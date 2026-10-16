@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "75s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-accounting-red07",
+    "tests/test_puck_guard_time_diagnostics.py::test_guard_end_diagnostic_cannot_bypass_final_deadline"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+    "tests/test_puck_guard_time_diagnostics.py": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f"
+  },
+  "scope": "Authored RED for completion counts that must not include failed finalclock."
+}

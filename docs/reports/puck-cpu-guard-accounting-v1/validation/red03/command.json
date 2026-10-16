@@ -1,0 +1,46 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "75s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-accounting-red03",
+    "tests/test_puck_guard_time_diagnostics.py::test_real_nested_guard_is_charged_to_outer_section_once",
+    "tests/test_puck_guard_time_diagnostics.py::test_real_refusal_has_no_diagnostic_clock_or_write_after_poisoning",
+    "tests/test_puck_guard_time_diagnostics.py::test_periodic_checkpoint_records_active_guard_and_does_not_catch_up"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+    "tests/test_puck_guard_time_diagnostics.py": "c330218e64a5a42f6c4b8b1caa798609566113bdca527d9b46e3a077d2877958"
+  },
+  "scope": "Authored RED for real nested checks, primary refusal and deterministic periodic accounting."
+}

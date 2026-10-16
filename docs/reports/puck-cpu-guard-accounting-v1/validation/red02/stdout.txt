@@ -1,0 +1,101 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_cost_cancellation_propagates_after_owned_close ______________
+
+    def test_cost_cancellation_propagates_after_owned_close():
+        result = run_cpu(package='mujoco', code=('import os,sys\n'
+            'def install():\n owner = sys.meta_path[0].owner\n original_close = owner._close\n original_write = os.write\n'
+            ' def close(error=None):\n  result = original_close(error)\n  os.write = original_write\n'
+            '  assert not owner._children and not owner._early_runtime_fds\n'
+            '  original_write(2, b"AUTHORED_COST_CANCEL_CLOSED\\n")\n  return result\n'
+            ' def cancel(fd, payload):\n  raise KeyboardInterrupt("AUTHORED_COST_CANCEL")\n'
+            ' owner._close = close\n os.write = cancel\n owner._guard_emit(force=True)\ninstall()\n'))
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'KeyboardInterrupt: AUTHORED_COST_CANCEL' in result.stderr, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":3.606954123824835e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.057076390949077904,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.057127266947645694,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2402806369937025,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2579735309700482,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.258021652000025,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3618840389535762,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3697459119721316,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.406459551944863,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4082964709959924,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.443652513960842,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4456590419868007,"kind":"puck-worker-phase-v1","phase":"import.torchvision.returned","sequence":12}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4809891969780438,"kind":"puck-worker-phase-v1","phase":"import.mujoco.enter","sequence":13}
+E         AUTHORED_COST_CANCEL_CLOSED
+E         AUTHORED_COST_CANCEL_CLOSED
+E         AUTHORED_COST_CANCEL_CLOSED
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/dependency/mujoco/__init__.py", line 20, in <module>
+E             install()
+E           File "/tmp/palimpsest-tmpfs-deps-rvnmar7u/dependency/mujoco/__init__.py", line 19, in install
+E             owner._guard_emit(force=True)
+E             ^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E         
+E       assert 'KeyboardInterrupt: AUTHORED_COST_CANCEL' in '{"diagnostic_only":true,"elapsed_seconds":3.606954123824835e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...(force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n'
+E        +  where '{"diagnostic_only":true,"elapsed_seconds":3.606954123824835e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...(force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').stderr
+
+tests/test_puck_guard_time_diagnostics.py:155: AssertionError
+__ test_malformed_accounting_state_preserves_real_operation[_guard_sections] ___
+
+field = '_guard_sections'
+
+    @pytest.mark.parametrize('field', ['_guard_sections', '_guard_checks'])
+    def test_malformed_accounting_state_preserves_real_operation(field):
+        result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+            'setattr(owner, '+repr(field)+', None)\nowner._import_recheck()\n'))
+        assert result.returncode == 0, result.stderr
+>       assert [row['context'] for _, row in costs(result.stderr)] == CONTEXTS[:5]
+E       AssertionError: assert [] == ['import.nump...vision.enter']
+E         
+E         Right contains 5 more items, first extra item: 'import.numpy.enter'
+E         Use -v to get more diff
+
+tests/test_puck_guard_time_diagnostics.py:98: AssertionError
+___ test_malformed_accounting_state_preserves_real_operation[_guard_checks] ____
+
+field = '_guard_checks'
+
+    @pytest.mark.parametrize('field', ['_guard_sections', '_guard_checks'])
+    def test_malformed_accounting_state_preserves_real_operation(field):
+        result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+            'setattr(owner, '+repr(field)+', None)\nowner._import_recheck()\n'))
+        assert result.returncode == 0, result.stderr
+>       assert [row['context'] for _, row in costs(result.stderr)] == CONTEXTS[:5]
+E       AssertionError: assert [] == ['import.nump...vision.enter']
+E         
+E         Right contains 5 more items, first extra item: 'import.numpy.enter'
+E         Use -v to get more diff
+
+tests/test_puck_guard_time_diagnostics.py:98: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_cancellation_propagates_after_owned_close
+FAILED tests/test_puck_guard_time_diagnostics.py::test_malformed_accounting_state_preserves_real_operation[_guard_sections]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_malformed_accounting_state_preserves_real_operation[_guard_checks]
+3 failed in 5.16s

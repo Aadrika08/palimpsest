@@ -1,0 +1,59 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_authored08_binds_fifth_source_diagnostics_and_independent_audits _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/tmp/test_authored08_binds_fifth_so0')
+
+    def test_authored08_binds_fifth_source_diagnostics_and_independent_audits(tmp_path):
+        before=len(os.listdir('/proc/self/fd'))
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_diagnostic08_auditor')
+        with publication05_fixture(tmp_path,pillow_origins=True,phase_trace=True) as case:
+            root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+            historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            qualifier_pin=next(r for r in config['sources'] if r['path']==QUALIFIER)
+            old_sources={r['path']:r for r in case['prepared']['sources']}
+            assert {r['path'] for r in config['sources'] if r!=old_sources[r['path']]}==set(DIAGNOSTIC_SOURCES)
+            assert qualifier_pin['sha256']==digest((ROOT/QUALIFIER).read_bytes())
+            assert qualifier_pin!=old_sources[QUALIFIER]
+            candidate=copy.deepcopy(case['candidate'])
+            candidate['import_profile']['native_origins']=copy.deepcopy(PILLOW_ORIGINS)
+            path=root/'docs/authored/candidate-diagnostic08.json';path.write_bytes(canonical(candidate))
+            config['inputs']['candidate']=file_pin(root,path)
+            config.update(kind='puck-cpu-held-runtime-allocation-v8',version=8,allocation_id=8,
+                negative_imports=list(AUTHORED_ROSTER06))
+            code,stdout,stderr=run_cli(root,api,'qualify08',config)
+            base=root/'runs/puck-cpu-held-qualification-08'
+            raw=(base/'result.json').read_bytes() if (base/'result.json').exists() else b''
+            assert code==0,(code,stdout,stderr,raw)
+            result=json.loads(raw)
+            assert stdout==raw and (result['kind'],result['version'],result['allocation_id'],result['status'])==(
+                'puck-cpu-held-runtime-outcome-v8',8,8,'imports_completed')
+            worker=json.loads((base/'logs/stdout.log').read_bytes())
+            assert [(r['name'],r['version']) for r in worker['entry_result']['imports']]==list(api.VERSIONS.items())
+            trace=[json.loads(line) for line in (base/'logs/stderr.log').read_bytes().splitlines()]
+>           assert [row['phase'] for row in trace]==[
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                'bootstrap.enter','source.ready','dependencies.enter','dependencies.ready','bootstrap.ready','entry.enter',
+                'import.numpy.enter','import.numpy.returned','import.torch.enter','import.torch.returned',
+                'import.torchvision.enter','import.torchvision.returned','import.mujoco.enter','import.mujoco.returned',
+                'entry.returned','entry.ready','close.enter','close.ready']
+
+tests/test_puck_cpu_held_amendment08_integration.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x70a2b7a47af0>
+
+>   assert [row['phase'] for row in trace]==[
+            ^^^^^^^^^^^^
+        'bootstrap.enter','source.ready','dependencies.enter','dependencies.ready','bootstrap.ready','entry.enter',
+        'import.numpy.enter','import.numpy.returned','import.torch.enter','import.torch.returned',
+        'import.torchvision.enter','import.torchvision.returned','import.mujoco.enter','import.mujoco.returned',
+        'entry.returned','entry.ready','close.enter','close.ready']
+E   KeyError: 'phase'
+
+tests/test_puck_cpu_held_amendment08_integration.py:44: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment08_integration.py::test_authored08_binds_fifth_source_diagnostics_and_independent_audits
+1 failed in 14.48s

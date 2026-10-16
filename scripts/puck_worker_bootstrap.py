@@ -339,10 +339,23 @@ class HeldWorkerBootstrap:
         self._negative_imports=tuple(q.get('negative_imports',()))
         self._trace_enabled=self._missing_policy_version==3
         self._trace_started=time.monotonic(); self._trace_count=0; self._trace_bytes=0
+        self._diagnostic_io=True
+        self._guard_enabled=self._missing_policy_version==3
+        self._guard_origin=None; self._guard_last=None; self._guard_next=0; self._guard_context=''
+        self._guard_count=0; self._guard_bytes=0; self._guard_busy=False
+        self._guard_depth=0; self._guard_current=None; self._guard_nested=0
+        self._guard_checks={True:[0,0],False:[0,0]}
+        self._guard_sections={name:[0,0] for name in ('bindings','cache','custody','images')}
 
     def _phase(self, phase):
         # Diagnostic only: losing trace data must not replace the real outcome.
-        if not self._trace_enabled: return
+        if self._state=='failed': return
+        if type(phase) is str and phase in (
+                'import.numpy.enter','import.numpy.returned','import.torch.enter','import.torch.returned',
+                'import.torchvision.enter','import.torchvision.returned','import.mujoco.enter','import.mujoco.returned'):
+            self._guard_context=phase
+            self._guard_emit(force=True)
+        if not self._trace_enabled or not self._diagnostic_io: return
         try:
             if type(phase) is not str or len(phase)>512:
                 self._trace_enabled=False; return
@@ -351,14 +364,110 @@ class HeldWorkerBootstrap:
                 self._trace_enabled=False; return
             raw=canonical(dict(kind='puck-worker-phase-v1',diagnostic_only=True,
                 phase=phase,sequence=self._trace_count+1,elapsed_seconds=elapsed))+b'\n'
+            if not self._trace_enabled or not self._diagnostic_io or self._state=='failed': return
             if self._trace_count>=24 or self._trace_bytes+len(raw)>16*1024:
                 self._trace_enabled=False; return
             self._trace_count+=1; self._trace_bytes+=len(raw)
-            if os.write(2,raw)!=len(raw): self._trace_enabled=False
+            if os.write(2,raw)!=len(raw):
+                self._trace_enabled=False; self._diagnostic_io=False
         except Exception:
-            self._trace_enabled=False
+            self._trace_enabled=False; self._diagnostic_io=False
+        except BaseException as error:
+            self._trace_enabled=False; self._diagnostic_io=False
+            self._fail(error); raise
+
+    def _guard_now(self):
+        now=time.monotonic_ns()
+        if type(now) is not int or now<0 or (self._guard_last is not None and now<self._guard_last):
+            raise ValueError('Invalid diagnostic clock')
+        self._guard_last=now
+        if self._guard_origin is None:
+            self._guard_origin=now; self._guard_next=now+10_000_000_000
+        return now
+
+    def _guard_emit(self, now=None, *, force=False):
+        if not self._guard_enabled or not self._diagnostic_io or self._guard_busy or self._state!='active': return
+        self._guard_busy=True
+        try:
+            if now is None: now=self._guard_now()
+            if not force and now<self._guard_next: return
+            token=self._guard_current
+            raw=canonical(dict(kind='puck-worker-guard-cost-v1',diagnostic_only=True,
+                sequence=self._guard_count+1,trigger='checkpoint' if force else 'periodic',
+                context=self._guard_context,elapsed_nanoseconds=now-self._guard_origin,
+                active=None if token is None else dict(section=token[2],full=token[3]),
+                full=dict(zip(('started','completed'),self._guard_checks[True])),
+                light=dict(zip(('started','completed'),self._guard_checks[False])),
+                nested_checks=self._guard_nested,
+                sections={name:dict(zip(('nanoseconds','visits'),values))
+                          for name,values in self._guard_sections.items()}))+b'\n'
+            if not self._guard_enabled or not self._diagnostic_io or self._state!='active': return
+            if self._guard_count>=32 or len(raw)>1024 or self._guard_bytes+len(raw)>32*1024:
+                self._guard_enabled=False; return
+            self._guard_count+=1; self._guard_bytes+=len(raw); self._guard_next=now+10_000_000_000
+            try:
+                if os.write(2,raw)!=len(raw):
+                    self._guard_enabled=False; self._diagnostic_io=False; self._trace_enabled=False
+            except Exception:
+                self._guard_enabled=False; self._diagnostic_io=False; self._trace_enabled=False
+        except Exception:
+            self._guard_enabled=False
+        except BaseException as error:
+            self._guard_enabled=False; self._diagnostic_io=False; self._trace_enabled=False
+            self._fail(error); raise
+        finally: self._guard_busy=False
+
+    def _guard_begin(self, full):
+        if not self._guard_enabled or not self._diagnostic_io: return None
+        try:
+            self._guard_depth+=1
+            if self._guard_depth>1:
+                self._guard_nested+=1; return False
+            now=self._guard_now()
+            token=[now,now,'bindings',full]
+            self._guard_checks[full][0]+=1; self._guard_current=token
+            self._guard_emit(now)
+            return token
+        except Exception:
+            self._guard_enabled=False; self._guard_depth=0; self._guard_current=None
+            return None
+        except BaseException as error:
+            self._guard_depth=0; self._guard_current=None
+            self._fail(error); raise
+
+    def _guard_step(self, token, section):
+        if not token or not self._guard_enabled: return
+        try:
+            now=self._guard_now()
+            if now<token[1]: raise ValueError('Diagnostic clock moved backwards')
+            values=self._guard_sections[token[2]]
+            values[0]+=now-token[1]; values[1]+=1
+            token[1]=now; token[2]=section
+            if section is None: self._guard_current=None
+            self._guard_emit(now)
+        except Exception:
+            self._guard_enabled=False
         except BaseException as error:
             self._fail(error); raise
+
+    def _guard_end(self, token):
+        if token is None: return
+        try:
+            self._guard_depth-=1
+            if token is False: return
+            if self._guard_enabled and self._state=='active':
+                self._guard_step(token,None)
+        except Exception:
+            self._guard_enabled=False
+        except BaseException as error:
+            self._fail(error); raise
+        finally:
+            if token is not False: self._guard_current=None
+
+    def _guard_complete(self, token):
+        if not token or not self._guard_enabled: return
+        try: self._guard_checks[token[3]][1]+=1
+        except Exception: self._guard_enabled=False
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Fresh worker deadline exhausted')
@@ -548,10 +657,12 @@ class HeldWorkerBootstrap:
         return self._check(full=self._dependencies is None)
 
     def _check(self, *, full):
+        token=None
         try:
             if self._state != 'active':
                 raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
             self._clock()
+            token=self._guard_begin(full)
             if sys.meta_path != [self._finder, *self._meta_path]: raise RuntimeError('Source import dispatch changed')
             for name, binding in self._loaded.items():
                 module, filename, loader, spec, origin, spec_loader, package, search, spec_name, spec_search, _, _ = binding
@@ -586,11 +697,13 @@ class HeldWorkerBootstrap:
                     if sys.modules['__mp_main__'] is not self._main_module:
                         raise RuntimeError('Runtime qualification stdlib alias identity changed')
                     aliases.add('__mp_main__')
+            self._guard_step(token,'cache')
             for name in sys.modules:
                 if (name.split('.')[0] not in sys.stdlib_module_names and
                         name not in {'__main__', '_puck_held_file_bootstrap'}|aliases|self._loaded.keys()|self._loading
                         | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
                     raise RuntimeError('Unregistered module cache entry: '+name)
+            self._guard_step(token,'custody')
             # Check support dispatch before invoking its guard methods.
             for child in self._children:
                 if full: child.recheck()
@@ -602,15 +715,22 @@ class HeldWorkerBootstrap:
                                 _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
                             raise RuntimeError('Held source/runtime file metadata changed')
             if self._dependencies is not None:
+                self._guard_step(token,'bindings')
                 cls.recheck(receiver)
-                if full: self._dependencies.images()
+                if full:
+                    self._guard_step(token,'images')
+                    self._dependencies.images()
+                self._guard_step(token,'custody')
             if _identity(os.stat('/proc/self/exe')) != self._image: raise RuntimeError('Running interpreter object differs')
             if _process(os.getpid()) != self._process or _process(os.getppid()) != self._parent:
                 raise RuntimeError('Worker or parent identity changed')
             if dict(os.environ) != self._reg['environment'] or os.getcwd() != self._reg['cwd']:
                 raise RuntimeError('Worker environment/cwd changed')
+            self._guard_end(token); completed=token; token=None
             self._clock()
+            self._guard_complete(completed)
         except BaseException as error: self._fail(error); raise
+        finally: self._guard_end(token)
 
     def snapshot(self):
         try:

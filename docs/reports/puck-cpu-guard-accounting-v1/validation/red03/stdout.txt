@@ -1,0 +1,120 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_real_nested_guard_is_charged_to_outer_section_once ____________
+
+    def test_real_nested_guard_is_charged_to_outer_section_once():
+        result = run_cpu(code=('import sys,types\nowner = sys.meta_path[0].owner\n'
+            'triggered = False\n'
+            'class NestedName(str):\n'
+            ' def split(self, *args):\n  global triggered\n'
+            '  if not triggered:\n   triggered = True\n   owner._import_recheck()\n'
+            '  return super().split(*args)\n'
+            'name = NestedName("fixture_nested_guard")\n'
+            'before = list(owner._guard_checks[False])\nnested_before = owner._guard_nested\n'
+            'owner._dependencies.loading.add(str(name))\nsys.modules[name] = types.ModuleType(str(name))\n'
+            'try:\n owner._import_recheck()\n'
+            ' assert owner._guard_nested == nested_before+1, "NESTED_GUARD_NOT_COUNTED"\n'
+            ' assert owner._guard_checks[False] == [before[0]+1,before[1]+1], "NESTED_GUARD_DOUBLE_COUNTED"\n'
+            ' assert owner._guard_depth == 0 and owner._guard_current is None\n'
+            'finally:\n sys.modules.pop(name, None)\n owner._dependencies.loading.discard(str(name))\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":2.535001840442419e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05430257099214941,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05433542298851535,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.1945862430147827,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2116834270418622,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2117396630346775,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3157417580368929,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3240285720094107,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3593617540318519,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3611488090245984,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3954095810186118,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-7nzr4qnp/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-7nzr4qnp/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-7nzr4qnp/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-7nzr4qnp/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-7nzr4qnp/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-7nzr4qnp/dependency/torchvision/__init__.py", line 15, in <module>
+E             before = list(owner._guard_checks[False])
+E                           ^^^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_checks'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...             ^^^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_checks\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:156: AssertionError
+_____ test_periodic_checkpoint_records_active_guard_and_does_not_catch_up ______
+
+    def test_periodic_checkpoint_records_active_guard_and_does_not_catch_up():
+        result = run_cpu(code=('import sys,time\nowner = sys.meta_path[0].owner\n'
+            'original = time.monotonic_ns\nanchor = original()\nbefore = owner._guard_count\n'
+            'time.monotonic_ns = lambda: anchor\n'
+            'try:\n owner._guard_next = 0\n owner._import_recheck()\n'
+            ' assert owner._guard_count == before+1, "PERIODIC_CATCH_UP"\n'
+            'finally:\n time.monotonic_ns = original\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":3.3060205169022083e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05757054500281811,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05761264398461208,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2659032340161502,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2837267550057732,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2838018870097585,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3928968319669366,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4008390869712457,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.437052957015112,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4388734549866058,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.475055325019639,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-cr71vpgd/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-cr71vpgd/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-cr71vpgd/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-cr71vpgd/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-cr71vpgd/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-cr71vpgd/dependency/torchvision/__init__.py", line 8, in <module>
+E             before = owner._guard_count
+E                      ^^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_count'. Did you mean: '_trace_count'?
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_count\'. Did you mean: \'_trace_count\'?\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_time_diagnostics.py::test_real_nested_guard_is_charged_to_outer_section_once
+FAILED tests/test_puck_guard_time_diagnostics.py::test_periodic_checkpoint_records_active_guard_and_does_not_catch_up
+2 failed, 1 passed in 4.79s
