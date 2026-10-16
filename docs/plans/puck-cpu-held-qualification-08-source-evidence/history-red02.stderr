@@ -1,0 +1,25 @@
+test_changed_transport_is_refused (__main__.HistoryChecks.test_changed_transport_is_refused) ... ok
+test_fabricated07_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated07_baseline_after_is_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_manifest_first_reads_preserve_historical07_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_stream_bytes) ... ERROR
+
+======================================================================
+ERROR: test_manifest_first_reads_preserve_historical07_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_stream_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held08-history-check.py", line 47, in test_manifest_first_reads_preserve_historical07_stream_bytes
+    value=control.check_consumed07(held)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08-admission.py", line 58, in check_consumed07
+    raw=held.file(ROOT/row['path'],row,16*1024**2,raw=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py", line 131, in file
+    if raw and row['raw'] is None:raise ValueError('Repeated metadata/data role differs')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Repeated metadata/data role differs
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.005s
+
+FAILED (errors=1)
