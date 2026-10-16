@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/canonical-preflight.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-11.json",
+      "sha256": "6e28bef8bebd6daecfdf34e762584312f984e0d77c7a822a119e0c89e136b212",
+      "size_bytes": 9130
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-11-source-evidence/canonical-preflight.py",
+      "sha256": "214640eee43c0a12053990e6fc3a2b58f845bab7bd03b39a4c3528331e5c8008",
+      "size_bytes": 3723
+    }
+  ],
+  "scope": "small historical/configuration metadata only; no admission/main, SITE/staged census, vendor or runtime"
+}
