@@ -1,0 +1,63 @@
+F
+=================================== FAILURES ===================================
+____ test_authored10_binds_fifth_source_diagnostics_and_independent_audits _____
+
+tmp_path = PosixPath('/home/utkarsh/.codex/worktrees/293b/brain/runs/q4-epoch10-integration-red02/test_authored10_binds_fifth_so0')
+
+    def test_authored10_binds_fifth_source_diagnostics_and_independent_audits(tmp_path):
+        before=len(os.listdir('/proc/self/fd'))
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_q4epoch10_auditor')
+        with publication05_fixture(tmp_path,pillow_origins=True,phase_trace=True) as case:
+            root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+            historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            qualifier_pin=next(r for r in config['sources'] if r['path']==QUALIFIER)
+            old_sources={r['path']:r for r in case['prepared']['sources']}
+            assert {r['path'] for r in config['sources'] if r!=old_sources[r['path']]}==set(DIAGNOSTIC_SOURCES)
+            assert qualifier_pin['sha256']==digest((ROOT/QUALIFIER).read_bytes())
+            assert qualifier_pin!=old_sources[QUALIFIER]
+            candidate=copy.deepcopy(case['candidate'])
+            candidate['import_profile']['native_origins']=copy.deepcopy(PILLOW_ORIGINS)
+            path=root/'docs/authored/candidate-q4epoch10.json';path.write_bytes(canonical(candidate))
+            config['inputs']['candidate']=file_pin(root,path)
+            config.update(kind='puck-cpu-held-runtime-allocation-v9',version=9,allocation_id=9,
+                negative_imports=list(AUTHORED_ROSTER06))
+            code,stdout,stderr=run_cli(root,api,'qualify10',config)
+            base=root/'runs/puck-cpu-held-qualification-10'
+            raw=(base/'result.json').read_bytes() if (base/'result.json').exists() else b''
+            assert code==0,(code,stdout,stderr,raw)
+>           result=json.loads(raw)
+                   ^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10_integration.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7b87be6a0d10>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/json/decoder.py:355: JSONDecodeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment10_integration.py::test_authored10_binds_fifth_source_diagnostics_and_independent_audits
+1 failed in 12.39s
