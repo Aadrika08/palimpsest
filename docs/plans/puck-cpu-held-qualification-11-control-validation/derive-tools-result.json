@@ -1,0 +1,42 @@
+{
+  "admission_invoked": false,
+  "derived": [
+    {
+      "new_sha256": "5fc64c930cdca00b9c1c0bd80ca2758428604cb2d66150d884d6c31a11d7cecf",
+      "old_sha256": "b25a784f97fdaa5dbcf797c2cdb5bed1d20a1295f8f9a7f1a501e743723beb4f",
+      "replacements": 2,
+      "source": "docs/reports/puck-cpu-held-qualification-10/tools/palimpsest-held10-amendment02-run-admission-template.py",
+      "target": "run-admission-once.py.in"
+    },
+    {
+      "new_sha256": "aecad31116b5fb0e17147aee51fe45a4f193ebba676e6559b05a693346b28cb2",
+      "old_sha256": "681c0a08218234e910935f0e48f144c14fef8de3a52897e7b963a8d64c4f57b5",
+      "replacements": 4,
+      "source": "docs/reports/puck-cpu-held-qualification-10/tools/palimpsest-held10-amendment02-run-observer-once.py",
+      "target": "run-observer-once.py.in"
+    },
+    {
+      "new_sha256": "9db034a7f49628cf9e9eaf770b4dd48378279230829be2eab5616b70f6368402",
+      "old_sha256": "aa41e25ba5ebbf3cbf49e960e6883d03445ac51479f1bef58e4afa4cdac1b50c",
+      "replacements": 4,
+      "source": "docs/reports/puck-cpu-held-qualification-10/tools/palimpsest-held10-amendment02-run-audit-once.py",
+      "target": "run-audit-once.py.in"
+    },
+    {
+      "new_sha256": "f3da1594e88847f15ce527fff10443c676f5863144c7fad89887c45807fd9fce",
+      "old_sha256": "576e5c03509c8ab0ce31431b1e1c94a66bff0e19b82f3385821114ec013524fe",
+      "replacements": 7,
+      "source": "docs/reports/puck-cpu-held-qualification-10/tools/palimpsest-held10-amendment02-bind-audit-command.py",
+      "target": "bind-audit-command.py"
+    },
+    {
+      "new_sha256": "6c14355ba3e6c29d0642d7ad6d13a53158b38c1f8a976f133a1bd1579bbf84b4",
+      "old_sha256": "780f85db6f47bfc1ea44424c5eed8c9ab2f415bed79cd0e41b8235d7ca55cd19",
+      "replacements": 7,
+      "source": "docs/reports/puck-cpu-held-qualification-10/tools/palimpsest-held10-amendment02-make-observer-guard.py",
+      "target": "make-observer-guard.py"
+    }
+  ],
+  "runtime_invoked": false,
+  "tools_invoked": false
+}

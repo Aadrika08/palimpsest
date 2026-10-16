@@ -1,0 +1,12 @@
+{
+  "admission_invoked": false,
+  "canonical": "canonical-green01: 9,130B compact configuration matches the authenticated formatter AST and bytes; qualifier validate_configuration and auditor configuration accept v11; 13 added absent names; 3 changed config sources",
+  "freeze": "2,427 pins / 121,346,836B / 588,680B manifest d9c34de3...; retains all 2,150 admission10-02 pins (5 replaced live sources archived at docs/reports/puck-cpu-held-qualification-10/source/) and all 1,998 original10 pins; freeze unchanged after creation",
+  "guard": "guard-green01: corrected history read loads the fixture below ROOT on the attempt-11 template; whole template compiles; nothing else executed",
+  "history": "history-red01: 26 cases, 7 errors/4 failures/15 passes; history-green01: all 26 pass after history-impl.py; no admission main or payload read",
+  "kind": "actual11-control-validation-notes-v1",
+  "limits": "No admission main, pre-admission/pre-observer guard, SITE/staged/native census, observer, auditor, target import or runtime invoked. /tmp writes: wrapper copy, self-check JSON, freeze result copy and scratch only.",
+  "runtime_invoked": false,
+  "selfcheck01": "PASS_AUTHENTICATED_CONTROL_METADATA_ONLY in 3.52s; full 2,427-pin warm roster; consumed 07-10 and admission10 01/02; 32-name planned-forest absence; 4 hidden names undeclared; worker registration v5; FD 4->4, no child/thread",
+  "tools": "tools-green01 failed on two test-authoring errors in tools-check.py only (it counted all nine '/tmp/ literals instead of the maker's four I/O paths, and refused the legitimate terminal10 verify_evidence.py reference); tools-green02 passes after correcting only tools-check.py. No tool or template changed between the runs. check-batch.py gained the 'tools' kind after selfcheck01/guard-green01 ran; those retained commands do not depend on it."
+}
