@@ -2,8 +2,11 @@
 
 No installed runtime, protected input or allocation runs. Declared absent and
 declared unavailable names must look like stock CPython misses to bare
-find_spec and import, without poison and without executing a present hidden
-module. Undeclared requests keep poisoning; v1-v4 keep their exact semantics.
+find_spec and import, without poison. Undeclared requests keep poisoning;
+v1-v4 keep their exact semantics. Present hidden files sit in the held root,
+which is not on sys.path, and held packages have __path__ == [], so their
+HIDDEN_TARGET_RAN marker only shows the guard itself never loads them. The
+discriminating never-executes proof is the frozen __hello__ later-finder case.
 Success cases require a body-completion marker, so the initial RED (v5 refused
 as an unknown descriptor) can never satisfy them.
 """
@@ -31,18 +34,22 @@ sys.stderr.write('V5_BODY_ENTERED\\n')
 
 
 def run(code='', *, version=5, negatives=(), hidden=HIDDEN, present=(), registered=(),
-        defect=None, dependency_version=3, change=None, exports=()):
+        defect=None, dependency_version=3, change=None, exports=(), native_cache=()):
     def packages(deps, root):
         cpu_setup(deps, root, defect, dependency_version)
         for name in present:
             relative = PRESENT[name]; path = root/relative
             path.parent.mkdir(parents=True, exist_ok=True)
+            # Unreachable to stock finders; see the __hello__ case for a resolvable target.
             path.write_text('raise AssertionError("HIDDEN_TARGET_RAN")\n')
             deps['roots'][0]['files'].append(descriptor(path, relative))
             if name in registered:
                 deps['modules'].append(dict(name=name, root_index=0, path=relative, kind='python',
                                             is_package=relative.endswith('/__init__.py')))
         if exports: deps['import_profile']['exports'].extend(exports)
+        if native_cache:
+            deps['import_profile'].update(kind='puck-producer-import-profile-v2', version=2,
+                                          native_cache=list(native_cache))
         if code:
             path = root/'torch/__init__.py'
             path.write_text(path.read_text()+_PRELUDE+textwrap.dedent(code)
@@ -60,7 +67,7 @@ def run(code='', *, version=5, negatives=(), hidden=HIDDEN, present=(), register
 
     with authored() as base:
         result, _ = dependency_fixture(base, 'raise AssertionError("DEFAULT_ENTRY_RAN")',
-            mutate=packages, source_change=policy)
+            mutate=packages, source_change=policy, native=bool(native_cache))
     print(json.dumps({'kind': 'authored-v5-stock-absence-case-v1', 'worker_returncode': result.returncode,
         'stdout': result.stdout, 'stderr': result.stderr}, sort_keys=True))
     return result
@@ -69,6 +76,7 @@ def run(code='', *, version=5, negatives=(), hidden=HIDDEN, present=(), register
 def succeeded(result, version=5):
     assert result.returncode == 0, result.stderr
     assert 'V5_BODY_ENTERED\n' in result.stderr and 'V5_CASE_COMPLETED\n' in result.stderr
+    # HIDDEN_TARGET_RAN alone is not discriminating (held root unreachable to stock finders).
     assert 'HIDDEN_TARGET_RAN' not in result.stderr and 'DEFAULT_ENTRY_RAN' not in result.stderr
     receipt = json.loads(result.stdout); entry = receipt['entry_result']
     assert entry['kind'] == 'puck-held-runtime-import-qualification-result-v2'
@@ -127,6 +135,9 @@ def test_v5_declared_absent_names_are_stock_misses_without_poison():
 
 
 def test_v5_hidden_present_modules_never_execute():
+    # Stock-miss answers and receipt for present hidden names. Their files are
+    # unreachable to stock finders anyway; the later-finder __hello__ case is
+    # the discriminating proof that a resolvable declared name never executes.
     receipt = succeeded(run('''
         assert [importlib.util.find_spec(n) for n in ('networkx', 'pandas', 'sklearn')] == [None]*3
         assert importlib.util.find_spec('torch._cxx_pytree') is None
@@ -186,13 +197,17 @@ def test_v5_declared_absent_but_present_refuses_before_initializers(registered):
 
 _EXPORT = dict(name='torch.hidden_parent.child', producer='torch', phase='module_exec',
                attributes=['hidden_parent_child'], class_binding=None)
+_CACHE = dict(name='hidden_cache', producer='fixture_dep._native', phase='module_exec',
+              delegate_attributes=[])
 
 
 @pytest.mark.parametrize('defect', ['registered', 'registered-present', 'registered-package', 'export-parent',
+    'native-cache',
     'local', 'stdlib', 'negative', 'negative-parent', 'negative-child', 'empty', 'unsorted', 'duplicate',
     'prefix', 'reserved', 'too-many', 'not-list', 'non-string'])
 def test_v5_hidden_declaration_is_strict_before_initializers(defect):
     hidden = list(HIDDEN); negatives = []; present = []; registered = []; exports = []; change = None
+    native_cache = []
     reason = 'Expected missing imports must be sorted, unique and nonoverlapping'
     custody = 'Hidden import overlaps a registered dependency module, namespace or export: '
     if defect == 'registered': hidden.append('fixture_dep'); reason = custody+'fixture_dep'
@@ -201,6 +216,8 @@ def test_v5_hidden_declaration_is_strict_before_initializers(defect):
     elif defect == 'registered-package': hidden.append('mujoco'); reason = custody+'mujoco'
     elif defect == 'export-parent':
         hidden.append('torch.hidden_parent'); exports = [_EXPORT]; reason = custody+'torch.hidden_parent'
+    elif defect == 'native-cache':
+        hidden.append('hidden_cache'); native_cache = [_CACHE]; reason = custody+'hidden_cache'
     elif defect == 'local':
         hidden.append('palimpsest.optional'); reason = 'Expected missing import overlaps authenticated local source'
     elif defect == 'stdlib':
@@ -225,7 +242,7 @@ def test_v5_hidden_declaration_is_strict_before_initializers(defect):
     else:
         change = lambda q: q.update(hidden_imports=[1]); reason = 'Bounded expected missing import declaration required'
     refused_before_initializers(run(negatives=negatives, hidden=hidden, present=present, registered=registered,
-        exports=exports, change=change, defect='before-init'), reason)
+        exports=exports, native_cache=native_cache, change=change, defect='before-init'), reason)
 
 
 @pytest.mark.parametrize('version,key', [(5, False), (4, True), (3, True)])

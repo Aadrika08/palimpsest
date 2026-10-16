@@ -488,6 +488,7 @@ def validate_worker_result(result,*,registration_sha256,dependency_sha256,depend
             or result.get('qualification_claims')!=[] or result.get('expected_missing_imports')!=negative_imports
             or type(result.get('denied_imports')) is not list or not set(result['denied_imports'])<=declared
             or (qualification_version==5 and result.get('expected_hidden_imports')!=hidden_imports)
+            or (qualification_version!=5 and 'expected_hidden_imports' in result)
             or dep.get('registration_sha256')!=dependency_sha256 or dep.get('native_identity')!='tmpfs-raw-dev-inode-v1'
             or type(dep.get('root_count')) is not int or dep['root_count']!=4
             or type(dep.get('file_count')) is not int or dep['file_count']!=count

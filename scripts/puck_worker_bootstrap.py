@@ -348,6 +348,8 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
 
     def _stock_miss(self, fullname, path, target):
         # Returning None defers to the original finders; none may resolve it.
+        # They run again after this returns; a module loaded in that window is an
+        # unregistered cache entry, refused by the q4 recheck before any receipt.
         for finder in self.owner._meta_path:
             if finder.find_spec(fullname, path, target) is not None:
                 raise ImportError('Declared unavailable import resolved by a later finder: '+fullname, name=fullname)

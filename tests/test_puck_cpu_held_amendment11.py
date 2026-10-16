@@ -168,6 +168,16 @@ def test11_older_selections_do_not_accept_hidden_denials():
                 dependencies=deps,negative_imports=['org'],qualification_version=version)
 
 
+@pytest.mark.parametrize('version',[3,4])
+def test11_older_selections_refuse_a_hidden_receipt_field(version):
+    m,deps,result=result_case();result['entry_result']['qualification_version']=version
+    arguments=dict(registration_sha256='a'*64,dependency_sha256='b'*64,dependencies=deps,
+                   negative_imports=['org'],qualification_version=version)
+    m.validate_worker_result(result,**arguments)
+    result['expected_hidden_imports']=[]
+    with pytest.raises(ValueError):m.validate_worker_result(result,**arguments)
+
+
 @pytest.mark.parametrize('code',[0,7])
 def test11_observer_reserves_once_without_modifying_consumed10(tmp_path,monkeypatch,code):
     m,path,_=observer_setup(tmp_path,monkeypatch,'import sys\nprint("AUTHORED11 transport")\nsys.exit('+str(code)+')\n')
