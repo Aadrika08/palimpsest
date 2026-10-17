@@ -45,7 +45,7 @@ def write(root,name,value):
     return dict(path=name,size_bytes=len(raw),sha256=digest(raw))
 
 
-def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False,autograd_publication=False,caught_optional_import=False,pillow_origins=False):
+def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False,autograd_publication=False,caught_optional_import=False,pillow_origins=False,stock_absence_probe=False,worker_delay_seconds=None):
     project=tmp_path/'authored-project';project.mkdir(mode=0o700)
     current=load(ROOT/PARENT,'cpu_authored_current_parent')
     marker=b'min_available_ram_bytes=(4096 if phase==\'prepare\' else 2048)*MiB'
@@ -101,6 +101,14 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
             assert autograd_publication, 'The caught optional seam follows all four authored creators'
             source+=b'try:\n    import pynvml\nexcept ImportError:\n    AUTHORED_OPTIONAL_PYNVML_ABSENT = True\n'
         if pillow_origins and name=='torchvision':source+=b'import PIL\n'
+        if worker_delay_seconds and name=='mujoco':
+            # Scaled clock tests: a held import that outlasts one epoch's clock.
+            source+=b'import time\ntime.sleep('+str(worker_delay_seconds).encode()+b')\n'
+        if stock_absence_probe and name=='torchvision':
+            # Bare trace_rules-style probes and a caught import of declared names.
+            source+=(b'import importlib.util\n'
+                     b"assert [importlib.util.find_spec(n) for n in ('tabulate','networkx','pandas','sklearn')]==[None]*4\n"
+                     b'try:\n    import backports_abc\nexcept ImportError:\n    AUTHORED_OPTIONAL_BACKPORTS_ABC_ABSENT = True\n')
         module_path=name+'/__init__.py' if package else name+'.py'
         write(site,module_path,source)
         entries.append(dict(path=module_path,size_bytes=len(source),sha256=digest(source)))

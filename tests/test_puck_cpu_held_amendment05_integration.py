@@ -29,10 +29,11 @@ def file_pin(root,path):
 
 
 @contextmanager
-def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False,phase_trace=False):
+def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False,phase_trace=False,stock_absence_probe=False):
     assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
     root,current,inputs,_=project(tmp_path,autograd_publication=True,
-        caught_optional_import=caught_optional_import,pillow_origins=pillow_origins)
+        caught_optional_import=caught_optional_import,pillow_origins=pillow_origins,
+        stock_absence_probe=stock_absence_probe)
     legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
     changed={PARENT,current.BOOTSTRAP,BINDINGS,IMPORTS}
     if phase_trace:changed.add('src/palimpsest/puck_runtime_qualification.py')

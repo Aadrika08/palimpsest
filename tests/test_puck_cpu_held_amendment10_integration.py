@@ -118,6 +118,16 @@ def test_authored10_binds_fifth_source_diagnostics_and_independent_audits(tmp_pa
                         auditor.worker(held,base,config,json.loads(current_dep),current_dep,sources)
                 finally:held.close()
             finally:target.write_bytes(original)
+        # A q4 receipt may not carry a policy-v5 hidden roster.
+        target=base/'logs/stdout.log';original=target.read_bytes()
+        try:
+            target.write_bytes(canonical(dict(json.loads(original),expected_hidden_imports=[])))
+            held=auditor.Held(time.monotonic()+30)
+            try:
+                with pytest.raises(ValueError,match='^Worker bootstrap/source/negative-import receipt differs$'):
+                    auditor.worker(held,base,config,json.loads(current_dep),current_dep,sources)
+            finally:held.close()
+        finally:target.write_bytes(original)
         legacy_config=copy.deepcopy(config)
         legacy_config.update(kind='puck-cpu-held-runtime-allocation-v9',version=9,allocation_id=9)
         auditor.configuration(legacy_config,True)
