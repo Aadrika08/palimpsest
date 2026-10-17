@@ -260,7 +260,7 @@ def sandbox_command(baseline,native,*,phase,capsule,capsule_files,controls,paylo
     for name,host in sorted(controls.items()):cmd+=['--ro-bind',str(host),'/puck/control/'+name]
     if source_run is not None:cmd+=['--ro-bind',str(source_run),'/puck/source-run']
     cmd+=['--bind',str(payload),'/output','--size',str(LIMITS['scratch_bytes']),'--tmpfs','/scratch']
-    for name in ('home','tmp','pycache','assets'):cmd+=['--dir','/scratch/'+name,'--chmod','0700','/scratch/'+name]
+    for name in ('home','tmp','pycache'):cmd+=['--dir','/scratch/'+name,'--chmod','0700','/scratch/'+name]
     cmd+=['--symlink','scratch/tmp','/tmp','--proc','/proc','--remount-ro','/proc',
         '--dev','/dev','--remount-ro','/dev','--remount-ro','/']
     for key,value in sorted(ENVIRONMENT.items()):cmd+=['--setenv',key,value]

@@ -74,7 +74,7 @@ def _aliases(baseline, native, files):
 def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
                     source_root, control_root, output_root, command, environment,
                     site_root=None, generated_root=None,
-                    scratch_bytes=_SCRATCH_BYTES, source_run_root=None) -> list[str]:
+                    scratch_bytes=_SCRATCH_BYTES, source_run_root=None, source_files=None) -> list[str]:
     """Bind one admitted host tmpfs tree into two separate private namespaces.
 
     Preparation sees only explicitly supplied source trees and host native
@@ -95,6 +95,14 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
         raise ValueError('Namespace phase must be prepare, qualify or an episode worker')
     if (source_run_root is None) != (phase != 'episode-replay'):
         raise ValueError('Only the episode replay worker mounts the source run')
+    # Episode workers bind exactly their registered files from the prepared capsule.
+    if (source_files is None) != (not phase.startswith('episode-')):
+        raise ValueError('Episode workers, and only they, bind an explicit source file list')
+    if source_files is not None and (type(source_files) not in (list, tuple) or not 1 <= len(source_files) <= 512
+            or list(source_files) != sorted(set(source_files))
+            or any(not _text(path) or path.startswith('/') or '\\' in path or ':' in path
+                   or any(part in ('', '.', '..') for part in path.split('/')) for path in source_files)):
+        raise ValueError('Episode source files must be sorted distinct canonical relative paths')
     if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
         raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
     if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
@@ -159,8 +167,12 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
         cmd += ['--ro-bind', origin, path]
     for path, target in sorted(aliases.items(), key=lambda item: (item[0].count('/'), item[0])):
         cmd += ['--symlink', target, path]
-    cmd += ['--ro-bind', source_root, '/puck/source',
-            '--ro-bind', control_root, '/puck/control']
+    if source_files is None:
+        cmd += ['--ro-bind', source_root, '/puck/source']
+    else:
+        for path in source_files:
+            cmd += ['--ro-bind', source_root + '/' + path, '/puck/source/' + path]
+    cmd += ['--ro-bind', control_root, '/puck/control']
     if phase == 'prepare':
         cmd += ['--bind', stage_parent, '/puck/staged']
         for path in (site_root, generated_root):

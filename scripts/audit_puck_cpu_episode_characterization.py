@@ -278,7 +278,7 @@ def namespace(baseline,native,capsule,name,request_sha=None):
     for key,host in sorted(controls.items()):cmd+=['--ro-bind',str(host),'/puck/control/'+key]
     if name=='replay':cmd+=['--ro-bind',str(output/'payload-source'),'/puck/source-run']
     cmd+=['--bind',str(output/('payload-'+phase)),'/output','--size',str(LIMITS['scratch_bytes']),'--tmpfs','/scratch']
-    for item in ('home','tmp','pycache','assets'):cmd+=['--dir','/scratch/'+item,'--chmod','0700','/scratch/'+item]
+    for item in ('home','tmp','pycache'):cmd+=['--dir','/scratch/'+item,'--chmod','0700','/scratch/'+item]
     cmd+=['--symlink','scratch/tmp','/tmp','--proc','/proc','--remount-ro','/proc','--dev','/dev','--remount-ro','/dev','--remount-ro','/']
     for key,value in sorted(ENVIRONMENT.items()):cmd+=['--setenv',key,value]
     cmd+=['--chdir','/scratch',PYTHON,'-I','-S','-B','-X','pycache_prefix=/scratch/pycache']
