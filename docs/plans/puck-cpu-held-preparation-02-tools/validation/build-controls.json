@@ -1,0 +1,95 @@
+{
+  "allocation_invoked": false,
+  "canonical_serializer": "qualify_puck_cpu_held_runtime.canonical (reproduces preparation01 bytes exactly)",
+  "changed_sources": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "preparation01": {
+        "sha256": "7aac915251166b79abec77f7a51559ada588fe9ee92b9f1dc5c5e4cebb64feb9",
+        "size_bytes": 38250
+      },
+      "preparation02": {
+        "sha256": "357115832f33d83750db26557b947677ca3db4235fe0358bc6f14aa5ce270148",
+        "size_bytes": 54769
+      }
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "preparation01": {
+        "sha256": "ec4b8a4bee2c3956c1b687635ddb4a48064bba49b8422e6ea9d5fd526e1b0be4",
+        "size_bytes": 36880
+      },
+      "preparation02": {
+        "sha256": "f8faa17db3e2958bbbf25559fc86feb57224e73cddcf2117687957f2bce05b1d",
+        "size_bytes": 63813
+      }
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "preparation01": {
+        "sha256": "5110aec2eb6961bbbb6fdc40431b46c42d5ad6fff2f43d86c69125a8fa0644a7",
+        "size_bytes": 23102
+      },
+      "preparation02": {
+        "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+        "size_bytes": 28299
+      }
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "preparation01": {
+        "sha256": "62ac7f05e451bf6b6b58eff84032561f49411479ef55c87ec15d6e28cd6bb7d7",
+        "size_bytes": 14468
+      },
+      "preparation02": {
+        "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+        "size_bytes": 14868
+      }
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "preparation01": {
+        "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+        "size_bytes": 2190
+      },
+      "preparation02": {
+        "sha256": "32a1618b5d79863f8b2a4de16909e1a060c684ab36ef88c7808871e99d17b0f5",
+        "size_bytes": 2516
+      }
+    }
+  ],
+  "configuration": {
+    "path": "docs/plans/puck-cpu-held-preparation-02.json",
+    "sha256": "1acfb10b40d561b8e56c96f4cd0d59ee1f00b4d0a14f62c80ffe64e22e1de3ed",
+    "size_bytes": 7906
+  },
+  "freeze": {
+    "path": "docs/plans/puck-cpu-held-preparation-02-freeze.json",
+    "sha256": "0bef2aa59af8c293d48099fe0e631025f4f0196fbf7c2002931a64e5125c7634",
+    "size_bytes": 9655
+  },
+  "top_level_diff": {
+    "allocation_id": {
+      "preparation01": 1,
+      "preparation02": 12
+    },
+    "kind": {
+      "preparation01": "puck-cpu-held-runtime-allocation-v1",
+      "preparation02": "puck-cpu-held-runtime-allocation-v12"
+    },
+    "stage_parent": {
+      "preparation01": "/tmp/palimpsest-puck-cpu-held-01",
+      "preparation02": "/tmp/palimpsest-puck-cpu-held-02"
+    },
+    "version": {
+      "preparation01": 1,
+      "preparation02": 12
+    }
+  },
+  "unchanged_sources": 19,
+  "validators": {
+    "allocation_output": "runs/puck-cpu-held-preparation-02",
+    "auditor_configuration": "PASS",
+    "parent_validate_configuration": "PASS"
+  }
+}
