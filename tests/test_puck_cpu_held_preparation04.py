@@ -12,7 +12,9 @@ import json
 
 import pytest
 
+from test_puck_cpu_held_observer import setup as observer_setup
 from test_puck_cpu_held_parent import link_case
+from test_puck_cpu_held_runtime_audit import api as auditor_api
 from test_puck_cpu_held_preparation02 import FLOORS, preparation02_config
 from test_puck_cpu_held_preparation03 import CLOCKS, preparation03_config
 
@@ -229,3 +231,50 @@ def test_v6_native_leaves_hash_beyond_the_legacy_64_mib_builder_cap(tmp_path):
     with huge.open('wb') as stream:stream.truncate(256*1024**2+1)
     with pytest.raises(ValueError):native_leaf_row(huge,time.monotonic()+30)
     with pytest.raises(TimeoutError):native_leaf_row(big,time.monotonic()-1)
+
+
+def test_preparation04_auditor_pin_is_the_current_independent_auditor():
+    m,*_=preparation04_config()
+    current=m.digest((m.ROOT/'scripts/audit_puck_cpu_held_runtime.py').read_bytes())
+    assert m.PREPARATION04_AUDITOR_SHA256==current
+    assert len({current,m.PREPARATION03_AUDITOR_SHA256,m.PREPARATION02_AUDITOR_SHA256,m.LEGACY_AUDITOR_SHA256})==4
+
+
+def test_the_independent_auditor_accepts_only_the_exact_preparation04_identity():
+    m,config,_=preparation04_config();a=auditor_api()
+    a.configuration(config,False)
+    assert a.allocation_output(config)==a.preparation_output(config)==OUTPUT04
+    for change in (dict(stage_parent='/tmp/palimpsest-puck-cpu-held-03'),dict(version=13),dict(allocation_id=13),
+                   dict(phase='qualify'),dict(expected_versions=dict(m.VERSIONS)),
+                   dict(sources=[dict(path=p,size_bytes=1,sha256='a'*64) for p in m.SOURCES]),
+                   dict(inputs={k:v for k,v in config['inputs'].items() if k!=REPLAY_ROLE}),
+                   dict(sources=sorted(config['sources']+[dict(path='src/palimpsest/zz_unlisted.py',size_bytes=1,sha256='a'*64)],
+                                       key=lambda r:r['path']))):
+        with pytest.raises(ValueError):a.configuration(dict(copy.deepcopy(config),**change),False)
+
+
+def test_the_independent_auditor_binds_characterization04_and_candidate02():
+    m,config,blobs=episode_case();a=auditor_api();config=dict(config,root=str(m.ROOT))
+    data={role:json.loads(raw) for role,raw in blobs.items() if role!='generated'}
+    a.inputs_binding(config,data,blobs)
+    for role,change in (('observation_result',dict(replay_report_sha256='0'*64)),('candidate',dict(native_metadata_sha256='0'*64)),
+                        ('observation_audit',dict(status='FAIL')),('observation_replay_report',dict(phase='source')),
+                        ('observation_configuration',dict(kind='puck-cpu-runtime-characterization-v1',version=1))):
+        changed=dict(data,**{role:dict(data[role],**change)})
+        with pytest.raises(ValueError):a.inputs_binding(config,changed,blobs)
+
+
+@pytest.mark.parametrize('code',[0,7])
+def test_observer_reserves_preparation04_once_with_preparation_clocks(tmp_path,monkeypatch,code):
+    m,path,_=observer_setup(tmp_path,monkeypatch,'import sys\nprint("AUTHORED prepare04 transport")\nsys.exit('+str(code)+')\n')
+    config=json.loads(path.read_bytes());config.update(kind=KIND04,version=15,allocation_id=15,phase='prepare')
+    raw=m.canonical(config);path.write_bytes(raw)
+    waits=[];popen=m.subprocess.Popen
+    class Recording(popen):
+        def wait(self,timeout=None):
+            waits.append(timeout);return super().wait(timeout=timeout)
+    monkeypatch.setattr(m.subprocess,'Popen',Recording)
+    result=m.observe(path,m.hashlib.sha256(raw).hexdigest())
+    assert result['observed_returncode']==code and result['phase']=='prepare'
+    assert result['stdout']['path']==OUTPUT04+'-external-cli.stdout' and 200<waits[0]<=210
+    with pytest.raises(FileExistsError):m.observe(path,m.hashlib.sha256(raw).hexdigest())

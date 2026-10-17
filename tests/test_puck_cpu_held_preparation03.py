@@ -87,11 +87,11 @@ def test_preparation02_cannot_claim_the_preparation03_stage_family():
     with pytest.raises(ValueError):auditor_api().configuration(config,False)
 
 
-def test_preparation03_auditor_pin_is_the_current_independent_auditor():
+def test_preparation03_auditor_pin_stays_the_auditor_that_accepted_preparation03():
     m,*_=preparation03_config()
-    current=m.digest((m.ROOT/'scripts/audit_puck_cpu_held_runtime.py').read_bytes())
-    assert m.PREPARATION03_AUDITOR_SHA256==current
-    assert len({current,m.PREPARATION02_AUDITOR_SHA256,m.LEGACY_AUDITOR_SHA256})==3
+    retained=m.digest((m.ROOT/'tests/historical/audit_puck_cpu_held_runtime-6292b550.py').read_bytes())
+    assert m.PREPARATION03_AUDITOR_SHA256==retained==auditor_api().PREPARATION03_AUDITOR_SHA256
+    assert len({retained,m.PREPARATION02_AUDITOR_SHA256,m.LEGACY_AUDITOR_SHA256})==3
 
 
 @pytest.mark.parametrize('code',[0,7])

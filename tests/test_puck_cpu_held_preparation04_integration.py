@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import secrets
 import shutil
+import subprocess
 
 import pytest
 
@@ -112,3 +113,15 @@ def test_authored_preparation04_stages_the_episode_closure_once(tmp_path,stage):
     assert dependencies['import_profile']==json.loads((root/inputs['candidate']['path']).read_bytes())['import_profile']
     code,_,_=run_cli(root,api,'prepare04-again',config)
     assert code!=0 and json.loads(result_path.read_bytes())==prepared
+    configuration=root/'authored-prepare04-configuration.json';transport=root/'authored-prepare04-transport.json'
+    published=root/'docs/authored/prepare04-audit.json';published.parent.mkdir(parents=True,exist_ok=True)
+    audited=subprocess.run([api.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+        '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),'--transport',str(transport),
+        '--transport-sha256',digest(transport.read_bytes()),'--output',str(published)],cwd=root,capture_output=True,timeout=120,
+        env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+    audit=json.loads(published.read_bytes())
+    assert audited.returncode==0,audit
+    assert (audit['kind'],audit['version'],audit['allocation_id'],audit['status'],audit['phase'])==(
+        'puck-cpu-held-runtime-independent-audit-v15',15,15,'PASS','prepare')
+    assert audit['auditor_source_sha256']==api.PREPARATION04_AUDITOR_SHA256==digest((root/'scripts/audit_puck_cpu_held_runtime.py').read_bytes())
+    assert audit['result_sha256']==digest(result_path.read_bytes()) and audit['evidence_scope']=='AUTHORED fixture only'

@@ -4,7 +4,7 @@ Mirrors the preparation01 fixtures with separately named allocations. Current
 sources prepare once into a new private stage; the auditor whose bytes the
 parent pins for that preparation accepts it through an externally observed CLI.
 Preparation02 was accepted by the retained 04192a3b auditor; preparation03 by
-the current one.
+the retained 6292b550 auditor.
 """
 import copy
 from contextlib import contextmanager
@@ -27,6 +27,8 @@ from test_puck_cpu_held_parent_integration import AUTHORED, ROOT, canonical, dig
 PARENT='scripts/qualify_puck_cpu_held_runtime.py'
 AUDITOR='scripts/audit_puck_cpu_held_runtime.py'
 HISTORICAL_AUDITOR=ROOT/'tests/historical/audit_puck_cpu_held_runtime-04192a3b.py'
+# The auditor bytes that accepted the real preparation03 (epoch14 binds them).
+PREPARATION03_AUDITOR=ROOT/'tests/historical/audit_puck_cpu_held_runtime-6292b550.py'
 OUTPUT={12:'runs/puck-cpu-held-preparation-02',13:'runs/puck-cpu-held-preparation-03'}
 LABEL={12:'prepare02',13:'prepare03'}
 
@@ -38,7 +40,7 @@ def auditor_pin(api,allocation):
 def prepare_and_audit(root,api,inputs,allocation,stage):
     """One authored preparation allocation plus its externally observed independent audit."""
     auditor_path=root/AUDITOR
-    auditor_path.write_bytes(HISTORICAL_AUDITOR.read_bytes() if allocation==12 else (ROOT/AUDITOR).read_bytes())
+    auditor_path.write_bytes((HISTORICAL_AUDITOR if allocation==12 else PREPARATION03_AUDITOR).read_bytes())
     assert digest(auditor_path.read_bytes())==auditor_pin(api,allocation)!=api.LEGACY_AUDITOR_SHA256
     assert not os.path.lexists(stage)
     prepare=api.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
