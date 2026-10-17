@@ -83,7 +83,13 @@ def episode_project(tmp_path,*,defect=None):
         metadata=('Name: '+name+'\nVersion: '+version+'\n\n').encode();path=name+'-'+version+'.dist-info/METADATA'
         write(site,path,metadata);entries.append(dict(path=path,size_bytes=len(metadata),sha256=sha(metadata)))
         wheels.append(dict(name=name,version=version,metadata_path=path,metadata_sha256=sha(metadata)))
-    directories=sorted([w['metadata_path'].split('/')[0] for w in wheels]+list(VERSIONS))
+    # Parent packages of the declared absent/hidden names (scipy, scipy.linalg, torch.utils) must be registered.
+    for name in ('scipy/__init__.py','scipy/linalg/__init__.py','torch/utils/__init__.py'):
+        source=b'AUTHORED_PACKAGE = True\n';write(site,name,source);entries.append(dict(path=name,size_bytes=len(source),sha256=sha(source)))
+    metadata=b'Name: scipy\nVersion: 1.15.3\n\n';path='scipy-1.15.3.dist-info/METADATA';write(site,path,metadata)
+    entries.append(dict(path=path,size_bytes=len(metadata),sha256=sha(metadata)))
+    wheels.append(dict(name='scipy',version='1.15.3',metadata_path=path,metadata_sha256=sha(metadata)))
+    directories=sorted([w['metadata_path'].split('/')[0] for w in wheels]+list(VERSIONS)+['scipy','scipy/linalg','torch/utils'])
     inventory=dict(kind='puck-cpu-installed-files-v1',entries=sorted(entries,key=lambda r:r['path']),file_count=len(entries),
                    directory_count=len(directories),total_bytes=sum(r['size_bytes'] for r in entries))
     inputs={'inventory':write(root,'runs/puck-cpu-retained-admission-02/inventory.json',inventory)}

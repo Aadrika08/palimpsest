@@ -163,7 +163,7 @@ def provenance(admission):
 
 
 def run(admission):
-    import numpy, torch, mujoco, gymnasium  # noqa: F401  (the four observed packages)
+    import numpy, torch, torch.utils, mujoco, gymnasium, scipy.linalg  # noqa: F401  (observed packages and roster parents)
     admission.recheck()
     episode = copy.deepcopy(admission._reg['episode'])
     defect = AUTHORED_DEFECT

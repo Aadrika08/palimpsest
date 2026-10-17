@@ -164,6 +164,8 @@ def test_sandbox_binds_v6_natives_control_capsule_and_the_source_run_only_for_re
         assert binds(command,'--bind')==[(str(paths['payload']),'/output')]
         assert ('libEGL_mesa.so.0.0.0','/usr/lib/libEGL_mesa.so.0') in binds(command,'--symlink')
         assert '--unshare-all' in command and '--clearenv' in command and '--share-net' not in command
+        # Like the held episode namespace, no asset directory exists; the manual episode reads none.
+        assert '/scratch/assets' not in command
         for key,value in m.ENVIRONMENT.items():
             assert any(command[i:i+3]==['--setenv',key,value] for i in range(len(command)))
         assert command[-6:-2]==['-B','-X','pycache_prefix=/scratch/pycache','/puck/source/'+m.WORKER]
