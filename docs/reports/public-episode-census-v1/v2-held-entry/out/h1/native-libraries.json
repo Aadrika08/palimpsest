@@ -1,0 +1,761 @@
+{
+ "kind": "diagnostic-held-episode-native-maps-v1",
+ "diagnostic_only": true,
+ "host": [
+  {
+   "path": "/etc/ld.so.cache",
+   "realpath": null,
+   "size_bytes": 234519,
+   "sha256": "e8db11a9dc9717980438413880a1a03a93e3727cf25ff8f3e389604ba943e42d",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/gconv/gconv-modules.cache",
+   "realpath": null,
+   "size_bytes": 27010,
+   "sha256": "0fde9bfd93c2ac83b23f0ab2e89f438be92f3c368247410eff58ccc847d7a783",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/ld-linux-x86-64.so.2",
+   "realpath": null,
+   "size_bytes": 263152,
+   "sha256": "d011113b7054c641c8ca064f58bcc23804fd2654a3dff2444dad06ddeda61bfb",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libEGL.so.1.1.0",
+   "realpath": null,
+   "size_bytes": 67536,
+   "sha256": "89d5d0f68f7e42397544db26347c24a893be2e08b81406e8e8714803c29db03b",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libEGL_mesa.so.0.0.0",
+   "realpath": null,
+   "size_bytes": 396424,
+   "sha256": "15c06ccfe5054c95059f2526a284b8fb2d10c9000bbec20c531eb9d6815abc6d",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libGLdispatch.so.0.0.0",
+   "realpath": null,
+   "size_bytes": 460896,
+   "sha256": "b6d068112d4fd36750b6fedcddea0df7719b707495611cbe6fd92f6887eda467",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libLLVM.so.22.1",
+   "realpath": null,
+   "size_bytes": 171426848,
+   "sha256": "06662e11c1faa7b4cb199e03c9ef681b74655ad4274473273b41dfc754a6f16f",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libOpenGL.so.0.0.0",
+   "realpath": null,
+   "size_bytes": 145432,
+   "sha256": "5ec13550cb78002495db99017a034c810e0a61facc9c289091420ba1edbd441e",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libSPIRV-Tools.so",
+   "realpath": null,
+   "size_bytes": 1948368,
+   "sha256": "e12f83159f86b969b6fc5c3668a670f15038d3182b510ac04fce68e833b7be2a",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libX11-xcb.so.1.0.0",
+   "realpath": null,
+   "size_bytes": 13976,
+   "sha256": "3913178fdde804e000803ff435b79eac731b121f13f719ac1bf2390c86a474be",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libX11.so.6.4.0",
+   "realpath": null,
+   "size_bytes": 1313184,
+   "sha256": "97736fa2855baf2022d80a8881ffc79cdbecca11c96935e4ca3cfeb47eae1ea4",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libXau.so.6.0.0",
+   "realpath": null,
+   "size_bytes": 14232,
+   "sha256": "3e229dba702d7b56f1c58ac0e004ae691ae2ad5ede7b50968e1cd7d8b2ccdecc",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libXdmcp.so.6.0.0",
+   "realpath": null,
+   "size_bytes": 26488,
+   "sha256": "0c572ba75de0f967c9c4d088161d3e435ea721bd99c169aae707aba6870a71b1",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libc.so.6",
+   "realpath": null,
+   "size_bytes": 2215072,
+   "sha256": "e221b10fee9ee4776d8f0f1701253bc06817f7a4dbe6c5292487277d0bf8ffff",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libdl.so.2",
+   "realpath": null,
+   "size_bytes": 14352,
+   "sha256": "9b3812e7f6b766e2d0a1d9eeca1a58c1272392859e8b04f708b2f86b2256d03c",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libdrm.so.2.134.0",
+   "realpath": null,
+   "size_bytes": 92104,
+   "sha256": "8b97afc5e15a07442768b302660cf844b0962623f8dcecbaebccadf288c611b1",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libdrm_amdgpu.so.1.134.0",
+   "realpath": null,
+   "size_bytes": 46976,
+   "sha256": "02bd5087b5f98d63fba8dad0a14185652e777ec1955883c6f7b7dc0a0854bc5a",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libdrm_intel.so.1.134.0",
+   "realpath": null,
+   "size_bytes": 150864,
+   "sha256": "9ad14db649075dae53261e809c687c17403667a339127dda95c201c94516658f",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libedit.so.0.0.78",
+   "realpath": null,
+   "size_bytes": 227440,
+   "sha256": "0bb14cee691695fd88a63c3cea14030ba4973c725239e15c1cd637c39d6a2007",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libelf-0.196.so",
+   "realpath": null,
+   "size_bytes": 116824,
+   "sha256": "13d3e3cb54d6120d87a0569ac67be05c029f8cd2e4bf44e75936b2721c8e08af",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libexpat.so.1.12.4",
+   "realpath": null,
+   "size_bytes": 182216,
+   "sha256": "516a880ec607ee15f664d92eeb587deeb609f6ef6d05c947e9bfeb781a9debaf",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libffi.so.8.5.0",
+   "realpath": null,
+   "size_bytes": 51432,
+   "sha256": "b38bb3a55ba04dfbb5be68e881a72385d6c30010afffb1cf1dfc373b72c2278c",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libgallium-26.2.2-arch1.1.so",
+   "realpath": null,
+   "size_bytes": 55220440,
+   "sha256": "d7d313070226982467fd8984d943d84c7adeaf290b1705de7bf227fca3b392da",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libgbm.so.1.0.0",
+   "realpath": null,
+   "size_bytes": 18416,
+   "sha256": "9ff0105801e62ed4335e036eee25c4d42421668b4887d77ee35c400db389d8f6",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libgcc_s.so.1",
+   "realpath": null,
+   "size_bytes": 182512,
+   "sha256": "e618cb9c90c2eb3a1dad1cfea5b6c1eebcf2e799ad805976f4ae47bdd61c716a",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libicudata.so.78.3",
+   "realpath": null,
+   "size_bytes": 33112920,
+   "sha256": "d72003b08760852bee4c80cff32c1e6248ae6b1fda5bd313482733a4d5e70dc9",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libicuuc.so.78.3",
+   "realpath": null,
+   "size_bytes": 2144304,
+   "sha256": "c99f0dd0c797c07f9ab64413d36c595393cdded6fa04cc4edd6f6a521fd155ca",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libm.so.6",
+   "realpath": null,
+   "size_bytes": 1268336,
+   "sha256": "965106704753eefe8c31ae7da6daba3ead3d18c52b19b5fcc41178bcc4aa999d",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libncursesw.so.6.6",
+   "realpath": null,
+   "size_bytes": 457936,
+   "sha256": "7498a0b0f75deb5417e109d1853679f1a6b201e52e03b247c914fec0a36e3a5b",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libpciaccess.so.0.11.1",
+   "realpath": null,
+   "size_bytes": 38864,
+   "sha256": "b9ae870769c7e8bb2acc75157ddb37e48c6f2a11b25116eaea1c9a9e3bd16bb6",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libpthread.so.0",
+   "realpath": null,
+   "size_bytes": 14360,
+   "sha256": "839b91403f89fa4c6888d50deb2b59cd0612f8cfe3d57dd9d6314832b4cb31ab",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/librt.so.1",
+   "realpath": null,
+   "size_bytes": 14424,
+   "sha256": "e06e12b8a78494908d08376838c380fb3817bfd7d54f6a86ef050016f7ade5f8",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libsensors.so.5.0.0",
+   "realpath": null,
+   "size_bytes": 63480,
+   "sha256": "68b821c4548aacbeae67ea4825662c1dbde62d2d55933cd7af03c1885ef565f9",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libstdc++.so.6.0.36",
+   "realpath": null,
+   "size_bytes": 2939928,
+   "sha256": "f5fc7380f2ae46fa4053a64be04e7b98109f1066a4bbfff3c37042488aa0be0e",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libutil.so.1",
+   "realpath": null,
+   "size_bytes": 14352,
+   "sha256": "8c2cbf01f52acb42478b9ab10506af9878b7e8d47aefacc8896bb5b37384c222",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libwayland-client.so.0.26.0",
+   "realpath": null,
+   "size_bytes": 60168,
+   "sha256": "39c83ae7b73d22f18b4f81da14749c4535c304b7e62910a2f1aae682f279cc9d",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb-dri3.so.0.1.0",
+   "realpath": null,
+   "size_bytes": 22496,
+   "sha256": "116d544940cb64e6b218dfe547434c309e1e99a5c208853c953cd6bb66b78717",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb-present.so.0.0.0",
+   "realpath": null,
+   "size_bytes": 14312,
+   "sha256": "d9f47da0e4925c706e83c1ea7572b2660c74a22b01c0f2b95723cc96a258f7c7",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb-randr.so.0.1.0",
+   "realpath": null,
+   "size_bytes": 71648,
+   "sha256": "5db40f22bfc3a142d653d69669f509b971dc8cd36215e90f977158d109b3dbf5",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb-shm.so.0.0.0",
+   "realpath": null,
+   "size_bytes": 14304,
+   "sha256": "e04329f8117411113e6094e3dc354ed50b8b3b10e6cf5f8a21a6b7bec4786eec",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb-sync.so.1.0.0",
+   "realpath": null,
+   "size_bytes": 34784,
+   "sha256": "e5e6f35089a65d0d34761fdfb6ea9c74a86b9c7e57ab6fc56e1282491ad6bbd0",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb-xfixes.so.0.0.0",
+   "realpath": null,
+   "size_bytes": 34792,
+   "sha256": "dad274e042c86866ac9b624a47c2f46648a291dbc1e11f8c906cd355ce60e38f",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxcb.so.1.1.0",
+   "realpath": null,
+   "size_bytes": 169984,
+   "sha256": "40df5eff95408b67d969e559f2689b3e50e6151251b1f4e03608ce5cd9c9a133",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxml2.so.16.1.4",
+   "realpath": null,
+   "size_bytes": 1326024,
+   "sha256": "5ff12cee1e6992555ba638190cce88a0aab40acad51d5c826f6487888a0160ab",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libxshmfence.so.1.0.0",
+   "realpath": null,
+   "size_bytes": 14208,
+   "sha256": "ac614957c4966511f815774fdafbd33dfad0d6142b1c52669343b160066e04d9",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libz.so.1.3.2",
+   "realpath": null,
+   "size_bytes": 104464,
+   "sha256": "9ba92a0b85dc9b659e8f5e596a69452cec801def6ece0883a8a2c1f032e52397",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/libzstd.so.1.5.7",
+   "realpath": null,
+   "size_bytes": 939976,
+   "sha256": "f023d49e85fb22057bfdd21857263d2638b73356c06f3b342f678a75212379f8",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/locale/C.utf8/LC_CTYPE",
+   "realpath": null,
+   "size_bytes": 369120,
+   "sha256": "40680545df4f92443c15e7c6f51a7fdc9154ebedd9eff1ed5c48437039add365",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  },
+  {
+   "path": "/usr/lib/locale/locale-archive",
+   "realpath": null,
+   "size_bytes": 3064432,
+   "sha256": "7bf2da63b17127e5976936957419603a8b057f606dcf56de1e81e9256ad06a32",
+   "during_rendering": true,
+   "source_end": true,
+   "replay_end": true
+  }
+ ],
+ "site_mapped_source_end": [
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/glfw/x11/libglfw.so",
+   "size_bytes": 374896
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 626304
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 359336
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 2340296
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 355272
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 998040
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 771432
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 2135944
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 2987352
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/libmujoco.so.3.3.6",
+   "size_bytes": 5002648
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/plugin/libactuator.so",
+   "size_bytes": 324544
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/plugin/libelasticity.so",
+   "size_bytes": 339512
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/plugin/libsdf_plugin.so",
+   "size_bytes": 366432
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/plugin/libsensor.so",
+   "size_bytes": 644200
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+   "size_bytes": 2833617
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+   "size_bytes": 250985
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy.libs/libscipy_openblas64_-6bb31eeb.so",
+   "size_bytes": 22468673
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 10445089
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 649272
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 227657
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 366800
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 276728
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 1061400
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 141824
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 148704
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 128872
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 89448
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 254072
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 850752
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy.libs/libgfortran-040039e1.so.5.0.0",
+   "size_bytes": 2686065
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy.libs/libquadmath-96973f99.so.0.0.0",
+   "size_bytes": 247609
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy.libs/libscipy_openblas-68440149.so",
+   "size_bytes": 22211841
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/_lib/_ccallback_c.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 110176
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_cythonized_array_utils.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 629512
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_decomp_lu_cython.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 266848
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_decomp_update.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 368752
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_fblas.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 1032545
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_flapack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 2478641
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_linalg_pythran.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 140520
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_matfuncs_expm.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 511433
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_matfuncs_sqrtm_triu.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 277072
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/_solve_toeplitz.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 300760
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/cython_blas.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 353993
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/linalg/cython_lapack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 879609
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 147184
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/ndimage/_ni_label.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 448968
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/ndimage/_rank_filter_1d.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 27448
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/_csparsetools.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 831520
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 4560912
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_flow.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 354464
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_matching.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 357600
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_min_spanning_tree.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 268720
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_reordering.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 327976
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_shortest_path.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 576504
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_tools.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 214848
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/csgraph/_traversal.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 642840
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/linalg/_dsolve/_superlu.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 811113
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/linalg/_eigen/arpack/_arpack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 877177
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/linalg/_propack/_cpropack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 566049
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/linalg/_propack/_dpropack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 533201
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/linalg/_propack/_spropack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 533201
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/sparse/linalg/_propack/_zpropack.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 557857
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_comb.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 63496
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_ellip_harm_2.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 142409
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_gufuncs.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 753248
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_specfun.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 292664
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_special_ufuncs.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 1464544
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_ufuncs.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 1626297
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/_ufuncs_cxx.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 1855456
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/scipy/special/libsf_error_state.so",
+   "size_bytes": 15840
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+   "size_bytes": 25137
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libc10.so",
+   "size_bytes": 1374664
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libgomp.so.1",
+   "size_bytes": 253849
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libshm.so",
+   "size_bytes": 36952
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libtorch.so",
+   "size_bytes": 8032
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libtorch_cpu.so",
+   "size_bytes": 432273704
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libtorch_global_deps.so",
+   "size_bytes": 8264
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/lib/libtorch_python.so",
+   "size_bytes": 30179712
+  }
+ ]
+}
