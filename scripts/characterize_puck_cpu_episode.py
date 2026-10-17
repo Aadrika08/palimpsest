@@ -64,7 +64,8 @@ LIMITS=dict(normal_seconds=360,child_hard_seconds=375,hard_seconds=390,
     rss_bytes=2048*MiB,address_space_bytes=8192*MiB,output_bytes=64*MiB,
     scratch_bytes=64*MiB,file_bytes=16*MiB,min_free_bytes=4096*MiB,
     min_available_ram_bytes=2048*MiB,max_processes=3,max_fds=40000)
-OUTPUT_NAMESPACE=(256,64)
+# Sources and controls are bound file by file, so the retained tree stays within 16 directories.
+OUTPUT_NAMESPACE=(128,16)
 EPISODE=dict(upstream_commit='8d964599119b420de67ee259434d273651a1a76d',
     profile=dict(controller='manual',device='cpu',seed=7,scenario='reproduction',texture='checker'),
     schedule=dict(ticks=48,actions=[[0,1.0,0.0],[24,1.0,0.5]]),
@@ -231,11 +232,15 @@ def episode_request(phase,*,source_files,distributions):
         distributions=copy.deepcopy(distributions),episode=episode)
 
 
-def sandbox_command(baseline,native,*,phase,capsule,control,payload,request,request_sha,source_run=None,probe=False):
+def sandbox_command(baseline,native,*,phase,capsule,capsule_files,controls,payload,request,request_sha,
+                    source_run=None,probe=False):
     if type(native) is not dict or native.get('kind')!=NATIVE_V6:
         raise ValueError('Characterization-04 requires native metadata v6')
     if phase not in ('source','replay') or (source_run is None)!=(phase=='source'):
         raise ValueError('Only the replay worker mounts the source run')
+    if (any(type(p) is not str or p.startswith('/') or any(part in ('','.','..') for part in p.split('/')) for p in capsule_files)
+            or any(type(n) is not str or not n or '/' in n or n in ('.','..') for n in controls)):
+        raise ValueError('Capsule files and control names must be canonical relative names')
     cmd=['/usr/bin/bwrap','--unshare-all','--unshare-user','--as-pid-1',
         '--disable-userns','--die-with-parent','--cap-drop','ALL','--clearenv',
         '--hostname','palimpsest-cpu-episode-observation','--ro-bind',baseline['python_prefix'],baseline['python_prefix']]
@@ -248,8 +253,9 @@ def sandbox_command(baseline,native,*,phase,capsule,control,payload,request,requ
         aliases[path]=target
     for path,target in sorted(aliases.items(),key=lambda item:(item[0].count('/'),item[0])):
         cmd+=['--symlink',target,path]
-    cmd+=['--ro-bind',str(ROOT/SITE),str(ROOT/SITE),'--ro-bind',str(capsule),'/puck/source',
-        '--ro-bind',str(control),'/puck/control']
+    cmd+=['--ro-bind',str(ROOT/SITE),str(ROOT/SITE)]
+    for path in sorted(capsule_files):cmd+=['--ro-bind',str(Path(capsule)/path),'/puck/source/'+path]
+    for name,host in sorted(controls.items()):cmd+=['--ro-bind',str(host),'/puck/control/'+name]
     if source_run is not None:cmd+=['--ro-bind',str(source_run),'/puck/source-run']
     cmd+=['--bind',str(payload),'/output','--size',str(LIMITS['scratch_bytes']),'--tmpfs','/scratch']
     for name in ('home','tmp','pycache','assets'):cmd+=['--dir','/scratch/'+name,'--chmod','0700','/scratch/'+name]
@@ -354,7 +360,7 @@ def execute(config,digest,started):
     resource.setrlimit(resource.RLIMIT_FSIZE,(LIMITS['file_bytes'],LIMITS['file_bytes']))
     with AdmissionInputs(ROOT,rows,deadline):pass
     bounds.reserve_output(output,{'sources':{'root':str(ROOT),'files':rows},'installed':{'root':str(ROOT/SITE)}})
-    for name in ('control','payload','payload/source','payload/replay','source','probe-logs','source-logs','replay-logs'):
+    for name in ('payload-source','payload-replay','probe-logs','source-logs','replay-logs'):
         (output/name).mkdir(mode=0o700)
     bounds.write_new(output/'configuration.json',{k:v for k,v in config.items() if not k.startswith('_')})
     before_fds=len(os.listdir('/proc/self/fd'))
@@ -392,7 +398,7 @@ def execute(config,digest,started):
                 if len(files)!=27225 or len(directories)!=2074 or sum(r['size_bytes'] for r in files)!=1304701872:
                     raise ValueError('Accepted measured namespace differs')
                 vendor=egl_vendor_control(native,read(native['egl_vendor']['path'],MiB))
-                write_raw(output/'control/egl-vendor.json',vendor)
+                write_raw(output/'egl-vendor.json',vendor)
                 def native_checks():
                     for row in native['native_files']:
                         if build.file_row(Path(row['path']),deadline,single_link=False)!={k:row[k] for k in ('size_bytes','sha256')}:
@@ -409,19 +415,18 @@ def execute(config,digest,started):
                         raw=read(ROOT/path,MiB,empty=True)
                         if len(raw)!=pins[path]['size_bytes'] or sha(raw)!=pins[path]['sha256']:
                             raise ValueError('Characterization-04 capsule source differs: '+path)
-                        target=output/'source'/path;target.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
-                        write_raw(target,raw)
                     source_files=[dict(pins[path]) for path in CAPSULE]
                     reports={}
                     for name in ('probe','source','replay'):
                         phase='source' if name=='probe' else name;request_name=request_sha=None
+                        controls={'egl-vendor.json':output/'egl-vendor.json'}
                         if name!='probe':
                             request_name='request-'+name+'.json'
                             raw=canonical(episode_request(name,source_files=source_files,distributions=distributions))
-                            write_raw(output/'control'/request_name,raw);request_sha=sha(raw)
-                        command=sandbox_command(baseline,native,phase=phase,capsule=output/'source',control=output/'control',
-                            payload=output/'payload'/phase,request=request_name,request_sha=request_sha,
-                            source_run=output/'payload/source' if name=='replay' else None,probe=name=='probe')
+                            write_raw(output/request_name,raw);request_sha=sha(raw);controls[request_name]=output/request_name
+                        command=sandbox_command(baseline,native,phase=phase,capsule=ROOT,capsule_files=CAPSULE,
+                            controls=controls,payload=output/('payload-'+phase),request=request_name,request_sha=request_sha,
+                            source_run=output/'payload-source' if name=='replay' else None,probe=name=='probe')
                         bounds.write_new(output/(name+'-invocation.json'),dict(command=command,configuration_sha256=digest))
                         observed=bounds.supervised(command,output/(name+'-logs'),cwd=ROOT,
                             normal_deadline=deadline,hard_deadline=started+LIMITS['child_hard_seconds'],
@@ -436,11 +441,11 @@ def execute(config,digest,started):
                                     site_readonly=True,source_readonly=True,project_hidden=True,private_pycache_empty=True):
                                 raise ValueError('Namespace probe receipt differs')
                             bounds.write_new(output/'namespace.json',namespace);continue
-                        report_raw=read(output/'payload'/name/REPORT_NAME,REPORT_BYTES);report=json.loads(report_raw)
+                        report_raw=read(output/('payload-'+name)/REPORT_NAME,REPORT_BYTES);report=json.loads(report_raw)
                         if canonical(report)!=report_raw:raise ValueError('Canonical characterization-04 report required')
                         validate_report(report,phase=name,request_sha256=request_sha,worker_sha256=pins[WORKER]['sha256'])
                         bundle=report['episode_result']['bundle']
-                        bundle_raw=read(output/'payload'/name/bundle['path'],LIMITS['file_bytes'])
+                        bundle_raw=read(output/('payload-'+name)/bundle['path'],LIMITS['file_bytes'])
                         if len(bundle_raw)!=bundle['size_bytes'] or sha(bundle_raw)!=bundle['sha256']:
                             raise ValueError('Characterization-04 '+name+' bundle bytes differ from its receipt')
                         reports[name]=(report,sha(report_raw))
