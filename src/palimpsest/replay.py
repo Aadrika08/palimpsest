@@ -210,17 +210,23 @@ def _write_report(destination, report, storage_budget=None):
 
 
 def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_root, progress=None,
-               storage_budget=None, recording_max_bytes=None):
+               storage_budget=None, recording_max_bytes=None, diagnostics=None):
     """Replay a completed source in a fresh owner process supplied by the caller.
 
     Action replay restores the same controller for snapshot compatibility, then
     bypasses inference. Policy replay executes it. Neither is recorded playback.
     ``progress`` may block at boundaries or raise InterruptedError to cancel.
     Optional ``recording_max_bytes`` uses the existing Engine/RunWriter admission;
-    omission preserves the normal Engine recording limit.
+    omission preserves the normal Engine recording limit. Optional ``diagnostics``
+    is an exact HeldProvenance record: it must equal the source diagnostics event
+    and is handed unchanged to the fresh owner; omission keeps the ambient doctor.
     """
     if mode not in {"actions", "policy"}:
         raise ValueError("replay mode must be actions or policy")
+    if diagnostics is not None:
+        from .held_provenance import HeldProvenance
+        if type(diagnostics) is not HeldProvenance:
+            raise ValueError("diagnostics must be an exact held provenance record")
     source, destination = _safe_path(source_run_path), _safe_path(destination_run_path)
     _id(source.name)
     _id(destination.name)
@@ -280,6 +286,10 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         snapshot_case = snapshot_world.get('case') if isinstance(snapshot_world, dict) else None
         if snapshot_case != memory_case:
             raise ValueError('Recorded runtime case differs from initial application snapshot')
+        if diagnostics is not None:
+            recorded = [event.get("report") for event in data["events"] if event.get("kind") == "diagnostics"]
+            if recorded != [diagnostics.report()]:
+                raise ValueError("replay held provenance differs from the source diagnostics event")
         from .engine import Engine
         atomic_memory = (memory_case is not None and memory_case['acquisition'] and
             profile['id'] == 'memory-passages' and manifest['controller'] == 'flynn')
@@ -295,7 +305,8 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
             storage_budget=storage_budget, memory_case=memory_case, expected_policy_identity=identity,
-            **restoration, **({} if recording_max_bytes is None else {"max_bytes": recording_max_bytes}))
+            **restoration, **({} if recording_max_bytes is None else {"max_bytes": recording_max_bytes}),
+            **({} if diagnostics is None else {"diagnostics": diagnostics}))
         _compatible(data["events"], _events(destination), manifest['controller'], manifest['scenario']['id'])
         if not atomic_memory and not reference:
             engine.restore_branch(snapshot)

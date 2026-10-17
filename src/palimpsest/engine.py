@@ -253,10 +253,19 @@ class Engine:
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
              storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None,
-             restore_snapshot=None, replace_controller=False, memory_u=None):
-        """Create an actual pinned runtime. The caller owns its process watchdog."""
+             restore_snapshot=None, replace_controller=False, memory_u=None, diagnostics=None):
+        """Create an actual pinned runtime. The caller owns its process watchdog.
+
+        ``diagnostics`` defaults to the ambient doctor. A held worker instead passes
+        its exact HeldProvenance record, which replaces doctor and inspects nothing.
+        """
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
-        from .doctor import diagnose
+        if diagnostics is None:
+            from .doctor import diagnose
+        else:
+            from .held_provenance import HeldProvenance
+            if type(diagnostics) is not HeldProvenance:
+                raise ValueError("diagnostics must be an exact held provenance record")
         from .records import RunWriter
         from .profiles import validate, configure_world, POPULATIONS
 
@@ -318,7 +327,7 @@ class Engine:
         }, max_bytes=max_bytes, storage_budget=storage_budget)
         env = None
         try:
-            diagnosis = diagnose(root, assets)
+            diagnosis = diagnose(root, assets) if diagnostics is None else diagnostics.report()
             writer.event("diagnostics", run_id=writer.manifest["run_id"], report=diagnosis)
             required = [check for check in diagnosis["checks"]
                         if check["name"] in {"python", "upstream"} or check["name"].startswith("dependency:")]
