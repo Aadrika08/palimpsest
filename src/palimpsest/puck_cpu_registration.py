@@ -10,8 +10,10 @@ import copy
 import hashlib
 import json
 import math
+import os
 from pathlib import PurePosixPath
 import re
+import stat
 import time
 
 from .puck_dependency_files import (HeldDependencyNamespace, MAX_REGISTRATION_BYTES,
@@ -252,6 +254,33 @@ def _dynamic(native, files):
     _absolute(vendor['path'])
     if _resolve(native, '/usr/lib/' + vendor['library_path']) not in leaves:
         raise ValueError('CPU native EGL vendor library is not a declared dynamic leaf')
+
+
+def native_leaf_row(path, deadline, maximum=_V6_LEAF_BYTES):
+    """Current size and SHA-256 of one host native leaf, up to the v6 leaf bound.
+
+    The legacy builder helper stops at 64 MiB; v6 declares larger leaves (libLLVM).
+    """
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    try:
+        before = os.fstat(fd)
+        if not stat.S_ISREG(before.st_mode) or before.st_size > maximum:
+            raise ValueError('Native leaf is not a bounded regular file')
+        digest = hashlib.sha256(); count = 0
+        while True:
+            _clock(deadline)
+            raw = os.read(fd, 1024 * 1024)
+            if not raw:
+                break
+            count += len(raw); digest.update(raw)
+            if count > maximum:
+                raise ValueError('Native leaf grew beyond its bound')
+        after = os.fstat(fd)
+        if count != before.st_size or (before.st_ino, before.st_size, before.st_mtime_ns) != (after.st_ino, after.st_size, after.st_mtime_ns):
+            raise ValueError('Native leaf changed while hashed')
+        return dict(size_bytes=count, sha256=digest.hexdigest())
+    finally:
+        os.close(fd)
 
 
 def egl_vendor_control(native, raw):

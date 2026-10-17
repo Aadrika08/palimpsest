@@ -819,7 +819,7 @@ def execute(config,raw,started):
     import build_puck_python_louvain as baseline_api
     from palimpsest import bounded_qualification as bounds
     from palimpsest.puck_retained_installation import AdmissionInputs
-    from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate
+    from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate,native_leaf_row
     from palimpsest.puck_cpu_namespace import sandbox_command
     phase=config['phase'];limits=config['limits'];output=ROOT/allocation_output(config);stage=Path(config['stage_parent'])
     amended=config['version'] in (2,3,4,5,6,7,8,9,10,11,14)
@@ -854,9 +854,12 @@ def execute(config,raw,started):
                 blobs={role:read(ROOT/row['path'],16*MiB,row['sha256']) for role,row in config['inputs'].items()}
                 inventory,layout,candidate,observation=validate_inputs(config,blobs)
                 baseline=decode(blobs['baseline']);native=decode(blobs['native'])
+                # v6 leaves reach 256 MiB (libLLVM); older allocations keep the builder's 64 MiB hasher.
+                hashed=((lambda path:native_leaf_row(path,deadline)) if config['version']==15 else
+                        (lambda path:baseline_api.file_row(path,deadline,single_link=False)))
                 def native_checks():
                     for row in native['native_files']:
-                        if baseline_api.file_row(Path(row['path']),deadline,single_link=False)!={k:row[k] for k in ('size_bytes','sha256')}:
+                        if hashed(Path(row['path']))!={k:row[k] for k in ('size_bytes','sha256')}:
                             raise ValueError('Original CPU native input changed')
                     for path,target in native['aliases']:
                         if os.readlink(path)!=target:raise ValueError('Original CPU native alias changed')

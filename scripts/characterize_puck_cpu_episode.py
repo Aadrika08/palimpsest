@@ -346,7 +346,7 @@ def execute(config,digest,started):
     import build_puck_python_louvain as build
     from palimpsest import bounded_qualification as bounds
     from palimpsest.puck_retained_installation import AdmissionInputs,HeldInstalledFiles
-    from palimpsest.puck_cpu_registration import _native,egl_vendor_control
+    from palimpsest.puck_cpu_registration import _native,egl_vendor_control,native_leaf_row
     from admit_puck_retained_installation import completion_state
     output=ROOT/OUTPUT;deadline=started+LIMITS['normal_seconds'];state={};result=dict(CLAIMS)
     rows=sorted(config['sources']+config['inputs']+[config['_configuration_row']],key=lambda r:r['path'])
@@ -401,7 +401,7 @@ def execute(config,digest,started):
                 write_raw(output/'egl-vendor.json',vendor)
                 def native_checks():
                     for row in native['native_files']:
-                        if build.file_row(Path(row['path']),deadline,single_link=False)!={k:row[k] for k in ('size_bytes','sha256')}:
+                        if native_leaf_row(row['path'],deadline)!={k:row[k] for k in ('size_bytes','sha256')}:
                             raise ValueError('Native input identity changed')
                     for path,target in native['aliases']:
                         if os.readlink(path)!=target:raise ValueError('Native alias changed')
