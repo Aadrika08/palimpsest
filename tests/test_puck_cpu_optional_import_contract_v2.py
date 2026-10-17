@@ -34,7 +34,7 @@ sys.stderr.write('V5_BODY_ENTERED\\n')
 
 
 def run(code='', *, version=5, negatives=(), hidden=HIDDEN, present=(), registered=(),
-        defect=None, dependency_version=3, change=None, exports=(), native_cache=()):
+        defect=None, dependency_version=3, change=None, exports=(), native_cache=(), registration_change=None):
     def packages(deps, root):
         cpu_setup(deps, root, defect, dependency_version)
         for name in present:
@@ -64,6 +64,7 @@ def run(code='', *, version=5, negatives=(), hidden=HIDDEN, present=(), register
                  negative_imports=sorted(BASE_MISSING+list(negatives)))
         if version == 5: q['hidden_imports'] = sorted(hidden)
         if change: change(q)
+        if registration_change: registration_change(reg)
 
     with authored() as base:
         result, _ = dependency_fixture(base, 'raise AssertionError("DEFAULT_ENTRY_RAN")',
@@ -354,3 +355,28 @@ def test_v4_has_no_hidden_names_and_still_poisons_a_caught_request():
         except ImportError:
             pass
     ''', version=4, present=['networkx']), 'Unregistered local or external dependency import: networkx')
+
+
+def test_v5_worker_clock_extends_only_with_the_exact_epoch14_registration():
+    succeeded(run('''
+        import time
+        remaining = owner._deadline - time.monotonic()
+        assert 300 < remaining <= 360, remaining
+        assert owner._dependencies.provider._deadline == owner._deadline
+    ''', registration_change=lambda reg: reg.update(deadline_seconds=360)))
+
+
+def test_v5_worker_clock_defaults_to_the_original_180_seconds():
+    succeeded(run('''
+        import time
+        remaining = owner._deadline - time.monotonic()
+        assert 120 < remaining <= 180, remaining
+        assert 'deadline_seconds' not in owner._reg
+    '''))
+
+
+@pytest.mark.parametrize('version,seconds', [(5, 180), (5, 361), (5, True), (5, 360.0), (5, '360'), (4, 360)])
+def test_extended_worker_clock_is_exact_and_policy_v5_only(version, seconds):
+    refused_before_initializers(run(version=version, defect='before-init',
+        registration_change=lambda reg: reg.update(deadline_seconds=seconds)),
+        'Exact extended worker deadline requires qualification v5')

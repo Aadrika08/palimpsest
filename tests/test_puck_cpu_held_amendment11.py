@@ -28,30 +28,37 @@ PREPARATION02='runs/puck-cpu-held-preparation-02'
 STAGE02='/tmp/palimpsest-puck-cpu-held-02-authored'
 
 
-def bind_preparation02(m,config,blobs,*,version=12,stage=STAGE02):
+def bind_preparation(m,config,blobs,*,allocation=12,version=None,stage=None):
     """Re-express the authored accepted preparation as a fresh epoch over current sources.
 
-    version=12 is the real preparation02 identity; version=1 keeps preparation01's
-    identity while moving its stage/sources, isolating the identity refusal."""
+    allocation picks the preparation output/stage family/transport (12 → 02, 13 → 03);
+    version is the prior's claimed identity (default: allocation; 1 keeps preparation01's
+    identity while moving its stage/sources, isolating the identity refusal)."""
+    version=allocation if version is None else version;suffix='0'+str(allocation-10)
+    stage='/tmp/palimpsest-puck-cpu-held-'+suffix+'-authored' if stage is None else stage
     prior=json.loads(blobs['configuration'])
     prior.update(stage_parent=stage,sources=copy.deepcopy(config['sources']))
-    if version==12:prior.update(kind='puck-cpu-held-runtime-allocation-v12',version=12,allocation_id=12)
+    if version!=1:prior.update(kind='puck-cpu-held-runtime-allocation-v'+str(version),version=version,allocation_id=version)
     raw=m.canonical(prior);acceptance=config['preparation_acceptance']
-    acceptance['configuration'].update(path='authored-prepare02-configuration.json',size_bytes=len(raw),sha256=m.digest(raw))
-    acceptance['result']['path']=PREPARATION02+'/result.json';blobs['configuration']=raw
+    acceptance['configuration'].update(path='authored-prepare'+suffix+'-configuration.json',size_bytes=len(raw),sha256=m.digest(raw))
+    acceptance['result']['path']='runs/puck-cpu-held-preparation-'+suffix+'/result.json';blobs['configuration']=raw
     prepared=json.loads(blobs['result'])
     prepared.update(stage_parent=stage,sources=copy.deepcopy(prior['sources']),configuration_sha256=m.digest(raw))
     audit=json.loads(blobs['independent_audit']);audit['configuration_sha256']=m.digest(raw)
     cli=json.loads(blobs['externally_observed_auditor_cli'])
     cli['command'][6]=str(m.ROOT/acceptance['configuration']['path']);cli['command'][8]=m.digest(raw)
-    if version==12:
-        prepared.update(kind='puck-cpu-held-runtime-outcome-v12',version=12,allocation_id=12)
-        audit.update(kind='puck-cpu-held-runtime-independent-audit-v12',version=12,allocation_id=12,
-                     auditor_source_sha256=m.PREPARATION02_AUDITOR_SHA256)
-        cli['command'][10]=str(m.ROOT/'authored-prepare02-transport.json')
+    if version!=1:
+        prepared.update(kind='puck-cpu-held-runtime-outcome-v'+str(version),version=version,allocation_id=version)
+        audit.update(kind='puck-cpu-held-runtime-independent-audit-v'+str(version),version=version,allocation_id=version,
+                     auditor_source_sha256=m.PREPARATION02_AUDITOR_SHA256 if version==12 else m.PREPARATION03_AUDITOR_SHA256)
+        cli['command'][10]=str(m.ROOT/('authored-prepare'+suffix+'-transport.json'))
     blobs['independent_audit']=m.canonical(audit);blobs['externally_observed_auditor_cli']=m.canonical(cli)
     rebind(m,config,blobs,'result',prepared)
     config['stage_parent']=stage
+
+
+def bind_preparation02(m,config,blobs,*,version=12,stage=STAGE02):
+    bind_preparation(m,config,blobs,allocation=12,version=version,stage=stage)
 
 
 def acceptance11_case():
@@ -148,10 +155,15 @@ def test11_preparation02_acceptance_identity_is_exact(defect):
         m.validate_configuration(config);m.validate_preparation_acceptance(config,blobs)
 
 
-def test_preparation02_auditor_pin_is_the_current_independent_auditor():
+# The auditor that accepted the real preparation02 (commit 8f3a138), retained for authored replays.
+PREPARATION02_AUDITOR='04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b'
+HISTORICAL_AUDITOR='tests/historical/audit_puck_cpu_held_runtime-04192a3b.py'
+
+
+def test_preparation02_auditor_pin_stays_the_auditor_that_accepted_preparation02():
     m,*_=acceptance11_case()
-    assert m.PREPARATION02_AUDITOR_SHA256==m.digest((m.ROOT/'scripts/audit_puck_cpu_held_runtime.py').read_bytes())
-    assert m.PREPARATION02_AUDITOR_SHA256!=m.LEGACY_AUDITOR_SHA256
+    assert m.PREPARATION02_AUDITOR_SHA256==auditor_api().PREPARATION02_AUDITOR_SHA256==PREPARATION02_AUDITOR
+    assert m.digest((m.ROOT/HISTORICAL_AUDITOR).read_bytes())==PREPARATION02_AUDITOR!=m.LEGACY_AUDITOR_SHA256
 
 
 @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits',
