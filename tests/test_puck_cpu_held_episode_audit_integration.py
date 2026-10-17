@@ -105,3 +105,13 @@ def test_defects_the_parents_cannot_see_fail_the_episode_audit(tmp_path,defect,r
         code,verdict,_=audit(value,'defect-'+defect)
         assert code!=0 and verdict['status']=='FAIL' and reason in verdict['error']
     finally:remove(stage)
+
+
+def test_a_held_only_refusal_fails_the_episode_and_its_audit(tmp_path):
+    value,stage=build_chain(tmp_path,'undeclared-import')
+    try:
+        code,_,_=value['episode'];result=value['result']
+        assert code!=0 and result['status']=='FAIL' and 'worker failed' in result['error']
+        verdict=audit(value,'held-refusal')[1]
+        assert verdict['status']=='FAIL'
+    finally:remove(stage)
