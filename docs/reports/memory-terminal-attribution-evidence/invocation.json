@@ -1,0 +1,50 @@
+{
+  "closed_monotonic": 126701.215599584,
+  "command": [
+    "timeout",
+    "--signal=KILL",
+    "300s",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-m",
+    "scripts.memory_terminal_attribution",
+    "--registration",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/simulation-completion-next/docs/reports/memory-terminal-attribution-evidence/registration.json"
+  ],
+  "external_cap_seconds": 300,
+  "invocations": 1,
+  "logs": [
+    {
+      "bytes": 406,
+      "path": "stdout.txt",
+      "sha256": "031cc31ec6106b655f53afed04b0e4ad841d35baa513ee18c05c333f178e19c3"
+    },
+    {
+      "bytes": 0,
+      "path": "stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "native_owners": 0,
+  "outer_seconds": 0.3903425589960534,
+  "physics_steps": 0,
+  "publication_storage": {
+    "additional_bytes": 1048576,
+    "files": 18,
+    "free_bytes": 12844900352,
+    "headroom_bytes": 67108864,
+    "max_bytes": 134217728,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 134111446,
+    "used_bytes": 106282
+  },
+  "qualification_claims": [],
+  "r2_complete": false,
+  "registration_commit": "88b26e2d20abe33e44e2ca84927f6226953b713c",
+  "registration_sha256": "c9a1176499a2795525c6470e8fafbfcb9fd4db9d0a50c1c6a2b648bba6253e7a",
+  "retries": 0,
+  "returncode": 0,
+  "schema": "memory-terminal-attribution-invocation-v1",
+  "snapshots_decoded": 0,
+  "started_monotonic": 126700.825257025,
+  "started_utc": "2026-10-08T04:07:19.552928+00:00"
+}
