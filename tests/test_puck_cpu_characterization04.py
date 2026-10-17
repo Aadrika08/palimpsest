@@ -146,14 +146,20 @@ def binds(command,flag):
 def test_sandbox_binds_v6_natives_control_capsule_and_the_source_run_only_for_replay(tmp_path):
     m=api();baseline=dict(python_prefix='/trusted/python',external_libraries=[],host_path_aliases=[['/lib','usr/lib']])
     paths={k:tmp_path/k for k in ('capsule','control','payload','run')}
-    source=m.sandbox_command(baseline,native(m),phase='source',capsule=paths['capsule'],control=paths['control'],
+    files=('pyproject.toml','scripts/characterize_puck_episode_worker.py')
+    controls={'egl-vendor.json':paths['control']/'egl-vendor.json'}
+    source=m.sandbox_command(baseline,native(m),phase='source',capsule=paths['capsule'],capsule_files=files,
+        controls=dict(controls,**{'request-source.json':paths['control']/'request-source.json'}),
         payload=paths['payload'],request='request-source.json',request_sha='a'*64)
-    replay=m.sandbox_command(baseline,native(m),phase='replay',capsule=paths['capsule'],control=paths['control'],
-        payload=paths['payload'],source_run=paths['run'],request='request-replay.json',request_sha='b'*64)
+    replay=m.sandbox_command(baseline,native(m),phase='replay',capsule=paths['capsule'],capsule_files=files,
+        controls=controls,payload=paths['payload'],source_run=paths['run'],request='request-replay.json',request_sha='b'*64)
     for command in (source,replay):
         readonly=binds(command,'--ro-bind')
         assert ('/usr/lib/libLLVM.so.22.1','/usr/lib/libLLVM.so.22.1') in readonly
-        assert (str(paths['capsule']),'/puck/source') in readonly and (str(paths['control']),'/puck/control') in readonly
+        # Bound file by file: no capsule or control copy enters the retained output tree.
+        assert (str(paths['capsule']/'pyproject.toml'),'/puck/source/pyproject.toml') in readonly
+        assert not any(target=='/puck/source' for _,target in readonly)
+        assert (str(paths['control']/'egl-vendor.json'),'/puck/control/egl-vendor.json') in readonly
         assert (str(m.ROOT/m.SITE),str(m.ROOT/m.SITE)) in readonly
         assert binds(command,'--bind')==[(str(paths['payload']),'/output')]
         assert ('libEGL_mesa.so.0.0.0','/usr/lib/libEGL_mesa.so.0') in binds(command,'--symlink')
@@ -164,12 +170,13 @@ def test_sandbox_binds_v6_natives_control_capsule_and_the_source_run_only_for_re
     assert (str(paths['run']),'/puck/source-run') in binds(replay,'--ro-bind')
     assert not any(target=='/puck/source-run' for _,target in binds(source,'--ro-bind'))
     assert source[-2:]==['/puck/control/request-source.json','a'*64]
-    with pytest.raises(ValueError):
-        m.sandbox_command(baseline,native(m),phase='source',capsule=paths['capsule'],control=paths['control'],
-            payload=paths['payload'],source_run=paths['run'],request='request-source.json',request_sha='a'*64)
-    with pytest.raises(ValueError):
-        m.sandbox_command(baseline,dict(native(m),kind='puck-cpu-characterization-native-metadata-v5'),phase='source',
-            capsule=paths['capsule'],control=paths['control'],payload=paths['payload'],request='r.json',request_sha='a'*64)
+    assert (str(paths['control']/'request-source.json'),'/puck/control/request-source.json') in binds(source,'--ro-bind')
+    for changes in (dict(source_run=paths['run']),dict(native=dict(native(m),kind='puck-cpu-characterization-native-metadata-v5')),
+                    dict(capsule_files=('../escape.py',)),dict(controls={'../x':paths['control']})):
+        arguments=dict(phase='source',capsule=paths['capsule'],capsule_files=files,controls=controls,
+            payload=paths['payload'],request='r.json',request_sha='a'*64,native=native(m));arguments.update(changes)
+        value=arguments.pop('native')
+        with pytest.raises(ValueError):m.sandbox_command(baseline,value,**arguments)
 
 
 # --- worker reports ---------------------------------------------------------
@@ -353,7 +360,9 @@ def test_real_namespace_probe_and_both_authored_phases(tmp_path,monkeypatch):
     monkeypatch.setattr(m,'ENVIRONMENT',dict(m.ENVIRONMENT,PYGLFW_LIBRARY=str(site)+'/glfw/x11/libglfw.so'))
     control=tmp_path/'control';control.mkdir();payloads={}
     empty=dict(kind='puck-cpu-characterization-native-metadata-v6',native_files=[],aliases=[])
-    probe=subprocess.run(m.sandbox_command(baseline,empty,phase='source',capsule=root,control=control,
+    files=[row['path'] for row in pins];(control/'egl-vendor.json').write_bytes(b'{}\n')
+    controls={'egl-vendor.json':control/'egl-vendor.json'}
+    probe=subprocess.run(m.sandbox_command(baseline,empty,phase='source',capsule=root,capsule_files=files,controls=controls,
         payload=tmp_path,request=None,request_sha=None,probe=True),capture_output=True,text=True,timeout=30)
     assert probe.returncode==0,probe.stderr
     assert json.loads(probe.stdout)['network_isolated'] is True
@@ -362,7 +371,8 @@ def test_real_namespace_probe_and_both_authored_phases(tmp_path,monkeypatch):
         request=m.episode_request(phase,source_files=pins,distributions=[dict(name='gymnasium',version='1.2.1',
             root_index=0,metadata_path='gymnasium-1.2.1.dist-info/METADATA')])
         raw=canonical(request);(control/('request-'+phase+'.json')).write_bytes(raw)
-        command=m.sandbox_command(baseline,empty,phase=phase,capsule=root,control=control,payload=payloads[phase],
+        command=m.sandbox_command(baseline,empty,phase=phase,capsule=root,capsule_files=files,
+            controls=dict(controls,**{'request-'+phase+'.json':control/('request-'+phase+'.json')}),payload=payloads[phase],
             source_run=payloads['source'] if phase=='replay' else None,request='request-'+phase+'.json',request_sha=sha(raw))
         observed=subprocess.run(command,capture_output=True,text=True,timeout=60)
         assert observed.returncode==0,observed.stderr
