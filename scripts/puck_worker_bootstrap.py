@@ -24,6 +24,17 @@ BOOTSTRAP = 'scripts/puck_worker_bootstrap.py'
 HOLDER = 'src/palimpsest/puck_execution_files.py'
 ENTRY = 'palimpsest.puck_worker_preflight'
 QUALIFICATION_ENTRY = 'palimpsest.puck_runtime_qualification'
+# Registration v4: one closed held public manual episode; no arbitrary entry selection.
+EPISODE_ENTRY = 'palimpsest.puck_held_episode'
+EPISODE_KIND = 'puck-held-public-episode-v1'
+EPISODE_KEYS = {'kind', 'version', 'phase', 'expected_versions', 'stdlib_cache_aliases', 'negative_imports',
+                'hidden_imports', 'stdlib_exception', 'profile', 'schedule', 'run_ids', 'paths', 'upstream_commit'}
+EPISODE_VERSIONS = {'numpy', 'torch', 'mujoco', 'gymnasium'}
+# The single user-approved stdlib-name exception: scipy requests it, and CPython
+# does not list it in sys.stdlib_module_names. Only its pinned interpreter bytes load.
+SYSCONFIGDATA = '_sysconfigdata__linux_x86_64-linux-gnu'
+_PROCESS_EVENTS = frozenset({'subprocess.Popen', 'os.posix_spawn', 'os.fork', 'os.forkpty', 'os.system',
+                             'pty.spawn', 'os.spawn'})
 RUNTIME_PIN = {'path': 'python3.11', 'size_bytes': 21662864,
     'sha256': '572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a'}
 _PREFIXES = ('src/palimpsest', 'scripts', 'upstream/fly-gym')
@@ -158,13 +169,74 @@ def _q4_copy(value, kind, maximum=65536):
     return result if kind is dict else frozenset(result)
 
 
+def _declared_rosters(negatives, hidden=None):
+    # V5 hidden names (present but unavailable) obey the absent-name format.
+    for names in ((negatives,) if hidden is None else (negatives, hidden)):
+        if (type(names) is not list or not 1<=len(names)<=128 or any(
+                type(name) is not str or len(name)>512 or not name.isascii()
+                or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')
+                for name in names)):
+            raise ValueError('Bounded expected missing import declaration required')
+        for name in names:_name(name)
+        if names!=sorted(set(names)) or any(
+                name.startswith(parent+'.') for index,name in enumerate(names) for parent in names[:index]):
+            raise ValueError('Expected missing imports must be sorted, unique and nonoverlapping')
+    if hidden is not None and any(a==b or a.startswith(b+'.') or b.startswith(a+'.')
+            for a in hidden for b in negatives):
+        raise ValueError('Expected hidden imports must be disjoint from expected missing imports')
+
+
+def _episode(e):
+    if (type(e) is not dict or set(e) != EPISODE_KEYS or e['kind'] != EPISODE_KIND
+            or type(e['version']) is not int or e['version'] != 1 or e['phase'] not in ('source', 'replay')
+            or type(e['expected_versions']) is not dict or set(e['expected_versions']) != EPISODE_VERSIONS
+            or any(type(v) is not str or not 1<=len(v)<=128 for v in e['expected_versions'].values())
+            or e['stdlib_cache_aliases'] != {'__mp_main__':'__main__'}
+            or type(e['upstream_commit']) is not str or re.fullmatch('[0-9a-f]{40}', e['upstream_commit']) is None):
+        raise ValueError('Exact held public episode descriptor required')
+    _q4_copy(sys.stdlib_module_names, frozenset)
+    _declared_rosters(e['negative_imports'], e['hidden_imports'])
+    p = e['profile']
+    if (type(p) is not dict or set(p) != {'scenario', 'texture', 'controller', 'device', 'seed'}
+            or [p['scenario'], p['texture'], p['controller'], p['device']] != ['reproduction', 'checker', 'manual', 'cpu']
+            or type(p['seed']) is not int or not 0 <= p['seed'] < 2**31):
+        raise ValueError('Exact held public episode profile required')
+    s = e['schedule']
+    if (type(s) is not dict or set(s) != {'ticks', 'actions'} or type(s['ticks']) is not int or not 2 <= s['ticks'] <= 256
+            or type(s['actions']) is not list or len(s['actions']) != 2
+            or any(type(a) is not list or len(a) != 3 or type(a[0]) is not int for a in s['actions'])
+            or [a[0] for a in s['actions']] != [0, s['ticks']//2]
+            or any(type(v) not in (int, float) or not math.isfinite(v) for a in s['actions'] for v in a[1:])
+            or any(abs(a[1]) > 3 or abs(a[2]) > math.pi for a in s['actions'])):
+        raise ValueError('Exact held public episode schedule required')
+    r = e['run_ids']
+    if (type(r) is not dict or set(r) != {'source', 'replay'}
+            or any(type(v) is not str or re.fullmatch('[0-9a-f]{32}', v) is None for v in r.values())
+            or r['source'] == r['replay']):
+        raise ValueError('Exact held public episode run identities required')
+    paths = e['paths']
+    if type(paths) is not dict or set(paths) != {'output_root', 'source_root', 'asset_root'}:
+        raise ValueError('Exact held public episode paths required')
+    for value in paths.values(): _path(value)
+    if ((paths['source_root'] == paths['output_root']) != (e['phase'] == 'source')
+            or paths['asset_root'] in (paths['output_root'], paths['source_root'])):
+        raise ValueError('Exact held public episode paths required')
+    x = e['stdlib_exception']
+    if type(x) is not dict or set(x) != {'name', 'path', 'size_bytes', 'sha256'} or x['name'] != SYSCONFIGDATA:
+        raise ValueError('Exact pinned stdlib-name exception required')
+    _path(x['path']); _hash(x['sha256'])
+    if type(x['size_bytes']) is not int or not 0 < x['size_bytes'] <= MiB:
+        raise ValueError('Exact pinned stdlib-name exception required')
+
+
 def _parse(raw, expected):
     if type(raw) is not bytes or not 0 < len(raw) <= MiB or digest(raw) != _hash(expected):
         raise ValueError('Externally pinned bounded worker registration required')
     reg = _decode(raw)
-    if (type(reg.get('version')) is not int or reg['version'] not in (1, 2, 3)
+    if (type(reg.get('version')) is not int or reg['version'] not in (1, 2, 3, 4)
             or set(reg)-({'deadline_seconds'} if reg['version']==3 else set()) != (_FIELDS if reg['version'] == 1 else
-                _FIELDS | {'dependencies'} | ({'qualification'} if reg['version']==3 else set()))
+                _FIELDS | {'dependencies'} | ({'qualification'} if reg['version']==3 else
+                    {'episode', 'deadline_seconds'} if reg['version']==4 else set()))
             or reg['kind'] != 'puck-worker-source-bootstrap-v'+str(reg['version'])
             or reg['qualification_claims'] != [] or reg['executable'] is not False):
         raise ValueError('Exact source-only bootstrap registration required')
@@ -193,23 +265,12 @@ def _parse(raw, expected):
         if q['version']==1:
             if negatives!=['org']:raise ValueError('Exact legacy qualification denial required')
         else:
-            # V5 hidden names (present but unavailable) obey the absent-name format.
-            for names in ((negatives,q['hidden_imports']) if q['version']==5 else (negatives,)):
-                if (type(names) is not list or not 1<=len(names)<=128 or any(
-                        type(name) is not str or len(name)>512 or not name.isascii()
-                        or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')
-                        for name in names)):
-                    raise ValueError('Bounded expected missing import declaration required')
-                for name in names:_name(name)
-                if names!=sorted(set(names)) or any(
-                        name.startswith(parent+'.') for index,name in enumerate(names) for parent in names[:index]):
-                    raise ValueError('Expected missing imports must be sorted, unique and nonoverlapping')
-            if q['version']==5 and any(a==b or a.startswith(b+'.') or b.startswith(a+'.')
-                    for a in q['hidden_imports'] for b in negatives):
-                raise ValueError('Expected hidden imports must be disjoint from expected missing imports')
+            _declared_rosters(negatives, q['hidden_imports'] if q['version']==5 else None)
+    if reg['version']==4: _episode(reg['episode'])
     if 'deadline_seconds' in reg and (type(reg['deadline_seconds']) is not int
-            or reg['deadline_seconds']!=EXTENDED_SECONDS or reg['qualification']['version']!=5):
-        raise ValueError('Exact extended worker deadline requires qualification v5')
+            or reg['deadline_seconds']!=EXTENDED_SECONDS or (reg['version']==3 and reg['qualification']['version']!=5)):
+        raise ValueError('Exact extended worker deadline requires qualification v5' if reg['version']==3
+                         else 'Exact extended worker deadline required for the held episode')
     _path(reg['source_root']); _path(reg['cwd'])
     files = reg['source_files']
     if type(files) is not list or not 1 <= len(files) <= 512:
@@ -242,16 +303,19 @@ def _parse(raw, expected):
         if name in modules or name in namespaces: raise ValueError('Duplicate import namespace')
         namespaces[name] = path
     expected = {p for p in paths if p.endswith('.py')} - {BOOTSTRAP}
-    if mapped_paths != expected or ENTRY not in modules or (reg['version']==3 and QUALIFICATION_ENTRY not in modules):
+    if (mapped_paths != expected or ENTRY not in modules or (reg['version']==3 and QUALIFICATION_ENTRY not in modules)
+            or (reg['version']==4 and EPISODE_ENTRY not in modules)):
         raise ValueError('Complete Python module mapping required')
     for name in modules.keys() | namespaces.keys():
         parent = name.rpartition('.')[0]
         if parent and parent not in namespaces and (parent not in modules or not modules[parent].endswith('/__init__.py')):
             raise ValueError('Unregistered package parent')
-    if reg['version']==3 and reg['qualification']['version']>=2:
+    declared=(reg['qualification'] if reg['version']==3 and reg['qualification']['version']>=2
+              else reg['episode'] if reg['version']==4 else None)
+    if declared is not None:
         local_tops={name.split('.')[0] for name in modules.keys()|namespaces.keys()}
         if any(name.split('.')[0] in local_tops for name in
-                reg['qualification']['negative_imports']+reg['qualification'].get('hidden_imports',[])):
+                declared['negative_imports']+declared.get('hidden_imports',[])):
             raise ValueError('Expected missing import overlaps authenticated local source')
     runtime = reg['runtime']
     if type(runtime) is not dict or set(runtime) != {'root', 'files', 'python_version'}:
@@ -259,6 +323,9 @@ def _parse(raw, expected):
     _path(runtime['root'])
     if canonical(runtime['files']) != canonical([RUNTIME_PIN]) or runtime['python_version'] != '3.11.15':
         raise ValueError('Original interpreter pin/version required')
+    if (reg['version']==4 and reg['episode']['stdlib_exception']['path']
+            != str(PurePosixPath(runtime['root']).parent/'lib/python3.11'/(SYSCONFIGDATA+'.py'))):
+        raise ValueError('Exact pinned stdlib-name exception required')
     if total + RUNTIME_PIN['size_bytes'] > 80*MiB:
         raise ValueError('Existing aggregate input ceiling exceeded')
     env = reg['environment']
@@ -307,13 +374,33 @@ class _SourceLoader(importlib.abc.Loader):
             self.owner._loading.discard(self.name)
 
 
+class _PinnedStdlibLoader(importlib.abc.Loader):
+    """The one reviewed stdlib-name exception: the pinned interpreter file bytes only."""
+    def __init__(self, owner, row): self.owner, self.row = owner, row
+    def create_module(self, spec): return None
+    def exec_module(self, module):
+        name = self.row['name']; self.owner._loading.add(name)
+        try:
+            self.owner.recheck()
+            payload = _read_initial(self.row['path'], self.row['sha256'])
+            if len(payload) != self.row['size_bytes']: raise ValueError('Pinned stdlib exception size differs')
+            module.__file__ = self.row['path']
+            exec(compile(payload, self.row['path'], 'exec', dont_inherit=True), module.__dict__)
+            self.owner._capture(name, module, self.row['path'], digest(payload))
+            self.owner.recheck()
+        except BaseException as error:
+            self.owner._fail(error); raise
+        finally:
+            self.owner._loading.discard(name)
+
+
 class _SourceFinder(importlib.abc.MetaPathFinder):
     def __init__(self, owner): self.owner = owner
     def find_spec(self, fullname, path=None, target=None):
         expected_denial=False
         try:
             self.owner._import_recheck()
-            if (self.owner._reg['version']==3 and
+            if (self.owner._reg['version'] in (3,4) and
                     fullname in self.owner._negative_imports):
                 # V1 preserves the original exact org denial. V2/V3 additionally
                 # verifies finite absence in the live held package namespace.
@@ -332,6 +419,10 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
                     raise RuntimeError('Expected unavailable import requires admitted dependency custody')
                 self.owner._denied_imports.add(fullname)
                 return self._stock_miss(fullname, path, target)
+            exception = self.owner._stdlib_exception
+            if exception is not None and fullname == exception['name']:
+                return importlib.util.spec_from_loader(fullname, _PinnedStdlibLoader(self.owner, exception),
+                    origin=exception['path'])
             if fullname in self.owner._modules:
                 source = self.owner._modules[fullname]
                 loader = _SourceLoader(self.owner, fullname, source)
@@ -382,10 +473,15 @@ class HeldWorkerBootstrap:
         self._finder = None; self._meta_path = None; self._source = None; self._runtime = None
         self._early_runtime_fds = []
         self._dependencies = None; self._dependency_dispatch = None
-        q=self._reg.get('qualification',{})
-        self._missing_policy_version=q.get('version',0)
-        self._negative_imports=tuple(q.get('negative_imports',()))
-        self._hidden_imports=tuple(q.get('hidden_imports',()))
+        q=self._reg.get('qualification',{}); episode=self._reg.get('episode')
+        # Registration v4 reuses policy v5 (stock absence, hidden names, q4 guard) for its own rosters.
+        self._missing_policy_version=q.get('version',0) if episode is None else 5
+        policy=q if episode is None else episode
+        self._negative_imports=tuple(policy.get('negative_imports',()))
+        self._hidden_imports=tuple(policy.get('hidden_imports',()))
+        self._stdlib_exception=None if episode is None else dict(episode['stdlib_exception'])
+        self._process_attempts=[0,[]]
+        if episode is not None: sys.addaudithook(self._refuse_process_creation)
         self._stdlib_names=sys.stdlib_module_names if self._missing_policy_version in (4,5) else None
         if self._missing_policy_version in (4,5): self._q4_snapshot(set(),set())
         self._main_module=sys.modules.get('__main__'); self._denied_imports=set()
@@ -398,6 +494,13 @@ class HeldWorkerBootstrap:
         self._guard_depth=0; self._guard_current=None; self._guard_nested=0
         self._guard_checks={True:[0,0],False:[0,0]}
         self._guard_sections={name:[0,0] for name in ('bindings','cache','custody','images')}
+
+    def _refuse_process_creation(self, event, args):
+        # Active for the whole episode worker: record, then refuse, every process creation.
+        if event in _PROCESS_EVENTS or event.startswith('os.exec'):
+            self._process_attempts[0]+=1
+            if len(self._process_attempts[1])<64: self._process_attempts[1].append(event)
+            raise RuntimeError('Held episode refuses process creation: '+event)
 
     def _phase(self, phase):
         # Diagnostic only: losing trace data must not replace the real outcome.
@@ -746,10 +849,12 @@ class HeldWorkerBootstrap:
     def _q4_stable(self, snapshot, exported, second_exported, aliases, negative_imports, hidden_imports):
         if self._state!='active':
             raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
-        q=self._reg.get('qualification'); version=self._missing_policy_version
-        if (type(version) is not int or version not in (4,5)
-                or type(q) is not dict or type(q.get('version')) is not int or q['version']!=version
-                or q.get('kind')!='puck-held-runtime-import-qualification-v'+str(version)
+        episode=self._reg['version']==4; version=self._missing_policy_version
+        q=self._reg.get('episode' if episode else 'qualification')
+        if (type(version) is not int or version not in (4,5) or type(q) is not dict
+                or (not episode and (type(q.get('version')) is not int or q['version']!=version
+                    or q.get('kind')!='puck-held-runtime-import-qualification-v'+str(version)))
+                or (episode and (version!=5 or q.get('kind')!=EPISODE_KIND))
                 or type(q.get('negative_imports')) is not list
                 or any(type(name) is not str for name in q['negative_imports'])
                 or tuple(q['negative_imports'])!=negative_imports or self._negative_imports!=negative_imports
@@ -808,9 +913,9 @@ class HeldWorkerBootstrap:
                 exported=cls.recheck(receiver)
                 if q4: self._q4_snapshot(exported,set())
             aliases=set()
-            if self._reg['version']==3:
-                q=self._reg['qualification']
-                if (q['version']!=self._missing_policy_version
+            if self._reg['version'] in (3,4):
+                q=self._reg['qualification'] if self._reg['version']==3 else self._reg['episode']
+                if ((self._reg['version']==3 and q['version']!=self._missing_policy_version)
                         or tuple(q['negative_imports'])!=self._negative_imports
                         or (self._missing_policy_version==5 and tuple(q['hidden_imports'])!=self._hidden_imports)):
                     raise RuntimeError('Expected missing import declaration changed')
@@ -885,13 +990,17 @@ class HeldWorkerBootstrap:
                 'runtime_qualified':False, 'dependencies_qualified':False, 'native_authorized':False,
                 'collection_authorized':False, 'executable':False, 'qualification_claims':[]}
             if self._dependencies is not None: result['dependencies'] = self._dependencies.snapshot()
-            if self._reg['version']==3:
+            if self._reg['version'] in (3,4):
                 result['stdlib_cache_aliases']=({'__mp_main__':'__main__'} if '__mp_main__' in sys.modules else {})
                 result['denied_imports']=sorted(self._denied_imports)
                 if self._missing_policy_version>=2:
                     result['expected_missing_imports']=list(self._negative_imports)
                 if self._missing_policy_version==5:
                     result['expected_hidden_imports']=list(self._hidden_imports)
+            if self._reg['version']==4:
+                result['episode_phase']=self._reg['episode']['phase']
+                result['process_creation_attempts']={'count':self._process_attempts[0],
+                                                     'events':list(self._process_attempts[1])}
             if len(canonical(result)) > MiB: raise ValueError('Bootstrap receipt ceiling exceeded')
             self.recheck(); return copy.deepcopy(result)
         except BaseException as error: self._fail(error); raise
@@ -900,10 +1009,11 @@ class HeldWorkerBootstrap:
         try:
             self._phase('entry.enter')
             self.recheck()
-            qualification=self._reg['version']==3
-            module = __import__(QUALIFICATION_ENTRY if qualification else ENTRY,
-                fromlist=['qualify' if qualification else 'preflight'])
-            self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+            # Closed dispatch: the registration version alone selects one fixed entry.
+            name, function = {3:(QUALIFICATION_ENTRY, 'qualify'), 4:(EPISODE_ENTRY, 'run')}.get(
+                self._reg['version'], (ENTRY, 'preflight'))
+            module = __import__(name, fromlist=[function])
+            self.recheck(); result = getattr(module, function)(self)
             self._phase('entry.returned'); self.recheck()
             if type(result) is not dict or len(canonical(result)) > 64*1024:
                 raise ValueError('Bounded source-preflight result required')
