@@ -33,6 +33,8 @@ PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bi
 INTERPRETER=dict(path='python3.11',size_bytes=21662864,
     sha256='572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a')
 ACCEPTED_SHA='32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96'
+# Accepted retained site: files, directories and regular-file bytes.
+SITE_COUNTS=(27225,2074,1304701872)
 NATIVE_V6='puck-cpu-characterization-native-metadata-v6'
 NATIVE_METADATA_PIN=dict(path='docs/plans/puck-cpu-characterization-native-metadata-06.json',size_bytes=17199,
     sha256='48ca37b1c45366bcd53ac195277ade6236537f89a720b50591906764eaf72569')
@@ -395,7 +397,7 @@ def execute(config,digest,started):
                 if native.get('kind')!=NATIVE_V6:raise ValueError('Characterization-04 requires native metadata v6')
                 _native(native,deadline)
                 files=inventory['entries'];directories=layout['predicted_destination_directories']
-                if len(files)!=27225 or len(directories)!=2074 or sum(r['size_bytes'] for r in files)!=1304701872:
+                if (len(files),len(directories),sum(r['size_bytes'] for r in files))!=SITE_COUNTS:
                     raise ValueError('Accepted measured namespace differs')
                 vendor=egl_vendor_control(native,read(native['egl_vendor']['path'],MiB))
                 write_raw(output/'egl-vendor.json',vendor)
