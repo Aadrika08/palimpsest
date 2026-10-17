@@ -54,6 +54,24 @@ def test_existing_worker_naming_is_unchanged():
     assert m.source_modules(rows(m.WORKER_SOURCES))==old
 
 
-@pytest.mark.parametrize('path',['scripts/other.py','docs/authored.py','upstream/other/module.py','src/palimpsest'])
+@pytest.mark.parametrize('path',['scripts/other.py','docs/authored.py','upstream/other/module.py','upstream/fly-gymnasium/x.py'])
 def test_sources_without_a_declared_import_root_are_refused(path):
-    with pytest.raises(ValueError):api().source_modules(rows([path if path.endswith('.py') else path+'.py']))
+    with pytest.raises(ValueError):api().source_modules(rows([path]))
+
+
+def test_the_v4_bootstrap_accepts_the_closure_naming_and_its_package_parents():
+    import json
+    from test_puck_held_episode_bootstrap import episode
+    from test_puck_worker_bootstrap import api as bootstrap_api, sha
+    m=api();b=bootstrap_api();files=rows(m.EPISODE_WORKER_SOURCES);root=str(Path('/proc/self/exe').resolve().parent)
+    reg=dict(kind='puck-worker-source-bootstrap-v4',version=4,source_root='/puck/source',source_files=files,
+        modules=m.source_modules(files),namespaces=[],
+        runtime=dict(root=root,files=[dict(b.RUNTIME_PIN)],python_version='3.11.15'),
+        environment=dict(PATH='/nonexistent'),cwd='/puck/source',argv_prefix=['/authored'],
+        dependencies=dict(path='/puck/control/dependencies.json',size_bytes=2,sha256='b'*64),
+        deadline_seconds=360,qualification_claims=[],executable=False)
+    reg['episode']=episode(root)
+    raw=json.dumps(reg,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+    parsed,modules,namespaces=b._parse(raw,sha(raw))
+    assert {'core','core.astar','environment','environment.mujoco_two_cam_env_random_obstacles',
+            'palimpsest.puck_held_episode',b.ENTRY,b.EPISODE_ENTRY}<=set(modules) and namespaces=={}

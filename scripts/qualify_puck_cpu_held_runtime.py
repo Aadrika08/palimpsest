@@ -134,6 +134,31 @@ WORKER_SOURCES=tuple(sorted((BOOTSTRAP,'src/palimpsest/__init__.py',
     'src/palimpsest/puck_dependency_bindings.py','src/palimpsest/puck_dependency_imports.py',
     'src/palimpsest/puck_native_origins.py','src/palimpsest/puck_native_identity.py',
     'src/palimpsest/puck_worker_preflight.py','src/palimpsest/puck_runtime_qualification.py')))
+# Held public episode: every file Engine.open's environment event and replay
+# compatibility read, plus the fly-gym modules and checker model the manual env loads.
+UPSTREAM_PREFIX='upstream/fly-gym/'
+EPISODE_PALIMPSEST=(
+    '__init__', '__main__', 'afterimage', 'artifacts', 'assets', 'atlas', 'body_adaptation', 'body_profile',
+    'bounded_qualification', 'cli', 'comparison', 'doctor', 'engine', 'evaluate', 'flynn', 'held_provenance',
+    'interventions', 'lab', 'male_model', 'male_policy', 'male_research', 'memory', 'memory_experiment',
+    'memory_history', 'memory_reference', 'memory_task', 'memory_world', 'profiles', 'puck_balanced',
+    'puck_balanced_development', 'puck_balanced_student', 'puck_build_inputs', 'puck_bundle_provenance',
+    'puck_collection_admission', 'puck_collection_close', 'puck_collection_ledger', 'puck_cpu_namespace',
+    'puck_cpu_registration', 'puck_dependency_bindings', 'puck_dependency_files', 'puck_dependency_imports',
+    'puck_development', 'puck_execution', 'puck_execution_files', 'puck_held_episode', 'puck_learning',
+    'puck_model', 'puck_native_identity', 'puck_native_origins', 'puck_on_policy', 'puck_package_payloads',
+    'puck_profile', 'puck_retained_installation', 'puck_runtime_qualification', 'puck_runtime_registration',
+    'puck_runtime_staging', 'puck_scene_catalog', 'puck_scene_git', 'puck_scene_inventory_scope',
+    'puck_scene_markdown', 'puck_scene_reference_resolution', 'puck_scene_registry', 'puck_scene_reports',
+    'puck_scene_retained', 'puck_scene_roots', 'puck_scene_training', 'puck_student', 'puck_teacher',
+    'puck_worker_preflight', 'records', 'replay', 'snapshots', 'sonification', 'specimens', 'storage',
+    'task_mechanics', 'task_profiles', 'worker',
+)
+EPISODE_WORKER_SOURCES=tuple(sorted((BOOTSTRAP,*('src/palimpsest/'+name+'.py' for name in EPISODE_PALIMPSEST),
+    'upstream/fly-gym/core/__init__.py','upstream/fly-gym/core/astar.py','upstream/fly-gym/environment/__init__.py',
+    'upstream/fly-gym/environment/mujoco_model_random_obstacles.xml',
+    'upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py',
+    'model_manifests/flynn-full-vision.json','pyproject.toml','uv.lock')))
 SOURCES=tuple(sorted(set(WORKER_SOURCES)|{
     'scripts/qualify_puck_cpu_held_runtime.py','scripts/stage_puck_cpu_held_runtime.py',
     'scripts/qualify_puck_held_runtime.py','scripts/build_puck_python_louvain.py',
@@ -474,6 +499,21 @@ def qualification_command(worker_command):
     return [PYTHON,'-I','-B','-S','-c',launcher]+list(worker_command)
 
 
+def source_modules(source_files):
+    """Import names for registered Python sources under src/ or upstream fly-gym; data files have none."""
+    modules=[]
+    for row in source_files:
+        path=row['path']
+        if path==BOOTSTRAP or not path.endswith('.py'):continue
+        if path.startswith('src/'):name=path[4:-3]
+        elif path.startswith(UPSTREAM_PREFIX):name=path[len(UPSTREAM_PREFIX):-3]
+        else:raise ValueError('CPU worker source has no declared import root: '+path)
+        name=name.replace('/','.')
+        if name.endswith('.__init__'):name=name[:-9]
+        modules.append(dict(name=name,path=path))
+    return modules
+
+
 def worker_registration(source_files,dependency_raw,*,negative_imports,qualification_version=3,hidden_imports=None,deadline_seconds=None):
     if type(qualification_version) is not int or qualification_version not in (3,4,5):
         raise ValueError('Exact CPU worker qualification version required')
@@ -490,12 +530,7 @@ def worker_registration(source_files,dependency_raw,*,negative_imports,qualifica
     api=types.ModuleType('_frozen_cpu_bootstrap_api');api.__file__=str(ROOT/BOOTSTRAP)
     exec(compile(raw,api.__file__,'exec'),api.__dict__)
     prefix=api.command(PYTHON,'/puck/source/'+BOOTSTRAP,bootstrap['sha256'],'/puck/control/worker-registration.json','0'*64)[:-1]
-    modules=[]
-    for row in source_files:
-        if row['path']==BOOTSTRAP:continue
-        name=row['path'][4:-3].replace('/','.')
-        if name.endswith('.__init__'):name=name[:-9]
-        modules.append(dict(name=name,path=row['path']))
+    modules=source_modules(source_files)
     result=dict(kind='puck-worker-source-bootstrap-v3',version=3,source_root='/puck/source',
         source_files=copy.deepcopy(source_files),modules=modules,namespaces=[],
         runtime=dict(root=str(Path(PYTHON).parent),files=[dict(api.RUNTIME_PIN)],python_version='3.11.15'),
