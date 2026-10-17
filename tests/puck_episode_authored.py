@@ -190,7 +190,8 @@ def authored_scale(project):
     root=project['root']
     patch(root,QUALIFIER,[(b"PREPARATION_NEGATIVE_IMPORTS=['numpy._distributor_init_local','org']",b"PREPARATION_NEGATIVE_IMPORTS=['org']"),
         (b"min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB",b'min_available_ram_bytes=128*MiB')])
-    if (root/EPISODE_PARENT).exists():patch(root,EPISODE_PARENT,[(b'min_available_ram_bytes=2048*MiB',b'min_available_ram_bytes=128*MiB')])
+    for name in (EPISODE_PARENT,'scripts/audit_puck_cpu_held_episode.py'):
+        if (root/name).exists():patch(root,name,[(b'min_available_ram_bytes=2048*MiB',b'min_available_ram_bytes=128*MiB')])
 
 
 def derive_candidate(characterized):

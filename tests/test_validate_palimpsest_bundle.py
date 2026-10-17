@@ -57,7 +57,7 @@ def test_npz_reader_matches_numpy_when_available(tmp_path):
 def test_bundle_validates_against_its_run(tmp_path,replay):
     v=api();run,bundle,receipt=authored_run(tmp_path,replay=replay)
     result=v.validate_bundle(bundle,run)
-    assert result['sha256']==receipt['sha256'] and result['members']==4+replay
+    assert result['sha256']==receipt['sha256'] and result['members']==5+replay
 
 
 def rewrite(bundle,members,*,manifest=None,compression=zipfile.ZIP_STORED,last_manifest=True):
@@ -92,7 +92,7 @@ def test_bundle_refuses_unsafe_or_inconsistent_archives(tmp_path,defect):
     elif defect=='manifest-first':rewrite(bundle,[('bundle-manifest.json',manifest)]+body,manifest=None,last_manifest=False)
     elif defect=='format':data['format']='palimpsest-bundle-v0';rewrite(bundle,body,manifest=json.dumps(data).encode())
     elif defect=='run-file':
-        path=run/'recording/manifest.json';path.write_bytes(path.read_bytes().replace(b'"seed":7',b'"seed":8'))
+        path=run/'recording/manifest.json';path.write_bytes(path.read_bytes().replace(b'"seed": 7',b'"seed": 8'))
     elif defect=='run-missing':(run/'snapshots/initial.snp').unlink()
     else:(run/'replay-report.json').write_text('{}\n')
     with pytest.raises((ValueError,zipfile.BadZipFile,KeyError,FileNotFoundError)):

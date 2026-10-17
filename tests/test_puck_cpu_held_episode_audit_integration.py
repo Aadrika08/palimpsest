@@ -78,7 +78,7 @@ def test_the_episode_audit_refuses_retained_drift(chain,label):
     output=chain['root']/OUTPUT;ids=chain['allocation']['run_ids']
     source=output/'payload-source'/ids['source'];replay=output/'payload-replay'/ids['replay']
     path,mutate={'snapshot':(source/'snapshots/initial.snp',flip),'record':(source/'recording/chunks/000001.npz',flip),
-        'replay-report':(replay/'replay-report.json',lambda p:p.write_bytes(p.read_bytes().replace(b'"compared_ticks":48',b'"compared_ticks":47'))),
+        'replay-report':(replay/'replay-report.json',lambda p:p.write_bytes(p.read_bytes().replace(b'"compared_ticks": 48',b'"compared_ticks": 47'))),
         'registration':(output/'control/worker-registration-replay.json',flip),'empty-episode':(source/'recording/events.jsonl',empty),
         'failed-worker':(output/'source-supervision.json',lambda p:p.write_bytes(p.read_bytes().replace(b'"returncode":0',b'"returncode":1'))),
         'outcome':(output/'result.json',lambda p:p.write_bytes(p.read_bytes().replace(b'"ticks_completed":48',b'"ticks_completed":47'))),
