@@ -1,0 +1,553 @@
+{
+ "kind": "diagnostic-episode-auditor-exercise-v1",
+ "diagnostic_only": true,
+ "checks": {
+  "validator.source.bundle_only": {
+   "ok": true,
+   "value": {
+    "sha256": "3c58473e8a6ab7fce50ad35acb4fabddbc6f664225c22455ad39b8b886e91061",
+    "size_bytes": 10085157,
+    "members": 5,
+    "member_bytes": 10039939
+   }
+  },
+  "validator.source.bundle_vs_run": {
+   "ok": true,
+   "value": {
+    "sha256": "3c58473e8a6ab7fce50ad35acb4fabddbc6f664225c22455ad39b8b886e91061",
+    "size_bytes": 10085157,
+    "members": 5,
+    "member_bytes": 10039939
+   }
+  },
+  "validator.source.sha_matches_entry": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.source.validate_entry": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.source.payload_members": {
+   "ok": true,
+   "value": null
+  },
+  "validator.replay.bundle_only": {
+   "ok": true,
+   "value": {
+    "sha256": "4d83fdc118a72e8864ed223024f2d6bdc94bd9e0ba618fb09b0982c9a20ce8a5",
+    "size_bytes": 10092232,
+    "members": 6,
+    "member_bytes": 10045073
+   }
+  },
+  "validator.replay.bundle_vs_run": {
+   "ok": true,
+   "value": {
+    "sha256": "4d83fdc118a72e8864ed223024f2d6bdc94bd9e0ba618fb09b0982c9a20ce8a5",
+    "size_bytes": 10092232,
+    "members": 6,
+    "member_bytes": 10045073
+   }
+  },
+  "validator.replay.sha_matches_entry": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.replay.validate_entry": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.replay.payload_members": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.source.recording": {
+   "ok": true,
+   "value": {
+    "rows": 48,
+    "snapshot_id": "ecb19eebbcd74a25a97d0515f841aa67"
+   }
+  },
+  "auditor.replay.recording": {
+   "ok": true,
+   "value": {
+    "rows": 48,
+    "snapshot_id": "725e19146bbf4b599cc22b9e417fe93c"
+   }
+  },
+  "auditor.source.snapshot_identity": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.provenance_equal": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.compare": {
+   "ok": true,
+   "value": null
+  },
+  "auditor.replay_report": {
+   "ok": true,
+   "value": {
+    "status": "passed",
+    "compared_ticks": 48,
+    "compared_events": 100,
+    "mode": "actions"
+   }
+  }
+ },
+ "facts": {
+  "source": {
+   "manifest_keys": [
+    "close_reason",
+    "continuation_contract",
+    "control_interval_seconds",
+    "controller",
+    "final_phase",
+    "initial_world",
+    "last_outcome",
+    "metrics",
+    "observation_profile",
+    "parent_event_prefix",
+    "parent_run_id",
+    "population_columns",
+    "population_names",
+    "population_scale",
+    "profile",
+    "recorded_chunks",
+    "recorded_events",
+    "recorded_ticks",
+    "recording_format",
+    "recording_max_bytes",
+    "requested_device",
+    "run_id",
+    "scenario",
+    "schema_version",
+    "seed",
+    "sensor_order",
+    "status",
+    "teacher_privileged",
+    "texture",
+    "tick_contract",
+    "total_tick"
+   ],
+   "run_id_equals_dir": true,
+   "recorded_ticks": 48,
+   "recorded_events": 107,
+   "event_count": 107,
+   "recorded_chunks": 2,
+   "chunk_events": [
+    {
+     "path": "chunks/000000.npz",
+     "start": 0,
+     "count": 32,
+     "episode": 0
+    },
+    {
+     "path": "chunks/000001.npz",
+     "start": 32,
+     "count": 16,
+     "episode": 0
+    }
+   ],
+   "chunk_episodes": [
+    0
+   ],
+   "schema": {
+    "action": {
+     "dtype": "<f8",
+     "shape": [
+      2
+     ]
+    },
+    "cam_left": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "cam_right": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "control": {
+     "dtype": "<f8",
+     "shape": [
+      2
+     ]
+    },
+    "eyes": {
+     "dtype": "|b1",
+     "shape": [
+      2
+     ]
+    },
+    "latency": {
+     "dtype": "<f8",
+     "shape": []
+    },
+    "next_pose": {
+     "dtype": "<f8",
+     "shape": [
+      3
+     ]
+    },
+    "population_stats": {
+     "dtype": "<f8",
+     "shape": [
+      0,
+      4
+     ]
+    },
+    "pose": {
+     "dtype": "<f8",
+     "shape": [
+      3
+     ]
+    },
+    "raw_cam_left": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "raw_cam_right": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "revision": {
+     "dtype": "<i8",
+     "shape": []
+    },
+    "reward": {
+     "dtype": "<f8",
+     "shape": []
+    },
+    "sensors": {
+     "dtype": "<f4",
+     "shape": [
+      4
+     ]
+    },
+    "simulation_time": {
+     "dtype": "<f8",
+     "shape": []
+    },
+    "step_latency": {
+     "dtype": "<f8",
+     "shape": []
+    }
+   },
+   "constant_frames": {
+    "cam_left": 0,
+    "cam_right": 0,
+    "raw_cam_left": 0,
+    "raw_cam_right": 0
+   },
+   "frames_per_camera": {
+    "cam_left": 48,
+    "cam_right": 48,
+    "raw_cam_left": 48,
+    "raw_cam_right": 48
+   },
+   "eyes_values": [
+    [
+     true,
+     true
+    ]
+   ],
+   "npz_reader_vs_numpy_mismatches": [],
+   "snapshot_index": {
+    "version": 1,
+    "snapshots": {
+     "ecb19eebbcd74a25a97d0515f841aa67": {
+      "snapshot_id": "ecb19eebbcd74a25a97d0515f841aa67",
+      "filename": "initial.snp",
+      "initial": true,
+      "revision": 0,
+      "episode": 0,
+      "tick": 0,
+      "sha256": "ceaa026cabdfa630ea5e27715fb1317115988d7f61ec563c19e9940e44bf745e",
+      "config": {
+       "scenario": "reproduction",
+       "texture": "checker",
+       "controller": "manual",
+       "device": "cpu",
+       "seed": 7
+      }
+     }
+    }
+   },
+   "snapshot_registered_event": {
+    "episode": 0,
+    "filename": "initial.snp",
+    "initial": true,
+    "kind": "snapshot_registered",
+    "revision": 0,
+    "run_id": "89d6a62ac52c49cfaa67c8d1e3ac7c7a",
+    "sequence": 4,
+    "sha256": "ceaa026cabdfa630ea5e27715fb1317115988d7f61ec563c19e9940e44bf745e",
+    "snapshot_id": "ecb19eebbcd74a25a97d0515f841aa67",
+    "tick": 0
+   },
+   "event_kinds": [
+    "chunk",
+    "command_applied",
+    "command_received",
+    "diagnostics",
+    "engine_opened",
+    "environment",
+    "episode_started",
+    "snapshot_registered"
+   ],
+   "top_level": [
+    "recording",
+    "snapshots"
+   ]
+  },
+  "replay": {
+   "manifest_keys": [
+    "close_reason",
+    "continuation_contract",
+    "control_interval_seconds",
+    "controller",
+    "controller_reexecuted",
+    "execution_mode",
+    "final_phase",
+    "inference_executed",
+    "initial_world",
+    "last_outcome",
+    "metrics",
+    "observation_profile",
+    "parent_event_prefix",
+    "parent_run_id",
+    "population_columns",
+    "population_names",
+    "population_scale",
+    "profile",
+    "recorded_chunks",
+    "recorded_events",
+    "recorded_ticks",
+    "recording_format",
+    "recording_max_bytes",
+    "replay_mode",
+    "replay_source_run_id",
+    "requested_device",
+    "run_id",
+    "scenario",
+    "schema_version",
+    "seed",
+    "sensor_order",
+    "source_snapshot_id",
+    "status",
+    "teacher_privileged",
+    "texture",
+    "tick_contract",
+    "total_tick"
+   ],
+   "run_id_equals_dir": true,
+   "recorded_ticks": 48,
+   "recorded_events": 110,
+   "event_count": 110,
+   "recorded_chunks": 2,
+   "chunk_events": [
+    {
+     "path": "chunks/000000.npz",
+     "start": 0,
+     "count": 32,
+     "episode": 0
+    },
+    {
+     "path": "chunks/000001.npz",
+     "start": 32,
+     "count": 16,
+     "episode": 0
+    }
+   ],
+   "chunk_episodes": [
+    0
+   ],
+   "schema": {
+    "action": {
+     "dtype": "<f8",
+     "shape": [
+      2
+     ]
+    },
+    "cam_left": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "cam_right": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "control": {
+     "dtype": "<f8",
+     "shape": [
+      2
+     ]
+    },
+    "eyes": {
+     "dtype": "|b1",
+     "shape": [
+      2
+     ]
+    },
+    "latency": {
+     "dtype": "<f8",
+     "shape": []
+    },
+    "next_pose": {
+     "dtype": "<f8",
+     "shape": [
+      3
+     ]
+    },
+    "population_stats": {
+     "dtype": "<f8",
+     "shape": [
+      0,
+      4
+     ]
+    },
+    "pose": {
+     "dtype": "<f8",
+     "shape": [
+      3
+     ]
+    },
+    "raw_cam_left": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "raw_cam_right": {
+     "dtype": "|u1",
+     "shape": [
+      128,
+      128,
+      3
+     ]
+    },
+    "revision": {
+     "dtype": "<i8",
+     "shape": []
+    },
+    "reward": {
+     "dtype": "<f8",
+     "shape": []
+    },
+    "sensors": {
+     "dtype": "<f4",
+     "shape": [
+      4
+     ]
+    },
+    "simulation_time": {
+     "dtype": "<f8",
+     "shape": []
+    },
+    "step_latency": {
+     "dtype": "<f8",
+     "shape": []
+    }
+   },
+   "constant_frames": {
+    "cam_left": 0,
+    "cam_right": 0,
+    "raw_cam_left": 0,
+    "raw_cam_right": 0
+   },
+   "frames_per_camera": {
+    "cam_left": 48,
+    "cam_right": 48,
+    "raw_cam_left": 48,
+    "raw_cam_right": 48
+   },
+   "eyes_values": [
+    [
+     true,
+     true
+    ]
+   ],
+   "npz_reader_vs_numpy_mismatches": [],
+   "snapshot_index": {
+    "version": 1,
+    "snapshots": {
+     "725e19146bbf4b599cc22b9e417fe93c": {
+      "snapshot_id": "725e19146bbf4b599cc22b9e417fe93c",
+      "filename": "initial.snp",
+      "initial": true,
+      "revision": 0,
+      "episode": 0,
+      "tick": 0,
+      "sha256": "851c6f2391ff548f048e63e189d7b1d157d86d7371a679e4cdd860b19cfcbe82",
+      "config": {
+       "scenario": "reproduction",
+       "texture": "checker",
+       "controller": "manual",
+       "device": "cpu",
+       "seed": 7
+      }
+     }
+    }
+   },
+   "snapshot_registered_event": {
+    "episode": 0,
+    "filename": "initial.snp",
+    "initial": true,
+    "kind": "snapshot_registered",
+    "revision": 0,
+    "run_id": "06a9f607439948ef9ee96421c3f2fa28",
+    "sequence": 6,
+    "sha256": "851c6f2391ff548f048e63e189d7b1d157d86d7371a679e4cdd860b19cfcbe82",
+    "snapshot_id": "725e19146bbf4b599cc22b9e417fe93c",
+    "tick": 0
+   },
+   "event_kinds": [
+    "application_restored",
+    "chunk",
+    "command_applied",
+    "command_received",
+    "diagnostics",
+    "engine_opened",
+    "environment",
+    "episode_started",
+    "replay_comparison_before_close",
+    "replay_started",
+    "snapshot_registered"
+   ],
+   "top_level": [
+    "recording",
+    "replay-report.json",
+    "snapshots"
+   ]
+  }
+ }
+}
