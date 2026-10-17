@@ -61,6 +61,8 @@ def tick_arrays(ticks, actions, latency_offset=0.0, defect=None):
     rows = []
     for tick in ticks:
         heading = [a for t, *a in actions if t <= tick][-1]
+        if defect == 'schedule' and tick == 30:
+            heading = [1.0, 0.25]
         rows.append(dict(
             cam_left=frame(tick, 0, defect == 'constant-frame' and tick == 3), cam_right=frame(tick, 1),
             raw_cam_left=frame(tick, 2), raw_cam_right=frame(tick, 3),
@@ -80,10 +82,11 @@ SCHEMA = dict(cam_left=('|u1', [SIDE, SIDE, 3]), cam_right=('|u1', [SIDE, SIDE, 
               step_latency=('<f8', []), eyes=('|b1', [2]), revision=('<i8', []))
 
 
-def write_recording(run, run_id, rows, *, seed, events_extra=()):
+def write_recording(run, run_id, rows, *, seed, events_extra=(), diagnostics=None):
     recording = run / 'recording'
     (recording / 'chunks').mkdir(parents=True)
-    events = [dict(kind='episode_started', episode=0, world=dict(goal=[1.0, 0.0, 0.0], obstacles=[]), run_id=run_id)]
+    events = [] if diagnostics is None else [dict(kind='diagnostics', run_id=run_id, report=diagnostics)]
+    events.append(dict(kind='episode_started', episode=0, world=dict(goal=[1.0, 0.0, 0.0], obstacles=[]), run_id=run_id))
     events.extend(events_extra)
     for index in range(0, len(rows), CHUNK_TICKS):
         part = rows[index:index + CHUNK_TICKS]
@@ -154,12 +157,23 @@ def versions(expected, modules=None):
 
 
 def provenance(admission):
-    reg = admission._reg
+    """The real held provenance record, built as palimpsest.puck_held_episode.provenance builds it."""
+    import tomllib
+    from pathlib import PurePosixPath
+    from palimpsest.held_provenance import held_provenance
+    reg = admission._reg; episode = reg['episode']
+    rows = {row['path']: row for row in reg['source_files']}
     raw = admission._source.read('pyproject.toml', 1024 ** 2)
-    rows = sorted(r['sha256'] for r in reg['source_files'] if r['path'].startswith('upstream/fly-gym/'))
-    value = dict(environment=reg['environment'], upstream=rows, pyproject=hashlib.sha256(raw).hexdigest(),
-                 distributions=[d['name'] for d in admission._dependencies.distributions])
-    return hashlib.sha256(_json(value).encode()).hexdigest()
+    version = tomllib.loads(raw.decode('utf-8'))['project']['version']
+    runtime = reg['runtime']; pin = runtime['files'][0]
+    interpreter = dict(path=str(PurePosixPath(runtime['root']) / pin['path']), size_bytes=pin['size_bytes'],
+                       sha256=pin['sha256'], python_version=runtime['python_version'])
+    upstream = dict(path=str(PurePosixPath(reg['source_root']) / 'upstream/fly-gym'), commit=episode['upstream_commit'],
+                    files=[dict(row, path=row['path'][len('upstream/fly-gym/'):]) for row in reg['source_files']
+                           if row['path'].startswith('upstream/fly-gym/')])
+    return held_provenance(interpreter=interpreter, upstream=upstream,
+        distributions=copy.deepcopy(admission._dependencies.distributions), palimpsest_version=version,
+        lock_sha256=rows['uv.lock']['sha256'], environment=dict(reg['environment']))
 
 
 def run(admission):
@@ -181,6 +195,11 @@ def run(admission):
         except ImportError:
             pass
     record = provenance(admission)
+    report = record.report(); digest = record.sha256
+    if defect == 'diagnostics':
+        report['ready'] = not report['ready']
+    if defect == 'provenance-sha':
+        digest = hashlib.sha256(b'AUTHORED other provenance').hexdigest()
     output = Path(episode['paths']['output_root']); schedule = episode['schedule']
     ids = episode['run_ids']; ticks = list(range(schedule['ticks']))
     observed = versions(episode['expected_versions'])
@@ -189,12 +208,12 @@ def run(admission):
         identifier, registered = register_snapshot(run, ids['source'])
         completed = ticks[:-1] if defect == 'short' else ticks
         rows = tick_arrays(completed, schedule['actions'], defect=defect)
-        write_recording(run, ids['source'], rows, seed=episode['profile']['seed'], events_extra=[registered])
+        write_recording(run, ids['source'], rows, seed=episode['profile']['seed'], events_extra=[registered], diagnostics=report)
         admission.recheck()
         receipt = bundle(run, output / 'source-bundle.zip', defect)
         return dict(kind=RESULT_KIND, version=1, phase='source', run_id=ids['source'], source_run_id=ids['source'],
                     ticks_requested=schedule['ticks'], ticks_completed=len(completed), final_phase='paused',
-                    initial_snapshot_id=identifier, provenance_sha256=record, versions=observed,
+                    initial_snapshot_id=identifier, provenance_sha256=digest, versions=observed,
                     renderer=dict(RENDERER), bundle=receipt, **copy.deepcopy(CLAIMS))
     source = Path(episode['paths']['source_root']) / ids['source']
     if not (source / 'recording' / 'manifest.json').is_file():
@@ -204,7 +223,8 @@ def run(admission):
     rows = tick_arrays(ticks, schedule['actions'], latency_offset=.0005, defect=defect)
     if defect == 'diverge':
         rows[5]['pose'] = struct.pack('<3d', 9.0, 0.0, 0.0)
-    events = write_recording(run, ids['replay'], rows, seed=episode['profile']['seed'], events_extra=[registered])
+    events = write_recording(run, ids['replay'], rows, seed=episode['profile']['seed'], events_extra=[registered],
+                             diagnostics=report)
     report = dict(schema_version=1, source_run_id=ids['source'], run_id=ids['replay'], mode='actions', status='passed',
                   compared_ticks=len(ticks), compared_events=events, first_divergence=None,
                   comparison=dict(float_atol=1e-6, float_rtol=1e-6, integer_and_camera_exact=True), errors=[])
@@ -212,6 +232,6 @@ def run(admission):
     admission.recheck()
     receipt = bundle(run, output / 'replay-bundle.zip', defect)
     return dict(kind=RESULT_KIND, version=1, phase='replay', run_id=ids['replay'], source_run_id=ids['source'],
-                ticks_requested=schedule['ticks'], provenance_sha256=record, versions=observed,
+                ticks_requested=schedule['ticks'], provenance_sha256=digest, versions=observed,
                 replay={key: report[key] for key in ('status', 'compared_ticks', 'compared_events', 'first_divergence')},
                 bundle=receipt, **copy.deepcopy(CLAIMS))

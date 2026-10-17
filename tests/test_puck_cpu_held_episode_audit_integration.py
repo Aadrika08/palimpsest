@@ -97,7 +97,10 @@ def test_the_episode_audit_refuses_a_different_transport_pin(chain):
 
 
 @pytest.mark.parametrize('defect,reason',[('constant-frame','Constant cam_left frame'),('diverge','Replay diverged'),
-                                          ('unlisted-member','Bundle members differ')])
+                                          ('unlisted-member','Bundle members differ'),
+                                          ('diagnostics','diagnostics event differs from the independently recomputed held provenance'),
+                                          ('provenance-sha','held provenance digest differs'),
+                                          ('schedule','Recorded action differs from the frozen schedule at tick 30')])
 def test_defects_the_parents_cannot_see_fail_the_episode_audit(tmp_path,defect,reason):
     value,stage=build_chain(tmp_path,defect)
     try:
@@ -124,3 +127,15 @@ def test_a_characterized_undeclared_miss_is_refused_before_reservation(tmp_path)
         assert code!=0 and value['result'] is None and b'undeclared by the episode rosters' in stderr
         assert not (value['root']/OUTPUT).exists()
     finally:remove(stage)
+
+
+def test_the_audit_recomputes_the_exact_held_provenance_record(chain):
+    import importlib.util
+    root=chain['root'];spec=importlib.util.spec_from_file_location('episode_auditor_fixture',root/AUDITOR)
+    auditor=importlib.util.module_from_spec(spec);spec.loader.exec_module(auditor)
+    output=root/OUTPUT;registration=json.loads((output/'control/worker-registration-source.json').read_bytes())
+    dependencies=json.loads((output/'control/dependencies.json').read_bytes())
+    report,raw=auditor.provenance_report(registration,dependencies['distributions'],(root/'pyproject.toml').read_bytes())
+    events=[json.loads(line) for line in (output/'payload-source'/chain['allocation']['run_ids']['source']/'recording/events.jsonl').read_bytes().splitlines()]
+    assert [e['report'] for e in events if e['kind']=='diagnostics']==[report]
+    assert sha(raw)==chain['result']['provenance_sha256']
