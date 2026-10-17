@@ -1,0 +1,37 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-preparation-03.json",
+    "--sha256",
+    "f915023564ace5cfe61bd034fc24f8ee6f33ebce0c783875b52ce2cf49def54d",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-03-external-cli-transport.json",
+    "--transport-sha256",
+    "5f1c25b6049b2a16106ae5d38e810fad90dde15bc1c6c354681483597870d415",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.json"
+  ],
+  "elapsed_seconds": 11.790607495000586,
+  "kind": "externally-observed-cpu-auditor-cli-v1",
+  "observed_returncode": 0,
+  "published": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.json",
+    "sha256": "c5c7da423dd81cbf9f6b60907f50e1e326d3afbbee8fa2269eea9ed3fd19e78b",
+    "size_bytes": 1583
+  },
+  "stderr": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.stdout",
+    "sha256": "c5c7da423dd81cbf9f6b60907f50e1e326d3afbbee8fa2269eea9ed3fd19e78b",
+    "size_bytes": 1583
+  }
+}
