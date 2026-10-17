@@ -125,6 +125,8 @@ QUALIFY11_HIDDEN_IMPORTS=['networkx','pandas','sklearn','torch.utils._cxx_pytree
 LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
 PREPARATION02_AUDITOR_SHA256='04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b'
 PREPARATION03_AUDITOR_SHA256='6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd'
+# The independent auditor whose bytes must accept preparation04 (allocation 15).
+PREPARATION04_AUDITOR_SHA256='972ef46c0e94c24e234577b956ec2bf65730095de7ad05871dcedddb9e07eb47'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',

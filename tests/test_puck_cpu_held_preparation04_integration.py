@@ -115,6 +115,7 @@ def test_authored_preparation04_stages_the_episode_closure_once(tmp_path,stage):
     assert code!=0 and json.loads(result_path.read_bytes())==prepared
     configuration=root/'authored-prepare04-configuration.json';transport=root/'authored-prepare04-transport.json'
     published=root/'docs/authored/prepare04-audit.json';published.parent.mkdir(parents=True,exist_ok=True)
+    write(root,'scripts/audit_puck_cpu_held_runtime.py',(ROOT/'scripts/audit_puck_cpu_held_runtime.py').read_bytes())
     audited=subprocess.run([api.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
         '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),'--transport',str(transport),
         '--transport-sha256',digest(transport.read_bytes()),'--output',str(published)],cwd=root,capture_output=True,timeout=120,
