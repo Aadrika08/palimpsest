@@ -1,0 +1,34 @@
+{
+  "absent": 19,
+  "at_utc": "2026-10-17T07:24:24.417001+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "dry_run": true,
+  "git": {
+    "clean": false,
+    "controls_git_bound": 12,
+    "head": "7b4328b3a4fc549f5127c009c1ba6b948037c06d",
+    "origin": null
+  },
+  "host": {
+    "baseline_external_files": 10,
+    "baseline_files": 4233,
+    "baseline_links": 1048,
+    "native_aliases": 23,
+    "native_files": 29
+  },
+  "kind": "palimpsest-prep03-preflight-v1",
+  "phase": "observer",
+  "pins_checked": 44,
+  "resources": {
+    "disk_available_bytes": 44256624640,
+    "floors_met": true,
+    "mem_available_bytes": 8719736832,
+    "nofile": [
+      524288,
+      524288
+    ],
+    "tmp_flags": 6,
+    "tmpfs_available_bytes": 6292930560
+  },
+  "status": "PASS_PREFLIGHT_OBSERVER"
+}
