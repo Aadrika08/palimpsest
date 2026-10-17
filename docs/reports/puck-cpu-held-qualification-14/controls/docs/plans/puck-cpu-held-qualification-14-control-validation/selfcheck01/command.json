@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-control-selfcheck.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-14-control-selfcheck.py",
+      "sha256": "be60f69fd7d4095a216c0e9d4b3de212a2d6c628abf5fb613b1a4b8f8bb77034",
+      "size_bytes": 15321
+    }
+  ],
+  "scope": "authenticated metadata readers only; no admission/main, SITE/staged/native payloads or vendors"
+}
