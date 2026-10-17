@@ -26,7 +26,7 @@ NATIVE_V5 = 'puck-cpu-characterization-native-metadata-v5'
 # Mesa/llvmpipe, LLVM, glfw) and the one GLVND EGL vendor JSON staged under control.
 NATIVE_V6 = 'puck-cpu-characterization-native-metadata-v6'
 _V6_KEYS = {'kind', 'status', 'root_scope', 'errors', 'oversized_native_files', 'required_missing_names',
-            'native_files', 'aliases', 'dynamic_leaves', 'egl_vendor'}
+            'native_files', 'aliases', 'dynamic_leaves', 'egl_vendor', 'provenance', 'limitations'}
 _V6_LEAF_BYTES = 256 * 1024**2
 _V6_FILES = 256
 EGL_VENDOR_CONTROL = '/puck/control/egl-vendor.json'
@@ -232,6 +232,10 @@ def _resolve(native, path):
 
 
 def _dynamic(native, files):
+    limitations = native['limitations']
+    if (type(native['provenance']) is not dict or type(limitations) is not list or not 1 <= len(limitations) <= 64
+            or any(type(text) is not str or not 0 < len(text) <= 1024 for text in limitations)):
+        raise ValueError('CPU native metadata v6 provenance and limitations are required')
     leaves = native['dynamic_leaves']
     if (type(leaves) is not list or not 1 <= len(leaves) <= _V6_FILES or leaves != sorted(set(leaves))
             or any(type(path) is not str or not path.startswith('/usr/lib/') or path not in files for path in leaves)):

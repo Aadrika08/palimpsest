@@ -115,3 +115,24 @@ def test_staged_egl_vendor_json_refuses_any_other_bytes(defect):
 
 def test_egl_vendor_requires_v6_metadata():
     with pytest.raises(ValueError):api().egl_vendor_control(case()['native'],VENDOR)
+
+
+def test_committed_metadata06_is_a_valid_v6_episode_selection(tmp_path):
+    from pathlib import Path
+    from test_puck_cpu_namespace import BASELINE, BASE_PATHS, PYTHON
+    root=Path(__file__).resolve().parents[1]
+    document=json.loads((root/'docs/plans/puck-cpu-characterization-native-metadata-06.json').read_bytes())
+    import time
+    groups=api()._native(document,time.monotonic()+30)
+    assert document['kind']=='puck-cpu-characterization-native-metadata-v6' and len(document['native_files'])==60
+    assert {'lib/libLLVM.so.22.1','lib/libEGL_mesa.so.0.0.0','lib/locale/locale-archive'}<={r['path'] for r in groups[1]}
+    assert document['egl_vendor']['library_path']=='libEGL_mesa.so.0'
+    assert set(document['dynamic_leaves'])>={'/usr/lib/libEGL_mesa.so.0.0.0','/usr/lib/libLLVM.so.22.1'}
+    paths={}
+    for key in ('stage_parent','source_root','control_root','output_root'):
+        path=tmp_path/key;path.mkdir(mode=0o700);paths[key]=str(path)
+    (tmp_path/'stage_parent/inputs').mkdir(mode=0o700)
+    from palimpsest.puck_cpu_namespace import sandbox_command
+    command=sandbox_command(BASELINE,document,BASE_PATHS,phase='episode-source',command=[PYTHON,'-I'],
+        environment={'HOME':'/scratch/home'},**paths)
+    assert ['--symlink','libEGL_mesa.so.0.0.0','/usr/lib/libEGL_mesa.so.0'] in [command[i:i+3] for i in range(len(command)-2)]
