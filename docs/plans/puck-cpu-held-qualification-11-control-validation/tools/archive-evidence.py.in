@@ -5,7 +5,7 @@ root=Path('/home/utkarsh/.codex/worktrees/0071/brain')
 base='docs/plans/puck-cpu-held-qualification-11'
 control='@CONTROL@'
 source='8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15'
-packet=root/'docs/reports/puck-cpu-held-qualification-11'
+packet=root/'docs/reports/puck-cpu-held-qualification-11b'
 end=time.monotonic()+60
 
 def read(path):
