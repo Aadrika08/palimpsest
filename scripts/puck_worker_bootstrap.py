@@ -19,6 +19,7 @@ import time
 import types
 
 MiB = 1024**2
+EXTENDED_SECONDS = 360  # Only an explicit policy-v5 registration may extend the 180 s worker clock.
 BOOTSTRAP = 'scripts/puck_worker_bootstrap.py'
 HOLDER = 'src/palimpsest/puck_execution_files.py'
 ENTRY = 'palimpsest.puck_worker_preflight'
@@ -162,7 +163,7 @@ def _parse(raw, expected):
         raise ValueError('Externally pinned bounded worker registration required')
     reg = _decode(raw)
     if (type(reg.get('version')) is not int or reg['version'] not in (1, 2, 3)
-            or set(reg) != (_FIELDS if reg['version'] == 1 else
+            or set(reg)-({'deadline_seconds'} if reg['version']==3 else set()) != (_FIELDS if reg['version'] == 1 else
                 _FIELDS | {'dependencies'} | ({'qualification'} if reg['version']==3 else set()))
             or reg['kind'] != 'puck-worker-source-bootstrap-v'+str(reg['version'])
             or reg['qualification_claims'] != [] or reg['executable'] is not False):
@@ -206,6 +207,9 @@ def _parse(raw, expected):
             if q['version']==5 and any(a==b or a.startswith(b+'.') or b.startswith(a+'.')
                     for a in q['hidden_imports'] for b in negatives):
                 raise ValueError('Expected hidden imports must be disjoint from expected missing imports')
+    if 'deadline_seconds' in reg and (type(reg['deadline_seconds']) is not int
+            or reg['deadline_seconds']!=EXTENDED_SECONDS or reg['qualification']['version']!=5):
+        raise ValueError('Exact extended worker deadline requires qualification v5')
     _path(reg['source_root']); _path(reg['cwd'])
     files = reg['source_files']
     if type(files) is not list or not 1 <= len(files) <= 512:
@@ -365,9 +369,11 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
 class HeldWorkerBootstrap:
     """Fresh process source custody only; later dependency admission is required."""
     def __init__(self, registration_raw, *, expected_sha256, deadline, registration_path):
-        if type(deadline) not in (int, float) or not math.isfinite(deadline) or not time.monotonic() < deadline <= time.monotonic()+180:
+        if type(deadline) not in (int, float) or not math.isfinite(deadline) or not time.monotonic() < deadline <= time.monotonic()+EXTENDED_SECONDS:
             raise ValueError('Bounded worker deadline required')
         self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+        self._deadline_seconds = self._reg.get('deadline_seconds', 180)
+        if deadline > time.monotonic()+self._deadline_seconds: raise ValueError('Bounded worker deadline required')
         self._raw = registration_raw; self._sha = expected_sha256; self._deadline = deadline
         self._registration_path = _path(registration_path)
         self._state = 'new'; self._first_failure = None; self._children = []; self._loaded = {}; self._bindings = []
@@ -629,7 +635,7 @@ class HeldWorkerBootstrap:
                 if len(raw) != dep['size_bytes']:
                     raise ValueError('Dependency registration reference size differs')
                 provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
-                    deadline=self._deadline, registration_path=dep['path']))
+                    deadline=self._deadline, registration_path=dep['path'], deadline_seconds=self._deadline_seconds))
                 self._dependencies = DependencyImports(provider, self._import_recheck, self.recheck, self._fail,
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']])
@@ -926,8 +932,9 @@ def main():
     if len(sys.argv) != 5: raise ValueError('Exact seeded bootstrap arguments required')
     registration_path, expected = sys.argv[3:5]
     payload = _read_initial(registration_path, expected)
+    seconds = _parse(payload, expected)[0].get('deadline_seconds', 180)
     with HeldWorkerBootstrap(payload, expected_sha256=expected,
-            deadline=time.monotonic()+180, registration_path=registration_path) as admission:
+            deadline=time.monotonic()+seconds, registration_path=registration_path) as admission:
         receipt = admission.invoke()
     # Terminal transport after successful final recheck/close. Parent must bind
     # this to independently observed identity, exit, drained descendants and

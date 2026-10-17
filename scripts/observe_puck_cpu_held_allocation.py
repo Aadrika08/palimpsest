@@ -15,6 +15,8 @@ PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bi
 NORMAL_SECONDS=210
 CLEANUP_SECONDS=5
 HARD_SECONDS=225
+# Allocation 14 extends the parent clocks to 360/375/390 s; its observer keeps the same margins.
+EXTENDED_SECONDS={14:(400,415)}
 MAX_STREAM_BYTES=16*1024**2
 MAX_INHERITED_FILE_BYTES=1024**3
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
@@ -55,19 +57,23 @@ def observe(configuration,expected_sha256):
     config=json.loads(raw)
     if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
     phase=config.get('phase')
-    version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7,'puck-cpu-held-runtime-allocation-v8':8,'puck-cpu-held-runtime-allocation-v9':9,'puck-cpu-held-runtime-allocation-v10':10,'puck-cpu-held-runtime-allocation-v11':11,'puck-cpu-held-runtime-allocation-v12':12}.get(config.get('kind'))
+    version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7,'puck-cpu-held-runtime-allocation-v8':8,'puck-cpu-held-runtime-allocation-v9':9,'puck-cpu-held-runtime-allocation-v10':10,'puck-cpu-held-runtime-allocation-v11':11,'puck-cpu-held-runtime-allocation-v12':12,'puck-cpu-held-runtime-allocation-v13':13,'puck-cpu-held-runtime-allocation-v14':14}.get(config.get('kind'))
     amended=version is not None
     if amended:
-        # Allocation 12 is the fresh preparation02; every other amended allocation qualifies.
-        if (phase!=('prepare' if version==12 else 'qualify') or type(config.get('version')) is not int or config['version']!=version
+        # Allocations 12/13 are fresh preparations02/03; every other amended allocation qualifies.
+        if (phase!=('prepare' if version in (12,13) else 'qualify') or type(config.get('version')) is not int or config['version']!=version
                 or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
             raise ValueError('Exact amended qualification allocation identity required')
-        output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07',8:'runs/puck-cpu-held-qualification-08',9:'runs/puck-cpu-held-qualification-09',10:'runs/puck-cpu-held-qualification-10',11:'runs/puck-cpu-held-qualification-11',12:'runs/puck-cpu-held-preparation-02'}[version]
+        output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07',8:'runs/puck-cpu-held-qualification-08',9:'runs/puck-cpu-held-qualification-09',10:'runs/puck-cpu-held-qualification-10',11:'runs/puck-cpu-held-qualification-11',12:'runs/puck-cpu-held-preparation-02',13:'runs/puck-cpu-held-preparation-03',14:'runs/puck-cpu-held-qualification-14'}[version]
     else:
         if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
             raise ValueError('Exact CPU parent allocation root and phase required')
         output_name=OUTPUTS[phase]
     if config.get('root')!=str(ROOT):raise ValueError('Exact CPU parent allocation root required')
+    normal,hard=EXTENDED_SECONDS.get(version,(NORMAL_SECONDS,HARD_SECONDS))
+    if hard!=HARD_SECONDS and signal.getitimer(signal.ITIMER_REAL)[0]>0:
+        # Extend only an armed outer alarm (the CLI's); direct API callers arm none.
+        signal.setitimer(signal.ITIMER_REAL,max(.001,started+hard-time.monotonic()))
     output=ROOT/output_name
     paths={name:Path(output_name+'-external-cli.'+name) for name in ('stdout','stderr')}
     receipt=Path(output_name+'-external-cli-transport.json')
@@ -81,7 +87,7 @@ def observe(configuration,expected_sha256):
         with open(ROOT/paths['stderr'],'xb',buffering=0) as stderr:
             os.chmod(ROOT/paths['stderr'],0o600)
             try:
-                remaining=started+NORMAL_SECONDS-time.monotonic()
+                remaining=started+normal-time.monotonic()
                 if remaining<=0:raise TimeoutError('CPU observation deadline before launch')
                 process=subprocess.Popen(command,cwd=ROOT,env=ENVIRONMENT,
                     stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,start_new_session=True,close_fds=True)
