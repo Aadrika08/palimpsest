@@ -77,6 +77,11 @@ PHYSICAL=('cam_left','cam_right','raw_cam_left','raw_cam_right','sensors','actio
 CAMERAS=('cam_left','cam_right','raw_cam_left','raw_cam_right')
 FRAME=(128,128,3)
 ATOL=RTOL=1e-6
+# Independent copy of the held provenance (doctor-schema) record definition.
+UPSTREAM='upstream/fly-gym/'
+SIMULATION_DISTRIBUTIONS=('torch','torchvision','numpy','scipy','pandas','scikit-learn','mujoco','gymnasium','glfw',
+    'opencv-python','matplotlib','seaborn','networkx','python-louvain','py7zr')
+NOT_INSPECTED='not inspected in the held runtime'
 MEMBERS={'outer','configuration.json','resource-admission.json','baseline-before.json','baseline-after.json','control',
     'logs-source','logs-replay','payload-source','payload-replay','result.json',
     *(phase+suffix for phase in PHASES for suffix in ('-invocation.json','-supervision.json'))}
@@ -256,7 +261,7 @@ def registration(config,phase,files,dependency_raw,bootstrap_raw):
         dependencies=dict(path='/puck/control/dependencies.json',size_bytes=len(dependency_raw),sha256=sha(dependency_raw)),
         episode=episode,qualification_claims=[],executable=False,deadline_seconds=360)
     raw=canonical(value,False)
-    return raw,[PYTHON,'-I','-B','-S','-c',LAUNCHER]+prefix+[sha(raw)]
+    return value,raw,[PYTHON,'-I','-B','-S','-c',LAUNCHER]+prefix+[sha(raw)]
 
 
 def namespace(config,baseline,native,observation,phase,files,worker_command):
@@ -284,6 +289,49 @@ def namespace(config,baseline,native,observation,phase,files,worker_command):
     return cmd+['--chdir','/puck/source']+worker_command
 
 
+def provenance_report(registration,distributions,pyproject_raw):
+    """The held provenance record recomputed from the registration, dependency rows and pinned pyproject bytes."""
+    import tomllib
+    compact=lambda value:json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+    normalized=lambda name:re.sub(r'[-_.]+','-',name).lower()
+    runtime=registration['runtime'];pin=runtime['files'][0];episode=registration['episode'];environment=registration['environment']
+    interpreter=dict(path=str(PurePosixPath(runtime['root'])/pin['path']),size_bytes=pin['size_bytes'],sha256=pin['sha256'],
+                     python_version=runtime['python_version'])
+    rows=[dict(path=r['path'][len(UPSTREAM):],size_bytes=r['size_bytes'],sha256=r['sha256'])
+          for r in registration['source_files'] if r['path'].startswith(UPSTREAM)]
+    require(rows and [r['path'] for r in rows]==sorted({r['path'] for r in rows}),'Registered upstream rows required')
+    versions={}
+    for row in distributions:
+        require(normalized(row['name']) not in versions,'Registered distributions must be unique');versions[normalized(row['name'])]=row['version']
+    lock=[r['sha256'] for r in registration['source_files'] if r['path']=='uv.lock'];require(len(lock)==1,'Registered uv.lock required')
+    version=tomllib.loads(pyproject_raw.decode('utf-8'))['project']['version'];python=interpreter['python_version']
+    checks=[dict(name='python',status='ok' if python.startswith('3.11.') else 'error',
+                 detail=dict(version=python,executable=interpreter['path'],required='Python 3.11; uv sync --extra simulation')),
+            dict(name='platform',status='info',detail=dict(platform=NOT_INSPECTED,machine=NOT_INSPECTED)),
+            dict(name='dependency:palimpsest',status='ok',detail=version)]
+    for name in SIMULATION_DISTRIBUTIONS:
+        found=versions.get(normalized(name))
+        checks.append(dict(name='dependency:'+name,status='missing',detail='Not a registered held distribution') if found is None
+                      else dict(name='dependency:'+name,status='ok',detail=found))
+    commit=episode['upstream_commit']
+    checks+=[dict(name='upstream',status='ok' if commit==EPISODE['upstream_commit'] else 'error',
+                  detail=dict(path=str(PurePosixPath(registration['source_root'])/UPSTREAM.rstrip('/')),commit=commit,
+                              expected_commit=EPISODE['upstream_commit'],dirty=False,changes=[])),
+             dict(name='ram',status='info',detail=NOT_INSPECTED),dict(name='disk',status='info',detail=NOT_INSPECTED),
+             dict(name='gpu',status='info',detail=dict(devices=[],source=NOT_INSPECTED)),
+             dict(name='assets',status='info',detail=NOT_INSPECTED),
+             dict(name='renderer',status='info',detail=dict(requested_backend=environment.get('MUJOCO_GL','platform default'),
+                  backend_selection='explicit MUJOCO_GL' if 'MUJOCO_GL' in environment else 'MuJoCo platform default',
+                  probed=False,command='palimpsest doctor --probe-renderer')),
+             dict(name='hardware',status='info',detail='Physical hardware has not been assessed; simulation setup does not qualify a rover'),
+             dict(name='held-provenance',status='info',detail=dict(kind='puck-held-provenance-v1',interpreter=interpreter,
+                  upstream=dict(commit=commit,file_count=len(rows),files_sha256=sha(compact(rows))),
+                  distributions_sha256=sha(compact(sorted(versions.items()))),environment_sha256=sha(compact(environment)),
+                  lock_sha256=lock[0],scope='authenticated registration pins; '+NOT_INSPECTED+' host'))]
+    report=dict(schema_version=1,checks=checks,ready=all(c['status'] not in ('missing','error') for c in checks))
+    return report,compact(report)
+
+
 def validate_entry(value,config,phase):
     ids=config['run_ids'];ticks=EPISODE['schedule']['ticks']
     keys={'kind','version','phase','run_id','source_run_id','ticks_requested','provenance_sha256','versions','bundle',*EPISODE_CLAIMS,
@@ -304,7 +352,7 @@ def validate_entry(value,config,phase):
                 'Replay must pass every tick')
 
 
-def recording(run,v,reader,ticks):
+def recording(run,v,reader,ticks,provenance):
     """Validate one run's published recording; return per-tick array rows and the registered initial snapshot."""
     manifest,_=reader.json(run/'recording/manifest.json',MiB)
     require(manifest.get('status')=='completed' and manifest.get('recording_format')=='palimpsest-npz-v1'
@@ -328,6 +376,16 @@ def recording(run,v,reader,ticks):
         split={name:array.rows() for name,array in arrays.items()}
         for offset in range(event['count']):rows.append({name:(arrays[name],split[name][offset]) for name in arrays})
     require(len(rows)==ticks,'Recorded ticks differ from the schedule')
+    diagnostics=[e for e in events if e['kind']=='diagnostics']
+    require(len(diagnostics)==1 and diagnostics[0].get('run_id')==run.name and diagnostics[0].get('report')==provenance,
+            'The '+run.name+' diagnostics event differs from the independently recomputed held provenance')
+    # One step per tick; the action set at 0 and N//2 is held between.
+    actions=EPISODE['schedule']['actions']
+    for tick,row in enumerate(rows):
+        array,raw=row['action'];expected=[values for start,*values in actions if start<=tick][-1]
+        require(array.descr in ('<f8','<f4') and array.shape[1:]==(2,),'Recorded action must be two floats')
+        code='d' if array.descr=='<f8' else 'f'
+        require(list(struct.unpack('<2'+code,raw))==expected,'Recorded action differs from the frozen schedule at tick %d' % tick)
     snapshots=[e for e in events if e['kind']=='snapshot_registered']
     require(len(snapshots)==1 and snapshots[0].get('initial') is True and snapshots[0].get('filename')=='initial.snp','Exactly one initial snapshot required')
     record=snapshots[0];index,_=reader.json(run/'snapshots/index.json',MiB);entry=index.get('snapshots',{}).get(record['snapshot_id'],{})
@@ -381,7 +439,9 @@ def audit(configuration,expected_sha,transport,transport_sha,deadline):
     declared=set(NEGATIVE_IMPORTS)|set(HIDDEN_IMPORTS);count=sum(len(r['files']) for r in dependencies['roots'])
     total=sum(f['size_bytes'] for r in dependencies['roots'] for f in r['files']);entries={};recordings={};reports={}
     for phase in PHASES:
-        registration_raw,worker_command=registration(config,phase,files,dependency_raw,bootstrap)
+        registration_value,registration_raw,worker_command=registration(config,phase,files,dependency_raw,bootstrap)
+        expected_report,expected_raw=provenance_report(registration_value,dependencies['distributions'],
+                                                       reader.bytes(ROOT/'pyproject.toml',MiB,pins['pyproject.toml']))
         require(reader.bytes(output/('control/worker-registration-'+phase+'.json'),MiB)==registration_raw,'Independent '+phase+' registration differs')
         invocation=reader.json(output/(phase+'-invocation.json'))[0]
         require(invocation==dict(command=namespace(config,baseline,native,observation,phase,files,worker_command),configuration_sha256=expected_sha),
@@ -402,11 +462,12 @@ def audit(configuration,expected_sha,transport,transport_sha,deadline):
                 and dep.get('registration_sha256')==sha(dependency_raw) and dep.get('root_count')==4 and dep.get('file_count')==count
                 and dep.get('input_bytes')==total and dep.get('native_identity')=='tmpfs-raw-dev-inode-v1','Held '+phase+' bootstrap receipt differs')
         entry=receipt['entry_result'];validate_entry(entry,config,phase);entries[phase]=(entry,sha(stdout),sha(registration_raw))
+        require(entry['provenance_sha256']==sha(expected_raw),'The '+phase+' held provenance digest differs from the independent record')
         payload=output/('payload-'+phase);run=payload/config['run_ids'][phase];bundle=entry['bundle']
         require({e.name for e in os.scandir(payload)}=={bundle['path'],run.name} and stat.S_ISDIR(run.lstat().st_mode),'Payload members differ: '+phase)
         reader.bytes(payload/bundle['path'],LIMITS['file_bytes'],bundle,keep=False)
         checked=v.validate_bundle(payload/bundle['path'],run);require(checked['sha256']==bundle['sha256'],'Validated bundle differs: '+phase)
-        recordings[phase]=recording(run,v,reader,EPISODE['schedule']['ticks'])
+        recordings[phase]=recording(run,v,reader,EPISODE['schedule']['ticks'],expected_report)
     source_entry,replay_entry=entries['source'][0],entries['replay'][0]
     require(source_entry['initial_snapshot_id']==recordings['source'][1]['snapshot_id'],'Source snapshot identity differs from its registration')
     require(source_entry['provenance_sha256']==replay_entry['provenance_sha256'],'Held provenance differs between phases')
