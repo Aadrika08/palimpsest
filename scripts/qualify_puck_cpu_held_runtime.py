@@ -31,6 +31,8 @@ OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-
 # Fresh allocation 12: preparation01's tmpfs forest cannot be recreated without forging custody.
 PREPARATION02='runs/puck-cpu-held-preparation-02'
 PREPARATION03='runs/puck-cpu-held-preparation-03'
+# Allocation 15 prepares the held episode closure from characterization-04 evidence.
+PREPARATION04='runs/puck-cpu-held-preparation-04'
 QUALIFY02='runs/puck-cpu-held-qualification-02'
 QUALIFY03='runs/puck-cpu-held-qualification-03'
 QUALIFY04='runs/puck-cpu-held-qualification-04'
@@ -172,6 +174,13 @@ INPUT_ROLES=tuple(sorted(('inventory','layout','candidate','native','baseline','
     'observation_configuration','observation_report','observation_result','observation_audit','observation_index')))
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,
     study_authorized=False,executable=False,qualification_claims=[])
+EPISODE_VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',mujoco='3.3.6',gymnasium='1.2.1')
+PREPARATION04_SOURCES=tuple(sorted(set(SOURCES)|set(EPISODE_WORKER_SOURCES)))
+PREPARATION04_INPUT_ROLES=tuple(sorted(INPUT_ROLES+('observation_replay_report',)))
+EPISODE_OBSERVATION_PATHS=dict(observation_configuration='frozen-configuration.json',
+    observation_report='raw/payload/source/characterization.json',
+    observation_replay_report='raw/payload/replay/characterization.json',
+    observation_result='raw/result.json',observation_audit='outcome-audit-04.json')
 LIMITS={phase:dict(normal_seconds=180,child_hard_seconds=190,hard_seconds=200,
     rss_bytes=2048*MiB,address_space_bytes=8192*MiB,output_bytes=64*MiB,
     scratch_bytes=64*MiB,file_bytes=(1024 if phase=='prepare' else 16)*MiB,min_free_bytes=4096*MiB,
@@ -197,15 +206,16 @@ def relative(value):
     return value
 
 
-def pin(row):
+def pin(row,*,empty=False):
+    # Only preparation04's episode closure carries empty sources (two upstream __init__ files).
     if (type(row) is not dict or set(row)!={'path','size_bytes','sha256'}
-            or type(row['size_bytes']) is not int or not 0<row['size_bytes']<=16*MiB
+            or type(row['size_bytes']) is not int or not (0 if empty else 1)<=row['size_bytes']<=16*MiB
             or type(row['sha256']) is not str or re.fullmatch('[0-9a-f]{64}',row['sha256']) is None):
         raise ValueError('Exact bounded CPU input pin required')
     relative(row['path']);return row
 
 
-def read(path,maximum,expected=None):
+def read(path,maximum,expected=None,*,empty=False):
     """Initial bounded nofollow read before importing any repository helpers."""
     path=Path(path);fds=[]
     if not path.is_absolute() or str(path)!=os.fspath(path) or any(p in ('.','..') for p in path.parts):
@@ -216,7 +226,7 @@ def read(path,maximum,expected=None):
             fd=os.open(name,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=fd);fds.append(fd)
         leaf=os.open(path.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd);fds.append(leaf)
         before=os.fstat(leaf)
-        if not stat.S_ISREG(before.st_mode) or before.st_nlink!=1 or not 0<before.st_size<=maximum:
+        if not stat.S_ISREG(before.st_mode) or before.st_nlink!=1 or not (0 if empty else 1)<=before.st_size<=maximum:
             raise ValueError('CPU control is not bounded single-link regular data')
         with os.fdopen(os.dup(leaf),'rb') as handle:raw=handle.read(maximum+1)
         identity=lambda v:(v.st_dev,v.st_ino,v.st_mode,v.st_size,v.st_mtime_ns,v.st_ctime_ns,v.st_nlink)
@@ -278,28 +288,29 @@ def validate_configuration(config):
           'interpreter','environment','expected_versions','limits','negative_imports','claims'}
     phase=config.get('phase') if type(config) is dict else None
     kind=config.get('kind') if type(config) is dict else None
-    epoch=14 if kind=='puck-cpu-held-runtime-allocation-v14' else 13 if kind=='puck-cpu-held-runtime-allocation-v13' else 12 if kind=='puck-cpu-held-runtime-allocation-v12' else 11 if kind=='puck-cpu-held-runtime-allocation-v11' else 10 if kind=='puck-cpu-held-runtime-allocation-v10' else 9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+    epoch=15 if kind=='puck-cpu-held-runtime-allocation-v15' else 14 if kind=='puck-cpu-held-runtime-allocation-v14' else 13 if kind=='puck-cpu-held-runtime-allocation-v13' else 12 if kind=='puck-cpu-held-runtime-allocation-v12' else 11 if kind=='puck-cpu-held-runtime-allocation-v11' else 10 if kind=='puck-cpu-held-runtime-allocation-v10' else 9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
     amended=epoch in (2,3,4,5,6,7,8,9,10,11,14)
     if amended:keys.add('preparation_acceptance')
     elif phase=='qualify':keys.add('preparation')
-    if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify') or (epoch in (12,13) and phase!='prepare')
+    if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify') or (epoch in (12,13,15) and phase!='prepare')
             or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
             or type(config['version']) is not int or config['version']!=epoch
             or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
             or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(QUALIFY14_LIMITS if epoch==14 else LIMITS[phase])
             or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
-            or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+            or config['expected_versions']!=(EPISODE_VERSIONS if epoch==15 else VERSIONS)
+            or canonical(config['claims'])!=canonical(CLAIMS)):
         raise ValueError('Exact CPU allocation configuration required')
     stage=config['stage_parent']
     if (type(stage) is not str or Path(stage).parent!=Path('/tmp') or str(Path(stage))!=stage
             or not re.fullmatch(r'/tmp/palimpsest-puck-cpu-held-[A-Za-z0-9_-]+',stage)):
         raise ValueError('Private CPU tmpfs allocation path required')
-    family={12:'02',13:'03'}.get(bound_preparation(epoch))
+    family={12:'02',13:'03',15:'04'}.get(bound_preparation(epoch))
     if family and not re.fullmatch(r'/tmp/palimpsest-puck-cpu-held-'+family+r'(?:-[A-Za-z0-9_-]+)?',stage):
         raise ValueError('Private CPU preparation'+family+' tmpfs allocation path required')
     sources=config['sources'];inputs=config['inputs']
-    if (type(sources) is not list or [pin(r)['path'] for r in sources]!=list(SOURCES)
-            or type(inputs) is not dict or set(inputs)!=set(INPUT_ROLES)):
+    if (type(sources) is not list or [pin(r,empty=epoch==15)['path'] for r in sources]!=list(PREPARATION04_SOURCES if epoch==15 else SOURCES)
+            or type(inputs) is not dict or set(inputs)!=set(PREPARATION04_INPUT_ROLES if epoch==15 else INPUT_ROLES)):
         raise ValueError('Exact CPU source/input closure required')
     for row in inputs.values():pin(row)
     if amended:
@@ -318,17 +329,17 @@ def validate_configuration(config):
         raise ValueError('Exact CPU qualification0'+str(epoch)+' missing-import roster required')
     if epoch in (11,14) and config['negative_imports']!=QUALIFY11_NEGATIVE_IMPORTS:
         raise ValueError('Exact CPU qualification'+str(epoch)+' missing-import roster required')
-    if epoch in (12,13) and config['negative_imports']!=PREPARATION_NEGATIVE_IMPORTS:
-        raise ValueError('Exact CPU preparation0'+str(epoch-10)+' missing-import roster required')
+    if epoch in (12,13,15) and config['negative_imports']!=PREPARATION_NEGATIVE_IMPORTS:
+        raise ValueError('Exact CPU preparation'+family+' missing-import roster required')
 
 
 def bound_preparation(version):
     """The preparation allocation an allocation creates or binds; epochs 1-10 keep 01."""
-    return {11:12,12:12,13:13,14:13}.get(version,1)
+    return {11:12,12:12,13:13,14:13,15:15}.get(version,1)
 
 
 def preparation_output(config):
-    return {1:OUTPUTS['prepare'],12:PREPARATION02,13:PREPARATION03}[bound_preparation(config['version'])]
+    return {1:OUTPUTS['prepare'],12:PREPARATION02,13:PREPARATION03,15:PREPARATION04}[bound_preparation(config['version'])]
 
 
 def planning(deadline):
@@ -338,6 +349,7 @@ def planning(deadline):
 
 def allocation_output(config):
     validate_configuration(config)
+    if config['version']==15:return PREPARATION04
     if config['version']==14:return QUALIFY14
     if config['version']==13:return PREPARATION03
     if config['version']==12:return PREPARATION02
@@ -583,10 +595,12 @@ def validate_worker_result(result,*,registration_sha256,dependency_sha256,depend
 
 def validate_observation_links(config,blobs):
     pins=config['inputs'];frozen=decode(blobs['observation_configuration'])
+    # Preparation04 binds characterization-04 (kind v3); every older allocation binds characterization02.
+    episode=config.get('version')==15
     roles=('inventory','layout','native','baseline','accepted_result','accepted_snapshot',
            'accepted_audit','accepted_configuration','accepted_index')
-    if (frozen.get('kind')!='puck-cpu-runtime-characterization-v1'
-            or type(frozen.get('version')) is not int or frozen['version']!=1
+    if (frozen.get('kind')!=('puck-cpu-runtime-characterization-v3' if episode else 'puck-cpu-runtime-characterization-v1')
+            or type(frozen.get('version')) is not int or frozen['version']!=(3 if episode else 1)
             or type(frozen.get('roles')) is not dict or type(frozen.get('inputs')) is not list):
         raise ValueError('Authenticated CPU observation configuration differs')
     old_rows={r['path']:r for r in frozen['inputs']}
@@ -600,7 +614,8 @@ def validate_observation_links(config,blobs):
             'inventory':'raw/inventory.json','accepted_result':'raw/result.json',
             'accepted_snapshot':'raw/snapshot.json','accepted_audit':'acceptance-audit-03.json',
             'accepted_configuration':'raw/configuration.json'}),
-        'observation_index':('cpu-characterization-evidence-index-v2',{
+        'observation_index':('cpu-episode-characterization-evidence-index-v1',EPISODE_OBSERVATION_PATHS) if episode else
+            ('cpu-characterization-evidence-index-v2',{
             'observation_configuration':'frozen-configuration.json','observation_report':'raw/payload/imports.json',
             'observation_result':'raw/result.json','observation_audit':'outcome-audit-02.json'})}
     for role,(kind,paths) in bindings.items():
@@ -669,7 +684,8 @@ def validate_inputs(config,blobs):
         raise ValueError('Accepted CPU package size or directory binding differs')
     layout_pins=[r for r in accepted_config.get('inputs',[]) if r['path']==pins['layout']['path']]
     if layout_pins!=[pins['layout']]:raise ValueError('Accepted CPU layout pin differs')
-    if (observed.get('status')!='observed' or observed.get('report_sha256')!=pins['observation_report']['sha256']
+    if config.get('version')==15:validate_episode_observation(config,blobs)
+    elif (observed.get('status')!='observed' or observed.get('report_sha256')!=pins['observation_report']['sha256']
             or observed.get('configuration_sha256')!=pins['observation_configuration']['sha256']
             or observation.get('kind')!='puck-runtime-import-characterization-result-v3'
             or observation.get('versions')!=VERSIONS or observed.get('versions')!=VERSIONS
@@ -690,6 +706,55 @@ def validate_inputs(config,blobs):
     if pins['generated']!=dict(generated,path=additional[0]['root']+'/'+generated['path']):
         raise ValueError('Generated CPU helper pin differs')
     return inventory,layout,candidate,observation
+
+
+def validate_episode_observation(config,blobs):
+    """Characterization-04 result, both reports, its outcome audit and candidate 02, all bound by pins."""
+    get=lambda role:decode(blobs[role]);pins=config['inputs'];sha=lambda role:pins[role]['sha256']
+    result,audit,candidate,native=(get(k) for k in ('observation_result','observation_audit','candidate','native'))
+    reports=((get('observation_report'),'source'),(get('observation_replay_report'),'replay'))
+    false=lambda value:(all(value.get(k) is False for k in CLAIMS if k!='qualification_claims')
+                        and value.get('qualification_claims')==[])
+    verified=audit.get('verified') if type(audit.get('verified')) is dict else {}
+    if (result.get('kind')!='puck-cpu-characterization-outcome-v3' or result.get('status')!='observed'
+            or any(k in result for k in ('error','error_type')) or not false(result)
+            or result.get('configuration_sha256')!=sha('observation_configuration')
+            or result.get('source_report_sha256')!=sha('observation_report')
+            or result.get('replay_report_sha256')!=sha('observation_replay_report')
+            or result.get('versions')!=EPISODE_VERSIONS
+            or any(report.get('kind')!='puck-episode-characterization-result-v1' or report.get('status')!='observed'
+                   or report.get('phase')!=phase or report.get('versions')!=EPISODE_VERSIONS
+                   or report.get('expected_versions')!=EPISODE_VERSIONS or not false(report) for report,phase in reports)
+            or audit.get('kind')!='cpu-episode-characterization-outcome-audit-v1' or audit.get('status')!='PASS'
+            or verified.get('configuration_sha256')!=sha('observation_configuration')
+            or verified.get('result_sha256')!=sha('observation_result')
+            or verified.get('source_report_sha256')!=sha('observation_report')
+            or verified.get('replay_report_sha256')!=sha('observation_replay_report')
+            or native.get('kind')!='puck-cpu-characterization-native-metadata-v6'):
+        raise ValueError('Accepted characterization-04 episode observation binding differs')
+    if (candidate.get('kind')!='puck-cpu-episode-import-profile-candidate-v2'
+            or type(candidate.get('version')) is not int or candidate['version']!=2
+            or candidate.get('expected_versions')!=EPISODE_VERSIONS
+            or candidate.get('characterization_configuration_sha256')!=sha('observation_configuration')
+            or candidate.get('observation_reports')!=dict(source=sha('observation_report'),replay=sha('observation_replay_report'))
+            or candidate.get('observation_result_sha256')!=sha('observation_result')
+            or candidate.get('outcome_audit_sha256')!=sha('observation_audit')
+            or candidate.get('retained_inventory_sha256')!=sha('inventory')
+            or candidate.get('native_metadata_sha256')!=sha('native')):
+        raise ValueError('Episode candidate 02 binding to characterization-04 differs')
+
+
+def baseline_images(config,observation,native):
+    """The original interpreter baseline paths the namespace exempts from staged binding.
+
+    Under v6 the interpreter maps the C.UTF-8 locale and gconv cache at startup;
+    preparation04 admits those only as declared v6 dynamic leaves.
+    """
+    paths=sorted(row['path'] for row in observation['baseline_maps']['images'])
+    if config['version']!=15:return paths
+    leaves=native.get('dynamic_leaves') if native.get('kind')=='puck-cpu-characterization-native-metadata-v6' else None
+    if type(leaves) is not list:raise ValueError('Preparation04 baseline requires v6 dynamic leaves')
+    return [path for path in paths if path not in set(leaves)]
 
 
 def resource_admission(config):
@@ -727,6 +792,16 @@ def closure(before):
     after=len(os.listdir('/proc/self/fd'))
     if children or threads or before!=after:raise ValueError('CPU parent process/thread/descriptor closure failed')
     return dict(active_children=[],active_non_main_threads=[],fd_count_before=before,fd_count_after=after)
+
+
+def write_source(target,raw):
+    """Capsule writer; only preparation04's episode closure has empty sources."""
+    if raw:
+        import qualify_puck_held_runtime as controls
+        return controls.write(target,raw)
+    fd=os.open(target,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+    try:os.fsync(fd)
+    finally:os.close(fd)
 
 
 def create_capsule(directory,names,source_bytes,write):
@@ -788,7 +863,7 @@ def execute(config,raw,started):
                 native_checks()
                 baseline_before=baseline_api.verify_baseline(baseline,deadline)
                 bounds.write_new(output/'baseline-before.json',baseline_before)
-                source_bytes={r['path']:read(ROOT/r['path'],MiB,r['sha256']) for r in config['sources']}
+                source_bytes={r['path']:read(ROOT/r['path'],MiB,r['sha256'],empty=config['version']==15) for r in config['sources']}
                 generated_root=str((ROOT/config['inputs']['generated']['path']).parent)
                 source_reg=build_cpu_source_registration(blobs['inventory'],blobs['layout'],blobs['candidate'],blobs['native'],
                     expected_pins={k:{x:config['inputs'][k][x] for x in ('size_bytes','sha256')} for k in ('inventory','layout','candidate','native')},
@@ -796,8 +871,11 @@ def execute(config,raw,started):
                 if phase=='prepare':
                     os.mkdir(stage,0o700);os.chmod(stage,0o700)
                     driver_source=output/'parent-source';worker_source=output/'worker-source'
-                    for directory,names in ((driver_source,SOURCES),(worker_source,WORKER_SOURCES)):
-                        create_capsule(directory,names,source_bytes,controls.write)
+                    # Preparation04 keeps one source capsule (its whole closure) within the 16-directory output bound.
+                    capsules=(((driver_source,PREPARATION04_SOURCES),) if config['version']==15 else
+                              ((driver_source,SOURCES),(worker_source,WORKER_SOURCES)))
+                    for directory,names in capsules:
+                        create_capsule(directory,names,source_bytes,write_source)
                     copy_raw=json.dumps(source_reg,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode();controls.write(output/'control/copy-registration.json',copy_raw,16*MiB)
                     for role in ('candidate','layout'):controls.write(output/('control/'+role+'.json'),blobs[role],16*MiB)
                     request=dict(registration=dict(path='/puck/control/copy-registration.json',sha256=digest(copy_raw)),
@@ -860,7 +938,7 @@ def execute(config,raw,started):
                     controls.write(output/'control/worker-registration.json',worker_raw)
                     command=qualification_command(command)
                     generated_root=None
-                command=sandbox_command(baseline,native,sorted(r['path'] for r in observation['baseline_maps']['images']),
+                command=sandbox_command(baseline,native,baseline_images(config,observation,native),
                     phase=phase,stage_parent=str(stage),source_root=str(sandbox_source),control_root=str(output/'control'),
                     output_root=str(output/'payload'),command=command,environment=ENVIRONMENT,
                     site_root=str(ROOT/SITE) if phase=='prepare' else None,generated_root=generated_root,
@@ -870,7 +948,7 @@ def execute(config,raw,started):
                     hard_deadline=started+limits['child_hard_seconds'],rss_bytes=limits['rss_bytes'],
                     output_bytes=limits['output_bytes'],min_free_bytes=limits['min_free_bytes'],
                     max_processes=limits['max_processes'],output_root=output,guard_state=state,
-                    output_namespace_limits=(128,16),log_mode='direct',
+                    output_namespace_limits=(256,16) if config['version']==15 else (128,16),log_mode='direct',
                     process_scope='descendants' if phase=='qualify' else 'group')
                 bounds.write_new(output/'supervision.json',observed)
                 if observed['status']!='completed':raise ValueError('CPU '+phase+' worker failed; retained logs are authoritative')
@@ -911,7 +989,8 @@ def main():
         raw=read(args.configuration,MiB,args.sha256);config=decode(raw);validate_configuration(config)
         if canonical(config)!=raw:raise ValueError('Canonical CPU configuration bytes required')
         for row in config['sources']:
-            if len(read(ROOT/row['path'],MiB,row['sha256']))!=row['size_bytes']:raise ValueError('CPU frozen source size differs')
+            if len(read(ROOT/row['path'],MiB,row['sha256'],empty=config['version']==15))!=row['size_bytes']:
+                raise ValueError('CPU frozen source size differs')
         if (str(Path(sys.executable).resolve())!=PYTHON or not(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode)
                 or os.environ.get('LD_PRELOAD') or os.environ.get('LD_LIBRARY_PATH')):
             raise ValueError('Original isolated CPU parent interpreter required')
