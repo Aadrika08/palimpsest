@@ -1,0 +1,177 @@
+{
+  "byte_binding_roots": {
+    "controls": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans",
+    "tmp": "/tmp"
+  },
+  "byte_bindings": {
+    "controls": {
+      "puck-cpu-held-qualification-11-admission.py": [
+        65179,
+        "f952e828b75d4ee2d2659805c233e32ce9fc42570821d006040d189013492ed6"
+      ],
+      "puck-cpu-held-qualification-11-control-validation/pre-admission-guard.py.in": [
+        4406,
+        "3ca6af5adf126b3ea0c612986dba7956e53e56d3dea5cb2973e7d01b3d92473d"
+      ],
+      "puck-cpu-held-qualification-11-control-validation/tools/run-admission-once.py.in": [
+        2673,
+        "e2fc5e0793d3117b18299f184cd4db7d9b23fe6a58315bd9308b48f397027ce7"
+      ],
+      "puck-cpu-held-qualification-11-control-validation/tools/stage_guard.py": [
+        3442,
+        "3e1b01666731b0ffa491caec39dc187ad0e4a0b3438b1da368ff233b3e08e3a1"
+      ],
+      "puck-cpu-held-qualification-11-execution.json": [
+        4201,
+        "5f91dd92df8e62b3c97d99bc2b000a9fdc6be5760f71a97e6e70edbec1f66337"
+      ],
+      "puck-cpu-held-qualification-11-external.py": [
+        4227,
+        "d5ec3a6a352adc8db97e8f0c75702d7c320119b61ce11c8ffeecb9098705a5f8"
+      ],
+      "puck-cpu-held-qualification-11-freeze.json": [
+        617268,
+        "19f930d09329c6bac668ca67b2301a844a8ab8971c8a459cbe1ec9e1c4b22592"
+      ],
+      "puck-cpu-held-qualification-11-independent-controls-review-02.md": [
+        2921,
+        "af2e93792d7a78868f649571b371f76687f68d30912a1fd887918ab8b74cdec5"
+      ],
+      "puck-cpu-held-qualification-11.json": [
+        9048,
+        "4ab0ef1b3eab7a74d2f6dc03ab56293a65dea2d7363680b7e687aeb399d1afb5"
+      ]
+    },
+    "tmp": {
+      "palimpsest-held11b-admission-external.json": [
+        1120,
+        "6d0bc2e46abd6d79b2f841edef3c40622816c70e5692d698a321738d0093254e"
+      ],
+      "palimpsest-held11b-admission-external.stderr": [
+        1474,
+        "766eb7bdec22ee4693a8396c092064a31b034d2a0ecfaabc3c96f8c7db1c6836"
+      ],
+      "palimpsest-held11b-admission-external.stdout": [
+        11223,
+        "8f7115c5ccd0a93a17931ce10d3368b6b76020083afd4aedbca6dd3df7b64c8d"
+      ],
+      "palimpsest-held11b-admission-tool-command.json": [
+        1910,
+        "de8500d8685ce029c513befa7c6669f74e111fb7169cb3b1c7d2a5c7784b36c8"
+      ],
+      "palimpsest-held11b-admission-tool-terminal.json": [
+        140,
+        "2c700d2063b2acf342ad13edcaa74364a1160f8e3f23685ff64244142acfefa0"
+      ],
+      "palimpsest-held11b-admission-tool.stderr": [
+        0,
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "palimpsest-held11b-admission-tool.stdout": [
+        500,
+        "65b17bb7edecda3256f18c379dfed3b15db78da5644bc80e3e4f0a36a0a7bbef"
+      ],
+      "palimpsest-held11b-external.py": [
+        4227,
+        "d5ec3a6a352adc8db97e8f0c75702d7c320119b61ce11c8ffeecb9098705a5f8"
+      ],
+      "palimpsest-held11b-pre-admission-guard.py": [
+        4432,
+        "d6e860d718c4381c7878bbefdd56aa325478d91303096d292ff081ee70b22762"
+      ],
+      "palimpsest-held11b-pre-admission-guard01.json": [
+        2648,
+        "287e1ad713c52d648e8a1310665cb908cfa26dc22ec3b18a66eb36649dcc63fe"
+      ],
+      "palimpsest-held11b-run-admission-once.py": [
+        2704,
+        "b5cffb23ddc949819cc0a8595202c45e022f47c8b6df8a177bbe10808071b952"
+      ],
+      "palimpsest-puck-cpu-held-qualification-11b-admission-01.json": [
+        11223,
+        "8f7115c5ccd0a93a17931ce10d3368b6b76020083afd4aedbca6dd3df7b64c8d"
+      ]
+    }
+  },
+  "byte_bindings_format": "group root plus relative key -> [size_bytes,sha256]",
+  "commits": {
+    "control": "27780dd5cbc096c26fb353faea7edfde878a4f74",
+    "d83dab3_review": "0b9c67f5fbf70f7bd3af4277ae9a10fb9b60a7d3",
+    "evidence": "facc2a741315867ce98e745edd5d6692abf77603",
+    "source": "8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15",
+    "unexecuted_d83dab3": "d83dab3c92387c80e81af528fea25dd3f8931598"
+  },
+  "decision": "GO",
+  "exact_checks": [
+    "Clean worktree; HEAD = origin/research/puck-cpu-held-qualification-11b = control 27780dd. git diff --name-only facc2a7..control lists 86 files, all under docs/plans/puck-cpu-held-qualification-11, each byte-equal to its control blob. The only change since 8d7a109 is the -11b archive packet path plus review 02.",
+    "Configuration 9048B 4ab0ef1b...: compact canonical, 24 sources equal Git at 8f3a138, 4 preparation02 acceptance pins match. Freeze 617268B 19f930d0... equals the envelope pin; 2463 pins / 121576773B all re-hashed equal after admission.",
+    "Instantiated /tmp pre-admission guard and run-admission-once equal their templates at control with @CONTROL@=27780dd and @COUNT@=86. Wrapper equals its tracked copy and the envelope pin; timeout and interpreter pins match.",
+    "Tool command, environment and cwd equal the envelope; runner_sha256 equals the instantiated run-once bytes; the stage guard ran first and recorded PASS_STAGE_AND_BOOT. External receipt: command equals freeze commands.admission (-I -S -B on admission.py) under the outer environment, returncode 0, normal_exit, not timed out, no implicit retry, 14.20s of 145s. Tool terminal: exit 0, no outer timeout, 14.24s of 155s, runtime_invoked false. Tool stderr empty; tool summary accepted=true.",
+    "Actual stdout/stderr sizes and SHA256 equal both the external receipt and the tool summary. Stdout is byte-identical to the published /tmp/palimpsest-puck-cpu-held-qualification-11b-admission-01.json (11223B 8f7115c5...), which is canonical JSON.",
+    "Eight ordered held11b phase records, check_id 11, all phase_completed: controls/plans, SITEhash, hostbaseline/native, forest1, forest2, finalSITEcensus, fullrecheck, close/publication. Elapsed is monotonic, last at 14.11s (<120s). Held files: 2502 -> 6777 -> 34032 at forest1..fullrecheck, then 0 after close. Peak bytes 1554649487, matching review 02 (34032 files; 38290 entries).",
+    "Receipt binds: kind puck-cpu-held11b-data-only-admission-v1; status DATA_ONLY_ADMITTED; configuration_sha256 4ab0ef1b...; source_commit 8f3a138; runner_sha256 f952e828... equal to admission.py at control; authenticated reader 01bc2c99...; current auditor 04192a3b... equal to the control blob; preparation02 config 1acfb10b... and result 4ef13965...; candidate 6eba3555...; dependencies 25ea4e91...; admission_check_id 1; qualification11_invoked false; all authority flags false; qualification_claims empty.",
+    "Consumed histories: qualifications 07/08/09/10 FAILED_CONSUMED (10 bound to config 4cc0cf9a..., missing only baseline-after); admission10-01 FAILED_CONSUMED; admission10-02 ADMITTED_CONSUMED_BY_RUNTIME10 with no current authority. Preparation02 ACCEPTED (independent audit fe155208..., stage /tmp/palimpsest-puck-cpu-held-02, roots 55/10400-10403). Preparation01 ACCEPTED_SUPERSEDED_STAGE_LOST, required false. d83dab3 NEVER_INVOKED with 39 absent outputs. 35 historical empty directories; 32 negative-absence names equal the configuration.",
+    "Closure: FD 4 -> 4, no active children or non-main threads. 15 historical PID/start identities absent. Resources before/after: MemAvailable 8290549760/8140840960 (>= 2GiB floor), project free 44.3GB (>= 4GiB), tmpfs free 6.30GB (>= 256MiB), NOFILE 524288 before and 40000 after (the self-imposed limit). Baseline summary 4233 files / 1048 links / prefix 4d54b1da....",
+    "Pre-admission guard PASS at control: 86 controls, 2463 pins / 121576773B, 103 raw run records, 51 preparation02 run files, 35 empty directories, d83dab3 NEVER_INVOKED, stage/boot PASS (parent inode 10398, inputs 10399, roots 10400-10403). Its absence object equals the receipt absence. Order: guard 02:33:13Z < admission resources 02:33:19Z/02:33:31Z.",
+    "Fresh metadata-only lstat and glob: nothing matches runs/puck-cpu-held-qualification-11*. Also absent: 11b audit-01, admission-02, concrete audit command, observer/audit phase and tool outputs, pre-observer guard output, post-outcome observation, the docs/reports/puck-cpu-held-qualification-11b packet, 21 historical absent paths and 39 d83dab3 outputs. 103 + 51 run records still match their pins. Boot id still 7f875223-b4cf-421e-b04d-81e3c1f19460."
+  ],
+  "findings": [],
+  "kind": "independent_exact_admission11b_receipt_review_v1",
+  "limitations": [
+    "Read-only except this exclusive /tmp review JSON. No admission main, guard, run-once tool, observer, auditor, qualifier, vendor import, network or repo edit. Standard-library checks covered listed metadata, Git blobs, the 2463 freeze pins (re-hashed) and run-record pins.",
+    "Full SITE, staged-forest, native and interpreter custody rests on source ordering, the normal-return receipt and the phase records. The reviewer did not walk or re-hash /tmp/palimpsest-puck-cpu-held-02, SITE or native payloads.",
+    "Telemetry check_id 11 is the epoch label; admission_check_id 1 is the admission ordinal. Sole invocation relies on exclusive-output creation and the supplied run history, not an independent process-lifetime audit.",
+    "Grants no runtime, import, renderer, inference, operator, study, protected-data or rover acceptance, and no preparation reacceptance. Runtime11 still needs the pre-observer guard (with the stage/boot guard) and its own independent outcome audit. A reboot or stage change before then is fatal and needs a new preparation epoch."
+  ],
+  "observed": {
+    "admission_check_id": 1,
+    "all_authority_flags": false,
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_after": 4,
+      "fd_before": 4,
+      "held_files_after_close": 0
+    },
+    "custody_reported": {
+      "held_bytes": 1554649487,
+      "held_peak_files": 34032,
+      "roots": 4,
+      "site_bytes": 1304701872,
+      "site_directories": 2074,
+      "site_files": 27225,
+      "staged_bytes": 1318494346,
+      "staged_directories": 2076,
+      "staged_files": 27255
+    },
+    "external": {
+      "deadline_seconds": 145,
+      "elapsed_seconds": 14.197107261999918,
+      "implicit_retry": false,
+      "normal_exit": true,
+      "returncode": 0,
+      "timed_out": false
+    },
+    "freeze_roster": {
+      "bytes": 121576773,
+      "pins": 2463
+    },
+    "historical": "qualifications01-10 and admission10-01 FAILED_CONSUMED; admission10-02 consumed by runtime10; d83dab3 controls NEVER_INVOKED",
+    "negative_absence": "32 configured names; declarations and re-censused staged forests only",
+    "preparation": "preparation02 accepted and bound (config 1acfb10b..., result 4ef13965..., audit fe155208...); preparation01 superseded, stage lost, not required",
+    "process_samples": "15 PID/start identities absent; nonexhaustive/non-atomic",
+    "qualification11_invoked": false,
+    "qualification_claims": [],
+    "resources": "Recorded initial and final RAM, project/tmpfs free space and NOFILE all meet source thresholds (RAM >= 2GiB); dated.",
+    "runtime_qualified": false,
+    "stage_guard": "PASS_STAGE_AND_BOOT before admission; boot unchanged at review time",
+    "status": "DATA_ONLY_ADMITTED",
+    "terminal": {
+      "elapsed_seconds": 14.244327697999324,
+      "exit_code": 0,
+      "outer_timeout": false,
+      "runtime_invoked": false
+    }
+  },
+  "scope": "Completed admission11b data-only receipt at control 27780dd on accepted preparation02: exact byte bindings, phase telemetry, closure, resources, consumed histories, d83dab3 non-invocation and prepublication absences. Not runtime acceptance."
+}

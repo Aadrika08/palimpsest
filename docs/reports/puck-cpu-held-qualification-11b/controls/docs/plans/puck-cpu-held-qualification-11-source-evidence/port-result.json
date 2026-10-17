@@ -1,0 +1,22 @@
+{
+  "admission_or_runtime_invoked": false,
+  "configuration": {
+    "sha256": "4ab0ef1b3eab7a74d2f6dc03ab56293a65dea2d7363680b7e687aeb399d1afb5",
+    "size_bytes": 9048
+  },
+  "configuration_delta_vs_d83dab3": [
+    "stage_parent",
+    "sources (qualifier row)",
+    "preparation_acceptance"
+  ],
+  "current_auditor_sha256": "04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b",
+  "history_cases": 33,
+  "offline_acceptance": {
+    "auditor_configuration": "PASS",
+    "auditor_historical_acceptance": "PASS",
+    "auditor_preparation_epoch": "PASS",
+    "parent_validate_configuration": "PASS",
+    "parent_validate_preparation_acceptance": "PASS"
+  },
+  "stage_touched": false
+}
