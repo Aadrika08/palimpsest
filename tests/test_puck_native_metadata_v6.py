@@ -33,7 +33,8 @@ def v6_case():
         aliases=native['aliases']+[['/usr/lib/libEGL_mesa.so.0','libEGL_mesa.so.0.0.0']],
         dynamic_leaves=list(leaves),
         egl_vendor=dict(path='/usr/share/glvnd/egl_vendor.d/50_mesa.json',size_bytes=len(VENDOR),
-                        sha256=hashlib.sha256(VENDOR).hexdigest(),library_path='libEGL_mesa.so.0'))
+                        sha256=hashlib.sha256(VENDOR).hexdigest(),library_path='libEGL_mesa.so.0'),
+        provenance=dict(kind='authored-native-metadata-v6-provenance'),limitations=['AUTHORED fixture only'])
     return data
 
 
@@ -55,7 +56,8 @@ def test_v6_admits_256_leaves_and_a_256_mib_leaf_within_the_total_byte_bound():
 
 @pytest.mark.parametrize('defect',['leaf-too-large','too-many','v5-large-leaf','scope','extra-key',
     'dynamic-unsorted','dynamic-missing-file','dynamic-outside-lib','dynamic-empty','vendor-path','vendor-library',
-    'vendor-unresolved','vendor-size','vendor-extra','status','errors'])
+    'vendor-unresolved','vendor-size','vendor-extra','status','errors','provenance-type','limitations-type',
+    'limitations-empty'])
 def test_native_metadata_contracts_are_exact(defect):
     data=v6_case() if not defect.startswith('v5') else case();native=data['native']
     if defect=='leaf-too-large':native['native_files'][-2]['size_bytes']=256*MiB+1
@@ -76,6 +78,9 @@ def test_native_metadata_contracts_are_exact(defect):
     elif defect=='vendor-size':native['egl_vendor']['size_bytes']=0
     elif defect=='vendor-extra':native['egl_vendor']['dlopen']=True
     elif defect=='status':native['status']='PARTIAL'
+    elif defect=='provenance-type':native['provenance']=['authored']
+    elif defect=='limitations-type':native['limitations']=[1]
+    elif defect=='limitations-empty':native['limitations']=[]
     else:native['errors']=['authored']
     with pytest.raises(ValueError):build(data)
 
