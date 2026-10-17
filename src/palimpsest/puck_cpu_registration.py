@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 from pathlib import PurePosixPath
+import re
 import time
 
 from .puck_dependency_files import (HeldDependencyNamespace, MAX_REGISTRATION_BYTES,
@@ -20,6 +21,17 @@ from .puck_execution_files import _relative
 from .puck_native_identity import TMPFS_IDENTITY_POLICY
 
 _ROLES = ('inventory', 'layout', 'candidate', 'native')
+NATIVE_V5 = 'puck-cpu-characterization-native-metadata-v5'
+# v6 adds the held episode's explicitly declared dlopen-only leaves (GLVND, EGL,
+# Mesa/llvmpipe, LLVM, glfw) and the one GLVND EGL vendor JSON staged under control.
+NATIVE_V6 = 'puck-cpu-characterization-native-metadata-v6'
+_V6_KEYS = {'kind', 'status', 'root_scope', 'errors', 'oversized_native_files', 'required_missing_names',
+            'native_files', 'aliases', 'dynamic_leaves', 'egl_vendor'}
+_V6_LEAF_BYTES = 256 * 1024**2
+_V6_FILES = 256
+EGL_VENDOR_CONTROL = '/puck/control/egl-vendor.json'
+_EGL_VENDOR_DIRECTORY = '/usr/share/glvnd/egl_vendor.d/'
+_SONAME = re.compile(r'lib[A-Za-z0-9_+-]+(\.[A-Za-z0-9_+-]+)*\.so(\.[0-9]+)*')
 _EMPTY_PROFILE = dict(exports=[], module_changes=[], native_origins=[])
 _COLLISIONS = ('destination_regular_directory_path_conflicts',
     'destination_regular_path_collisions_including_entrypoint_wrappers',
@@ -170,13 +182,17 @@ def _site(inventory, layout, deadline):
 
 
 def _native(native, deadline):
-    if (native.get('kind') != 'puck-cpu-characterization-native-metadata-v5'
+    v6 = native.get('kind') == NATIVE_V6
+    if ((native.get('kind') != NATIVE_V5 and not v6)
             or native.get('status') != 'COMPLETE'
-            or native.get('root_scope') != 'installed_shared_objects_and_interpreter'
-            or any(native.get(k) != [] for k in ('errors','oversized_native_files','required_missing_names'))):
+            or native.get('root_scope') != ('installed_shared_objects_interpreter_and_declared_dynamic_leaves' if v6
+                                            else 'installed_shared_objects_and_interpreter')
+            or any(native.get(k) != [] for k in ('errors','oversized_native_files','required_missing_names'))
+            or (v6 and set(native) != _V6_KEYS)):
         raise ValueError('CPU native metadata is incomplete')
-    files = _descriptors(native.get('native_files'), deadline, absolute=True, leaf_limit=64*1024**2)
-    if len(files) > 128:
+    files = _descriptors(native.get('native_files'), deadline, absolute=True,
+                         leaf_limit=_V6_LEAF_BYTES if v6 else 64*1024**2)
+    if len(files) > (_V6_FILES if v6 else 128):
         raise ValueError('CPU native metadata file ceiling exceeded')
     groups = {1:[], 2:[]}
     for path, row in files.items():
@@ -199,7 +215,57 @@ def _native(native, deadline):
         if path in seen or path in files or any(p.startswith(path+'/') for p in files):
             raise ValueError('CPU native alias duplicates or redirects a selected regular path')
         seen.add(path)
+    if v6:
+        _dynamic(native, files)
     return groups
+
+
+def _resolve(native, path):
+    # Follow only declared single-directory aliases, as the namespace binds them.
+    aliases = {row[0]: row[1] for row in native['aliases']}
+    for _ in range(4):
+        if path not in aliases:
+            return path
+        target = aliases[path]
+        path = target if target.startswith('/') else str(PurePosixPath(path).parent/target)
+    raise ValueError('CPU native alias chain is too long')
+
+
+def _dynamic(native, files):
+    leaves = native['dynamic_leaves']
+    if (type(leaves) is not list or not 1 <= len(leaves) <= _V6_FILES or leaves != sorted(set(leaves))
+            or any(type(path) is not str or not path.startswith('/usr/lib/') or path not in files for path in leaves)):
+        raise ValueError('CPU native dynamic leaves must be sorted declared /usr/lib regular files')
+    vendor = native['egl_vendor']
+    if (type(vendor) is not dict or set(vendor) != {'path', 'size_bytes', 'sha256', 'library_path'}
+            or type(vendor['path']) is not str or not vendor['path'].startswith(_EGL_VENDOR_DIRECTORY)
+            or '/' in vendor['path'][len(_EGL_VENDOR_DIRECTORY):] or not vendor['path'].endswith('.json')
+            or type(vendor['size_bytes']) is not int or not 0 < vendor['size_bytes'] <= 64*1024
+            or not _sha(vendor['sha256'])
+            or type(vendor['library_path']) is not str or _SONAME.fullmatch(vendor['library_path']) is None):
+        raise ValueError('CPU native EGL vendor declaration differs')
+    _absolute(vendor['path'])
+    if _resolve(native, '/usr/lib/' + vendor['library_path']) not in leaves:
+        raise ValueError('CPU native EGL vendor library is not a declared dynamic leaf')
+
+
+def egl_vendor_control(native, raw):
+    """Exact pinned host vendor JSON bytes for the staged control copy; nothing is discovered."""
+    if type(native) is not dict or native.get('kind') != NATIVE_V6:
+        raise ValueError('EGL vendor staging requires native metadata v6')
+    _dynamic(native, {row['path']: row for row in native.get('native_files', []) if type(row) is dict})
+    vendor = native['egl_vendor']
+    if type(raw) is not bytes or len(raw) != vendor['size_bytes'] or hashlib.sha256(raw).hexdigest() != vendor['sha256']:
+        raise ValueError('EGL vendor JSON bytes differ from their pin')
+    try:
+        value = json.loads(raw.decode('utf-8'))
+    except (UnicodeError, ValueError) as error:
+        raise ValueError('EGL vendor JSON is malformed') from error
+    if (type(value) is not dict or set(value) != {'file_format_version', 'ICD'}
+            or type(value['file_format_version']) is not str or type(value['ICD']) is not dict
+            or value['ICD'] != {'library_path': vendor['library_path']}):
+        raise ValueError('EGL vendor JSON must name only the declared library')
+    return raw
 
 
 def _candidate(candidate, deadline):

@@ -44,10 +44,11 @@ def test_v6_plans_large_declared_dynamic_leaves_into_the_system_roots():
     assert [r['path'] for r in result['roots'][2]['files']]==['ld.so.cache']
 
 
-def test_v6_admits_exactly_256_leaves_of_256_mib():
+def test_v6_admits_256_leaves_and_a_256_mib_leaf_within_the_total_byte_bound():
     data=v6_case();native=data['native']
     extra=['/usr/lib/libmesa%03d.so'%i for i in range(256-len(native['native_files']))]
-    native['native_files']=sorted(native['native_files']+[big(p,256*MiB) for p in extra],key=lambda r:r['path'])
+    native['native_files']=sorted(native['native_files']+[big(p,256*MiB if p.endswith('000.so') else MiB) for p in extra],
+                                  key=lambda r:r['path'])
     assert len(native['native_files'])==256
     build(data)
 
