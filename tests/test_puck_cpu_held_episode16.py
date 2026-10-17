@@ -185,3 +185,12 @@ def test_observer_rejects_mixed_episode_identity_before_launch(tmp_path,monkeypa
     raw=m.canonical(config);path.write_bytes(raw)
     with pytest.raises(ValueError):m.observe(path,hashlib.sha256(raw).hexdigest())
     assert list((tmp_path/'runs').iterdir())==[]
+
+
+def test_every_characterized_miss_must_be_declared_before_reservation():
+    m=api()
+    m.require_declared_misses(dict(import_misses=['org','pandas','scipy.linalg._cblas']))
+    m.require_declared_misses(dict(import_misses=[]))
+    for misses in (['authored_undeclared_optional'],['org','requests']):
+        with pytest.raises(ValueError,match='undeclared'):m.require_declared_misses(dict(import_misses=misses))
+    with pytest.raises(ValueError):m.require_declared_misses(dict())
