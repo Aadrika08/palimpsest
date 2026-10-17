@@ -134,5 +134,5 @@ def test_committed_metadata06_is_a_valid_v6_episode_selection(tmp_path):
     (tmp_path/'stage_parent/inputs').mkdir(mode=0o700)
     from palimpsest.puck_cpu_namespace import sandbox_command
     command=sandbox_command(BASELINE,document,BASE_PATHS,phase='episode-source',command=[PYTHON,'-I'],
-        environment={'HOME':'/scratch/home'},**paths)
+        environment={'HOME':'/scratch/home'},source_files=['scripts/puck_worker_bootstrap.py'],**paths)
     assert ['--symlink','libEGL_mesa.so.0.0.0','/usr/lib/libEGL_mesa.so.0'] in [command[i:i+3] for i in range(len(command)-2)]
