@@ -108,10 +108,19 @@ def test_defects_the_parents_cannot_see_fail_the_episode_audit(tmp_path,defect,r
 
 
 def test_a_held_only_refusal_fails_the_episode_and_its_audit(tmp_path):
-    value,stage=build_chain(tmp_path,'undeclared-import')
+    value,stage=build_chain(tmp_path,'held-undeclared-import')
     try:
         code,_,_=value['episode'];result=value['result']
         assert code!=0 and result['status']=='FAIL' and 'worker failed' in result['error']
         verdict=audit(value,'held-refusal')[1]
         assert verdict['status']=='FAIL'
+    finally:remove(stage)
+
+
+def test_a_characterized_undeclared_miss_is_refused_before_reservation(tmp_path):
+    value,stage=build_chain(tmp_path,'undeclared-import')
+    try:
+        code,_,stderr=value['episode']
+        assert code!=0 and value['result'] is None and b'undeclared by the episode rosters' in stderr
+        assert not (value['root']/OUTPUT).exists()
     finally:remove(stage)

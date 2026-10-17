@@ -173,7 +173,8 @@ def run(admission):
             subprocess.run(['/bin/true'])
         except RuntimeError:
             pass
-    if defect == 'undeclared-import':
+    held = type(admission).__name__ != '_Admission'
+    if defect == 'undeclared-import' or (defect == 'held-undeclared-import' and held):
         # Caught as a plain miss when unguarded; the held bootstrap refuses undeclared names.
         try:
             import authored_undeclared_optional  # noqa: F401
