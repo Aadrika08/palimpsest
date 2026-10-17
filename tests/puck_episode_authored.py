@@ -171,3 +171,111 @@ def audit_characterization(characterized,output_name='docs/authored/outcome-audi
         '--sha256',sha(characterized['configuration_raw']),'--transport',str(transport),
         '--transport-sha256',sha(transport.read_bytes()),'--output',str(output)],root,330)
     return code,(json.loads(output.read_bytes()) if output.exists() else None),stdout,stderr,output
+
+
+QUALIFIER='scripts/qualify_puck_cpu_held_runtime.py'
+EPISODE_PARENT='scripts/run_puck_cpu_held_episode.py'
+HELD_AUDITOR='scripts/audit_puck_cpu_held_runtime.py'
+ARCHIVE='docs/reports/puck-cpu-characterization-04'
+
+
+def authored_scale(project):
+    """Patch the qualifier and episode parent clones to the authored preparation roster and RAM floor."""
+    root=project['root']
+    patch(root,QUALIFIER,[(b"PREPARATION_NEGATIVE_IMPORTS=['numpy._distributor_init_local','org']",b"PREPARATION_NEGATIVE_IMPORTS=['org']"),
+        (b"min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB",b'min_available_ram_bytes=128*MiB')])
+    if (root/EPISODE_PARENT).exists():patch(root,EPISODE_PARENT,[(b'min_available_ram_bytes=2048*MiB',b'min_available_ram_bytes=128*MiB')])
+
+
+def derive_candidate(characterized):
+    """Archive the PASS-audited characterization-04 and derive candidate 02 from it."""
+    root=characterized['root'];code,value,_,_,audit=audit_characterization(characterized,'docs/authored/chain-outcome-audit-04.json')
+    assert code==0,value
+    load(root/'scripts/archive_puck_episode_characterization.py','authored_chain_archive_'+str(id(characterized))).archive(
+        characterized['configuration'],audit,ARCHIVE)
+    helper=b'AUTHORED_PROSPECTIVE_HELPER = True\n'
+    generated=write(root,'docs/authored/generated/_authored_cpu_generated.py',helper)
+    template=write(root,'docs/authored/template-candidate.json',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
+        import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=[],module_changes=[],native_origins=[],native_cache=[]),
+        additional_package_inputs=[dict(root='docs/authored/generated',files=[dict(generated,path='_authored_cpu_generated.py')])],
+        authored_scope=AUTHORED))
+    run_root=root/'runs/puck-cpu-runtime-characterization-04';candidate='docs/plans/puck-cpu-episode-import-profile-candidate-02.json'
+    code,stdout,stderr=run([PYTHON,'-I','-B',str(root/'scripts/derive_puck_episode_profile.py'),
+        '--configuration',str(root/ARCHIVE/'frozen-configuration.json'),'--result',str(run_root/'result.json'),
+        '--source',str(run_root/'payload-source/characterization.json'),'--replay',str(run_root/'payload-replay/characterization.json'),
+        '--audit',str(root/ARCHIVE/'outcome-audit-04.json'),'--template',str(root/template['path']),
+        '--inventory',str(root/characterized['inputs']['inventory']['path']),'--site-root',str(characterized['site']),
+        '--output',str(root/candidate)],root)
+    assert code==0,(stdout,stderr)
+    raw=(root/candidate).read_bytes()
+    return dict(characterized,generated=generated,candidate=dict(path=candidate,size_bytes=len(raw),sha256=sha(raw)))
+
+
+def preparation04_inputs(derived):
+    root=derived['root'];archive=root/ARCHIVE;inputs={k:v for k,v in derived['inputs'].items()}
+    def pin(name):raw=(root/name).read_bytes();return dict(path=name,size_bytes=len(raw),sha256=sha(raw))
+    inputs.update(candidate=derived['candidate'],generated=derived['generated'],
+        observation_configuration=pin(ARCHIVE+'/frozen-configuration.json'),observation_index=pin(ARCHIVE+'/evidence-index.json'),
+        observation_report=pin(ARCHIVE+'/raw/payload/source/characterization.json'),
+        observation_replay_report=pin(ARCHIVE+'/raw/payload/replay/characterization.json'),
+        observation_result=pin(ARCHIVE+'/raw/result.json'),observation_audit=pin(ARCHIVE+'/outcome-audit-04.json'))
+    assert archive.is_dir()
+    return inputs
+
+
+def cli(root,label,script,config):
+    """One authored parent CLI run with the authored transport the independent auditors read."""
+    raw=canonical(config);configuration=root/('authored-'+label+'-configuration.json');configuration.write_bytes(raw)
+    command=[PYTHON,'-I','-S','-B',str(root/script),'--configuration',str(configuration),'--sha256',sha(raw)]
+    started=time.monotonic();code,stdout,stderr=run(command,root,900);channels={}
+    for name,payload in (('stdout',stdout),('stderr',stderr)):
+        leaf='authored-'+label+'-cli.'+name;(root/leaf).write_bytes(payload)
+        channels[name]=dict(path=leaf,size_bytes=len(payload),sha256=sha(payload))
+    receipt=dict(kind='authored-cpu-parent-cli-transport-v1',authored_scope=AUTHORED,command=command,configuration_sha256=sha(raw),
+                 observed_returncode=code,elapsed_seconds=time.monotonic()-started,**channels)
+    (root/('authored-'+label+'-transport.json')).write_bytes(canonical(receipt))
+    return code,stdout,stderr,configuration
+
+
+def prepare04(derived,stage):
+    """Preparation04 over the derived candidate, then its independent v15 audit and observed CLI receipt."""
+    root=derived['root'];q=load(root/QUALIFIER,'authored_chain_qualifier_'+str(id(derived)))
+    inputs=preparation04_inputs(derived)
+    sources=[dict(path=p,size_bytes=len(raw),sha256=sha(raw)) for p in q.PREPARATION04_SOURCES for raw in ((root/p).read_bytes(),)]
+    config=q.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),sources=sources,inputs=inputs,
+                                    negative_imports=list(q.PREPARATION_NEGATIVE_IMPORTS))
+    config.update(kind='puck-cpu-held-runtime-allocation-v15',version=15,allocation_id=15,expected_versions=dict(q.EPISODE_VERSIONS))
+    code,stdout,stderr,configuration=cli(root,'prepare04',QUALIFIER,config)
+    assert code==0,(stdout,stderr)
+    transport=root/'authored-prepare04-transport.json';published=root/'docs/authored/prepare04-audit.json'
+    command=[PYTHON,'-I','-S','-B',str(root/HELD_AUDITOR),'--configuration',str(configuration),'--sha256',sha(configuration.read_bytes()),
+             '--transport',str(transport),'--transport-sha256',sha(transport.read_bytes()),'--output',str(published)]
+    started=time.monotonic();code,stdout,stderr=run(command,root,180)
+    assert code==0,(stdout,stderr)
+    channels={}
+    for name,payload in (('stdout',stdout),('stderr',stderr)):
+        path=root/('authored-prepare04-audit.'+name);path.write_bytes(payload);channels[name]=dict(path=str(path),size_bytes=len(payload),sha256=sha(payload))
+    write(root,'docs/authored/prepare04-audit-cli.json',dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,
+        observed_returncode=code,elapsed_seconds=time.monotonic()-started,
+        published=dict(path=str(published),size_bytes=published.stat().st_size,sha256=sha(published.read_bytes())),**channels))
+    def pin(path):raw=path.read_bytes();return dict(path=path.relative_to(root).as_posix(),size_bytes=len(raw),sha256=sha(raw))
+    acceptance=dict(configuration=pin(configuration),result=pin(root/'runs/puck-cpu-held-preparation-04/result.json'),
+        independent_audit=pin(published),externally_observed_auditor_cli=pin(root/'docs/authored/prepare04-audit-cli.json'))
+    return dict(derived,qualifier=q,preparation=config,acceptance=acceptance,stage=stage,inputs=inputs)
+
+
+RUN_IDS=dict(source='0b5c7c3e2b6f4f0e9a1d2c3b4a596877',replay='1c6d8d4f3c7050f1ab2e3d4c5b6a7988')
+
+
+def allocation16(prepared,run_ids=RUN_IDS):
+    root=prepared['root'];parent=load(root/EPISODE_PARENT,'authored_chain_episode_parent_'+str(id(prepared)));q=prepared['qualifier']
+    raw=(root/EPISODE_PARENT).read_bytes()
+    sources=sorted(prepared['preparation']['sources']+[dict(path=EPISODE_PARENT,size_bytes=len(raw),sha256=sha(raw))],key=lambda r:r['path'])
+    config=dict(kind=parent.KIND,version=16,allocation_id=16,root=str(root),stage_parent=str(prepared['stage']),sources=sources,
+        inputs=prepared['inputs'],interpreter=dict(q.INTERPRETER),environment=dict(parent.ENVIRONMENT),expected_versions=dict(parent.VERSIONS),
+        limits=dict(parent.LIMITS),negative_imports=list(parent.NEGATIVE_IMPORTS),hidden_imports=list(parent.HIDDEN_IMPORTS),
+        claims=dict(parent.CLAIMS),preparation_acceptance=prepared['acceptance'],run_ids=dict(run_ids))
+    code,stdout,stderr,configuration=cli(root,'episode16',EPISODE_PARENT,config)
+    result_path=root/parent.OUTPUT/'result.json'
+    return dict(prepared,parent=parent,allocation=config,episode=(code,stdout,stderr),episode_configuration=configuration,
+                result=json.loads(result_path.read_bytes()) if result_path.exists() else None)

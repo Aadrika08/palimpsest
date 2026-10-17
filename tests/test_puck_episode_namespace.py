@@ -33,7 +33,13 @@ def episode(tmp_path):
     for key in ('stage_parent','source_root','control_root','output_root','source_run_root'):
         path=base/key;path.mkdir(mode=0o700);paths[key]=str(path)
     (base/'stage_parent/inputs').mkdir(mode=0o700)
-    return dict(command=[PYTHON,'-I','-B','-S','-c','pass'],environment=dict(EPISODE_ENVIRONMENT),**paths)
+    return dict(command=[PYTHON,'-I','-B','-S','-c','pass'],environment=dict(EPISODE_ENVIRONMENT),
+                source_files=list(WORKER_FILES),**paths)
+
+
+# Episode workers see exactly their registered source files, bound one by one from a
+# larger prepared capsule, so the held bootstrap's source census finds no extra script.
+WORKER_FILES=('scripts/puck_worker_bootstrap.py','src/palimpsest/__init__.py','upstream/fly-gym/core/__init__.py')
 
 
 def source(arguments):
@@ -45,7 +51,8 @@ def test_source_worker_writes_only_its_own_output_and_sees_staged_inputs(episode
     assert binds(command,'--bind')==[(episode['output_root'],'/output')]
     readonly=binds(command,'--ro-bind')
     assert (episode['stage_parent']+'/inputs','/puck/staged/inputs') in readonly
-    assert (episode['control_root'],'/puck/control') in readonly and (episode['source_root'],'/puck/source') in readonly
+    assert (episode['control_root'],'/puck/control') in readonly and not any(t=='/puck/source' for _,t in readonly)
+    for path in WORKER_FILES:assert (episode['source_root']+'/'+path,'/puck/source/'+path) in readonly
     assert not any(target=='/puck/source-run' for _,target in readonly)
     assert '--as-pid-1' not in command
     for key,value in EPISODE_ENVIRONMENT.items():
@@ -85,5 +92,18 @@ def test_episode_namespace_refusals(episode,defect):
 
 def test_existing_phases_refuse_a_source_run_and_keep_their_mounts(episode,arguments):
     with pytest.raises(ValueError):build(dict(arguments,source_run_root=episode['source_run_root']))
+    with pytest.raises(ValueError):build(dict(arguments,source_files=list(WORKER_FILES)))
     command=build(arguments)
     assert binds(command,'--bind')==[(arguments['stage_parent'],'/puck/staged'),(arguments['output_root'],'/output')]
+
+
+@pytest.mark.parametrize('defect',['missing','empty','absolute','traversal','unsorted','duplicate'])
+def test_episode_workers_require_an_exact_registered_source_file_list(episode,defect):
+    arguments=source(episode)
+    if defect=='missing':arguments.pop('source_files')
+    elif defect=='empty':arguments['source_files']=[]
+    elif defect=='absolute':arguments['source_files']=['/etc/passwd']
+    elif defect=='traversal':arguments['source_files']=['src/../../etc/passwd']
+    elif defect=='unsorted':arguments['source_files']=list(reversed(WORKER_FILES))
+    else:arguments['source_files']=[WORKER_FILES[0],WORKER_FILES[0]]
+    with pytest.raises((ValueError,TypeError)):build(arguments,native=native_v6())
