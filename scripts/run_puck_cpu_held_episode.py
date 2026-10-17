@@ -144,6 +144,14 @@ def validate_configuration(config,q=None):
             'Two fresh distinct allocation-16 run ids required')
 
 
+def require_declared_misses(candidate):
+    """Every name characterization-04 saw unresolved must be a declared absent or hidden import."""
+    misses=candidate.get('import_misses') if type(candidate) is dict else None
+    require(type(misses) is list and all(type(n) is str for n in misses),'Candidate 02 import misses required')
+    undeclared=sorted(set(misses)-set(NEGATIVE_IMPORTS)-set(HIDDEN_IMPORTS))
+    require(not undeclared,'Characterized import misses are undeclared by the episode rosters: '+', '.join(undeclared[:16]))
+
+
 def validate_acceptance(config,blobs,q):
     """Preparation04's configuration, prepared result, independent v15 audit and its observed CLI."""
     acceptance=config['preparation_acceptance'];values={}
@@ -407,6 +415,8 @@ def main():
             require(len(read(ROOT/row['path'],MiB,row['sha256'],empty=True))==row['size_bytes'],'Allocation-16 source differs')
         sys.path[:0]=[str(ROOT/'src'),str(ROOT/'scripts')]
         validate_configuration(config)
+        candidate=config['inputs']['candidate']
+        require_declared_misses(json.loads(read(ROOT/candidate['path'],16*MiB,candidate['sha256'])))
         require(Path(sys.executable).resolve()==Path(PYTHON) and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode
                 and not os.environ.get('LD_PRELOAD') and not os.environ.get('LD_LIBRARY_PATH'),'Original isolated CPU parent interpreter required')
         if os.path.lexists(ROOT/OUTPUT):raise FileExistsError('Allocation 16 already reserved')
