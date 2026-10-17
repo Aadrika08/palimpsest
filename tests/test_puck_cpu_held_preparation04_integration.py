@@ -22,6 +22,8 @@ NATIVE06=json.loads((ROOT/'docs/plans/puck-cpu-characterization-native-metadata-
 LIBRARIES=('ld-linux-x86-64.so.2','libc.so.6','libdl.so.2','libm.so.6','libpthread.so.0','librt.so.1','libutil.so.1')
 LEAVES=['/usr/lib/gconv/gconv-modules.cache','/usr/lib/libEGL_mesa.so.0.0.0','/usr/lib/locale/C.utf8/LC_CTYPE',
         '/usr/lib/locale/locale-archive']
+# The real 171 MB LLVM leaf exceeds the legacy 64 MiB builder hashing cap.
+LLVM='/usr/lib/libLLVM.so.22.1'
 EMPTY=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
 
 
@@ -39,7 +41,7 @@ def episode_project(tmp_path):
         inputs[role]=write(root,name or 'docs/authored/episode-'+role+'.json',value)
     put('native',dict(kind='puck-cpu-characterization-native-metadata-v6',status='COMPLETE',
         root_scope='installed_shared_objects_interpreter_and_declared_dynamic_leaves',errors=[],oversized_native_files=[],
-        required_missing_names=[],native_files=[rows[p] for p in sorted(nine+LEAVES)],
+        required_missing_names=[],native_files=[rows[p] for p in sorted(nine+LEAVES+[LLVM])],
         aliases=sorted(baseline['host_path_aliases']+[['/usr/lib/libEGL_mesa.so.0','libEGL_mesa.so.0.0.0']]),
         dynamic_leaves=LEAVES,egl_vendor=NATIVE06['egl_vendor'],provenance=dict(authored_scope=AUTHORED),
         limitations=[AUTHORED]))
@@ -100,7 +102,7 @@ def test_authored_preparation04_stages_the_episode_closure_once(tmp_path,stage):
     assert prepared['kind']=='puck-cpu-held-runtime-outcome-v15' and prepared['stage_parent']==str(stage)
     staged=stage/'inputs'
     assert sorted(p.name for p in staged.iterdir())==['root-0000','root-0001','root-0002','root-0003']
-    for leaf in LEAVES:assert (staged/'root-0001'/leaf[len('/usr/'):]).is_file()
+    for leaf in LEAVES+[LLVM]:assert (staged/'root-0001'/leaf[len('/usr/'):]).is_file()
     capsule=root/OUTPUT/'parent-source'
     assert not (root/OUTPUT/'worker-source').exists()
     assert all((capsule/name).read_bytes()==(root/name).read_bytes() for name in api.PREPARATION04_SOURCES)

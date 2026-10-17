@@ -216,3 +216,16 @@ def test_v15_baseline_admits_only_declared_dynamic_leaves_beyond_the_nine():
     assert '/usr/lib/libstray.so' in m.baseline_images(config,extra,native)
     old=dict(config,version=14)
     assert m.baseline_images(old,observation,native)==sorted(NINE+LOCALE)
+
+
+def test_v6_native_leaves_hash_beyond_the_legacy_64_mib_builder_cap(tmp_path):
+    import time
+    from palimpsest.puck_cpu_registration import native_leaf_row
+    big=tmp_path/'libbig.so';big.write_bytes(b'\x7f'*(65*1024**2))
+    assert native_leaf_row(big,time.monotonic()+30)==dict(size_bytes=65*1024**2,sha256=sha(big.read_bytes()))
+    link=tmp_path/'liblink.so';link.symlink_to(big.name)
+    with pytest.raises((ValueError,OSError)):native_leaf_row(link,time.monotonic()+30)
+    huge=tmp_path/'libhuge.so'
+    with huge.open('wb') as stream:stream.truncate(256*1024**2+1)
+    with pytest.raises(ValueError):native_leaf_row(huge,time.monotonic()+30)
+    with pytest.raises(TimeoutError):native_leaf_row(big,time.monotonic()-1)
