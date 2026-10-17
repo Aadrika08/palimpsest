@@ -9,6 +9,10 @@ from pathlib import PurePosixPath
 import stat
 
 _SCRATCH_BYTES = 64 * 1024 ** 2
+# Held episode workers: A records under /output; B replays A's run read-only.
+_PHASES = ('prepare', 'qualify', 'episode-source', 'episode-replay')
+_SOURCE_RUN = '/puck/source-run'
+_NATIVE_V6 = 'puck-cpu-characterization-native-metadata-v6'
 _FIXED = ('/puck', '/output', '/scratch', '/tmp', '/proc', '/dev')
 _BASE_LIBRARIES = ('ld-linux-x86-64.so.2', 'libc.so.6', 'libdl.so.2',
                    'libm.so.6', 'libpthread.so.0', 'librt.so.1', 'libutil.so.1')
@@ -70,7 +74,7 @@ def _aliases(baseline, native, files):
 def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
                     source_root, control_root, output_root, command, environment,
                     site_root=None, generated_root=None,
-                    scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+                    scratch_bytes=_SCRATCH_BYTES, source_run_root=None) -> list[str]:
     """Bind one admitted host tmpfs tree into two separate private namespaces.
 
     Preparation sees only explicitly supplied source trees and host native
@@ -87,8 +91,10 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
                       + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
     if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
         raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
-    if phase not in ('prepare', 'qualify'):
-        raise ValueError('Namespace phase must be prepare or qualify')
+    if phase not in _PHASES:
+        raise ValueError('Namespace phase must be prepare, qualify or an episode worker')
+    if (source_run_root is None) != (phase != 'episode-replay'):
+        raise ValueError('Only the episode replay worker mounts the source run')
     if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
         raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
     if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
@@ -99,12 +105,12 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
             or any(not _text(key) or '=' in key or not _text(value, empty=True)
                    for key, value in environment.items())):
         raise ValueError('Namespace environment must be explicit bounded text')
-    if phase == 'qualify' and (site_root is not None or generated_root is not None):
+    if phase != 'prepare' and (site_root is not None or generated_root is not None):
         raise ValueError('Namespace source trees are available only in prepare phase')
     if phase == 'prepare' and site_root is None:
         raise ValueError('Namespace prepare phase requires the explicit site source root')
     hosts = [stage_parent, source_root, control_root, output_root]
-    hosts += [path for path in (site_root, generated_root) if path is not None]
+    hosts += [path for path in (site_root, generated_root, source_run_root) if path is not None]
     checked = []
     for path in hosts:
         _absolute(path)
@@ -124,7 +130,7 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
     if phase == 'prepare' and os.path.lexists(stage_parent + '/inputs'):
         raise ValueError('Namespace preparation inputs must not already exist')
     files = native.get('native_files')
-    if type(files) is not list or len(files) > 128:
+    if type(files) is not list or len(files) > (256 if native.get('kind') == _NATIVE_V6 else 128):
         raise ValueError('Namespace native file rows are invalid')
     paths = set()
     for row in files:
@@ -147,7 +153,7 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
            '--hostname', 'palimpsest-cpu-held', '--ro-bind', prefix, prefix]
     for path in sorted(paths):
         origin = path
-        if phase == 'qualify' and path not in baseline_paths:
+        if phase != 'prepare' and path not in baseline_paths:
             root, relative = ('root-0001', path[5:]) if path.startswith('/usr/') else ('root-0002', path[5:])
             origin = stage_parent + '/inputs/' + root + '/' + relative
         cmd += ['--ro-bind', origin, path]
@@ -162,6 +168,8 @@ def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
                 cmd += ['--ro-bind', path, path]
     else:
         cmd += ['--ro-bind', stage_parent + '/inputs', '/puck/staged/inputs']
+    if source_run_root is not None:
+        cmd += ['--ro-bind', source_run_root, _SOURCE_RUN]
     cmd += ['--bind', output_root, '/output', '--size', str(scratch_bytes), '--tmpfs', '/scratch']
     for name in ('home', 'tmp', 'pycache'):
         cmd += ['--dir', '/scratch/' + name, '--chmod', '0700', '/scratch/' + name]
