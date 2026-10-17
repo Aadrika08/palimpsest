@@ -32,77 +32,57 @@ on the same integrated release candidate.
    candidate, with final review/verification, reproducible installation, licences,
    limitations, runbook and a complete requirements-to-evidence matrix.
 
-## Active work unit: stock-absence import policy v5 and attempt 11
+## Active work unit: qualify the public operator/renderer episode route
 
-**Next finite exit:** independently reviewed source for missing-import policy v5
-and CPU qualification epoch 11, with passing RED-to-GREEN regression checks.
-Then freeze distinct epoch-11 controls, pass fresh admission and invoke attempt 11
-once under the unchanged 180s/2GiB limits with an independent outcome audit.
+**Completed (2026-10-17): held CPU four-import route accepted.** Runtime14 (epoch 14
+on preparation03, policy v5, user-approved 360s clock) imported numpy 2.2.5,
+torch 2.9.0+cpu, torchvision 0.24.0+cpu and mujoco 3.3.6 in 202.5s, with every
+custody check intact. All 36 declared names were requested and denied, and
+nothing else. The independent v14 audit PASSED and the outcome review PASSED
+([report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-held-qualification-14/docs/reports/puck-cpu-held-qualification-14.md)).
+This proves the import route only: `runtime_qualified` stays false and all seven
+release gates remain open.
 
-**Verified status (2026-10-16):** runtime10 failed normally after 114.82s, before
-its deadline. Its first refusal is unregistered `backports_abc` from
-`numpy.random._common` during Torchvision → `torch._dynamo`. Evidence is in
-[PR176](https://github.com/Aadrika08/palimpsest/pull/176) (local commit `a492e2e`,
-not yet pushed). Attempts01–10 and admission01 remain immutable history.
+The path here:
 
-The [contract v2](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-optional-import-contract-v2/docs/plans/puck-cpu-optional-import-contract-v2.md)
-proves, with read-only offline diagnostics on the inventory-matched held site:
+- Runtime10 failed on undeclared `backports_abc`.
+- The diagnostic census showed that the one-name fix would fail. The v2 contract
+  added stock-absence policy v5 (PR177).
+- A reboot erased preparation01's stage. Preparation02 replaced it, then runtime11
+  proved policy v5 but hit the 180s deadline in `import mujoco`.
+- The user chose to raise the clock. Preparation03 and epoch 14 followed, and
+  runtime14 passed.
 
-- `backports_abc` is optional: Cython 3.0.12 `__Pyx_patch_abc` clears the failure
-  and initialization continues. It is absent from the held site and inventory.
-- The planned one-name successor would still fail. `torch._dynamo.trace_rules`
-  calls bare `find_spec()` without a handler for its third-party skip list.
-  The current raise semantics fail Torchvision on frozen negative `tqdm`.
-- The four imports make 32 unresolved non-stdlib requests and four refused
-  present-but-unregistered requests (`networkx`, `pandas`, `sklearn`,
-  `torch.utils._cxx_pytree`). Stock absence (`None`) for exactly these names
-  completes all four imports with the expected versions.
+Guard checks still take about 132s of runtime14's 190s of imports, so the 180s
+limit remains unmet.
 
-Policy v5 and epoch 11 source is implemented locally on the contract-v2 branch
-(`bf6b980` RED tests, `ec4de6b` implementation): new and affected suites pass,
-including 163 unit and 2 integration cases rechecked by root. Independent review
-is pending. Offline timing places `backports_abc` at 70% of Torchvision's 990
-module loads (~106s guarded), projecting ~135-145s for all four imports against
-the 180s deadline; the margin is tight and unproven.
-
-**Reboot invalidated preparation01 (2026-10-16 21:33).** Its staged tmpfs forest
-is gone, so neither admission11 nor runtime11 can pass on it. Recreating its
-identities would forge custody. Attempt-11 controls `d83dab3` passed every byte,
-history and diff check, but independent review 01 is NO-GO for this reason
-(`0b9c67f`). The reviewer measured 38,243 held entries against the 40,000 limit.
-An offline public-episode census (branch `research/public-episode-census-v1`)
-completed a 12-tick manual episode, replay and export without Torchvision. It
-also lists the registration, absence and process needs for the episode route.
-
-**Runtime11 (2026-10-17) proved policy v5 and failed on time.** Preparation02 was
-prepared and independently accepted, and attempt-11b controls were reviewed GO.
-Admission11b was admitted in 14.2s (34,032 held files). Runtime11 ran once:
-Torchvision returned at 154.7s with no import refusal, then the 180s
-normal-return deadline fired during `import mujoco`. The guard took 112.8s of
-166.5s: custody 66.5s, about 0.8s per native-library full check, and bindings
-45.3s, growing with loaded modules. The audit refused the nonzero transport, and
-the outcome review confirmed `FAILED_CONSUMED`
-([report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-held-qualification-11b/docs/reports/puck-cpu-held-qualification-11b.md)).
-The next blocker is guarded import time, not dependency declaration.
+**Next finite exit:** one bounded public manual CPU episode, held and observed,
+with a registered tick-0 snapshot, finite steps and normal close. Every tick is
+replayed against a comparison declared before execution, and the source and
+replay bundles are exported. Independent outcome, byte and cleanup audits must
+accept it. A task failure can prove this route; it cannot prove controller
+capability.
 
 The next actions, in order, are:
 
-0. Add CPU preparation epoch 02 (distinct output and stage parent), run it once
-   and accept it independently. Re-derive the attempt-11 controls on it. Every guard
-   before a one-shot step stat-checks the staged roots, so a reboot fails closed.
-   The host must not reboot between preparation02 and runtime11.
-1. Finish policy v5: declared-absent (32) and declared-hidden (4) names are
-   verified, recorded and return `None`; remaining finders must not resolve them;
-   undeclared requests still poison. Add epoch 11 to parent, observer and auditor.
-   Policies v1–v4 and epochs 1–10 stay unchanged.
-2. Independently review the source and its regression evidence.
-3. Freeze distinct epoch-11 controls, independently review them, run fresh full
-   admission and pre-execution guards, then invoke attempt 11 exactly once.
+1. Port the reviewed constructor seam (`52a8f5d`) onto the qualified source and
+   decide the held diagnostics policy (git/metadata/`nvidia-smi` children).
+2. Add a closed episode descriptor, worker entry, bounded parent and independent
+   auditor. Use the offline census (branch `research/public-episode-census-v1`):
+   - 308 modules to register
+   - 10 new declared absences
+   - the `_sysconfigdata` stdlib-name gap
+   - child processes
+   - EGL software rendering, needing no `/dev/dri`
 
-After accepted import qualification, separately qualify the finite public
-operator/renderer route and produce the real episode bundle in milestone 1.
-A failure consumes its named attempt; never overwrite or silently retry.
-A newly discovered import is not permission to relax the loader or a threshold.
+   Re-run the offline census with exact guard semantics before freezing.
+3. Freeze the seed, a finite schedule of at most 600 ticks, clocks sized from
+   runtime14's guard cost, and the replay comparison (cameras and integers
+   exact, floats 1e-6). Then admit fresh, invoke once, and audit independently.
+
+Preparation03's stage is valid only on boot `7f875223…`. A reboot requires a new
+preparation epoch. Consumed attempts 01–11, runtime14 and every admission and
+preparation remain immutable history; never overwrite or silently retry them.
 
 Project disk has about 45GiB free at the 2026-10-16 check. Every execution must
 refresh its own resource checks; clearing disk space is not admission. Scientific
