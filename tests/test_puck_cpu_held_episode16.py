@@ -151,3 +151,37 @@ def test_receipt_validation_requires_a_clean_complete_episode(defect):
     if defect is None:m.validate_receipt(item,value,phase,registration_raw,dependency_raw,dependencies)
     else:
         with pytest.raises(ValueError):m.validate_receipt(item,value,phase,registration_raw,dependency_raw,dependencies)
+
+
+def episode_observer(tmp_path,monkeypatch,body):
+    from test_puck_cpu_held_observer import setup
+    m,path,_=setup(tmp_path,monkeypatch,'raise AssertionError("the qualifier must not launch")\n')
+    (tmp_path/'scripts/run_puck_cpu_held_episode.py').write_text(body)
+    return m,path
+
+
+@pytest.mark.parametrize('code',[0,7])
+def test_observer_runs_the_episode_parent_once_with_clocks_beyond_750(tmp_path,monkeypatch,code):
+    m,path=episode_observer(tmp_path,monkeypatch,'import sys\nprint("AUTHORED16 transport")\nsys.exit('+str(code)+')\n')
+    raw=m.canonical(dict(kind=KIND16,version=16,allocation_id=16,root=str(tmp_path)));path.write_bytes(raw)
+    waits=[];popen=m.subprocess.Popen
+    class Recording(popen):
+        def wait(self,timeout=None):
+            waits.append(timeout);return super().wait(timeout=timeout)
+    monkeypatch.setattr(m.subprocess,'Popen',Recording)
+    result=m.observe(path,hashlib.sha256(raw).hexdigest())
+    assert result['observed_returncode']==code and result['timed_out'] is False and result['phase']=='episode'
+    assert result['command'][4]==str(tmp_path/'scripts/run_puck_cpu_held_episode.py')
+    assert result['stdout']['path']==OUTPUT16+'-external-cli.stdout'
+    assert 750<waits[0]<=780 and m.EPISODE_SECONDS==(780,795) and m.EXTENDED_SECONDS=={14:(400,415)}
+    assert m.signal.getitimer(m.signal.ITIMER_REAL)[0]==0
+    with pytest.raises(FileExistsError):m.observe(path,hashlib.sha256(raw).hexdigest())
+
+
+@pytest.mark.parametrize('field,value',[('version',15),('version',True),('allocation_id',15),('phase','qualify'),('root','/elsewhere')])
+def test_observer_rejects_mixed_episode_identity_before_launch(tmp_path,monkeypatch,field,value):
+    m,path=episode_observer(tmp_path,monkeypatch,'raise AssertionError("must not launch")\n')
+    config=dict(kind=KIND16,version=16,allocation_id=16,root=str(tmp_path));config[field]=value
+    raw=m.canonical(config);path.write_bytes(raw)
+    with pytest.raises(ValueError):m.observe(path,hashlib.sha256(raw).hexdigest())
+    assert list((tmp_path/'runs').iterdir())==[]
