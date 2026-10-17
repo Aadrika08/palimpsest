@@ -45,6 +45,10 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 def canonical(value):return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
 
 
+def authored_sources(m):
+    return [dict(path=path,size_bytes=0 if path.endswith('__init__.py') else 1,sha256='a'*64) for path in m.SOURCES]
+
+
 def test_characterization04_identity_is_the_next_characterization():
     m=api()
     assert (m.OUTPUT,m.KIND,m.VERSION)==(OUTPUT04,KIND04,3)
@@ -75,7 +79,7 @@ def test_capsule_is_the_held_worker_closure_without_the_bootstrap():
 
 
 def test_configuration_is_exact_and_binds_the_frozen_characterization02_pins():
-    m=api();config=m.configuration();m.validate_configuration(config)
+    m=api();config=m.configuration(authored_sources(m));m.validate_configuration(config)
     rows={r['path']:r for r in config['inputs']}
     assert rows[NATIVE06['path']]==NATIVE06
     assert rows['docs/plans/puck-cpu-retained-admission-02.json']['sha256']=='32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96'
@@ -92,7 +96,7 @@ def test_configuration_is_exact_and_binds_the_frozen_characterization02_pins():
 @pytest.mark.parametrize('defect',['kind','bool-version','output02','torchvision','native05','limits','glfw','egl',
     'ticks','seed','run-ids','renderer','source-missing','input-pin','extra-key','authority'])
 def test_configuration_refuses_drift(defect):
-    m=api();config=m.configuration();m.validate_configuration(config)
+    m=api();config=m.configuration(authored_sources(m));m.validate_configuration(config)
     if defect=='kind':config['kind']='puck-cpu-runtime-characterization-v2'
     elif defect=='bool-version':config['version']=True
     elif defect=='output02':config['output']='runs/puck-cpu-runtime-characterization-02'
@@ -171,7 +175,7 @@ def test_sandbox_binds_v6_natives_control_capsule_and_the_source_run_only_for_re
 # --- worker reports ---------------------------------------------------------
 
 def report(m,phase,request_sha='a'*64,worker_sha='b'*64):
-    config=m.configuration();episode=config['episode']
+    config=m.configuration(authored_sources(m));episode=config['episode']
     bundle=dict(path=phase+'-bundle.zip',size_bytes=10085154,sha256='c'*64)
     claims=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,executable=False,qualification_claims=[])
     if phase=='source':
@@ -259,13 +263,15 @@ def run(admission):
 
 
 def capsule(tmp_path,mode):
-    root=tmp_path/'capsule'
+    root=tmp_path/'capsule';site=tmp_path/'site'
+    if root.exists():
+        files=sorted(p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file())
+        return root,site,[dict(path=p,size_bytes=(root/p).stat().st_size,sha256=sha((root/p).read_bytes())) for p in files]
     (root/'src/palimpsest').mkdir(parents=True);(root/'scripts').mkdir()
     (root/'src/palimpsest/__init__.py').write_text('')
     (root/'src/palimpsest/puck_held_episode.py').write_text(FAKE_EPISODE.format(mode=mode,kind=FAKE_RESULT_KIND))
     (root/'pyproject.toml').write_bytes(b'[project]\nversion = "0.0.0"\n')
     for path in (WORKER,HELPER):shutil.copyfile(path,root/'scripts'/path.name)
-    site=tmp_path/'site'
     for name,version in VERSIONS04.items():
         (site/name).mkdir(parents=True);(site/name/'__init__.py').write_text('__version__='+repr(version)+'\n')
     files=sorted(p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file())
@@ -365,7 +371,7 @@ def test_real_namespace_probe_and_both_authored_phases(tmp_path,monkeypatch):
 
 
 def test_main_refuses_a_different_configuration_sha_before_any_reservation(tmp_path):
-    m=api();config=m.configuration();raw=(json.dumps(config,sort_keys=True,indent=2)+'\n').encode()
+    m=api();config=m.configuration(authored_sources(m));raw=(json.dumps(config,sort_keys=True,indent=2)+'\n').encode()
     path=tmp_path/'configuration.json';path.write_bytes(raw)
     observed=subprocess.run([m.PYTHON,'-I','-S','-B',str(SCRIPT),'--configuration',str(path),'--sha256','0'*64],
         capture_output=True,text=True,timeout=30,start_new_session=True)
