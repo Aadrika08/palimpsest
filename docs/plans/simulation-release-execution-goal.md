@@ -74,6 +74,17 @@ An offline public-episode census (branch `research/public-episode-census-v1`)
 completed a 12-tick manual episode, replay and export without Torchvision. It
 also lists the registration, absence and process needs for the episode route.
 
+**Runtime11 (2026-10-17) proved policy v5 and failed on time.** Preparation02 was
+prepared and independently accepted, and attempt-11b controls were reviewed GO.
+Admission11b was admitted in 14.2s (34,032 held files). Runtime11 ran once:
+Torchvision returned at 154.7s with no import refusal, then the 180s
+normal-return deadline fired during `import mujoco`. The guard took 112.8s of
+166.5s: custody 66.5s, about 0.8s per native-library full check, and bindings
+45.3s, growing with loaded modules. The audit refused the nonzero transport, and
+the outcome review confirmed `FAILED_CONSUMED`
+([report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-held-qualification-11b/docs/reports/puck-cpu-held-qualification-11b.md)).
+The next blocker is guarded import time, not dependency declaration.
+
 The next actions, in order, are:
 
 0. Add CPU preparation epoch 02 (distinct output and stage parent), run it once
