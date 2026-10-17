@@ -1,4 +1,9 @@
-"""Record one exact CPU-parent CLI transport; grants no runtime authority."""
+"""Record one exact CPU-parent CLI transport; grants no runtime authority.
+
+Allocation 16 (the held episode) runs scripts/run_puck_cpu_held_episode.py with
+720/735/750 s clocks; this observer then waits up to 780 s and arms a 795 s
+outer alarm. Any outer wrapper must allow more than 795 s (for example 810 s).
+"""
 import argparse
 import hashlib
 import json
@@ -17,6 +22,10 @@ CLEANUP_SECONDS=5
 HARD_SECONDS=225
 # Allocation 14 extends the parent clocks to 360/375/390 s; its observer keeps the same margins.
 EXTENDED_SECONDS={14:(400,415)}
+EPISODE_KIND='puck-cpu-held-episode-allocation-v16'
+EPISODE_PARENT='scripts/run_puck_cpu_held_episode.py'
+EPISODE_OUTPUT='runs/puck-cpu-held-episode-16'
+EPISODE_SECONDS=(780,795)
 MAX_STREAM_BYTES=16*1024**2
 MAX_INHERITED_FILE_BYTES=1024**3
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
@@ -56,10 +65,16 @@ def observe(configuration,expected_sha256):
     if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
     config=json.loads(raw)
     if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
-    phase=config.get('phase')
+    phase=config.get('phase');parent='scripts/qualify_puck_cpu_held_runtime.py';episode=config.get('kind')==EPISODE_KIND
+    if episode:
+        if ('phase' in config or type(config.get('version')) is not int or config['version']!=16
+                or type(config.get('allocation_id')) is not int or config['allocation_id']!=16):
+            raise ValueError('Exact allocation-16 episode identity required')
+        phase='episode';parent=EPISODE_PARENT
     version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7,'puck-cpu-held-runtime-allocation-v8':8,'puck-cpu-held-runtime-allocation-v9':9,'puck-cpu-held-runtime-allocation-v10':10,'puck-cpu-held-runtime-allocation-v11':11,'puck-cpu-held-runtime-allocation-v12':12,'puck-cpu-held-runtime-allocation-v13':13,'puck-cpu-held-runtime-allocation-v14':14,'puck-cpu-held-runtime-allocation-v15':15}.get(config.get('kind'))
     amended=version is not None
-    if amended:
+    if episode:output_name=EPISODE_OUTPUT
+    elif amended:
         # Allocations 12/13/15 are fresh preparations02/03/04; every other amended allocation qualifies.
         if (phase!=('prepare' if version in (12,13,15) else 'qualify') or type(config.get('version')) is not int or config['version']!=version
                 or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
@@ -70,7 +85,7 @@ def observe(configuration,expected_sha256):
             raise ValueError('Exact CPU parent allocation root and phase required')
         output_name=OUTPUTS[phase]
     if config.get('root')!=str(ROOT):raise ValueError('Exact CPU parent allocation root required')
-    normal,hard=EXTENDED_SECONDS.get(version,(NORMAL_SECONDS,HARD_SECONDS))
+    normal,hard=EPISODE_SECONDS if episode else EXTENDED_SECONDS.get(version,(NORMAL_SECONDS,HARD_SECONDS))
     if hard!=HARD_SECONDS and signal.getitimer(signal.ITIMER_REAL)[0]>0:
         # Extend only an armed outer alarm (the CLI's); direct API callers arm none.
         signal.setitimer(signal.ITIMER_REAL,max(.001,started+hard-time.monotonic()))
@@ -79,7 +94,7 @@ def observe(configuration,expected_sha256):
     receipt=Path(output_name+'-external-cli-transport.json')
     if any(os.path.lexists(p) for p in [output,ROOT/receipt,*[ROOT/p for p in paths.values()]]):
         raise FileExistsError('CPU external observation or allocation already reserved')
-    command=[PYTHON,'-I','-S','-B',str(ROOT/'scripts/qualify_puck_cpu_held_runtime.py'),
+    command=[PYTHON,'-I','-S','-B',str(ROOT/parent),
              '--configuration',str(configuration),'--sha256',expected_sha256]
     process=None;timed_out=False
     with open(ROOT/paths['stdout'],'xb',buffering=0) as stdout:
