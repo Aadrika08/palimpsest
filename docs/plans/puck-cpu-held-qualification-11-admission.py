@@ -20,8 +20,8 @@ CONFIGURATION=ROOT/'docs/plans/puck-cpu-held-qualification-11.json'
 CONFIG_SHA='4ab0ef1b3eab7a74d2f6dc03ab56293a65dea2d7363680b7e687aeb399d1afb5'
 AUDITOR_CURRENT_SHA='04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b'
 OBS_AUDITOR_SHA='be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4'
-PREP_SHA='38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6'
-RESULT_SHA='9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d'
+PREP_SHA='1acfb10b40d561b8e56c96f4cd0d59ee1f00b4d0a14f62c80ffe64e22e1de3ed'
+RESULT_SHA='4ef13965e6f312a0bcdef9c49e57190f6a9526988f20f1959357bcc31400e0d4'
 DEP_SHA='25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f'
 
 
@@ -408,6 +408,59 @@ def check_consumed_admission02(held,admitted):
         current_admission_authority=False,scope='genuine historical admission02 metadata only; grants no admission11')
 
 
+PREP_CONFIGURATION='docs/plans/puck-cpu-held-preparation-02.json'
+PREP_OUTPUT='runs/puck-cpu-held-preparation-02'
+PREP_STAGE='/tmp/palimpsest-puck-cpu-held-02'
+PREP_ROOTS=[{'device': 55, 'inode': 10400, 'root_index': 0}, {'device': 55, 'inode': 10401, 'root_index': 1}, {'device': 55, 'inode': 10402, 'root_index': 2}, {'device': 55, 'inode': 10403, 'root_index': 3}]
+UNEXECUTED11={'control_commit': 'd83dab3c92387c80e81af528fea25dd3f8931598', 'review_commit': '0b9c67f5fbf70f7bd3af4277ae9a10fb9b60a7d3', 'branch': 'research/puck-cpu-held-qualification-11', 'review': {'path': 'docs/plans/puck-cpu-held-qualification-11-independent-controls-review-01.md', 'size_bytes': 2367, 'sha256': '7b8d8acbbc8a1b289a40510e2eca35ab9958c80a735f3f21b9667b345ee800e6'}, 'outputs': ['/tmp/palimpsest-held11-admission-external.json', '/tmp/palimpsest-held11-admission-external.stderr', '/tmp/palimpsest-held11-admission-external.stdout', '/tmp/palimpsest-held11-observer-external.json', '/tmp/palimpsest-held11-observer-external.stderr', '/tmp/palimpsest-held11-observer-external.stdout', '/tmp/palimpsest-held11-audit-external.json', '/tmp/palimpsest-held11-audit-external.stderr', '/tmp/palimpsest-held11-audit-external.stdout', '/tmp/palimpsest-puck-cpu-held-qualification-11-admission-01.json', '/tmp/palimpsest-puck-cpu-held-qualification-11-audit-01.json', '/tmp/palimpsest-held11-concrete-audit-command.json', '/tmp/palimpsest-held11-admission-tool-command.json', '/tmp/palimpsest-held11-admission-tool-terminal.json', '/tmp/palimpsest-held11-admission-tool.stdout', '/tmp/palimpsest-held11-admission-tool.stderr', '/tmp/palimpsest-held11-observer-tool-command.json', '/tmp/palimpsest-held11-observer-tool-terminal.json', '/tmp/palimpsest-held11-observer-tool.stdout', '/tmp/palimpsest-held11-observer-tool.stderr', '/tmp/palimpsest-held11-audit-tool-command.json', '/tmp/palimpsest-held11-audit-tool-terminal.json', '/tmp/palimpsest-held11-audit-tool.stdout', '/tmp/palimpsest-held11-audit-tool.stderr', '/tmp/palimpsest-held11-pre-admission-guard01.json', '/tmp/palimpsest-held11-pre-observer-guard01.json', '/tmp/palimpsest-held11-independent-admission-review.json', '/tmp/palimpsest-held11-independent-outcome-review.json', '/tmp/palimpsest-held11-post-outcome-observation.json', '/tmp/palimpsest-held11-archive-evidence.py', '/tmp/palimpsest-held11-bind-audit-command.py', '/tmp/palimpsest-held11-collect-outcome.py', '/tmp/palimpsest-held11-make-observer-guard.py', '/tmp/palimpsest-held11-pre-admission-guard.py', '/tmp/palimpsest-held11-run-admission-once.py', '/tmp/palimpsest-held11-run-audit-once.py', '/tmp/palimpsest-held11-run-observer-once.py', '/tmp/palimpsest-held11-pre-observer-guard.py', '/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-11']}
+EMPTY_DIRECTORIES=['runs/puck-cpu-held-preparation-01/outer', 'runs/puck-cpu-held-preparation-01/parent-source/upstream/fly-gym', 'runs/puck-cpu-held-preparation-01/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-preparation-02/outer', 'runs/puck-cpu-held-preparation-02/parent-source/upstream/fly-gym', 'runs/puck-cpu-held-preparation-02/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-01/outer', 'runs/puck-cpu-held-qualification-01/payload', 'runs/puck-cpu-held-qualification-02/outer', 'runs/puck-cpu-held-qualification-02/payload', 'runs/puck-cpu-held-qualification-02/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-03/outer', 'runs/puck-cpu-held-qualification-03/payload', 'runs/puck-cpu-held-qualification-03/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-04/outer', 'runs/puck-cpu-held-qualification-04/payload', 'runs/puck-cpu-held-qualification-04/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-05/outer', 'runs/puck-cpu-held-qualification-05/payload', 'runs/puck-cpu-held-qualification-05/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-06/outer', 'runs/puck-cpu-held-qualification-06/payload', 'runs/puck-cpu-held-qualification-06/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-07/outer', 'runs/puck-cpu-held-qualification-07/payload', 'runs/puck-cpu-held-qualification-07/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-08/outer', 'runs/puck-cpu-held-qualification-08/payload', 'runs/puck-cpu-held-qualification-08/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-09/outer', 'runs/puck-cpu-held-qualification-09/payload', 'runs/puck-cpu-held-qualification-09/worker-source/upstream/fly-gym', 'runs/puck-cpu-held-qualification-10/outer', 'runs/puck-cpu-held-qualification-10/payload', 'runs/puck-cpu-held-qualification-10/worker-source/upstream/fly-gym']
+
+
+def check_preparation02(held,m,current,frozen):
+    """Accepted preparation02 metadata only; its staged forest is re-hashed separately by forest()."""
+    config,configraw=held.json(ROOT/PREP_CONFIGURATION,maximum=1024**2,lf=True)
+    assert m.sha(configraw)==PREP_SHA;current.configuration(config,False)
+    assert config['root']==str(ROOT) and config['phase']=='prepare' and config['stage_parent']==PREP_STAGE
+    assert current.preparation_output(config)==current.preparation_output(frozen)==PREP_OUTPUT
+    prepbase=ROOT/PREP_OUTPUT
+    prep,prepraw=held.json(prepbase/'result.json',maximum=1024**2,lf=True)
+    assert m.sha(prepraw)==RESULT_SHA;m.outcome(prep,config,PREP_SHA)
+    assert prep['staged_roots']==PREP_ROOTS and prep['dependencies']['sha256']==DEP_SHA
+    assert held.file(prepbase/'configuration.json',maximum=1024**2,raw=True)==configraw
+    for folder,names in [('parent-source',m.SOURCES),('worker-source',m.WORKER)]:
+        for row in config['sources']:
+            if row['path'] in names:held.file(prepbase/folder/row['path'],row,1024**2)
+    prior,accepted,audit=current.historical_acceptance(held,frozen,False)
+    assert prior==config and accepted==prep and audit['allocation_id']==12 and audit['status']=='PASS'
+    return config,configraw,prep,prepraw,dict(status='ACCEPTED_PREPARATION02',configuration_sha256=PREP_SHA,
+        result_sha256=RESULT_SHA,independent_audit_sha256=frozen['preparation_acceptance']['independent_audit']['sha256'],
+        stage_parent=PREP_STAGE,staged_roots=PREP_ROOTS,scope='accepted preparation metadata only; staged bytes re-hashed by forest')
+
+
+def record_preparation01():
+    # Preparation01's tmpfs forest was lost on reboot; it is history, not an input.
+    return dict(status='ACCEPTED_SUPERSEDED_STAGE_LOST',required=False,stage_parent='/tmp/palimpsest-puck-cpu-held-01',
+        stage_present=os.path.lexists('/tmp/palimpsest-puck-cpu-held-01'),
+        configuration_sha256='38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6',
+        result_sha256='9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d')
+
+
+def check_unexecuted11(held):
+    """The d83dab3 attempt-11 controls were reviewed NO-GO and never invoked; none of their outputs exist."""
+    row=UNEXECUTED11['review'];held.file(ROOT/row['path'],row,1024**2)
+    assert all(not os.path.lexists(path) for path in UNEXECUTED11['outputs'])
+    return dict(status='NEVER_INVOKED',control_commit=UNEXECUTED11['control_commit'],review_commit=UNEXECUTED11['review_commit'],
+        review='NO-GO: preparation01 stage lost on reboot',absent_outputs=len(UNEXECUTED11['outputs']),
+        scope='absence of every d83dab3 /tmp output and archive; /tmp absence alone would not survive a reboot, the Git NO-GO record does')
+
+
+def check_empty_directories():
+    for name in EMPTY_DIRECTORIES:
+        path=ROOT/name
+        assert os.path.isdir(path) and not os.path.islink(path) and os.listdir(path)==[],name
+    return dict(directories=len(EMPTY_DIRECTORIES),scope='historical allocation directories hold no unpinned entries')
+
+
 def resources(minimum_ram_bytes=2<<30):
     available=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))*1024
     soft,hard=resource.getrlimit(resource.RLIMIT_NOFILE)
@@ -532,7 +585,7 @@ def main():
         finally:os.close(fd)
         m=types.ModuleType('authenticated_cpu_data_auditor');m.__file__=str(AUDITOR)
         exec(compile(raw,str(AUDITOR),'exec'),m.__dict__)
-        before=len(os.listdir('/proc/self/fd'));held=m.Held(deadline);prepbase=ROOT/m.OUTPUTS['prepare']
+        before=len(os.listdir('/proc/self/fd'));held=m.Held(deadline);prepbase=ROOT/PREP_OUTPUT
         try:
             assert held.file(AUDITOR,dict(size_bytes=65522,sha256=AUDITOR_SHA),1024**2,raw=True)==raw
             own=held.file(Path(__file__).resolve(),maximum=1024**2)
@@ -561,21 +614,12 @@ def main():
             consumed_admission01=check_consumed_admission01(held,admitted10)
             consumed_admission02=check_consumed_admission02(held,admitted10)
             assert manifest['source_commit']=='8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15' and manifest['observer_invocations']==1 and manifest['implicit_retry'] is False
-            config,configraw=held.json(ROOT/'docs/plans/puck-cpu-held-preparation-01.json',maximum=1024**2,lf=True)
-            assert m.sha(configraw)==PREP_SHA;m.configuration(config,False)
-            assert config['root']==str(ROOT) and config['phase']=='prepare'
-            prep,prepraw=held.json(prepbase/'result.json',maximum=1024**2,lf=True)
-            assert m.sha(prepraw)==RESULT_SHA;m.outcome(prep,config,PREP_SHA)
-            assert held.file(prepbase/'configuration.json',maximum=1024**2,raw=True)==configraw
-            for folder,names in [('parent-source',m.SOURCES),('worker-source',m.WORKER)]:
-                for row in config['sources']:
-                    if row['path'] in names:held.file(prepbase/folder/row['path'],row,1024**2)
+            config,configraw,prep,prepraw,preparation02=check_preparation02(held,m,current,frozen)
             blobs={};data={}
             for role,row in config['inputs'].items():
                 blobs[role]=held.file(ROOT/row['path'],row,16*1024**2,raw=True)
                 if role!='generated':data[role]=m.decode(blobs[role])
             m.inputs_binding(config,data,blobs);source,dependency,directories=m.plan(config,data)
-            current.historical_acceptance(held,frozen,False)
             selected=dict(data);selected_blobs=dict(blobs)
             candidate_raw=held.file(ROOT/frozen['inputs']['candidate']['path'],frozen['inputs']['candidate'],16*1024**2,raw=True)
             selected['candidate']=current.decode(candidate_raw);selected_blobs['candidate']=candidate_raw
@@ -613,7 +657,7 @@ def main():
             observed,_=held.json(prepbase/'supervision.json',maximum=1024**2,lf=True);m.supervision(observed,'prepare')
             command=[m.PYTHON,'-I','-S','-B','/puck/source/scripts/stage_puck_cpu_held_runtime.py',m.sha(requestraw)]
             invocation,_=held.json(prepbase/'invocation.json',maximum=1024**2,lf=True)
-            assert invocation==dict(command=m.namespace_command(config,data,'prepare',command),configuration_sha256=PREP_SHA)
+            assert invocation==dict(command=current.namespace_command(config,data,'prepare',command),configuration_sha256=PREP_SHA)
             for allocation,expected in [('01','224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299'),('02','085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b'),('03','ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b'),('04','d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889'),('05','c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67'),('06','e88a7f3317ae15b709409cf04a30f969629b20c51454a5ad6ca72d63d6378b88')]:
                 failurebase=ROOT/('runs/puck-cpu-held-qualification-'+allocation)
                 failed,fraw=held.json(failurebase/'result.json',maximum=1024**2,lf=True)
@@ -624,6 +668,9 @@ def main():
             consumed08=check_consumed08(held)
             consumed09=check_consumed09(held)
             consumed10=check_consumed10(held)
+            unexecuted11=check_unexecuted11(held)
+            empty_directories=check_empty_directories()
+            preparation01=record_preparation01()
             _phase('hostbaseline/native',started,held)
             tree=m.forest(held,config,dependency,directories,prep['staged_roots'])
             _phase('forest1',started,held)
@@ -651,7 +698,7 @@ def main():
             except FileNotFoundError:matches=False
             assert not matches
             sampled.append(dict(pid=identity[0],start_ticks=identity[1],matching_identity_present=matches))
-        result=dict(m.CLAIMS,kind='puck-cpu-held11b-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current11b/D on preparation02 source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_07_08_09_10_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=True,qualification08_invoked=True,qualification09_invoked=True,qualification10_invoked=True,qualification11_invoked=False,admission_check_id=1,admission10_01_failed_consumed=True,admission10_01_failure=consumed_admission01,admission10_02_admitted_consumed=True,admission10_02=consumed_admission02,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='fifteen recorded identities only; nonexhaustive non-atomic lifetime observation',qualification07_failure=consumed07,qualification08_failure=consumed08,qualification09_failure=consumed09,qualification10_failure=consumed10,current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15')
+        result=dict(m.CLAIMS,kind='puck-cpu-held11b-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current11b/D on preparation02 source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_07_08_09_10_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=True,qualification08_invoked=True,qualification09_invoked=True,qualification10_invoked=True,qualification11_invoked=False,admission_check_id=1,admission10_01_failed_consumed=True,admission10_01_failure=consumed_admission01,admission10_02_admitted_consumed=True,admission10_02=consumed_admission02,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='fifteen recorded identities only; nonexhaustive non-atomic lifetime observation',qualification07_failure=consumed07,qualification08_failure=consumed08,qualification09_failure=consumed09,qualification10_failure=consumed10,preparation02=preparation02,preparation01=preparation01,attempt11_d83dab3=unexecuted11,historical_empty_directories=empty_directories,current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15')
         assert time.monotonic()<deadline;m.publish(OUTPUT,result)
         _phase('close/publication',started,held)
         assert time.monotonic()<deadline
