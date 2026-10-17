@@ -30,6 +30,7 @@ _V6_KEYS = {'kind', 'status', 'root_scope', 'errors', 'oversized_native_files', 
 _V6_LEAF_BYTES = 256 * 1024**2
 _V6_FILES = 256
 EGL_VENDOR_CONTROL = '/puck/control/egl-vendor.json'
+EPISODE_CANDIDATE = 'puck-cpu-episode-import-profile-candidate-v2'
 _EGL_VENDOR_DIRECTORY = '/usr/share/glvnd/egl_vendor.d/'
 _SONAME = re.compile(r'lib[A-Za-z0-9_+-]+(\.[A-Za-z0-9_+-]+)*\.so(\.[0-9]+)*')
 _EMPTY_PROFILE = dict(exports=[], module_changes=[], native_origins=[])
@@ -273,8 +274,10 @@ def egl_vendor_control(native, raw):
 
 
 def _candidate(candidate, deadline):
-    if (candidate.get('kind') != 'puck-cpu-observed-import-profile-candidate-v1'
-            or type(candidate.get('version')) is not int or candidate['version'] != 1
+    # v2 is the held episode candidate: numpy, torch, mujoco and gymnasium, no torchvision.
+    episode = candidate.get('kind') == EPISODE_CANDIDATE
+    if (candidate.get('kind') not in ('puck-cpu-observed-import-profile-candidate-v1', EPISODE_CANDIDATE)
+            or type(candidate.get('version')) is not int or candidate['version'] != (2 if episode else 1)
             or any(candidate.get(k) is not False for k in ('native_phase_qualified','held_runtime_qualified',
                 'native_authorized','collection_authorized','study_authorized','executable'))
             or candidate.get('qualification_claims') != []):
@@ -283,7 +286,8 @@ def _candidate(candidate, deadline):
     versions = candidate.get('expected_versions')
     if (type(profile) is not dict or profile.get('kind') != 'puck-producer-import-profile-v2'
             or type(profile.get('version')) is not int or profile['version'] != 2
-            or type(versions) is not dict or set(versions) != {'numpy','torch','torchvision','mujoco'}
+            or type(versions) is not dict
+            or set(versions) != {'numpy','torch','gymnasium' if episode else 'torchvision','mujoco'}
             or any(type(v) is not str or not 1 <= len(v) <= 128
                    or any(ord(c) < 33 or ord(c) == 127 for c in v) for v in versions.values())):
         raise ValueError('CPU candidate requires its explicit enhanced profile and four version strings')
