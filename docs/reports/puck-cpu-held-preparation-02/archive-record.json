@@ -1,0 +1,155 @@
+{
+  "acceptance_pins": {
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-preparation-02.json",
+      "sha256": "1acfb10b40d561b8e56c96f4cd0d59ee1f00b4d0a14f62c80ffe64e22e1de3ed",
+      "size_bytes": 7906
+    },
+    "externally_observed_auditor_cli": {
+      "path": "docs/reports/puck-cpu-held-preparation-02/audit/palimpsest-puck-cpu-held-preparation-02-audit-01.external-cli.json",
+      "sha256": "50e452aa92f61fcb2743421d30b6d04334796250eb1b96ae0f16e9e229b1a073",
+      "size_bytes": 1465
+    },
+    "independent_audit": {
+      "path": "docs/reports/puck-cpu-held-preparation-02/audit/palimpsest-puck-cpu-held-preparation-02-audit-01.json",
+      "sha256": "fe155208053f522c92e5e1d4a294e5be768ede398c4abc57ea8305b93556e792",
+      "size_bytes": 1583
+    },
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-02/result.json",
+      "sha256": "4ef13965e6f312a0bcdef9c49e57190f6a9526988f20f1959357bcc31400e0d4",
+      "size_bytes": 7326
+    }
+  },
+  "acceptance_proof": {
+    "auditor_configuration": "PASS",
+    "auditor_historical_acceptance": "PASS",
+    "auditor_preparation_epoch": "PASS",
+    "parent_validate_preparation_acceptance": "PASS"
+  },
+  "at_utc": "2026-10-17T02:02:24.665384+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "copies": [
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/audit/palimpsest-puck-cpu-held-preparation-02-audit-01.json",
+      "sha256": "fe155208053f522c92e5e1d4a294e5be768ede398c4abc57ea8305b93556e792",
+      "size_bytes": 1583,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/audit/palimpsest-puck-cpu-held-preparation-02-audit-01.external-cli.json",
+      "sha256": "50e452aa92f61fcb2743421d30b6d04334796250eb1b96ae0f16e9e229b1a073",
+      "size_bytes": 1465,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.external-cli.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/audit/palimpsest-puck-cpu-held-preparation-02-audit-01.stdout",
+      "sha256": "fe155208053f522c92e5e1d4a294e5be768ede398c4abc57ea8305b93556e792",
+      "size_bytes": 1583,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/audit/palimpsest-puck-cpu-held-preparation-02-audit-01.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.stderr"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/records/palimpsest-prep02-observer-terminal.json",
+      "sha256": "0e7df7b403f6484b9b9abda58f1e3b173da15c34cb8fc3419fd3e1a61be88eab",
+      "size_bytes": 3655,
+      "source": "/tmp/palimpsest-prep02-observer-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/records/palimpsest-prep02-audit-terminal.json",
+      "sha256": "8017e9780966a1028bd8986e42cd554a434543cf05c37d25bbca3b3e39adc2d9",
+      "size_bytes": 4198,
+      "source": "/tmp/palimpsest-prep02-audit-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/records/palimpsest-prep02-observer.stdout",
+      "sha256": "63a90878fb5841342ea94950da81f7816d674daa3d4497d420a2f2410f9cd2a4",
+      "size_bytes": 946,
+      "source": "/tmp/palimpsest-prep02-observer.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-02/records/palimpsest-prep02-observer.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-prep02-observer.stderr"
+    }
+  ],
+  "head": "8a0a579c70767bddcc5bfd5082d9c6465d975a2c",
+  "kind": "palimpsest-prep02-archive-record-v1",
+  "preflight": {
+    "absent": 3,
+    "at_utc": "2026-10-17T02:02:24.073398+00:00",
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "dry_run": false,
+    "git": {
+      "clean": true,
+      "controls_git_bound": 15,
+      "head": "8a0a579c70767bddcc5bfd5082d9c6465d975a2c",
+      "origin": "8a0a579c70767bddcc5bfd5082d9c6465d975a2c"
+    },
+    "host": {
+      "baseline_external_files": 10,
+      "baseline_files": 4233,
+      "baseline_links": 1048,
+      "native_aliases": 23,
+      "native_files": 29
+    },
+    "kind": "palimpsest-prep02-preflight-v1",
+    "phase": "archive",
+    "pins_checked": 44,
+    "prepared": {
+      "observer_boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+      "result_sha256": "4ef13965e6f312a0bcdef9c49e57190f6a9526988f20f1959357bcc31400e0d4",
+      "staged_roots": {
+        "roots": [
+          {
+            "device": 55,
+            "inode": 10400,
+            "matches": true,
+            "root_index": 0
+          },
+          {
+            "device": 55,
+            "inode": 10401,
+            "matches": true,
+            "root_index": 1
+          },
+          {
+            "device": 55,
+            "inode": 10402,
+            "matches": true,
+            "root_index": 2
+          },
+          {
+            "device": 55,
+            "inode": 10403,
+            "matches": true,
+            "root_index": 3
+          }
+        ],
+        "stage_parent": "/tmp/palimpsest-puck-cpu-held-02",
+        "stage_parent_device": 55,
+        "stage_parent_inode": 10398
+      },
+      "transport_sha256": "63a90878fb5841342ea94950da81f7816d674daa3d4497d420a2f2410f9cd2a4"
+    },
+    "resources": {
+      "disk_available_bytes": 44347023360,
+      "floors_met": true,
+      "mem_available_bytes": 8271978496,
+      "nofile": [
+        524288,
+        524288
+      ],
+      "tmp_flags": 6,
+      "tmpfs_available_bytes": 6295515136
+    },
+    "status": "PASS_PREFLIGHT_ARCHIVE"
+  },
+  "scope": "byte-identical archive of preparation02 audit evidence; not runtime qualification"
+}
