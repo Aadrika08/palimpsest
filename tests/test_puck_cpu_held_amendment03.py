@@ -138,6 +138,7 @@ def amendment03_fixture(tmp_path):
         yield dict(case,config=updated)
 
 
+@pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
 def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
     with amendment03_fixture(tmp_path) as case:
         root,m,config,stage=(case[k] for k in ('root','api','config','stage'))

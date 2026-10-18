@@ -314,6 +314,7 @@ class ImportBoundaryTests(unittest.TestCase):
         command = [
             sys.executable,
             "-I",
+            "-B",
             "-c",
             ("import sys;"
              f"sys.path[:0]=[{str(ROOT / 'src')!r},{str(ROOT / 'scripts')!r}];"

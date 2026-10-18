@@ -133,6 +133,7 @@ def test_reauthenticated_historical_receipt_tampering_still_refuses(tmp_path,def
     finally:held.close()
 
 
+@pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
 def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
     from test_puck_cpu_held_amendment import amendment_fixture
     from test_puck_cpu_held_parent_integration import run_cli

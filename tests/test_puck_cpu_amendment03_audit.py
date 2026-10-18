@@ -89,6 +89,7 @@ def test03_outcome_cannot_reuse02_identity():
     with pytest.raises(ValueError):m.outcome(old,config,'a'*64)
 
 
+@pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
 def test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures(tmp_path):
     from test_puck_cpu_held_amendment03 import amendment03_fixture
     from test_puck_cpu_held_parent_integration import run_cli

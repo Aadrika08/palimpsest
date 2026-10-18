@@ -247,7 +247,7 @@ def test_import_bootstrap_binds_checkout_without_running_preflight(mode):
         print(json.dumps({'mode': mode, 'origins': origins}, sort_keys=True))
     ''')
     completed = subprocess.run(
-        [sys.executable, '-I', '-c', program, mode, str(ROOT)],
+        [sys.executable, '-I', '-B', '-c', program, mode, str(ROOT)],
         cwd='/tmp', text=True, capture_output=True, check=False)
     assert completed.returncode == 0, completed.stderr
 
