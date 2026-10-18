@@ -68,6 +68,30 @@ def split(rows,capsule,prefix):
     return site,source
 
 
+def native_cache_rows(rows,reports):
+    """Each kept template cache row with its observed creator keys and every later key's producers."""
+    names={row['name'] for row in rows};result=[]
+    for value in reports.values():
+        for event in value['native_cache_dispatch']['events']:
+            if event['first'] and event['cache'] not in names:
+                raise ValueError('Observed shared cache module is not a template native cache row: '+event['cache'])
+    for row in rows:
+        late={}
+        for phase,value in reports.items():
+            events=[e for e in value['native_cache_dispatch']['events'] if e['cache']==row['name']]
+            if not events or not events[0]['first'] or (events[0]['producer'],events[0]['phase'])!=(row['producer'],row['phase']):
+                raise ValueError('Shared cache '+row['name']+' was not first observed at its template creator in '+phase)
+            if events[0]['added']!=row['delegate_attributes'] or any(e['first'] for e in events[1:]):
+                raise ValueError('Shared cache '+row['name']+' creator keys differ from the template in '+phase)
+            for event in events[1:]:
+                for key in event['added']:late.setdefault(key,set()).add((event['producer'],event['phase']))
+        if late:
+            row=dict(row,late_delegates=[dict(attribute=key,producers=[dict(producer=p,phase=f) for p,f in sorted(late[key])])
+                                         for key in sorted(late)])
+        result.append(row)
+    return result
+
+
 def derive(*,configuration,result,source,replay,audit,template,inventory,site_root):
     config=load(configuration,'Characterization-04 configuration');PARENT.validate_configuration(config)
     if config['environment']['PYGLFW_LIBRARY']!=site_root+'/glfw/x11/libglfw.so':
@@ -104,6 +128,7 @@ def derive(*,configuration,result,source,replay,audit,template,inventory,site_ro
     observed={row['name'] for value in reports.values() for row in value['cache']['modules']}
     for key in ('exports','module_changes','native_origins','native_cache'):
         profile[key]=[row for row in profile[key] if row['name'] in observed]
+    profile['native_cache']=native_cache_rows(profile['native_cache'],reports)
     rows=load(inventory,'Retained inventory')['entries']
     census={row['path']:(None,None,stat.S_IFREG) for row in rows}
     for row in rows:

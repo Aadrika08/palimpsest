@@ -290,7 +290,7 @@ def validate_report(report,phase,request_sha,worker_sha):
     keys={'kind','version','status','phase','request_sha256','source_sha256','environment_sha256','python_version',
           'executable_path','pid','ppid','expected_versions','versions','episode_result','process_creation_attempts',
           'import_misses','rechecks','cache','maps','baseline_maps','environment_unchanged','pycache_unchanged',
-          'observation_errors','seconds',*FALSE}
+          'native_cache_dispatch','observation_errors','seconds',*FALSE}
     require(type(report) is dict and set(report)==keys and report['kind']=='puck-episode-characterization-result-v1'
             and type(report['version']) is int and report['version']==1 and report['status']=='observed'
             and report['phase']==phase and report['request_sha256']==request_sha and report['source_sha256']==worker_sha
@@ -306,6 +306,12 @@ def validate_report(report,phase,request_sha,worker_sha):
     require(len(names)==len(set(names))<=8192 and all(type(n) is str for n in names)
             and not any(n=='torchvision' or n.startswith('torchvision.') for n in names),'Episode module cache differs')
     require(type(report['maps'].get('images')) is list and type(report['baseline_maps'].get('images')) is list,'Mapped images required')
+    dispatch=report['native_cache_dispatch']
+    require(type(dispatch) is dict and set(dispatch)=={'events','unattributed','errors'} and dispatch['unattributed']==[]
+            and dispatch['errors']==[] and type(dispatch['events']) is list and len(dispatch['events'])<=4096
+            and all(type(e) is dict and set(e)=={'cache','producer','phase','added','first'} and e['phase'] in ('native_create','module_exec')
+                    and type(e['first']) is bool and type(e['added']) is list and e['added']==sorted(set(e['added']))
+                    for e in dispatch['events']),'Complete attributed native cache dispatch record required')
     misses=report['import_misses'];require(type(misses) is list and misses==sorted(set(misses)) and len(misses)<=4096,'Import misses differ')
     value=report['episode_result'];ids=EPISODE['run_ids'];ticks=EPISODE['schedule']['ticks']
     common={'kind','version','phase','run_id','source_run_id','ticks_requested','provenance_sha256','versions','bundle',

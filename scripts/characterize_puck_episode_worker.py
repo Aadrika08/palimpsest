@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import sys
 import time
+import types
 
 REPORT_KIND = 'puck-episode-characterization-result-v1'
 REQUEST_KIND = 'puck-episode-characterization-request-v1'
@@ -131,6 +132,92 @@ class _Admission:
         self.rechecks += 1
 
 
+class _DispatchWatch:
+    """Attribute shared native-cache dispatch keys to the innermost completing site producer phase.
+
+    A head finder enables a profile hook only while an import runs. At each site
+    module completion (a Python module body returning, or _imp.create_dynamic /
+    _imp.exec_dynamic returning for an extension) it snapshots the dispatch keys
+    (module, class or function values) of every virtual cache module, so each new
+    key is attributed exactly as the held guard checks it at that phase's close.
+    """
+    DELEGATES = (types.ModuleType, type, types.FunctionType, types.BuiltinFunctionType)
+
+    def __init__(self, site_root):
+        import _imp
+        self.site = site_root.rstrip('/') + '/'; self.create = _imp.create_dynamic; self.execute = _imp.exec_dynamic
+        self.depth = 0; self.active = False; self.state = {}; self.events = []; self.errors = []; self.code = None
+
+    def find_spec(self, fullname, path=None, target=None):
+        if not self.active:
+            frame = sys._getframe(1)
+            while frame is not None and frame.f_code.co_name != '_find_and_load':
+                frame = frame.f_back
+            if frame is not None:
+                self.code = frame.f_code; self.depth = 1; self.active = True; sys.setprofile(self.profile)
+        return None
+
+    def invalidate_caches(self):
+        pass
+
+    def caches(self):
+        result = {}
+        for name, value in list(sys.modules.items()):
+            if type(value) is not types.ModuleType or '.' in name or name in ('__main__', '__mp_main__'):
+                continue
+            raw = types.ModuleType.__dict__['__dict__'].__get__(value)
+            if raw.get('__spec__') is None and raw.get('__file__') is None:
+                result[name] = {key: item for key, item in raw.items() if isinstance(item, self.DELEGATES)}
+        return result
+
+    def completed(self, producer, phase):
+        current = self.caches()
+        for cache, keys in current.items():
+            before = self.state.get(cache)
+            if before is None:
+                self.events.append(dict(cache=cache, producer=producer, phase=phase, added=sorted(keys), first=True))
+                continue
+            if any(key not in keys or keys[key] is not value for key, value in before.items()):
+                self.errors.append(dict(cache=cache, producer=producer, phase=phase, error='dispatch changed or removed'))
+            added = sorted(set(keys) - set(before))
+            if added:
+                self.events.append(dict(cache=cache, producer=producer, phase=phase, added=added, first=False))
+        self.state = current
+
+    def profile(self, frame, event, arg):
+        try:
+            if event == 'call' and frame.f_code is self.code:
+                self.depth += 1
+            elif event == 'return' and frame.f_code is self.code:
+                self.depth -= 1
+                if self.depth <= 0:
+                    self.active = False; sys.setprofile(None)
+            elif event == 'return' and frame.f_code.co_name == '<module>':
+                path = frame.f_globals.get('__file__')
+                if type(path) is str and path.startswith(self.site):
+                    self.completed(frame.f_globals.get('__name__'), 'module_exec')
+            elif event == 'c_return' and (arg is self.create or arg is self.execute):
+                target = frame.f_locals.get('args', (None,))[0]
+                if arg is self.create:
+                    name, origin, phase = getattr(target, 'name', None), getattr(target, 'origin', None), 'native_create'
+                else:
+                    raw = types.ModuleType.__dict__['__dict__'].__get__(target)
+                    name, origin, phase = raw.get('__name__'), raw.get('__file__'), 'module_exec'
+                if type(origin) is str and origin.startswith(self.site):
+                    self.completed(name, phase)
+        except BaseException as error:
+            if len(self.errors) < 64:
+                self.errors.append(dict(error=type(error).__name__ + ': ' + str(error)[:512]))
+
+    def report(self):
+        final = self.caches(); unattributed = []
+        for cache, keys in final.items():
+            before = self.state.get(cache, {})
+            if set(keys) != set(before) or any(keys[k] is not before[k] for k in before if k in keys):
+                unattributed.append(dict(cache=cache, keys=sorted(set(keys) ^ set(before))))
+        return dict(events=self.events[:4096], unattributed=unattributed, errors=self.errors)
+
+
 class _Misses:
     """Passive tail finder: records names no finder resolved."""
 
@@ -154,12 +241,13 @@ def observe(request, request_sha, h):
                   expected_versions=dict(request['expected_versions']), versions={}, episode_result=None,
                   process_creation_attempts=attempts, import_misses=[], rechecks=0, cache=None, maps=None,
                   baseline_maps=None, environment_unchanged=None, pycache_unchanged=None,
-                  observation_errors=[], **CLAIMS)
+                  native_cache_dispatch=None, observation_errors=[], **CLAIMS)
     started = time.monotonic(); error = None; admission = None; misses = _Misses()
+    dispatch = _DispatchWatch(request['site_root'])
     try:
         report['baseline_maps'] = h.mapped_images()
         sys.path.extend([request['site_root'], str(Path(request['source_root']) / 'src')])
-        sys.meta_path.append(misses)
+        sys.meta_path.append(misses); sys.meta_path.insert(0, dispatch)
         admission = _Admission(request)
         from palimpsest import puck_held_episode
         report['episode_result'] = puck_held_episode.run(admission)
@@ -176,8 +264,11 @@ def observe(request, request_sha, h):
         except BaseException as diagnostic:
             report['error_chain'] = dict(entries=[], complete=False, truncation='diagnostic_error',
                                          error_type=h.class_name(diagnostic))
-    if misses in sys.meta_path:
-        sys.meta_path.remove(misses)
+    sys.setprofile(None)
+    for finder in (misses, dispatch):
+        if finder in sys.meta_path:
+            sys.meta_path.remove(finder)
+    report['native_cache_dispatch'] = dispatch.report()
     report['import_misses'] = sorted(misses.names)
     report['rechecks'] = admission.rechecks if admission is not None else 0
     for stage, snapshot in (('cache', lambda: h.describe_cache(sys.modules)), ('maps', h.mapped_images)):

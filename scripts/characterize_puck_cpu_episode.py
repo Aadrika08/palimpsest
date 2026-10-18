@@ -114,7 +114,7 @@ CONFIGURATION_KEYS={'kind','version','output','site_root','sources','inputs','ro
 REPORT_KEYS={'kind','version','status','phase','request_sha256','source_sha256','environment_sha256',
     'python_version','executable_path','pid','ppid','expected_versions','versions','episode_result',
     'process_creation_attempts','import_misses','rechecks','cache','maps','baseline_maps',
-    'environment_unchanged','pycache_unchanged','observation_errors','seconds',*CLAIMS}
+    'environment_unchanged','pycache_unchanged','native_cache_dispatch','observation_errors','seconds',*CLAIMS}
 PROBE="""import json,os,pathlib,sys
 parent_net,site,hidden=sys.argv[1:]
 assert os.readlink('/proc/self/ns/net')!=parent_net
@@ -132,6 +132,10 @@ print(json.dumps(dict(kind='cpu-episode-characterization-namespace-v1',network_i
 
 
 def sha(raw):return hashlib.sha256(raw).hexdigest()
+
+
+def require(value,message):
+    if not value:raise ValueError(message)
 
 
 def canonical(value):return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
@@ -309,6 +313,19 @@ def validate_episode_result(value,phase):
             raise ValueError('Held replay must pass every scheduled tick without divergence')
 
 
+def validate_dispatch(value):
+    """Every shared cache dispatch key attributed to one producer phase; none unattributed or changed."""
+    require(type(value) is dict and set(value)=={'events','unattributed','errors'} and value['unattributed']==[]
+            and value['errors']==[] and type(value['events']) is list and len(value['events'])<=4096,
+            'Complete attributed native cache dispatch record required')
+    for event in value['events']:
+        require(type(event) is dict and set(event)=={'cache','producer','phase','added','first'}
+                and type(event['cache']) is str and type(event['producer']) is str
+                and event['phase'] in ('native_create','module_exec') and type(event['first']) is bool
+                and type(event['added']) is list and all(type(k) is str for k in event['added'])
+                and event['added']==sorted(set(event['added'])),'Native cache dispatch event differs')
+
+
 def validate_report(report,*,phase,request_sha256,worker_sha256):
     if (type(report) is not dict or set(report)!=REPORT_KEYS or report['kind']!=REPORT_KIND
             or type(report['version']) is not int or report['version']!=1
@@ -340,6 +357,7 @@ def validate_report(report,*,phase,request_sha256,worker_sha256):
     for key in ('maps','baseline_maps'):
         if type(report[key]) is not dict or type(report[key].get('images')) is not list:
             raise ValueError('Mapped-image observation required')
+    validate_dispatch(report['native_cache_dispatch'])
     validate_episode_result(report['episode_result'],phase)
 
 
