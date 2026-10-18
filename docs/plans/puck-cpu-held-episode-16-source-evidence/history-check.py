@@ -85,6 +85,9 @@ class HistoryChecks(unittest.TestCase):
         for epoch in ('07','08','09','10','11'):
             selected.update('runs/puck-cpu-held-qualification-'+epoch+'-external-cli.'+name for name in ('stdout','stderr'))
             selected.update('runs/puck-cpu-held-qualification-'+epoch+'/logs/'+name+'.log' for name in ('stdout','stderr'))
+        # Runtime14's streams and baselines are pinned too and must survive manifest-first holds (selfcheck trial finding).
+        selected.update('runs/puck-cpu-held-qualification-14-external-cli.'+name for name in ('stdout','stderr'))
+        selected.update('runs/puck-cpu-held-qualification-14/baseline-'+name+'.json' for name in ('before','after'))
         pins=[]
         for path in sorted(selected):
             data=(control.ROOT/path).read_bytes();pins.append(dict(path=path,size_bytes=len(data),sha256=hashlib.sha256(data).hexdigest()))

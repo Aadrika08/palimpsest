@@ -57,6 +57,9 @@ def hold_manifest(held,pins,raw_paths):
     for epoch in ('07','08','09','10','11'):
         raw_paths.update('runs/puck-cpu-held-qualification-'+epoch+'-external-cli.'+name for name in ('stdout','stderr'))
         raw_paths.update('runs/puck-cpu-held-qualification-'+epoch+'/logs/'+name+'.log' for name in ('stdout','stderr'))
+    # check_runtime14 reads runtime14's streams and baselines raw, so manifest-first holds must keep their bytes.
+    raw_paths.update('runs/puck-cpu-held-qualification-14-external-cli.'+name for name in ('stdout','stderr'))
+    raw_paths.update('runs/puck-cpu-held-qualification-14/baseline-'+name+'.json' for name in ('before','after'))
     for row in pins:held.file(ROOT/row['path'],row,16*1024**2,raw=row['path'] in raw_paths)
 
 
