@@ -75,6 +75,10 @@ CAPSULE_REQUIRED={WORKER,HELPER,'src/palimpsest/__init__.py','src/palimpsest/puc
     'upstream/fly-gym/core/__init__.py','upstream/fly-gym/core/astar.py','upstream/fly-gym/environment/__init__.py',
     'upstream/fly-gym/environment/mujoco_model_random_obstacles.xml',
     'upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py'}
+EMPTY_SOURCES=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+DATA=('model_manifests/flynn-full-vision.json','pyproject.toml','uv.lock')
+NINE=sorted(['/etc/ld.so.cache',PYTHON,*('/usr/lib/'+n for n in ('ld-linux-x86-64.so.2','libc.so.6','libdl.so.2',
+    'libm.so.6','libpthread.so.0','librt.so.1','libutil.so.1'))])
 FALSE=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,
     study_authorized=False,executable=False,qualification_claims=[])
 EPISODE_CLAIMS=('runtime_qualified','native_authorized','collection_authorized','executable')
@@ -177,12 +181,15 @@ def validate_configuration(config,sources_ok=True):
                 'Sorted distinct pins required')
         for row in rows:
             require(type(row) is dict and set(row)=={'path','size_bytes','sha256'} and type(row['size_bytes']) is int
-                    and 0<=row['size_bytes']<=limit and hexdigest(row['sha256']) and type(row['path']) is str
+                    and (0 if (rows is config['sources'] and row['path'] in EMPTY_SOURCES) else 1)<=row['size_bytes']<=limit
+                    and hexdigest(row['sha256']) and type(row['path']) is str
                     and not row['path'].startswith('/') and '..' not in row['path'].split('/'),'Exact bounded pin required')
-    paths={r['path'] for r in config['sources']};capsule=paths-PARENT_ONLY
+    paths={r['path'] for r in config['sources']}
+    # The worker capsule: its two scripts, every palimpsest module, upstream fly-gym and three data files.
+    capsule={p for p in paths if p in (WORKER,HELPER,*DATA) or p.startswith(('src/palimpsest/','upstream/fly-gym/'))}
     require(PARENT_ONLY<=paths and CAPSULE_REQUIRED<=capsule
-            and all(p in CAPSULE_REQUIRED or re.fullmatch(r'src/palimpsest/[a-z_]+\.py',p) for p in capsule),
-            'Exact characterization-04 source closure required')
+            and all(p in CAPSULE_REQUIRED or re.fullmatch(r'src/palimpsest/[a-z_]+\.py',p) for p in capsule)
+            and all(re.fullmatch(r'scripts/[a-z_]+\.py',p) for p in paths-capsule),'Exact characterization-04 source closure required')
     require([r['path'] for r in config['inputs']]==sorted(ROLES.values()),'Exact characterization-04 input roles required')
     pins={r['path']:r for r in config['inputs']}
     require(pins[NATIVE_METADATA_PIN['path']]==NATIVE_METADATA_PIN and pins[OBSERVATION02_PIN['path']]==OBSERVATION02_PIN,
@@ -286,7 +293,7 @@ def namespace(baseline,native,capsule,name,request_sha=None):
     return cmd+['/puck/source/'+WORKER,'/puck/control/request-'+name+'.json',request_sha]
 
 
-def validate_report(report,phase,request_sha,worker_sha):
+def validate_report(report,phase,request_sha,worker_sha,dynamic_leaves):
     keys={'kind','version','status','phase','request_sha256','source_sha256','environment_sha256','python_version',
           'executable_path','pid','ppid','expected_versions','versions','episode_result','process_creation_attempts',
           'import_misses','rechecks','cache','maps','baseline_maps','environment_unchanged','pycache_unchanged',
@@ -306,6 +313,8 @@ def validate_report(report,phase,request_sha,worker_sha):
     require(len(names)==len(set(names))<=8192 and all(type(n) is str for n in names)
             and not any(n=='torchvision' or n.startswith('torchvision.') for n in names),'Episode module cache differs')
     require(type(report['maps'].get('images')) is list and type(report['baseline_maps'].get('images')) is list,'Mapped images required')
+    baseline=sorted(row.get('path') for row in report['baseline_maps']['images'] if type(row) is dict)
+    require([p for p in baseline if p not in set(dynamic_leaves)]==NINE,'Baseline maps must be the nine originals plus declared dynamic leaves')
     dispatch=report['native_cache_dispatch']
     require(type(dispatch) is dict and set(dispatch)=={'events','unattributed','errors'} and dispatch['unattributed']==[]
             and dispatch['errors']==[] and type(dispatch['events']) is list and len(dispatch['events'])<=4096
@@ -402,7 +411,7 @@ def audit(configuration,expected_sha,transport,transport_sha,deadline):
         if name=='probe':continue
         payload=output/('payload-'+name);report_raw=reader.bytes(payload/'characterization.json',4*MiB);report=decode(report_raw)
         require(report_raw==canonical(report),'Canonical '+name+' report required')
-        validate_report(report,name,request_sha,pins[WORKER]['sha256'])
+        validate_report(report,name,request_sha,pins[WORKER]['sha256'],native['dynamic_leaves'])
         require(reader.json(output/(name+'-logs')/'stdout.log')[0]==dict(report_sha256=sha(report_raw),report_bytes=len(report_raw),
                 status='observed'),'Worker publication receipt differs: '+name)
         bundle=report['episode_result']['bundle']

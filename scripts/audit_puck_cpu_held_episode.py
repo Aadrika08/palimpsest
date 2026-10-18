@@ -4,8 +4,8 @@ Stdlib only, plus the stdlib bundle/npz validator next to this file. It binds
 the frozen configuration and every pin, preparation04's PASS v15 acceptance
 (by the pinned auditor bytes), the v6 native leaves, the EGL vendor JSON and the
 trusted prefix; reconstructs both v4 registrations and both episode namespace
-argvs independently; checks supervision and bootstrap receipts (zero process
-creation), both recordings (contiguous published chunks, one registered tick-0
+argvs independently; checks supervision and bootstrap receipts (no audited Python-level process
+creation, with the supervised descendant scope), both recordings (contiguous published chunks, one registered tick-0
 snapshot, every camera frame a non-constant uint8[128,128,3]), the replay
 comparison (cameras and integers exact, floats within 1e-6), the replay report,
 both bundles against their run directories, the result and the transport. PASS
@@ -37,7 +37,7 @@ BOOTSTRAP='scripts/puck_worker_bootstrap.py'
 PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11'
 INTERPRETER=dict(path=PYTHON,size_bytes=21662864,sha256='572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a')
 # The independent auditor bytes that must have accepted preparation04.
-PREPARATION04_AUDITOR_SHA256='972ef46c0e94c24e234577b956ec2bf65730095de7ad05871dcedddb9e07eb47'
+PREPARATION04_AUDITOR_SHA256='14ab28020dcc673099a97ea873880f87a42d030a0c9c22552efa3083b5f1fc20'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',mujoco='3.3.6',gymnasium='1.2.1')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',
@@ -82,6 +82,8 @@ UPSTREAM='upstream/fly-gym/'
 SIMULATION_DISTRIBUTIONS=('torch','torchvision','numpy','scipy','pandas','scikit-learn','mujoco','gymnasium','glfw',
     'opencv-python','matplotlib','seaborn','networkx','python-louvain','py7zr')
 NOT_INSPECTED='not inspected in the held runtime'
+# Only an authored test clone sets this, to accept its authored parent CLI transport.
+AUTHORED_TRANSPORT=False
 MEMBERS={'outer','configuration.json','resource-admission.json','baseline-before.json','baseline-after.json','control',
     'logs-source','logs-replay','payload-source','payload-replay','result.json',
     *(phase+suffix for phase in PHASES for suffix in ('-invocation.json','-supervision.json'))}
@@ -461,6 +463,10 @@ def audit(configuration,expected_sha,transport,transport_sha,deadline):
                 and receipt.get('process_creation_attempts')==dict(count=0,events=[])
                 and dep.get('registration_sha256')==sha(dependency_raw) and dep.get('root_count')==4 and dep.get('file_count')==count
                 and dep.get('input_bytes')==total and dep.get('native_identity')=='tmpfs-raw-dev-inode-v1','Held '+phase+' bootstrap receipt differs')
+        publications=[{k:row[k] for k in ('name','producer','phase','attributes','delegate_attributes')}
+            for row in sorted(dependencies['import_profile'].get('exports',[]),key=lambda r:r['name']) if row.get('phase')=='module_exec_publish']
+        require((dep.get('published_export_modules')==publications) if publications else 'published_export_modules' not in dep,
+                'Held '+phase+' published export creators differ from the held profile')
         entry=receipt['entry_result'];validate_entry(entry,config,phase);entries[phase]=(entry,sha(stdout),sha(registration_raw))
         require(entry['provenance_sha256']==sha(expected_raw),'The '+phase+' held provenance digest differs from the independent record')
         payload=output/('payload-'+phase);run=payload/config['run_ids'][phase];bundle=entry['bundle']
@@ -497,7 +503,7 @@ def audit(configuration,expected_sha,transport,transport_sha,deadline):
             and finite(result['elapsed_seconds'],LIMITS['normal_seconds']),'Completed allocation-16 outcome required')
     traw=reader.bytes(transport,64*1024);observed=decode(traw)
     require(sha(traw)==transport_sha and traw==canonical(observed),'Authenticated canonical transport required')
-    authored=observed.get('kind')=='authored-cpu-parent-cli-transport-v1'
+    authored=AUTHORED_TRANSPORT and observed.get('kind')=='authored-cpu-parent-cli-transport-v1'
     require(authored or (observed.get('kind')=='puck-cpu-held-cli-transport-v1' and observed.get('phase')=='episode'
             and observed.get('timed_out') is False),'Episode transport kind differs')
     require(not authored or str(observed.get('authored_scope','')).startswith('AUTHORED fixture only;'),'Explicit authored transport scope required')

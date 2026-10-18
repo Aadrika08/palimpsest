@@ -4,7 +4,8 @@ Two fresh sandboxed workers run ``puck_held_episode.run`` over ordinary imports
 from the accepted site, inside the native metadata v6 namespace with the staged
 EGL vendor JSON and the frozen episode environment: worker A records the source
 episode, worker B replays it from A's read-only output. Each records and refuses
-every process creation and reports its module cache and mapped images. The result
+every process creation and reports its module cache and mapped images. Acceptance requires no
+audited Python-level process creation, alongside the supervised process scope. The result
 is observation evidence only; it grants no runtime, native or collection authority.
 """
 import argparse
@@ -102,10 +103,15 @@ CAPSULE=tuple(sorted((WORKER,HELPER,*('src/palimpsest/'+name+'.py' for name in P
     'upstream/fly-gym/environment/mujoco_model_random_obstacles.xml',
     'upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py',
     'model_manifests/flynn-full-vision.json','pyproject.toml','uv.lock')))
-SOURCES=tuple(sorted(set(CAPSULE)|{'scripts/characterize_puck_cpu_episode.py',
-    'scripts/qualify_puck_cpu_held_runtime.py','scripts/build_puck_python_louvain.py',
-    'scripts/install_puck_cpu.py','scripts/acquire_puck_cpu_payloads.py',
-    'scripts/admit_puck_retained_installation.py'}))
+# Exactly preparation04's sources (the qualifier's PREPARATION04_SOURCES), so this observation covers the
+# bytes preparation04 prepares; only the capsule is bound into the worker namespace.
+SOURCES=tuple(sorted(set(CAPSULE)|{'scripts/acquire_puck_cpu_payloads.py','scripts/admit_puck_retained_installation.py',
+    'scripts/build_puck_python_louvain.py','scripts/characterize_puck_cpu_episode.py','scripts/install_puck_cpu.py',
+    'scripts/puck_worker_bootstrap.py','scripts/qualify_puck_cpu_held_runtime.py','scripts/qualify_puck_held_runtime.py',
+    'scripts/stage_puck_cpu_held_runtime.py'}))
+EMPTY_SOURCES=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+NINE=sorted(['/etc/ld.so.cache',PYTHON,*('/usr/lib/'+n for n in ('ld-linux-x86-64.so.2','libc.so.6','libdl.so.2',
+    'libm.so.6','libpthread.so.0','librt.so.1','libutil.so.1'))])
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,
     study_authorized=False,executable=False,qualification_claims=[])
 EPISODE_CLAIMS=('runtime_qualified','native_authorized','collection_authorized','executable','qualification_claims')
@@ -182,7 +188,7 @@ def same(left,right):return canonical(left)==canonical(right)
 def source_rows():
     """Current source pins, for authoring the frozen configuration."""
     return [dict(path=path,size_bytes=len(raw),sha256=sha(raw))
-            for path in SOURCES for raw in (read(ROOT/path,MiB,empty=True),)]
+            for path in SOURCES for raw in (read(ROOT/path,MiB,empty=path in EMPTY_SOURCES),)]
 
 
 def required_inputs():
@@ -217,7 +223,8 @@ def validate_configuration(config):
         raise ValueError('Exact characterization-04 configuration required')
     for row in config['sources']:
         if (type(row) is not dict or set(row)!={'path','size_bytes','sha256'}
-                or type(row['size_bytes']) is not int or not 0<=row['size_bytes']<=MiB or not hexdigest(row['sha256'])):
+                or type(row['size_bytes']) is not int or not (0 if row.get('path') in EMPTY_SOURCES else 1)<=row['size_bytes']<=MiB
+                or not hexdigest(row['sha256'])):
             raise ValueError('Exact characterization-04 source pin required')
     if tuple(row['path'] for row in config['sources'])!=SOURCES:
         raise ValueError('Exact characterization-04 source closure required')
@@ -326,7 +333,7 @@ def validate_dispatch(value):
                 and event['added']==sorted(set(event['added'])),'Native cache dispatch event differs')
 
 
-def validate_report(report,*,phase,request_sha256,worker_sha256):
+def validate_report(report,*,phase,request_sha256,worker_sha256,dynamic_leaves):
     if (type(report) is not dict or set(report)!=REPORT_KEYS or report['kind']!=REPORT_KIND
             or type(report['version']) is not int or report['version']!=1
             or report['status']!='observed' or report['phase']!=phase
@@ -357,6 +364,10 @@ def validate_report(report,*,phase,request_sha256,worker_sha256):
     for key in ('maps','baseline_maps'):
         if type(report[key]) is not dict or type(report[key].get('images')) is not list:
             raise ValueError('Mapped-image observation required')
+    # Before any import only the nine original images and declared startup leaves (locale, gconv) are mapped.
+    baseline=sorted(row.get('path') for row in report['baseline_maps']['images'] if type(row) is dict)
+    require(type(dynamic_leaves) is list and [p for p in baseline if p not in set(dynamic_leaves)]==NINE,
+            'Baseline maps must be exactly the nine original images plus declared dynamic leaves')
     validate_dispatch(report['native_cache_dispatch'])
     validate_episode_result(report['episode_result'],phase)
 
@@ -432,7 +443,7 @@ def execute(config,digest,started):
                                for w in layout['wheels']]
                 with HeldInstalledFiles(ROOT/SITE,files,directories,deadline,check=check) as held:
                     for path in CAPSULE:
-                        raw=read(ROOT/path,MiB,empty=True)
+                        raw=read(ROOT/path,MiB,empty=path in EMPTY_SOURCES)
                         if len(raw)!=pins[path]['size_bytes'] or sha(raw)!=pins[path]['sha256']:
                             raise ValueError('Characterization-04 capsule source differs: '+path)
                     source_files=[dict(pins[path]) for path in CAPSULE]
@@ -463,7 +474,8 @@ def execute(config,digest,started):
                             bounds.write_new(output/'namespace.json',namespace);continue
                         report_raw=read(output/('payload-'+name)/REPORT_NAME,REPORT_BYTES);report=json.loads(report_raw)
                         if canonical(report)!=report_raw:raise ValueError('Canonical characterization-04 report required')
-                        validate_report(report,phase=name,request_sha256=request_sha,worker_sha256=pins[WORKER]['sha256'])
+                        validate_report(report,phase=name,request_sha256=request_sha,worker_sha256=pins[WORKER]['sha256'],
+                                        dynamic_leaves=native['dynamic_leaves'])
                         bundle=report['episode_result']['bundle']
                         bundle_raw=read(output/('payload-'+name)/bundle['path'],LIMITS['file_bytes'])
                         if len(bundle_raw)!=bundle['size_bytes'] or sha(bundle_raw)!=bundle['sha256']:
@@ -508,7 +520,7 @@ def main():
                 or (json.dumps(config,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()!=raw):
             raise ValueError('Canonical root-contained frozen characterization-04 configuration required')
         for row in config['sources']:
-            source=read(ROOT/row['path'],MiB,empty=True)
+            source=read(ROOT/row['path'],MiB,empty=row['path'] in EMPTY_SOURCES)
             if sha(source)!=row['sha256'] or len(source)!=row['size_bytes']:raise ValueError('Trusted source differs')
         if (Path(sys.executable).resolve()!=Path(PYTHON) or not(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode)
                 or os.environ.get('LD_PRELOAD') or os.environ.get('LD_LIBRARY_PATH')):

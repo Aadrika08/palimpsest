@@ -178,7 +178,7 @@ def test_derivation_maps_site_modules_and_filters_the_template(evidence):
     assert candidate['outcome_audit_sha256']==sha(raws['audit'])
     assert candidate['retained_inventory_sha256']==sha(raws['inventory'])
     assert candidate['template_sha256']==sha(raws['template'])
-    assert candidate['native_metadata_sha256']=='48ca37b1c45366bcd53ac195277ade6236537f89a720b50591906764eaf72569'
+    assert candidate['native_metadata_sha256']==sha(raws['native'])
     # 3.11 stdlib names (imp, json.*) are not misses; every other miss is a declared absent or hidden name.
     assert candidate['import_misses']==['org','pandas','scipy._distributor_init_local']
     assert candidate['additional_package_inputs']==template()['additional_package_inputs']

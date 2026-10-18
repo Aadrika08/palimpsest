@@ -27,7 +27,13 @@ def _parent():
     value=importlib.util.module_from_spec(spec);spec.loader.exec_module(value);return value
 
 
+def _qualifier():
+    spec=importlib.util.spec_from_file_location('_episode_preparation_qualifier',ROOT/'scripts/qualify_puck_cpu_held_runtime.py')
+    value=importlib.util.module_from_spec(spec);spec.loader.exec_module(value);return value
+
+
 PARENT=_parent()
+QUALIFIER=_qualifier()
 KIND='puck-cpu-episode-import-profile-candidate-v2'
 AUDIT_KIND='cpu-episode-characterization-outcome-audit-v1'
 SOURCE_ROOT='/puck/source/'
@@ -92,7 +98,10 @@ def native_cache_rows(rows,reports):
     return result
 
 
-def derive(*,configuration,result,source,replay,audit,template,inventory,site_root):
+def derive(*,configuration,result,source,replay,audit,template,inventory,native,site_root):
+    # _module_maps reads sys.stdlib_module_names, so only the pinned 3.11.15 interpreter may derive.
+    if sys.version_info[:3]!=(3,11,15) or Path(sys.executable).resolve()!=Path(PARENT.PYTHON):
+        raise ValueError('Candidate 02 derivation requires the pinned CPython 3.11.15 interpreter')
     config=load(configuration,'Characterization-04 configuration');PARENT.validate_configuration(config)
     if config['environment']['PYGLFW_LIBRARY']!=site_root+'/glfw/x11/libglfw.so':
         raise ValueError('Site root differs from the frozen characterization-04 environment')
@@ -100,6 +109,10 @@ def derive(*,configuration,result,source,replay,audit,template,inventory,site_ro
     inventory_pin=pins[PARENT.ROLES['inventory']]
     if len(inventory)!=inventory_pin['size_bytes'] or sha(inventory)!=inventory_pin['sha256']:
         raise ValueError('Retained inventory differs from its characterization-04 pin')
+    native_pin=pins[PARENT.ROLES['native_metadata']]
+    if len(native)!=native_pin['size_bytes'] or sha(native)!=native_pin['sha256']:
+        raise ValueError('Native metadata differs from its characterization-04 pin')
+    leaves=load(native,'Native metadata').get('dynamic_leaves')
     outcome=load(result,'Characterization-04 result')
     if (outcome.get('kind')!='puck-cpu-characterization-outcome-v3' or outcome.get('status')!='observed'
             or type(outcome.get('version')) is not int or outcome['version']!=3
@@ -119,7 +132,7 @@ def derive(*,configuration,result,source,replay,audit,template,inventory,site_ro
     for phase,raw in (('source',source),('replay',replay)):
         value=load(raw,'Characterization-04 '+phase+' report')
         if PARENT.canonical(value)!=raw:raise ValueError('Canonical characterization-04 report required')
-        PARENT.validate_report(value,phase=phase,request_sha256=value.get('request_sha256'),worker_sha256=worker)
+        PARENT.validate_report(value,phase=phase,request_sha256=value.get('request_sha256'),worker_sha256=worker,dynamic_leaves=leaves)
         reports[phase]=value
     old=load(template,'Template candidate');profile=copy.deepcopy(old.get('import_profile'))
     if (old.get('kind')!='puck-cpu-observed-import-profile-candidate-v1' or type(profile) is not dict
@@ -153,7 +166,9 @@ def derive(*,configuration,result,source,replay,audit,template,inventory,site_ro
     module_paths=sorted(modules.values(),key=lambda r:r['name']);namespace_rows=sorted(namespaces.values(),key=lambda r:r['name'])
     validate_profile(profile,module_paths,namespace_rows,allow_native_cache=True)
     misses=sorted({name for value in reports.values() for name in value['import_misses']
-                   if name.split('.')[0] not in sys.stdlib_module_names})
+                   if name.split('.')[0] not in QUALIFIER.STDLIB_311})
+    undeclared=sorted(set(misses)-set(QUALIFIER.EPISODE_NEGATIVE_IMPORTS)-set(QUALIFIER.EPISODE_HIDDEN_IMPORTS))
+    if undeclared:raise ValueError('Characterized import misses are undeclared by the episode rosters: '+', '.join(undeclared[:16]))
     return dict(kind=KIND,version=2,characterization_configuration_sha256=sha(configuration),
         observation_reports=dict(source=sha(source),replay=sha(replay)),observation_result_sha256=sha(result),
         outcome_audit_sha256=sha(audit),retained_inventory_sha256=sha(inventory),template_sha256=sha(template),
@@ -176,11 +191,11 @@ def write(candidate,output):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    for name in ('configuration','result','source','replay','audit','template','inventory'):
+    for name in ('configuration','result','source','replay','audit','template','inventory','native'):
         parser.add_argument('--'+name,required=True,type=Path)
     parser.add_argument('--site-root',required=True);parser.add_argument('--output',required=True,type=Path)
     args=parser.parse_args()
-    raws={name:getattr(args,name).read_bytes() for name in ('configuration','result','source','replay','audit','template','inventory')}
+    raws={name:getattr(args,name).read_bytes() for name in ('configuration','result','source','replay','audit','template','inventory','native')}
     print(json.dumps(write(derive(site_root=args.site_root,**raws),args.output),sort_keys=True))
 
 

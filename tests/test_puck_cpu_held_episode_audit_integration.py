@@ -120,13 +120,11 @@ def test_a_held_only_refusal_fails_the_episode_and_its_audit(tmp_path):
     finally:remove(stage)
 
 
-def test_a_characterized_undeclared_miss_is_refused_before_reservation(tmp_path):
-    value,stage=build_chain(tmp_path,'undeclared-import')
-    try:
-        code,_,stderr=value['episode']
-        assert code!=0 and value['result'] is None and b'undeclared by the episode rosters' in stderr
-        assert not (value['root']/OUTPUT).exists()
-    finally:remove(stage)
+def test_a_characterized_undeclared_miss_is_refused_at_derivation(tmp_path):
+    project=episode_project(tmp_path,defect='undeclared-import');authored_scale(project)
+    with pytest.raises(AssertionError) as refused:derive_candidate(characterize(project))
+    assert b'undeclared by the episode rosters' in refused.value.args[0][1]
+    assert not (project['root']/'docs/plans/puck-cpu-episode-import-profile-candidate-02.json').exists()
 
 
 def test_the_audit_recomputes_the_exact_held_provenance_record(chain):

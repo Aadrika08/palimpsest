@@ -123,7 +123,47 @@ EPISODE_WORKER=tuple(sorted((BOOTSTRAP,*('src/palimpsest/'+name+'.py' for name i
     'upstream/fly-gym/core/__init__.py','upstream/fly-gym/core/astar.py','upstream/fly-gym/environment/__init__.py',
     'upstream/fly-gym/environment/mujoco_model_random_obstacles.xml','upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py',
     'model_manifests/flynn-full-vision.json','pyproject.toml','uv.lock')))
-PREPARATION04_SOURCES=tuple(sorted(set(SOURCES)|set(EPISODE_WORKER)))
+CHARACTERIZATION04_SCRIPTS=('scripts/admit_puck_retained_installation.py','scripts/characterize_puck_cpu_episode.py',
+    'scripts/characterize_puck_episode_worker.py','scripts/characterize_puck_runtime_imports.py','scripts/install_puck_cpu.py')
+PREPARATION04_SOURCES=tuple(sorted(set(SOURCES)|set(EPISODE_WORKER)|set(CHARACTERIZATION04_SCRIPTS)))
+EMPTY_SOURCES=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+EPISODE_NEGATIVE_IMPORTS=sorted(['numpy._distributor_init_local','org','torch._rocm_init',*OPTIONAL06_IMPORTS,*OPTIONAL11_IMPORTS,
+    'cffi','charset_normalizer','cython','glfw_preview','scikits','scipy._distributor_init_local','scipy.linalg._cblas',
+    'scipy.linalg._clapack','scipy.linalg._fblas_64','scipy.linalg._flapack_64'])
+# Independent copy of CPython 3.11.15's sys.stdlib_module_names.
+STDLIB_311=frozenset(('__future__', '_abc', '_aix_support', '_ast', '_asyncio', '_bisect', '_blake2', '_bootsubprocess', '_bz2', '_codecs',
+'_codecs_cn', '_codecs_hk', '_codecs_iso2022', '_codecs_jp', '_codecs_kr', '_codecs_tw', '_collections',
+'_collections_abc', '_compat_pickle', '_compression', '_contextvars', '_crypt', '_csv', '_ctypes', '_curses',
+'_curses_panel', '_datetime', '_dbm', '_decimal', '_elementtree', '_frozen_importlib', '_frozen_importlib_external',
+'_functools', '_gdbm', '_hashlib', '_heapq', '_imp', '_io', '_json', '_locale', '_lsprof', '_lzma', '_markupbase',
+'_md5', '_msi', '_multibytecodec', '_multiprocessing', '_opcode', '_operator', '_osx_support', '_overlapped',
+'_pickle', '_posixshmem', '_posixsubprocess', '_py_abc', '_pydecimal', '_pyio', '_queue', '_random', '_scproxy',
+'_sha1', '_sha256', '_sha3', '_sha512', '_signal', '_sitebuiltins', '_socket', '_sqlite3', '_sre', '_ssl', '_stat',
+'_statistics', '_string', '_strptime', '_struct', '_symtable', '_thread', '_threading_local', '_tkinter', '_tokenize',
+'_tracemalloc', '_typing', '_uuid', '_warnings', '_weakref', '_weakrefset', '_winapi', '_zoneinfo', 'abc', 'aifc',
+'antigravity', 'argparse', 'array', 'ast', 'asynchat', 'asyncio', 'asyncore', 'atexit', 'audioop', 'base64', 'bdb',
+'binascii', 'bisect', 'builtins', 'bz2', 'cProfile', 'calendar', 'cgi', 'cgitb', 'chunk', 'cmath', 'cmd', 'code',
+'codecs', 'codeop', 'collections', 'colorsys', 'compileall', 'concurrent', 'configparser', 'contextlib',
+'contextvars', 'copy', 'copyreg', 'crypt', 'csv', 'ctypes', 'curses', 'dataclasses', 'datetime', 'dbm', 'decimal',
+'difflib', 'dis', 'distutils', 'doctest', 'email', 'encodings', 'ensurepip', 'enum', 'errno', 'faulthandler', 'fcntl',
+'filecmp', 'fileinput', 'fnmatch', 'fractions', 'ftplib', 'functools', 'gc', 'genericpath', 'getopt', 'getpass',
+'gettext', 'glob', 'graphlib', 'grp', 'gzip', 'hashlib', 'heapq', 'hmac', 'html', 'http', 'idlelib', 'imaplib',
+'imghdr', 'imp', 'importlib', 'inspect', 'io', 'ipaddress', 'itertools', 'json', 'keyword', 'lib2to3', 'linecache',
+'locale', 'logging', 'lzma', 'mailbox', 'mailcap', 'marshal', 'math', 'mimetypes', 'mmap', 'modulefinder', 'msilib',
+'msvcrt', 'multiprocessing', 'netrc', 'nis', 'nntplib', 'nt', 'ntpath', 'nturl2path', 'numbers', 'opcode', 'operator',
+'optparse', 'os', 'ossaudiodev', 'pathlib', 'pdb', 'pickle', 'pickletools', 'pipes', 'pkgutil', 'platform',
+'plistlib', 'poplib', 'posix', 'posixpath', 'pprint', 'profile', 'pstats', 'pty', 'pwd', 'py_compile', 'pyclbr',
+'pydoc', 'pydoc_data', 'pyexpat', 'queue', 'quopri', 'random', 're', 'readline', 'reprlib', 'resource', 'rlcompleter',
+'runpy', 'sched', 'secrets', 'select', 'selectors', 'shelve', 'shlex', 'shutil', 'signal', 'site', 'smtpd', 'smtplib',
+'sndhdr', 'socket', 'socketserver', 'spwd', 'sqlite3', 'sre_compile', 'sre_constants', 'sre_parse', 'ssl', 'stat',
+'statistics', 'string', 'stringprep', 'struct', 'subprocess', 'sunau', 'symtable', 'sys', 'sysconfig', 'syslog',
+'tabnanny', 'tarfile', 'telnetlib', 'tempfile', 'termios', 'textwrap', 'this', 'threading', 'time', 'timeit',
+'tkinter', 'token', 'tokenize', 'tomllib', 'trace', 'traceback', 'tracemalloc', 'tty', 'turtle', 'turtledemo',
+'types', 'typing', 'unicodedata', 'unittest', 'urllib', 'uu', 'uuid', 'venv', 'warnings', 'wave', 'weakref',
+'webbrowser', 'winreg', 'winsound', 'wsgiref', 'xdrlib', 'xml', 'xmlrpc', 'zipapp', 'zipfile', 'zipimport', 'zlib',
+'zoneinfo'))
+# The characterization-04 outcome auditor bytes whose PASS preparation04 accepts.
+CHARACTERIZATION04_AUDITOR_SHA256='7d9660320bf1f835290ad3c8821d0dc44bbce0847f1e1f777486f4dd14969950'
 PREPARATION04_ROLES=tuple(sorted(ROLES+('observation_replay_report',)))
 EPISODE_OBSERVATION_PATHS=dict(observation_configuration='frozen-configuration.json',
     observation_report='raw/payload/source/characterization.json',observation_replay_report='raw/payload/replay/characterization.json',
@@ -298,7 +338,8 @@ def configuration(config,authored):
     require(config['interpreter']==INTERPRETER and canonical(config['environment'])==canonical(ENVIRONMENT) and config['expected_versions']==(EPISODE_VERSIONS if version==15 else VERSIONS) and canonical(config['limits'])==canonical(limits(phase,authored,version)),'Exact interpreter/environment/resource limits required')
     no_authority(config['claims'])
     # Preparation04 prepares the held episode closure and adds the characterization-04 replay report role.
-    require(type(config['sources']) is list and [pin(r,MiB)['path'] for r in config['sources']]==list(PREPARATION04_SOURCES if version==15 else SOURCES) and type(config['inputs']) is dict and set(config['inputs'])==set(PREPARATION04_ROLES if version==15 else ROLES),'Exact source/role closure required')
+    require(type(config['sources']) is list and [pin(r,MiB)['path'] for r in config['sources']]==list(PREPARATION04_SOURCES if version==15 else SOURCES)
+            and all(r['size_bytes']>0 or (version==15 and r['path'] in EMPTY_SOURCES) for r in config['sources']) and type(config['inputs']) is dict and set(config['inputs'])==set(PREPARATION04_ROLES if version==15 else ROLES),'Exact source/role closure required')
     rows=config['sources']+list(config['inputs'].values())
     for row in config['inputs'].values():pin(row)
     require(len({r['path'] for r in rows})==len(rows),'Overlapping source/input paths')
@@ -446,6 +487,13 @@ def episode_binding(config,data):
     """Characterization-04 result, both reports, its outcome audit and candidate 02, bound by the configuration pins."""
     pins=config['inputs'];shas={role:pins[role]['sha256'] for role in ('observation_configuration','observation_report','observation_replay_report','observation_result','observation_audit','inventory','native')}
     result,audit,candidate=data['observation_result'],data['observation_audit'],data['candidate'];verified=audit.get('verified') if type(audit.get('verified')) is dict else {}
+    require(data['observation_configuration'].get('sources')==config['sources'],'Characterization-04 must have pinned exactly the preparation04 sources')
+    require(audit.get('auditor_source_sha256')==CHARACTERIZATION04_AUDITOR_SHA256,'Characterization-04 outcome audit must come from the pinned auditor bytes')
+    reports=[data['observation_report'],data['observation_replay_report']]
+    require(all(type(n) is str for r in reports for n in r.get('import_misses',[None])),'Characterization-04 import misses must be names')
+    misses=sorted({n for r in reports for n in r['import_misses'] if n.split('.')[0] not in STDLIB_311})
+    require(candidate.get('import_misses')==misses and set(misses)<=set(EPISODE_NEGATIVE_IMPORTS)|set(HIDDEN11_IMPORTS),
+            'Candidate 02 import misses differ from the reports or are undeclared by the episode rosters')
     no_authority(result)
     require(result.get('kind')=='puck-cpu-characterization-outcome-v3' and result.get('status')=='observed' and not {'error','error_type'}&set(result) and result.get('configuration_sha256')==shas['observation_configuration'] and result.get('source_report_sha256')==shas['observation_report'] and result.get('replay_report_sha256')==shas['observation_replay_report'] and result.get('versions')==EPISODE_VERSIONS,'Characterization-04 outcome binding differs')
     for role,phase in (('observation_report','source'),('observation_replay_report','replay')):

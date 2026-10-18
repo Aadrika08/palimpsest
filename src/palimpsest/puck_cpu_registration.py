@@ -32,6 +32,9 @@ _V6_KEYS = {'kind', 'status', 'root_scope', 'errors', 'oversized_native_files', 
 _V6_LEAF_BYTES = 256 * 1024**2
 _V6_FILES = 256
 EGL_VENDOR_CONTROL = '/puck/control/egl-vendor.json'
+# The original interpreter baseline's /usr/lib images, never declared as dynamic leaves.
+_BASELINE_LIBRARIES = frozenset('/usr/lib/' + name for name in ('ld-linux-x86-64.so.2', 'libc.so.6', 'libdl.so.2',
+                                 'libm.so.6', 'libpthread.so.0', 'librt.so.1', 'libutil.so.1'))
 EPISODE_CANDIDATE = 'puck-cpu-episode-import-profile-candidate-v2'
 _EGL_VENDOR_DIRECTORY = '/usr/share/glvnd/egl_vendor.d/'
 _SONAME = re.compile(r'lib[A-Za-z0-9_+-]+(\.[A-Za-z0-9_+-]+)*\.so(\.[0-9]+)*')
@@ -243,6 +246,8 @@ def _dynamic(native, files):
     if (type(leaves) is not list or not 1 <= len(leaves) <= _V6_FILES or leaves != sorted(set(leaves))
             or any(type(path) is not str or not path.startswith('/usr/lib/') or path not in files for path in leaves)):
         raise ValueError('CPU native dynamic leaves must be sorted declared /usr/lib regular files')
+    if set(leaves) & _BASELINE_LIBRARIES:
+        raise ValueError('A CPU native dynamic leaf cannot be an original baseline path')
     vendor = native['egl_vendor']
     if (type(vendor) is not dict or set(vendor) != {'path', 'size_bytes', 'sha256', 'library_path'}
             or type(vendor['path']) is not str or not vendor['path'].startswith(_EGL_VENDOR_DIRECTORY)

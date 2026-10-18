@@ -126,7 +126,7 @@ LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e9417543
 PREPARATION02_AUDITOR_SHA256='04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b'
 PREPARATION03_AUDITOR_SHA256='6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd'
 # The independent auditor whose bytes must accept preparation04 (allocation 15).
-PREPARATION04_AUDITOR_SHA256='972ef46c0e94c24e234577b956ec2bf65730095de7ad05871dcedddb9e07eb47'
+PREPARATION04_AUDITOR_SHA256='14ab28020dcc673099a97ea873880f87a42d030a0c9c22552efa3083b5f1fc20'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',
@@ -177,7 +177,53 @@ INPUT_ROLES=tuple(sorted(('inventory','layout','candidate','native','baseline','
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,
     study_authorized=False,executable=False,qualification_claims=[])
 EPISODE_VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',mujoco='3.3.6',gymnasium='1.2.1')
-PREPARATION04_SOURCES=tuple(sorted(set(SOURCES)|set(EPISODE_WORKER_SOURCES)))
+# Characterization-04 pins exactly these sources too, so it observed the bytes preparation04 prepares.
+CHARACTERIZATION04_SCRIPTS=('scripts/admit_puck_retained_installation.py','scripts/characterize_puck_cpu_episode.py',
+    'scripts/characterize_puck_episode_worker.py','scripts/characterize_puck_runtime_imports.py','scripts/install_puck_cpu.py')
+PREPARATION04_SOURCES=tuple(sorted(set(SOURCES)|set(EPISODE_WORKER_SOURCES)|set(CHARACTERIZATION04_SCRIPTS)))
+# The only sources allowed to be empty: two upstream fly-gym package initializers.
+EMPTY_SOURCES=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+# The held episode's absent (epoch14's 32 plus ten census names) and hidden rosters.
+EPISODE_NEGATIVE_IMPORTS=sorted(['OpenGL_accelerate','accimage','av','backports_abc','colorama','defusedxml','dill','flint',
+    'fx2trt_oss','gmpy','gmpy2','hypothesis','monkeytype','numpy._distributor_init_local','onnx','onnx_tf','onnxruntime',
+    'opt_einsum','org','pydot','pynvml','tabulate','tensorflow','tensorrt','torch._rocm_init','torch2trt','torchdistx','tqdm',
+    'tree','triton','tvm','xarray','cffi','charset_normalizer','cython','glfw_preview','scikits','scipy._distributor_init_local',
+    'scipy.linalg._cblas','scipy.linalg._clapack','scipy.linalg._fblas_64','scipy.linalg._flapack_64'])
+EPISODE_HIDDEN_IMPORTS=list(QUALIFY11_HIDDEN_IMPORTS)
+# CPython 3.11.15's sys.stdlib_module_names, explicit so no host interpreter decides what a miss is.
+STDLIB_311=frozenset(('__future__', '_abc', '_aix_support', '_ast', '_asyncio', '_bisect', '_blake2', '_bootsubprocess', '_bz2', '_codecs',
+'_codecs_cn', '_codecs_hk', '_codecs_iso2022', '_codecs_jp', '_codecs_kr', '_codecs_tw', '_collections',
+'_collections_abc', '_compat_pickle', '_compression', '_contextvars', '_crypt', '_csv', '_ctypes', '_curses',
+'_curses_panel', '_datetime', '_dbm', '_decimal', '_elementtree', '_frozen_importlib', '_frozen_importlib_external',
+'_functools', '_gdbm', '_hashlib', '_heapq', '_imp', '_io', '_json', '_locale', '_lsprof', '_lzma', '_markupbase',
+'_md5', '_msi', '_multibytecodec', '_multiprocessing', '_opcode', '_operator', '_osx_support', '_overlapped',
+'_pickle', '_posixshmem', '_posixsubprocess', '_py_abc', '_pydecimal', '_pyio', '_queue', '_random', '_scproxy',
+'_sha1', '_sha256', '_sha3', '_sha512', '_signal', '_sitebuiltins', '_socket', '_sqlite3', '_sre', '_ssl', '_stat',
+'_statistics', '_string', '_strptime', '_struct', '_symtable', '_thread', '_threading_local', '_tkinter', '_tokenize',
+'_tracemalloc', '_typing', '_uuid', '_warnings', '_weakref', '_weakrefset', '_winapi', '_zoneinfo', 'abc', 'aifc',
+'antigravity', 'argparse', 'array', 'ast', 'asynchat', 'asyncio', 'asyncore', 'atexit', 'audioop', 'base64', 'bdb',
+'binascii', 'bisect', 'builtins', 'bz2', 'cProfile', 'calendar', 'cgi', 'cgitb', 'chunk', 'cmath', 'cmd', 'code',
+'codecs', 'codeop', 'collections', 'colorsys', 'compileall', 'concurrent', 'configparser', 'contextlib',
+'contextvars', 'copy', 'copyreg', 'crypt', 'csv', 'ctypes', 'curses', 'dataclasses', 'datetime', 'dbm', 'decimal',
+'difflib', 'dis', 'distutils', 'doctest', 'email', 'encodings', 'ensurepip', 'enum', 'errno', 'faulthandler', 'fcntl',
+'filecmp', 'fileinput', 'fnmatch', 'fractions', 'ftplib', 'functools', 'gc', 'genericpath', 'getopt', 'getpass',
+'gettext', 'glob', 'graphlib', 'grp', 'gzip', 'hashlib', 'heapq', 'hmac', 'html', 'http', 'idlelib', 'imaplib',
+'imghdr', 'imp', 'importlib', 'inspect', 'io', 'ipaddress', 'itertools', 'json', 'keyword', 'lib2to3', 'linecache',
+'locale', 'logging', 'lzma', 'mailbox', 'mailcap', 'marshal', 'math', 'mimetypes', 'mmap', 'modulefinder', 'msilib',
+'msvcrt', 'multiprocessing', 'netrc', 'nis', 'nntplib', 'nt', 'ntpath', 'nturl2path', 'numbers', 'opcode', 'operator',
+'optparse', 'os', 'ossaudiodev', 'pathlib', 'pdb', 'pickle', 'pickletools', 'pipes', 'pkgutil', 'platform',
+'plistlib', 'poplib', 'posix', 'posixpath', 'pprint', 'profile', 'pstats', 'pty', 'pwd', 'py_compile', 'pyclbr',
+'pydoc', 'pydoc_data', 'pyexpat', 'queue', 'quopri', 'random', 're', 'readline', 'reprlib', 'resource', 'rlcompleter',
+'runpy', 'sched', 'secrets', 'select', 'selectors', 'shelve', 'shlex', 'shutil', 'signal', 'site', 'smtpd', 'smtplib',
+'sndhdr', 'socket', 'socketserver', 'spwd', 'sqlite3', 'sre_compile', 'sre_constants', 'sre_parse', 'ssl', 'stat',
+'statistics', 'string', 'stringprep', 'struct', 'subprocess', 'sunau', 'symtable', 'sys', 'sysconfig', 'syslog',
+'tabnanny', 'tarfile', 'telnetlib', 'tempfile', 'termios', 'textwrap', 'this', 'threading', 'time', 'timeit',
+'tkinter', 'token', 'tokenize', 'tomllib', 'trace', 'traceback', 'tracemalloc', 'tty', 'turtle', 'turtledemo',
+'types', 'typing', 'unicodedata', 'unittest', 'urllib', 'uu', 'uuid', 'venv', 'warnings', 'wave', 'weakref',
+'webbrowser', 'winreg', 'winsound', 'wsgiref', 'xdrlib', 'xml', 'xmlrpc', 'zipapp', 'zipfile', 'zipimport', 'zlib',
+'zoneinfo'))
+# The independent characterization-04 outcome auditor whose PASS preparation04 accepts.
+CHARACTERIZATION04_AUDITOR_SHA256='7d9660320bf1f835290ad3c8821d0dc44bbce0847f1e1f777486f4dd14969950'
 PREPARATION04_INPUT_ROLES=tuple(sorted(INPUT_ROLES+('observation_replay_report',)))
 EPISODE_OBSERVATION_PATHS=dict(observation_configuration='frozen-configuration.json',
     observation_report='raw/payload/source/characterization.json',
@@ -211,7 +257,7 @@ def relative(value):
 def pin(row,*,empty=False):
     # Only preparation04's episode closure carries empty sources (two upstream __init__ files).
     if (type(row) is not dict or set(row)!={'path','size_bytes','sha256'}
-            or type(row['size_bytes']) is not int or not (0 if empty else 1)<=row['size_bytes']<=16*MiB
+            or type(row['size_bytes']) is not int or not (0 if empty and row.get('path') in EMPTY_SOURCES else 1)<=row['size_bytes']<=16*MiB
             or type(row['sha256']) is not str or re.fullmatch('[0-9a-f]{64}',row['sha256']) is None):
         raise ValueError('Exact bounded CPU input pin required')
     relative(row['path']);return row
@@ -713,8 +759,20 @@ def validate_inputs(config,blobs):
 def validate_episode_observation(config,blobs):
     """Characterization-04 result, both reports, its outcome audit and candidate 02, all bound by pins."""
     get=lambda role:decode(blobs[role]);pins=config['inputs'];sha=lambda role:pins[role]['sha256']
-    result,audit,candidate,native=(get(k) for k in ('observation_result','observation_audit','candidate','native'))
+    result,audit,candidate,native,frozen=(get(k) for k in ('observation_result','observation_audit','candidate','native','observation_configuration'))
     reports=((get('observation_report'),'source'),(get('observation_replay_report'),'replay'))
+    if frozen.get('sources')!=config['sources']:
+        raise ValueError('Characterization-04 must have pinned exactly the preparation04 sources')
+    if audit.get('auditor_source_sha256')!=CHARACTERIZATION04_AUDITOR_SHA256:
+        raise ValueError('Characterization-04 outcome audit must come from the pinned auditor bytes')
+    misses=sorted({name for report,_ in reports for name in report.get('import_misses',[]) if type(name) is str
+                   and name.split('.')[0] not in STDLIB_311})
+    if any(type(name) is not str for report,_ in reports for name in report.get('import_misses',[None])):
+        raise ValueError('Characterization-04 import misses must be names')
+    if candidate.get('import_misses')!=misses:
+        raise ValueError('Candidate 02 import misses differ from the two characterization-04 reports')
+    undeclared=sorted(set(misses)-set(EPISODE_NEGATIVE_IMPORTS)-set(EPISODE_HIDDEN_IMPORTS))
+    if undeclared:raise ValueError('Characterized import misses are undeclared by the episode rosters: '+', '.join(undeclared[:16]))
     false=lambda value:(all(value.get(k) is False for k in CLAIMS if k!='qualification_claims')
                         and value.get('qualification_claims')==[])
     verified=audit.get('verified') if type(audit.get('verified')) is dict else {}
@@ -868,7 +926,8 @@ def execute(config,raw,started):
                 native_checks()
                 baseline_before=baseline_api.verify_baseline(baseline,deadline)
                 bounds.write_new(output/'baseline-before.json',baseline_before)
-                source_bytes={r['path']:read(ROOT/r['path'],MiB,r['sha256'],empty=config['version']==15) for r in config['sources']}
+                source_bytes={r['path']:read(ROOT/r['path'],MiB,r['sha256'],empty=config['version']==15 and r['path'] in EMPTY_SOURCES)
+                              for r in config['sources']}
                 generated_root=str((ROOT/config['inputs']['generated']['path']).parent)
                 source_reg=build_cpu_source_registration(blobs['inventory'],blobs['layout'],blobs['candidate'],blobs['native'],
                     expected_pins={k:{x:config['inputs'][k][x] for x in ('size_bytes','sha256')} for k in ('inventory','layout','candidate','native')},
@@ -994,7 +1053,7 @@ def main():
         raw=read(args.configuration,MiB,args.sha256);config=decode(raw);validate_configuration(config)
         if canonical(config)!=raw:raise ValueError('Canonical CPU configuration bytes required')
         for row in config['sources']:
-            if len(read(ROOT/row['path'],MiB,row['sha256'],empty=config['version']==15))!=row['size_bytes']:
+            if len(read(ROOT/row['path'],MiB,row['sha256'],empty=config['version']==15 and row['path'] in EMPTY_SOURCES))!=row['size_bytes']:
                 raise ValueError('CPU frozen source size differs')
         if (str(Path(sys.executable).resolve())!=PYTHON or not(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode)
                 or os.environ.get('LD_PRELOAD') or os.environ.get('LD_LIBRARY_PATH')):

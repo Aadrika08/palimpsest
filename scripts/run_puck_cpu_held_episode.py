@@ -4,7 +4,8 @@ Worker A records the source episode and worker B replays it from A's read-only
 output, each inside the held, import-guarded v4 bootstrap with a 360 s clock,
 over preparation04's staged roots and its single source capsule. The parent
 admits only the exact frozen configuration, binds preparation04's independent
-acceptance, and requires zero process-creation attempts, every scheduled tick,
+acceptance, and requires no audited Python-level process creation (alongside the
+supervised descendant scope), every scheduled tick,
 a passing replay, the exact versions and the frozen renderer. The result binds
 both bootstrap receipts, both run directories, both bundles and the replay
 report. It grants no runtime, renderer, collection or study authority.
@@ -75,6 +76,9 @@ EPISODE_CLAIMS=('runtime_qualified','native_authorized','collection_authorized',
 KEYS={'kind','version','allocation_id','root','stage_parent','sources','inputs','interpreter','environment',
       'expected_versions','limits','negative_imports','hidden_imports','claims','preparation_acceptance','run_ids'}
 PHASES=('source','replay')
+EMPTY_SOURCES=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+# Only an authored test clone sets this, to accept its own authored preparation04 audit and transport.
+AUTHORED_PREPARATION=False
 
 
 def canonical(value):
@@ -122,7 +126,8 @@ def validate_configuration(config,q=None):
             and config['root']==str(ROOT) and config['interpreter']==INTERPRETER
             and canonical(config['environment'])==canonical(ENVIRONMENT) and config['expected_versions']==VERSIONS
             and canonical(config['limits'])==canonical(LIMITS) and canonical(config['claims'])==canonical(CLAIMS)
-            and config['negative_imports']==NEGATIVE_IMPORTS and config['hidden_imports']==HIDDEN_IMPORTS,
+            and config['negative_imports']==NEGATIVE_IMPORTS==q.EPISODE_NEGATIVE_IMPORTS
+            and config['hidden_imports']==HIDDEN_IMPORTS==q.EPISODE_HIDDEN_IMPORTS,
             'Exact allocation-16 episode configuration required')
     q._hidden_imports(HIDDEN_IMPORTS,NEGATIVE_IMPORTS)
     stage=config['stage_parent']
@@ -187,7 +192,7 @@ def validate_acceptance(config,blobs,q):
             and audit.get('configuration_sha256')==acceptance['configuration']['sha256']
             and audit.get('result_sha256')==acceptance['result']['sha256'] and audit.get('dependencies_sha256')==dep['sha256']
             and type(audit.get('external_returncode')) is int and audit['external_returncode']==0 and closed(audit,4)
-            and audit.get('evidence_scope') in ('ordinary CPU held allocation only','AUTHORED fixture only'),
+            and audit.get('evidence_scope')==('AUTHORED fixture only' if AUTHORED_PREPARATION else 'ordinary CPU held allocation only'),
             'Preparation04 independent audit failed or differs')
     require(cli.get('kind')=='externally-observed-cpu-auditor-cli-v1' and type(cli.get('observed_returncode')) is int
             and cli['observed_returncode']==0 and all(type(cli.get(k)) is dict for k in ('published','stdout','stderr'))
@@ -196,7 +201,8 @@ def validate_acceptance(config,blobs,q):
     command=cli.get('command')
     require(type(command)==list and len(command)==15 and command[:5]==[PYTHON,'-I','-S','-B',str(ROOT/'scripts/audit_puck_cpu_held_runtime.py')]
             and command[5:9]==['--configuration',str(ROOT/acceptance['configuration']['path']),'--sha256',acceptance['configuration']['sha256']]
-            and command[10] in (str(ROOT/'authored-prepare04-transport.json'),str(ROOT/PREPARATION04)+'-external-cli-transport.json')
+            and command[10]==(str(ROOT/'authored-prepare04-transport.json') if AUTHORED_PREPARATION
+                              else str(ROOT/PREPARATION04)+'-external-cli-transport.json')
             and command[11:]==['--transport-sha256',audit.get('transport_sha256'),'--output',cli['published'].get('path')],
             'Preparation04 auditor CLI command differs')
     return prior,prep
@@ -268,6 +274,10 @@ def validate_entry(value,config,phase):
 
 def validate_receipt(receipt,config,phase,registration_raw,dependency_raw,dependencies):
     declared=set(NEGATIVE_IMPORTS)|set(HIDDEN_IMPORTS);dep=receipt.get('dependencies',{})
+    publications=[{key:row[key] for key in ('name','producer','phase','attributes','delegate_attributes')}
+        for row in sorted(dependencies['import_profile'].get('exports',[]),key=lambda r:r['name']) if row.get('phase')=='module_exec_publish']
+    require(dep.get('published_export_modules')==publications if publications else 'published_export_modules' not in dep,
+            'Held episode '+phase+' published export creators differ from the held profile')
     count=sum(len(r['files']) for r in dependencies['roots']);total=sum(f['size_bytes'] for r in dependencies['roots'] for f in r['files'])
     require(receipt.get('kind')=='puck-worker-source-bootstrap-receipt-v1' and receipt.get('registration_sha256')==digest(registration_raw)
             and receipt.get('interpreter_object_bound') is True and receipt.get('python_version')=='3.11.15'
@@ -335,8 +345,8 @@ def execute(config,raw,started):
                     require(read(native['egl_vendor']['path'],64*1024)==vendor,'EGL vendor JSON changed')
                 native_checks();baseline_before=baseline_api.verify_baseline(baseline,deadline)
                 bounds.write_new(output/'baseline-before.json',baseline_before)
-                source_bytes={r['path']:q.read(ROOT/r['path'],MiB,r['sha256'],empty=True) for r in config['sources']}
-                for row in capsule:q.read(ROOT/row['path'],MiB,row['sha256'],empty=True)
+                source_bytes={r['path']:q.read(ROOT/r['path'],MiB,r['sha256'],empty=r['path'] in EMPTY_SOURCES) for r in config['sources']}
+                for row in capsule:q.read(ROOT/row['path'],MiB,row['sha256'],empty=row['path'].endswith(EMPTY_SOURCES))
                 source_reg=build_cpu_source_registration(blobs['inventory'],blobs['layout'],blobs['candidate'],blobs['native'],
                     expected_pins={k:{x:config['inputs'][k][x] for x in ('size_bytes','sha256')} for k in ('inventory','layout','candidate','native')},
                     site_root=str(ROOT/SITE),generated_root=str((ROOT/config['inputs']['generated']['path']).parent),deadline=q.planning(deadline))
@@ -412,7 +422,8 @@ def main():
         require(type(config.get('sources')) is list and [r.get('path') for r in config['sources']]==sorted({r.get('path') for r in config['sources']})
                 and QUALIFIER in {r['path'] for r in config['sources']},'Sorted allocation-16 sources including the qualifier required')
         for row in config['sources']:
-            require(len(read(ROOT/row['path'],MiB,row['sha256'],empty=True))==row['size_bytes'],'Allocation-16 source differs')
+            require(len(read(ROOT/row['path'],MiB,row['sha256'],empty=row['path'] in EMPTY_SOURCES))==row['size_bytes'],
+                    'Allocation-16 source differs')
         sys.path[:0]=[str(ROOT/'src'),str(ROOT/'scripts')]
         validate_configuration(config)
         candidate=config['inputs']['candidate']
