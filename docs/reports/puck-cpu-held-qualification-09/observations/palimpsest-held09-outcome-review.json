@@ -1,0 +1,286 @@
+{
+  "additional_pins": {
+    "admission_source": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-admission.py",
+      "sha256": "5ee0931ae42ba94de7db82b8c33028e1749ddaec819ac2c51a7a0d2189727652",
+      "size_bytes": 31965
+    },
+    "collector": {
+      "path": "/tmp/palimpsest-held09-post-outcome-observation.py",
+      "sha256": "37ff58e8941ba5262bea3c46ee7e3c1bc15a917cc157e585a98b19ad55f7bdf8",
+      "size_bytes": 6341
+    },
+    "collector_before_fix": {
+      "path": "/tmp/palimpsest-held09-post-outcome-observation-before-readstamp-fix.py",
+      "sha256": "e89bb66f7888abbd0e27acf547403d10a005ea89188c039cfe17a490c0c97a41",
+      "size_bytes": 6208
+    },
+    "collector_failure": {
+      "path": "/tmp/palimpsest-held09-post-observation-authoring-failure01.json",
+      "sha256": "2a06d32e27abf0f78447ffa6e27ad4a2798973e51d919905fa9966fd467af615",
+      "size_bytes": 442
+    },
+    "configuration": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09.json",
+      "sha256": "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0",
+      "size_bytes": 8985
+    },
+    "execution": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-execution.json",
+      "sha256": "0cdea1d32ec49d0f04da3f4e8b9cf98c6d1d0e0842811d5bc85021ea22341118",
+      "size_bytes": 3636
+    },
+    "freeze": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-freeze.json",
+      "sha256": "efb5bbe5ad22dfb5c2559e64a4565b35424f51ba3bbbc6d080b7eda81acd85a5",
+      "size_bytes": 301670
+    },
+    "readstamp_corroboration": {
+      "path": "/tmp/palimpsest-held09-readstamp-observation01.json",
+      "sha256": "56c7624486afb6a84b9e3996f1408ada8d38dff180a3fa06e1e9988bdf548c90",
+      "size_bytes": 777
+    },
+    "root_observation": {
+      "path": "/tmp/palimpsest-held09-post-outcome-observation.json",
+      "sha256": "ccc44e35bb01a6abbfbe02f1d086915929d1cbfea759e34f31252b86e86a179a",
+      "size_bytes": 22149
+    },
+    "wrapper": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-external.py",
+      "sha256": "49a4806ee0e8156d0be4c227f512f623f4e8972ea9609154291405e67857fca6",
+      "size_bytes": 4194
+    }
+  },
+  "authority": {
+    "all_seven_release_gates_open": true,
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "collector_failure_and_fix": {
+    "admission_or_runtime_reinvoked_by_collector": false,
+    "before_source_hash_matches_failure_record": true,
+    "before_source_sha256": "e89bb66f7888abbd0e27acf547403d10a005ea89188c039cfe17a490c0c97a41",
+    "boundary": "Collector is stdlib observation and exclusive JSON publication only; no subprocess/exec/target imports. Failure record links retained tool error, not a second qualification attempt. Raw external tool transcript was not re-fetched.",
+    "collector_only_source_ast_checked": true,
+    "exact_only_fix": "Replace whole stat_result equality, including read-modified atime, with st_dev/st_ino/st_mode/st_nlink/st_size/st_mtime_ns/st_ctime_ns equality. All other collector source bytes unchanged.",
+    "failure_before_json_creation_recorded": true,
+    "failure_exit_code": 1,
+    "failure_preserved": true,
+    "failure_tool_chunk": "8a87b3",
+    "fixed_collector_output_present": true,
+    "later_small_readstamp_observation": {
+      "all_other_recorded_identity_metadata_fields_unchanged": true,
+      "changed_fields": [
+        "st_atime_ns"
+      ],
+      "runtime_reinvoked": false,
+      "scope": "Root-recorded small read of the published617B audit; metadata corroboration only, not reproduced by this reviewer.",
+      "stable_content_sha256": "c2b6b6e7c8e4c93bb79e906a751038295b2135ad8551f029f3f18fdc8d21d009"
+    }
+  },
+  "diagnostics": {
+    "cost_rows": 19,
+    "cost_sequence_exact_1_to19": true,
+    "interpretation": "Optional unauthenticated incomplete source-reported cumulative counters; sections can contain nested checks/instrumentation. Neither exclusive-time decomposition, hard timing, exact timeout cause nor a claim of a Torchvision hang follows. A started-but-uncompleted light check does not locate all elapsed work.",
+    "last_cost": {
+      "active": {
+        "full": false,
+        "section": "custody"
+      },
+      "context": "import.torchvision.enter",
+      "elapsed_nanoseconds": 175091295432,
+      "full": {
+        "completed": 100,
+        "started": 100
+      },
+      "light": {
+        "completed": 3996,
+        "started": 3997
+      },
+      "nested_checks": 0,
+      "sections_nanoseconds": {
+        "bindings": 31626743936,
+        "cache": 59248136401,
+        "custody": 30099583338,
+        "images": 13683114
+      }
+    },
+    "last_phase": {
+      "elapsed_seconds": 87.53611273999559,
+      "phase": "import.torchvision.enter"
+    },
+    "phase_rows": 11,
+    "phase_sequence_exact_1_to11": true,
+    "rows": 30,
+    "within_phase24_16KiB_and_cost32_32KiB_1024B_bounds": true,
+    "worker_stderr_bytes": 11086,
+    "worker_stderr_sha256": "c548022a96e5cc22dfb8bbd9d9bb5c0c0ef446dc5a662401dc3e91bc06714a61"
+  },
+  "exact_outcome_roster": {
+    "all_regular_single_link_files": true,
+    "categories": "19 allocation records +3 parent transport/streams +9 external coordinator records +2 published receipts +3 tool terminal records +7 guards/admission-review/command/binder records.",
+    "records": 43,
+    "size_sha_mismatches": 0,
+    "sorted": true,
+    "total_bytes": 4479338,
+    "unique": 43
+  },
+  "independent_auditor": {
+    "auditor_source_sha256": "dffcec25696948da18b18abda32dae764fa933a1175c622f45d33a3bca27d234",
+    "boundary": "Correct generic-v1 early nonzero-transport refusal. It did not complete post-run payload/byte/custody validation and is not a qualification PASS.",
+    "configuration_and_measured_transport_bound": true,
+    "error": "Normal external transport exit required",
+    "external_normal_exit": true,
+    "external_returncode": 1,
+    "external_timed_out": false,
+    "kind": "puck-cpu-held-runtime-independent-audit-v1",
+    "published_receipt_equals_external_stdout": true,
+    "sha256": "c2b6b6e7c8e4c93bb79e906a751038295b2135ad8551f029f3f18fdc8d21d009",
+    "size_bytes": 617,
+    "status": "FAIL",
+    "version": 1
+  },
+  "kind": "puck-cpu-held09-independent-failed-outcome-review-v1",
+  "limitations": [
+    "No control/helper/module/main/auditor/vendor/runtime/test execution; no Git mutation/network.",
+    "No installed SITE, staged forest, native/interpreter payload read/census/rehash. Control/dependencies.json is metadata, not a native payload.",
+    "No current resources or PID/start liveness checks. Recorded sampled absence is not exhaustive process closure.",
+    "Only the43 exact outcome records and necessary small source/frozen-control metadata were hashed. Historical57/14 preservation is corroborated by pinned collector/guard/admission records and prior completed metadata review, not newly rehashed here.",
+    "Single retained observer/auditor invocation is supported by fixed exclusive paths, guards, transports and terminal summaries; this is not a global proof that no unrecorded command ever ran.",
+    "Data-only admission is dated evidence. The failed09 early audit supplies no post-run complete byte/custody proof, installed runtime acceptance or episode/operator/renderer/scientific authority."
+  ],
+  "material_findings": [],
+  "prior_admission_and_order": {
+    "admission_external_elapsed_seconds": 29.17548476002412,
+    "admission_external_returncode": 0,
+    "admission_external_timed_out": false,
+    "admission_internal_elapsed_seconds": 29.070700966985896,
+    "admission_receipt_review": "GO_PRE_OBSERVER_FRESH_GUARD_REQUIRED",
+    "data_only_receipt_status": "DATA_ONLY_ADMITTED",
+    "data_only_runtime_invoked_flag": false,
+    "guard_future_output_paths": 12,
+    "guard_recorded_historical_absences": 14,
+    "guard_recorded_runtime_invoked": false,
+    "guard_status": "PASS_PRE_OBSERVER_GUARD_ONLY",
+    "new_resource_or_payload_check_performed_by_this_review": false,
+    "ordered_recorded_utc": [
+      {
+        "checkpoint": "pre-admission guard",
+        "utc": "2026-10-16T02:42:22.341344+00:00"
+      },
+      {
+        "checkpoint": "admission initial resources",
+        "utc": "2026-10-16T02:43:31.139967+00:00"
+      },
+      {
+        "checkpoint": "admission final resources",
+        "utc": "2026-10-16T02:43:58.257197+00:00"
+      },
+      {
+        "checkpoint": "independent admission receipt review",
+        "utc": "2026-10-16T02:47:05.298921+00:00"
+      },
+      {
+        "checkpoint": "fresh preobserver guard",
+        "utc": "2026-10-16T02:47:28.180392+00:00"
+      },
+      {
+        "checkpoint": "current invocation.json filesystem mtime",
+        "utc": "2026-10-16T02:47:34.604789+00:00"
+      },
+      {
+        "checkpoint": "post-outcome observation",
+        "utc": "2026-10-16T02:52:46.643690+00:00"
+      }
+    ],
+    "ordering_scope": "Consistent recorded UTC fields plus observed invocation-file mtime, not independent trusted-clock or continuous-custody attestation. Original outer tool JSON was not reconstructed; three pinned root-observed terminal summaries corroborate admission0/observer1/audit1.",
+    "published_admission_equals_external_stdout": true,
+    "receipt_review_findings": [],
+    "recorded_closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 4,
+      "fd_count_before": 4
+    },
+    "recorded_resources_meet_unchanged_2GiB_and_180s_contract": true,
+    "source_control_and_config_bindings_match": true
+  },
+  "qualification_outcome": {
+    "completed_four_import_receipt": false,
+    "missing_result_and_baseline_after": true,
+    "observer_external": {
+      "deadline_seconds": 240,
+      "elapsed_seconds": 180.5176759089809,
+      "normal_exit": true,
+      "returncode": 1,
+      "stderr_empty": true,
+      "stdout_exactly_parent_transport": true,
+      "timed_out": false
+    },
+    "parent_closure_receipt": false,
+    "parent_transport": {
+      "elapsed_seconds": 180.42937721597264,
+      "returncode": 1,
+      "sha256": "7e8396f9b44a83980459b5f59e2b544b7e02fc7da431e5a0e99e13b42b1feec1",
+      "size_bytes": 951,
+      "timed_out": false
+    },
+    "post_failure_full_payload_custody": false,
+    "recorded_independent_audit_invocations": 1,
+    "recorded_observer_invocations": 1,
+    "references": [
+      "/tmp/palimpsest-held09-post-outcome-observation.py:19-34",
+      "runs/puck-cpu-held-qualification-09/supervision.json"
+    ],
+    "status": "FAILED_CONSUMED",
+    "supervision": {
+      "failure": "normal-return deadline",
+      "matching_survivors": [],
+      "recorded_identities": [
+        {
+          "pid": 104005,
+          "start_ticks": 55289090
+        },
+        {
+          "pid": 104006,
+          "start_ticks": 55289091
+        },
+        {
+          "pid": 104007,
+          "start_ticks": 55289092
+        }
+      ],
+      "returncode": -15,
+      "scope": "Recorded descendant samples only; no exhaustive or atomic lifetime claim.",
+      "status": "failed"
+    },
+    "worker_stdout_bytes": 0
+  },
+  "recorded_control_commit": "60e5756d8c670e898320b26b3a2cee267577e53c",
+  "review_scope": "Independent consistency/byte review of the43 exact small current09 metadata/source/log records, collector source/failure and necessary frozen control metadata. No post-run payload acceptance.",
+  "reviewed_at_utc": "2026-10-16T02:56:16.281241+00:00",
+  "reviewer_writes": [
+    "/tmp/palimpsest-held09-outcome-review.json"
+  ],
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "source_and_control_continuity": {
+    "allocation_configuration_equals_frozen_config_bytes": true,
+    "audit_concrete_command_exact_frozen_prefix_measured_transport_and_output": true,
+    "configuration_sha256": "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0",
+    "current_D_dependency_sha256": "c82ddc9777f8c26cc68bb8a6a2010b1309085b3567c74d101d67732508be53fc",
+    "five_admission_review_control_pins_match_current_bytes": true,
+    "minimum_ram_bytes": 2147483648,
+    "negative_probes_unchanged": 19,
+    "outer_commands_environments_cwd_and_stream_pins_match_recorded_controls": true,
+    "runtime_normal_seconds": 180,
+    "ten_registration_source_rows_equal_frozen_pins": true,
+    "ten_saved_worker_source_files_equal_frozen_pins": true
+  },
+  "source_commit": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+  "status": "PASS_FAILED_OUTCOME_RECORD_NO_RUNTIME_ACCEPTANCE",
+  "version": 1
+}

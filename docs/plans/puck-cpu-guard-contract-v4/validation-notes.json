@@ -1,0 +1,16 @@
+{
+  "baseline-red01": "Exit5: -k coordinated selected zero tests. Kept unchanged; baseline-red02 selected intended case and observed RED.",
+  "entry-red01": "Seven passing negatives included weak custody substring assertions matching a fixture pathname; corrected to exact intended refusal before GREEN. Both positive/captured-expectation cases failed descriptor refusal as expected.",
+  "final_source_review": "GO source only; execution is reported separately.41 distinct final authored cases passed across guard-entry03 + entry-final01 (9 overlap), not50.",
+  "guard-entry01": "29 passed,5 failed. All five failures generated invalid Python because template substitution also changed assertion text; marker requirements prevented false green. Fixed assignment-only substitution and compiled all expanded bodies.",
+  "guard-entry03": "40 collected cases passed:31 guard+9 entry. Entry test file gained a parent-refusal case during this run after its pinned9-case version/collection; do not treat this run as proof of the later file. entry-final01 separately pinned and passed all10 latest entry cases.",
+  "kind": "q4-validation-notes-v1",
+  "legacy01": "393 passed,4 failed,3 deselected in243.68s. All four failures were subprocess ModuleNotFoundError for local palimpsest modules: pytest pythonpath=src affects parent only; the reused venv points to historical checkout. Production unchanged. native-subprocess02 reran only these4 with explicit current-src PYTHONPATH and passed4 (29 deselected) in0.38s.397 distinct legacy cases have passing evidence, not one all-green397-case invocation.",
+  "legacy_plan": {
+    "cap_seconds": 360,
+    "excludes": "Historical publication/input runs, real vendor imports, installed qualification, actual10, protected data and CI. Original timing workload deselected; old semantic controls included.",
+    "native": "Tiny authored C fixture only",
+    "private_tmpfs": true
+  },
+  "timing_admission": "Final source review GO,41 distinct q4 authored and397 distinct legacy cases passed; install the declared3size workload only now. Method-review staged vs installed file differs only in module docstring."
+}

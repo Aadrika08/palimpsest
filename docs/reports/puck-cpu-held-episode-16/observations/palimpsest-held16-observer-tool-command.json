@@ -1,0 +1,70 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "1310s",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held16-external.py",
+    "observer"
+  ],
+  "control_commit": "e7c5a3e55dcbac8715a68025069e4ed6e5860fb1",
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "runner_sha256": "91bd54b46d35646742d4345b439f4939e9dc10d7992ac7c1acccf36062876177",
+  "scope": "sole bounded allocation-16 held episode observer; no implicit retry",
+  "stage_guard": {
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "directories": {
+      "inputs": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 317248,
+        "mode": "0700"
+      },
+      "root-0000": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 317249,
+        "mode": "0700"
+      },
+      "root-0001": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 317250,
+        "mode": "0700"
+      },
+      "root-0002": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 317251,
+        "mode": "0700"
+      },
+      "root-0003": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 317252,
+        "mode": "0700"
+      },
+      "stage_parent": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 317247,
+        "mode": "0700"
+      }
+    },
+    "kind": "held16-stage-boot-guard-v1",
+    "result_sha256": "a76b61487a1e5c053032167f1602260a1184b6262fa86e0e62842f0a05e6ebc3",
+    "scope": "metadata of five directories only; staged bytes are re-hashed by admission/runtime/audit",
+    "stage_parent": "/tmp/palimpsest-puck-cpu-held-04",
+    "status": "PASS_STAGE_AND_BOOT"
+  }
+}

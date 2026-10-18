@@ -1,0 +1,192 @@
+{
+  "byte_binding_roots": {
+    "controls": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans",
+    "tmp": "/tmp"
+  },
+  "byte_bindings": {
+    "controls": {
+      "puck-cpu-held-episode-16-admission.py": [
+        105315,
+        "4376590be1fee0f27d20887f29159826eedd20612094cc5b9883672e1b619e3c"
+      ],
+      "puck-cpu-held-episode-16-control-validation/pre-admission-guard.py.in": [
+        4827,
+        "4bff066b75005778a1fc294807dbae46b51f30daebe868b377c6c98006674edb"
+      ],
+      "puck-cpu-held-episode-16-control-validation/tools/make-observer-guard.py": [
+        3664,
+        "cfbf2780a78a3d4ed224a17a108a75df9c212a12c0857997fa20f69ef02c7c24"
+      ],
+      "puck-cpu-held-episode-16-control-validation/tools/run-admission-once.py.in": [
+        2657,
+        "1aada325660fa2af809d39f28019b7e1ede97e9795e870f9e4593a2e394edb38"
+      ],
+      "puck-cpu-held-episode-16-control-validation/tools/stage_guard.py": [
+        3444,
+        "af07b70fdc216d819f7969721e2f4bf470eed8ecf48cd562d3c5fac27a0becf5"
+      ],
+      "puck-cpu-held-episode-16-execution.json": [
+        5246,
+        "aa56769d8d93d5e1f8609099c74376a14320a6917b7f3739d667b88fc67671a5"
+      ],
+      "puck-cpu-held-episode-16-external.py": [
+        4244,
+        "e6d571603e059fe8d1f01e44ad45e9a65aa6fa80faaf96de8e79060650cc3890"
+      ],
+      "puck-cpu-held-episode-16-freeze.json": [
+        542502,
+        "a40c0d1483486a59531149a63eaaaf968fc8d09ca1547480e1b8d71eddf67d35"
+      ],
+      "puck-cpu-held-episode-16-independent-controls-review-01.md": [
+        2069,
+        "8a62f398ba3e9d31ce436475592e81eb35077636a0342bb0b6d6057f9fdf93b4"
+      ],
+      "puck-cpu-held-episode-16.json": [
+        20132,
+        "01a669fc24d02e0681c6d82303ff543d315c20c80bbd5a4a00e6ca309fcece43"
+      ]
+    },
+    "tmp": {
+      "palimpsest-held16-admission-external.json": [
+        1111,
+        "cfae35b0bdac8fe5888d411ba22589cb85ce4641741aba29f46152442e3eb381"
+      ],
+      "palimpsest-held16-admission-external.stderr": [
+        1465,
+        "5d17b2f1ae45c3b1ddfeae5086ca831162837d037f935a5e70a08006acc0980f"
+      ],
+      "palimpsest-held16-admission-external.stdout": [
+        17446,
+        "e0cdaea0d0a6782ddd12215d25ddc4b912f9612e9213c08234c4900e4b833b5b"
+      ],
+      "palimpsest-held16-admission-tool-command.json": [
+        1914,
+        "0b078d90d94c87ad09e0e232c03332762bcd5c4c0632967ab38ae8ce6bb78cd8"
+      ],
+      "palimpsest-held16-admission-tool-terminal.json": [
+        140,
+        "bb4477ade9a3eb99bceb7adde4a042e05044d0ba6fb05d17119a2e6219b9ad52"
+      ],
+      "palimpsest-held16-admission-tool.stderr": [
+        0,
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "palimpsest-held16-admission-tool.stdout": [
+        497,
+        "7ed73f057eec919fd3ff717ed512e4d6d12c4e3fa597f7a609cf2b1c2e36cdaf"
+      ],
+      "palimpsest-held16-external.py": [
+        4244,
+        "e6d571603e059fe8d1f01e44ad45e9a65aa6fa80faaf96de8e79060650cc3890"
+      ],
+      "palimpsest-held16-pre-admission-guard.py": [
+        4854,
+        "2f440f1e20110877e72fa1b5533b5cd168105960f076737ce82841de0e49d21a"
+      ],
+      "palimpsest-held16-pre-admission-guard01.json": [
+        2750,
+        "5f9c337529f8947b26d0b3e2adeb49012f26de3a7ed02b48ba52530be253a1ac"
+      ],
+      "palimpsest-held16-run-admission-once.py": [
+        2688,
+        "3c0740e90c43c799d24aee5904e6ab9c6cadc5f18abad7d38c096f80eebc5135"
+      ],
+      "palimpsest-puck-cpu-held-episode-16-admission-01.json": [
+        17446,
+        "e0cdaea0d0a6782ddd12215d25ddc4b912f9612e9213c08234c4900e4b833b5b"
+      ]
+    }
+  },
+  "byte_bindings_format": "group root plus relative key -> [size_bytes,sha256]",
+  "commits": {
+    "control": "e7c5a3e55dcbac8715a68025069e4ed6e5860fb1",
+    "control14": "eb34d5c2a66730c248b00229c17ce84e197b3d68",
+    "merge_base_for_count": "75df4dba55e435eee84d8a0f34b33967b0ac86bf",
+    "preparation04_evidence": "4b22f2be5ceeaa61632aa72cf18e75d3eef43cc7",
+    "runtime14_outcome": "4fd4f68de5f0350c22ac7d5e5c2432b28525bc64",
+    "source": "cbda0d992c12320e2c9bd8a188f89d2c73d9f77e",
+    "unexecuted_d83dab3": "d83dab3c92387c80e81af528fea25dd3f8931598"
+  },
+  "decision": "GO",
+  "exact_checks": [
+    "Clean worktree; HEAD = origin/research/puck-cpu-held-episode-16 = control e7c5a3e. git diff --name-only 75df4db..control lists 105 files, all prefixed docs/plans/puck-cpu-held-episode-16 and byte-equal to the control blobs. Since 5ad1178 the only changes are the make-observer-guard closure fix (4/4 -> 5/5) and controls review 01.",
+    "Configuration 20132B 01a669fc... with limits 1200/1215/1230. 98 sources and the 4 preparation04 acceptance pins match. Freeze 542502B a40c0d14... equals the envelope; all 2128 pins re-hashed equal after admission. All 9 index-bound packets (05, 07-10, 10-admission-01, 11b, 14) have pinned indexes, and all 1143 listed files are byte-equal. The runner at control asserts (1200,1215,1230) and 600s workers before publication.",
+    "Instantiated pre-admission guard and run-admission-once equal their templates with CONTROL e7c5a3e and COUNT 105. Wrapper e6d57160... equals its tracked copy and envelope pin; timeout and interpreter pins match.",
+    "Tool command, environment and cwd equal the envelope; runner SHA matches. The stage guard ran first and passed (boot 7f875223..., stage -04, roots dev55/317249-317252). External: freeze admission command, rc 0, normal exit, no timeout, no retry, 18.86s of 145s. Tool: exit 0, 18.91s, runtime_invoked false, empty stderr, accepted. Stream pins equal the receipt and summary.",
+    "Stdout is byte-identical to the published /tmp/palimpsest-puck-cpu-held-episode-16-admission-01.json (17446B e0cdaea0...), which is canonical JSON.",
+    "Eight ordered held16 phase records, check_id 16, monotonic to 18.79s (<120s). Held files 2231 -> 6538 -> 33824, bytes 2044405373 (equal to the review measurement), 0 after close.",
+    "Receipt binds: kind episode16 data-only admission; DATA_ONLY_ADMITTED; configuration 01a669fc...; source cbda0d9; runner 4376590b... equal to the control blob; held auditor 4ef23799, episode auditor 4d8ac17f and episode parent bd08543a, each equal to the current bytes; preparation04 config f43be975... and result a76b6148...; run ids 6bdba8da/3cdc557f; 98 sources, 17 input pins, 27286 staged files / 1590197452B; held_entries 33824+3061+1097 = 37982 and 2044405373B; episode16_invoked false; authority false; no claims.",
+    "Consumed histories: qualifications 07-11 and admission10-01 FAILED_CONSUMED; admission10-02, 11b and 14 consumed by their runtimes; runtime14 accepted and consumed. Preparation02/03 accepted, consumed and STAGE_RETIRED: the retirement record shows both RETIRED on this boot and both stages are absent. Preparation04 accepted, characterization-04 accepted, d83dab3 NEVER_INVOKED, preparation01 superseded. 46 empty directories; 42 negative names equal the configuration; 21 PID/start identities absent.",
+    "Closure: FD 5 -> 5 (the expected /dev/urandom descriptor from the pre-baseline tempfile import), no children or threads. Resources before/after: MemAvailable 5.93/4.96GB (>= 2GiB), project free 13.05GB (>= 4GiB), tmpfs free 4.01GB (>= 256MiB), NOFILE 524288 before and 40000 after.",
+    "Pre-admission guard PASS at control: 105 controls, 2128 pins, 151 records. Its absence object equals the receipt, its stage record equals the tool record, and it ran before admission.",
+    "Fresh metadata-only checks: nothing matches runs/puck-cpu-held-episode-16*. Also absent: audit-01, admission-02, concrete audit command, observer/audit outputs, pre-observer guard and outputs, review and post-outcome files, the -16 report packet, 23 historical and 39 d83dab3 paths, and the retired stages. All run records (151 raw + 114 prep04 + 51 + 51 + 40 char-04) are unchanged; 46 directories empty. Boot unchanged; a single stat of the preparation04 roots shows 317249-317252, mode 0700.",
+    "make-observer-guard dry check, with nothing written: every replacement anchor occurs exactly once in the instantiated guard; the 12 future paths are unique and absent; the real receipt satisfies every maker assertion (status, admission_check_id 1, episode16_invoked false, runtime_qualified false, closure 5/5, stdout = published). Only this review file (decision GO) remains for the maker to pin."
+  ],
+  "findings": [],
+  "kind": "independent_exact_admission16_receipt_review_v1",
+  "limitations": [
+    "Read-only except this exclusive /tmp review JSON. No admission main, guard, run-once tool, maker write, observer, auditor, episode, vendor import, network or repo edit. Checks covered metadata, Git blobs, all 2128 freeze pins, all index-bound packet files, run-record pins, and one stat of the preparation04 roots.",
+    "SITE, staged-forest, native, EGL and interpreter custody rests on the admission own phase records and source ordering; the reviewer did not walk /tmp/palimpsest-puck-cpu-held-04 or re-hash SITE/native payloads.",
+    "Index-bound history files are bound through pinned evidence indexes plus Git rather than per-file Held custody inside the admission (a recorded user decision driven by the 2GiB Held byte ceiling); this review re-hashed them independently.",
+    "Grants no episode, renderer, operator, collection, study or release acceptance. Allocation 16 still needs the pre-observer guard (with the stage/boot guard) and its own independent outcome audit. A reboot, stage change or Mesa/system update before then is fatal."
+  ],
+  "observed": {
+    "admission_check_id": 1,
+    "all_authority_flags": false,
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_after": 5,
+      "fd_before": 5,
+      "held_files_after_close": 0
+    },
+    "custody_reported": {
+      "index_bound_packet_files": 1143,
+      "site_bytes": 1304701872,
+      "site_directories": 2074,
+      "site_files": 27225,
+      "staged_bytes": 1590197452,
+      "staged_directories": 2079,
+      "staged_files": 27286
+    },
+    "episode16_invoked": false,
+    "epoch16_limits_asserted": {
+      "child_hard_seconds": 1215,
+      "evidence": "configuration and runner assertions preceding publication",
+      "hard_seconds": 1230,
+      "normal_seconds": 1200,
+      "worker_seconds": 600
+    },
+    "external": {
+      "deadline_seconds": 145,
+      "elapsed_seconds": 18.863229440990835,
+      "implicit_retry": false,
+      "normal_exit": true,
+      "returncode": 0,
+      "timed_out": false
+    },
+    "freeze_roster": {
+      "pins": 2128
+    },
+    "held_entries": {
+      "bytes": 2044405373,
+      "directories": 3061,
+      "files": 33824,
+      "links": 1097
+    },
+    "historical": "qualifications01-11 and admission10-01 FAILED_CONSUMED; admissions10-02/11b/14 consumed; runtime14 accepted import route, consumed; characterization-04 accepted; d83dab3 NEVER_INVOKED",
+    "maker_dry_check": "PASS without writing the guard",
+    "preparation": "preparation04 accepted and bound (f43be975/a76b6148); preparation02/03 accepted, consumed, stages retired with census; preparation01 superseded",
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "stage_guard": "PASS_STAGE_AND_BOOT on preparation04 before admission; unchanged at review time",
+    "status": "DATA_ONLY_ADMITTED",
+    "terminal": {
+      "elapsed_seconds": 18.913777294015745,
+      "exit_code": 0,
+      "outer_timeout": false,
+      "runtime_invoked": false
+    }
+  },
+  "scope": "Completed admission16 data-only receipt at control e7c5a3e on accepted preparation04 for the held public manual episode: exact byte bindings, phase telemetry, closure 5->5, resources, consumed and retired histories, prepublication absences, and a dry pre-observer maker check. Not episode acceptance."
+}

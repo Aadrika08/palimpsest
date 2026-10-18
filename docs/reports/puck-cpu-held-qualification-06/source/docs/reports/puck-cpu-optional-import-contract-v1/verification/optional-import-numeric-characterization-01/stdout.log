@@ -1,0 +1,17 @@
+........F                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_declared_absence_does_not_turn_an_uncaught_find_spec_into_none ______
+
+    def test_declared_absence_does_not_turn_an_uncaught_find_spec_into_none():
+        code = 'import importlib.util\nassert importlib.util.find_spec("triton") is None\n'
+        with authored() as base:
+            result = optional_fixture(base, declared=['pynvml', 'triton'], after_cuda=code)
+        assert result.returncode != 0 and result.stdout == ''
+>       assert "ModuleNotFoundError: No module named 'triton'" in result.stderr
+E       assert "ModuleNotFoundError: No module named 'triton'" in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-pgnhz...ication import denial: \'+fullname,name=fullname)\nModuleNotFoundError: Explicit qualification import denial: triton\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-pgnhz...ication import denial: \'+fullname,name=fullname)\nModuleNotFoundError: Explicit qualification import denial: triton\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...cation import denial: \'+fullname,name=fullname)\nModuleNotFoundError: Explicit qualification import denial: triton\n').stderr
+
+tests/test_puck_cpu_optional_import_contract.py:164: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_optional_import_contract.py::test_declared_absence_does_not_turn_an_uncaught_find_spec_into_none
+1 failed, 8 passed in 14.03s

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_cpu_distributed_observer.py"
+  ],
+  "source_sha256": {
+    "scripts/observe_puck_cpu_runtime_characterization.py": "35f969bf9288d5ba079c2a84c8e868a62f3e432a2a15b1c94599ce8817121d0b",
+    "tests/test_puck_cpu_distributed_observer.py": "bf60e55be545a21e4e6311afa4d4068769004097a9aa369f36680ffa685f221f"
+  },
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+  }
+}

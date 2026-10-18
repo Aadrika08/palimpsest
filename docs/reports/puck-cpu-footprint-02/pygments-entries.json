@@ -1,0 +1,2794 @@
+[
+  {
+    "compressed_size": 1254,
+    "compression": 8,
+    "crc32": 1681755,
+    "external_attr": 2175008768,
+    "name": "pygments/__init__.py",
+    "size_bytes": 2962
+  },
+  {
+    "compressed_size": 224,
+    "compression": 8,
+    "crc32": 438911721,
+    "external_attr": 2175008768,
+    "name": "pygments/__main__.py",
+    "size_bytes": 351
+  },
+  {
+    "compressed_size": 6070,
+    "compression": 8,
+    "crc32": 1199052711,
+    "external_attr": 2175008768,
+    "name": "pygments/cmdline.py",
+    "size_bytes": 23542
+  },
+  {
+    "compressed_size": 661,
+    "compression": 8,
+    "crc32": 1184778042,
+    "external_attr": 2175008768,
+    "name": "pygments/console.py",
+    "size_bytes": 1721
+  },
+  {
+    "compressed_size": 764,
+    "compression": 8,
+    "crc32": 765131542,
+    "external_attr": 2175008768,
+    "name": "pygments/filter.py",
+    "size_bytes": 1913
+  },
+  {
+    "compressed_size": 1752,
+    "compression": 8,
+    "crc32": 1969713828,
+    "external_attr": 2175008768,
+    "name": "pygments/formatter.py",
+    "size_bytes": 4369
+  },
+  {
+    "compressed_size": 9547,
+    "compression": 8,
+    "crc32": 2927381450,
+    "external_attr": 2175008768,
+    "name": "pygments/lexer.py",
+    "size_bytes": 35155
+  },
+  {
+    "compressed_size": 496,
+    "compression": 8,
+    "crc32": 1016152122,
+    "external_attr": 2175008768,
+    "name": "pygments/modeline.py",
+    "size_bytes": 1008
+  },
+  {
+    "compressed_size": 659,
+    "compression": 8,
+    "crc32": 4247005138,
+    "external_attr": 2175008768,
+    "name": "pygments/plugin.py",
+    "size_bytes": 1933
+  },
+  {
+    "compressed_size": 1192,
+    "compression": 8,
+    "crc32": 616274867,
+    "external_attr": 2175008768,
+    "name": "pygments/regexopt.py",
+    "size_bytes": 3313
+  },
+  {
+    "compressed_size": 1151,
+    "compression": 8,
+    "crc32": 2081519154,
+    "external_attr": 2175008768,
+    "name": "pygments/scanner.py",
+    "size_bytes": 3095
+  },
+  {
+    "compressed_size": 2240,
+    "compression": 8,
+    "crc32": 1836762139,
+    "external_attr": 2175008768,
+    "name": "pygments/sphinxext.py",
+    "size_bytes": 7901
+  },
+  {
+    "compressed_size": 1787,
+    "compression": 8,
+    "crc32": 1401573241,
+    "external_attr": 2175008768,
+    "name": "pygments/style.py",
+    "size_bytes": 6479
+  },
+  {
+    "compressed_size": 1921,
+    "compression": 8,
+    "crc32": 3379988400,
+    "external_attr": 2175008768,
+    "name": "pygments/token.py",
+    "size_bytes": 6229
+  },
+  {
+    "compressed_size": 19652,
+    "compression": 8,
+    "crc32": 3058345051,
+    "external_attr": 2175008768,
+    "name": "pygments/unistring.py",
+    "size_bytes": 63211
+  },
+  {
+    "compressed_size": 3734,
+    "compression": 8,
+    "crc32": 335036378,
+    "external_attr": 2175008768,
+    "name": "pygments/util.py",
+    "size_bytes": 10770
+  },
+  {
+    "compressed_size": 8095,
+    "compression": 8,
+    "crc32": 4267578485,
+    "external_attr": 2175008768,
+    "name": "pygments/filters/__init__.py",
+    "size_bytes": 40349
+  },
+  {
+    "compressed_size": 1731,
+    "compression": 8,
+    "crc32": 1085166265,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/__init__.py",
+    "size_bytes": 5352
+  },
+  {
+    "compressed_size": 1312,
+    "compression": 8,
+    "crc32": 3439168142,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/_mapping.py",
+    "size_bytes": 4176
+  },
+  {
+    "compressed_size": 1143,
+    "compression": 8,
+    "crc32": 3972461552,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/bbcode.py",
+    "size_bytes": 3299
+  },
+  {
+    "compressed_size": 1558,
+    "compression": 8,
+    "crc32": 2397511046,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/groff.py",
+    "size_bytes": 5089
+  },
+  {
+    "compressed_size": 10092,
+    "compression": 8,
+    "crc32": 4072913370,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/html.py",
+    "size_bytes": 36351
+  },
+  {
+    "compressed_size": 5849,
+    "compression": 8,
+    "crc32": 2357108928,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/img.py",
+    "size_bytes": 23304
+  },
+  {
+    "compressed_size": 1713,
+    "compression": 8,
+    "crc32": 1173892695,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/irc.py",
+    "size_bytes": 4907
+  },
+  {
+    "compressed_size": 5964,
+    "compression": 8,
+    "crc32": 1519452499,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/latex.py",
+    "size_bytes": 19814
+  },
+  {
+    "compressed_size": 1641,
+    "compression": 8,
+    "crc32": 3374047009,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/other.py",
+    "size_bytes": 5007
+  },
+  {
+    "compressed_size": 762,
+    "compression": 8,
+    "crc32": 2505868184,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/pangomarkup.py",
+    "size_bytes": 2209
+  },
+  {
+    "compressed_size": 3495,
+    "compression": 8,
+    "crc32": 4255317220,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/rtf.py",
+    "size_bytes": 11924
+  },
+  {
+    "compressed_size": 2359,
+    "compression": 8,
+    "crc32": 1044857248,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/svg.py",
+    "size_bytes": 6852
+  },
+  {
+    "compressed_size": 1603,
+    "compression": 8,
+    "crc32": 2876045471,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/terminal.py",
+    "size_bytes": 4629
+  },
+  {
+    "compressed_size": 3038,
+    "compression": 8,
+    "crc32": 3869640289,
+    "external_attr": 2175008768,
+    "name": "pygments/formatters/terminal256.py",
+    "size_bytes": 11718
+  },
+  {
+    "compressed_size": 3388,
+    "compression": 8,
+    "crc32": 1587763058,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/__init__.py",
+    "size_bytes": 12070
+  },
+  {
+    "compressed_size": 572,
+    "compression": 8,
+    "crc32": 4063069410,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_ada_builtins.py",
+    "size_bytes": 1546
+  },
+  {
+    "compressed_size": 7191,
+    "compression": 8,
+    "crc32": 1150383245,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_asy_builtins.py",
+    "size_bytes": 27290
+  },
+  {
+    "compressed_size": 4363,
+    "compression": 8,
+    "crc32": 236520238,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_cl_builtins.py",
+    "size_bytes": 13997
+  },
+  {
+    "compressed_size": 24797,
+    "compression": 8,
+    "crc32": 94751121,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_cocoa_builtins.py",
+    "size_bytes": 105176
+  },
+  {
+    "compressed_size": 6645,
+    "compression": 8,
+    "crc32": 2196636046,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_csound_builtins.py",
+    "size_bytes": 18417
+  },
+  {
+    "compressed_size": 2787,
+    "compression": 8,
+    "crc32": 3345584322,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_css_builtins.py",
+    "size_bytes": 12449
+  },
+  {
+    "compressed_size": 4180,
+    "compression": 8,
+    "crc32": 3049912764,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_googlesql_builtins.py",
+    "size_bytes": 16135
+  },
+  {
+    "compressed_size": 3983,
+    "compression": 8,
+    "crc32": 23687431,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_julia_builtins.py",
+    "size_bytes": 11886
+  },
+  {
+    "compressed_size": 25069,
+    "compression": 8,
+    "crc32": 442086166,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_lasso_builtins.py",
+    "size_bytes": 134513
+  },
+  {
+    "compressed_size": 27554,
+    "compression": 8,
+    "crc32": 1009484169,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_lilypond_builtins.py",
+    "size_bytes": 115114
+  },
+  {
+    "compressed_size": 2217,
+    "compression": 8,
+    "crc32": 2995621429,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_lua_builtins.py",
+    "size_bytes": 8110
+  },
+  {
+    "compressed_size": 482,
+    "compression": 8,
+    "crc32": 698357597,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_luau_builtins.py",
+    "size_bytes": 958
+  },
+  {
+    "compressed_size": 16187,
+    "compression": 8,
+    "crc32": 2591037908,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_mapping.py",
+    "size_bytes": 71218
+  },
+  {
+    "compressed_size": 6279,
+    "compression": 8,
+    "crc32": 1169090147,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_mql_builtins.py",
+    "size_bytes": 24716
+  },
+  {
+    "compressed_size": 7333,
+    "compression": 8,
+    "crc32": 999543406,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_mysql_builtins.py",
+    "size_bytes": 26876
+  },
+  {
+    "compressed_size": 9687,
+    "compression": 8,
+    "crc32": 3345485690,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_openedge_builtins.py",
+    "size_bytes": 49401
+  },
+  {
+    "compressed_size": 19843,
+    "compression": 8,
+    "crc32": 2978341406,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_php_builtins.py",
+    "size_bytes": 108054
+  },
+  {
+    "compressed_size": 4291,
+    "compression": 8,
+    "crc32": 692368884,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_postgres_builtins.py",
+    "size_bytes": 13346
+  },
+  {
+    "compressed_size": 3662,
+    "compression": 8,
+    "crc32": 1578055468,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_qlik_builtins.py",
+    "size_bytes": 12598
+  },
+  {
+    "compressed_size": 7328,
+    "compression": 8,
+    "crc32": 2136721963,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_scheme_builtins.py",
+    "size_bytes": 32567
+  },
+  {
+    "compressed_size": 13097,
+    "compression": 8,
+    "crc32": 2331771430,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_scilab_builtins.py",
+    "size_bytes": 52414
+  },
+  {
+    "compressed_size": 7060,
+    "compression": 8,
+    "crc32": 815859900,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_sourcemod_builtins.py",
+    "size_bytes": 26780
+  },
+  {
+    "compressed_size": 2366,
+    "compression": 8,
+    "crc32": 2086861029,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_sql_builtins.py",
+    "size_bytes": 6770
+  },
+  {
+    "compressed_size": 3280,
+    "compression": 8,
+    "crc32": 939784781,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_stan_builtins.py",
+    "size_bytes": 16623
+  },
+  {
+    "compressed_size": 8103,
+    "compression": 8,
+    "crc32": 4191772741,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_stata_builtins.py",
+    "size_bytes": 27230
+  },
+  {
+    "compressed_size": 3880,
+    "compression": 8,
+    "crc32": 2069762654,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_tsql_builtins.py",
+    "size_bytes": 15463
+  },
+  {
+    "compressed_size": 637,
+    "compression": 8,
+    "crc32": 1901880745,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_usd_builtins.py",
+    "size_bytes": 1661
+  },
+  {
+    "compressed_size": 1404,
+    "compression": 8,
+    "crc32": 682946600,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_vbscript_builtins.py",
+    "size_bytes": 4228
+  },
+  {
+    "compressed_size": 19108,
+    "compression": 8,
+    "crc32": 2275080945,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/_vim_builtins.py",
+    "size_bytes": 120501
+  },
+  {
+    "compressed_size": 3566,
+    "compression": 8,
+    "crc32": 1160020156,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/actionscript.py",
+    "size_bytes": 11738
+  },
+  {
+    "compressed_size": 1561,
+    "compression": 8,
+    "crc32": 2856326989,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ada.py",
+    "size_bytes": 5323
+  },
+  {
+    "compressed_size": 373,
+    "compression": 8,
+    "crc32": 3954060107,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/agile.py",
+    "size_bytes": 899
+  },
+  {
+    "compressed_size": 3177,
+    "compression": 8,
+    "crc32": 1351545099,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/algebra.py",
+    "size_bytes": 10161
+  },
+  {
+    "compressed_size": 1019,
+    "compression": 8,
+    "crc32": 1493083574,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ambient.py",
+    "size_bytes": 2608
+  },
+  {
+    "compressed_size": 754,
+    "compression": 8,
+    "crc32": 2769825306,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/amdgpu.py",
+    "size_bytes": 1725
+  },
+  {
+    "compressed_size": 1613,
+    "compression": 8,
+    "crc32": 1792891382,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ampl.py",
+    "size_bytes": 4179
+  },
+  {
+    "compressed_size": 9196,
+    "compression": 8,
+    "crc32": 32178489,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/apdlexer.py",
+    "size_bytes": 30803
+  },
+  {
+    "compressed_size": 1363,
+    "compression": 8,
+    "crc32": 3882353445,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/apl.py",
+    "size_bytes": 3407
+  },
+  {
+    "compressed_size": 2973,
+    "compression": 8,
+    "crc32": 1850520931,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/archetype.py",
+    "size_bytes": 11577
+  },
+  {
+    "compressed_size": 1070,
+    "compression": 8,
+    "crc32": 1797104629,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/arrow.py",
+    "size_bytes": 3567
+  },
+  {
+    "compressed_size": 3208,
+    "compression": 8,
+    "crc32": 3631842929,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/arturo.py",
+    "size_bytes": 11417
+  },
+  {
+    "compressed_size": 771,
+    "compression": 8,
+    "crc32": 2036713009,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/asc.py",
+    "size_bytes": 1696
+  },
+  {
+    "compressed_size": 11206,
+    "compression": 8,
+    "crc32": 2469919017,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/asm.py",
+    "size_bytes": 42201
+  },
+  {
+    "compressed_size": 1590,
+    "compression": 8,
+    "crc32": 764291287,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/asn1.py",
+    "size_bytes": 4267
+  },
+  {
+    "compressed_size": 6423,
+    "compression": 8,
+    "crc32": 1268202593,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/automation.py",
+    "size_bytes": 19834
+  },
+  {
+    "compressed_size": 804,
+    "compression": 8,
+    "crc32": 56293441,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/bare.py",
+    "size_bytes": 3023
+  },
+  {
+    "compressed_size": 7154,
+    "compression": 8,
+    "crc32": 1417863678,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/basic.py",
+    "size_bytes": 27949
+  },
+  {
+    "compressed_size": 785,
+    "compression": 8,
+    "crc32": 699201634,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/bdd.py",
+    "size_bytes": 1644
+  },
+  {
+    "compressed_size": 1138,
+    "compression": 8,
+    "crc32": 2693442773,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/berry.py",
+    "size_bytes": 3212
+  },
+  {
+    "compressed_size": 1298,
+    "compression": 8,
+    "crc32": 2309703132,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/bibtex.py",
+    "size_bytes": 4814
+  },
+  {
+    "compressed_size": 1994,
+    "compression": 8,
+    "crc32": 3317171491,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/bitbake.py",
+    "size_bytes": 6132
+  },
+  {
+    "compressed_size": 1548,
+    "compression": 8,
+    "crc32": 3801676396,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/blueprint.py",
+    "size_bytes": 6191
+  },
+  {
+    "compressed_size": 1503,
+    "compression": 8,
+    "crc32": 3144370955,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/boa.py",
+    "size_bytes": 3924
+  },
+  {
+    "compressed_size": 1511,
+    "compression": 8,
+    "crc32": 1768868800,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/bqn.py",
+    "size_bytes": 3674
+  },
+  {
+    "compressed_size": 9099,
+    "compression": 8,
+    "crc32": 671827751,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/business.py",
+    "size_bytes": 28348
+  },
+  {
+    "compressed_size": 5254,
+    "compression": 8,
+    "crc32": 1782967234,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/c_cpp.py",
+    "size_bytes": 21069
+  },
+  {
+    "compressed_size": 9319,
+    "compression": 8,
+    "crc32": 3116847133,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/c_like.py",
+    "size_bytes": 32374
+  },
+  {
+    "compressed_size": 707,
+    "compression": 8,
+    "crc32": 1828226175,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/capnproto.py",
+    "size_bytes": 2177
+  },
+  {
+    "compressed_size": 1249,
+    "compression": 8,
+    "crc32": 3149719866,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/carbon.py",
+    "size_bytes": 3214
+  },
+  {
+    "compressed_size": 1753,
+    "compression": 8,
+    "crc32": 3539747087,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/cddl.py",
+    "size_bytes": 5079
+  },
+  {
+    "compressed_size": 1826,
+    "compression": 8,
+    "crc32": 2436888327,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/cel.py",
+    "size_bytes": 5063
+  },
+  {
+    "compressed_size": 1804,
+    "compression": 8,
+    "crc32": 327332095,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/chapel.py",
+    "size_bytes": 5159
+  },
+  {
+    "compressed_size": 1628,
+    "compression": 8,
+    "crc32": 3460144501,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/clean.py",
+    "size_bytes": 6421
+  },
+  {
+    "compressed_size": 1041,
+    "compression": 8,
+    "crc32": 1518891150,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/codeql.py",
+    "size_bytes": 2579
+  },
+  {
+    "compressed_size": 1300,
+    "compression": 8,
+    "crc32": 981167031,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/comal.py",
+    "size_bytes": 3182
+  },
+  {
+    "compressed_size": 499,
+    "compression": 8,
+    "crc32": 2138756387,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/compiled.py",
+    "size_bytes": 1429
+  },
+  {
+    "compressed_size": 13598,
+    "compression": 8,
+    "crc32": 1102294447,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/configs.py",
+    "size_bytes": 53776
+  },
+  {
+    "compressed_size": 1466,
+    "compression": 8,
+    "crc32": 1435969424,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/console.py",
+    "size_bytes": 4752
+  },
+  {
+    "compressed_size": 672,
+    "compression": 8,
+    "crc32": 1077653738,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/cplint.py",
+    "size_bytes": 1391
+  },
+  {
+    "compressed_size": 4307,
+    "compression": 8,
+    "crc32": 4087447350,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/crystal.py",
+    "size_bytes": 15757
+  },
+  {
+    "compressed_size": 3969,
+    "compression": 8,
+    "crc32": 2018923682,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/csound.py",
+    "size_bytes": 17006
+  },
+  {
+    "compressed_size": 6710,
+    "compression": 8,
+    "crc32": 3373450647,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/css.py",
+    "size_bytes": 26457
+  },
+  {
+    "compressed_size": 2612,
+    "compression": 8,
+    "crc32": 1029274293,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/d.py",
+    "size_bytes": 9917
+  },
+  {
+    "compressed_size": 1608,
+    "compression": 8,
+    "crc32": 59375208,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/dalvik.py",
+    "size_bytes": 4609
+  },
+  {
+    "compressed_size": 5372,
+    "compression": 8,
+    "crc32": 714154290,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/data.py",
+    "size_bytes": 27068
+  },
+  {
+    "compressed_size": 2617,
+    "compression": 8,
+    "crc32": 2695232663,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/dax.py",
+    "size_bytes": 8101
+  },
+  {
+    "compressed_size": 1458,
+    "compression": 8,
+    "crc32": 3125492049,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/devicetree.py",
+    "size_bytes": 4826
+  },
+  {
+    "compressed_size": 1653,
+    "compression": 8,
+    "crc32": 1785458861,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/diff.py",
+    "size_bytes": 5385
+  },
+  {
+    "compressed_size": 1192,
+    "compression": 8,
+    "crc32": 1421811568,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/dns.py",
+    "size_bytes": 3894
+  },
+  {
+    "compressed_size": 10100,
+    "compression": 8,
+    "crc32": 1788419157,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/dotnet.py",
+    "size_bytes": 40222
+  },
+  {
+    "compressed_size": 10018,
+    "compression": 8,
+    "crc32": 520803114,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/dsls.py",
+    "size_bytes": 36750
+  },
+  {
+    "compressed_size": 3303,
+    "compression": 8,
+    "crc32": 950841746,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/dylan.py",
+    "size_bytes": 10412
+  },
+  {
+    "compressed_size": 2424,
+    "compression": 8,
+    "crc32": 2990750049,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ecl.py",
+    "size_bytes": 6374
+  },
+  {
+    "compressed_size": 1130,
+    "compression": 8,
+    "crc32": 3124228978,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/eiffel.py",
+    "size_bytes": 2656
+  },
+  {
+    "compressed_size": 1111,
+    "compression": 8,
+    "crc32": 3730800835,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/elm.py",
+    "size_bytes": 3155
+  },
+  {
+    "compressed_size": 1825,
+    "compression": 8,
+    "crc32": 2394229667,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/elpi.py",
+    "size_bytes": 7904
+  },
+  {
+    "compressed_size": 1647,
+    "compression": 8,
+    "crc32": 2743465995,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/email.py",
+    "size_bytes": 4690
+  },
+  {
+    "compressed_size": 5021,
+    "compression": 8,
+    "crc32": 1942959966,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/erlang.py",
+    "size_bytes": 19150
+  },
+  {
+    "compressed_size": 3836,
+    "compression": 8,
+    "crc32": 4056562816,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/esoteric.py",
+    "size_bytes": 10502
+  },
+  {
+    "compressed_size": 1442,
+    "compression": 8,
+    "crc32": 1608858888,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ezhil.py",
+    "size_bytes": 3275
+  },
+  {
+    "compressed_size": 4868,
+    "compression": 8,
+    "crc32": 3357332839,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/factor.py",
+    "size_bytes": 19403
+  },
+  {
+    "compressed_size": 2489,
+    "compression": 8,
+    "crc32": 3903259029,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/fantom.py",
+    "size_bytes": 10200
+  },
+  {
+    "compressed_size": 2761,
+    "compression": 8,
+    "crc32": 1939173649,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/felix.py",
+    "size_bytes": 9658
+  },
+  {
+    "compressed_size": 650,
+    "compression": 8,
+    "crc32": 550028376,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/fift.py",
+    "size_bytes": 1647
+  },
+  {
+    "compressed_size": 1239,
+    "compression": 8,
+    "crc32": 2619580932,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/floscript.py",
+    "size_bytes": 3028
+  },
+  {
+    "compressed_size": 2712,
+    "compression": 8,
+    "crc32": 1628002034,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/forth.py",
+    "size_bytes": 7196
+  },
+  {
+    "compressed_size": 3672,
+    "compression": 8,
+    "crc32": 1376351206,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/fortran.py",
+    "size_bytes": 10385
+  },
+  {
+    "compressed_size": 9113,
+    "compression": 8,
+    "crc32": 3838564351,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/foxpro.py",
+    "size_bytes": 26298
+  },
+  {
+    "compressed_size": 4679,
+    "compression": 8,
+    "crc32": 3377511117,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/freefem.py",
+    "size_bytes": 26916
+  },
+  {
+    "compressed_size": 1350,
+    "compression": 8,
+    "crc32": 1280259813,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/func.py",
+    "size_bytes": 3703
+  },
+  {
+    "compressed_size": 339,
+    "compression": 8,
+    "crc32": 1412824741,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/functional.py",
+    "size_bytes": 697
+  },
+  {
+    "compressed_size": 1320,
+    "compression": 8,
+    "crc32": 206440685,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/futhark.py",
+    "size_bytes": 3709
+  },
+  {
+    "compressed_size": 471,
+    "compression": 8,
+    "crc32": 1752184957,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/gcodelexer.py",
+    "size_bytes": 877
+  },
+  {
+    "compressed_size": 2401,
+    "compression": 8,
+    "crc32": 362074734,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/gdscript.py",
+    "size_bytes": 7565
+  },
+  {
+    "compressed_size": 947,
+    "compression": 8,
+    "crc32": 4081654461,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/gleam.py",
+    "size_bytes": 2395
+  },
+  {
+    "compressed_size": 1345,
+    "compression": 8,
+    "crc32": 1222457700,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/go.py",
+    "size_bytes": 3416
+  },
+  {
+    "compressed_size": 2651,
+    "compression": 8,
+    "crc32": 2626268823,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/grammar_notation.py",
+    "size_bytes": 8046
+  },
+  {
+    "compressed_size": 1226,
+    "compression": 8,
+    "crc32": 189953285,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/graph.py",
+    "size_bytes": 4111
+  },
+  {
+    "compressed_size": 10845,
+    "compression": 8,
+    "crc32": 28361550,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/graphics.py",
+    "size_bytes": 39137
+  },
+  {
+    "compressed_size": 1483,
+    "compression": 8,
+    "crc32": 1877106531,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/graphql.py",
+    "size_bytes": 5604
+  },
+  {
+    "compressed_size": 786,
+    "compression": 8,
+    "crc32": 2049749770,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/graphviz.py",
+    "size_bytes": 1937
+  },
+  {
+    "compressed_size": 1567,
+    "compression": 8,
+    "crc32": 800698610,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/gsql.py",
+    "size_bytes": 3993
+  },
+  {
+    "compressed_size": 1123,
+    "compression": 8,
+    "crc32": 3856425220,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/hare.py",
+    "size_bytes": 2652
+  },
+  {
+    "compressed_size": 6435,
+    "compression": 8,
+    "crc32": 3087309785,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/haskell.py",
+    "size_bytes": 33323
+  },
+  {
+    "compressed_size": 5408,
+    "compression": 8,
+    "crc32": 1924629778,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/haxe.py",
+    "size_bytes": 31169
+  },
+  {
+    "compressed_size": 5634,
+    "compression": 8,
+    "crc32": 992192414,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/hdl.py",
+    "size_bytes": 22742
+  },
+  {
+    "compressed_size": 989,
+    "compression": 8,
+    "crc32": 2498481857,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/hexdump.py",
+    "size_bytes": 3656
+  },
+  {
+    "compressed_size": 4088,
+    "compression": 8,
+    "crc32": 625030577,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/html.py",
+    "size_bytes": 22007
+  },
+  {
+    "compressed_size": 5474,
+    "compression": 8,
+    "crc32": 1049878443,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/idl.py",
+    "size_bytes": 15451
+  },
+  {
+    "compressed_size": 9319,
+    "compression": 8,
+    "crc32": 1544803137,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/igor.py",
+    "size_bytes": 31636
+  },
+  {
+    "compressed_size": 1362,
+    "compression": 8,
+    "crc32": 2613669862,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/inferno.py",
+    "size_bytes": 3138
+  },
+  {
+    "compressed_size": 4747,
+    "compression": 8,
+    "crc32": 668575552,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/installers.py",
+    "size_bytes": 14494
+  },
+  {
+    "compressed_size": 11546,
+    "compression": 8,
+    "crc32": 3102197059,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/int_fiction.py",
+    "size_bytes": 56547
+  },
+  {
+    "compressed_size": 828,
+    "compression": 8,
+    "crc32": 2874769193,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/iolang.py",
+    "size_bytes": 1908
+  },
+  {
+    "compressed_size": 1658,
+    "compression": 8,
+    "crc32": 2082770106,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/j.py",
+    "size_bytes": 4856
+  },
+  {
+    "compressed_size": 13463,
+    "compression": 8,
+    "crc32": 3713071160,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/javascript.py",
+    "size_bytes": 63365
+  },
+  {
+    "compressed_size": 752,
+    "compression": 8,
+    "crc32": 1451753965,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/jmespath.py",
+    "size_bytes": 2087
+  },
+  {
+    "compressed_size": 1180,
+    "compression": 8,
+    "crc32": 211681339,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/jslt.py",
+    "size_bytes": 3703
+  },
+  {
+    "compressed_size": 874,
+    "compression": 8,
+    "crc32": 3660160133,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/json5.py",
+    "size_bytes": 2505
+  },
+  {
+    "compressed_size": 1378,
+    "compression": 8,
+    "crc32": 1783743096,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/jsonnet.py",
+    "size_bytes": 5543
+  },
+  {
+    "compressed_size": 962,
+    "compression": 8,
+    "crc32": 3788455680,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/jsx.py",
+    "size_bytes": 2748
+  },
+  {
+    "compressed_size": 3449,
+    "compression": 8,
+    "crc32": 863827198,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/julia.py",
+    "size_bytes": 11688
+  },
+  {
+    "compressed_size": 16024,
+    "compression": 8,
+    "crc32": 2830378169,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/jvm.py",
+    "size_bytes": 73264
+  },
+  {
+    "compressed_size": 1830,
+    "compression": 8,
+    "crc32": 2120840602,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/kuin.py",
+    "size_bytes": 11401
+  },
+  {
+    "compressed_size": 1315,
+    "compression": 8,
+    "crc32": 851054636,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/kusto.py",
+    "size_bytes": 3486
+  },
+  {
+    "compressed_size": 1904,
+    "compression": 8,
+    "crc32": 520167241,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ldap.py",
+    "size_bytes": 6554
+  },
+  {
+    "compressed_size": 2330,
+    "compression": 8,
+    "crc32": 1119381132,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/lean.py",
+    "size_bytes": 8588
+  },
+  {
+    "compressed_size": 3392,
+    "compression": 8,
+    "crc32": 1314887969,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/lilypond.py",
+    "size_bytes": 9755
+  },
+  {
+    "compressed_size": 40569,
+    "compression": 8,
+    "crc32": 928186122,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/lisp.py",
+    "size_bytes": 157900
+  },
+  {
+    "compressed_size": 10099,
+    "compression": 8,
+    "crc32": 1207919281,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/macaulay2.py",
+    "size_bytes": 35392
+  },
+  {
+    "compressed_size": 2693,
+    "compression": 8,
+    "crc32": 998926367,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/make.py",
+    "size_bytes": 7834
+  },
+  {
+    "compressed_size": 1970,
+    "compression": 8,
+    "crc32": 2227718606,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/maple.py",
+    "size_bytes": 7965
+  },
+  {
+    "compressed_size": 14080,
+    "compression": 8,
+    "crc32": 1418764441,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/markup.py",
+    "size_bytes": 66526
+  },
+  {
+    "compressed_size": 327,
+    "compression": 8,
+    "crc32": 1395990422,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/math.py",
+    "size_bytes": 698
+  },
+  {
+    "compressed_size": 24564,
+    "compression": 8,
+    "crc32": 1003810400,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/matlab.py",
+    "size_bytes": 132992
+  },
+  {
+    "compressed_size": 1080,
+    "compression": 8,
+    "crc32": 3598355953,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/maxima.py",
+    "size_bytes": 2718
+  },
+  {
+    "compressed_size": 1420,
+    "compression": 8,
+    "crc32": 3904838689,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/meson.py",
+    "size_bytes": 4347
+  },
+  {
+    "compressed_size": 2292,
+    "compression": 8,
+    "crc32": 3287494353,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/mime.py",
+    "size_bytes": 7585
+  },
+  {
+    "compressed_size": 3788,
+    "compression": 8,
+    "crc32": 4098977098,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/minecraft.py",
+    "size_bytes": 13701
+  },
+  {
+    "compressed_size": 1734,
+    "compression": 8,
+    "crc32": 2105818692,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/mips.py",
+    "size_bytes": 4659
+  },
+  {
+    "compressed_size": 7842,
+    "compression": 8,
+    "crc32": 214062739,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ml.py",
+    "size_bytes": 35398
+  },
+  {
+    "compressed_size": 4149,
+    "compression": 8,
+    "crc32": 2258945215,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/modeling.py",
+    "size_bytes": 14664
+  },
+  {
+    "compressed_size": 10580,
+    "compression": 8,
+    "crc32": 3162522524,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/modula2.py",
+    "size_bytes": 53075
+  },
+  {
+    "compressed_size": 4556,
+    "compression": 8,
+    "crc32": 351836818,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/mojo.py",
+    "size_bytes": 24232
+  },
+  {
+    "compressed_size": 2078,
+    "compression": 8,
+    "crc32": 957194551,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/monte.py",
+    "size_bytes": 6292
+  },
+  {
+    "compressed_size": 2972,
+    "compression": 8,
+    "crc32": 1771599551,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/mosel.py",
+    "size_bytes": 9300
+  },
+  {
+    "compressed_size": 14376,
+    "compression": 8,
+    "crc32": 4031143954,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ncl.py",
+    "size_bytes": 64002
+  },
+  {
+    "compressed_size": 2045,
+    "compression": 8,
+    "crc32": 2342303103,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/nimrod.py",
+    "size_bytes": 6416
+  },
+  {
+    "compressed_size": 1062,
+    "compression": 8,
+    "crc32": 1278475651,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/nit.py",
+    "size_bytes": 2727
+  },
+  {
+    "compressed_size": 1459,
+    "compression": 8,
+    "crc32": 2266197012,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/nix.py",
+    "size_bytes": 4424
+  },
+  {
+    "compressed_size": 780,
+    "compression": 8,
+    "crc32": 3221016581,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/numbair.py",
+    "size_bytes": 1756
+  },
+  {
+    "compressed_size": 1559,
+    "compression": 8,
+    "crc32": 2108855922,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/oberon.py",
+    "size_bytes": 4216
+  },
+  {
+    "compressed_size": 6080,
+    "compression": 8,
+    "crc32": 2082651827,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/objective.py",
+    "size_bytes": 23663
+  },
+  {
+    "compressed_size": 1179,
+    "compression": 8,
+    "crc32": 97197742,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ooc.py",
+    "size_bytes": 3005
+  },
+  {
+    "compressed_size": 1332,
+    "compression": 8,
+    "crc32": 2526712995,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/openscad.py",
+    "size_bytes": 3703
+  },
+  {
+    "compressed_size": 639,
+    "compression": 8,
+    "crc32": 3233298457,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/other.py",
+    "size_bytes": 1766
+  },
+  {
+    "compressed_size": 1195,
+    "compression": 8,
+    "crc32": 387198669,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/parasail.py",
+    "size_bytes": 2987
+  },
+  {
+    "compressed_size": 5097,
+    "compression": 8,
+    "crc32": 4185785637,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/parsers.py",
+    "size_bytes": 26598
+  },
+  {
+    "compressed_size": 7907,
+    "compression": 8,
+    "crc32": 360559634,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/pascal.py",
+    "size_bytes": 30992
+  },
+  {
+    "compressed_size": 2222,
+    "compression": 8,
+    "crc32": 1890194542,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/pawn.py",
+    "size_bytes": 8256
+  },
+  {
+    "compressed_size": 1142,
+    "compression": 8,
+    "crc32": 4067607509,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/pddl.py",
+    "size_bytes": 2992
+  },
+  {
+    "compressed_size": 11979,
+    "compression": 8,
+    "crc32": 3967038450,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/perl.py",
+    "size_bytes": 39195
+  },
+  {
+    "compressed_size": 7632,
+    "compression": 8,
+    "crc32": 3955126867,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/phix.py",
+    "size_bytes": 23252
+  },
+  {
+    "compressed_size": 4269,
+    "compression": 8,
+    "crc32": 1212908511,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/php.py",
+    "size_bytes": 13171
+  },
+  {
+    "compressed_size": 785,
+    "compression": 8,
+    "crc32": 3660914527,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/pointless.py",
+    "size_bytes": 1977
+  },
+  {
+    "compressed_size": 1229,
+    "compression": 8,
+    "crc32": 256589658,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/pony.py",
+    "size_bytes": 3280
+  },
+  {
+    "compressed_size": 3815,
+    "compression": 8,
+    "crc32": 556260543,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/praat.py",
+    "size_bytes": 12679
+  },
+  {
+    "compressed_size": 560,
+    "compression": 8,
+    "crc32": 697398218,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/procfile.py",
+    "size_bytes": 1158
+  },
+  {
+    "compressed_size": 3526,
+    "compression": 8,
+    "crc32": 4138845480,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/prolog.py",
+    "size_bytes": 12866
+  },
+  {
+    "compressed_size": 1311,
+    "compression": 8,
+    "crc32": 1172841709,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/promql.py",
+    "size_bytes": 4741
+  },
+  {
+    "compressed_size": 2225,
+    "compression": 8,
+    "crc32": 2346701131,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/prql.py",
+    "size_bytes": 8750
+  },
+  {
+    "compressed_size": 1626,
+    "compression": 8,
+    "crc32": 389951737,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ptx.py",
+    "size_bytes": 4498
+  },
+  {
+    "compressed_size": 1622,
+    "compression": 8,
+    "crc32": 49307444,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/purescript.py",
+    "size_bytes": 6086
+  },
+  {
+    "compressed_size": 11286,
+    "compression": 8,
+    "crc32": 344939893,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/python.py",
+    "size_bytes": 54574
+  },
+  {
+    "compressed_size": 2115,
+    "compression": 8,
+    "crc32": 3224511536,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/q.py",
+    "size_bytes": 6939
+  },
+  {
+    "compressed_size": 1206,
+    "compression": 8,
+    "crc32": 4090482189,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/qlik.py",
+    "size_bytes": 3696
+  },
+  {
+    "compressed_size": 2294,
+    "compression": 8,
+    "crc32": 3936196240,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/qvt.py",
+    "size_bytes": 6106
+  },
+  {
+    "compressed_size": 2316,
+    "compression": 8,
+    "crc32": 3456753394,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/r.py",
+    "size_bytes": 6476
+  },
+  {
+    "compressed_size": 3077,
+    "compression": 8,
+    "crc32": 2668176127,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rdf.py",
+    "size_bytes": 16063
+  },
+  {
+    "compressed_size": 4158,
+    "compression": 8,
+    "crc32": 2326939781,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rebol.py",
+    "size_bytes": 18262
+  },
+  {
+    "compressed_size": 831,
+    "compression": 8,
+    "crc32": 3333455655,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rego.py",
+    "size_bytes": 1751
+  },
+  {
+    "compressed_size": 1035,
+    "compression": 8,
+    "crc32": 2907745703,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rell.py",
+    "size_bytes": 2484
+  },
+  {
+    "compressed_size": 983,
+    "compression": 8,
+    "crc32": 2442639149,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/resource.py",
+    "size_bytes": 2930
+  },
+  {
+    "compressed_size": 1775,
+    "compression": 8,
+    "crc32": 2884110787,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ride.py",
+    "size_bytes": 5038
+  },
+  {
+    "compressed_size": 551,
+    "compression": 8,
+    "crc32": 3750106282,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rita.py",
+    "size_bytes": 1130
+  },
+  {
+    "compressed_size": 777,
+    "compression": 8,
+    "crc32": 1438983660,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rnc.py",
+    "size_bytes": 1975
+  },
+  {
+    "compressed_size": 669,
+    "compression": 8,
+    "crc32": 1380700556,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/roboconf.py",
+    "size_bytes": 2077
+  },
+  {
+    "compressed_size": 4453,
+    "compression": 8,
+    "crc32": 2205759956,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/robotframework.py",
+    "size_bytes": 18451
+  },
+  {
+    "compressed_size": 6206,
+    "compression": 8,
+    "crc32": 1933296472,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ruby.py",
+    "size_bytes": 22987
+  },
+  {
+    "compressed_size": 2562,
+    "compression": 8,
+    "crc32": 2017187985,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/rust.py",
+    "size_bytes": 8263
+  },
+  {
+    "compressed_size": 3095,
+    "compression": 8,
+    "crc32": 1447240287,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/sas.py",
+    "size_bytes": 9457
+  },
+  {
+    "compressed_size": 1606,
+    "compression": 8,
+    "crc32": 1310490936,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/savi.py",
+    "size_bytes": 4881
+  },
+  {
+    "compressed_size": 1037,
+    "compression": 8,
+    "crc32": 828792680,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/scdoc.py",
+    "size_bytes": 2527
+  },
+  {
+    "compressed_size": 24363,
+    "compression": 8,
+    "crc32": 1854206636,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/scripting.py",
+    "size_bytes": 83232
+  },
+  {
+    "compressed_size": 802,
+    "compression": 8,
+    "crc32": 1606610417,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/sgf.py",
+    "size_bytes": 1988
+  },
+  {
+    "compressed_size": 8841,
+    "compression": 8,
+    "crc32": 1755642810,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/shell.py",
+    "size_bytes": 36425
+  },
+  {
+    "compressed_size": 1029,
+    "compression": 8,
+    "crc32": 2967482715,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/sieve.py",
+    "size_bytes": 2517
+  },
+  {
+    "compressed_size": 1634,
+    "compression": 8,
+    "crc32": 2215991115,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/slash.py",
+    "size_bytes": 8491
+  },
+  {
+    "compressed_size": 1955,
+    "compression": 8,
+    "crc32": 3090867787,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/smalltalk.py",
+    "size_bytes": 7207
+  },
+  {
+    "compressed_size": 1214,
+    "compression": 8,
+    "crc32": 2870479104,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/smithy.py",
+    "size_bytes": 3233
+  },
+  {
+    "compressed_size": 1089,
+    "compression": 8,
+    "crc32": 654560028,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/smv.py",
+    "size_bytes": 2808
+  },
+  {
+    "compressed_size": 1213,
+    "compression": 8,
+    "crc32": 2081713400,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/snobol.py",
+    "size_bytes": 2781
+  },
+  {
+    "compressed_size": 1235,
+    "compression": 8,
+    "crc32": 2198799840,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/solidity.py",
+    "size_bytes": 3166
+  },
+  {
+    "compressed_size": 813,
+    "compression": 8,
+    "crc32": 2819466488,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/soong.py",
+    "size_bytes": 2342
+  },
+  {
+    "compressed_size": 1222,
+    "compression": 8,
+    "crc32": 1117067723,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/sophia.py",
+    "size_bytes": 3379
+  },
+  {
+    "compressed_size": 1239,
+    "compression": 8,
+    "crc32": 2523706310,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/special.py",
+    "size_bytes": 3588
+  },
+  {
+    "compressed_size": 1189,
+    "compression": 8,
+    "crc32": 1386778634,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/spice.py",
+    "size_bytes": 2801
+  },
+  {
+    "compressed_size": 9809,
+    "compression": 8,
+    "crc32": 267935182,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/sql.py",
+    "size_bytes": 41901
+  },
+  {
+    "compressed_size": 732,
+    "compression": 8,
+    "crc32": 1214802143,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/srcinfo.py",
+    "size_bytes": 1749
+  },
+  {
+    "compressed_size": 1973,
+    "compression": 8,
+    "crc32": 2649049162,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/stata.py",
+    "size_bytes": 6418
+  },
+  {
+    "compressed_size": 1439,
+    "compression": 8,
+    "crc32": 3486888364,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/supercollider.py",
+    "size_bytes": 3700
+  },
+  {
+    "compressed_size": 1515,
+    "compression": 8,
+    "crc32": 2980664453,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tablegen.py",
+    "size_bytes": 4012
+  },
+  {
+    "compressed_size": 1974,
+    "compression": 8,
+    "crc32": 674270772,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tact.py",
+    "size_bytes": 10812
+  },
+  {
+    "compressed_size": 1130,
+    "compression": 8,
+    "crc32": 502402376,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tal.py",
+    "size_bytes": 2907
+  },
+  {
+    "compressed_size": 1720,
+    "compression": 8,
+    "crc32": 2039468877,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tcl.py",
+    "size_bytes": 5661
+  },
+  {
+    "compressed_size": 1439,
+    "compression": 8,
+    "crc32": 562017983,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/teal.py",
+    "size_bytes": 3525
+  },
+  {
+    "compressed_size": 12884,
+    "compression": 8,
+    "crc32": 1942719267,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/templates.py",
+    "size_bytes": 75715
+  },
+  {
+    "compressed_size": 2252,
+    "compression": 8,
+    "crc32": 1495870993,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/teraterm.py",
+    "size_bytes": 10045
+  },
+  {
+    "compressed_size": 4096,
+    "compression": 8,
+    "crc32": 2212534844,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/testing.py",
+    "size_bytes": 10813
+  },
+  {
+    "compressed_size": 450,
+    "compression": 8,
+    "crc32": 416481542,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/text.py",
+    "size_bytes": 1071
+  },
+  {
+    "compressed_size": 2783,
+    "compression": 8,
+    "crc32": 1328950270,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/textedit.py",
+    "size_bytes": 8065
+  },
+  {
+    "compressed_size": 4256,
+    "compression": 8,
+    "crc32": 184360073,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/textfmts.py",
+    "size_bytes": 15527
+  },
+  {
+    "compressed_size": 5398,
+    "compression": 8,
+    "crc32": 799224121,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/theorem.py",
+    "size_bytes": 17903
+  },
+  {
+    "compressed_size": 2270,
+    "compression": 8,
+    "crc32": 4000608159,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/thingsdb.py",
+    "size_bytes": 6257
+  },
+  {
+    "compressed_size": 613,
+    "compression": 8,
+    "crc32": 1760216832,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tlb.py",
+    "size_bytes": 1453
+  },
+  {
+    "compressed_size": 727,
+    "compression": 8,
+    "crc32": 3858432371,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tls.py",
+    "size_bytes": 1543
+  },
+  {
+    "compressed_size": 2446,
+    "compression": 8,
+    "crc32": 3720607058,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/tnt.py",
+    "size_bytes": 10459
+  },
+  {
+    "compressed_size": 711,
+    "compression": 8,
+    "crc32": 1368527409,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/trafficscript.py",
+    "size_bytes": 1509
+  },
+  {
+    "compressed_size": 2340,
+    "compression": 8,
+    "crc32": 3550852737,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/typoscript.py",
+    "size_bytes": 8335
+  },
+  {
+    "compressed_size": 2169,
+    "compression": 8,
+    "crc32": 1071635494,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/typst.py",
+    "size_bytes": 7168
+  },
+  {
+    "compressed_size": 2336,
+    "compression": 8,
+    "crc32": 2261855782,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/ul4.py",
+    "size_bytes": 10502
+  },
+  {
+    "compressed_size": 4061,
+    "compression": 8,
+    "crc32": 4187504599,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/unicon.py",
+    "size_bytes": 18562
+  },
+  {
+    "compressed_size": 2324,
+    "compression": 8,
+    "crc32": 2362295887,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/urbi.py",
+    "size_bytes": 6085
+  },
+  {
+    "compressed_size": 1117,
+    "compression": 8,
+    "crc32": 281465222,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/usd.py",
+    "size_bytes": 3303
+  },
+  {
+    "compressed_size": 2133,
+    "compression": 8,
+    "crc32": 4088295424,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/varnish.py",
+    "size_bytes": 7476
+  },
+  {
+    "compressed_size": 1320,
+    "compression": 8,
+    "crc32": 753744451,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/verification.py",
+    "size_bytes": 4256
+  },
+  {
+    "compressed_size": 953,
+    "compression": 8,
+    "crc32": 2683256764,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/verifpal.py",
+    "size_bytes": 2664
+  },
+  {
+    "compressed_size": 1725,
+    "compression": 8,
+    "crc32": 2926182214,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/vip.py",
+    "size_bytes": 5714
+  },
+  {
+    "compressed_size": 1848,
+    "compression": 8,
+    "crc32": 1108288181,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/vyper.py",
+    "size_bytes": 5618
+  },
+  {
+    "compressed_size": 398,
+    "compression": 8,
+    "crc32": 2378369441,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/web.py",
+    "size_bytes": 916
+  },
+  {
+    "compressed_size": 1802,
+    "compression": 8,
+    "crc32": 358302072,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/webassembly.py",
+    "size_bytes": 5828
+  },
+  {
+    "compressed_size": 1964,
+    "compression": 8,
+    "crc32": 3864188364,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/webidl.py",
+    "size_bytes": 10519
+  },
+  {
+    "compressed_size": 7545,
+    "compression": 8,
+    "crc32": 3319919290,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/webmisc.py",
+    "size_bytes": 40563
+  },
+  {
+    "compressed_size": 2973,
+    "compression": 8,
+    "crc32": 1321356841,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/wgsl.py",
+    "size_bytes": 11883
+  },
+  {
+    "compressed_size": 1458,
+    "compression": 8,
+    "crc32": 3802083278,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/whiley.py",
+    "size_bytes": 4020
+  },
+  {
+    "compressed_size": 1673,
+    "compression": 8,
+    "crc32": 548532453,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/wowtoc.py",
+    "size_bytes": 4079
+  },
+  {
+    "compressed_size": 1174,
+    "compression": 8,
+    "crc32": 966622633,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/wren.py",
+    "size_bytes": 3232
+  },
+  {
+    "compressed_size": 860,
+    "compression": 8,
+    "crc32": 2518094307,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/x10.py",
+    "size_bytes": 1946
+  },
+  {
+    "compressed_size": 458,
+    "compression": 8,
+    "crc32": 3160479146,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/xorg.py",
+    "size_bytes": 928
+  },
+  {
+    "compressed_size": 1567,
+    "compression": 8,
+    "crc32": 1258526836,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/yang.py",
+    "size_bytes": 4502
+  },
+  {
+    "compressed_size": 919,
+    "compression": 8,
+    "crc32": 2443992253,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/yara.py",
+    "size_bytes": 2430
+  },
+  {
+    "compressed_size": 1318,
+    "compression": 8,
+    "crc32": 834209698,
+    "external_attr": 2175008768,
+    "name": "pygments/lexers/zig.py",
+    "size_bytes": 3976
+  },
+  {
+    "compressed_size": 858,
+    "compression": 8,
+    "crc32": 1186325203,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/__init__.py",
+    "size_bytes": 2009
+  },
+  {
+    "compressed_size": 815,
+    "compression": 8,
+    "crc32": 1497053322,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/_mapping.py",
+    "size_bytes": 3381
+  },
+  {
+    "compressed_size": 354,
+    "compression": 8,
+    "crc32": 3899345780,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/abap.py",
+    "size_bytes": 752
+  },
+  {
+    "compressed_size": 907,
+    "compression": 8,
+    "crc32": 826219435,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/algol.py",
+    "size_bytes": 2265
+  },
+  {
+    "compressed_size": 912,
+    "compression": 8,
+    "crc32": 1372075345,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/algol_nu.py",
+    "size_bytes": 2286
+  },
+  {
+    "compressed_size": 1101,
+    "compression": 8,
+    "crc32": 725536988,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/arduino.py",
+    "size_bytes": 4560
+  },
+  {
+    "compressed_size": 696,
+    "compression": 8,
+    "crc32": 1647167805,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/autumn.py",
+    "size_bytes": 2198
+  },
+  {
+    "compressed_size": 592,
+    "compression": 8,
+    "crc32": 2573735680,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/borland.py",
+    "size_bytes": 1614
+  },
+  {
+    "compressed_size": 504,
+    "compression": 8,
+    "crc32": 1775329117,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/bw.py",
+    "size_bytes": 1409
+  },
+  {
+    "compressed_size": 789,
+    "compression": 8,
+    "crc32": 2176761577,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/coffee.py",
+    "size_bytes": 2311
+  },
+  {
+    "compressed_size": 878,
+    "compression": 8,
+    "crc32": 2487762729,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/colorful.py",
+    "size_bytes": 2835
+  },
+  {
+    "compressed_size": 841,
+    "compression": 8,
+    "crc32": 2629877680,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/default.py",
+    "size_bytes": 2591
+  },
+  {
+    "compressed_size": 869,
+    "compression": 8,
+    "crc32": 2335061117,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/dracula.py",
+    "size_bytes": 2185
+  },
+  {
+    "compressed_size": 817,
+    "compression": 8,
+    "crc32": 98669569,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/emacs.py",
+    "size_bytes": 2538
+  },
+  {
+    "compressed_size": 842,
+    "compression": 8,
+    "crc32": 3683552007,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/friendly.py",
+    "size_bytes": 2607
+  },
+  {
+    "compressed_size": 934,
+    "compression": 8,
+    "crc32": 2816295235,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/friendly_grayscale.py",
+    "size_bytes": 2831
+  },
+  {
+    "compressed_size": 553,
+    "compression": 8,
+    "crc32": 405700124,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/fruity.py",
+    "size_bytes": 1327
+  },
+  {
+    "compressed_size": 1180,
+    "compression": 8,
+    "crc32": 2154936401,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/gh_dark.py",
+    "size_bytes": 3593
+  },
+  {
+    "compressed_size": 940,
+    "compression": 8,
+    "crc32": 3275131047,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/gruvbox.py",
+    "size_bytes": 3390
+  },
+  {
+    "compressed_size": 374,
+    "compression": 8,
+    "crc32": 748027674,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/igor.py",
+    "size_bytes": 740
+  },
+  {
+    "compressed_size": 787,
+    "compression": 8,
+    "crc32": 318604634,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/inkpot.py",
+    "size_bytes": 2407
+  },
+  {
+    "compressed_size": 988,
+    "compression": 8,
+    "crc32": 2813514594,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/lightbulb.py",
+    "size_bytes": 3175
+  },
+  {
+    "compressed_size": 774,
+    "compression": 8,
+    "crc32": 1156452810,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/lilypond.py",
+    "size_bytes": 2069
+  },
+  {
+    "compressed_size": 1126,
+    "compression": 8,
+    "crc32": 2718375172,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/lovelace.py",
+    "size_bytes": 3181
+  },
+  {
+    "compressed_size": 891,
+    "compression": 8,
+    "crc32": 489277831,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/manni.py",
+    "size_bytes": 2446
+  },
+  {
+    "compressed_size": 1146,
+    "compression": 8,
+    "crc32": 2183556776,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/material.py",
+    "size_bytes": 4204
+  },
+  {
+    "compressed_size": 1295,
+    "compression": 8,
+    "crc32": 3875267341,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/monokai.py",
+    "size_bytes": 5187
+  },
+  {
+    "compressed_size": 875,
+    "compression": 8,
+    "crc32": 875851796,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/murphy.py",
+    "size_bytes": 2808
+  },
+  {
+    "compressed_size": 764,
+    "compression": 8,
+    "crc32": 3520052970,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/native.py",
+    "size_bytes": 2046
+  },
+  {
+    "compressed_size": 1411,
+    "compression": 8,
+    "crc32": 4261275791,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/night_owl.py",
+    "size_bytes": 4565
+  },
+  {
+    "compressed_size": 954,
+    "compression": 8,
+    "crc32": 4143259536,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/nord.py",
+    "size_bytes": 5394
+  },
+  {
+    "compressed_size": 776,
+    "compression": 8,
+    "crc32": 3855927834,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/onedark.py",
+    "size_bytes": 2126
+  },
+  {
+    "compressed_size": 1498,
+    "compression": 8,
+    "crc32": 4028124189,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/paraiso_dark.py",
+    "size_bytes": 5665
+  },
+  {
+    "compressed_size": 1497,
+    "compression": 8,
+    "crc32": 631348194,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/paraiso_light.py",
+    "size_bytes": 5671
+  },
+  {
+    "compressed_size": 842,
+    "compression": 8,
+    "crc32": 938708971,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/pastie.py",
+    "size_bytes": 2528
+  },
+  {
+    "compressed_size": 784,
+    "compression": 8,
+    "crc32": 4058081994,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/perldoc.py",
+    "size_bytes": 2233
+  },
+  {
+    "compressed_size": 920,
+    "compression": 8,
+    "crc32": 2086171756,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/rainbow_dash.py",
+    "size_bytes": 2393
+  },
+  {
+    "compressed_size": 527,
+    "compression": 8,
+    "crc32": 3252772367,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/rrt.py",
+    "size_bytes": 1295
+  },
+  {
+    "compressed_size": 565,
+    "compression": 8,
+    "crc32": 2295179043,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/sas.py",
+    "size_bytes": 1443
+  },
+  {
+    "compressed_size": 1177,
+    "compression": 8,
+    "crc32": 2391980111,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/solarized.py",
+    "size_bytes": 4250
+  },
+  {
+    "compressed_size": 369,
+    "compression": 8,
+    "crc32": 2758271700,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/staroffice.py",
+    "size_bytes": 834
+  },
+  {
+    "compressed_size": 584,
+    "compression": 8,
+    "crc32": 2620478541,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/stata_dark.py",
+    "size_bytes": 1260
+  },
+  {
+    "compressed_size": 551,
+    "compression": 8,
+    "crc32": 256347262,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/stata_light.py",
+    "size_bytes": 1292
+  },
+  {
+    "compressed_size": 2039,
+    "compression": 8,
+    "crc32": 1138871174,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/tango.py",
+    "size_bytes": 7140
+  },
+  {
+    "compressed_size": 681,
+    "compression": 8,
+    "crc32": 3077226563,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/trac.py",
+    "size_bytes": 1984
+  },
+  {
+    "compressed_size": 691,
+    "compression": 8,
+    "crc32": 941926493,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/vim.py",
+    "size_bytes": 2022
+  },
+  {
+    "compressed_size": 462,
+    "compression": 8,
+    "crc32": 2317859183,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/vs.py",
+    "size_bytes": 1133
+  },
+  {
+    "compressed_size": 617,
+    "compression": 8,
+    "crc32": 1553673904,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/xcode.py",
+    "size_bytes": 1507
+  },
+  {
+    "compressed_size": 836,
+    "compression": 8,
+    "crc32": 2494513938,
+    "external_attr": 2175008768,
+    "name": "pygments/styles/zenburn.py",
+    "size_bytes": 2206
+  },
+  {
+    "compressed_size": 1016,
+    "compression": 8,
+    "crc32": 1794136146,
+    "external_attr": 27525120,
+    "name": "pygments-2.21.0.dist-info/METADATA",
+    "size_bytes": 2527
+  },
+  {
+    "compressed_size": 85,
+    "compression": 8,
+    "crc32": 28400612,
+    "external_attr": 27525120,
+    "name": "pygments-2.21.0.dist-info/WHEEL",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 49,
+    "compression": 8,
+    "crc32": 2061013311,
+    "external_attr": 27525120,
+    "name": "pygments-2.21.0.dist-info/entry_points.txt",
+    "size_bytes": 53
+  },
+  {
+    "compressed_size": 5068,
+    "compression": 8,
+    "crc32": 2299666501,
+    "external_attr": 27525120,
+    "name": "pygments-2.21.0.dist-info/licenses/AUTHORS",
+    "size_bytes": 11048
+  },
+  {
+    "compressed_size": 705,
+    "compression": 8,
+    "crc32": 3407806475,
+    "external_attr": 27525120,
+    "name": "pygments-2.21.0.dist-info/licenses/LICENSE",
+    "size_bytes": 1331
+  },
+  {
+    "compressed_size": 15413,
+    "compression": 8,
+    "crc32": 4214142682,
+    "external_attr": 27525120,
+    "name": "pygments-2.21.0.dist-info/RECORD",
+    "size_bytes": 28911
+  }
+]

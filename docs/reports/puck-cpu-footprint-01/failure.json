@@ -1,0 +1,12 @@
+{
+  "status": "metadata_acquisition_failed",
+  "exit_code": 1,
+  "first_cause": "TypeError: Object of type Header is not JSON serializable",
+  "stage": "serializing pandas License header after metadata acquisition",
+  "final_summary_serialization_also_failed": true,
+  "last_saved_summary_status": "in_progress",
+  "not_a_runtime_allocation": true,
+  "numerical_code_executed": false,
+  "runtime_qualified": false,
+  "collection_authorized": false
+}

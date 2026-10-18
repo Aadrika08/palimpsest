@@ -1,0 +1,281 @@
+{
+  "baseline_commit": "2159cdf1d515513abdd36bdd5999019ea27ff39c",
+  "checks": [
+    "Baseline9 pass; direct2 fail7 pass on lying-false/lying-true; hoisted1 fail8 pass on callback-removal. All three retained pytest stderr streams are empty.",
+    "Nine timing rows independently parsed from raw stdout; every median recomputed as median(three batch durations)/three checks/1e6 agrees with comparison.json. Timing has three unprofiled samples; keys counting occurs in a separate profiled check.",
+    "Command pins, isolated variant hashes and driver hash match retained bytes. Variant diffs are exactly the proposed dependency-membership rewrite and whitelist hoist; all remaining bootstrap bytes match production.",
+    "Driver changes only test_puck_worker_bootstrap.SCRIPT in its separate process. Fixture uses that module global to copy and hash-bind the authored bootstrap; no production write appears in the driver.",
+    "Production bootstrap matches both baseline Git bytes and pre-experiment SHA. scripts/src are unchanged against baseline. HEAD intentionally advanced during review only to commit plan/tests; this is not an unchanged-HEAD or clean-worktree claim."
+  ],
+  "current_source_test_commit": "2a9db8d35af5ede17d3a676ec55296f008fd078a",
+  "decision": "Retain production and reject both exact variants: observed speed gains cannot justify changing accepted allowances or allowing an unknown cache entry past the guard.",
+  "git_status_observed": "?? docs/reports/puck-cpu-guard-cost-v1.md\n",
+  "kind": "puck-cpu-guard-cost-independent-outcome-review-v1",
+  "limitations": [
+    "Nine unique authored cases ran against three variants;27 executions are not27 distinct behavioral cases. Three sequential samples per size are descriptive, without general uncertainty/performance evidence.",
+    "Synthetic entries are blank ModuleType objects allowed as in-flight dependencies, not initialized Torch/Torchvision modules, realistic dispatch seals or27k-file/native workloads. Fixture is bootstrap-v2/preflight, not actual08 CPUq3 qualification.",
+    "Positive workload rows show cache_clean/allowances_clean true. Refusal tests check first-failure identity, emptied holder list and poison persistence; they do not independently prove OS FD/process cleanup, installed-runtime custody or exhaustive lifetime closure.",
+    "These exact failures demonstrate non-equivalence of these rewrites; nine finite cases cannot establish all-equivalence of another rewrite or every alias/callback/equality/exception behavior.",
+    "No installed imports, actual08 replay,09 controls/allocation, protected reads, payload census/hash or reruns were performed in this review. Measurements do not establish a contribution to or cause of07/08 deadlines. Real runtime and recorded/replayed/exported episode acceptance remain blocked."
+  ],
+  "material_findings": [],
+  "pins": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "path": "tests/test_puck_guard_cost.py",
+      "sha256": "0f3d4ad250dc6662132d923d20abe99416869d0eb2bfec25d8a0c653501c3874",
+      "size_bytes": 5614
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    },
+    {
+      "path": "tests/test_puck_worker_bootstrap.py",
+      "sha256": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5",
+      "size_bytes": 13905
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "docs/plans/puck-cpu-guard-cost-v1.md",
+      "sha256": "916fe2c0ee2ae8a8162b608a9c6fbf49a2e7fd62fc01d0d97ec655bfb0002ab0",
+      "size_bytes": 3043
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/comparison.json",
+      "sha256": "7a965ac9859526ba8de5c0926439ca56f38d018bf04a7928fa0a84a717ab13b3",
+      "size_bytes": 4583
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/experimental-sources/direct-dependency.py",
+      "sha256": "1b1063a069f174b1e4f6db9bffcb81807c0c0751b09f020e8ea0442fe513cb54",
+      "size_bytes": 39989
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/experimental-sources/hoisted-whitelist.py",
+      "sha256": "5615ac8803aa92edfe59c5eecbd221533e1ac1ac85af491e0a3c2d14a826f079",
+      "size_bytes": 39942
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/experimental-sources/run_candidate.py",
+      "sha256": "018e76324601820a789033e369de6a5bfae1f91527fa81d25b5478f42263ded6",
+      "size_bytes": 445
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/experimental-sources/sources.json",
+      "sha256": "b77d3f3920bf010136118713f700579b226e39463f2174472135926b4c666b20",
+      "size_bytes": 630
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/baseline01/command.json",
+      "sha256": "1bd4caac1e430740813deb701b9eb4d4383ba72237d6ea5851d12f303e56f914",
+      "size_bytes": 1445
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/baseline01/terminal.json",
+      "sha256": "c578f861fc5208949c17edadc9be0fc35d7bf7b3f7dedb3b7e8324d8060f9dc1",
+      "size_bytes": 63
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/baseline01/stdout.txt",
+      "sha256": "59edd65da6d3b868428c77a584cee067f0d653d2724fbfdd038aa938d1c847b9",
+      "size_bytes": 730
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/baseline01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/direct-dependency01/command.json",
+      "sha256": "0f432fd28be4f29ce9011b12ded31a502778e0a9a553f3f2195ff68ce7f53b34",
+      "size_bytes": 1443
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/direct-dependency01/terminal.json",
+      "sha256": "b9f8328ccf02eb11db967ac11fb265c95fa78eb98d87fee95c93b539ecd4f953",
+      "size_bytes": 63
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/direct-dependency01/stdout.txt",
+      "sha256": "78c452089a42e92bdcd923e74672c3235a82d4c24035a1ebba36f056a20475a2",
+      "size_bytes": 8573
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/direct-dependency01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/hoisted-whitelist01/command.json",
+      "sha256": "a765ac30059b68cb4eac6c5d33983fb3ee9e462dfa3a48d589276fbd6ae1195d",
+      "size_bytes": 1452
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/hoisted-whitelist01/terminal.json",
+      "sha256": "9943e3dc996878ef6a665e4bf02ef8a92c6be97f93fae5ef5ab6c42dd1fb996c",
+      "size_bytes": 63
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/hoisted-whitelist01/stdout.txt",
+      "sha256": "f7228924257da00df8405ed6337fa9fa70777f8022a53c71c173ae642729c771",
+      "size_bytes": 5393
+    },
+    {
+      "path": "runs/puck-cpu-guard-cost-v1/hoisted-whitelist01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  ],
+  "production_bootstrap_sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+  "production_scripts_src_diff_unchanged": true,
+  "recommended_next_finite_diagnostic": "First resolve a narrow mutation/dispatch contract for the mutable whitelist: either produce a guard-equivalent candidate with explicit callback/container counterexamples, or retain the loop without expanding policy. If no small safe candidate exists, plan one separately reviewed bounded guard-time diagnostic that can distinguish cache/binding reconciliation from full namespace/native checks on the four-import route; authorize no new installed allocation through this report. Its finite exit is an equivalent measured correction or documented blocker, serving the real episode prerequisite rather than redefining completion.",
+  "recomputed_measurements": [
+    {
+      "batch_elapsed_ns": [
+        2232536,
+        2102270,
+        2114223
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 138,
+      "recomputed_median_ms_per_check": 0.704741,
+      "run": "baseline01",
+      "synthetic_cache_entries": 128
+    },
+    {
+      "batch_elapsed_ns": [
+        17872779,
+        17500147,
+        16795029
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 522,
+      "recomputed_median_ms_per_check": 5.833382333333333,
+      "run": "baseline01",
+      "synthetic_cache_entries": 512
+    },
+    {
+      "batch_elapsed_ns": [
+        273678950,
+        281227039,
+        289247659
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 2058,
+      "recomputed_median_ms_per_check": 93.74234633333333,
+      "run": "baseline01",
+      "synthetic_cache_entries": 2048
+    },
+    {
+      "batch_elapsed_ns": [
+        1305289,
+        1231500,
+        1054156
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 0,
+      "recomputed_median_ms_per_check": 0.4105,
+      "run": "direct-dependency01",
+      "synthetic_cache_entries": 128
+    },
+    {
+      "batch_elapsed_ns": [
+        1820179,
+        1881524,
+        1648365
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 0,
+      "recomputed_median_ms_per_check": 0.6067263333333334,
+      "run": "direct-dependency01",
+      "synthetic_cache_entries": 512
+    },
+    {
+      "batch_elapsed_ns": [
+        4702228,
+        4551473,
+        4214619
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 0,
+      "recomputed_median_ms_per_check": 1.5171576666666668,
+      "run": "direct-dependency01",
+      "synthetic_cache_entries": 2048
+    },
+    {
+      "batch_elapsed_ns": [
+        1325237,
+        1020142,
+        1042975
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 1,
+      "recomputed_median_ms_per_check": 0.3476583333333333,
+      "run": "hoisted-whitelist01",
+      "synthetic_cache_entries": 128
+    },
+    {
+      "batch_elapsed_ns": [
+        1396260,
+        1195412,
+        1536073
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 1,
+      "recomputed_median_ms_per_check": 0.46542,
+      "run": "hoisted-whitelist01",
+      "synthetic_cache_entries": 512
+    },
+    {
+      "batch_elapsed_ns": [
+        3202894,
+        3465638,
+        2603945
+      ],
+      "checks_per_sample": 3,
+      "dependency_keys_calls_per_profiled_check": 1,
+      "recomputed_median_ms_per_check": 1.0676313333333332,
+      "run": "hoisted-whitelist01",
+      "synthetic_cache_entries": 2048
+    }
+  ],
+  "review_process_note": "Initial report-generation assertion stopped before file creation when root advanced HEAD from baseline to the planned plan/tests commit. Reconciled current Git state and verified unchanged production before writing this sole report.",
+  "reviewed_at_utc": "2026-10-16T00:56:10.730809+00:00",
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-cost-v1",
+  "status": "PASS_SCOPED_EVIDENCE_RETAIN_PRODUCTION",
+  "test_outcomes": {
+    "baseline01": {
+      "failed": 0,
+      "outer_elapsed_seconds": 14.191201355017256,
+      "passed": 9,
+      "pytest_summary": "9 passed in 13.43s",
+      "recorded_returncode": 0
+    },
+    "direct-dependency01": {
+      "failed": 2,
+      "outer_elapsed_seconds": 15.749713520985097,
+      "passed": 7,
+      "pytest_summary": "2 failed, 7 passed in 13.41s",
+      "recorded_returncode": 1
+    },
+    "hoisted-whitelist01": {
+      "failed": 1,
+      "outer_elapsed_seconds": 16.130170807009563,
+      "passed": 8,
+      "pytest_summary": "1 failed, 8 passed in 15.86s",
+      "recorded_returncode": 1
+    }
+  },
+  "tracked_worktree_diff_unchanged": true,
+  "version": 1
+}

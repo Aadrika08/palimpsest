@@ -1,0 +1,103 @@
+{
+  "actual10_controls_created": false,
+  "actual10_invoked": false,
+  "all_seven_release_gates_open": true,
+  "authored_q4_unique_cases": 41,
+  "cost_cases": 3,
+  "final_source_review": "GO_SOURCE_REVIEW_ONLY",
+  "implementation_commit": "1fa94213f583a30e6c5533a45bef5575b45e9095",
+  "installed_runtime_invoked": false,
+  "kind": "puck-q4-guard-source-unit-outcome-v1",
+  "legacy_unique_passing_cases": 397,
+  "outer_epochs_changed": false,
+  "pin_copies_verified": 204,
+  "production_paths_changed": [
+    "scripts/puck_worker_bootstrap.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "runtime_qualified": false,
+  "scope": "Source unit and tiny authored packages/native fixtures only.39/40 earlier q4 rounds overlap; report41 distinct final cases, not sum of repeated invocations.",
+  "single_all_green_397_case_run": false,
+  "status": "SOURCE_AND_AUTHORED_EVIDENCE_PASS_PENDING_INDEPENDENT_OUTCOME_REVIEW",
+  "terminals": [
+    {
+      "elapsed_seconds": 0.36507799004903063,
+      "exit_code": 5,
+      "label": "baseline-red01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 1.9183617740054615,
+      "exit_code": 1,
+      "label": "baseline-red02",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 5.526671321014874,
+      "exit_code": 0,
+      "label": "cost01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 6.576774811022915,
+      "exit_code": 0,
+      "label": "entry-final01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 1.0667254980071448,
+      "exit_code": 1,
+      "label": "entry-red01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 6.927605951961596,
+      "exit_code": 1,
+      "label": "extension-red01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 46.50839468900813,
+      "exit_code": 1,
+      "label": "guard-entry01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 53.11736840498634,
+      "exit_code": 0,
+      "label": "guard-entry02",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 57.28043611801695,
+      "exit_code": 0,
+      "label": "guard-entry03",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 2.420042756013572,
+      "exit_code": 1,
+      "label": "guard-red01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 243.94419363798806,
+      "exit_code": 1,
+      "label": "legacy01",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 0.6157349279965274,
+      "exit_code": 0,
+      "label": "native-subprocess02",
+      "outer_timeout": false
+    },
+    {
+      "elapsed_seconds": 2.118364009016659,
+      "exit_code": 1,
+      "label": "selector-red01",
+      "outer_timeout": false
+    }
+  ],
+  "unique_passing_cases": 441
+}

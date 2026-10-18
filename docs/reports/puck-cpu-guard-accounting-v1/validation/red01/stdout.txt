@@ -1,0 +1,466 @@
+FFFFFFFFFFFF.                                                            [100%]
+=================================== FAILURES ===================================
+_ test_guard_costs_cover_import_boundaries_without_changing_phase_or_terminal __
+
+    def test_guard_costs_cover_import_boundaries_without_changing_phase_or_terminal():
+        result = run_cpu()
+        assert result.returncode == 0, result.stderr
+        rows = costs(result.stderr)
+>       assert [row['context'] for _, row in rows] == CONTEXTS
+E       AssertionError: assert [] == ['import.nump...eturned', ...]
+E         
+E         Right contains 8 more items, first extra item: 'import.numpy.enter'
+E         Use -v to get more diff
+
+tests/test_puck_guard_time_diagnostics.py:30: AssertionError
+_____ test_periodic_checkpoint_records_active_guard_and_does_not_catch_up ______
+
+    def test_periodic_checkpoint_records_active_guard_and_does_not_catch_up():
+        result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+            'owner._guard_next = 0\nowner._import_recheck()\n'))
+        assert result.returncode == 0, result.stderr
+        rows = [row for _, row in costs(result.stderr)]
+        active = [row for row in rows if row['active'] is not None]
+>       assert len(active) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_puck_guard_time_diagnostics.py:57: AssertionError
+____________ test_cost_record_budget_is_independent_of_phase_budget ____________
+
+    def test_cost_record_budget_is_independent_of_phase_budget():
+        result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+            'for _ in range(40): owner._guard_emit(force=True)\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":3.6869896575808525e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05667710700072348,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05671414698008448,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2285403319983743,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2462128069601022,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2462636529817246,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.35096472495934,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3593505049939267,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3944642400019802,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3962368879583664,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.430925594002474,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-oc7upz1w/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-oc7upz1w/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-oc7upz1w/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-oc7upz1w/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-oc7upz1w/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-oc7upz1w/dependency/torchvision/__init__.py", line 6, in <module>
+E             for _ in range(40): owner._guard_emit(force=True)
+E                                 ^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...                 ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:66: AssertionError
+______ test_cost_byte_budget_refuses_the_next_row_without_affecting_phase ______
+
+    def test_cost_byte_budget_refuses_the_next_row_without_affecting_phase():
+        result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+            'owner._guard_bytes = 32760\nowner._guard_emit(force=True)\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":2.9050279408693314e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05764188402099535,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05767564702546224,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2403088919818401,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2572315550060011,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2572814489831217,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3621453780215234,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.370390052034054,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.405252394033596,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4068996959831566,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4415603590314277,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-pagdexpx/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-pagdexpx/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-pagdexpx/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-pagdexpx/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-pagdexpx/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-pagdexpx/dependency/torchvision/__init__.py", line 7, in <module>
+E             owner._guard_emit(force=True)
+E             ^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:78: AssertionError
+______________ test_bad_accounting_clock_disables_only_costs[-1] _______________
+
+bad = '-1'
+
+    @pytest.mark.parametrize('bad', ['-1', 'float("nan")'])
+    def test_bad_accounting_clock_disables_only_costs(bad):
+        result = run_cpu(code=('import sys,time\nowner = sys.meta_path[0].owner\n'
+            'original = time.monotonic_ns\ntime.monotonic_ns = lambda: '+bad+'\n'
+            'try:\n owner._import_recheck()\nfinally:\n time.monotonic_ns = original\n'))
+        assert result.returncode == 0, result.stderr
+>       assert [row['context'] for _, row in costs(result.stderr)] == CONTEXTS[:5]
+E       AssertionError: assert [] == ['import.nump...vision.enter']
+E         
+E         Right contains 5 more items, first extra item: 'import.numpy.enter'
+E         Use -v to get more diff
+
+tests/test_puck_guard_time_diagnostics.py:89: AssertionError
+_________ test_bad_accounting_clock_disables_only_costs[float("nan")] __________
+
+bad = 'float("nan")'
+
+    @pytest.mark.parametrize('bad', ['-1', 'float("nan")'])
+    def test_bad_accounting_clock_disables_only_costs(bad):
+        result = run_cpu(code=('import sys,time\nowner = sys.meta_path[0].owner\n'
+            'original = time.monotonic_ns\ntime.monotonic_ns = lambda: '+bad+'\n'
+            'try:\n owner._import_recheck()\nfinally:\n time.monotonic_ns = original\n'))
+        assert result.returncode == 0, result.stderr
+>       assert [row['context'] for _, row in costs(result.stderr)] == CONTEXTS[:5]
+E       AssertionError: assert [] == ['import.nump...vision.enter']
+E         
+E         Right contains 5 more items, first extra item: 'import.numpy.enter'
+E         Use -v to get more diff
+
+tests/test_puck_guard_time_diagnostics.py:89: AssertionError
+_ test_cost_io_failure_latches_both_channels_and_preserves_outcome[False-short] _
+
+writer = 'short', primary_failure = False
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('primary_failure', [False, True])
+    def test_cost_io_failure_latches_both_channels_and_preserves_outcome(writer, primary_failure):
+        code = ('import os,sys\nowner = sys.meta_path[0].owner\noriginal = os.write\ncalls = 0\n'
+            'def write(fd, payload):\n global calls\n calls += 1\n'
+            ' if calls > 1: raise AssertionError("DIAGNOSTIC_IO_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_COST_IO")\n')
+            + 'os.write = write\nowner._guard_emit(force=True)\nowner._guard_emit(force=True)\n'
+            'owner._phase("authored.no_retry")\nos.write = original\n'
+            'assert calls == 1, "DIAGNOSTIC_IO_RETRIED"\n')
+        if primary_failure:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'DIAGNOSTIC_IO_RETRIED' not in result.stderr, result.stderr
+        assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+        if primary_failure:
+            assert result.returncode != 0 and result.stdout == ''
+            assert 'AUTHORED_PRIMARY_FAILURE' in result.stderr
+        else:
+>           assert result.returncode == 0, result.stderr
+E           AssertionError: {"diagnostic_only":true,"elapsed_seconds":2.796004991978407e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E             {"diagnostic_only":true,"elapsed_seconds":0.060983987990766764,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E             {"diagnostic_only":true,"elapsed_seconds":0.061032768979202956,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E             {"diagnostic_only":true,"elapsed_seconds":1.2909762779599987,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E             {"diagnostic_only":true,"elapsed_seconds":1.310362449963577,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E             {"diagnostic_only":true,"elapsed_seconds":1.3104320709826425,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4207541369833052,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4288623339962214,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4647091499646194,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4669732530019246,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E             {"diagnostic_only":true,"elapsed_seconds":1.503926653007511,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E             Traceback (most recent call last):
+E               File "<string>", line 10, in <module>
+E               File "/tmp/palimpsest-tmpfs-deps-a4zb3tfo/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E                 if __name__ == '__main__': main()
+E                                            ^^^^^^
+E               File "/tmp/palimpsest-tmpfs-deps-a4zb3tfo/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E                 receipt = admission.invoke()
+E                           ^^^^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-tmpfs-deps-a4zb3tfo/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E                 self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                          ^^^^^^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-tmpfs-deps-a4zb3tfo/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E                 module=importlib.import_module(name)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E                 return _bootstrap._gcd_import(name[level:], package, level)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E               File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E               File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E               File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E               File "/tmp/palimpsest-tmpfs-deps-a4zb3tfo/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E                 exec(code,module_dict(module))
+E               File "/tmp/palimpsest-tmpfs-deps-a4zb3tfo/dependency/torchvision/__init__.py", line 14, in <module>
+E                 owner._guard_emit(force=True)
+E                 ^^^^^^^^^^^^^^^^^
+E             AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:112: AssertionError
+_ test_cost_io_failure_latches_both_channels_and_preserves_outcome[False-error] _
+
+writer = 'error', primary_failure = False
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('primary_failure', [False, True])
+    def test_cost_io_failure_latches_both_channels_and_preserves_outcome(writer, primary_failure):
+        code = ('import os,sys\nowner = sys.meta_path[0].owner\noriginal = os.write\ncalls = 0\n'
+            'def write(fd, payload):\n global calls\n calls += 1\n'
+            ' if calls > 1: raise AssertionError("DIAGNOSTIC_IO_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_COST_IO")\n')
+            + 'os.write = write\nowner._guard_emit(force=True)\nowner._guard_emit(force=True)\n'
+            'owner._phase("authored.no_retry")\nos.write = original\n'
+            'assert calls == 1, "DIAGNOSTIC_IO_RETRIED"\n')
+        if primary_failure:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'DIAGNOSTIC_IO_RETRIED' not in result.stderr, result.stderr
+        assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+        if primary_failure:
+            assert result.returncode != 0 and result.stdout == ''
+            assert 'AUTHORED_PRIMARY_FAILURE' in result.stderr
+        else:
+>           assert result.returncode == 0, result.stderr
+E           AssertionError: {"diagnostic_only":true,"elapsed_seconds":2.744956873357296e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E             {"diagnostic_only":true,"elapsed_seconds":0.059827329008840024,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E             {"diagnostic_only":true,"elapsed_seconds":0.05988089996390045,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E             {"diagnostic_only":true,"elapsed_seconds":1.3144105729879811,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E             {"diagnostic_only":true,"elapsed_seconds":1.3324799859547056,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E             {"diagnostic_only":true,"elapsed_seconds":1.332530390995089,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4402455679955892,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4495578429778107,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4857202029670589,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E             {"diagnostic_only":true,"elapsed_seconds":1.4877263499656692,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E             {"diagnostic_only":true,"elapsed_seconds":1.5238162739551626,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E             Traceback (most recent call last):
+E               File "<string>", line 10, in <module>
+E               File "/tmp/palimpsest-tmpfs-deps-7rqk0w2_/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E                 if __name__ == '__main__': main()
+E                                            ^^^^^^
+E               File "/tmp/palimpsest-tmpfs-deps-7rqk0w2_/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E                 receipt = admission.invoke()
+E                           ^^^^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-tmpfs-deps-7rqk0w2_/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E                 self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                          ^^^^^^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-tmpfs-deps-7rqk0w2_/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E                 module=importlib.import_module(name)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E                 return _bootstrap._gcd_import(name[level:], package, level)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E               File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E               File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E               File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E               File "/tmp/palimpsest-tmpfs-deps-7rqk0w2_/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E                 exec(code,module_dict(module))
+E               File "/tmp/palimpsest-tmpfs-deps-7rqk0w2_/dependency/torchvision/__init__.py", line 14, in <module>
+E                 owner._guard_emit(force=True)
+E                 ^^^^^^^^^^^^^^^^^
+E             AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:112: AssertionError
+_ test_cost_io_failure_latches_both_channels_and_preserves_outcome[True-short] _
+
+writer = 'short', primary_failure = True
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('primary_failure', [False, True])
+    def test_cost_io_failure_latches_both_channels_and_preserves_outcome(writer, primary_failure):
+        code = ('import os,sys\nowner = sys.meta_path[0].owner\noriginal = os.write\ncalls = 0\n'
+            'def write(fd, payload):\n global calls\n calls += 1\n'
+            ' if calls > 1: raise AssertionError("DIAGNOSTIC_IO_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_COST_IO")\n')
+            + 'os.write = write\nowner._guard_emit(force=True)\nowner._guard_emit(force=True)\n'
+            'owner._phase("authored.no_retry")\nos.write = original\n'
+            'assert calls == 1, "DIAGNOSTIC_IO_RETRIED"\n')
+        if primary_failure:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'DIAGNOSTIC_IO_RETRIED' not in result.stderr, result.stderr
+        assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+        if primary_failure:
+            assert result.returncode != 0 and result.stdout == ''
+>           assert 'AUTHORED_PRIMARY_FAILURE' in result.stderr
+E           assert 'AUTHORED_PRIMARY_FAILURE' in '{"diagnostic_only":true,"elapsed_seconds":2.935004886239767e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...(force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n'
+E            +  where '{"diagnostic_only":true,"elapsed_seconds":2.935004886239767e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...(force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').stderr
+
+tests/test_puck_guard_time_diagnostics.py:110: AssertionError
+_ test_cost_io_failure_latches_both_channels_and_preserves_outcome[True-error] _
+
+writer = 'error', primary_failure = True
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('primary_failure', [False, True])
+    def test_cost_io_failure_latches_both_channels_and_preserves_outcome(writer, primary_failure):
+        code = ('import os,sys\nowner = sys.meta_path[0].owner\noriginal = os.write\ncalls = 0\n'
+            'def write(fd, payload):\n global calls\n calls += 1\n'
+            ' if calls > 1: raise AssertionError("DIAGNOSTIC_IO_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_COST_IO")\n')
+            + 'os.write = write\nowner._guard_emit(force=True)\nowner._guard_emit(force=True)\n'
+            'owner._phase("authored.no_retry")\nos.write = original\n'
+            'assert calls == 1, "DIAGNOSTIC_IO_RETRIED"\n')
+        if primary_failure:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'DIAGNOSTIC_IO_RETRIED' not in result.stderr, result.stderr
+        assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+        if primary_failure:
+            assert result.returncode != 0 and result.stdout == ''
+>           assert 'AUTHORED_PRIMARY_FAILURE' in result.stderr
+E           assert 'AUTHORED_PRIMARY_FAILURE' in '{"diagnostic_only":true,"elapsed_seconds":3.156019374728203e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...(force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n'
+E            +  where '{"diagnostic_only":true,"elapsed_seconds":3.156019374728203e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...(force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').stderr
+
+tests/test_puck_guard_time_diagnostics.py:110: AssertionError
+_____________________ test_nested_cost_write_is_suppressed _____________________
+
+    def test_nested_cost_write_is_suppressed():
+        result = run_cpu(code=('import os,sys\nowner = sys.meta_path[0].owner\noriginal = os.write\ncalls = 0\n'
+            'def write(fd, payload):\n global calls\n calls += 1\n'
+            ' owner._guard_emit(force=True)\n return original(fd, payload)\n'
+            'os.write = write\nowner._guard_emit(force=True)\nos.write = original\n'
+            'assert calls == 1, "NESTED_COST_WRITE"\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":2.8060167096555233e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.057939835998695344,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.057974751049187034,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2609419299988076,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.278446750016883,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2785110610420816,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3839530590339564,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.39188995299628,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.426558040024247,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4282527409959584,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4625612610252574,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-5d1i4676/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-5d1i4676/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-5d1i4676/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-5d1i4676/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-5d1i4676/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-5d1i4676/dependency/torchvision/__init__.py", line 14, in <module>
+E             owner._guard_emit(force=True)
+E             ^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:121: AssertionError
+_______ test_successful_cost_write_cannot_rearm_nested_phase_io_failure ________
+
+    def test_successful_cost_write_cannot_rearm_nested_phase_io_failure():
+        result = run_cpu(code=('import os,sys\nowner = sys.meta_path[0].owner\noriginal = os.write\ncalls = 0\n'
+            'def write(fd, payload):\n global calls\n calls += 1\n'
+            ' if calls == 1:\n  owner._phase("authored.nested")\n  return len(payload)\n'
+            ' raise OSError("AUTHORED_NESTED_PHASE_IO")\n'
+            'os.write = write\nowner._guard_emit(force=True)\nowner._guard_emit(force=True)\n'
+            'owner._phase("authored.no_retry")\nos.write = original\n'
+            'assert calls == 2, "NESTED_IO_LATCH_REARMED"\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":2.684944774955511e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.056152078963350505,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05619197397027165,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2192505589919165,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2359594609588385,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.236007981991861,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3381765759550035,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3461430259631015,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.380069927952718,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3820099309668876,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4163254939485341,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-ceuo3njt/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-ceuo3njt/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-ceuo3njt/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-ceuo3njt/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-ceuo3njt/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-ceuo3njt/dependency/torchvision/__init__.py", line 16, in <module>
+E             owner._guard_emit(force=True)
+E             ^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_guard_emit'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...force=True)\n    ^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_guard_emit\'\n').returncode
+
+tests/test_puck_guard_time_diagnostics.py:133: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_time_diagnostics.py::test_guard_costs_cover_import_boundaries_without_changing_phase_or_terminal
+FAILED tests/test_puck_guard_time_diagnostics.py::test_periodic_checkpoint_records_active_guard_and_does_not_catch_up
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_record_budget_is_independent_of_phase_budget
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_byte_budget_refuses_the_next_row_without_affecting_phase
+FAILED tests/test_puck_guard_time_diagnostics.py::test_bad_accounting_clock_disables_only_costs[-1]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_bad_accounting_clock_disables_only_costs[float("nan")]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_io_failure_latches_both_channels_and_preserves_outcome[False-short]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_io_failure_latches_both_channels_and_preserves_outcome[False-error]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_io_failure_latches_both_channels_and_preserves_outcome[True-short]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_cost_io_failure_latches_both_channels_and_preserves_outcome[True-error]
+FAILED tests/test_puck_guard_time_diagnostics.py::test_nested_cost_write_is_suppressed
+FAILED tests/test_puck_guard_time_diagnostics.py::test_successful_cost_write_cannot_rearm_nested_phase_io_failure
+12 failed, 1 passed in 21.01s

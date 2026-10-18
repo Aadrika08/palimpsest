@@ -1,0 +1,31 @@
+{
+  "attempt11b": {
+    "directories": 3187,
+    "entries": 38290,
+    "files": 34032,
+    "limit": 40000,
+    "links": 1071,
+    "manifest_pins": 2463,
+    "margin": 1710,
+    "staged_directories": 2076,
+    "staged_files": 27255
+  },
+  "calibration": {
+    "measured_admission10_02_peak_files": 33719,
+    "model": {
+      "directories": 3113,
+      "entries": 37903,
+      "files": 33719,
+      "limit": 40000,
+      "links": 1071,
+      "manifest_pins": 2150,
+      "margin": 2097,
+      "staged_directories": 2076,
+      "staged_files": 27255
+    },
+    "reviewer_projected_entries_d83dab3": 38243,
+    "reviewer_reported_entries10": 37903
+  },
+  "kind": "held11b-entry-ceiling-model-v1",
+  "scope": "read-only model from pins, the plan and metadata; staged paths from the plan; preparation02 stage untouched"
+}

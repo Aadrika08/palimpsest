@@ -1,0 +1,20 @@
+........................................................................ [ 94%]
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+____ test_cli_failure_is_false_authority_json_without_caller_exit_argument _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-483/test_cli_failure_is_false_auth0')
+
+    def test_cli_failure_is_false_authority_json_without_caller_exit_argument(tmp_path):
+        module = api()
+        result = subprocess.run([module.PYTHON, '-I', '-S', '-B', str(SCRIPT), '--configuration', str(tmp_path / 'absent.json'),
+                                 '--sha256', '0' * 64, '--transport', str(tmp_path / 'absent-transport.json'),
+                                 '--transport-sha256', '0' * 64], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=10)
+>       assert result.returncode == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...ort-sha256', '0000000000000000000000000000000000000000000000000000000000000000'], returncode=0, stdout=b'', stderr=b'').returncode
+
+tests/test_puck_cpu_distributed_observation_audit.py:262: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_cli_failure_is_false_authority_json_without_caller_exit_argument
+1 failed, 75 passed in 0.15s

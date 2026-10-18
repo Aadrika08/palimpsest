@@ -1,0 +1,73 @@
+FF.........................                                              [100%]
+=================================== FAILURES ===================================
+_ test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata _
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0')
+
+    def test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata(tmp_path):
+        metadata=('import importlib.machinery\nchild.__file__=__file__\n'
+            'child.__spec__=importlib.machinery.ModuleSpec("'+NAME+'",__loader__,origin=__file__)\n'
+            'child.__loader__=__loader__\n')
+        result=run(tmp_path,producer=PREFIX+metadata+PUBLISH+GUARD_ONE)
+>       assert result.returncode==0,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 450, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/src/palimpsest/puck_dependency_files.py", line 222, in __init__
+E             self._validate()
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/src/palimpsest/puck_dependency_files.py", line 321, in _validate
+E             validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'],
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/src/palimpsest/puck_dependency_bindings.py", line 87, in validate_profile
+E             _fields(row, ('name','producer','phase','attributes','class_binding'))
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_first_publication_survive0/source/src/palimpsest/puck_dependency_bindings.py", line 24, in _fields
+E             raise ValueError('Dependency import profile binding fields differ')
+E         ValueError: Dependency import profile binding fields differ
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...r(\'Dependency import profile binding fields differ\')\nValueError: Dependency import profile binding fields differ\n').returncode
+
+tests/test_puck_published_exports.py:84: AssertionError
+____ test_declared_delegate_growth_is_captured_between_two_reentrant_guards ____
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0')
+
+    def test_declared_delegate_growth_is_captured_between_two_reentrant_guards(tmp_path):
+        producer=PREFIX+PUBLISH+GUARD_ONE+'def late(): return 53\nchild.late=late\n'+GUARD_TWO
+        body='import fixture_dep.producer as p\nreturn {"answer":p.child.answer(),"late":p.child.late()}'
+        result=run(tmp_path,producer=producer,body=body,delegates=['answer','late'])
+>       assert result.returncode==0,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/scripts/puck_worker_bootstrap.py", line 450, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/src/palimpsest/puck_dependency_files.py", line 222, in __init__
+E             self._validate()
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/src/palimpsest/puck_dependency_files.py", line 321, in _validate
+E             validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'],
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/src/palimpsest/puck_dependency_bindings.py", line 87, in validate_profile
+E             _fields(row, ('name','producer','phase','attributes','class_binding'))
+E           File "/tmp/palimpsest-delayed-exports-red-publication-01/test_declared_delegate_growth_0/source/src/palimpsest/puck_dependency_bindings.py", line 24, in _fields
+E             raise ValueError('Dependency import profile binding fields differ')
+E         ValueError: Dependency import profile binding fields differ
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...r(\'Dependency import profile binding fields differ\')\nValueError: Dependency import profile binding fields differ\n').returncode
+
+tests/test_puck_published_exports.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_published_exports.py::test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata
+FAILED tests/test_puck_published_exports.py::test_declared_delegate_growth_is_captured_between_two_reentrant_guards
+2 failed, 25 passed in 32.34s

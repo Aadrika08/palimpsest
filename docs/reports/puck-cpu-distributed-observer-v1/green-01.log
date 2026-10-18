@@ -1,0 +1,50 @@
+......................................FF........                         [100%]
+=================================== FAILURES ===================================
+_______ test_timeout_kills_and_reaps_only_owned_parent_and_sampled_child _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-470/test_timeout_kills_and_reaps_o0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7dbf116d4710>
+
+    def test_timeout_kills_and_reaps_only_owned_parent_and_sampled_child(tmp_path, monkeypatch):
+        body = ('import os,subprocess,sys,time\n'
+                'child=subprocess.Popen([sys.executable,"-I","-S","-c","import time;time.sleep(30)"])\n'
+                'print(str(os.getpid())+" "+str(child.pid),flush=True)\n'
+                'try: time.sleep(30)\nfinally: child.kill();child.wait()\n')
+        module, path, config = fixture(tmp_path, monkeypatch, body)
+        monkeypatch.setattr(module, 'NORMAL_SECONDS', .25)
+        result = module.observe(path, save(path, config))
+        pids = [int(value) for value in (tmp_path / result['stdout']['path']).read_text().split()]
+>       assert result['timed_out'] is True and result['observed_returncode'] == -signal.SIGKILL
+E       assert (True is True and None == -<Signals.SIGKILL: 9>)
+E        +  where <Signals.SIGKILL: 9> = signal.SIGKILL
+
+tests/test_puck_cpu_distributed_observer.py:249: AssertionError
+______________________ test_pid_reuse_is_never_signalled _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-470/test_pid_reuse_is_never_signal0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7dbf114bf750>
+
+    def test_pid_reuse_is_never_signalled(tmp_path, monkeypatch):
+        module = api()
+        identity = dict(pid=os.getpid(), start_ticks=1)
+        assert module.process_identity(os.getpid())['start_ticks'] != 1
+>       assert module.terminate_identity(identity) is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:260: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+identity = {'pid': 3189377, 'start_ticks': 1}
+
+    def terminate_identity(identity):
+        """A pidfd binds the signal to the inspected lifetime, never a reused PID."""
+        try:
+>           fd = os.pidfd_open(identity['pid'], 0)
+                 ^^^^^^^^^^^^^
+E           AttributeError: module 'os' has no attribute 'pidfd_open'
+
+scripts/observe_puck_cpu_runtime_characterization.py:151: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observer.py::test_timeout_kills_and_reaps_only_owned_parent_and_sampled_child
+FAILED tests/test_puck_cpu_distributed_observer.py::test_pid_reuse_is_never_signalled
+2 failed, 46 passed in 3.00s

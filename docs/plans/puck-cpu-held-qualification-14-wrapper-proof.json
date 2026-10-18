@@ -1,0 +1,25 @@
+{
+  "admission14_invoked": false,
+  "admission_and_audit_budget_seconds": 145,
+  "exact_inverse": true,
+  "kind": "held14-external-wrapper-compatibility-v1",
+  "new": {
+    "sha256": "caa13c29e501dc708c818664dc91f76d60b4383809322c42fc7d90582d4c98a0",
+    "size_bytes": 4226
+  },
+  "observer_budget_seconds": {
+    "new": 440,
+    "previous": 240
+  },
+  "old": {
+    "sha256": "d5ec3a6a352adc8db97e8f0c75702d7c320119b61ce11c8ffeecb9098705a5f8",
+    "size_bytes": 4227
+  },
+  "runtime14_invoked": false,
+  "scope": "source inverse and local binary identity only; historical wrapper evidence separate",
+  "source_new": "docs/plans/puck-cpu-held-qualification-14-external.py",
+  "source_previous": "docs/plans/puck-cpu-held-qualification-11-external.py (git 27780dd5cbc096c26fb353faea7edfde878a4f74)",
+  "status": "PASS_WRAPPER_INVERSE_METADATA_ONLY",
+  "timeout_version_observed": "timeout (GNU coreutils) 9.11",
+  "wrapper_invoked": false
+}

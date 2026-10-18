@@ -1,0 +1,49 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_successful_receipt_with_rebound_error_fields_is_refused[error-independent_audit] _
+
+role = 'independent_audit', key = 'error'
+
+    @pytest.mark.parametrize('role',['result','independent_audit'])
+    @pytest.mark.parametrize('key',['error','error_type'])
+    def test_successful_receipt_with_rebound_error_fields_is_refused(role,key):
+        m,config,blobs=acceptance_case()
+        value=json.loads(blobs[role]);value[key]='contradictory failure'
+        rebind(m,config,blobs,role,value)
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment.py:97: Failed
+_ test_successful_receipt_with_rebound_error_fields_is_refused[error_type-result] _
+
+role = 'result', key = 'error_type'
+
+    @pytest.mark.parametrize('role',['result','independent_audit'])
+    @pytest.mark.parametrize('key',['error','error_type'])
+    def test_successful_receipt_with_rebound_error_fields_is_refused(role,key):
+        m,config,blobs=acceptance_case()
+        value=json.loads(blobs[role]);value[key]='contradictory failure'
+        rebind(m,config,blobs,role,value)
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment.py:97: Failed
+_ test_successful_receipt_with_rebound_error_fields_is_refused[error_type-independent_audit] _
+
+role = 'independent_audit', key = 'error_type'
+
+    @pytest.mark.parametrize('role',['result','independent_audit'])
+    @pytest.mark.parametrize('key',['error','error_type'])
+    def test_successful_receipt_with_rebound_error_fields_is_refused(role,key):
+        m,config,blobs=acceptance_case()
+        value=json.loads(blobs[role]);value[key]='contradictory failure'
+        rebind(m,config,blobs,role,value)
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment.py:97: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_successful_receipt_with_rebound_error_fields_is_refused[error-independent_audit]
+FAILED tests/test_puck_cpu_held_amendment.py::test_successful_receipt_with_rebound_error_fields_is_refused[error_type-result]
+FAILED tests/test_puck_cpu_held_amendment.py::test_successful_receipt_with_rebound_error_fields_is_refused[error_type-independent_audit]
+3 failed, 1 passed, 33 deselected in 0.14s

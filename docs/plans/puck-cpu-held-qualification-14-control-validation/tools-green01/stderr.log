@@ -1,0 +1,15 @@
+test_collect_passes_only_within_epoch14_clocks (__main__.ToolChecks.test_collect_passes_only_within_epoch14_clocks) ... ok
+test_collect_records_admission_refusal_without_allocation (__main__.ToolChecks.test_collect_records_admission_refusal_without_allocation) ... ok
+test_collect_records_observer_timeout_without_audit (__main__.ToolChecks.test_collect_records_observer_timeout_without_audit) ... ok
+test_collect_refuses_a_different_configuration_sha (__main__.ToolChecks.test_collect_refuses_a_different_configuration_sha) ... ok
+test_collect_refuses_a_registration_without_the_360s_clock (__main__.ToolChecks.test_collect_refuses_a_registration_without_the_360s_clock) ... ok
+test_envelope_and_wrapper_extend_only_the_observer (__main__.ToolChecks.test_envelope_and_wrapper_extend_only_the_observer) ... ok
+test_every_one_shot_guard_checks_stage_and_boot_before_acting (__main__.ToolChecks.test_every_one_shot_guard_checks_stage_and_boot_before_acting) ... ok
+test_make_observer_guard_derives_pre_observer_guard_on_fixture (__main__.ToolChecks.test_make_observer_guard_derives_pre_observer_guard_on_fixture) ... ok
+test_stage_guard_on_tmpfs_fixture (__main__.ToolChecks.test_stage_guard_on_tmpfs_fixture) ... ok
+test_templates_compile_without_unknown_placeholders (__main__.ToolChecks.test_templates_compile_without_unknown_placeholders) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.048s
+
+OK

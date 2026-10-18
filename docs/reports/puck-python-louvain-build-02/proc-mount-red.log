@@ -1,0 +1,69 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___ test_proc_readonly_is_proved_by_mount_flags_without_file_creation[False] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77681c432790>
+readonly_mount = False
+
+    @pytest.mark.parametrize("readonly_mount", [False, True])
+    def test_proc_readonly_is_proved_by_mount_flags_without_file_creation(monkeypatch, readonly_mount):
+        from types import SimpleNamespace
+        value = module(WORKER)
+        monkeypatch.setattr(value.os, "statvfs", lambda path: SimpleNamespace(f_flag=os.ST_RDONLY if readonly_mount else 0))
+        def no_create(*args, **kwargs):
+            raise AssertionError("proc root does not support regular-file creation probes")
+        monkeypatch.setattr(value.os, "open", no_create)
+        if readonly_mount:
+            value.readonly("/proc")
+        else:
+            with pytest.raises(ValueError, match="mount is not read-only"):
+>               value.readonly("/proc")
+
+tests/test_puck_python_louvain_build.py:282: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/puck_python_louvain_worker.py:68: in readonly
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (PosixPath('/proc/.palimpsest-write-refusal'), 193, 384), kwargs = {}
+
+    def no_create(*args, **kwargs):
+>       raise AssertionError("proc root does not support regular-file creation probes")
+E       AssertionError: proc root does not support regular-file creation probes
+
+tests/test_puck_python_louvain_build.py:276: AssertionError
+___ test_proc_readonly_is_proved_by_mount_flags_without_file_creation[True] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77681c467cd0>
+readonly_mount = True
+
+    @pytest.mark.parametrize("readonly_mount", [False, True])
+    def test_proc_readonly_is_proved_by_mount_flags_without_file_creation(monkeypatch, readonly_mount):
+        from types import SimpleNamespace
+        value = module(WORKER)
+        monkeypatch.setattr(value.os, "statvfs", lambda path: SimpleNamespace(f_flag=os.ST_RDONLY if readonly_mount else 0))
+        def no_create(*args, **kwargs):
+            raise AssertionError("proc root does not support regular-file creation probes")
+        monkeypatch.setattr(value.os, "open", no_create)
+        if readonly_mount:
+>           value.readonly("/proc")
+
+tests/test_puck_python_louvain_build.py:279: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/puck_python_louvain_worker.py:68: in readonly
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (PosixPath('/proc/.palimpsest-write-refusal'), 193, 384), kwargs = {}
+
+    def no_create(*args, **kwargs):
+>       raise AssertionError("proc root does not support regular-file creation probes")
+E       AssertionError: proc root does not support regular-file creation probes
+
+tests/test_puck_python_louvain_build.py:276: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_python_louvain_build.py::test_proc_readonly_is_proved_by_mount_flags_without_file_creation[False]
+FAILED tests/test_puck_python_louvain_build.py::test_proc_readonly_is_proved_by_mount_flags_without_file_creation[True]
+2 failed in 0.05s

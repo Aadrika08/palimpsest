@@ -1,0 +1,84 @@
+{
+  "acceptance_auditor": {
+    "error": "Normal external transport exit required",
+    "external_elapsed_seconds": 0.06406971404794604,
+    "normal_return": true,
+    "passing_failure_preservation_audit": false,
+    "refused_before_post_stage_byte_checks": true,
+    "returncode": 1,
+    "status": "FAIL",
+    "terminal": "acfed5",
+    "timed_out": false
+  },
+  "binding": {
+    "all_four_imports_completed": false,
+    "attributes": [
+      "_autograd"
+    ],
+    "component_index": 0,
+    "export": "torch._C._autograd",
+    "missing_component": "_autograd",
+    "native_create_returned": true,
+    "native_exec_module_completed": false,
+    "other_export_rows_not_qualified": true,
+    "phase": "native_create",
+    "producer": "torch._C",
+    "replacement_producer_or_phase_selected": false
+  },
+  "kind": "actual-qualification04-terminal-ledger-v1",
+  "observer": {
+    "elapsed_seconds": 43.40152189100627,
+    "normal_return": true,
+    "returncode": 1,
+    "terminal": "cb9b93",
+    "timed_out": false
+  },
+  "parent": {
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 5,
+      "fd_count_before": 5
+    },
+    "elapsed_seconds": 43.30062078003539,
+    "status": "FAIL"
+  },
+  "post_terminal_custody": {
+    "all_three_tracked_identities_absent": true,
+    "at": "2026-10-15T16:32:02.815077+00:00",
+    "terminal": "dd005e"
+  },
+  "pre04_data_only_census": {
+    "at": "2026-10-15T16:06:25.713223+00:00",
+    "scope": "dated before04; not held qualification or post04 byte acceptance",
+    "sha256": "9f19b42f5db4c0f5980b6e39d2b89cfbdf082046d88898ab0c1613221731a7bd",
+    "status": "PASS"
+  },
+  "prior_qualifications01_02_03_failed_consumed_preserved": true,
+  "qualification04_consumed": true,
+  "qualification05_created": false,
+  "source_inspection": {
+    "inference": "The required _autograd module is created by a later _autograd_init callback during torch.autograd Python initialization, so the current native_create check is premature.",
+    "installed_autograd_initializer_matches_exact_upstream": true,
+    "limits": [
+      "The actual04 trace ends before that later callback.",
+      "Package git_version and source matching are not linked-binary provenance.",
+      "No alternative closure phase is accepted; cache admission before parent completion needs proof.",
+      "Do not move all36 rows, skip any row, or silently retry04."
+    ],
+    "package_git_version": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+    "python_initializer_call_line": 558,
+    "python_initializer_export_import_line": 562,
+    "python_initializer_sha256": "0439167a6a8a4c50f73457c9961698611109638a1b146f0a084fa1ee3825273d",
+    "scope": "static source-supported explanation; not a runtime call trace or linked-binary build proof",
+    "upstream_creation": {
+      "def_submodule_line": 135,
+      "function_line": 102,
+      "path": "torch/csrc/autograd/init.cpp"
+    },
+    "upstream_method_mapping": {
+      "line": 1564,
+      "path": "torch/csrc/Module.cpp"
+    }
+  }
+}

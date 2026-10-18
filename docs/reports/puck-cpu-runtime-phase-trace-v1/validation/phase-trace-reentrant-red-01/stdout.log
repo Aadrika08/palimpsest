@@ -1,0 +1,62 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_successful_outer_write_cannot_rearm_a_nested_trace_failure ________
+
+    def test_successful_outer_write_cannot_rearm_a_nested_trace_failure():
+        result = run_cpu(code=(
+            'import os,sys\noriginal_write = os.write\nwrite_calls = 0\n'
+            'def nested_write(fd, payload):\n global write_calls\n write_calls += 1\n'
+            ' if write_calls == 1:\n  sys.meta_path[0].owner._phase("authored.nested")\n'
+            '  return len(payload)\n if write_calls == 2: raise OSError("AUTHORED_NESTED_IO_FAILURE")\n'
+            ' return original_write(fd, payload)\n'
+            'os.write = nested_write\nsys.meta_path[0].owner._phase("authored.outer")\n'
+            'sys.meta_path[0].owner._phase("authored.no_retry")\nos.write = original_write\n'
+            'assert write_calls == 2, "TRACE_LATCH_REARMED"\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":5.3399708122015e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.057917681988328695,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05795353901339695,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2400120689999312,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2582708270056173,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.258319437969476,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3641703560133465,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3726128959679045,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4081155579769984,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"diagnostic_only":true,"elapsed_seconds":1.40996899997117,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"diagnostic_only":true,"elapsed_seconds":1.445838683983311,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4471594630158506,"kind":"puck-worker-phase-v1","phase":"authored.no_retry","sequence":14}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-35c6l9uh/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-35c6l9uh/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-35c6l9uh/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-35c6l9uh/source/src/palimpsest/puck_runtime_qualification.py", line 28, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-35c6l9uh/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-35c6l9uh/dependency/torchvision/__init__.py", line 19, in <module>
+E             assert write_calls == 2, "TRACE_LATCH_REARMED"
+E                    ^^^^^^^^^^^^^^^^
+E         AssertionError: TRACE_LATCH_REARMED
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...   assert write_calls == 2, "TRACE_LATCH_REARMED"\n           ^^^^^^^^^^^^^^^^\nAssertionError: TRACE_LATCH_REARMED\n').returncode
+
+tests/test_puck_cpu_phase_trace.py:253: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_phase_trace.py::test_successful_outer_write_cannot_rearm_a_nested_trace_failure
+1 failed in 1.71s

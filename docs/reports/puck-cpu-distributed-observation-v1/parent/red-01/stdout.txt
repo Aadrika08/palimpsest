@@ -1,0 +1,1708 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  [100%]
+=================================== FAILURES ===================================
+_ test_new_epoch_has_exact_19_sources_19_roles_and_63_inputs_without_changing02 _
+
+    def test_new_epoch_has_exact_19_sources_19_roles_and_63_inputs_without_changing02():
+>       m = api(); value = configuration(m); m.validate_configuration(value)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+____________ test_new_epoch_refuses_drift_or_rebound_history[kind] _____________
+
+defect = 'kind'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+___________ test_new_epoch_refuses_drift_or_rebound_history[version] ___________
+
+defect = 'version'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+_______ test_new_epoch_refuses_drift_or_rebound_history[boolean-version] _______
+
+defect = 'boolean-version'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+___________ test_new_epoch_refuses_drift_or_rebound_history[output] ____________
+
+defect = 'output'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+____________ test_new_epoch_refuses_drift_or_rebound_history[roles] ____________
+
+defect = 'roles'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+____________ test_new_epoch_refuses_drift_or_rebound_history[limit] ____________
+
+defect = 'limit'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+_________ test_new_epoch_refuses_drift_or_rebound_history[environment] _________
+
+defect = 'environment'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+__________ test_new_epoch_refuses_drift_or_rebound_history[versions] ___________
+
+defect = 'versions'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+__________ test_new_epoch_refuses_drift_or_rebound_history[authority] __________
+
+defect = 'authority'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+_______ test_new_epoch_refuses_drift_or_rebound_history[source-missing] ________
+
+defect = 'source-missing'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+________ test_new_epoch_refuses_drift_or_rebound_history[source-extra] _________
+
+defect = 'source-extra'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+________ test_new_epoch_refuses_drift_or_rebound_history[source-fields] ________
+
+defect = 'source-fields'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+______ test_new_epoch_refuses_drift_or_rebound_history[source-bool-size] _______
+
+defect = 'source-bool-size'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+_________ test_new_epoch_refuses_drift_or_rebound_history[source-hash] _________
+
+defect = 'source-hash'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+________ test_new_epoch_refuses_drift_or_rebound_history[input-missing] ________
+
+defect = 'input-missing'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+________ test_new_epoch_refuses_drift_or_rebound_history[input-rebound] ________
+
+defect = 'input-rebound'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+_________ test_new_epoch_refuses_drift_or_rebound_history[input-extra] _________
+
+defect = 'input-extra'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'boolean-version', 'output', 'roles', 'limit',
+        'environment', 'versions', 'authority', 'source-missing', 'source-extra', 'source-fields',
+        'source-bool-size', 'source-hash', 'input-missing', 'input-rebound', 'input-extra'])
+    def test_new_epoch_refuses_drift_or_rebound_history(defect):
+>       m = api(); value = configuration(m)
+                           ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def configuration(m):
+        return dict(kind='puck-cpu-runtime-characterization-v2', version=2,
+>                   output=m.ROSTER_OUTPUT, site_root=m.SITE, roles=dict(m.ROSTER_ROLES),
+                           ^^^^^^^^^^^^^^^
+                    limits=dict(m.LIMITS), environment=dict(m.ENVIRONMENT), expected_versions=dict(m.VERSIONS),
+                    sources=[dict(path=p, size_bytes=1, sha256='0' * 64) for p in m.ROSTER_SOURCES],
+                    inputs=m.required_roster_input_rows(m.read_observation_configuration()))
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'ROSTER_OUTPUT'
+
+tests/test_puck_cpu_distributed_epoch.py:24: AttributeError
+________ test_observation_configuration_reader_authenticates_raw_bytes _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b8f000a1050>
+
+    def test_observation_configuration_reader_authenticates_raw_bytes(monkeypatch):
+>       m = api(); m.read_observation_configuration()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'read_observation_configuration'
+
+tests/test_puck_cpu_distributed_epoch.py:98: AttributeError
+__ test_historical02_success_is_not_weakened_or_reinterpreted[parent-status] ___
+
+defect = 'parent-status'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+_ test_historical02_success_is_not_weakened_or_reinterpreted[parent-authority] _
+
+defect = 'parent-authority'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+__ test_historical02_success_is_not_weakened_or_reinterpreted[parent-report] ___
+
+defect = 'parent-report'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+___ test_historical02_success_is_not_weakened_or_reinterpreted[parent-late] ____
+
+defect = 'parent-late'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+_ test_historical02_success_is_not_weakened_or_reinterpreted[parent-children] __
+
+defect = 'parent-children'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+__ test_historical02_success_is_not_weakened_or_reinterpreted[report-status] ___
+
+defect = 'report-status'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+_ test_historical02_success_is_not_weakened_or_reinterpreted[report-versions] __
+
+defect = 'report-versions'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+___ test_historical02_success_is_not_weakened_or_reinterpreted[audit-status] ___
+
+defect = 'audit-status'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+___ test_historical02_success_is_not_weakened_or_reinterpreted[audit-scope] ____
+
+defect = 'audit-scope'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+___ test_historical02_success_is_not_weakened_or_reinterpreted[audit-inputs] ___
+
+defect = 'audit-inputs'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+___ test_historical02_success_is_not_weakened_or_reinterpreted[audit-report] ___
+
+defect = 'audit-report'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+_ test_historical02_success_is_not_weakened_or_reinterpreted[terminal-return] __
+
+defect = 'terminal-return'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+__ test_historical02_success_is_not_weakened_or_reinterpreted[terminal-retry] __
+
+defect = 'terminal-retry'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+__ test_historical02_success_is_not_weakened_or_reinterpreted[configuration] ___
+
+defect = 'configuration'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+______ test_historical02_success_is_not_weakened_or_reinterpreted[index] _______
+
+defect = 'index'
+
+    @pytest.mark.parametrize('defect', ['parent-status', 'parent-authority', 'parent-report', 'parent-late',
+        'parent-children', 'report-status', 'report-versions', 'audit-status', 'audit-scope',
+        'audit-inputs', 'audit-report', 'terminal-return', 'terminal-retry', 'configuration', 'index'])
+    def test_historical02_success_is_not_weakened_or_reinterpreted(defect):
+>       m = api(); values, pins = history(m)
+                                  ^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def history(m):
+>       base = ROOT / m.OBSERVATION_ARCHIVE
+                      ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'OBSERVATION_ARCHIVE'
+
+tests/test_puck_cpu_distributed_epoch.py:31: AttributeError
+____ test_expected_rosters_come_only_from_the_bounded_source_proposal[kind] ____
+
+defect = 'kind'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+___ test_expected_rosters_come_only_from_the_bounded_source_proposal[target] ___
+
+defect = 'target'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+__ test_expected_rosters_come_only_from_the_bounded_source_proposal[producer] __
+
+defect = 'producer'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+___ test_expected_rosters_come_only_from_the_bounded_source_proposal[phase] ____
+
+defect = 'phase'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+__ test_expected_rosters_come_only_from_the_bounded_source_proposal[raw-path] __
+
+defect = 'raw-path'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+_ test_expected_rosters_come_only_from_the_bounded_source_proposal[duplicate] __
+
+defect = 'duplicate'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+__ test_expected_rosters_come_only_from_the_bounded_source_proposal[unsorted] __
+
+defect = 'unsorted'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+_ test_expected_rosters_come_only_from_the_bounded_source_proposal[boolean-name] _
+
+defect = 'boolean-name'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+_ test_expected_rosters_come_only_from_the_bounded_source_proposal[authority] __
+
+defect = 'authority'
+
+    @pytest.mark.parametrize('defect', ['kind', 'target', 'producer', 'phase', 'raw-path', 'duplicate',
+                                      'unsorted', 'boolean-name', 'authority'])
+    def test_expected_rosters_come_only_from_the_bounded_source_proposal(defect):
+>       m = api(); proposal = json.loads(PROPOSAL.read_bytes()); m.distributed_expected(proposal)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:130: AttributeError
+_ test_complete_roster_mismatch_remains_observed_data_without_profile_acceptance _
+
+    def test_complete_roster_mismatch_remains_observed_data_without_profile_acceptance():
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:145: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[kind] __
+
+defect = 'kind'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[version] _
+
+defect = 'version'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[profile] _
+
+defect = 'profile'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[request] _
+
+defect = 'request'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[source] _
+
+defect = 'source'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[authority] _
+
+defect = 'authority'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[error] _
+
+defect = 'error'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[imports] _
+
+defect = 'imports'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[import-status] _
+
+defect = 'import-status'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[nan-time] _
+
+defect = 'nan-time'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[environment] _
+
+defect = 'environment'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[projection-kind] _
+
+defect = 'projection-kind'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[projection-version] _
+
+defect = 'projection-version'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[stable] _
+
+defect = 'stable'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[profile-accepted] _
+
+defect = 'profile-accepted'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[target] _
+
+defect = 'target'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[raw-identity] _
+
+defect = 'raw-identity'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[cache-identity] _
+
+defect = 'cache-identity'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[comparison] _
+
+defect = 'comparison'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[match-type] _
+
+defect = 'match-type'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[duplicate-name] _
+
+defect = 'duplicate-name'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[metadata-name] _
+
+defect = 'metadata-name'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[metadata-field] _
+
+defect = 'metadata-field'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[metadata-text] _
+
+defect = 'metadata-text'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[path-type] _
+
+defect = 'path-type'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[spec-field] _
+
+defect = 'spec-field'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+_ test_new_parent_refuses_incomplete_or_semantically_rebound_projection[extra-field] _
+
+defect = 'extra-field'
+
+    @pytest.mark.parametrize('defect', ['kind', 'version', 'profile', 'request', 'source', 'authority',
+        'error', 'imports', 'import-status', 'nan-time', 'environment', 'projection-kind', 'projection-version',
+        'stable', 'profile-accepted', 'target', 'raw-identity', 'cache-identity', 'comparison', 'match-type',
+        'duplicate-name', 'metadata-name', 'metadata-field', 'metadata-text', 'path-type', 'spec-field', 'extra-field'])
+    def test_new_parent_refuses_incomplete_or_semantically_rebound_projection(defect):
+>       m = api(); value, expected = report(m)
+                                     ^^^^^^^^^
+
+tests/test_puck_cpu_distributed_epoch.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+m = <module 'distributed_epoch_parent' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_cpu_runtime.py'>
+
+    def report(m):
+        value = json.loads((ROOT / 'docs/reports/puck-cpu-characterization-02/raw/payload/imports.json').read_bytes())
+        value.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                     profile='cpu-distributed-terminal-v1', request_sha256='1' * 64, source_sha256='2' * 64)
+>       expected = m.distributed_expected(json.loads(PROPOSAL.read_bytes()))
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'distributed_epoch_parent' has no attribute 'distributed_expected'
+
+tests/test_puck_cpu_distributed_epoch.py:43: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_has_exact_19_sources_19_roles_and_63_inputs_without_changing02
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[kind]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[version]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[boolean-version]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[output]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[roles]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[limit]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[environment]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[versions]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[authority]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[source-missing]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[source-extra]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[source-fields]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[source-bool-size]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[source-hash]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[input-missing]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[input-rebound]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_epoch_refuses_drift_or_rebound_history[input-extra]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_observation_configuration_reader_authenticates_raw_bytes
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[parent-status]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[parent-authority]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[parent-report]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[parent-late]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[parent-children]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[report-status]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[report-versions]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[audit-status]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[audit-scope]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[audit-inputs]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[audit-report]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[terminal-return]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[terminal-retry]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[configuration]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_historical02_success_is_not_weakened_or_reinterpreted[index]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[kind]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[target]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[producer]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[phase]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[raw-path]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[duplicate]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[unsorted]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[boolean-name]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_expected_rosters_come_only_from_the_bounded_source_proposal[authority]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_complete_roster_mismatch_remains_observed_data_without_profile_acceptance
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[kind]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[version]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[profile]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[request]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[source]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[authority]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[error]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[imports]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[import-status]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[nan-time]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[environment]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[projection-kind]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[projection-version]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[stable]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[profile-accepted]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[target]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[raw-identity]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[cache-identity]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[comparison]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[match-type]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[duplicate-name]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[metadata-name]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[metadata-field]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[metadata-text]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[path-type]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[spec-field]
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_new_parent_refuses_incomplete_or_semantically_rebound_projection[extra-field]
+71 failed in 0.86s

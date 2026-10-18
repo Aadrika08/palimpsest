@@ -1,0 +1,11 @@
+{
+  "exit_code": 1,
+  "failing_test": "tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed",
+  "failure": "Unregistered native file image: persistent fixture native extension",
+  "initial_chunk_id": "1d9511",
+  "kind": "exec-terminal-observation-v1",
+  "new_regression_passed": true,
+  "pytest_result": "1 failed, 63 passed in 42.63s",
+  "session_id": 29596,
+  "terminal_chunk_id": "2619b2"
+}

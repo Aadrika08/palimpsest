@@ -1,0 +1,73 @@
+{
+  "acceptance_auditor": {
+    "error": "Normal external transport exit required",
+    "external_elapsed_seconds": 0.051284271001350135,
+    "normal_return": true,
+    "passing_failure_preservation_audit": false,
+    "refused_before_post_stage_byte_checks": true,
+    "returncode": 1,
+    "status": "FAIL",
+    "terminal": "2b1134"
+  },
+  "all_seven_release_gates_open": true,
+  "baseline_after_absent": true,
+  "collection_authorized": false,
+  "configuration_sha256": "c6f5807c71e4dc18dcd371aec0da833cd6de3d675e32c1f7686739068a529772",
+  "consumed": true,
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-03/evidence-index.json",
+    "sha256": "458e7f91334ca9a5e9050a122f54917197d9d14163529a66b0a27f41262aa581",
+    "size_bytes": 11559
+  },
+  "executable": false,
+  "freeze_sha256": "2470b8fe56ed37db8c651fc7e4eeb0b3a8f7ee1dbd72cadc45d1dc732b574fb8",
+  "frozen_controls_commit": "8111299d2abfcb0ba6b2c075a8bde5bc90adb086",
+  "kind": "puck-cpu-held-qualification03-actual-report-v1",
+  "native_authorized": false,
+  "observer": {
+    "elapsed_seconds": 45.51643660804257,
+    "normal_return": true,
+    "returncode": 1,
+    "terminal": "82ce07",
+    "timed_out": false
+  },
+  "preflight": {
+    "disk_available_bytes": 99105910784,
+    "mem_available_bytes": 3729133568,
+    "original_prior_artifacts_verified": 111,
+    "tmpfs_available_bytes": 3657646080
+  },
+  "prior_qualifications01_02_preserved": true,
+  "process_custody": {
+    "all_three_tracked_identities_absent": true,
+    "at": "2026-10-15T15:17:38.267433+00:00",
+    "terminal": "ab8037"
+  },
+  "qualification04_created": false,
+  "qualification_claims": [],
+  "result_sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+  "runtime_qualified": false,
+  "source_code_commit": "5f2978851c24ca84fbde948a977285b9ba647354",
+  "source_verification": {
+    "affected_passes": 185,
+    "pytest_seconds": 53.58
+  },
+  "static_binding_inspection": {
+    "candidate_sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+    "declared_export_rows_at_phase": 36,
+    "dependency_sha256": "25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f",
+    "exact_failed_export_or_attribute": null,
+    "interpretation": "ExportBindings.complete fails in raw attribute resolution before close_phase; the generic error does not identify its row or justify a replacement producer or phase.",
+    "native_create_returned": true,
+    "native_exec_module_completed": false,
+    "phase": "native_create",
+    "producer": "torch._C",
+    "scope": "source/profile inspection only; no runtime import, census or allocation"
+  },
+  "status": "FAIL",
+  "study_authorized": false,
+  "transport_sha256": "5c14dbd6cb75e2dddf14e5becba99efdcb2dacf7278274aad45267964fd79c07",
+  "worker_error": "RuntimeError: Dependency producer attribute binding is missing",
+  "worker_stderr_bytes": 2582,
+  "worker_stdout_bytes": 0
+}

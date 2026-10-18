@@ -1,0 +1,22 @@
+{
+  "kind": "held07-observer-tool-observation-v1",
+  "frozen_commit": "1a1ffa06b325d0a0a60b26cff14f70992ca995ec",
+  "initial": {
+    "chunk_id": "3cf853",
+    "wall_time_seconds": 1.001593128,
+    "session_id": 19821,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "terminal": {
+    "chunk_id": "22f859",
+    "wall_time_seconds": 4.065031536,
+    "exit_code": 1,
+    "original_token_count": 123,
+    "output": "{\"accepted\": false, \"elapsed_seconds\": 180.39976700098487, \"receipt\": \"/tmp/palimpsest-held07-observer-external.json\", \"returncode\": 1, \"stderr\": {\"path\": \"/tmp/palimpsest-held07-observer-external.stderr\", \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"size_bytes\": 0}, \"stdout\": {\"path\": \"/tmp/palimpsest-held07-observer-external.stdout\", \"sha256\": \"9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7\", \"size_bytes\": 951}, \"timed_out\": false}\n"
+  },
+  "invocations": 1,
+  "wall_time_scope": "Tool chunks only; wrapper measures complete elapsed.",
+  "observer_invoked": true,
+  "qualification_pass": false
+}

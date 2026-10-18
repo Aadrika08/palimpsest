@@ -1,0 +1,24 @@
+test_reads_history_below_root_before_validating_records (__main__.HistoryPathCheck.test_reads_history_below_root_before_validating_records) ... FAIL
+
+======================================================================
+FAIL: test_reads_history_below_root_before_validating_records (__main__.HistoryPathCheck.test_reads_history_below_root_before_validating_records)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/guard-path-check.py", line 24, in test_reads_history_below_root_before_validating_records
+    exec(compile(ast.Module(body=reads,type_ignores=[]),str(TEMPLATE),'exec'),namespace)
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/pre-admission-guard.py.in", line 35, in <module>
+    before=json.loads(ROOT/(BASE+'/historical-before-admission.json').read_bytes())
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'read_bytes'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/guard-path-check.py", line 26, in test_reads_history_below_root_before_validating_records
+    self.fail('guard failed to read fixture history: '+type(error).__name__+': '+str(error))
+AssertionError: guard failed to read fixture history: AttributeError: 'str' object has no attribute 'read_bytes'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

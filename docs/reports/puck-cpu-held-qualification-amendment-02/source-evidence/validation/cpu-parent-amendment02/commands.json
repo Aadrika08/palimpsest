@@ -1,0 +1,184 @@
+{
+  "scope": "AUTHORED source tests only; no actual CPU stack allocation",
+  "runs": [
+    {
+      "label": "red-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/red-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/red-01.log",
+      "exit_code": 1
+    },
+    {
+      "label": "green-unit-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "tests/test_puck_cpu_held_parent.py",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/green-unit-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/green-unit-01.log",
+      "exit_code": 0
+    },
+    {
+      "label": "red-integration-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/red-integration-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/red-integration-01.log",
+      "exit_code": 1
+    },
+    {
+      "label": "red-metadata-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "-k",
+        "not authored02",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/red-metadata-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/red-metadata-01.log",
+      "exit_code": 1
+    },
+    {
+      "label": "green-02",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "tests/test_puck_cpu_held_parent.py",
+        "tests/test_puck_cpu_held_parent_integration.py",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/green-02"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/green-02.log",
+      "exit_code": 1
+    },
+    {
+      "label": "green-03",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "tests/test_puck_cpu_held_parent.py",
+        "tests/test_puck_cpu_held_parent_integration.py",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/green-03"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/green-03.log",
+      "exit_code": 0
+    },
+    {
+      "label": "red-error-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "-k",
+        "successful_receipt",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/red-error-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/red-error-01.log",
+      "exit_code": 1
+    },
+    {
+      "label": "green-error-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment.py",
+        "-k",
+        "not authored02",
+        "--basetemp=runs/source-validation/cpu-parent-amendment02/green-error-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment02/green-error-01.log",
+      "exit_code": 0
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-episode-16-source-evidence/history-check.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-episode-16-admission.py",
+      "sha256": "1554245b0f504b2431f29a563fbea0becc90856f2e734342d8cb1bfd22af37fe",
+      "size_bytes": 81255
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-episode-16-source-evidence/history-check.py",
+      "sha256": "5241b020e3fef12ce07c0dffbdd0ebdad77f2b0494f2f717ac2c0d0ca0e9d1b7",
+      "size_bytes": 18241
+    }
+  ],
+  "scope": "small historical/configuration metadata only; no admission/main, SITE/staged census, vendor or runtime"
+}

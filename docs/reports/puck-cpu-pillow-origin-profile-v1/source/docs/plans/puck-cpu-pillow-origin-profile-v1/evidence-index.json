@@ -1,0 +1,74 @@
+{
+  "checks": {
+    "D_is_exact_two_sorted_origin_row_insertion": true,
+    "H_to_D_is_exact_four_export_replacements_plus_two_origin_additions": true,
+    "acceptance_or_authority_granted": false,
+    "all_other_candidate_fields_unchanged": true,
+    "allocation_performed": false,
+    "new_ELF_hash_scan_performed": false,
+    "retained_23_extension_metadata_and_pins_match": true,
+    "target_native_vendor_execution_performed": false
+  },
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "held_runtime_qualified": false,
+    "native_authorized": false,
+    "native_phase_qualified": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "evidence_inputs": [
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
+      "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+      "size_bytes": 165833
+    },
+    {
+      "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/projection.json",
+      "sha256": "b8aa91886a1c5b8a71af476ad2c150c1cfd1e1fd018a4bb8c700d0f2451ede55",
+      "size_bytes": 19311
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/native-evidence.json",
+      "sha256": "d65e59289302aeeaec35c7af47cf0de7121c01eb01cbe33af837eff1f0a41fe3",
+      "size_bytes": 87746
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
+      "sha256": "16c0b036a6b7ceb9c5d6740e9e62f6672a98d705e9ff2b0e35332c2ceaf6a41b",
+      "size_bytes": 1879
+    }
+  ],
+  "kind": "puck-cpu-pillow-origin-source-evidence-index-v1",
+  "status": "SOURCE_DATA_ONLY_EXACT_PROJECTION",
+  "version": 1
+}

@@ -1,0 +1,173 @@
+{"diagnostic_only":true,"elapsed_seconds":7.273978553712368e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+{"diagnostic_only":true,"elapsed_seconds":0.05191529600415379,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+{"diagnostic_only":true,"elapsed_seconds":0.05196130299009383,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+{"diagnostic_only":true,"elapsed_seconds":16.321498595003504,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+{"active":{"full":true,"section":"bindings"},"context":"","diagnostic_only":true,"elapsed_nanoseconds":16269582667,"full":{"completed":69,"started":70},"kind":"puck-worker-guard-cost-v1","light":{"completed":0,"started":0},"nested_checks":0,"sections":{"bindings":{"nanoseconds":5855910,"visits":69},"cache":{"nanoseconds":1736671,"visits":69},"custody":{"nanoseconds":969160922,"visits":69},"images":{"nanoseconds":0,"visits":0}},"sequence":1,"trigger":"periodic"}
+{"diagnostic_only":true,"elapsed_seconds":17.110767557984218,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+{"diagnostic_only":true,"elapsed_seconds":17.110938409983646,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+{"active":null,"context":"import.numpy.enter","diagnostic_only":true,"elapsed_nanoseconds":21782272607,"full":{"completed":76,"started":76},"kind":"puck-worker-guard-cost-v1","light":{"completed":1,"started":1},"nested_checks":0,"sections":{"bindings":{"nanoseconds":8808341,"visits":85},"cache":{"nanoseconds":1954433,"visits":77},"custody":{"nanoseconds":6475689046,"visits":85},"images":{"nanoseconds":1345483,"visits":7}},"sequence":2,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":21.83436148997862,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+{"active":null,"context":"import.numpy.returned","diagnostic_only":true,"elapsed_nanoseconds":30075711306,"full":{"completed":84,"started":84},"kind":"puck-worker-guard-cost-v1","light":{"completed":265,"started":265},"nested_checks":0,"sections":{"bindings":{"nanoseconds":161006888,"visits":629},"cache":{"nanoseconds":9076161,"visits":349},"custody":{"nanoseconds":12865930048,"visits":629},"images":{"nanoseconds":3590441,"visits":15}},"sequence":3,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":30.12780442700023,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+{"active":null,"context":"import.torch.enter","diagnostic_only":true,"elapsed_nanoseconds":31621289969,"full":{"completed":86,"started":86},"kind":"puck-worker-guard-cost-v1","light":{"completed":265,"started":265},"nested_checks":0,"sections":{"bindings":{"nanoseconds":163298363,"visits":633},"cache":{"nanoseconds":9149940,"visits":351},"custody":{"nanoseconds":14408029929,"visits":633},"images":{"nanoseconds":4341897,"visits":17}},"sequence":4,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":31.67337899300037,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+{"active":{"full":false,"section":"bindings"},"context":"import.torch.enter","diagnostic_only":true,"elapsed_nanoseconds":41621610191,"full":{"completed":90,"started":90},"kind":"puck-worker-guard-cost-v1","light":{"completed":1133,"started":1134},"nested_checks":0,"sections":{"bindings":{"nanoseconds":2473935402,"visits":2377},"cache":{"nanoseconds":63940049,"visits":1223},"custody":{"nanoseconds":17727128440,"visits":2377},"images":{"nanoseconds":5938877,"visits":21}},"sequence":5,"trigger":"periodic"}
+{"active":{"full":false,"section":"custody"},"context":"import.torch.enter","diagnostic_only":true,"elapsed_nanoseconds":51624520377,"full":{"completed":90,"started":90},"kind":"puck-worker-guard-cost-v1","light":{"completed":2179,"started":2180},"nested_checks":0,"sections":{"bindings":{"nanoseconds":8291658305,"visits":4471},"cache":{"nanoseconds":188418391,"visits":2270},"custody":{"nanoseconds":17972030265,"visits":4470},"images":{"nanoseconds":5938877,"visits":21}},"sequence":6,"trigger":"periodic"}
+{"active":null,"context":"import.torch.returned","diagnostic_only":true,"elapsed_nanoseconds":53868770967,"full":{"completed":90,"started":90},"kind":"puck-worker-guard-cost-v1","light":{"completed":2385,"started":2385},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9796651510,"visits":4881},"cache":{"nanoseconds":221614527,"visits":2475},"custody":{"nanoseconds":18022767161,"visits":4881},"images":{"nanoseconds":5938877,"visits":21}},"sequence":7,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":53.92087010899559,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+{"active":null,"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":55437275299,"full":{"completed":92,"started":92},"kind":"puck-worker-guard-cost-v1","light":{"completed":2385,"started":2385},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9815310822,"visits":4885},"cache":{"nanoseconds":222010343,"visits":2477},"custody":{"nanoseconds":19569928297,"visits":4885},"images":{"nanoseconds":6732081,"visits":23}},"sequence":8,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":55.489362268999685,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+{"active":{"full":false,"section":"bindings"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":65457665032,"full":{"completed":100,"started":100},"kind":"puck-worker-guard-cost-v1","light":{"completed":2477,"started":2478},"nested_checks":0,"sections":{"bindings":{"nanoseconds":10706438736,"visits":5085},"cache":{"nanoseconds":240150724,"visits":2577},"custody":{"nanoseconds":26155172265,"visits":5085},"images":{"nanoseconds":11651466,"visits":31}},"sequence":9,"trigger":"periodic"}
+{"active":{"full":false,"section":"custody"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":75458697452,"full":{"completed":100,"started":100},"kind":"puck-worker-guard-cost-v1","light":{"completed":2925,"started":2926},"nested_checks":0,"sections":{"bindings":{"nanoseconds":14815114371,"visits":5983},"cache":{"nanoseconds":326028751,"visits":3026},"custody":{"nanoseconds":26273167363,"visits":5982},"images":{"nanoseconds":11651466,"visits":31}},"sequence":10,"trigger":"periodic"}
+{"active":{"full":false,"section":"bindings"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":85473243869,"full":{"completed":100,"started":100},"kind":"puck-worker-guard-cost-v1","light":{"completed":3541,"started":3542},"nested_checks":0,"sections":{"bindings":{"nanoseconds":21515478568,"visits":7213},"cache":{"nanoseconds":461219026,"visits":3641},"custody":{"nanoseconds":26435025627,"visits":7213},"images":{"nanoseconds":11651466,"visits":31}},"sequence":11,"trigger":"periodic"}
+{"active":{"full":false,"section":"custody"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":95473801804,"full":{"completed":100,"started":100},"kind":"puck-worker-guard-cost-v1","light":{"completed":4138,"started":4139},"nested_checks":0,"sections":{"bindings":{"nanoseconds":29582706850,"visits":8409},"cache":{"nanoseconds":616832968,"visits":4239},"custody":{"nanoseconds":26596595530,"visits":8408},"images":{"nanoseconds":11651466,"visits":31}},"sequence":12,"trigger":"periodic"}
+{"active":{"full":true,"section":"bindings"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":106138097719,"full":{"completed":105,"started":106},"kind":"puck-worker-guard-cost-v1","light":{"completed":4400,"started":4400},"nested_checks":0,"sections":{"bindings":{"nanoseconds":34662958114,"visits":8942},"cache":{"nanoseconds":695257815,"visits":4506},"custody":{"nanoseconds":31339308210,"visits":8942},"images":{"nanoseconds":15379407,"visits":36}},"sequence":13,"trigger":"periodic"}
+Traceback (most recent call last):
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 327, in find_spec
+    raise ImportError('Unregistered local or external dependency import: '+fullname)
+ImportError: Unregistered local or external dependency import: backports_abc
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 897, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 890, in main
+    receipt = admission.invoke()
+              ^^^^^^^^^^^^^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 870, in invoke
+    raise error from self._first_failure
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 859, in invoke
+    self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+                             ^^^^^^^^^^^^^^^^^^^^
+  File "/puck/source/src/palimpsest/puck_runtime_qualification.py", line 31, in qualify
+    module=importlib.import_module(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torchvision/__init__.py", line 10, in <module>
+    from torchvision import _meta_registrations, datasets, io, models, ops, transforms, utils  # usort:skip
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torchvision/models/__init__.py", line 2, in <module>
+    from .convnext import *
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torchvision/models/convnext.py", line 9, in <module>
+    from ..ops.misc import Conv2dNormActivation, Permute
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torchvision/ops/__init__.py", line 23, in <module>
+    from .poolers import MultiScaleRoIAlign
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torchvision/ops/poolers.py", line 10, in <module>
+    from .roi_align import roi_align
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torchvision/ops/roi_align.py", line 7, in <module>
+    from torch._dynamo.utils import is_compile_supported
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/_dynamo/__init__.py", line 13, in <module>
+    from . import (
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/_dynamo/aot_compile.py", line 15, in <module>
+    from . import convert_frame
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/_dynamo/convert_frame.py", line 57, in <module>
+    from torch._dynamo.symbolic_convert import TensorifyState
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/_dynamo/symbolic_convert.py", line 53, in <module>
+    from torch._dynamo.exc import ObservedException, TensorifyScalarRestartAnalysis
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/_dynamo/exc.py", line 45, in <module>
+    from .utils import counters
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/_dynamo/utils.py", line 137, in <module>
+    np.random,
+    ^^^^^^^^^
+  File "/puck/staged/inputs/root-0000/numpy/__init__.py", line 340, in __getattr__
+    import numpy.random as random
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/numpy/random/__init__.py", line 180, in <module>
+    from . import _pickle
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/numpy/random/_pickle.py", line 1, in <module>
+    from .bit_generator import BitGenerator
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 143, in exec_module
+    self.native.exec_module(module)
+  File "bit_generator.pyx", line 1, in init numpy.random.bit_generator
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 145, in exec_module
+    owner.full_guard()
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 672, in recheck
+    return self._check(full=True)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 735, in _check
+    raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
+RuntimeError: Bootstrap inactive or poisoned

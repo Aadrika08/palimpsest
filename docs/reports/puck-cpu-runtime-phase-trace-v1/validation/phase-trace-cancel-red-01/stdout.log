@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_trace_cancellation_is_not_swallowed_and_closes_owned_holders _______
+
+    def test_trace_cancellation_is_not_swallowed_and_closes_owned_holders():
+        result = run_cpu(package='mujoco', code=(
+            'import os,sys\ndef install_cancel():\n'
+            ' owner = sys.meta_path[0].owner\n original_close = owner._close\n original_write = os.write\n'
+            ' def close(error=None):\n  result = original_close(error)\n  os.write = original_write\n'
+            '  assert not owner._children and not owner._early_runtime_fds\n'
+            '  original_write(2, b"AUTHORED_CANCEL_CLOSED\\n")\n  return result\n'
+            ' def cancel(fd, payload):\n  raise KeyboardInterrupt("AUTHORED_TRACE_CANCEL")\n'
+            ' owner._close = close\n os.write = cancel\n owner._phase("authored.cancel")\n'
+            'install_cancel()\n'))
+        assert result.returncode != 0 and result.stdout == ''
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:13]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 13 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:188: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_cancellation_is_not_swallowed_and_closes_owned_holders
+1 failed in 1.75s

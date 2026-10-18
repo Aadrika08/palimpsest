@@ -1,0 +1,30 @@
+{
+  "allocation_invoked": false,
+  "configuration": {
+    "path": "docs/plans/puck-cpu-held-episode-16.json",
+    "sha256": "01a669fc24d02e0681c6d82303ff543d315c20c80bbd5a4a00e6ca309fcece43",
+    "size_bytes": 20132
+  },
+  "inputs": 17,
+  "preparation_acceptance": {
+    "configuration": "f43be9750cd4e7a45054143cc55565df3ac89b831025fc6380349b557dc92956",
+    "externally_observed_auditor_cli": "3523c1da02a83ab1d86f0b591f5bbd21a34c3238b658f64bed9a4b52e07ea4cb",
+    "independent_audit": "987224d8779eb7dd8da8422e88e5ce67494dc7f1633938225f102d2505a631ce",
+    "result": "a76b61487a1e5c053032167f1602260a1184b6262fa86e0e62842f0a05e6ebc3"
+  },
+  "run_ids": {
+    "replay": "3cdc557fa36a48a853b5874a1a155a62",
+    "source": "6bdba8da892e005edde56e7fb1f958a6"
+  },
+  "serializer": "run_puck_cpu_held_episode.canonical (compact, ensure_ascii=False, LF)",
+  "sources": 98,
+  "stage_parent": "/tmp/palimpsest-puck-cpu-held-04",
+  "stage_touched": false,
+  "validators": {
+    "episode_auditor_validate_acceptance": "PASS",
+    "episode_auditor_validate_configuration": "PASS",
+    "episode_validate_acceptance": "PASS",
+    "episode_validate_configuration": "PASS",
+    "require_declared_misses": "PASS"
+  }
+}

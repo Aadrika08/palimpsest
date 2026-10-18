@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/prepared-byte-audit03-01/runner.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "hard_seconds": 130,
+  "normal_seconds": 120,
+  "outer_seconds": 135,
+  "review": "independent source-only GO; accept only external normalzero and stdout==publication",
+  "runner_sha256": "c7db07e57940b7ff95b0f2cd577d60033dd0863732dc96561bbed363ee1e2a9e"
+}

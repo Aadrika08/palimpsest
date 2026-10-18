@@ -1,0 +1,40 @@
+{
+  "argv": [
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-affected-legacy-final-01/tmp",
+    "tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry",
+    "tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli",
+    "tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes",
+    "tests/test_puck_cpu_amendment03_audit.py::test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures",
+    "tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "environment_overlay": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

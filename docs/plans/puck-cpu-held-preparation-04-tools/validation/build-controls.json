@@ -1,0 +1,51 @@
+{
+  "auditor_sha256": "4ef23799994785c2154aeedd83a03e0457cdfd7f9e4573d12d44e462fb782f7c",
+  "configuration": {
+    "path": "docs/plans/puck-cpu-held-preparation-04.json",
+    "sha256": "f43be9750cd4e7a45054143cc55565df3ac89b831025fc6380349b557dc92956",
+    "size_bytes": 18276
+  },
+  "freeze": {
+    "path": "docs/plans/puck-cpu-held-preparation-04-freeze.json",
+    "sha256": "af7d225f5bc197550f89507878ed48fc8b15348113cc259d6d063948da4a6888",
+    "size_bytes": 29061
+  },
+  "inputs": [
+    "accepted_audit",
+    "accepted_configuration",
+    "accepted_index",
+    "accepted_result",
+    "accepted_snapshot",
+    "baseline",
+    "candidate",
+    "generated",
+    "inventory",
+    "layout",
+    "native",
+    "observation_audit",
+    "observation_configuration",
+    "observation_index",
+    "observation_replay_report",
+    "observation_report",
+    "observation_result"
+  ],
+  "invoked": false,
+  "serializer": "qualify_puck_cpu_held_runtime.canonical(configuration_template(phase=prepare,...) + v15 identity)",
+  "sources": 97,
+  "sources_equal_characterization04": true,
+  "stage_plan": {
+    "bytes": 1590197452,
+    "files": 27286,
+    "required_tmpfs_free_bytes": 3737681100,
+    "roots": 4,
+    "tmpfs_floor_bytes": 2147483648
+  },
+  "stages_touched": false,
+  "validators": {
+    "auditor_configuration": "PASS",
+    "auditor_inputs_binding": "PASS",
+    "build_cpu_source_registration": "PASS",
+    "qualifier_validate_configuration": "PASS",
+    "qualifier_validate_inputs": "PASS"
+  }
+}

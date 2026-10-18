@@ -1,0 +1,65 @@
+{
+  "acceptance_auditor": {
+    "error": "Normal external transport exit required",
+    "external_elapsed_seconds": 0.05352770403260365,
+    "normal_return": true,
+    "passing_failure_preservation_audit": false,
+    "refused_before_post_stage_byte_checks": true,
+    "returncode": 1,
+    "status": "FAIL",
+    "terminal": "a23d4b"
+  },
+  "all_seven_release_gates_open": true,
+  "baseline_after_absent": true,
+  "collection_authorized": false,
+  "configuration_sha256": "253bf8727fe7890d97e0d2c5af98c2ffe7e7edaf763c0eb0537a57c882f5fd77",
+  "consumed": true,
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-02/evidence-index.json",
+    "sha256": "c53d236540e8daaf36f97f848bb001284dac25c0cd7497b8fb28fba5cad573ec",
+    "size_bytes": 11890
+  },
+  "executable": false,
+  "freeze_sha256": "18180b07ad67da612cebe4ce1b5b39810a91df9ad609fef1fb92e412e520162d",
+  "frozen_controls_commit": "44f1717e53aeefcf02a77949dc71d5c0c6360391",
+  "kind": "puck-cpu-held-qualification02-actual-report-v1",
+  "native_authorized": false,
+  "observer": {
+    "elapsed_seconds": 38.75431559397839,
+    "normal_return": true,
+    "returncode": 1,
+    "terminal": "e24788",
+    "timed_out": false
+  },
+  "preflight": {
+    "disk_available_bytes": 99123531776,
+    "mem_available_bytes": 3486789632,
+    "original01_artifacts_verified": 79,
+    "tmpfs_available_bytes": 3621011456
+  },
+  "primary_error": "ImportError: Unregistered local or external dependency import: torch._rocm_init",
+  "primary_source_line": 152,
+  "process_custody": {
+    "all_three_tracked_identities_absent": true,
+    "at": "2026-10-15T14:42:33.369187+00:00",
+    "terminal": "42f4a9"
+  },
+  "qualification01_preserved": true,
+  "qualification03_created": false,
+  "qualification_claims": [],
+  "result_sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+  "runtime_qualified": false,
+  "secondary_error": "ModuleNotFoundError: No module named 'torch._C'",
+  "secondary_source_line": 427,
+  "source_code_commit": "7fcbc6dd2013584342f0b7bcaacd0e5bcbb1203d",
+  "source_static_interpretation": "Torch explicitly catches optional ROCm module ImportError; registered CPU root contains no _rocm_init leaf. No policy amendment made.",
+  "source_verification": {
+    "affected_passes": 132,
+    "pytest_seconds": 31.04
+  },
+  "status": "FAIL",
+  "study_authorized": false,
+  "transport_sha256": "2a15c6e8a2c132ab3fc9fcdecfdd36cf4913ebc9e59c75cce424f42e01c9258e",
+  "worker_stderr_bytes": 2285,
+  "worker_stdout_bytes": 0
+}

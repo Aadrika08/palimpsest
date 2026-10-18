@@ -1,0 +1,18 @@
+test_archive_index_binds_every_preparation04_path (__main__.Proofs.test_archive_index_binds_every_preparation04_path) ... ok
+test_authored_audit_passes_and_record_is_preparation01_shaped (__main__.Proofs.test_authored_audit_passes_and_record_is_preparation01_shaped) ... ok
+test_authored_observer_transport_is_observed (__main__.Proofs.test_authored_observer_transport_is_observed) ... ok
+test_builder_refuses_bad_terminals (__main__.Proofs.test_builder_refuses_bad_terminals) ... ok
+test_check_audit_refuses_other_auditors_and_failures (__main__.Proofs.test_check_audit_refuses_other_auditors_and_failures) ... ok
+test_configuration_and_freeze_are_the_frozen_bytes (__main__.Proofs.test_configuration_and_freeze_are_the_frozen_bytes) ... ok
+test_one_shot_tools_preflight_before_their_single_invocation (__main__.Proofs.test_one_shot_tools_preflight_before_their_single_invocation) ... ok
+test_outer_bounds_exceed_the_source_clocks (__main__.Proofs.test_outer_bounds_exceed_the_source_clocks) ... ok
+test_preflight_requires_the_boot_absences_and_untouched_stages (__main__.Proofs.test_preflight_requires_the_boot_absences_and_untouched_stages) ... ok
+test_preparation04_binds_the_archive_with_synthetic_and_derived_candidates (__main__.Proofs.test_preparation04_binds_the_archive_with_synthetic_and_derived_candidates) ... ok
+test_real_preparation04_refuses_an_unpinned_auditor (__main__.Proofs.test_real_preparation04_refuses_an_unpinned_auditor) ... ok
+test_run_once_is_exclusive (__main__.Proofs.test_run_once_is_exclusive) ... ok
+test_tampered_archive_or_candidate_is_refused (__main__.Proofs.test_tampered_archive_or_candidate_is_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 3.908s
+
+OK

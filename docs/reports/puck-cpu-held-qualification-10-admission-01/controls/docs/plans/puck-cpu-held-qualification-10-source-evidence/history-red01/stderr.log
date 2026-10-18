@@ -1,0 +1,83 @@
+test_changed07_transport_is_refused (__main__.HistoryChecks.test_changed07_transport_is_refused) ... ok
+test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused) ... ok
+test_changed09_transport_is_refused (__main__.HistoryChecks.test_changed09_transport_is_refused) ... ERROR
+test_fabricated07_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated07_baseline_after_is_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused) ... ok
+test_fabricated08_result_is_refused (__main__.HistoryChecks.test_fabricated08_result_is_refused) ... ok
+test_fabricated09_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated09_baseline_after_is_refused) ... FAIL
+test_fabricated09_result_is_refused (__main__.HistoryChecks.test_fabricated09_result_is_refused) ... FAIL
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt) ... FAIL
+test_genuine09_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine09_failure_has_no_success_or_closure_receipt) ... ERROR
+test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes) ... ERROR
+
+======================================================================
+ERROR: test_changed09_transport_is_refused (__main__.HistoryChecks.test_changed09_transport_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 106, in test_changed09_transport_is_refused
+    def test_changed09_transport_is_refused(self):self.changed_transport('09')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 82, in changed_transport
+    with self.assertRaises(AssertionError):getattr(control,'check_consumed'+epoch)(ChangedTransport())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held10_history_control' has no attribute 'check_consumed09'
+
+======================================================================
+ERROR: test_genuine09_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine09_failure_has_no_success_or_closure_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 104, in test_genuine09_failure_has_no_success_or_closure_receipt
+    self.genuine('09')
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 32, in genuine
+    value=getattr(control,'check_consumed'+epoch)(held)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held10_history_control' has no attribute 'check_consumed09'
+
+======================================================================
+ERROR: test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 53, in test_manifest_first_reads_preserve_historical07_and08_stream_bytes
+    selected=set(control.HISTORICAL07_JSON)|set(control.HISTORICAL08_JSON)|set(control.HISTORICAL09_JSON)
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held10_history_control' has no attribute 'HISTORICAL09_JSON'
+
+======================================================================
+FAIL: test_fabricated09_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated09_baseline_after_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 108, in test_fabricated09_baseline_after_is_refused
+    def test_fabricated09_baseline_after_is_refused(self):self.check_missing('09','baseline-after.json')
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 94, in check_missing
+    with self.assertRaises(AssertionError):control.absent()
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fabricated09_result_is_refused (__main__.HistoryChecks.test_fabricated09_result_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 107, in test_fabricated09_result_is_refused
+    def test_fabricated09_result_is_refused(self):self.check_missing('09','result.json')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 94, in check_missing
+    with self.assertRaises(AssertionError):control.absent()
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 48, in test_genuine08_failure_has_no_success_or_closure_receipt
+    def test_genuine08_failure_has_no_success_or_closure_receipt(self):self.genuine('08')
+                                                                       ^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-source-evidence/history-check.py", line 40, in genuine
+    self.assertEqual(control.absent()['historical_missing_receipts'],16)
+AssertionError: 14 != 16
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.016s
+
+FAILED (failures=3, errors=3)

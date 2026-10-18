@@ -1,0 +1,327 @@
+{
+  "acceptance_to_freeze_before_execution": [
+    "Exact public physics model/XML/source namespace and declared controller=manual, scenario/texture, seed, finite command schedule, max ticks<=600, normal/hard deadlines, memory/output/FD/process/scratch/storage limits; no protected model or catalogue access.",
+    "Passing scoped actual05/import prerequisite with fresh exact source/dependency leases, followed by separate admitted operator checks for actual used arithmetic/physics and renderer backend/version/device/context/frame criteria. Existing diagnostics/probe source may guide this, but ordinary diagnostics do not authenticate held inputs.",
+    "Exactly one source episode with registered tick0 snapshot and nonzero contiguous records; natural declared task failure is acceptable for route proof. No inference/capability claim follows from manual control.",
+    "Fresh-owner action replay status=passed, compared_ticks equal all source ticks, no divergence, exact source/upstream/lock/snapshot provenance, finite floats atol=rtol=1e-6 and integer/camera exact; final metrics/outcome/lifecycle and close verification must match.",
+    "Portable source/replay/export artifacts independently validate complete members, sizes/hashes, registered snapshots and bound controls/input identities; zero-tick empty bundle export alone is not acceptance.",
+    "Normal zero terminal returns, renderer/environment/recorder close, no active callback/leaked handles, retained owned-process identity/drain and full output-byte audit; preserve consumed failures and forbid implicit retry."
+  ],
+  "bounded_touch_map": [
+    {
+      "purpose": "One allocation envelope, exact episode controls/probes, finite supervision/resources, owned source+replay UUID outputs, durable failure/terminal audit and final episode wrapper. Reuse bounded_qualification reserve_output/supervised/hard_guard and StorageBudget; do not invoke or repurpose old frozen verifiers.",
+      "surface": "new fixed engineering parent + worker + independent data/outcome auditor"
+    },
+    {
+      "purpose": "Add only closed episode dispatch/source/XML/runtime bindings required by the selected fixed worker. Keep v1-v3 behavior and existing24/10 import qualification rosters immutable.",
+      "surface": "scripts/puck_worker_bootstrap.py and exact episode namespace/registration builder"
+    },
+    {
+      "purpose": "Only the admitted public constructor/provenance reopening seam if strict held execution is selected; preserve current public controller/scenario semantics, recording and snapshot schemas and same-source replay rules.",
+      "surface": "src/palimpsest/engine.py plus src/palimpsest/replay.py"
+    },
+    {
+      "purpose": "Existing contracts to call/reuse; no schema rewrite, new general writer, Puck adapter, public CLI/UI extension or arbitrary export inclusion is needed for the minimal route.",
+      "surface": "src/palimpsest/records.py, snapshots.py, artifacts.py, worker.py"
+    }
+  ],
+  "concrete_gaps": [
+    {
+      "evidence": [
+        "scripts/puck_worker_bootstrap.py:146-171",
+        "scripts/puck_worker_bootstrap.py:613-621",
+        "src/palimpsest/puck_runtime_qualification.py:1-46"
+      ],
+      "gap": "Bootstrap versions1-3 expose only fixed preflight or import qualification. Import PASS cannot dispatch an episode. The current CPU source roster does not admit Engine, recorder, snapshots or replay.",
+      "id": "fixed_dispatch",
+      "smallest_change": "One distinct closed engineering-episode descriptor/worker entry and bounded parent, with exact fixed phases, source/input/argv/environment pins and fresh leases; preserve historical import contracts and consumed allocations. No arbitrary entry-point selector."
+    },
+    {
+      "evidence": [
+        "src/palimpsest/engine.py:239-365",
+        "src/palimpsest/flynn.py:12-23",
+        "src/palimpsest/doctor.py:43-95",
+        "src/palimpsest/replay.py:283-300"
+      ],
+      "gap": "Engine.open uses ambient diagnostics, metadata and Git subprocesses, sys.path upstream import, and the full run_connectome runner. replay_run always reopens through Engine.open. Neither is directly usable under the present held import namespace.",
+      "id": "public_construction_replay",
+      "smallest_change": "Connect one explicitly admitted fixed public manual construction route to both initial Engine ownership and replay reopening, sharing existing manifest/provenance/reset construction rather than duplicating Engine or accepting caller-supplied factories. Review this exact seam before implementation; direct environment construction reduces needed imports."
+    },
+    {
+      "evidence": [
+        "docs/plans/puck-cpu-distributed-publication-profile-v1.json:module_paths",
+        "src/palimpsest/puck_cpu_namespace.py:146-176",
+        "src/palimpsest/doctor.py:21-40"
+      ],
+      "gap": "Current1783 module map has none of gymnasium/scipy/glfw or upstream environment/core modules. Import qualification does not exercise their operator paths, MJCF file access, renderer context, EGL vendor/driver/device path or source construction. Current namespace provides a standard /dev and no explicit DRI device bind.",
+      "id": "dependency_render_closure",
+      "smallest_change": "Admit only the exact finite added source/XML/import/native and renderer route needed by the chosen public environment, then separately freeze operator/renderer probes and backend/device criteria. Do not weaken existing custody or mount broad devices/host roots. Retained package presence may avoid installation, but does not admit import mapping."
+    },
+    {
+      "evidence": [
+        "src/palimpsest/worker.py:240-285",
+        "src/palimpsest/worker.py:388-399",
+        "src/palimpsest/engine.py:812-824",
+        "src/palimpsest/engine.py:1239-1273",
+        "src/palimpsest/replay.py:111-137"
+      ],
+      "gap": "Generic recording/snapshot mechanics already work together in ordinary workers, but no fixed authenticated one-episode owner calls them. A completed manifest can arise by closing a zero-tick/unfinished Engine, so completion status alone cannot meet the episode exit.",
+      "id": "record_snapshot",
+      "smallest_change": "Use RunWriter unchanged; register exactly one paused tick0 initial snapshot with durable event prefix before stepping; execute one declared schedule and episode0 only; require nonzero contiguous ticks and the prospectively accepted terminal outcome/stop rule, flush and normally close. Reuse preflight/storage budgeting."
+    },
+    {
+      "evidence": [
+        "src/palimpsest/puck_on_policy.py:352-470",
+        "src/palimpsest/puck_on_policy.py:470-545",
+        "scripts/verify_puck_mechanics.py:377-462",
+        "scripts/verify_puck_mechanics.py:462-464",
+        "src/palimpsest/puck_execution.py:368-385",
+        "src/palimpsest/artifacts.py:97-105",
+        "src/palimpsest/artifacts.py:209-267"
+      ],
+      "gap": "PuckIntervalWriter publishes one recording per committed tick under numeric subdirectories, with v3 sensor/task/event/cursor schema. Generic artifacts require UUID run_id, completed aggregate manifest, pose/next_pose/sensors4 and world/lifecycle records; generic replay requires Engine application snapshots. owner(config) explicitly rejects puck_on_policy.",
+      "id": "puck_format_split",
+      "smallest_change": "Leave that scientific collection route unchanged for checkpoint A. If Puck itself is required later, it needs its own exact owner close, snapshot/replay and format adapter; relabeling interval directories as generic runs is invalid."
+    },
+    {
+      "evidence": [
+        "src/palimpsest/artifacts.py:552-614",
+        "src/palimpsest/artifacts.py:616-653",
+        "src/palimpsest/replay.py:212-238"
+      ],
+      "gap": "Standard source export contains source recording and registered snapshots; replay comparison lives under a separate destination UUID. Standard exporter does not bundle arbitrary frozen controls/runtime/model/scene inputs, and no standalone bundle validator exists.",
+      "id": "portable_evidence",
+      "smallest_change": "Reuse standard source/replay exports and make one finite episode evidence manifest/wrapper over those and exact declared control/input/replay/audit files. Independently check exclusive publication, exact allowed ZIP members, sizes/hashes/CRC and source/replay bindings. Preserve exporter whitelist and credential rejection."
+    },
+    {
+      "evidence": [
+        "src/palimpsest/evaluate.py:210-222",
+        "src/palimpsest/artifacts.py:97-105",
+        "src/palimpsest/replay.py:111-137"
+      ],
+      "gap": "evaluate.worker explicitly records snapshot_capability=False and playback/recorded-input capabilities; it omits generic UUID/run_id and initial Engine application snapshot. A successful evaluate invocation is not an executable replayable lab run.",
+      "id": "evaluate_is_not_record_replay_entry",
+      "smallest_change": "Do not invoke evaluate as the checkpoint-A recording route; reuse Engine and initial snapshot registration."
+    }
+  ],
+  "existing_tests_to_reuse_without_rerunning": [
+    "tests/test_engine.py:93 onward command boundaries, owner-only stepping, resets, recording/failure; fake native environment is authored.",
+    "tests/test_records.py numeric/chunk hash/schema/terminal recovery and budgets.",
+    "tests/test_replay.py:112 onward ActualReplay is opt-in and already demonstrates manual source/snapshot/action+policy replay; source test presence is not a current PASS.",
+    "tests/test_artifacts.py:189-310 exclusive SVG/PNG/bundle publication, whitelist/checksum/snapshot/credential/tamper checks; :330 empty completed bundle is explicitly supported.",
+    "tests/test_export_close.py:13-46 deferred close failure removes only new outputs.",
+    "tests/test_puck_on_policy_native_interval.py:188-395 real disk committed-prefix validation and authored native failure boundaries; does not connect to generic episode replay."
+  ],
+  "head": "22b4180459d0782f0dd5d591a0ef460e477107c9",
+  "inspected_file_pins": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/engine.py",
+      "sha256": "c0091ecbf44069a5ef58cc8105675182f512dddb46c230c8e907cf84dba8539f",
+      "size_bytes": 77853
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/worker.py",
+      "sha256": "a44a15087317d76e3cec921bcc76be37c3c28eb70931bfca7ba0dfb2066989d7",
+      "size_bytes": 25911
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/records.py",
+      "sha256": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "size_bytes": 14238
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/replay.py",
+      "sha256": "ef59d87b98c6201b7ea140eb9835228435fff46b11e97f64f8c695ccc33bd8fc",
+      "size_bytes": 27255
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/artifacts.py",
+      "sha256": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "size_bytes": 36173
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/snapshots.py",
+      "sha256": "22eee5484b49028a1a65839a47d1120883c1ce25b68abd8516b6a7657d1a2592",
+      "size_bytes": 38627
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/profiles.py",
+      "sha256": "09fd4be64e25eb28554b129bf9db172c110ec18bed0a782055e70126f72c971d",
+      "size_bytes": 11582
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/doctor.py",
+      "sha256": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "size_bytes": 8528
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/flynn.py",
+      "sha256": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "size_bytes": 14608
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/lab.py",
+      "sha256": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+      "size_bytes": 42084
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/cli.py",
+      "sha256": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+      "size_bytes": 17436
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/puck_on_policy.py",
+      "sha256": "c1c0889b217a8baff732c13e77676185901576be293dad0181115e696fe25242",
+      "size_bytes": 83904
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/puck_execution.py",
+      "sha256": "aed15e6601d19803d5ddc28747bc41bf9b657e9098b08d9e76db4424a2907631",
+      "size_bytes": 21440
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/bounded_qualification.py",
+      "sha256": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+      "size_bytes": 22914
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/verify_puck_mechanics.py",
+      "sha256": "11617c78548cd6448dba97139cc9a988d4b777d05395912ad8c10091be20b9e7",
+      "size_bytes": 59714
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/verify_body_runtime.py",
+      "sha256": "07912e536a85c621919a2d22f4c1f516ffa63a47b2f45d0659a60af946d906b2",
+      "size_bytes": 24085
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_engine.py",
+      "sha256": "9d79f8715e93d8883da87eb35401cdd4f6cbfd4cb09e1b28475ed3764e21ee0e",
+      "size_bytes": 20406
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_replay.py",
+      "sha256": "f1f1ec325d6d73534939c74d8b39cab62df467b45205ca7b72444beba588a977",
+      "size_bytes": 17363
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_artifacts.py",
+      "sha256": "90c3813c8ec62dee6b0dc488b27aee3894417eb022abdb7056cffe3a565b48a5",
+      "size_bytes": 24491
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_export_close.py",
+      "sha256": "ebe22afe5fe0fb62219462cbac504926440579c49d3324f0a677a6f505d7f02d",
+      "size_bytes": 2370
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_worker.py",
+      "sha256": "d73da917a84d88207e520a4785ae20cdc6f5f830f6d8967b42d0db8008bd70d6",
+      "size_bytes": 5093
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_puck_on_policy_native_interval.py",
+      "sha256": "1b730076efec3bcdb1af2149b9e48fb444492c377091d36a0d1f9827c2c3f7ea",
+      "size_bytes": 28036
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    }
+  ],
+  "kind": "palimpsest-cpu-episode-next-route-read-only-map-v1",
+  "not_checked": [
+    "No tests or source modules executed; no numerical/vendor/model/simulator/operator/renderer invocation.",
+    "No actual05 result inspected or inferred; root owns that lane.",
+    "No protected catalogue/scene/model bytes opened; only existing source and committed public input manifests were read.",
+    "No live installed/staged/package/resource census, GUI/operator session, CI or physical hardware qualification."
+  ],
+  "objective": "Checkpoint A: one real local CPU simulation episode recorded, executable replay compared, portable export independently validated, with exact public inputs and normal cleanup.",
+  "public_input_route": {
+    "constructor_reference": "run_connectome_rnn_checkpoint.py:203-218 _make_env; profiles.py:27-48 fixed reproduction/manual profile. Use exact reviewed constructor parameters and preserve task/reward/model identity; no constructor was executed.",
+    "direct_environment_dependencies": [
+      "numpy",
+      "gymnasium/spaces/seeding",
+      "mujoco",
+      "glfw",
+      "core.astar -> scipy.ndimage.distance_transform_edt"
+    ],
+    "external_xml_files": [],
+    "minimum_public_source_files": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/environment/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py",
+        "sha256": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+        "size_bytes": 33934
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/environment/mujoco_model_random_obstacles.xml",
+        "sha256": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484",
+        "size_bytes": 16971
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/core/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/core/astar.py",
+        "sha256": "e000e623a9ae7fae6f2f7b6a03d64a7db84720c516b96d8812711025380e30a1",
+        "size_bytes": 7044
+      }
+    ],
+    "physics_model_scene": "Pinned upstream environment/MuJoCoTwoCamEnv with checker MJCF; reproduction/manual is an existing public profile. Scene uses a seeded ordinary navigation layout, not the protected scene catalogue.",
+    "public_scene_xml": {
+      "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/environment/mujoco_model_random_obstacles.xml",
+      "sha256": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484",
+      "size_bytes": 16971
+    },
+    "retained_package_status": "Archived accepted wheel layout lists71 distributions including gymnasium/glfw/scipy/PyOpenGL; this is historical retained-plan data, not current runtime admission and not a new installation requirement.",
+    "smaller_import_route": "For a manual fixed engineering constructor, import the existing environment class and core.astar directly rather than importing run_connectome_rnn_checkpoint, which imports training/connectome/teacher modules and substantially more dependencies.",
+    "source_worktree_upstream": "SOURCEWT gitlink has that pin but files are uninitialized; public source files already exist locally in the main checkout, so network/init is not necessary to inspect/select them.",
+    "upstream_source_root": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym",
+    "verified_current_git_head": "8d964599119b420de67ee259434d273651a1a76d",
+    "verified_current_git_status": "clean"
+  },
+  "recommendation": {
+    "authority_boundary": "This proposes a real physics/record/replay/export demonstration with a declared manual control schedule and no learned checkpoint. It supplies no learned Puck/MaleCNS/FLYNN capability, study, protected-input or physical-rover claim. If a learned policy is made mandatory, an explicitly admitted public checkpoint route remains a separate input decision.",
+    "minimal_existing_chain": [
+      "Engine.open/Engine.__init__ -> Engine.submit/advance -> RunWriter.tick/events/finish",
+      "worker._episode_preflight + worker._snapshot, or replay._register_initial, before first tick",
+      "replay.replay_run(mode=actions) with the same admitted constructor and sources in a fresh UUID owner",
+      "artifacts.export_run(format=bundle) for completed source/replay runs",
+      "a finite episode evidence manifest/wrapper binds source export, replay comparison/export, frozen controls/public input pins, terminal/cleanup and independent audit"
+    ],
+    "route": "Use the existing generic Engine/RunWriter UUID recording contract for a fixed manual CPU public-scene engineering episode; register the initial snapshot, execute recorded-action replay in a fresh owner, then reuse standard bundle export. Do not connect the scientific Puck-v3 interval format merely to reach checkpoint A."
+  },
+  "repository_status_after": [],
+  "scope": "Read-only existing source/contracts/test inspection and retained JSON parsing. No source edits, imports of repository/vendor modules, tests, simulator/operator/renderer/model/scientific allocation, current installed/staged census, runtime invocation, network, or Git/auth mutation.",
+  "smallest_new_regression": "One authored complete fixed entry: exact admitted public-constructor fixture -> Engine initial snapshot -> nonzero source episode -> fresh action replay with all ticks matching -> standard source/replay export -> independent wrapper validation. Tampered snapshot/record/replay hash, source/provenance drift, empty episode, unlisted input and failed close must retain FAIL/refuse terminal acceptance. Actual vendor/operator/renderer run remains separately admitted.",
+  "source_worktree": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "status": "PROPOSED_MINIMUM_INTEGRATION_NOT_EXECUTED_OR_ADMITTED"
+}

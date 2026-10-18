@@ -1,0 +1,105 @@
+.................FF........................F.........                    [100%]
+=================================== FAILURES ===================================
+___ test_configuration_bytes_and_canonical_root_path_are_bound[double-slash] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-473/test_configuration_bytes_and_c7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cf528f7aed0>
+change = 'double-slash'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink',
+                                       'double-slash', 'dot'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+        module, path, config = fixture(tmp_path, monkeypatch)
+        sha = save(path, config)
+        if change == 'digest':
+            sha = '0' * 64
+        elif change == 'compact':
+            raw = json.dumps(config, sort_keys=True, separators=(',', ':')).encode() + b'\n'
+            path.write_bytes(raw)
+            sha = hashlib.sha256(raw).hexdigest()
+        elif change == 'relative':
+            path = Path('configuration.json')
+        elif change == 'dotdot':
+            path = tmp_path / 'scripts/../configuration.json'
+        elif change == 'outside':
+            outside = tmp_path.parent / (tmp_path.name + '-outside.json')
+            outside.write_bytes(path.read_bytes())
+            path = outside
+        elif change == 'symlink':
+            link = tmp_path / 'linked.json'
+            link.symlink_to(path)
+            path = link
+        elif change == 'double-slash':
+            path = str(tmp_path) + '//configuration.json'
+        elif change == 'dot':
+            path = str(tmp_path) + '/./configuration.json'
+        else:
+            real = tmp_path / 'real'
+            real.mkdir()
+            path.rename(real / 'configuration.json')
+            (tmp_path / 'linked').symlink_to(real, target_is_directory=True)
+            path = tmp_path / 'linked/configuration.json'
+>       with pytest.raises((ValueError, OSError)):
+E       Failed: DID NOT RAISE any of (<class 'ValueError'>, <class 'OSError'>)
+
+tests/test_puck_cpu_distributed_observer.py:171: Failed
+_______ test_configuration_bytes_and_canonical_root_path_are_bound[dot] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-473/test_configuration_bytes_and_c8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cf5290f7f10>
+change = 'dot'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink',
+                                       'double-slash', 'dot'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+        module, path, config = fixture(tmp_path, monkeypatch)
+        sha = save(path, config)
+        if change == 'digest':
+            sha = '0' * 64
+        elif change == 'compact':
+            raw = json.dumps(config, sort_keys=True, separators=(',', ':')).encode() + b'\n'
+            path.write_bytes(raw)
+            sha = hashlib.sha256(raw).hexdigest()
+        elif change == 'relative':
+            path = Path('configuration.json')
+        elif change == 'dotdot':
+            path = tmp_path / 'scripts/../configuration.json'
+        elif change == 'outside':
+            outside = tmp_path.parent / (tmp_path.name + '-outside.json')
+            outside.write_bytes(path.read_bytes())
+            path = outside
+        elif change == 'symlink':
+            link = tmp_path / 'linked.json'
+            link.symlink_to(path)
+            path = link
+        elif change == 'double-slash':
+            path = str(tmp_path) + '//configuration.json'
+        elif change == 'dot':
+            path = str(tmp_path) + '/./configuration.json'
+        else:
+            real = tmp_path / 'real'
+            real.mkdir()
+            path.rename(real / 'configuration.json')
+            (tmp_path / 'linked').symlink_to(real, target_is_directory=True)
+            path = tmp_path / 'linked/configuration.json'
+>       with pytest.raises((ValueError, OSError)):
+E       Failed: DID NOT RAISE any of (<class 'ValueError'>, <class 'OSError'>)
+
+tests/test_puck_cpu_distributed_observer.py:171: Failed
+____ test_sampled_cleanup_limitation_does_not_claim_atomic_pid_reuse_proof _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-473/test_sampled_cleanup_limitatio0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cf529136950>
+
+    def test_sampled_cleanup_limitation_does_not_claim_atomic_pid_reuse_proof(tmp_path, monkeypatch):
+        module, path, config = fixture(tmp_path, monkeypatch)
+        result = module.observe(path, save(path, config))
+>       assert 'not atomic' in result['sampling_limitation']
+E       AssertionError: assert 'not atomic' in 'Sampled PID/start identities only; not exhaustive unseen-process proof. Parent process-group supervision and closure require independent audit.'
+
+tests/test_puck_cpu_distributed_observer.py:282: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[double-slash]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[dot]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_sampled_cleanup_limitation_does_not_claim_atomic_pid_reuse_proof
+3 failed, 50 passed in 1.88s

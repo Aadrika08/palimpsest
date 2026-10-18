@@ -1,0 +1,9 @@
+E                                                                        [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_native_extension_initializes_from_held_file_and_is_observed _
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1116: in mkdir
+    os.mkdir(self, mode)
+E   FileNotFoundError: [Errno 2] No such file or directory: '/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-01/tmp'
+=========================== short test summary info ============================
+ERROR tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed
+1 error in 0.07s

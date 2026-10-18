@@ -1,0 +1,35 @@
+{
+  "actual_runtime10_invoked": false,
+  "admission_invocations": 1,
+  "all_seven_release_gates_open": true,
+  "collection_authorized": false,
+  "control_commit": "b3d50f5d8efbd36c56337c323d66768831c0f43f",
+  "executable": false,
+  "external_exit_code": 1,
+  "external_seconds": 0.11693223897600546,
+  "failure": "Canonical JSON bytes differ",
+  "failure_gate": "admission.py:367, before freeze/manifest/plan/SITE/staged-payload checks",
+  "failure_telemetry_closure": {
+    "children": [],
+    "fd_after": 4,
+    "fd_before": 4,
+    "scope": "data-only admission process observations; no runtime-parent closure",
+    "threads": []
+  },
+  "full_payload_custody": false,
+  "kind": "puck-cpu-held10-admission01-outcome-v1",
+  "missing_required_results": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-10",
+    "/tmp/palimpsest-puck-cpu-held-qualification-10-admission-01.json"
+  ],
+  "next": "Separate prospective admission amendment02: canonical-only config with identical parsed values, explicit preflight, distinct controls/outputs, independent review and fresh admission; no implicit retry",
+  "outer_timeout": false,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source_commit": "e723db037ed1f790c2618798d59f56913054754f",
+  "status": "DATA_ADMISSION_FAILED_CONSUMED",
+  "stderr_bytes": 1901,
+  "stdout_bytes": 0,
+  "study_authorized": false,
+  "tool_seconds": 0.16456262400606647
+}

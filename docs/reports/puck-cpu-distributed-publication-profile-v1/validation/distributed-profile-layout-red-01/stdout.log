@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0')
+
+    def test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata(tmp_path):
+        metadata=('import importlib.machinery\nchild.__file__=__file__\n'
+            'child.__spec__=importlib.machinery.ModuleSpec("'+NAME+'",__loader__,origin=__file__)\n'
+            'child.__loader__=__loader__\n')
+        result=run(tmp_path,producer=PREFIX+metadata+PUBLISH+GUARD_ONE)
+>       assert result.returncode==0,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 450, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0/source/scripts/puck_worker_bootstrap.py", line 364, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0/source/src/palimpsest/puck_dependency_files.py", line 419, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-layout-red-01/tmp/test_first_publication_survive0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n').returncode
+
+tests/test_puck_published_exports.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_published_exports.py::test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata
+1 failed in 1.34s

@@ -1,0 +1,163 @@
+{
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "control_pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06-admission.py",
+      "sha256": "4a789e5fa76bdeb83f7aa1252ebc65e03527fb143f4830be9b8a1627bf613813",
+      "size_bytes": 15979
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06-execution.md",
+      "sha256": "57bd3602e3bc745f83af497ff674e504867135bd56d5e56b583da2554f43bd75",
+      "size_bytes": 4653
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06-freeze.json",
+      "sha256": "54dfca9f7a2bccff7a436e12d232f80944f564fce48a66480dacb77d1693e61c",
+      "size_bytes": 73052
+    }
+  ],
+  "kind": "palimpsest-held06-independent-controls-review-v1",
+  "limitations": [
+    "Read-only static controls review; no admission, parent, observer, auditor entrypoint, package import, runtime/native probe, Git/network operation or episode was invoked by this reviewer.",
+    "The full live SITE/staged/native/Python-prefix census, transient resources, budget adequacy and normal closure remain admission/execution gates, not results of this review.",
+    "Negative policy is global by exact name and is not caller/count/order, attempted-request completeness or bare-find_spec transparency proof.",
+    "Only four-import prerequisite controls were reviewed; no episode/renderer/operator/replay/export/hardware/scientific qualification follows."
+  ],
+  "material_open_findings": [],
+  "remaining_execution_gates": [
+    "Commit/push these exact reviewed control bytes before invocation and recheck against the committed freeze.",
+    "Run the pinned admission once and require externally observed normal timely exit0 and DATA_ONLY_ADMITTED; preserve any refusal and do not launch observer after it.",
+    "Refresh transient resource/frozen-byte/output absence checks immediately before one observer invocation; poll its existing handle without restarting.",
+    "After termination bind measured complete exclusive transport SHA256 and record exact concrete independent-auditor command before its one invocation.",
+    "Preserve and index all external terminals, controls and runtime evidence; any invoked06 failure is consumed without implicit07 or retry."
+  ],
+  "resolved_pre_freeze_findings": [
+    {
+      "admission_or_runtime_consumed": false,
+      "corrected_admission_sha256": "4a789e5fa76bdeb83f7aa1252ebc65e03527fb143f4830be9b8a1627bf613813",
+      "current_lines": [
+        117,
+        120
+      ],
+      "original_admission_sha256": "3a99b4b07090c3c5589c137da55e77d912b604c6a432895cf301f664d224bb84",
+      "original_issue": "Expanded manifest first read15 noncandidate inputs and failed-result JSONs as metadata, then later requested raw bytes; authenticated Held.file rejects metadata-to-raw role changes.",
+      "path": "docs/plans/puck-cpu-held-qualification-06-admission.py",
+      "resolution": "First-read raw_paths now includes all16 current inputs, all4 preparation anchors and failed01\u201305 result JSONs. Historical candidateH is not first-read by the manifest and remains a fresh raw read. Other repeated byte/JSON roles were traced statically.",
+      "severity": "material data-only admission failure"
+    },
+    {
+      "admission_or_runtime_consumed": false,
+      "line": 10,
+      "original_issue": "Execution text called the new configuration v5.",
+      "path": "docs/plans/puck-cpu-held-qualification-06-execution.md",
+      "resolution": "Now names v6 and is repinned.",
+      "severity": "control documentation identity"
+    }
+  ],
+  "reviewed_at_utc": "2026-10-15T21:35:45.957617+00:00",
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "source_commit": "6a4ba958021c70f4ec310370b34923aa36324087",
+  "static_verification": {
+    "admission120s_deadline130s_alarm512MiB_AS40000FD_and_closure_retained": true,
+    "all160_old05_indexed_archive_artifacts_plus_index_pinned": true,
+    "all16_inputs_identical_to_actual05": true,
+    "all65_source_proof_artifacts_plus_index_pinned": true,
+    "all_freeze_pin_bytes_match": true,
+    "archived65522_auditor_and_authenticated_current_auditor_observation_helpers_preserved": true,
+    "canonical_compact_configuration": true,
+    "canonical_pretty_freeze": true,
+    "current_input_roles": 16,
+    "current_sources": 24,
+    "exact_isolated_admission_observer_and_auditor_prefix_commands": true,
+    "exact_negative_names": [
+      "OpenGL_accelerate",
+      "accimage",
+      "av",
+      "colorama",
+      "defusedxml",
+      "dill",
+      "flint",
+      "gmpy",
+      "gmpy2",
+      "monkeytype",
+      "numpy._distributor_init_local",
+      "opt_einsum",
+      "org",
+      "pydot",
+      "pynvml",
+      "torch._rocm_init",
+      "torchdistx",
+      "tqdm",
+      "triton"
+    ],
+    "exclusive06_outputs_currently_absent": true,
+    "four_changed_preparation_source_paths": [
+      "scripts/puck_worker_bootstrap.py",
+      "scripts/qualify_puck_cpu_held_runtime.py",
+      "src/palimpsest/puck_dependency_bindings.py",
+      "src/palimpsest/puck_dependency_imports.py"
+    ],
+    "freeze_pin_count": 295,
+    "frozen_pin_bytes": 33676018,
+    "helper_is_offline_only_and_result_publish_waits_for_matching_current_staged_census_and_full_recheck": true,
+    "historical_missing_receipts_currently_absent": [
+      "runs/puck-cpu-runtime-characterization-01/baseline-after.json",
+      "runs/puck-cpu-install-01/inventory.json",
+      "runs/puck-cpu-install-01/licences.json",
+      "runs/puck-cpu-install-01/baseline-after.json",
+      "runs/puck-cpu-install-01/logs/namespace.json",
+      "runs/puck-cpu-retained-admission-01/inventory.json",
+      "runs/puck-cpu-retained-admission-01/snapshot.json",
+      "runs/puck-cpu-retained-admission-01/baseline-after.json",
+      "runs/puck-cpu-held-qualification-05/baseline-after.json"
+    ],
+    "manifest_raw_roles_traced_no_remaining_metadata_to_raw_conflict": true,
+    "measured_transport_digest_late_binding_is_explicit": true,
+    "new_check_absences_matches_existing_declared_physical_suffix_bytecode_and_parent_rules": true,
+    "only_parent_source_pin_changed_since05": true,
+    "preparation_acceptance_anchors_unchanged": 4,
+    "preserved_failed_results": [
+      {
+        "path": "runs/puck-cpu-held-qualification-01/result.json",
+        "sha256": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+        "size_bytes": 618
+      },
+      {
+        "path": "runs/puck-cpu-held-qualification-02/result.json",
+        "sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+        "size_bytes": 616
+      },
+      {
+        "path": "runs/puck-cpu-held-qualification-03/result.json",
+        "sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+        "size_bytes": 617
+      },
+      {
+        "path": "runs/puck-cpu-held-qualification-04/result.json",
+        "sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+        "size_bytes": 617
+      },
+      {
+        "path": "runs/puck-cpu-held-qualification-05/result.json",
+        "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+        "size_bytes": 618
+      }
+    ],
+    "unchanged_limits_environment_interpreter_stage_versions_false_claims": true
+  },
+  "verdict": "PASS_STATIC_CONTROLS_AFTER_TWO_PRE_FREEZE_CORRECTIONS",
+  "version": 1
+}

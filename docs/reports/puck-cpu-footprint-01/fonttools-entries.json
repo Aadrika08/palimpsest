@@ -1,0 +1,3202 @@
+[
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 125,
+    "compression": 8,
+    "crc32": 3920938155,
+    "external_attr": 2175008768,
+    "name": "fontTools/__init__.py",
+    "size_bytes": 183
+  },
+  {
+    "compressed_size": 457,
+    "compression": 8,
+    "crc32": 2587991948,
+    "external_attr": 2175008768,
+    "name": "fontTools/__main__.py",
+    "size_bytes": 925
+  },
+  {
+    "compressed_size": 3874,
+    "compression": 8,
+    "crc32": 1478429055,
+    "external_attr": 2175008768,
+    "name": "fontTools/afmLib.py",
+    "size_bytes": 13374
+  },
+  {
+    "compressed_size": 36001,
+    "compression": 8,
+    "crc32": 1498256795,
+    "external_attr": 2175008768,
+    "name": "fontTools/agl.py",
+    "size_bytes": 113030
+  },
+  {
+    "compressed_size": 488,
+    "compression": 8,
+    "crc32": 2775445293,
+    "external_attr": 2175008768,
+    "name": "fontTools/annotations.py",
+    "size_bytes": 1225
+  },
+  {
+    "compressed_size": 8953,
+    "compression": 8,
+    "crc32": 4215650493,
+    "external_attr": 2175008768,
+    "name": "fontTools/fontBuilder.py",
+    "size_bytes": 34277
+  },
+  {
+    "compressed_size": 497,
+    "compression": 8,
+    "crc32": 2730309213,
+    "external_attr": 2175008768,
+    "name": "fontTools/help.py",
+    "size_bytes": 1125
+  },
+  {
+    "compressed_size": 4068,
+    "compression": 8,
+    "crc32": 3131132792,
+    "external_attr": 2175008768,
+    "name": "fontTools/tfmLib.py",
+    "size_bytes": 14480
+  },
+  {
+    "compressed_size": 5114,
+    "compression": 8,
+    "crc32": 1323966142,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttx.py",
+    "size_bytes": 17276
+  },
+  {
+    "compressed_size": 468,
+    "compression": 8,
+    "crc32": 22773276,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicode.py",
+    "size_bytes": 1237
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/cffLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2771,
+    "compression": 8,
+    "crc32": 285161422,
+    "external_attr": 2175008768,
+    "name": "fontTools/cffLib/CFF2ToCFF.py",
+    "size_bytes": 8200
+  },
+  {
+    "compressed_size": 3178,
+    "compression": 8,
+    "crc32": 3479156838,
+    "external_attr": 2175008768,
+    "name": "fontTools/cffLib/CFFToCFF2.py",
+    "size_bytes": 10119
+  },
+  {
+    "compressed_size": 21178,
+    "compression": 8,
+    "crc32": 535331261,
+    "external_attr": 2175008768,
+    "name": "fontTools/cffLib/__init__.py",
+    "size_bytes": 107852
+  },
+  {
+    "compressed_size": 8721,
+    "compression": 8,
+    "crc32": 2486972938,
+    "external_attr": 2175008768,
+    "name": "fontTools/cffLib/specializer.py",
+    "size_bytes": 32609
+  },
+  {
+    "compressed_size": 4011,
+    "compression": 8,
+    "crc32": 2663000251,
+    "external_attr": 2175008768,
+    "name": "fontTools/cffLib/transforms.py",
+    "size_bytes": 17455
+  },
+  {
+    "compressed_size": 2016,
+    "compression": 8,
+    "crc32": 979066103,
+    "external_attr": 2175008768,
+    "name": "fontTools/cffLib/width.py",
+    "size_bytes": 6073
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/colorLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "fontTools/colorLib/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 7097,
+    "compression": 8,
+    "crc32": 1559282700,
+    "external_attr": 2175008768,
+    "name": "fontTools/colorLib/builder.py",
+    "size_bytes": 24961
+  },
+  {
+    "compressed_size": 40,
+    "compression": 8,
+    "crc32": 2914802973,
+    "external_attr": 2175008768,
+    "name": "fontTools/colorLib/errors.py",
+    "size_bytes": 41
+  },
+  {
+    "compressed_size": 2182,
+    "compression": 8,
+    "crc32": 362705963,
+    "external_attr": 2175008768,
+    "name": "fontTools/colorLib/geometry.py",
+    "size_bytes": 5518
+  },
+  {
+    "compressed_size": 2094,
+    "compression": 8,
+    "crc32": 3643760765,
+    "external_attr": 2175008768,
+    "name": "fontTools/colorLib/table_builder.py",
+    "size_bytes": 7469
+  },
+  {
+    "compressed_size": 732,
+    "compression": 8,
+    "crc32": 3330347862,
+    "external_attr": 2175008768,
+    "name": "fontTools/colorLib/unbuilder.py",
+    "size_bytes": 2142
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/config/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1335,
+    "compression": 8,
+    "crc32": 503955906,
+    "external_attr": 2175008768,
+    "name": "fontTools/config/__init__.py",
+    "size_bytes": 3098
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/cu2qu/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 393,
+    "compression": 8,
+    "crc32": 939446783,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/__init__.py",
+    "size_bytes": 618
+  },
+  {
+    "compressed_size": 79,
+    "compression": 8,
+    "crc32": 552716340,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/__main__.py",
+    "size_bytes": 91
+  },
+  {
+    "compressed_size": 528,
+    "compression": 8,
+    "crc32": 2458706453,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/benchmark.py",
+    "size_bytes": 1296
+  },
+  {
+    "compressed_size": 1851,
+    "compression": 8,
+    "crc32": 3024492066,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/cli.py",
+    "size_bytes": 6075
+  },
+  {
+    "compressed_size": 114545,
+    "compression": 8,
+    "crc32": 1646655022,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/cu2qu.c",
+    "size_bytes": 693337
+  },
+  {
+    "compressed_size": 343098,
+    "compression": 8,
+    "crc32": 564877924,
+    "external_attr": 2179792896,
+    "name": "fontTools/cu2qu/cu2qu.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 1178904
+  },
+  {
+    "compressed_size": 5001,
+    "compression": 8,
+    "crc32": 3335085880,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/cu2qu.py",
+    "size_bytes": 18282
+  },
+  {
+    "compressed_size": 974,
+    "compression": 8,
+    "crc32": 287276945,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/errors.py",
+    "size_bytes": 2441
+  },
+  {
+    "compressed_size": 4015,
+    "compression": 8,
+    "crc32": 3270497782,
+    "external_attr": 2175008768,
+    "name": "fontTools/cu2qu/ufo.py",
+    "size_bytes": 13123
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/designspaceLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 26897,
+    "compression": 8,
+    "crc32": 1310115032,
+    "external_attr": 2175008768,
+    "name": "fontTools/designspaceLib/__init__.py",
+    "size_bytes": 131928
+  },
+  {
+    "compressed_size": 90,
+    "compression": 8,
+    "crc32": 588717399,
+    "external_attr": 2175008768,
+    "name": "fontTools/designspaceLib/__main__.py",
+    "size_bytes": 102
+  },
+  {
+    "compressed_size": 4797,
+    "compression": 8,
+    "crc32": 82192747,
+    "external_attr": 2175008768,
+    "name": "fontTools/designspaceLib/split.py",
+    "size_bytes": 20236
+  },
+  {
+    "compressed_size": 2761,
+    "compression": 8,
+    "crc32": 441357524,
+    "external_attr": 2175008768,
+    "name": "fontTools/designspaceLib/statNames.py",
+    "size_bytes": 9237
+  },
+  {
+    "compressed_size": 1567,
+    "compression": 8,
+    "crc32": 3856051908,
+    "external_attr": 2175008768,
+    "name": "fontTools/designspaceLib/types.py",
+    "size_bytes": 5320
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/diff/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3276,
+    "compression": 8,
+    "crc32": 3018963571,
+    "external_attr": 2175008768,
+    "name": "fontTools/diff/__init__.py",
+    "size_bytes": 13626
+  },
+  {
+    "compressed_size": 82,
+    "compression": 8,
+    "crc32": 3137040384,
+    "external_attr": 2175008768,
+    "name": "fontTools/diff/__main__.py",
+    "size_bytes": 92
+  },
+  {
+    "compressed_size": 473,
+    "compression": 8,
+    "crc32": 4028387706,
+    "external_attr": 2175008768,
+    "name": "fontTools/diff/color.py",
+    "size_bytes": 1387
+  },
+  {
+    "compressed_size": 2014,
+    "compression": 8,
+    "crc32": 3375727787,
+    "external_attr": 2175008768,
+    "name": "fontTools/diff/diff.py",
+    "size_bytes": 8964
+  },
+  {
+    "compressed_size": 488,
+    "compression": 8,
+    "crc32": 3846619400,
+    "external_attr": 2175008768,
+    "name": "fontTools/diff/utils.py",
+    "size_bytes": 1020
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/encodings/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 985,
+    "compression": 8,
+    "crc32": 2588129548,
+    "external_attr": 2175008768,
+    "name": "fontTools/encodings/MacRoman.py",
+    "size_bytes": 3576
+  },
+  {
+    "compressed_size": 665,
+    "compression": 8,
+    "crc32": 2183758660,
+    "external_attr": 2175008768,
+    "name": "fontTools/encodings/StandardEncoding.py",
+    "size_bytes": 3581
+  },
+  {
+    "compressed_size": 72,
+    "compression": 8,
+    "crc32": 1482162280,
+    "external_attr": 2175008768,
+    "name": "fontTools/encodings/__init__.py",
+    "size_bytes": 75
+  },
+  {
+    "compressed_size": 1471,
+    "compression": 8,
+    "crc32": 3764405206,
+    "external_attr": 2175008768,
+    "name": "fontTools/encodings/codecs.py",
+    "size_bytes": 4722
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/feaLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 151,
+    "compression": 8,
+    "crc32": 1965126271,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/__init__.py",
+    "size_bytes": 213
+  },
+  {
+    "compressed_size": 830,
+    "compression": 8,
+    "crc32": 1365465732,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/__main__.py",
+    "size_bytes": 2239
+  },
+  {
+    "compressed_size": 14015,
+    "compression": 8,
+    "crc32": 3676408501,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/ast.py",
+    "size_bytes": 75396
+  },
+  {
+    "compressed_size": 16271,
+    "compression": 8,
+    "crc32": 3134207125,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/builder.py",
+    "size_bytes": 76986
+  },
+  {
+    "compressed_size": 248,
+    "compression": 8,
+    "crc32": 3047485617,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/error.py",
+    "size_bytes": 648
+  },
+  {
+    "compressed_size": 119951,
+    "compression": 8,
+    "crc32": 4185625856,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/lexer.c",
+    "size_bytes": 839901
+  },
+  {
+    "compressed_size": 446782,
+    "compression": 8,
+    "crc32": 537380210,
+    "external_attr": 2179792896,
+    "name": "fontTools/feaLib/lexer.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 1625456
+  },
+  {
+    "compressed_size": 2903,
+    "compression": 8,
+    "crc32": 3055224836,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/lexer.py",
+    "size_bytes": 11132
+  },
+  {
+    "compressed_size": 151,
+    "compression": 8,
+    "crc32": 976466488,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/location.py",
+    "size_bytes": 234
+  },
+  {
+    "compressed_size": 216,
+    "compression": 8,
+    "crc32": 4160602029,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/lookupDebugInfo.py",
+    "size_bytes": 304
+  },
+  {
+    "compressed_size": 17164,
+    "compression": 8,
+    "crc32": 2837798195,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/parser.py",
+    "size_bytes": 102175
+  },
+  {
+    "compressed_size": 2818,
+    "compression": 8,
+    "crc32": 22771067,
+    "external_attr": 2175008768,
+    "name": "fontTools/feaLib/variableScalar.py",
+    "size_bytes": 9785
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/merge/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2852,
+    "compression": 8,
+    "crc32": 4079388064,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/__init__.py",
+    "size_bytes": 8255
+  },
+  {
+    "compressed_size": 82,
+    "compression": 8,
+    "crc32": 3282345730,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/__main__.py",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 918,
+    "compression": 8,
+    "crc32": 636934022,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/base.py",
+    "size_bytes": 2388
+  },
+  {
+    "compressed_size": 2147,
+    "compression": 8,
+    "crc32": 2832641044,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/cmap.py",
+    "size_bytes": 6727
+  },
+  {
+    "compressed_size": 3440,
+    "compression": 8,
+    "crc32": 2413969690,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/layout.py",
+    "size_bytes": 16074
+  },
+  {
+    "compressed_size": 805,
+    "compression": 8,
+    "crc32": 3456657342,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/options.py",
+    "size_bytes": 2501
+  },
+  {
+    "compressed_size": 3366,
+    "compression": 8,
+    "crc32": 4189822883,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/tables.py",
+    "size_bytes": 11194
+  },
+  {
+    "compressed_size": 1198,
+    "compression": 8,
+    "crc32": 3613320001,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/unicode.py",
+    "size_bytes": 4273
+  },
+  {
+    "compressed_size": 1216,
+    "compression": 8,
+    "crc32": 987602027,
+    "external_attr": 2175008768,
+    "name": "fontTools/merge/util.py",
+    "size_bytes": 3377
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/misc/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 72,
+    "compression": 8,
+    "crc32": 1482162280,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/__init__.py",
+    "size_bytes": 75
+  },
+  {
+    "compressed_size": 2801,
+    "compression": 8,
+    "crc32": 4202911317,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/arrayTools.py",
+    "size_bytes": 11457
+  },
+  {
+    "compressed_size": 250707,
+    "compression": 8,
+    "crc32": 1355818382,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/bezierTools.c",
+    "size_bytes": 2019694
+  },
+  {
+    "compressed_size": 1323120,
+    "compression": 8,
+    "crc32": 1782424510,
+    "external_attr": 2179792896,
+    "name": "fontTools/misc/bezierTools.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 5149648
+  },
+  {
+    "compressed_size": 10190,
+    "compression": 8,
+    "crc32": 4024161212,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/bezierTools.py",
+    "size_bytes": 45872
+  },
+  {
+    "compressed_size": 1543,
+    "compression": 8,
+    "crc32": 291141548,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/classifyTools.py",
+    "size_bytes": 5611
+  },
+  {
+    "compressed_size": 777,
+    "compression": 8,
+    "crc32": 549732660,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/cliTools.py",
+    "size_bytes": 1861
+  },
+  {
+    "compressed_size": 3269,
+    "compression": 8,
+    "crc32": 2544673760,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/configTools.py",
+    "size_bytes": 11228
+  },
+  {
+    "compressed_size": 384,
+    "compression": 8,
+    "crc32": 979560912,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/cython.py",
+    "size_bytes": 681
+  },
+  {
+    "compressed_size": 700,
+    "compression": 8,
+    "crc32": 2809466946,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/dictTools.py",
+    "size_bytes": 2417
+  },
+  {
+    "compressed_size": 1127,
+    "compression": 8,
+    "crc32": 3462848063,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/eexec.py",
+    "size_bytes": 3331
+  },
+  {
+    "compressed_size": 712,
+    "compression": 8,
+    "crc32": 244011998,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/encodingTools.py",
+    "size_bytes": 2072
+  },
+  {
+    "compressed_size": 170,
+    "compression": 8,
+    "crc32": 3890383836,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/enumTools.py",
+    "size_bytes": 255
+  },
+  {
+    "compressed_size": 4563,
+    "compression": 8,
+    "crc32": 88035469,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/etree.py",
+    "size_bytes": 16975
+  },
+  {
+    "compressed_size": 2232,
+    "compression": 8,
+    "crc32": 853764251,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filenames.py",
+    "size_bytes": 8223
+  },
+  {
+    "compressed_size": 1966,
+    "compression": 8,
+    "crc32": 1724780001,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/fixedTools.py",
+    "size_bytes": 7703
+  },
+  {
+    "compressed_size": 3166,
+    "compression": 8,
+    "crc32": 2489782917,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/iftSparseBitSet.py",
+    "size_bytes": 10521
+  },
+  {
+    "compressed_size": 334,
+    "compression": 8,
+    "crc32": 772057261,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/intTools.py",
+    "size_bytes": 586
+  },
+  {
+    "compressed_size": 233,
+    "compression": 8,
+    "crc32": 164834577,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/iterTools.py",
+    "size_bytes": 390
+  },
+  {
+    "compressed_size": 335,
+    "compression": 8,
+    "crc32": 2870442469,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/lazyTools.py",
+    "size_bytes": 1020
+  },
+  {
+    "compressed_size": 5977,
+    "compression": 8,
+    "crc32": 2026596005,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/loggingTools.py",
+    "size_bytes": 19932
+  },
+  {
+    "compressed_size": 593,
+    "compression": 8,
+    "crc32": 2990580309,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/macCreatorType.py",
+    "size_bytes": 1593
+  },
+  {
+    "compressed_size": 2323,
+    "compression": 8,
+    "crc32": 651192115,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/macRes.py",
+    "size_bytes": 8579
+  },
+  {
+    "compressed_size": 9644,
+    "compression": 8,
+    "crc32": 2600435029,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/psCharStrings.py",
+    "size_bytes": 43467
+  },
+  {
+    "compressed_size": 3288,
+    "compression": 8,
+    "crc32": 333960409,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/psLib.py",
+    "size_bytes": 12098
+  },
+  {
+    "compressed_size": 3125,
+    "compression": 8,
+    "crc32": 3839601362,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/psOperators.py",
+    "size_bytes": 15700
+  },
+  {
+    "compressed_size": 983,
+    "compression": 8,
+    "crc32": 1491790985,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/py23.py",
+    "size_bytes": 2238
+  },
+  {
+    "compressed_size": 1904,
+    "compression": 8,
+    "crc32": 2262470401,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/roundTools.py",
+    "size_bytes": 4871
+  },
+  {
+    "compressed_size": 2573,
+    "compression": 8,
+    "crc32": 58298507,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/sstruct.py",
+    "size_bytes": 7114
+  },
+  {
+    "compressed_size": 2043,
+    "compression": 8,
+    "crc32": 3144095433,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/symfont.py",
+    "size_bytes": 6961
+  },
+  {
+    "compressed_size": 2357,
+    "compression": 8,
+    "crc32": 2681243632,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/testTools.py",
+    "size_bytes": 7052
+  },
+  {
+    "compressed_size": 1295,
+    "compression": 8,
+    "crc32": 2751080177,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/textTools.py",
+    "size_bytes": 3482
+  },
+  {
+    "compressed_size": 1054,
+    "compression": 8,
+    "crc32": 416446268,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/timeTools.py",
+    "size_bytes": 2232
+  },
+  {
+    "compressed_size": 3700,
+    "compression": 8,
+    "crc32": 599271603,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/transform.py",
+    "size_bytes": 16003
+  },
+  {
+    "compressed_size": 549,
+    "compression": 8,
+    "crc32": 324936406,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/treeTools.py",
+    "size_bytes": 1269
+  },
+  {
+    "compressed_size": 1180,
+    "compression": 8,
+    "crc32": 89156052,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/vector.py",
+    "size_bytes": 4061
+  },
+  {
+    "compressed_size": 1531,
+    "compression": 8,
+    "crc32": 1671749227,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/visitor.py",
+    "size_bytes": 5754
+  },
+  {
+    "compressed_size": 1838,
+    "compression": 8,
+    "crc32": 494467855,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/xmlReader.py",
+    "size_bytes": 6579
+  },
+  {
+    "compressed_size": 2506,
+    "compression": 8,
+    "crc32": 2081781971,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/xmlWriter.py",
+    "size_bytes": 7581
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/misc/filesystem/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 843,
+    "compression": 8,
+    "crc32": 252329184,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/__init__.py",
+    "size_bytes": 2011
+  },
+  {
+    "compressed_size": 1156,
+    "compression": 8,
+    "crc32": 232743737,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_base.py",
+    "size_bytes": 4010
+  },
+  {
+    "compressed_size": 466,
+    "compression": 8,
+    "crc32": 3837452048,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_copy.py",
+    "size_bytes": 1361
+  },
+  {
+    "compressed_size": 357,
+    "compression": 8,
+    "crc32": 4129167288,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_errors.py",
+    "size_bytes": 955
+  },
+  {
+    "compressed_size": 637,
+    "compression": 8,
+    "crc32": 166077251,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_info.py",
+    "size_bytes": 2013
+  },
+  {
+    "compressed_size": 1902,
+    "compression": 8,
+    "crc32": 1987936844,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_osfs.py",
+    "size_bytes": 6323
+  },
+  {
+    "compressed_size": 825,
+    "compression": 8,
+    "crc32": 2846556683,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_path.py",
+    "size_bytes": 2122
+  },
+  {
+    "compressed_size": 872,
+    "compression": 8,
+    "crc32": 3538880435,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_subfs.py",
+    "size_bytes": 3028
+  },
+  {
+    "compressed_size": 348,
+    "compression": 8,
+    "crc32": 2417889758,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_tempfs.py",
+    "size_bytes": 924
+  },
+  {
+    "compressed_size": 480,
+    "compression": 8,
+    "crc32": 3231941740,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_tools.py",
+    "size_bytes": 972
+  },
+  {
+    "compressed_size": 585,
+    "compression": 8,
+    "crc32": 920074053,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_walk.py",
+    "size_bytes": 1655
+  },
+  {
+    "compressed_size": 1991,
+    "compression": 8,
+    "crc32": 4201610569,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/filesystem/_zipfs.py",
+    "size_bytes": 7253
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/misc/plistlib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 5653,
+    "compression": 8,
+    "crc32": 2642854205,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/plistlib/__init__.py",
+    "size_bytes": 21113
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "fontTools/misc/plistlib/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/mtiLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 10226,
+    "compression": 8,
+    "crc32": 1798023694,
+    "external_attr": 2175008768,
+    "name": "fontTools/mtiLib/__init__.py",
+    "size_bytes": 46594
+  },
+  {
+    "compressed_size": 84,
+    "compression": 8,
+    "crc32": 515224232,
+    "external_attr": 2175008768,
+    "name": "fontTools/mtiLib/__main__.py",
+    "size_bytes": 94
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/otlLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 47,
+    "compression": 8,
+    "crc32": 1719306913,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/__init__.py",
+    "size_bytes": 45
+  },
+  {
+    "compressed_size": 25915,
+    "compression": 8,
+    "crc32": 1833752889,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/builder.py",
+    "size_bytes": 130342
+  },
+  {
+    "compressed_size": 147,
+    "compression": 8,
+    "crc32": 2290888089,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/error.py",
+    "size_bytes": 335
+  },
+  {
+    "compressed_size": 773,
+    "compression": 8,
+    "crc32": 1904156749,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/maxContextCalc.py",
+    "size_bytes": 3175
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/otlLib/optimize/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 664,
+    "compression": 8,
+    "crc32": 3319118104,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/optimize/__init__.py",
+    "size_bytes": 1530
+  },
+  {
+    "compressed_size": 90,
+    "compression": 8,
+    "crc32": 2115194150,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/optimize/__main__.py",
+    "size_bytes": 103
+  },
+  {
+    "compressed_size": 5316,
+    "compression": 8,
+    "crc32": 365858530,
+    "external_attr": 2175008768,
+    "name": "fontTools/otlLib/optimize/gpos.py",
+    "size_bytes": 17668
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/pens/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 72,
+    "compression": 8,
+    "crc32": 1482162280,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/__init__.py",
+    "size_bytes": 75
+  },
+  {
+    "compressed_size": 512,
+    "compression": 8,
+    "crc32": 2334226986,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/areaPen.py",
+    "size_bytes": 1471
+  },
+  {
+    "compressed_size": 5041,
+    "compression": 8,
+    "crc32": 2506454286,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/basePen.py",
+    "size_bytes": 17080
+  },
+  {
+    "compressed_size": 801,
+    "compression": 8,
+    "crc32": 2473589575,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/boundsPen.py",
+    "size_bytes": 3128
+  },
+  {
+    "compressed_size": 247,
+    "compression": 8,
+    "crc32": 277155040,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/cairoPen.py",
+    "size_bytes": 591
+  },
+  {
+    "compressed_size": 262,
+    "compression": 8,
+    "crc32": 1929452752,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/cocoaPen.py",
+    "size_bytes": 611
+  },
+  {
+    "compressed_size": 3254,
+    "compression": 8,
+    "crc32": 1739765979,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/cu2quPen.py",
+    "size_bytes": 13007
+  },
+  {
+    "compressed_size": 552,
+    "compression": 8,
+    "crc32": 1145020019,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/explicitClosingLinePen.py",
+    "size_bytes": 3219
+  },
+  {
+    "compressed_size": 3133,
+    "compression": 8,
+    "crc32": 407097587,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/filterPen.py",
+    "size_bytes": 14703
+  },
+  {
+    "compressed_size": 4233,
+    "compression": 8,
+    "crc32": 594810485,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/freetypePen.py",
+    "size_bytes": 19908
+  },
+  {
+    "compressed_size": 1446,
+    "compression": 8,
+    "crc32": 3398757622,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/hashPointPen.py",
+    "size_bytes": 3573
+  },
+  {
+    "compressed_size": 100555,
+    "compression": 8,
+    "crc32": 3352934070,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/momentsPen.c",
+    "size_bytes": 623883
+  },
+  {
+    "compressed_size": 284334,
+    "compression": 8,
+    "crc32": 2651560842,
+    "external_attr": 2179792896,
+    "name": "fontTools/pens/momentsPen.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 1111040
+  },
+  {
+    "compressed_size": 4496,
+    "compression": 8,
+    "crc32": 2828201686,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/momentsPen.py",
+    "size_bytes": 25658
+  },
+  {
+    "compressed_size": 702,
+    "compression": 8,
+    "crc32": 1254616388,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/perimeterPen.py",
+    "size_bytes": 2152
+  },
+  {
+    "compressed_size": 2001,
+    "compression": 8,
+    "crc32": 510787171,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/pointInsidePen.py",
+    "size_bytes": 6354
+  },
+  {
+    "compressed_size": 6019,
+    "compression": 8,
+    "crc32": 3681878598,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/pointPen.py",
+    "size_bytes": 24584
+  },
+  {
+    "compressed_size": 266,
+    "compression": 8,
+    "crc32": 4276761944,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/qtPen.py",
+    "size_bytes": 633
+  },
+  {
+    "compressed_size": 1394,
+    "compression": 8,
+    "crc32": 2888381658,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/qu2cuPen.py",
+    "size_bytes": 3985
+  },
+  {
+    "compressed_size": 450,
+    "compression": 8,
+    "crc32": 2692541426,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/quartzPen.py",
+    "size_bytes": 1286
+  },
+  {
+    "compressed_size": 2481,
+    "compression": 8,
+    "crc32": 4256473156,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/recordingPen.py",
+    "size_bytes": 12488
+  },
+  {
+    "compressed_size": 862,
+    "compression": 8,
+    "crc32": 2080289277,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/reportLabPen.py",
+    "size_bytes": 2055
+  },
+  {
+    "compressed_size": 1375,
+    "compression": 8,
+    "crc32": 3499679441,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/reverseContourPen.py",
+    "size_bytes": 4021
+  },
+  {
+    "compressed_size": 1009,
+    "compression": 8,
+    "crc32": 708858464,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/roundingPen.py",
+    "size_bytes": 4619
+  },
+  {
+    "compressed_size": 2756,
+    "compression": 8,
+    "crc32": 4159457280,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/statisticsPen.py",
+    "size_bytes": 9808
+  },
+  {
+    "compressed_size": 2497,
+    "compression": 8,
+    "crc32": 2566689614,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/svgPathPen.py",
+    "size_bytes": 8572
+  },
+  {
+    "compressed_size": 1064,
+    "compression": 8,
+    "crc32": 1270995463,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/t2CharStringPen.py",
+    "size_bytes": 2931
+  },
+  {
+    "compressed_size": 423,
+    "compression": 8,
+    "crc32": 3905389105,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/teePen.py",
+    "size_bytes": 1289
+  },
+  {
+    "compressed_size": 1060,
+    "compression": 8,
+    "crc32": 840179260,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/transformPen.py",
+    "size_bytes": 4055
+  },
+  {
+    "compressed_size": 3121,
+    "compression": 8,
+    "crc32": 905507437,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/ttGlyphPen.py",
+    "size_bytes": 11869
+  },
+  {
+    "compressed_size": 290,
+    "compression": 8,
+    "crc32": 1809558150,
+    "external_attr": 2175008768,
+    "name": "fontTools/pens/wxPen.py",
+    "size_bytes": 679
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/qu2cu/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 393,
+    "compression": 8,
+    "crc32": 993627202,
+    "external_attr": 2175008768,
+    "name": "fontTools/qu2cu/__init__.py",
+    "size_bytes": 618
+  },
+  {
+    "compressed_size": 79,
+    "compression": 8,
+    "crc32": 1514106809,
+    "external_attr": 2175008768,
+    "name": "fontTools/qu2cu/__main__.py",
+    "size_bytes": 92
+  },
+  {
+    "compressed_size": 596,
+    "compression": 8,
+    "crc32": 657569480,
+    "external_attr": 2175008768,
+    "name": "fontTools/qu2cu/benchmark.py",
+    "size_bytes": 1400
+  },
+  {
+    "compressed_size": 1366,
+    "compression": 8,
+    "crc32": 585194666,
+    "external_attr": 2175008768,
+    "name": "fontTools/qu2cu/cli.py",
+    "size_bytes": 3839
+  },
+  {
+    "compressed_size": 131610,
+    "compression": 8,
+    "crc32": 2314931386,
+    "external_attr": 2175008768,
+    "name": "fontTools/qu2cu/qu2cu.c",
+    "size_bytes": 831850
+  },
+  {
+    "compressed_size": 435195,
+    "compression": 8,
+    "crc32": 438264955,
+    "external_attr": 2179792896,
+    "name": "fontTools/qu2cu/qu2cu.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 1522376
+  },
+  {
+    "compressed_size": 4339,
+    "compression": 8,
+    "crc32": 2106392827,
+    "external_attr": 2175008768,
+    "name": "fontTools/qu2cu/qu2cu.py",
+    "size_bytes": 13138
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/subset/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 30363,
+    "compression": 8,
+    "crc32": 4163677913,
+    "external_attr": 2175008768,
+    "name": "fontTools/subset/__init__.py",
+    "size_bytes": 144772
+  },
+  {
+    "compressed_size": 83,
+    "compression": 8,
+    "crc32": 408219990,
+    "external_attr": 2175008768,
+    "name": "fontTools/subset/__main__.py",
+    "size_bytes": 94
+  },
+  {
+    "compressed_size": 1809,
+    "compression": 8,
+    "crc32": 3370172658,
+    "external_attr": 2175008768,
+    "name": "fontTools/subset/cff.py",
+    "size_bytes": 6145
+  },
+  {
+    "compressed_size": 3487,
+    "compression": 8,
+    "crc32": 2141615348,
+    "external_attr": 2175008768,
+    "name": "fontTools/subset/svg.py",
+    "size_bytes": 9296
+  },
+  {
+    "compressed_size": 352,
+    "compression": 8,
+    "crc32": 3122945724,
+    "external_attr": 2175008768,
+    "name": "fontTools/subset/util.py",
+    "size_bytes": 754
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/svgLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 60,
+    "compression": 8,
+    "crc32": 88945165,
+    "external_attr": 2175008768,
+    "name": "fontTools/svgLib/__init__.py",
+    "size_bytes": 75
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/svgLib/path/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 824,
+    "compression": 8,
+    "crc32": 2723939263,
+    "external_attr": 2175008768,
+    "name": "fontTools/svgLib/path/__init__.py",
+    "size_bytes": 2047
+  },
+  {
+    "compressed_size": 1884,
+    "compression": 8,
+    "crc32": 308439549,
+    "external_attr": 2175008768,
+    "name": "fontTools/svgLib/path/arc.py",
+    "size_bytes": 5811
+  },
+  {
+    "compressed_size": 3335,
+    "compression": 8,
+    "crc32": 456710938,
+    "external_attr": 2175008768,
+    "name": "fontTools/svgLib/path/parser.py",
+    "size_bytes": 12408
+  },
+  {
+    "compressed_size": 1580,
+    "compression": 8,
+    "crc32": 547483700,
+    "external_attr": 2175008768,
+    "name": "fontTools/svgLib/path/shapes.py",
+    "size_bytes": 5387
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/t1Lib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 5606,
+    "compression": 8,
+    "crc32": 1226694385,
+    "external_attr": 2175008768,
+    "name": "fontTools/t1Lib/__init__.py",
+    "size_bytes": 20928
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/ttLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 339,
+    "compression": 8,
+    "crc32": 4096645773,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/__init__.py",
+    "size_bytes": 660
+  },
+  {
+    "compressed_size": 1529,
+    "compression": 8,
+    "crc32": 1144665040,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/__main__.py",
+    "size_bytes": 4733
+  },
+  {
+    "compressed_size": 664,
+    "compression": 8,
+    "crc32": 2338757791,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/macUtils.py",
+    "size_bytes": 1737
+  },
+  {
+    "compressed_size": 3681,
+    "compression": 8,
+    "crc32": 4141344152,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/removeOverlaps.py",
+    "size_bytes": 12743
+  },
+  {
+    "compressed_size": 2982,
+    "compression": 8,
+    "crc32": 3612274695,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/reorderGlyphs.py",
+    "size_bytes": 10370
+  },
+  {
+    "compressed_size": 3465,
+    "compression": 8,
+    "crc32": 3676764191,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/scaleUpem.py",
+    "size_bytes": 14617
+  },
+  {
+    "compressed_size": 6841,
+    "compression": 8,
+    "crc32": 63497455,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/sfnt.py",
+    "size_bytes": 26396
+  },
+  {
+    "compressed_size": 1878,
+    "compression": 8,
+    "crc32": 990313892,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/standardGlyphOrder.py",
+    "size_bytes": 5785
+  },
+  {
+    "compressed_size": 2549,
+    "compression": 8,
+    "crc32": 4174531603,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/ttCollection.py",
+    "size_bytes": 7314
+  },
+  {
+    "compressed_size": 15039,
+    "compression": 8,
+    "crc32": 4244553848,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/ttFont.py",
+    "size_bytes": 64058
+  },
+  {
+    "compressed_size": 4352,
+    "compression": 8,
+    "crc32": 2644921199,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/ttGlyphSet.py",
+    "size_bytes": 17979
+  },
+  {
+    "compressed_size": 428,
+    "compression": 8,
+    "crc32": 372739177,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/ttVisitor.py",
+    "size_bytes": 1025
+  },
+  {
+    "compressed_size": 14324,
+    "compression": 8,
+    "crc32": 1957520745,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/woff2.py",
+    "size_bytes": 60920
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/ttLib/tables/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 237,
+    "compression": 8,
+    "crc32": 4045767364,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/B_A_S_E_.py",
+    "size_bytes": 369
+  },
+  {
+    "compressed_size": 633,
+    "compression": 8,
+    "crc32": 1155669662,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/BitmapGlyphMetrics.py",
+    "size_bytes": 1768
+  },
+  {
+    "compressed_size": 1101,
+    "compression": 8,
+    "crc32": 691585168,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/C_B_D_T_.py",
+    "size_bytes": 3646
+  },
+  {
+    "compressed_size": 331,
+    "compression": 8,
+    "crc32": 1931914365,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/C_B_L_C_.py",
+    "size_bytes": 520
+  },
+  {
+    "compressed_size": 766,
+    "compression": 8,
+    "crc32": 2155445665,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/C_F_F_.py",
+    "size_bytes": 1978
+  },
+  {
+    "compressed_size": 419,
+    "compression": 8,
+    "crc32": 1662726876,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/C_F_F__2.py",
+    "size_bytes": 807
+  },
+  {
+    "compressed_size": 1727,
+    "compression": 8,
+    "crc32": 581474181,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/C_O_L_R_.py",
+    "size_bytes": 5993
+  },
+  {
+    "compressed_size": 2639,
+    "compression": 8,
+    "crc32": 3704328125,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/C_P_A_L_.py",
+    "size_bytes": 11942
+  },
+  {
+    "compressed_size": 1898,
+    "compression": 8,
+    "crc32": 1585644358,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/D_S_I_G_.py",
+    "size_bytes": 5903
+  },
+  {
+    "compressed_size": 477,
+    "compression": 8,
+    "crc32": 2113287503,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/D__e_b_g.py",
+    "size_bytes": 1134
+  },
+  {
+    "compressed_size": 743,
+    "compression": 8,
+    "crc32": 2837574697,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/DefaultTable.py",
+    "size_bytes": 1986
+  },
+  {
+    "compressed_size": 8106,
+    "compression": 8,
+    "crc32": 3105949322,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/E_B_D_T_.py",
+    "size_bytes": 33713
+  },
+  {
+    "compressed_size": 7061,
+    "compression": 8,
+    "crc32": 3139546236,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/E_B_L_C_.py",
+    "size_bytes": 30047
+  },
+  {
+    "compressed_size": 1694,
+    "compression": 8,
+    "crc32": 3800267151,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/E_B_S_C_.py",
+    "size_bytes": 5810
+  },
+  {
+    "compressed_size": 643,
+    "compression": 8,
+    "crc32": 4176965435,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/F_F_T_M_.py",
+    "size_bytes": 1683
+  },
+  {
+    "compressed_size": 1663,
+    "compression": 8,
+    "crc32": 3112486106,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/F__e_a_t.py",
+    "size_bytes": 5935
+  },
+  {
+    "compressed_size": 209,
+    "compression": 8,
+    "crc32": 930002715,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/G_D_E_F_.py",
+    "size_bytes": 299
+  },
+  {
+    "compressed_size": 256,
+    "compression": 8,
+    "crc32": 4209856406,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/G_P_O_S_.py",
+    "size_bytes": 397
+  },
+  {
+    "compressed_size": 202,
+    "compression": 8,
+    "crc32": 194610296,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/G_S_U_B_.py",
+    "size_bytes": 294
+  },
+  {
+    "compressed_size": 71,
+    "compression": 8,
+    "crc32": 1405452823,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/G_V_A_R_.py",
+    "size_bytes": 94
+  },
+  {
+    "compressed_size": 2106,
+    "compression": 8,
+    "crc32": 4044910114,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/G__l_a_t.py",
+    "size_bytes": 8640
+  },
+  {
+    "compressed_size": 853,
+    "compression": 8,
+    "crc32": 4099057725,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/G__l_o_c.py",
+    "size_bytes": 2684
+  },
+  {
+    "compressed_size": 205,
+    "compression": 8,
+    "crc32": 2656891522,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/H_V_A_R_.py",
+    "size_bytes": 313
+  },
+  {
+    "compressed_size": 177,
+    "compression": 8,
+    "crc32": 1964806291,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/I_F_T_.py",
+    "size_bytes": 272
+  },
+  {
+    "compressed_size": 178,
+    "compression": 8,
+    "crc32": 831913337,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/I_F_T_X_.py",
+    "size_bytes": 274
+  },
+  {
+    "compressed_size": 211,
+    "compression": 8,
+    "crc32": 1563869334,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/J_S_T_F_.py",
+    "size_bytes": 315
+  },
+  {
+    "compressed_size": 941,
+    "compression": 8,
+    "crc32": 744103480,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/L_T_S_H_.py",
+    "size_bytes": 2189
+  },
+  {
+    "compressed_size": 225,
+    "compression": 8,
+    "crc32": 1937175587,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/M_A_T_H_.py",
+    "size_bytes": 342
+  },
+  {
+    "compressed_size": 201,
+    "compression": 8,
+    "crc32": 4127066357,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/M_V_A_R_.py",
+    "size_bytes": 308
+  },
+  {
+    "compressed_size": 7652,
+    "compression": 8,
+    "crc32": 2089455310,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/O_S_2f_2.py",
+    "size_bytes": 28272
+  },
+  {
+    "compressed_size": 300,
+    "compression": 8,
+    "crc32": 1534735212,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/S_T_A_T_.py",
+    "size_bytes": 498
+  },
+  {
+    "compressed_size": 2429,
+    "compression": 8,
+    "crc32": 70924545,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/S_V_G_.py",
+    "size_bytes": 7794
+  },
+  {
+    "compressed_size": 7019,
+    "compression": 8,
+    "crc32": 2001824222,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/S__i_l_f.py",
+    "size_bytes": 34971
+  },
+  {
+    "compressed_size": 1033,
+    "compression": 8,
+    "crc32": 3467777950,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/S__i_l_l.py",
+    "size_bytes": 3218
+  },
+  {
+    "compressed_size": 232,
+    "compression": 8,
+    "crc32": 1847320307,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_B_.py",
+    "size_bytes": 340
+  },
+  {
+    "compressed_size": 261,
+    "compression": 8,
+    "crc32": 2528226483,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_C_.py",
+    "size_bytes": 380
+  },
+  {
+    "compressed_size": 232,
+    "compression": 8,
+    "crc32": 4271982386,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_D_.py",
+    "size_bytes": 340
+  },
+  {
+    "compressed_size": 231,
+    "compression": 8,
+    "crc32": 1481160820,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_J_.py",
+    "size_bytes": 340
+  },
+  {
+    "compressed_size": 232,
+    "compression": 8,
+    "crc32": 1577523988,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_P_.py",
+    "size_bytes": 340
+  },
+  {
+    "compressed_size": 231,
+    "compression": 8,
+    "crc32": 4191716317,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_S_.py",
+    "size_bytes": 340
+  },
+  {
+    "compressed_size": 428,
+    "compression": 8,
+    "crc32": 1465952095,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I_V_.py",
+    "size_bytes": 854
+  },
+  {
+    "compressed_size": 1007,
+    "compression": 8,
+    "crc32": 611106851,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I__0.py",
+    "size_bytes": 2505
+  },
+  {
+    "compressed_size": 1794,
+    "compression": 8,
+    "crc32": 2542222639,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I__1.py",
+    "size_bytes": 6970
+  },
+  {
+    "compressed_size": 322,
+    "compression": 8,
+    "crc32": 233978697,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I__2.py",
+    "size_bytes": 495
+  },
+  {
+    "compressed_size": 333,
+    "compression": 8,
+    "crc32": 2718442244,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I__3.py",
+    "size_bytes": 542
+  },
+  {
+    "compressed_size": 768,
+    "compression": 8,
+    "crc32": 3031118300,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_S_I__5.py",
+    "size_bytes": 1905
+  },
+  {
+    "compressed_size": 226,
+    "compression": 8,
+    "crc32": 2295891283,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/T_T_F_A_.py",
+    "size_bytes": 392
+  },
+  {
+    "compressed_size": 7931,
+    "compression": 8,
+    "crc32": 1108495133,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/TupleVariation.py",
+    "size_bytes": 32195
+  },
+  {
+    "compressed_size": 199,
+    "compression": 8,
+    "crc32": 11307632,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/V_A_R_C_.py",
+    "size_bytes": 289
+  },
+  {
+    "compressed_size": 2595,
+    "compression": 8,
+    "crc32": 349155461,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/V_D_M_X_.py",
+    "size_bytes": 10437
+  },
+  {
+    "compressed_size": 1572,
+    "compression": 8,
+    "crc32": 1121925636,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/V_O_R_G_.py",
+    "size_bytes": 5965
+  },
+  {
+    "compressed_size": 207,
+    "compression": 8,
+    "crc32": 4000001194,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/V_V_A_R_.py",
+    "size_bytes": 319
+  },
+  {
+    "compressed_size": 639,
+    "compression": 8,
+    "crc32": 1016684242,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/__init__.py",
+    "size_bytes": 2730
+  },
+  {
+    "compressed_size": 290,
+    "compression": 8,
+    "crc32": 2217418727,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_a_n_k_r.py",
+    "size_bytes": 483
+  },
+  {
+    "compressed_size": 2679,
+    "compression": 8,
+    "crc32": 4219870566,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_a_v_a_r.py",
+    "size_bytes": 9018
+  },
+  {
+    "compressed_size": 96,
+    "compression": 8,
+    "crc32": 2904541553,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_b_d_a_t.py",
+    "size_bytes": 124
+  },
+  {
+    "compressed_size": 2083,
+    "compression": 8,
+    "crc32": 1139743286,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_b_g_c_l.py",
+    "size_bytes": 5484
+  },
+  {
+    "compressed_size": 77,
+    "compression": 8,
+    "crc32": 1254919455,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_b_h_e_d.py",
+    "size_bytes": 108
+  },
+  {
+    "compressed_size": 101,
+    "compression": 8,
+    "crc32": 2441277993,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_b_l_o_c.py",
+    "size_bytes": 127
+  },
+  {
+    "compressed_size": 259,
+    "compression": 8,
+    "crc32": 1326955504,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_b_s_l_n.py",
+    "size_bytes": 465
+  },
+  {
+    "compressed_size": 547,
+    "compression": 8,
+    "crc32": 2208386096,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_c_i_d_g.py",
+    "size_bytes": 913
+  },
+  {
+    "compressed_size": 15390,
+    "compression": 8,
+    "crc32": 1227812373,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_c_m_a_p.py",
+    "size_bytes": 68150
+  },
+  {
+    "compressed_size": 1135,
+    "compression": 8,
+    "crc32": 4063671182,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_c_v_a_r.py",
+    "size_bytes": 3526
+  },
+  {
+    "compressed_size": 581,
+    "compression": 8,
+    "crc32": 1784715138,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_c_v_t.py",
+    "size_bytes": 1618
+  },
+  {
+    "compressed_size": 300,
+    "compression": 8,
+    "crc32": 4165302967,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_f_e_a_t.py",
+    "size_bytes": 469
+  },
+  {
+    "compressed_size": 604,
+    "compression": 8,
+    "crc32": 1596803217,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_f_p_g_m.py",
+    "size_bytes": 1633
+  },
+  {
+    "compressed_size": 2103,
+    "compression": 8,
+    "crc32": 4267398604,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_f_v_a_r.py",
+    "size_bytes": 8807
+  },
+  {
+    "compressed_size": 806,
+    "compression": 8,
+    "crc32": 4266435809,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_g_a_s_p.py",
+    "size_bytes": 2202
+  },
+  {
+    "compressed_size": 209,
+    "compression": 8,
+    "crc32": 654663577,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_g_c_i_d.py",
+    "size_bytes": 362
+  },
+  {
+    "compressed_size": 19766,
+    "compression": 8,
+    "crc32": 1323721592,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_g_l_y_f.py",
+    "size_bytes": 86445
+  },
+  {
+    "compressed_size": 3732,
+    "compression": 8,
+    "crc32": 3515335932,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_g_v_a_r.py",
+    "size_bytes": 13168
+  },
+  {
+    "compressed_size": 1402,
+    "compression": 8,
+    "crc32": 3384200440,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_h_d_m_x.py",
+    "size_bytes": 4252
+  },
+  {
+    "compressed_size": 1659,
+    "compression": 8,
+    "crc32": 1602463165,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_h_e_a_d.py",
+    "size_bytes": 4925
+  },
+  {
+    "compressed_size": 1512,
+    "compression": 8,
+    "crc32": 2662609558,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_h_h_e_a.py",
+    "size_bytes": 4766
+  },
+  {
+    "compressed_size": 1810,
+    "compression": 8,
+    "crc32": 1243387952,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_h_m_t_x.py",
+    "size_bytes": 6191
+  },
+  {
+    "compressed_size": 2853,
+    "compression": 8,
+    "crc32": 583157701,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_k_e_r_n.py",
+    "size_bytes": 10793
+  },
+  {
+    "compressed_size": 255,
+    "compression": 8,
+    "crc32": 43638015,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_l_c_a_r.py",
+    "size_bytes": 390
+  },
+  {
+    "compressed_size": 782,
+    "compression": 8,
+    "crc32": 167025759,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_l_o_c_a.py",
+    "size_bytes": 2179
+  },
+  {
+    "compressed_size": 916,
+    "compression": 8,
+    "crc32": 303907677,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_l_t_a_g.py",
+    "size_bytes": 2552
+  },
+  {
+    "compressed_size": 1495,
+    "compression": 8,
+    "crc32": 292251250,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_m_a_x_p.py",
+    "size_bytes": 5264
+  },
+  {
+    "compressed_size": 1223,
+    "compression": 8,
+    "crc32": 31905664,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_m_e_t_a.py",
+    "size_bytes": 3913
+  },
+  {
+    "compressed_size": 273,
+    "compression": 8,
+    "crc32": 1570543630,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_m_o_r_t.py",
+    "size_bytes": 487
+  },
+  {
+    "compressed_size": 310,
+    "compression": 8,
+    "crc32": 1293848759,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_m_o_r_x.py",
+    "size_bytes": 548
+  },
+  {
+    "compressed_size": 11861,
+    "compression": 8,
+    "crc32": 1703936776,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_n_a_m_e.py",
+    "size_bytes": 41265
+  },
+  {
+    "compressed_size": 254,
+    "compression": 8,
+    "crc32": 2463550346,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_o_p_b_d.py",
+    "size_bytes": 448
+  },
+  {
+    "compressed_size": 3097,
+    "compression": 8,
+    "crc32": 1768050453,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_p_o_s_t.py",
+    "size_bytes": 11671
+  },
+  {
+    "compressed_size": 271,
+    "compression": 8,
+    "crc32": 4288541881,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_p_r_e_p.py",
+    "size_bytes": 427
+  },
+  {
+    "compressed_size": 246,
+    "compression": 8,
+    "crc32": 3988421336,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_p_r_o_p.py",
+    "size_bytes": 427
+  },
+  {
+    "compressed_size": 1597,
+    "compression": 8,
+    "crc32": 1267957972,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_s_b_i_x.py",
+    "size_bytes": 4864
+  },
+  {
+    "compressed_size": 2851,
+    "compression": 8,
+    "crc32": 1471660407,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_t_r_a_k.py",
+    "size_bytes": 11349
+  },
+  {
+    "compressed_size": 1459,
+    "compression": 8,
+    "crc32": 3242191209,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_v_h_e_a.py",
+    "size_bytes": 4458
+  },
+  {
+    "compressed_size": 300,
+    "compression": 8,
+    "crc32": 3954056755,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/_v_m_t_x.py",
+    "size_bytes": 500
+  },
+  {
+    "compressed_size": 282,
+    "compression": 8,
+    "crc32": 48906064,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/asciiTable.py",
+    "size_bytes": 637
+  },
+  {
+    "compressed_size": 852,
+    "compression": 8,
+    "crc32": 3514452403,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/grUtils.py",
+    "size_bytes": 2270
+  },
+  {
+    "compressed_size": 12291,
+    "compression": 8,
+    "crc32": 9540307,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/otBase.py",
+    "size_bytes": 53237
+  },
+  {
+    "compressed_size": 21160,
+    "compression": 8,
+    "crc32": 1637844123,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/otConverters.py",
+    "size_bytes": 113137
+  },
+  {
+    "compressed_size": 20452,
+    "compression": 8,
+    "crc32": 2061226051,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/otData.py",
+    "size_bytes": 203941
+  },
+  {
+    "compressed_size": 755,
+    "compression": 8,
+    "crc32": 2248059472,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/otDataSchema.py",
+    "size_bytes": 1667
+  },
+  {
+    "compressed_size": 21293,
+    "compression": 8,
+    "crc32": 1120131448,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/otTables.py",
+    "size_bytes": 100458
+  },
+  {
+    "compressed_size": 1329,
+    "compression": 8,
+    "crc32": 1646749695,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/otTraverse.py",
+    "size_bytes": 5517
+  },
+  {
+    "compressed_size": 1513,
+    "compression": 8,
+    "crc32": 2952669946,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/sbixGlyph.py",
+    "size_bytes": 5795
+  },
+  {
+    "compressed_size": 1653,
+    "compression": 8,
+    "crc32": 3428836828,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/sbixStrike.py",
+    "size_bytes": 6651
+  },
+  {
+    "compressed_size": 1238,
+    "compression": 8,
+    "crc32": 910969873,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/table_API_readme.txt",
+    "size_bytes": 2748
+  },
+  {
+    "compressed_size": 7744,
+    "compression": 8,
+    "crc32": 394086124,
+    "external_attr": 2175008768,
+    "name": "fontTools/ttLib/tables/ttProgram.py",
+    "size_bytes": 36009
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/ufoLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 19294,
+    "compression": 8,
+    "crc32": 2676377659,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/__init__.py",
+    "size_bytes": 98982
+  },
+  {
+    "compressed_size": 2767,
+    "compression": 8,
+    "crc32": 779176872,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/converters.py",
+    "size_bytes": 13444
+  },
+  {
+    "compressed_size": 434,
+    "compression": 8,
+    "crc32": 2017831653,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/errors.py",
+    "size_bytes": 843
+  },
+  {
+    "compressed_size": 169,
+    "compression": 8,
+    "crc32": 2516250255,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/etree.py",
+    "size_bytes": 231
+  },
+  {
+    "compressed_size": 2807,
+    "compression": 8,
+    "crc32": 1094619003,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/filenames.py",
+    "size_bytes": 10654
+  },
+  {
+    "compressed_size": 15434,
+    "compression": 8,
+    "crc32": 3864134600,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/glifLib.py",
+    "size_bytes": 77495
+  },
+  {
+    "compressed_size": 1737,
+    "compression": 8,
+    "crc32": 3117807562,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/kerning.py",
+    "size_bytes": 6176
+  },
+  {
+    "compressed_size": 516,
+    "compression": 8,
+    "crc32": 3915172627,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/plistlib.py",
+    "size_bytes": 1510
+  },
+  {
+    "compressed_size": 174,
+    "compression": 8,
+    "crc32": 805138083,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/pointPen.py",
+    "size_bytes": 244
+  },
+  {
+    "compressed_size": 1194,
+    "compression": 8,
+    "crc32": 1973600877,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/utils.py",
+    "size_bytes": 3192
+  },
+  {
+    "compressed_size": 5200,
+    "compression": 8,
+    "crc32": 3102604351,
+    "external_attr": 2175008768,
+    "name": "fontTools/ufoLib/validators.py",
+    "size_bytes": 31991
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/unicodedata/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 8976,
+    "compression": 8,
+    "crc32": 1103801713,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicodedata/Blocks.py",
+    "size_bytes": 33933
+  },
+  {
+    "compressed_size": 2634,
+    "compression": 8,
+    "crc32": 4119526731,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicodedata/Mirrored.py",
+    "size_bytes": 9456
+  },
+  {
+    "compressed_size": 593,
+    "compression": 8,
+    "crc32": 2138999634,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicodedata/OTTags.py",
+    "size_bytes": 1196
+  },
+  {
+    "compressed_size": 6440,
+    "compression": 8,
+    "crc32": 1499903644,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicodedata/ScriptExtensions.py",
+    "size_bytes": 29167
+  },
+  {
+    "compressed_size": 28496,
+    "compression": 8,
+    "crc32": 1548394284,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicodedata/Scripts.py",
+    "size_bytes": 132341
+  },
+  {
+    "compressed_size": 3186,
+    "compression": 8,
+    "crc32": 2917886391,
+    "external_attr": 2175008768,
+    "name": "fontTools/unicodedata/__init__.py",
+    "size_bytes": 9084
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/varLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 16195,
+    "compression": 8,
+    "crc32": 1336893219,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/__init__.py",
+    "size_bytes": 56768
+  },
+  {
+    "compressed_size": 85,
+    "compression": 8,
+    "crc32": 440339555,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/__main__.py",
+    "size_bytes": 94
+  },
+  {
+    "compressed_size": 86,
+    "compression": 8,
+    "crc32": 3137796396,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avarPlanner.py",
+    "size_bytes": 109
+  },
+  {
+    "compressed_size": 1682,
+    "compression": 8,
+    "crc32": 535237843,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/builder.py",
+    "size_bytes": 6609
+  },
+  {
+    "compressed_size": 6294,
+    "compression": 8,
+    "crc32": 2262509311,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/cff.py",
+    "size_bytes": 22900
+  },
+  {
+    "compressed_size": 1834,
+    "compression": 8,
+    "crc32": 3676459318,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/errors.py",
+    "size_bytes": 6934
+  },
+  {
+    "compressed_size": 6840,
+    "compression": 8,
+    "crc32": 1613239639,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/featureVars.py",
+    "size_bytes": 26180
+  },
+  {
+    "compressed_size": 1337,
+    "compression": 8,
+    "crc32": 3989801688,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/hvar.py",
+    "size_bytes": 3695
+  },
+  {
+    "compressed_size": 9410,
+    "compression": 8,
+    "crc32": 2369126978,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/interpolatable.py",
+    "size_bytes": 45380
+  },
+  {
+    "compressed_size": 3441,
+    "compression": 8,
+    "crc32": 1448918716,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/interpolatableHelpers.py",
+    "size_bytes": 10286
+  },
+  {
+    "compressed_size": 7915,
+    "compression": 8,
+    "crc32": 2595738071,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/interpolatablePlot.py",
+    "size_bytes": 44272
+  },
+  {
+    "compressed_size": 840,
+    "compression": 8,
+    "crc32": 2052863525,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/interpolatableTestContourOrder.py",
+    "size_bytes": 2970
+  },
+  {
+    "compressed_size": 1489,
+    "compression": 8,
+    "crc32": 2155392977,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/interpolatableTestStartingPoint.py",
+    "size_bytes": 4364
+  },
+  {
+    "compressed_size": 1421,
+    "compression": 8,
+    "crc32": 3904122369,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/interpolate_layout.py",
+    "size_bytes": 3689
+  },
+  {
+    "compressed_size": 142312,
+    "compression": 8,
+    "crc32": 1353319897,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/iup.c",
+    "size_bytes": 1013553
+  },
+  {
+    "compressed_size": 546388,
+    "compression": 8,
+    "crc32": 3411267435,
+    "external_attr": 2179792896,
+    "name": "fontTools/varLib/iup.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 1973712
+  },
+  {
+    "compressed_size": 4453,
+    "compression": 8,
+    "crc32": 3366184247,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/iup.py",
+    "size_bytes": 14983
+  },
+  {
+    "compressed_size": 14533,
+    "compression": 8,
+    "crc32": 3714809082,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/merger.py",
+    "size_bytes": 60818
+  },
+  {
+    "compressed_size": 5799,
+    "compression": 8,
+    "crc32": 3948345792,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/models.py",
+    "size_bytes": 22909
+  },
+  {
+    "compressed_size": 2248,
+    "compression": 8,
+    "crc32": 1032714562,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/multiVarStore.py",
+    "size_bytes": 9404
+  },
+  {
+    "compressed_size": 6156,
+    "compression": 8,
+    "crc32": 4065145906,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/mutator.py",
+    "size_bytes": 19803
+  },
+  {
+    "compressed_size": 583,
+    "compression": 8,
+    "crc32": 1243406864,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/mvar.py",
+    "size_bytes": 2449
+  },
+  {
+    "compressed_size": 2054,
+    "compression": 8,
+    "crc32": 3120662011,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/plot.py",
+    "size_bytes": 7494
+  },
+  {
+    "compressed_size": 1517,
+    "compression": 8,
+    "crc32": 3518138929,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/stat.py",
+    "size_bytes": 4811
+  },
+  {
+    "compressed_size": 9149,
+    "compression": 8,
+    "crc32": 2957789317,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/varStore.py",
+    "size_bytes": 32419
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/varLib/avar/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avar/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 693,
+    "compression": 8,
+    "crc32": 2925184007,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avar/__main__.py",
+    "size_bytes": 1770
+  },
+  {
+    "compressed_size": 799,
+    "compression": 8,
+    "crc32": 3963805049,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avar/build.py",
+    "size_bytes": 2089
+  },
+  {
+    "compressed_size": 1206,
+    "compression": 8,
+    "crc32": 3019704753,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avar/map.py",
+    "size_bytes": 3482
+  },
+  {
+    "compressed_size": 5718,
+    "compression": 8,
+    "crc32": 1339784206,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avar/plan.py",
+    "size_bytes": 27354
+  },
+  {
+    "compressed_size": 3271,
+    "compression": 8,
+    "crc32": 230818869,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/avar/unbuild.py",
+    "size_bytes": 10831
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/varLib/instancer/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 31169,
+    "compression": 8,
+    "crc32": 3697778738,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/instancer/__init__.py",
+    "size_bytes": 117832
+  },
+  {
+    "compressed_size": 91,
+    "compression": 8,
+    "crc32": 3045185654,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/instancer/__main__.py",
+    "size_bytes": 104
+  },
+  {
+    "compressed_size": 2020,
+    "compression": 8,
+    "crc32": 391409828,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/instancer/featureVars.py",
+    "size_bytes": 7109
+  },
+  {
+    "compressed_size": 4583,
+    "compression": 8,
+    "crc32": 2743845576,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/instancer/names.py",
+    "size_bytes": 14950
+  },
+  {
+    "compressed_size": 2893,
+    "compression": 8,
+    "crc32": 2419950021,
+    "external_attr": 2175008768,
+    "name": "fontTools/varLib/instancer/solver.py",
+    "size_bytes": 11002
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fontTools/voltLib/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 130,
+    "compression": 8,
+    "crc32": 2305098492,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/__init__.py",
+    "size_bytes": 151
+  },
+  {
+    "compressed_size": 1977,
+    "compression": 8,
+    "crc32": 748249615,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/__main__.py",
+    "size_bytes": 5928
+  },
+  {
+    "compressed_size": 2770,
+    "compression": 8,
+    "crc32": 3842322690,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/ast.py",
+    "size_bytes": 13300
+  },
+  {
+    "compressed_size": 164,
+    "compression": 8,
+    "crc32": 2069226169,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/error.py",
+    "size_bytes": 395
+  },
+  {
+    "compressed_size": 945,
+    "compression": 8,
+    "crc32": 1767992431,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/lexer.py",
+    "size_bytes": 3368
+  },
+  {
+    "compressed_size": 4649,
+    "compression": 8,
+    "crc32": 1645297217,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/parser.py",
+    "size_bytes": 25396
+  },
+  {
+    "compressed_size": 8231,
+    "compression": 8,
+    "crc32": 4047199626,
+    "external_attr": 2175008768,
+    "name": "fontTools/voltLib/voltToFea.py",
+    "size_bytes": 36549
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.data/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.data/data/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.data/data/share/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.data/data/share/man/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.data/data/share/man/man1/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2271,
+    "compression": 8,
+    "crc32": 3321409378,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.data/data/share/man/man1/ttx.1",
+    "size_bytes": 5377
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.dist-info/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 46947,
+    "compression": 8,
+    "crc32": 3750209373,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.dist-info/METADATA",
+    "size_bytes": 130102
+  },
+  {
+    "compressed_size": 117,
+    "compression": 8,
+    "crc32": 1772479065,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.dist-info/WHEEL",
+    "size_bytes": 151
+  },
+  {
+    "compressed_size": 84,
+    "compression": 8,
+    "crc32": 3300380186,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.dist-info/entry_points.txt",
+    "size_bytes": 147
+  },
+  {
+    "compressed_size": 12,
+    "compression": 8,
+    "crc32": 735946946,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.dist-info/top_level.txt",
+    "size_bytes": 10
+  },
+  {
+    "compressed_size": 16277,
+    "compression": 8,
+    "crc32": 2472565493,
+    "external_attr": 2176057344,
+    "name": "fonttools-4.66.1.dist-info/RECORD",
+    "size_bytes": 32241
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "fonttools-4.66.1.dist-info/licenses/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 633,
+    "compression": 8,
+    "crc32": 1977450014,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.dist-info/licenses/LICENSE",
+    "size_bytes": 1072
+  },
+  {
+    "compressed_size": 6898,
+    "compression": 8,
+    "crc32": 2547056207,
+    "external_attr": 2175008768,
+    "name": "fonttools-4.66.1.dist-info/licenses/LICENSE.external",
+    "size_bytes": 20022
+  }
+]

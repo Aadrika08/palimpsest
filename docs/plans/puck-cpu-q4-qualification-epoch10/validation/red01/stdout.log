@@ -1,0 +1,1543 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.....FFFFFF
+=================================== FAILURES ===================================
+______ test10_preserves_exact_preparation_projection_candidate_and_limits ______
+
+    def test10_preserves_exact_preparation_projection_candidate_and_limits():
+        m,config,blobs,old,_,candidate_d=acceptance10_case()
+>       prior,prepared=validate_both(m,config,blobs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_ test10_refuses_missing_preparation_relative_source_changes[scripts/qualify_puck_cpu_held_runtime.py] _
+
+path = 'scripts/qualify_puck_cpu_held_runtime.py'
+
+    @pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES)
+    def test10_refuses_missing_preparation_relative_source_changes(path):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_ test10_refuses_missing_preparation_relative_source_changes[scripts/puck_worker_bootstrap.py] _
+
+path = 'scripts/puck_worker_bootstrap.py'
+
+    @pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES)
+    def test10_refuses_missing_preparation_relative_source_changes(path):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_ test10_refuses_missing_preparation_relative_source_changes[src/palimpsest/puck_dependency_bindings.py] _
+
+path = 'src/palimpsest/puck_dependency_bindings.py'
+
+    @pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES)
+    def test10_refuses_missing_preparation_relative_source_changes(path):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_ test10_refuses_missing_preparation_relative_source_changes[src/palimpsest/puck_dependency_imports.py] _
+
+path = 'src/palimpsest/puck_dependency_imports.py'
+
+    @pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES)
+    def test10_refuses_missing_preparation_relative_source_changes(path):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_ test10_refuses_missing_preparation_relative_source_changes[src/palimpsest/puck_runtime_qualification.py] _
+
+path = 'src/palimpsest/puck_runtime_qualification.py'
+
+    @pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES)
+    def test10_refuses_missing_preparation_relative_source_changes(path):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+__________________ test10_refuses_an_additional_source_change __________________
+
+    def test10_refuses_an_additional_source_change():
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+________ test10_refuses_identity_aliases_and_policy_expansion[old-kind] ________
+
+defect = 'old-kind'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______ test10_refuses_identity_aliases_and_policy_expansion[old-version] _______
+
+defect = 'old-version'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_________ test10_refuses_identity_aliases_and_policy_expansion[old-id] _________
+
+defect = 'old-id'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______ test10_refuses_identity_aliases_and_policy_expansion[bool-version] ______
+
+defect = 'bool-version'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+________ test10_refuses_identity_aliases_and_policy_expansion[bool-id] _________
+
+defect = 'bool-id'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+________ test10_refuses_identity_aliases_and_policy_expansion[prepare] _________
+
+defect = 'prepare'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_________ test10_refuses_identity_aliases_and_policy_expansion[limits] _________
+
+defect = 'limits'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_________ test10_refuses_identity_aliases_and_policy_expansion[roster] _________
+
+defect = 'roster'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______ test10_refuses_identity_aliases_and_policy_expansion[environment] _______
+
+defect = 'environment'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______ test10_refuses_identity_aliases_and_policy_expansion[extra-field] _______
+
+defect = 'extra-field'
+
+    @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits','roster','environment','extra-field'])
+    def test10_refuses_identity_aliases_and_policy_expansion(defect):
+>       m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_____________ test10_preserves_every_noncandidate_input[inventory] _____________
+
+role = 'inventory'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______________ test10_preserves_every_noncandidate_input[layout] _______________
+
+role = 'layout'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______________ test10_preserves_every_noncandidate_input[native] _______________
+
+role = 'native'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_____________ test10_preserves_every_noncandidate_input[baseline] ______________
+
+role = 'baseline'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_____________ test10_preserves_every_noncandidate_input[generated] _____________
+
+role = 'generated'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+__________ test10_preserves_every_noncandidate_input[accepted_result] __________
+
+role = 'accepted_result'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_________ test10_preserves_every_noncandidate_input[accepted_snapshot] _________
+
+role = 'accepted_snapshot'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+__________ test10_preserves_every_noncandidate_input[accepted_audit] ___________
+
+role = 'accepted_audit'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+______ test10_preserves_every_noncandidate_input[accepted_configuration] _______
+
+role = 'accepted_configuration'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+__________ test10_preserves_every_noncandidate_input[accepted_index] ___________
+
+role = 'accepted_index'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_____ test10_preserves_every_noncandidate_input[observation_configuration] _____
+
+role = 'observation_configuration'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+________ test10_preserves_every_noncandidate_input[observation_report] _________
+
+role = 'observation_report'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+________ test10_preserves_every_noncandidate_input[observation_result] _________
+
+role = 'observation_result'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_________ test10_preserves_every_noncandidate_input[observation_audit] _________
+
+role = 'observation_audit'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_________ test10_preserves_every_noncandidate_input[observation_index] _________
+
+role = 'observation_index'
+
+    @pytest.mark.parametrize('role',OTHER_INPUTS)
+    def test10_preserves_every_noncandidate_input(role):
+>       m,config,blobs,*_=acceptance10_case();prior,_=validate_both(m,config,blobs)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 10, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qua....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7,8,9)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:244: ValueError
+_ test10_worker_registration_requires_explicit_q4_selection_and_keeps_default_q3 _
+
+    def test10_worker_registration_requires_explicit_q4_selection_and_keeps_default_q3():
+        m,_,_=result_case()
+        files=[dict(path=p,size_bytes=(m.ROOT/p).stat().st_size,sha256=m.digest((m.ROOT/p).read_bytes())) for p in m.WORKER_SOURCES]
+        old,_=m.worker_registration(files,b'{}',negative_imports=['org'])
+>       selected,_=m.worker_registration(files,b'{}',negative_imports=['org'],qualification_version=4)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: worker_registration() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:81: TypeError
+_______ test10_parent_binds_worker_result_to_selected_qualification[4-4] _______
+
+expected = 4, observed = 4
+
+    @pytest.mark.parametrize('expected,observed',[(4,4),(3,3),(4,3),(3,4),(4,True)])
+    def test10_parent_binds_worker_result_to_selected_qualification(expected,observed):
+        m,deps,result=result_case();result['entry_result']['qualification_version']=observed
+        def check():
+            m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+                dependencies=deps,negative_imports=['org'],qualification_version=expected)
+>       if expected==observed and type(observed) is int:check()
+                                                        ^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check():
+>       m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+            dependencies=deps,negative_imports=['org'],qualification_version=expected)
+E       TypeError: validate_worker_result() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:95: TypeError
+_______ test10_parent_binds_worker_result_to_selected_qualification[3-3] _______
+
+expected = 3, observed = 3
+
+    @pytest.mark.parametrize('expected,observed',[(4,4),(3,3),(4,3),(3,4),(4,True)])
+    def test10_parent_binds_worker_result_to_selected_qualification(expected,observed):
+        m,deps,result=result_case();result['entry_result']['qualification_version']=observed
+        def check():
+            m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+                dependencies=deps,negative_imports=['org'],qualification_version=expected)
+>       if expected==observed and type(observed) is int:check()
+                                                        ^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check():
+>       m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+            dependencies=deps,negative_imports=['org'],qualification_version=expected)
+E       TypeError: validate_worker_result() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:95: TypeError
+_______ test10_parent_binds_worker_result_to_selected_qualification[4-3] _______
+
+expected = 4, observed = 3
+
+    @pytest.mark.parametrize('expected,observed',[(4,4),(3,3),(4,3),(3,4),(4,True)])
+    def test10_parent_binds_worker_result_to_selected_qualification(expected,observed):
+        m,deps,result=result_case();result['entry_result']['qualification_version']=observed
+        def check():
+            m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+                dependencies=deps,negative_imports=['org'],qualification_version=expected)
+        if expected==observed and type(observed) is int:check()
+        else:
+>           with pytest.raises(ValueError):check()
+                                           ^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check():
+>       m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+            dependencies=deps,negative_imports=['org'],qualification_version=expected)
+E       TypeError: validate_worker_result() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:95: TypeError
+_______ test10_parent_binds_worker_result_to_selected_qualification[3-4] _______
+
+expected = 3, observed = 4
+
+    @pytest.mark.parametrize('expected,observed',[(4,4),(3,3),(4,3),(3,4),(4,True)])
+    def test10_parent_binds_worker_result_to_selected_qualification(expected,observed):
+        m,deps,result=result_case();result['entry_result']['qualification_version']=observed
+        def check():
+            m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+                dependencies=deps,negative_imports=['org'],qualification_version=expected)
+        if expected==observed and type(observed) is int:check()
+        else:
+>           with pytest.raises(ValueError):check()
+                                           ^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check():
+>       m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+            dependencies=deps,negative_imports=['org'],qualification_version=expected)
+E       TypeError: validate_worker_result() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:95: TypeError
+_____ test10_parent_binds_worker_result_to_selected_qualification[4-True] ______
+
+expected = 4, observed = True
+
+    @pytest.mark.parametrize('expected,observed',[(4,4),(3,3),(4,3),(3,4),(4,True)])
+    def test10_parent_binds_worker_result_to_selected_qualification(expected,observed):
+        m,deps,result=result_case();result['entry_result']['qualification_version']=observed
+        def check():
+            m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+                dependencies=deps,negative_imports=['org'],qualification_version=expected)
+        if expected==observed and type(observed) is int:check()
+        else:
+>           with pytest.raises(ValueError):check()
+                                           ^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check():
+>       m.validate_worker_result(result,registration_sha256='a'*64,dependency_sha256='b'*64,
+            dependencies=deps,negative_imports=['org'],qualification_version=expected)
+E       TypeError: validate_worker_result() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:95: TypeError
+________ test10_observer_reserves_once_without_modifying_consumed09[0] _________
+
+tmp_path = PosixPath('/tmp/q4-epoch10-red01/test10_observer_reserves_once_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750beb10c190>
+code = 0
+
+    @pytest.mark.parametrize('code',[0,7])
+    def test10_observer_reserves_once_without_modifying_consumed09(tmp_path,monkeypatch,code):
+        m,path,_=observer_setup(tmp_path,monkeypatch,'import sys\nprint("AUTHORED10 transport")\nsys.exit('+str(code)+')\n')
+        config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v10',version=10,allocation_id=10,phase='qualify')
+        raw=m.canonical(config);path.write_bytes(raw)
+        old=tmp_path/'runs/puck-cpu-held-qualification-09';(old/'logs').mkdir(parents=True)
+        (old/'logs/stdout.log').write_bytes(b'');(old/'logs/stderr.log').write_bytes(b'AUTHORED consumed09\n')
+        previous={p:p.read_bytes() for p in old.rglob('*') if p.is_file()}
+>       result=m.observe(path,m.hashlib.sha256(raw).hexdigest())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+configuration = PosixPath('/tmp/q4-epoch10-red01/test10_observer_reserves_once_0/configuration.json')
+expected_sha256 = 'a6c70756bfce00ddfec5e347f1e3b323528c0c27c36c0b064aea1f70b8b4a81c'
+
+    def observe(configuration,expected_sha256):
+        started=time.monotonic();configuration=Path(configuration)
+        if not configuration.is_absolute() or not configuration.is_relative_to(ROOT):
+            raise ValueError('CPU configuration must be inside its exact project root')
+        raw=read(configuration,1024**2)
+        if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
+        config=json.loads(raw)
+        if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+        phase=config.get('phase')
+        version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7,'puck-cpu-held-runtime-allocation-v8':8,'puck-cpu-held-runtime-allocation-v9':9}.get(config.get('kind'))
+        amended=version is not None
+        if amended:
+            if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
+                    or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
+                raise ValueError('Exact amended qualification allocation identity required')
+            output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07',8:'runs/puck-cpu-held-qualification-08',9:'runs/puck-cpu-held-qualification-09'}[version]
+        else:
+            if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+>               raise ValueError('Exact CPU parent allocation root and phase required')
+E               ValueError: Exact CPU parent allocation root and phase required
+
+scripts/observe_puck_cpu_held_allocation.py:67: ValueError
+________ test10_observer_reserves_once_without_modifying_consumed09[7] _________
+
+tmp_path = PosixPath('/tmp/q4-epoch10-red01/test10_observer_reserves_once_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750beaf26710>
+code = 7
+
+    @pytest.mark.parametrize('code',[0,7])
+    def test10_observer_reserves_once_without_modifying_consumed09(tmp_path,monkeypatch,code):
+        m,path,_=observer_setup(tmp_path,monkeypatch,'import sys\nprint("AUTHORED10 transport")\nsys.exit('+str(code)+')\n')
+        config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v10',version=10,allocation_id=10,phase='qualify')
+        raw=m.canonical(config);path.write_bytes(raw)
+        old=tmp_path/'runs/puck-cpu-held-qualification-09';(old/'logs').mkdir(parents=True)
+        (old/'logs/stdout.log').write_bytes(b'');(old/'logs/stderr.log').write_bytes(b'AUTHORED consumed09\n')
+        previous={p:p.read_bytes() for p in old.rglob('*') if p.is_file()}
+>       result=m.observe(path,m.hashlib.sha256(raw).hexdigest())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment10.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+configuration = PosixPath('/tmp/q4-epoch10-red01/test10_observer_reserves_once_1/configuration.json')
+expected_sha256 = 'c9a87f43083427874fe3c903e4122c97b008e64c1a4ed529a8434880b44154ab'
+
+    def observe(configuration,expected_sha256):
+        started=time.monotonic();configuration=Path(configuration)
+        if not configuration.is_absolute() or not configuration.is_relative_to(ROOT):
+            raise ValueError('CPU configuration must be inside its exact project root')
+        raw=read(configuration,1024**2)
+        if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
+        config=json.loads(raw)
+        if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+        phase=config.get('phase')
+        version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7,'puck-cpu-held-runtime-allocation-v8':8,'puck-cpu-held-runtime-allocation-v9':9}.get(config.get('kind'))
+        amended=version is not None
+        if amended:
+            if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
+                    or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
+                raise ValueError('Exact amended qualification allocation identity required')
+            output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07',8:'runs/puck-cpu-held-qualification-08',9:'runs/puck-cpu-held-qualification-09'}[version]
+        else:
+            if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+>               raise ValueError('Exact CPU parent allocation root and phase required')
+E               ValueError: Exact CPU parent allocation root and phase required
+
+scripts/observe_puck_cpu_held_allocation.py:67: ValueError
+________ test10_refuses_unsupported_helper_qualification_versions[True] ________
+
+selected = True
+
+    @pytest.mark.parametrize('selected',[True,3.0,5,None,'4'])
+    def test10_refuses_unsupported_helper_qualification_versions(selected):
+        m,deps,result=result_case()
+        files=[dict(path=p,size_bytes=(m.ROOT/p).stat().st_size,sha256=m.digest((m.ROOT/p).read_bytes())) for p in m.WORKER_SOURCES]
+        with pytest.raises(ValueError):
+>           m.worker_registration(files,b'{}',negative_imports=['org'],qualification_version=selected)
+E           TypeError: worker_registration() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:134: TypeError
+________ test10_refuses_unsupported_helper_qualification_versions[3.0] _________
+
+selected = 3.0
+
+    @pytest.mark.parametrize('selected',[True,3.0,5,None,'4'])
+    def test10_refuses_unsupported_helper_qualification_versions(selected):
+        m,deps,result=result_case()
+        files=[dict(path=p,size_bytes=(m.ROOT/p).stat().st_size,sha256=m.digest((m.ROOT/p).read_bytes())) for p in m.WORKER_SOURCES]
+        with pytest.raises(ValueError):
+>           m.worker_registration(files,b'{}',negative_imports=['org'],qualification_version=selected)
+E           TypeError: worker_registration() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:134: TypeError
+_________ test10_refuses_unsupported_helper_qualification_versions[5] __________
+
+selected = 5
+
+    @pytest.mark.parametrize('selected',[True,3.0,5,None,'4'])
+    def test10_refuses_unsupported_helper_qualification_versions(selected):
+        m,deps,result=result_case()
+        files=[dict(path=p,size_bytes=(m.ROOT/p).stat().st_size,sha256=m.digest((m.ROOT/p).read_bytes())) for p in m.WORKER_SOURCES]
+        with pytest.raises(ValueError):
+>           m.worker_registration(files,b'{}',negative_imports=['org'],qualification_version=selected)
+E           TypeError: worker_registration() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:134: TypeError
+________ test10_refuses_unsupported_helper_qualification_versions[None] ________
+
+selected = None
+
+    @pytest.mark.parametrize('selected',[True,3.0,5,None,'4'])
+    def test10_refuses_unsupported_helper_qualification_versions(selected):
+        m,deps,result=result_case()
+        files=[dict(path=p,size_bytes=(m.ROOT/p).stat().st_size,sha256=m.digest((m.ROOT/p).read_bytes())) for p in m.WORKER_SOURCES]
+        with pytest.raises(ValueError):
+>           m.worker_registration(files,b'{}',negative_imports=['org'],qualification_version=selected)
+E           TypeError: worker_registration() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:134: TypeError
+_________ test10_refuses_unsupported_helper_qualification_versions[4] __________
+
+selected = '4'
+
+    @pytest.mark.parametrize('selected',[True,3.0,5,None,'4'])
+    def test10_refuses_unsupported_helper_qualification_versions(selected):
+        m,deps,result=result_case()
+        files=[dict(path=p,size_bytes=(m.ROOT/p).stat().st_size,sha256=m.digest((m.ROOT/p).read_bytes())) for p in m.WORKER_SOURCES]
+        with pytest.raises(ValueError):
+>           m.worker_registration(files,b'{}',negative_imports=['org'],qualification_version=selected)
+E           TypeError: worker_registration() got an unexpected keyword argument 'qualification_version'
+
+tests/test_puck_cpu_held_amendment10.py:134: TypeError
+____ test_authored10_binds_fifth_source_diagnostics_and_independent_audits _____
+
+tmp_path = PosixPath('/tmp/q4-epoch10-red01/test_authored10_binds_fifth_so0')
+
+    def test_authored10_binds_fifth_source_diagnostics_and_independent_audits(tmp_path):
+        before=len(os.listdir('/proc/self/fd'))
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_q4epoch10_auditor')
+>       with publication05_fixture(tmp_path,pillow_origins=True,phase_trace=True) as case:
+
+tests/test_puck_cpu_held_amendment10_integration.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/q4-epoch10-red01/test_authored10_binds_fifth_so0')
+
+    @contextmanager
+    def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False,phase_trace=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/.codex/worktrees/293b/brain/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/q4-epoch10-red01/test_authored10_binds_fifth_so0').is_relative_to
+E        +      where PosixPath('/tmp/q4-epoch10-red01/test_authored10_binds_fifth_so0') = resolve()
+E        +        where resolve = PosixPath('/tmp/q4-epoch10-red01/test_authored10_binds_fifth_so0').resolve
+E        +    and   PosixPath('/home/utkarsh/.codex/worktrees/293b/brain/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/.codex/worktrees/293b/brain') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment05_integration.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_exact_preparation_projection_candidate_and_limits
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_missing_preparation_relative_source_changes[scripts/qualify_puck_cpu_held_runtime.py]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_missing_preparation_relative_source_changes[scripts/puck_worker_bootstrap.py]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_missing_preparation_relative_source_changes[src/palimpsest/puck_dependency_bindings.py]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_missing_preparation_relative_source_changes[src/palimpsest/puck_dependency_imports.py]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_missing_preparation_relative_source_changes[src/palimpsest/puck_runtime_qualification.py]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_an_additional_source_change
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[old-kind]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[old-version]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[old-id]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[bool-version]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[bool-id]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[prepare]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[limits]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[roster]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[environment]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_identity_aliases_and_policy_expansion[extra-field]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[inventory]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[layout]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[native]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[baseline]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[generated]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[accepted_result]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[accepted_snapshot]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[accepted_audit]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[accepted_configuration]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[accepted_index]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[observation_configuration]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[observation_report]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[observation_result]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[observation_audit]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_preserves_every_noncandidate_input[observation_index]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_worker_registration_requires_explicit_q4_selection_and_keeps_default_q3
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_parent_binds_worker_result_to_selected_qualification[4-4]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_parent_binds_worker_result_to_selected_qualification[3-3]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_parent_binds_worker_result_to_selected_qualification[4-3]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_parent_binds_worker_result_to_selected_qualification[3-4]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_parent_binds_worker_result_to_selected_qualification[4-True]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_observer_reserves_once_without_modifying_consumed09[0]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_observer_reserves_once_without_modifying_consumed09[7]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_unsupported_helper_qualification_versions[True]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_unsupported_helper_qualification_versions[3.0]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_unsupported_helper_qualification_versions[5]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_unsupported_helper_qualification_versions[None]
+FAILED tests/test_puck_cpu_held_amendment10.py::test10_refuses_unsupported_helper_qualification_versions[4]
+FAILED tests/test_puck_cpu_held_amendment10_integration.py::test_authored10_binds_fifth_source_diagnostics_and_independent_audits
+46 failed, 5 passed in 2.17s

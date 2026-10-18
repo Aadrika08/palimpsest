@@ -78,6 +78,20 @@ def _teacher_fingerprint(teacher):
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
+def _make_manual_environment(repo_root, profile, texture):
+    """Preserve the pinned runner's environment without its training imports."""
+    from .flynn import import_upstream
+
+    environment = import_upstream(repo_root, "environment.mujoco_two_cam_env_random_obstacles")
+    return environment.MuJoCoTwoCamEnv(
+        width=profile['width'], height=profile['height'],
+        max_episode_steps=profile['max_steps'], n_obstacles=profile['n_obstacles'],
+        arena_half_extent=profile['arena'], render_mode=None,
+        end_on_collision=False, goal_bonus=0, contact_penalty=0,
+        time_penalty=.01, prog_scale=10., ctrl_penalty=.001,
+        texture_mode=texture)
+
+
 class Engine:
     MAX_QUEUE = 128
     MAX_IDS = 4096
@@ -240,10 +254,19 @@ class Engine:
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
              storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None,
-             restore_snapshot=None, replace_controller=False, memory_u=None):
-        """Create an actual pinned runtime. The caller owns its process watchdog."""
+             restore_snapshot=None, replace_controller=False, memory_u=None, diagnostics=None):
+        """Create an actual pinned runtime. The caller owns its process watchdog.
+
+        ``diagnostics`` defaults to the ambient doctor. A held worker instead passes
+        its exact HeldProvenance record, which replaces doctor and inspects nothing.
+        """
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
-        from .doctor import diagnose
+        if diagnostics is None:
+            from .doctor import diagnose
+        else:
+            from .held_provenance import HeldProvenance
+            if type(diagnostics) is not HeldProvenance:
+                raise ValueError("diagnostics must be an exact held provenance record")
         from .records import RunWriter
         from .profiles import validate, configure_world, POPULATIONS
 
@@ -317,7 +340,7 @@ class Engine:
         }, max_bytes=max_bytes, storage_budget=storage_budget)
         env = None
         try:
-            diagnosis = diagnose(root, assets)
+            diagnosis = diagnose(root, assets) if diagnostics is None else diagnostics.report()
             writer.event("diagnostics", run_id=writer.manifest["run_id"], report=diagnosis)
             required = [check for check in diagnosis["checks"]
                         if check["name"] in {"python", "upstream"} or check["name"].startswith("dependency:")]
@@ -332,8 +355,11 @@ class Engine:
             np.random.seed(seed)
             torch.manual_seed(seed)
             torch.set_num_threads(2)
-            reference = import_upstream(root, "run_connectome_rnn_checkpoint")
-            env = reference._make_env(None, profile['n_obstacles'], texture_mode=texture)
+            if controller == "manual":
+                env = _make_manual_environment(root, profile, texture)
+            else:
+                reference = import_upstream(root, "run_connectome_rnn_checkpoint")
+                env = reference._make_env(None, profile['n_obstacles'], texture_mode=texture)
             configure_world(env)
             policy = teacher = None
             if controller == "flynn":

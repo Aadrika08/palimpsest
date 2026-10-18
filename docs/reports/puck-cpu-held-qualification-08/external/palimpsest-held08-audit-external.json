@@ -1,0 +1,46 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08.json",
+    "--sha256",
+    "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli-transport.json",
+    "--transport-sha256",
+    "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-08-audit-01.json"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 0.11596581200137734,
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "external_deadline_seconds": 145,
+  "implicit_retry": false,
+  "kind": "puck-cpu-held08-external-transport-v1",
+  "normal_exit": true,
+  "phase": "audit",
+  "returncode": 1,
+  "runtime_qualified": false,
+  "stderr": {
+    "path": "/tmp/palimpsest-held08-audit-external.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-held08-audit-external.stdout",
+    "sha256": "93fb936dcf82bcf46a592026e8744c5900bf5bd9b283465d5e5dfad13d346ba9",
+    "size_bytes": 616
+  },
+  "study_authorized": false,
+  "timed_out": false
+}

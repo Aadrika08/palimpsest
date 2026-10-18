@@ -1,0 +1,29 @@
+test_changed07_transport_is_refused (__main__.HistoryChecks.test_changed07_transport_is_refused) ... ok
+test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused) ... ok
+test_fabricated07_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated07_baseline_after_is_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused) ... ok
+test_fabricated08_result_is_refused (__main__.HistoryChecks.test_fabricated08_result_is_refused) ... ok
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt) ... ok
+test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes) ... ERROR
+
+======================================================================
+ERROR: test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held09-history-check.py", line 69, in test_manifest_first_reads_preserve_historical07_and08_stream_bytes
+    self.assertEqual(control.check_consumed08(held)['status'],'FAILED_CONSUMED')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-admission.py", line 119, in check_consumed08
+    raw=held.file(ROOT/row['path'],row,16*1024**2,raw=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py", line 131, in file
+    if raw and row['raw'] is None:raise ValueError('Repeated metadata/data role differs')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Repeated metadata/data role differs
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.012s
+
+FAILED (errors=1)

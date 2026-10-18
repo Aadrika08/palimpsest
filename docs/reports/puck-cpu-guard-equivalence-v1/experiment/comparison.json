@@ -1,0 +1,61 @@
+{
+  "actual10_invoked": false,
+  "all_seven_release_gates_open": true,
+  "baseline": {
+    "pytest_summary": "7 passed, 3 deselected in 10.01s",
+    "source_pins": 13,
+    "stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stdout": {
+      "sha256": "dbc0aa88140d2c01f138ee5be8a75e11819ab909273ff2c2f19e081904b50b37",
+      "size_bytes": 2579
+    },
+    "terminal": {
+      "elapsed_seconds": 10.286118633986916,
+      "exit_code": 0,
+      "normal_outer_return": true,
+      "phase": "baseline01",
+      "production_unchanged": true
+    }
+  },
+  "candidate": {
+    "pytest_summary": "1 failed, 6 passed, 3 deselected in 9.73s",
+    "source_pins": 15,
+    "stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stdout": {
+      "sha256": "98fa5fe189c9883ed2299ed83479e7c69551faf5251e84c02034f8ecb76a7925",
+      "size_bytes": 5731
+    },
+    "terminal": {
+      "elapsed_seconds": 9.983805324998684,
+      "exit_code": 1,
+      "normal_outer_return": true,
+      "phase": "candidate01",
+      "production_unchanged": true
+    }
+  },
+  "collection_authorized": false,
+  "failed_case": "test_source_allowance_reflected_union_failure_is_not_skipped",
+  "kind": "guard-equivalence-authored-comparison-v1",
+  "limitations": [
+    "Authored source/callback counterexample only; no installed vendor imports or actual qualification.",
+    "No claim that all compatible optimizations are impossible; this rejects one unconditional in-place candidate.",
+    "Aggregate fixture evidence includes the new worker stream, not every private fixture tree or independent installed-runtime cleanup proof."
+  ],
+  "observed_break": "Original reflected union raises SOURCE_UNION_REFLECTED_FAILURE; in-place candidate skips it and reaches SOURCE_UNION_REFLECTED_FAILURE_SKIPPED. Test asserts original exception, first failure identity, owned closure and continued poison.",
+  "production_changed": false,
+  "production_sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "shared_source_pins_identical": 13,
+  "status": "CANDIDATE_REJECTED_SEMANTIC_MISMATCH",
+  "study_authorized": false,
+  "test_first_commit": "fb20e74",
+  "timing_workload_executed": false,
+  "timing_workload_skipped_reason": "Semantic rejection precedes performance admission; batch wall time is not a guard speed measurement."
+}

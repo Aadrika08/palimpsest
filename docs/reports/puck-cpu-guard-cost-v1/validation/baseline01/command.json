@@ -1,0 +1,48 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "60s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-cost-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-s",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-cost-baseline01",
+    "tests/test_puck_guard_cost.py"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+    "tests/test_puck_guard_cost.py": "0f3d4ad250dc6662132d923d20abe99416869d0eb2bfec25d8a0c653501c3874",
+    "tests/test_puck_worker_dependencies.py": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+    "tests/test_puck_worker_bootstrap.py": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5",
+    "src/palimpsest/puck_dependency_imports.py": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b"
+  },
+  "scope": "Authored cache workload and refusal checks only; no installed runtime qualification."
+}

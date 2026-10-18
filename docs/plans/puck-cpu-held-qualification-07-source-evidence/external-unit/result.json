@@ -1,0 +1,28 @@
+{
+  "actual07_coordinator_or_target_invoked": false,
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held07-external-unit-check.py"
+  ],
+  "elapsed_seconds": 0.10336232098052278,
+  "returncode": 0,
+  "script": {
+    "path": "/tmp/palimpsest-held07-external-unit-check.py",
+    "sha256": "7ab34bcf56569e3690323ac01ad4ead8bc1eaa736b2af12adfbe93b9847b1869",
+    "size_bytes": 14183
+  },
+  "stderr": {
+    "path": "/tmp/palimpsest-held07-external-unit-stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-held07-external-unit-stdout.log",
+    "sha256": "97cebc93135f11074da62e3a1742db74effe1b8e79a304e6ceabb518e5a2894a",
+    "size_bytes": 4728
+  },
+  "timed_out": false
+}

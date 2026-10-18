@@ -1,0 +1,55 @@
+........................................................................ [ 88%]
+F........                                                                [100%]
+=================================== FAILURES ===================================
+_ test_fixed_entry_retains_no_success_when_import_or_identity_gate_fails[environment-environment/cwd] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3')
+defect = 'environment', reason = 'environment/cwd'
+
+    @pytest.mark.parametrize('defect,reason',[('wrong-version','version'),('bad-alias','alias'),
+        ('fail','AUTHORED_IMPORT_FAILURE'),('environment','environment/cwd')])
+    def test_fixed_entry_retains_no_success_when_import_or_identity_gate_fails(tmp_path,defect,reason):
+        result,_=dependency_fixture(tmp_path,'raise AssertionError("DEFAULT_ENTRY_RAN")',
+            mutate=lambda deps,root:setup(deps,root,defect),source_change=qualify)
+        assert result.returncode!=0 and result.stdout==''
+>       assert reason in result.stderr and 'DEFAULT_ENTRY_RAN' not in result.stderr,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/src/palimpsest/puck_runtime_qualification.py", line 26, in qualify
+E             admission.recheck(); started=time.monotonic()
+E             ^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/scripts/puck_worker_bootstrap.py", line 542, in recheck
+E             return self._check(full=True)
+E                    ^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/scripts/puck_worker_bootstrap.py", line 596, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/src/palimpsest/puck_dependency_files.py", line 446, in recheck
+E             try: self._recheck()
+E                  ^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/src/palimpsest/puck_dependency_files.py", line 441, in _recheck
+E             self._registration_holder.recheck()
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/tmp/test_fixed_entry_retains_no_su3/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert ('environment/cwd' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/home/utkarsh/Work/shraddha/brai...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n')
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/home/utkarsh/Work/shraddha/brai...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_held_runtime_entry.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_held_runtime_entry.py::test_fixed_entry_retains_no_success_when_import_or_identity_gate_fails[environment-environment/cwd]
+1 failed, 80 passed in 57.12s

@@ -1,0 +1,19 @@
+{
+  "baseline": {
+    "exit_code": 0,
+    "final_tool_chunk": "2afe64",
+    "initial_tool_chunk": "733fa1",
+    "session_id": 91450
+  },
+  "both_observed_complete": true,
+  "candidate": {
+    "exit_code": 1,
+    "final_tool_chunk": "0cd11c",
+    "initial_tool_chunk": "5aa646",
+    "session_id": 55656
+  },
+  "kind": "guard-equivalence-root-tool-terminals-v1",
+  "no_other_candidate": true,
+  "production_changed": false,
+  "timing_workload_executed": false
+}

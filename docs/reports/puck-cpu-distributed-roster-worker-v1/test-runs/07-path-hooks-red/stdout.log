@@ -1,0 +1,104 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_path_type_rejection_never_compares_class_equality[module-path] ______
+
+target = 'module-path'
+
+    @pytest.mark.parametrize('target', ['module-path', 'spec-locations'])
+    def test_path_type_rejection_never_compares_class_equality(target):
+        module = api()
+        cache, expected = authored_cache()
+    
+        class Metaclass(type):
+            def __eq__(cls, other):
+                raise AssertionError('path metaclass equality hook invoked')
+    
+        class PathTrap(metaclass=Metaclass):
+            pass
+    
+        if target == 'module-path':
+            cache[NAMES[0]].__path__ = PathTrap()
+        else:
+            spec = importlib.util.spec_from_loader(NAMES[0], None)
+            spec.submodule_search_locations = PathTrap()
+            cache[NAMES[0]].__spec__ = spec
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_exports.py:31: in capture
+    return function(cache, expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:229: in describe_distributed_exports
+    rows, seals = _distributed_state(cache)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:217: in _distributed_state
+    path=_distributed_paths(raw.get('__path__', [])))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:175: in _distributed_paths
+    if (type(value) not in (list, tuple) or len(value) > 128
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'test_puck_cpu_distributed_exports.test_path_type_rejection_never_compares_class_equality.<locals>.PathTrap'>
+other = <class 'list'>
+
+    def __eq__(cls, other):
+>       raise AssertionError('path metaclass equality hook invoked')
+E       AssertionError: path metaclass equality hook invoked
+
+tests/test_puck_cpu_distributed_exports.py:174: AssertionError
+____ test_path_type_rejection_never_compares_class_equality[spec-locations] ____
+
+target = 'spec-locations'
+
+    @pytest.mark.parametrize('target', ['module-path', 'spec-locations'])
+    def test_path_type_rejection_never_compares_class_equality(target):
+        module = api()
+        cache, expected = authored_cache()
+    
+        class Metaclass(type):
+            def __eq__(cls, other):
+                raise AssertionError('path metaclass equality hook invoked')
+    
+        class PathTrap(metaclass=Metaclass):
+            pass
+    
+        if target == 'module-path':
+            cache[NAMES[0]].__path__ = PathTrap()
+        else:
+            spec = importlib.util.spec_from_loader(NAMES[0], None)
+            spec.submodule_search_locations = PathTrap()
+            cache[NAMES[0]].__spec__ = spec
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_exports.py:31: in capture
+    return function(cache, expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:229: in describe_distributed_exports
+    rows, seals = _distributed_state(cache)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:212: in _distributed_state
+    submodule_search_locations=None if locations is None else _distributed_paths(locations))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:175: in _distributed_paths
+    if (type(value) not in (list, tuple) or len(value) > 128
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'test_puck_cpu_distributed_exports.test_path_type_rejection_never_compares_class_equality.<locals>.PathTrap'>
+other = <class 'list'>
+
+    def __eq__(cls, other):
+>       raise AssertionError('path metaclass equality hook invoked')
+E       AssertionError: path metaclass equality hook invoked
+
+tests/test_puck_cpu_distributed_exports.py:174: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_exports.py::test_path_type_rejection_never_compares_class_equality[module-path]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_path_type_rejection_never_compares_class_equality[spec-locations]
+2 failed in 0.29s

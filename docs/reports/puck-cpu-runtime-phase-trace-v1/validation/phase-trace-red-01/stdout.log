@@ -1,0 +1,299 @@
+F..FFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+_____ test_cpu_trace_locates_each_return_without_changing_terminal_receipt _____
+
+    def test_cpu_trace_locates_each_return_without_changing_terminal_receipt():
+        result = run_cpu()
+        assert result.returncode == 0, result.stderr
+        rows = traces(result.stderr)
+>       assert [row['phase'] for _, row in rows] == PHASES
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 18 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:55: AssertionError
+_ test_import_return_marker_is_distinct_from_import_or_version_failure[fail-import.torchvision.enter-AUTHORED_TORCHVISION_FAILURE] _
+
+defect = 'fail', last = 'import.torchvision.enter'
+reason = 'AUTHORED_TORCHVISION_FAILURE'
+
+    @pytest.mark.parametrize('defect,last,reason', [
+        ('fail', 'import.torchvision.enter', 'AUTHORED_TORCHVISION_FAILURE'),
+        ('wrong-version', 'import.torchvision.returned', 'Runtime qualification version differs'),
+    ])
+    def test_import_return_marker_is_distinct_from_import_or_version_failure(defect, last, reason):
+        result = run_cpu(defect=defect)
+        assert result.returncode != 0 and result.stdout == ''
+        phases = [row['phase'] for _, row in traces(result.stderr)]
+>       assert phases == PHASES[:PHASES.index(last)+1]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 11 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:90: AssertionError
+_ test_import_return_marker_is_distinct_from_import_or_version_failure[wrong-version-import.torchvision.returned-Runtime qualification version differs] _
+
+defect = 'wrong-version', last = 'import.torchvision.returned'
+reason = 'Runtime qualification version differs'
+
+    @pytest.mark.parametrize('defect,last,reason', [
+        ('fail', 'import.torchvision.enter', 'AUTHORED_TORCHVISION_FAILURE'),
+        ('wrong-version', 'import.torchvision.returned', 'Runtime qualification version differs'),
+    ])
+    def test_import_return_marker_is_distinct_from_import_or_version_failure(defect, last, reason):
+        result = run_cpu(defect=defect)
+        assert result.returncode != 0 and result.stdout == ''
+        phases = [row['phase'] for _, row in traces(result.stderr)]
+>       assert phases == PHASES[:PHASES.index(last)+1]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 12 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:90: AssertionError
+______ test_dependency_admission_failure_does_not_announce_a_ready_worker ______
+
+    def test_dependency_admission_failure_does_not_announce_a_ready_worker():
+        result = run_cpu(dependency_version=2)
+        assert result.returncode != 0 and result.stdout == ''
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:3]
+E       AssertionError: assert [] == ['bootstrap.e...encies.enter']
+E         
+E         Right contains 3 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:97: AssertionError
+________ test_import_deadline_preserves_trace_prefix_and_no_completion _________
+
+    def test_import_deadline_preserves_trace_prefix_and_no_completion():
+        result = run_cpu(code='import sys\nsys.meta_path[0].owner._deadline = 0\n')
+        assert result.returncode != 0 and result.stdout == ''
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 11 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:104: AssertionError
+________ test_snapshot_failure_after_entry_return_cannot_publish_stdout ________
+
+    def test_snapshot_failure_after_entry_return_cannot_publish_stdout():
+        result = run_cpu(package='mujoco', code=(
+            'import sys\ndef fail_snapshot():\n raise TimeoutError("AUTHORED_SNAPSHOT_FAILURE")\n'
+            'sys.meta_path[0].owner.snapshot = fail_snapshot\n'))
+        assert result.returncode != 0 and result.stdout == ''
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:15]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 15 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:113: AssertionError
+__________ test_close_failure_has_no_close_ready_or_terminal_receipt ___________
+
+    def test_close_failure_has_no_close_ready_or_terminal_receipt():
+        result = run_cpu(package='mujoco', code=(
+            'import sys\ndef install_close_failure():\n'
+            ' owner = sys.meta_path[0].owner\n original = owner._close\n'
+            ' def close(error=None):\n  result = original(error)\n'
+            '  return result if error is not None else RuntimeError("AUTHORED_CLOSE_FAILURE")\n'
+            ' owner._close = close\ninstall_close_failure()\n'))
+        assert result.returncode != 0 and result.stdout == ''
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:17]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 17 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:125: AssertionError
+________ test_trace_record_budget_latches_off_without_changing_success _________
+
+    def test_trace_record_budget_latches_off_without_changing_success():
+        result = run_cpu(code=(
+            'import sys\nfor index in range(30):\n'
+            ' sys.meta_path[0].owner._phase("authored.extra")\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-q84vy_l8/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-q84vy_l8/source/scripts/puck_worker_bootstrap.py", line 644, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-q84vy_l8/source/scripts/puck_worker_bootstrap.py", line 617, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-q84vy_l8/source/src/palimpsest/puck_runtime_qualification.py", line 27, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-q84vy_l8/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-q84vy_l8/dependency/torchvision/__init__.py", line 6, in <module>
+E             sys.meta_path[0].owner._phase("authored.extra")
+E             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_phase'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...ra")\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n').returncode
+
+tests/test_puck_cpu_phase_trace.py:133: AssertionError
+_________ test_trace_encoded_byte_budget_is_separate_from_record_count _________
+
+    def test_trace_encoded_byte_budget_is_separate_from_record_count():
+        result = run_cpu(code=(
+            'import sys\nfor index in range(30):\n'
+            ' sys.meta_path[0].owner._phase("\\U0001f33f"*512)\n'))
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-4xjhscyg/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-4xjhscyg/source/scripts/puck_worker_bootstrap.py", line 644, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-4xjhscyg/source/scripts/puck_worker_bootstrap.py", line 617, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-4xjhscyg/source/src/palimpsest/puck_runtime_qualification.py", line 27, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-4xjhscyg/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-4xjhscyg/dependency/torchvision/__init__.py", line 6, in <module>
+E             sys.meta_path[0].owner._phase("\U0001f33f"*512)
+E             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E         AttributeError: 'HeldWorkerBootstrap' object has no attribute '_phase'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...512)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n').returncode
+
+tests/test_puck_cpu_phase_trace.py:146: AssertionError
+_ test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[False-short] _
+
+writer = 'short', fail_import = False
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('fail_import', [False, True])
+    def test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome(writer, fail_import):
+        code = ('import os,sys\noriginal_write = os.write\nwrite_calls = 0\n'
+            'def broken_write(fd, payload):\n global write_calls\n write_calls += 1\n'
+            ' if write_calls > 1: raise AssertionError("TRACE_WRITE_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_TRACE_IO_FAILURE")\n')
+            + 'os.write = broken_write\nsys.meta_path[0].owner._phase("authored.io")\n'
+            'sys.meta_path[0].owner._phase("authored.no_retry")\nos.write = original_write\n')
+        if fail_import:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'TRACE_WRITE_RETRIED' not in result.stderr
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 11 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:167: AssertionError
+_ test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[False-error] _
+
+writer = 'error', fail_import = False
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('fail_import', [False, True])
+    def test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome(writer, fail_import):
+        code = ('import os,sys\noriginal_write = os.write\nwrite_calls = 0\n'
+            'def broken_write(fd, payload):\n global write_calls\n write_calls += 1\n'
+            ' if write_calls > 1: raise AssertionError("TRACE_WRITE_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_TRACE_IO_FAILURE")\n')
+            + 'os.write = broken_write\nsys.meta_path[0].owner._phase("authored.io")\n'
+            'sys.meta_path[0].owner._phase("authored.no_retry")\nos.write = original_write\n')
+        if fail_import:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'TRACE_WRITE_RETRIED' not in result.stderr
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 11 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:167: AssertionError
+_ test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[True-short] _
+
+writer = 'short', fail_import = True
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('fail_import', [False, True])
+    def test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome(writer, fail_import):
+        code = ('import os,sys\noriginal_write = os.write\nwrite_calls = 0\n'
+            'def broken_write(fd, payload):\n global write_calls\n write_calls += 1\n'
+            ' if write_calls > 1: raise AssertionError("TRACE_WRITE_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_TRACE_IO_FAILURE")\n')
+            + 'os.write = broken_write\nsys.meta_path[0].owner._phase("authored.io")\n'
+            'sys.meta_path[0].owner._phase("authored.no_retry")\nos.write = original_write\n')
+        if fail_import:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'TRACE_WRITE_RETRIED' not in result.stderr
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 11 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:167: AssertionError
+_ test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[True-error] _
+
+writer = 'error', fail_import = True
+
+    @pytest.mark.parametrize('writer', ['short', 'error'])
+    @pytest.mark.parametrize('fail_import', [False, True])
+    def test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome(writer, fail_import):
+        code = ('import os,sys\noriginal_write = os.write\nwrite_calls = 0\n'
+            'def broken_write(fd, payload):\n global write_calls\n write_calls += 1\n'
+            ' if write_calls > 1: raise AssertionError("TRACE_WRITE_RETRIED")\n'
+            + (' return len(payload)-1\n' if writer == 'short' else ' raise OSError("AUTHORED_TRACE_IO_FAILURE")\n')
+            + 'os.write = broken_write\nsys.meta_path[0].owner._phase("authored.io")\n'
+            'sys.meta_path[0].owner._phase("authored.no_retry")\nos.write = original_write\n')
+        if fail_import:
+            code += 'raise RuntimeError("AUTHORED_PRIMARY_FAILURE")\n'
+        result = run_cpu(code=code)
+        assert 'TRACE_WRITE_RETRIED' not in result.stderr
+>       assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+E       AssertionError: assert [] == ['bootstrap.e...y.enter', ...]
+E         
+E         Right contains 11 more items, first extra item: 'bootstrap.enter'
+E         Use -v to get more diff
+
+tests/test_puck_cpu_phase_trace.py:167: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_phase_trace.py::test_cpu_trace_locates_each_return_without_changing_terminal_receipt
+FAILED tests/test_puck_cpu_phase_trace.py::test_import_return_marker_is_distinct_from_import_or_version_failure[fail-import.torchvision.enter-AUTHORED_TORCHVISION_FAILURE]
+FAILED tests/test_puck_cpu_phase_trace.py::test_import_return_marker_is_distinct_from_import_or_version_failure[wrong-version-import.torchvision.returned-Runtime qualification version differs]
+FAILED tests/test_puck_cpu_phase_trace.py::test_dependency_admission_failure_does_not_announce_a_ready_worker
+FAILED tests/test_puck_cpu_phase_trace.py::test_import_deadline_preserves_trace_prefix_and_no_completion
+FAILED tests/test_puck_cpu_phase_trace.py::test_snapshot_failure_after_entry_return_cannot_publish_stdout
+FAILED tests/test_puck_cpu_phase_trace.py::test_close_failure_has_no_close_ready_or_terminal_receipt
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_record_budget_latches_off_without_changing_success
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_encoded_byte_budget_is_separate_from_record_count
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[False-short]
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[False-error]
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[True-short]
+FAILED tests/test_puck_cpu_phase_trace.py::test_trace_io_failure_is_not_retried_and_preserves_the_real_outcome[True-error]
+13 failed, 2 passed in 26.19s

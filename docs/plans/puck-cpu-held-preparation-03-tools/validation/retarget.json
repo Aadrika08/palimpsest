@@ -1,0 +1,49 @@
+{
+  "allocation_invoked": false,
+  "derived": [
+    {
+      "new_sha256": "00a6f709f0ac60772b9808fcb767c9aa2c33063d5ef034a78374e53d54d36048",
+      "old_sha256": "c3214a4e7528cb96108009005bd658bbe1b1b14cac7544e71355b279c0f16ddd",
+      "replacements": 14,
+      "source": "git facc2a741315867ce98e745edd5d6692abf77603:docs/plans/puck-cpu-held-preparation-02-tools/common.py",
+      "target": "common.py"
+    },
+    {
+      "new_sha256": "b979f98fbd8f55586944ce584770cb97d48bc017698da34167fb1242c2c6ab3a",
+      "old_sha256": "b48e3686eb8172dd49807c3e990a9b4af3480f8175a5b067598086efba882200",
+      "replacements": 7,
+      "source": "git facc2a741315867ce98e745edd5d6692abf77603:docs/plans/puck-cpu-held-preparation-02-tools/preflight.py",
+      "target": "preflight.py"
+    },
+    {
+      "new_sha256": "4efc1467ebeec77ab43b37d2cec50a2ff2247b8d76d6e54b48bf4cbe7562a089",
+      "old_sha256": "f7482e2081c32c85746e5982d6e5757de47d294d1948ea5c9aea03a05d65b3b5",
+      "replacements": 2,
+      "source": "git facc2a741315867ce98e745edd5d6692abf77603:docs/plans/puck-cpu-held-preparation-02-tools/run-observer-once.py",
+      "target": "run-observer-once.py"
+    },
+    {
+      "new_sha256": "bc261648fbc707fa10ebf81320de0f9969c5fe44671b9907bd6ce6dcaa9db250",
+      "old_sha256": "316b0fc694479f1e56586d8da3de86f27ff98130cbac276132d965e7bd254351",
+      "replacements": 4,
+      "source": "git facc2a741315867ce98e745edd5d6692abf77603:docs/plans/puck-cpu-held-preparation-02-tools/run-audit-once.py",
+      "target": "run-audit-once.py"
+    },
+    {
+      "new_sha256": "01fd6a4b7004ceb26fe4c0d58614b96324d52502eab513d39a15a44b12c5dec0",
+      "old_sha256": "df9afc4b2986571e10974fe68214ac8c14af93fceea6c61bd0ed9e3fb47c0dde",
+      "replacements": 6,
+      "source": "git facc2a741315867ce98e745edd5d6692abf77603:docs/plans/puck-cpu-held-preparation-02-tools/archive.py",
+      "target": "archive.py"
+    },
+    {
+      "new_sha256": "2e7ae840dcbad74de6fb3797ae3069e2c7e0fcdd2d81844be98fc5610838592b",
+      "old_sha256": "0dc052a8bace90db54df99f8761dbb8203a76bc539a1168d06c6ef92fc4e3c86",
+      "replacements": 11,
+      "source": "git facc2a741315867ce98e745edd5d6692abf77603:docs/plans/puck-cpu-held-preparation-02-tools/validation/offline-proof.py",
+      "target": "validation/offline-proof.py"
+    }
+  ],
+  "stages_touched": false,
+  "tools_invoked": false
+}

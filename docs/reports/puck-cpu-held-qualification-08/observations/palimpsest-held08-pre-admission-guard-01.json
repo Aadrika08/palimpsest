@@ -1,0 +1,18 @@
+{
+  "admission_invoked": false,
+  "at_utc": "2026-10-16T00:13:01.138421+00:00",
+  "control_commit": "2f74653367f14f0156479a52314f625d7400fc57",
+  "frozen_pins": 749,
+  "future_outputs_absent": 16,
+  "pinned_bytes": 58476477,
+  "resources": {
+    "at_utc": "2026-10-16T00:13:01.138387+00:00",
+    "mem_available_bytes": 3183456256,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 64964128768,
+    "tmpfs_free_bytes": 3347128320
+  },
+  "runtime_invoked": false,
+  "status": "PASS_PRE_ADMISSION_GUARD"
+}

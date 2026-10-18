@@ -1,0 +1,208 @@
+{
+  "acceptance_pins": {
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-preparation-04.json",
+      "sha256": "f43be9750cd4e7a45054143cc55565df3ac89b831025fc6380349b557dc92956",
+      "size_bytes": 18276
+    },
+    "externally_observed_auditor_cli": {
+      "path": "docs/reports/puck-cpu-held-preparation-04/audit/palimpsest-puck-cpu-held-preparation-04-audit-01.external-cli.json",
+      "sha256": "3523c1da02a83ab1d86f0b591f5bbd21a34c3238b658f64bed9a4b52e07ea4cb",
+      "size_bytes": 1465
+    },
+    "independent_audit": {
+      "path": "docs/reports/puck-cpu-held-preparation-04/audit/palimpsest-puck-cpu-held-preparation-04-audit-01.json",
+      "sha256": "987224d8779eb7dd8da8422e88e5ce67494dc7f1633938225f102d2505a631ce",
+      "size_bytes": 1583
+    },
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-04/result.json",
+      "sha256": "a76b61487a1e5c053032167f1602260a1184b6262fa86e0e62842f0a05e6ebc3",
+      "size_bytes": 17706
+    }
+  },
+  "acceptance_proof": {
+    "episode_auditor_validate_acceptance": "PASS",
+    "episode_auditor_validate_configuration": "PASS",
+    "episode_validate_acceptance": "PASS",
+    "episode_validate_configuration": "PASS",
+    "require_declared_misses": "PASS",
+    "sources": 98,
+    "stage_parent": "/tmp/palimpsest-puck-cpu-held-04"
+  },
+  "at_utc": "2026-10-18T10:48:29.451079+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "copies": [
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/audit/palimpsest-puck-cpu-held-preparation-04-audit-01.json",
+      "sha256": "987224d8779eb7dd8da8422e88e5ce67494dc7f1633938225f102d2505a631ce",
+      "size_bytes": 1583,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-04-audit-01.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/audit/palimpsest-puck-cpu-held-preparation-04-audit-01.external-cli.json",
+      "sha256": "3523c1da02a83ab1d86f0b591f5bbd21a34c3238b658f64bed9a4b52e07ea4cb",
+      "size_bytes": 1465,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-04-audit-01.external-cli.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/audit/palimpsest-puck-cpu-held-preparation-04-audit-01.stdout",
+      "sha256": "987224d8779eb7dd8da8422e88e5ce67494dc7f1633938225f102d2505a631ce",
+      "size_bytes": 1583,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-04-audit-01.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/audit/palimpsest-puck-cpu-held-preparation-04-audit-01.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-04-audit-01.stderr"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/records/palimpsest-prep04-observer-terminal.json",
+      "sha256": "2da55f5c67e5db6d01b07804b1dd261a360b39a986bd16590b1d2781c98aa39b",
+      "size_bytes": 6729,
+      "source": "/tmp/palimpsest-prep04-observer-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/records/palimpsest-prep04-audit-terminal.json",
+      "sha256": "a0c99cfea904a48afcaa08230dd48ba4a532d21e10f41f3385ef8fcafc2895f4",
+      "size_bytes": 7349,
+      "source": "/tmp/palimpsest-prep04-audit-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/records/palimpsest-prep04-observer.stdout",
+      "sha256": "806b6835662e4a46058aff350c2b2466490cfd8a5e0c2bae2f4dac8eb3f8d94c",
+      "size_bytes": 946,
+      "source": "/tmp/palimpsest-prep04-observer.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/records/palimpsest-prep04-observer.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-prep04-observer.stderr"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-04/records/retire-consumed-stages.json",
+      "sha256": "02fc84198b90a17ea3d2bde516889abcfece0b774e75441bbde8838652da8d2d",
+      "size_bytes": 2565,
+      "source": "/home/utkarsh/.codex/worktrees/0071/brain/runs/palimpsest-prep04-tools/retire-consumed-stages.json"
+    }
+  ],
+  "head": "8798eb41ae5930f4e8b30d0d5bf9b5c90b95d371",
+  "kind": "palimpsest-prep04-archive-record-v1",
+  "preflight": {
+    "absent": 1,
+    "at_utc": "2026-10-18T10:48:28.579546+00:00",
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "consumed": [
+      {
+        "exists": false,
+        "path": "/tmp/palimpsest-puck-cpu-held-02"
+      },
+      {
+        "exists": false,
+        "path": "/tmp/palimpsest-puck-cpu-held-03"
+      },
+      {
+        "ctime_ns": 1792202523976335562,
+        "device": 56,
+        "directory": true,
+        "exists": true,
+        "inode": 27531034,
+        "mode": 16832,
+        "mtime_ns": 1792202523976335562,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-02"
+      },
+      {
+        "ctime_ns": 1792222029962860011,
+        "device": 56,
+        "directory": true,
+        "exists": true,
+        "inode": 27580920,
+        "mode": 16832,
+        "mtime_ns": 1792222029962860011,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-03"
+      }
+    ],
+    "dry_run": false,
+    "git": {
+      "branch": "research/puck-cpu-held-preparation-04",
+      "clean": true,
+      "controls_git_bound": 18,
+      "head": "8798eb41ae5930f4e8b30d0d5bf9b5c90b95d371",
+      "origin": "8798eb41ae5930f4e8b30d0d5bf9b5c90b95d371",
+      "upstream": {
+        "clean": true,
+        "gitlink": "8d964599119b420de67ee259434d273651a1a76d",
+        "head": "8d964599119b420de67ee259434d273651a1a76d"
+      }
+    },
+    "host": {
+      "baseline_external_files": 10,
+      "baseline_files": 4233,
+      "baseline_links": 1048,
+      "egl_vendor": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+      "native_aliases": 49,
+      "native_files": 60
+    },
+    "kind": "palimpsest-prep04-preflight-v1",
+    "phase": "archive",
+    "pins_checked": 122,
+    "prepared": {
+      "dependencies_sha256": "1bc48d562e5e3ec920993cdca116cbc710073a604482645cd6e7aa35bea9eaac",
+      "observer_boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+      "result_sha256": "a76b61487a1e5c053032167f1602260a1184b6262fa86e0e62842f0a05e6ebc3",
+      "staged_roots": {
+        "roots": [
+          {
+            "device": 55,
+            "inode": 317249,
+            "matches": true,
+            "root_index": 0
+          },
+          {
+            "device": 55,
+            "inode": 317250,
+            "matches": true,
+            "root_index": 1
+          },
+          {
+            "device": 55,
+            "inode": 317251,
+            "matches": true,
+            "root_index": 2
+          },
+          {
+            "device": 55,
+            "inode": 317252,
+            "matches": true,
+            "root_index": 3
+          }
+        ],
+        "stage_parent": "/tmp/palimpsest-puck-cpu-held-04",
+        "stage_parent_device": 55,
+        "stage_parent_inode": 317247
+      },
+      "transport_sha256": "806b6835662e4a46058aff350c2b2466490cfd8a5e0c2bae2f4dac8eb3f8d94c"
+    },
+    "resources": {
+      "disk_available_bytes": 13741977600,
+      "floors_met": true,
+      "mem_available_bytes": 5924716544,
+      "nofile": [
+        524288,
+        524288
+      ],
+      "required_tmpfs_free_bytes": 3737681100,
+      "tmp_flags": 6,
+      "tmpfs_available_bytes": 4028567552
+    },
+    "retirement": {
+      "path": "runs/palimpsest-prep04-tools/retire-consumed-stages.json",
+      "sha256": "02fc84198b90a17ea3d2bde516889abcfece0b774e75441bbde8838652da8d2d"
+    },
+    "status": "PASS_PREFLIGHT_ARCHIVE",
+    "validate_inputs": "PASS"
+  },
+  "scope": "byte-identical archive of preparation04 audit evidence; not runtime qualification"
+}

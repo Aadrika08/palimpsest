@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-red-01/test_actual_authored_prepare_t0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 508, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-red-01/test_actual_authored_prepare_t0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 502, in main
+    result=execute(config,raw,started)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-red-01/test_actual_authored_prepare_t0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 379, in execute
+    admission=resource_admission(config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-red-01/test_actual_authored_prepare_t0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 344, in resource_admission
+    try:require_tmpfs_descriptor(fd)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-red-01/test_actual_authored_prepare_t0/authored-project/src/palimpsest/puck_native_identity.py", line 47, in require_tmpfs_descriptor
+    raise ValueError('Native identity requires a regular file descriptor')
+ValueError: Native identity requires a regular file descriptor

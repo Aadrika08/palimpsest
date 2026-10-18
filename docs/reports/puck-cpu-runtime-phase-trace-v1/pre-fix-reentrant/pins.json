@@ -1,0 +1,23 @@
+{
+  "exit_code": 1,
+  "files": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "05c22bbfb898983c64153d282bbb118e26f0b2aa2bb4275aaed127261d329aca",
+      "size_bytes": 39934
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "b81e59a3c2b29d8edd67418d81bcc8bf7b1f241c3b1d5e859f6f7db78ef31cb2",
+      "size_bytes": 2309
+    },
+    {
+      "path": "tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    }
+  ],
+  "kind": "reentrant-red-pre-fix-source-snapshot-v1",
+  "observed_failure": "TRACE_LATCH_REARMED",
+  "terminal_tool": "034147"
+}

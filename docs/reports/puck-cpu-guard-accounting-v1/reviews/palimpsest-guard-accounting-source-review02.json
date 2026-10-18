@@ -1,0 +1,75 @@
+{
+  "base_commit": "2a168f934ee8a9f6e5cb0607a5f49c6b1a962b1c",
+  "checks": [
+    "Reviewed current bootstrap/diagnostic-test diff, authored08 integration parser adjustment and updated plan; previous review preserved.",
+    "AST comparison again passes: stripping only accounting calls and local token/completed bookkeeping yields original _check AST exactly, including original whitelist union, guard conditions/order, final deadline check and original exception handler.",
+    "guard_end finalizes timed sections before original final clock. _guard_complete is invoked only after that real clock succeeds and performs no diagnostic clock read or write. A failed final clock leaves started one ahead of completed, matching new regression and plan.",
+    "Existing final deadline/latch fixes remain: cost busy covers clock/encoding/write, both channels recheck eligibility before writing, cost requires active state, phase suppresses failed state but preserves closed close.ready, global_last detects backward nanoseconds.",
+    "Nested guards remain charged to outer section; full/light completion updates only for a real outer token after successful final real deadline. Ordinary diagnostic state/clock/encoding failures disable cost output without replacing real operation; IO failures latch both channels, cancellation reaches existing fail/close.",
+    "Bounded accounting stillCPUq3-only,32 attempts/32KiB/1024B row and cooperative10s updates; phase fields and independent24-attempt/16KiB cap remain. Qualifier and all other production files are unchanged.",
+    "Authored08 test now separates phase/cost stderr records by kind and checks cost count/bytes/row caps. It preserves exact18 phase sequence, terminal stdout, source/dependency bindings, API/CLI audit, no-authority/closure/prepared-byte/reentry assertions.",
+    "Diagnostic normal test accepts increasing checkpoint subsequence while requiring the full cost stream sequence contiguous, correctly allowing periodic records between checkpoints."
+  ],
+  "kind": "puck-cpu-guard-accounting-independent-source-review-v2",
+  "limitations": [
+    "Source-only GO binds these bytes. Final private13-file suite was running at dispatch and was neither polled nor read; no final test-pass claim follows from this review. Completed raw validation and persistent integration results require their own review.",
+    "A periodic active-null cost row may show a pending guard completion until the final real clock succeeds. Accounting is observational, not guard/runtime acceptance; totals include instrumentation and nested work and do not form exhaustive or hard timing.",
+    "Helper slots and mutable diagnostic state remain within existing trusted-source boundary. No authenticity, complete trace, fixed update latency, atomicity or resistance to arbitrary initializer mutation is claimed. Blocking writes and vendor stderr remain outside the diagnostic-byte budget.",
+    "Only AST/data/source inspection and hashing were performed; no tests, bootstrap/control/helper/runtime imports, profiling, installed/native execution, payload/namespace reads or09 controls/allocation. Only this new review JSON was written.",
+    "Future installed use still needs a distinct closed source epoch and fresh exact controls/resource/byte/custody admission. Source checks do not explain07/08 failures or qualify runtime, process/FD lifetime cleanup, episode, operator/renderer/model/study or release."
+  ],
+  "material_findings": [],
+  "pins": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    {
+      "path": "tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+      "size_bytes": 17051
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907",
+      "size_bytes": 6537
+    },
+    {
+      "path": "docs/plans/puck-cpu-guard-accounting-v1.md",
+      "sha256": "e978b7db271bec528726937ea1f1abd5d878872f76c3e951c5e5cb48f7020c60",
+      "size_bytes": 3782
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    }
+  ],
+  "previous_review": {
+    "path": "/tmp/palimpsest-guard-accounting-source-review.json",
+    "preserved_unchanged": true,
+    "sha256": "d28b26e2329b17e758b902342f1b8e11aff116a2906091c2a37ad4e20a241d36",
+    "size_bytes": 5711
+  },
+  "resolved_findings": [
+    {
+      "anchors": [
+        "scripts/puck_worker_bootstrap.py:453",
+        "scripts/puck_worker_bootstrap.py:467",
+        "scripts/puck_worker_bootstrap.py:729",
+        "tests/test_puck_guard_time_diagnostics.py:263"
+      ],
+      "issue": "Failed guard previously incremented completion before final real clock",
+      "resolution": "Clockless/writeless _guard_complete after original final clock; new pending-completion assertion on late deadline. Root reports retainedRED07; this lane did not execute it."
+    },
+    {
+      "issue": "Initial final-clock window and prewrite reentrancy/poison windows",
+      "resolution": "Prior corrections remain present; source-review01 findings remain resolved at current byte pins."
+    }
+  ],
+  "reviewed_at_utc": "2026-10-16T01:30:29.083338+00:00",
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+  "status": "GO_SCOPED_SOURCE_REVIEW_VALIDATION_PENDING",
+  "version": 2
+}

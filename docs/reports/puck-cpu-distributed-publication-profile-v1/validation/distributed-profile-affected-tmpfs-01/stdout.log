@@ -1,0 +1,185 @@
+........................................................................ [ 13%]
+.............F................................F....................F.... [ 26%]
+....................F................................................... [ 39%]
+....F................................................................... [ 53%]
+........................................................................ [ 66%]
+........................................................................ [ 79%]
+........................................................................ [ 93%]
+.....................................                                    [100%]
+=================================== FAILURES ===================================
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_authored02_uses_fresh_cap0')
+
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_authored02_uses_fresh_cap0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/distributed-worker-check/test_authored02_uses_fresh_cap0').is_relative_to
+E        +      where PosixPath('/tmp/distributed-worker-check/test_authored02_uses_fresh_cap0') = resolve()
+E        +        where resolve = PosixPath('/tmp/distributed-worker-check/test_authored02_uses_fresh_cap0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+__ test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli __
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_authored02_has_indep0')
+
+    def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
+        from test_puck_cpu_held_amendment import amendment_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment_audit.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_authored02_has_indep0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/distributed-worker-check/test_real_authored02_has_indep0').is_relative_to
+E        +      where PosixPath('/tmp/distributed-worker-check/test_real_authored02_has_indep0') = resolve()
+E        +        where resolve = PosixPath('/tmp/distributed-worker-check/test_real_authored02_has_indep0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+_ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_authored03_completes_afte0')
+
+    def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment03.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_authored03_completes_afte0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/distributed-worker-check/test_authored03_completes_afte0').is_relative_to
+E        +      where PosixPath('/tmp/distributed-worker-check/test_authored03_completes_afte0') = resolve()
+E        +        where resolve = PosixPath('/tmp/distributed-worker-check/test_authored03_completes_afte0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+_ test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures _
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_authored03_audit_bin0')
+
+    def test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures(tmp_path):
+        from test_puck_cpu_held_amendment03 import amendment03_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment03_audit.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_authored03_audit_bin0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/distributed-worker-check/test_real_authored03_audit_bin0').is_relative_to
+E        +      where PosixPath('/tmp/distributed-worker-check/test_real_authored03_audit_bin0') = resolve()
+E        +        where resolve = PosixPath('/tmp/distributed-worker-check/test_real_authored03_audit_bin0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+_ test_real_authored04_independent_audits_fresh_bindings_and_preserves_history _
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_authored04_independe0')
+
+    def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
+        from test_puck_cpu_held_amendment04_integration import amendment04_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment04_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment04_audit.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment04_integration.py:19: in amendment04_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True,historical_bindings=True,binding_failure=binding_failure) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_authored04_independe0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/distributed-worker-check/test_real_authored04_independe0').is_relative_to
+E        +      where PosixPath('/tmp/distributed-worker-check/test_real_authored04_independe0') = resolve()
+E        +        where resolve = PosixPath('/tmp/distributed-worker-check/test_real_authored04_independe0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+FAILED tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+FAILED tests/test_puck_cpu_amendment03_audit.py::test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures
+FAILED tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history
+5 failed, 536 passed in 55.29s

@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_authored_namespace_probe_requires_explicit_user_namespace ________
+
+tmp_path = PosixPath('/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-louvain-userns-regression-tests/test_authored_namespace_probe_0')
+
+    @pytest.mark.skipif(os.environ.get("PALIMPSEST_BUILD_NAMESPACE_TEST") != "1", reason="explicit local Linux namespace probe")
+    def test_authored_namespace_probe_requires_explicit_user_namespace(tmp_path):
+        value = module(PARENT)
+        baseline = json.loads((ROOT / value.BASELINE_PATH).read_bytes())
+        source = tmp_path / "source"
+        backend = tmp_path / "backend"
+        source.mkdir()
+        backend.mkdir()
+        (source / "authored.txt").write_text("inert fixture")
+        command = value.sandbox_command(baseline, source, backend,
+            ["probe", os.readlink("/proc/self/ns/net"), str(ROOT)])
+        stage = tmp_path / "namespace"
+        stage.mkdir()
+        now = time.monotonic()
+>       result = value.run_stage(command, stage, ROOT, now + 10, now + 15, {})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_python_louvain_build.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+command = ['/usr/bin/bwrap', '--unshare-all', '--die-with-parent', '--disable-userns', '--cap-drop', 'ALL', ...]
+stage = PosixPath('/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-louvain-userns-regression-tests/test_authored_namespace_probe_0/namespace')
+root = PosixPath('/home/utkarsh/.codex/worktrees/0071/brain')
+normal = 435816.068550697, hard = 435821.068550697, state = {'group': None}
+
+    def run_stage(command, stage, root, normal, hard, state):
+        write_new(stage / "invocation.json", dict(argv=command))
+        observed = supervised(command, stage, cwd=root, normal_deadline=normal, hard_deadline=hard,
+            rss_bytes=LIMITS["rss_bytes"], output_bytes=4 * MiB, min_free_bytes=LIMITS["min_free_bytes"],
+            max_processes=3, output_root=stage, guard_state=state)
+        write_new(stage / "supervision.json", observed)
+        if observed["status"] != "completed":
+>           raise RuntimeError("Build stage failed within its fixed allocation")
+E           RuntimeError: Build stage failed within its fixed allocation
+
+scripts/build_puck_python_louvain.py:201: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_python_louvain_build.py::test_authored_namespace_probe_requires_explicit_user_namespace
+1 failed in 0.14s

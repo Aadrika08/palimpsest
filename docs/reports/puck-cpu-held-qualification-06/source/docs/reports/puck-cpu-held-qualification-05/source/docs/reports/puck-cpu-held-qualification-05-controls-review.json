@@ -1,0 +1,122 @@
+{
+  "branch": "research/puck-cpu-held-qualification-05",
+  "control_hashes": {
+    "docs/plans/puck-cpu-held-qualification-05-admission.py": {
+      "sha256": "448503e23ef22abfca63cca525b5543f08da8dd4003a03724471a3471936aec1",
+      "size_bytes": 13506
+    },
+    "docs/plans/puck-cpu-held-qualification-05-execution.md": {
+      "sha256": "74a7e65f222940a756d00da0e7259f3fa295c7b2e7ad6314e5c1c664665cc299",
+      "size_bytes": 4322
+    },
+    "docs/plans/puck-cpu-held-qualification-05-freeze.json": {
+      "sha256": "9219d49273b3ff6837d99238035909cc4f150c882b4c9eda46f03ea762880f96",
+      "size_bytes": 7421
+    },
+    "docs/plans/puck-cpu-held-qualification-05.json": {
+      "sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+      "size_bytes": 8833
+    }
+  },
+  "execution_gates_remaining": [
+    "Commit and push reviewed control freeze before invocation.",
+    "Run the one admitted data-only admission with externally observed normal timely exit0 and DATA_ONLY_ADMITTED; preserve any refusal and do not invoke observer after refusal.",
+    "Refresh transient resources, absence and frozen bytes immediately before exactly one observer invocation.",
+    "After normal observer termination, bind complete transport SHA256 and record concrete fixed auditor command before one independent auditor invocation.",
+    "Preserve and index exact external tool terminals, streams and resulting evidence; failure consumes05 without implicit retry."
+  ],
+  "kind": "palimpsest-actual05-independent-controls-review-v1",
+  "limitations": [
+    "Read-only static control review only; no admission, observer, parent, auditor entrypoint, vendor import, renderer, model, catalogue or episode was invoked.",
+    "Full live SITE/staged forest/native/Python-prefix census, transient resource adequacy and normal runtime closure remain admission/execution checks; this review does not claim they passed.",
+    "No full release audit, hardware action, CI, Git mutation, authentication change or network mutation."
+  ],
+  "material_open_findings": [],
+  "resolved_pre_freeze_findings": [
+    {
+      "attempt_consumed": false,
+      "corrected_admission_sha256": "448503e23ef22abfca63cca525b5543f08da8dd4003a03724471a3471936aec1",
+      "disposition": "Parent corrected to unformatted held.json plus exact pretty sorted indent2 LF comparison, then repinned admission before any invocation.",
+      "issue": "Original held.json(...,lf=False) required compact JSON without LF, but freeze manifest is pretty sorted indent2 plus LF.",
+      "line": 86,
+      "original_admission_sha256": "0737bb25670bd3ab9044f45f9066ef429f40fea59e32dfa8f589ef470283f5ba",
+      "path": "docs/plans/puck-cpu-held-qualification-05-admission.py"
+    }
+  ],
+  "reviewed_at_utc": "2026-10-15T20:45:30.167692+00:00",
+  "reviewer": "actual05_control_review",
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "scope_authority": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "source_commit": "22b4180459d0782f0dd5d591a0ef460e477107c9",
+  "verdict": "PASS_STATIC_CONTROLS_AFTER_PRE_FREEZE_FORMAT_CORRECTION",
+  "verified_static": {
+    "actual04_controls_and_report_git_diff_empty": true,
+    "admission_address_space_bytes": 536870912,
+    "admission_alarm_seconds": 130,
+    "admission_deadline_seconds": 120,
+    "admission_max_fds": 40000,
+    "admission_preserves_archived_pre04_census_route": true,
+    "admission_source_requires_fd_child_thread_normal_closure": true,
+    "authenticated_archive_auditor_bytes": 65522,
+    "authenticated_archive_auditor_sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+    "candidate_exact_four_row_changes": [
+      {
+        "delegate_attributes": 41,
+        "index": 1,
+        "name": "torch._C._autograd"
+      },
+      {
+        "delegate_attributes": 11,
+        "index": 3,
+        "name": "torch._C._distributed_autograd"
+      },
+      {
+        "delegate_attributes": 69,
+        "index": 4,
+        "name": "torch._C._distributed_c10d"
+      },
+      {
+        "delegate_attributes": 29,
+        "index": 5,
+        "name": "torch._C._distributed_rpc"
+      }
+    ],
+    "candidate_sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+    "canonical_configuration_bytes": true,
+    "canonical_pretty_freeze_bytes": true,
+    "changed_preparation_source_paths": [
+      "scripts/puck_worker_bootstrap.py",
+      "scripts/qualify_puck_cpu_held_runtime.py",
+      "src/palimpsest/puck_dependency_bindings.py",
+      "src/palimpsest/puck_dependency_imports.py"
+    ],
+    "current_held_auditor_sha256": "5962e16b568633abff8916f6c1ee6c350087bc59f6bf1b5ff17d2983fbf3d229",
+    "current_source_pins": 24,
+    "exact_closed_commands_and_transport_digest_binding_reviewed": true,
+    "failure_result_hashes": {
+      "runs/puck-cpu-held-qualification-01/result.json": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "runs/puck-cpu-held-qualification-02/result.json": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "runs/puck-cpu-held-qualification-03/result.json": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "runs/puck-cpu-held-qualification-04/result.json": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889"
+    },
+    "freeze_pins": 15,
+    "helper_closure_stdlib_and_authenticated_install_helper_only": true,
+    "historical_missing_receipts": 8,
+    "input_roles": 16,
+    "observation03_auditor_sha256": "be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4",
+    "parent_and_independent_auditor_declarations_identical": true,
+    "parent_and_independent_auditor_v5_schema_and_projection_reviewed": true,
+    "preparation_acceptance_anchors_unchanged": 4,
+    "qualification05_output_and_audit_paths_absent": true,
+    "source_input_acceptance_and_freeze_pins_hashed": 59,
+    "unchanged_noncandidate_input_pins": 15
+  },
+  "version": 1
+}

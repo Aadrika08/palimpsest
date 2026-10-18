@@ -1,0 +1,1758 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 94%]
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_complete_projection_including_disagreement_is_data_not_authority[False] _
+
+mismatch = False
+
+    @pytest.mark.parametrize('mismatch', [False, True])
+    def test_complete_projection_including_disagreement_is_data_not_authority(mismatch):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_complete_projection_including_disagreement_is_data_not_authority[True] __
+
+mismatch = True
+
+    @pytest.mark.parametrize('mismatch', [False, True])
+    def test_complete_projection_including_disagreement_is_data_not_authority(mismatch):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__ test_projection_rejects_semantic_tamper_even_after_json_rebinding[stable] ___
+
+change = 'stable'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[version-bool] _
+
+change = 'version-bool'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__ test_projection_rejects_semantic_tamper_even_after_json_rebinding[profile] __
+
+change = 'profile'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__ test_projection_rejects_semantic_tamper_even_after_json_rebinding[runtime] __
+
+change = 'runtime'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[missing-row] _
+
+change = 'missing-row'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[duplicate] _
+
+change = 'duplicate'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+___ test_projection_rejects_semantic_tamper_even_after_json_rebinding[order] ___
+
+change = 'order'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+___ test_projection_rejects_semantic_tamper_even_after_json_rebinding[name] ____
+
+change = 'name'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[identity] __
+
+change = 'identity'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+___ test_projection_rejects_semantic_tamper_even_after_json_rebinding[cache] ___
+
+change = 'cache'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[plain-type] _
+
+change = 'plain-type'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[metadata-name] _
+
+change = 'metadata-name'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[metadata-extra] _
+
+change = 'metadata-extra'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[bad-spec] __
+
+change = 'bad-spec'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[bad-path] __
+
+change = 'bad-path'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[unsorted] __
+
+change = 'unsorted'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[duplicate-delegate] _
+
+change = 'duplicate-delegate'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[long-name] _
+
+change = 'long-name'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[too-many] __
+
+change = 'too-many'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_projection_rejects_semantic_tamper_even_after_json_rebinding[wrong-expected] _
+
+change = 'wrong-expected'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__ test_projection_rejects_semantic_tamper_even_after_json_rebinding[missing] __
+
+change = 'missing'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+___ test_projection_rejects_semantic_tamper_even_after_json_rebinding[extra] ___
+
+change = 'extra'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__ test_projection_rejects_semantic_tamper_even_after_json_rebinding[matches] __
+
+change = 'matches'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+___ test_projection_rejects_semantic_tamper_even_after_json_rebinding[field] ___
+
+change = 'field'
+
+    @pytest.mark.parametrize('change', ['stable', 'version-bool', 'profile', 'runtime', 'missing-row', 'duplicate',
+                                       'order', 'name', 'identity', 'cache', 'plain-type', 'metadata-name',
+                                       'metadata-extra', 'bad-spec', 'bad-path', 'unsorted', 'duplicate-delegate',
+                                       'long-name', 'too-many', 'wrong-expected', 'missing', 'extra', 'matches', 'field'])
+    def test_projection_rejects_semantic_tamper_even_after_json_rebinding(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_____ test_closed_19_source_63_input_19_role_epoch_preserves_every_old_pin _____
+
+    def test_closed_19_source_63_input_19_role_epoch_preserves_every_old_pin():
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_________ test_configuration_refuses_rebound_boundary_changes[legacy] __________
+
+change = 'legacy'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__________ test_configuration_refuses_rebound_boundary_changes[bool] ___________
+
+change = 'bool'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_________ test_configuration_refuses_rebound_boundary_changes[output] __________
+
+change = 'output'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__________ test_configuration_refuses_rebound_boundary_changes[role] ___________
+
+change = 'role'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_configuration_refuses_rebound_boundary_changes[extra-role] ________
+
+change = 'extra-role'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_________ test_configuration_refuses_rebound_boundary_changes[source] __________
+
+change = 'source'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__________ test_configuration_refuses_rebound_boundary_changes[input] __________
+
+change = 'input'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+________ test_configuration_refuses_rebound_boundary_changes[duplicate] ________
+
+change = 'duplicate'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_configuration_refuses_rebound_boundary_changes[input-hash] ________
+
+change = 'input-hash'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_____ test_configuration_refuses_rebound_boundary_changes[historical-hash] _____
+
+change = 'historical-hash'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_configuration_refuses_rebound_boundary_changes[environment] _______
+
+change = 'environment'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_________ test_configuration_refuses_rebound_boundary_changes[limits] __________
+
+change = 'limits'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+__________ test_configuration_refuses_rebound_boundary_changes[extra] __________
+
+change = 'extra'
+
+    @pytest.mark.parametrize('change', ['legacy', 'bool', 'output', 'role', 'extra-role', 'source', 'input', 'duplicate',
+                                       'input-hash', 'historical-hash', 'environment', 'limits', 'extra'])
+    def test_configuration_refuses_rebound_boundary_changes(change):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+______________ test_full_report_accepts_scoped_complete_mismatch _______________
+
+    def test_full_report_accepts_scoped_complete_mismatch():
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[legacy] _______
+
+change = 'legacy'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[extra] ________
+
+change = 'extra'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[error] ________
+
+change = 'error'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+________ test_report_refuses_boundaries_after_json_hash_rebinding[nan] _________
+
+change = 'nan'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+______ test_report_refuses_boundaries_after_json_hash_rebinding[bool-pid] ______
+
+change = 'bool-pid'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+______ test_report_refuses_boundaries_after_json_hash_rebinding[version] _______
+
+change = 'version'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[order] ________
+
+change = 'order'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+____ test_report_refuses_boundaries_after_json_hash_rebinding[import-time] _____
+
+change = 'import-time'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+______ test_report_refuses_boundaries_after_json_hash_rebinding[request] _______
+
+change = 'request'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[worker] _______
+
+change = 'worker'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+____ test_report_refuses_boundaries_after_json_hash_rebinding[environment] _____
+
+change = 'environment'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[delta] ________
+
+change = 'delta'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+________ test_report_refuses_boundaries_after_json_hash_rebinding[maps] ________
+
+change = 'maps'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_____ test_report_refuses_boundaries_after_json_hash_rebinding[map-entry] ______
+
+change = 'map-entry'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_______ test_report_refuses_boundaries_after_json_hash_rebinding[cache] ________
+
+change = 'cache'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_____ test_report_refuses_boundaries_after_json_hash_rebinding[cache-row] ______
+
+change = 'cache-row'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+______ test_report_refuses_boundaries_after_json_hash_rebinding[runtime] _______
+
+change = 'runtime'
+
+    @pytest.mark.parametrize('change', ['legacy', 'extra', 'error', 'nan', 'bool-pid', 'version', 'order', 'import-time',
+                                       'request', 'worker', 'environment', 'delta', 'maps', 'map-entry', 'cache',
+                                       'cache-row', 'runtime'])
+    def test_report_refuses_boundaries_after_json_hash_rebinding(change):
+>       module = api(); value = report(module)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[None] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342d5c350>
+change = None
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[code-bool] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342903e50>
+change = 'code-bool'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[code] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342a59810>
+change = 'code'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[timeout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342ad7790>
+change = 'timeout'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[late] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342aeae10>
+change = 'late'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[missing-parent] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342782c50>
+change = 'missing-parent'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[parent-bool] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b934275ecd0>
+change = 'parent-bool'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[survivor] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b93428bee90>
+change = 'survivor'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[duplicate] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342901290>
+change = 'duplicate'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[too-many] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342aa58d0>
+change = 'too-many'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[environment] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses10')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342774650>
+change = 'environment'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[argv] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses11')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b93428e3590>
+change = 'argv'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[claim] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses12')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b9342928150>
+change = 'claim'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[stream-path] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses13')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b93428ea090>
+change = 'stream-path'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[extra] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_transport_acceptance_uses14')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b934284c2d0>
+change = 'extra'
+
+    @pytest.mark.parametrize('change', [None, 'code-bool', 'code', 'timeout', 'late', 'missing-parent', 'parent-bool',
+                                       'survivor', 'duplicate', 'too-many', 'environment', 'argv', 'claim', 'stream-path', 'extra'])
+    def test_transport_acceptance_uses_observed_exact_command_and_sampled_scope(tmp_path, monkeypatch, change):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+___ test_helpers_authenticate_all_raw_bytes_and_relocate_only_fixed_literal ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_helpers_authenticate_all_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b934290dc50>
+
+    def test_helpers_authenticate_all_raw_bytes_and_relocate_only_fixed_literal(tmp_path, monkeypatch):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:227: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+_ test_namespace_reconstruction_contains_exact_fixed_mounts_and_worker_binding _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_namespace_reconstruction_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b934273ddd0>
+
+    def test_namespace_reconstruction_contains_exact_fixed_mounts_and_worker_binding(tmp_path, monkeypatch):
+>       module = api(); monkeypatch.setattr(module, 'ROOT', tmp_path)
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+____ test_cli_failure_is_false_authority_json_without_caller_exit_argument _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-482/test_cli_failure_is_false_auth0')
+
+    def test_cli_failure_is_false_authority_json_without_caller_exit_argument(tmp_path):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Independent characterization03 auditor is not implemented'
+E       AssertionError: Independent characterization03 auditor is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observation_audit.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_complete_projection_including_disagreement_is_data_not_authority[False]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_complete_projection_including_disagreement_is_data_not_authority[True]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[stable]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[version-bool]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[profile]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[runtime]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[missing-row]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[duplicate]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[order]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[name]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[identity]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[cache]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[plain-type]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[metadata-name]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[metadata-extra]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[bad-spec]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[bad-path]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[unsorted]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[duplicate-delegate]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[long-name]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[too-many]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[wrong-expected]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[missing]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[extra]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[matches]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_rejects_semantic_tamper_even_after_json_rebinding[field]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_closed_19_source_63_input_19_role_epoch_preserves_every_old_pin
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[legacy]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[bool]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[output]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[role]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[extra-role]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[source]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[input]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[duplicate]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[input-hash]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[historical-hash]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[environment]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[limits]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_configuration_refuses_rebound_boundary_changes[extra]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_full_report_accepts_scoped_complete_mismatch
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[legacy]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[extra]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[error]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[nan]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[bool-pid]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[version]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[order]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[import-time]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[request]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[worker]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[environment]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[delta]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[maps]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[map-entry]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[cache]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[cache-row]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_refuses_boundaries_after_json_hash_rebinding[runtime]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[None]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[code-bool]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[code]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[timeout]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[late]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[missing-parent]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[parent-bool]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[survivor]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[duplicate]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[too-many]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[environment]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[argv]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[claim]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[stream-path]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_transport_acceptance_uses_observed_exact_command_and_sampled_scope[extra]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_helpers_authenticate_all_raw_bytes_and_relocate_only_fixed_literal
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_namespace_reconstruction_contains_exact_fixed_mounts_and_worker_binding
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_cli_failure_is_false_authority_json_without_caller_exit_argument
+76 failed in 0.69s

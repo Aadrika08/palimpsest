@@ -1,0 +1,55 @@
+F.......F
+=================================== FAILURES ===================================
+_ test_q4_runs_four_expected_imports_and_emits_explicit_version_without_authority _
+
+    def test_q4_runs_four_expected_imports_and_emits_explicit_version_without_authority():
+        result = run_q4()
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-9iashn6o/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-9iashn6o/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-9iashn6o/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-9iashn6o/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').returncode
+
+tests/test_puck_runtime_entry_v4.py:33: AssertionError
+_______ test_q4_initializer_cannot_rewrite_the_captured_expected_version _______
+
+    def test_q4_initializer_cannot_rewrite_the_captured_expected_version():
+        result = run_q4(defect='rewrite-version')
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Runtime qualification version differs: torchvision' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-e02_9uc6/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-e02_9uc6/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-e02_9uc6/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-e02_9uc6/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Runtime qualification version differs: torchvision' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-e02_9...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-e02_9...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_runtime_entry_v4.py:95: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_runtime_entry_v4.py::test_q4_runs_four_expected_imports_and_emits_explicit_version_without_authority
+FAILED tests/test_puck_runtime_entry_v4.py::test_q4_initializer_cannot_rewrite_the_captured_expected_version
+2 failed, 7 passed in 0.78s

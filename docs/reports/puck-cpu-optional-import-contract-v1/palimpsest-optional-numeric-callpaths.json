@@ -1,0 +1,422 @@
+{
+  "absence_evidence": [
+    {
+      "absence_scope": "Pinned candidate plus retained SITE inventory and terminal03 cache; future live held absence still required.",
+      "candidate_physical_or_virtual_mapping": false,
+      "name": "gmpy2",
+      "ordinary03_cache_entry": false,
+      "retained_site_corresponding_module_paths": []
+    },
+    {
+      "absence_scope": "Pinned candidate plus retained SITE inventory and terminal03 cache; future live held absence still required.",
+      "candidate_physical_or_virtual_mapping": false,
+      "name": "gmpy",
+      "ordinary03_cache_entry": false,
+      "retained_site_corresponding_module_paths": []
+    },
+    {
+      "absence_scope": "Pinned candidate plus retained SITE inventory and terminal03 cache; future live held absence still required.",
+      "candidate_physical_or_virtual_mapping": false,
+      "name": "flint",
+      "ordinary03_cache_entry": false,
+      "retained_site_corresponding_module_paths": []
+    },
+    {
+      "absence_scope": "Pinned candidate plus retained SITE inventory and terminal03 cache; future live held absence still required.",
+      "candidate_physical_or_virtual_mapping": false,
+      "name": "triton",
+      "ordinary03_cache_entry": false,
+      "retained_site_corresponding_module_paths": []
+    }
+  ],
+  "callpaths": [
+    {
+      "catch_and_fallback": [
+        "mpmath backend:71 catches ImportError and tries gmpy; :79 bare handler preserves Python backend if neither optional library can be used.",
+        "SymPy importtools:155 catches ImportError, returns None; gmpy.py:170\u2013171 selects python ground types."
+      ],
+      "chains": [
+        [
+          "torch._dynamo.utils:67 eager import torch.fx.experimental.symbolic_shapes",
+          "torch.fx.experimental.symbolic_shapes:3 eager import sympy",
+          "sympy:23 eager import mpmath",
+          "mpmath:5 eager from .ctx_fp import FPContext",
+          "mpmath.ctx_fp:9 eager from .libmp import ...",
+          "mpmath.libmp:1 eager from .libmpf import ...",
+          "mpmath.libmp.libmpf:17 eager from .backend import ...",
+          "mpmath.libmp.backend:67 MPMATH_NOGMPY absent -> :70 import gmpy2 as gmpy"
+        ],
+        [
+          "sympy:55 eager from .core import ...",
+          "sympy.core:11 eager from .numbers import ...",
+          "sympy.core.numbers:23 eager from sympy.external.gmpy import ...",
+          "sympy.external.gmpy:151 default auto -> :159\u2013164 _get_flint absent -> :166\u2013167 _get_gmpy2(auto)",
+          "sympy.external.gmpy._get_gmpy2:139 import_module(\"gmpy2\",...)",
+          "sympy.external:18 binds sympy.external.importtools.import_module",
+          "sympy.external.importtools.import_module:144\u2013159 __import__(module,...) catches ImportError -> returns None"
+        ]
+      ],
+      "minimal_expected_absence": "gmpy2",
+      "name": "gmpy2",
+      "occurrence_limit": "Static chain plus ordinary03 loaded modules; no request-order or repeated-attempt count measured.",
+      "support": "Eager once registered mpmath.libmp.backend is reached with frozen default environment; a second independent eager SymPy helper request is also source-backed."
+    },
+    {
+      "catch_and_fallback": [
+        "BACKEND starts python at backend.py:30 and MPZ is int at:49; the absent optional-library path leaves those defaults."
+      ],
+      "chains": [
+        [
+          "mpmath.libmp.backend:67 frozen MPMATH_NOGMPY absent",
+          "mpmath.libmp.backend:70 gmpy2 import raises caught ImportError",
+          "mpmath.libmp.backend:73 import gmpy -> :74 catches ImportError -> :75 raises ImportError -> :79 outer bare catch"
+        ]
+      ],
+      "minimal_expected_absence": "gmpy",
+      "name": "gmpy",
+      "occurrence_limit": "Conditional on reaching backend and successful non-poisoning handling of gmpy2 absence. Adding only gmpy2 would expose the next ordinary optional fallback.",
+      "support": "Source-backed eager fallback following an absent gmpy2 in mpmath backend; not a SymPy supported gmpy1 backend."
+    },
+    {
+      "catch_and_fallback": [
+        "No flint warning under auto; absence falls through to gmpy2 then Python ground types.",
+        "The later :117 from flint import __version__ is unreachable when :115 failed; no separate flint.__version__ negative is justified."
+      ],
+      "chains": [
+        [
+          "sympy.core.numbers:23 or sympy.core.intfunc:17 eagerly imports sympy.external.gmpy",
+          "sympy.external.gmpy:151 reads absent SYMPY_GROUND_TYPES as auto",
+          "sympy.external.gmpy:159\u2013160 calls _get_flint(auto)",
+          "sympy.external.gmpy._get_flint:111 permits auto -> :115 import flint -> :118 catches ImportError -> :122 returns None",
+          "sympy.external.gmpy:164 resets auto -> :166\u2013167 next tries gmpy2"
+        ]
+      ],
+      "minimal_expected_absence": "flint",
+      "name": "flint",
+      "occurrence_limit": "A source-only AST eager flag on the import statement would miss the top-level helper call; this review explicitly traces that call.",
+      "support": "Source-backed eager helper execution under frozen default SYMPY_GROUND_TYPES=auto, despite the import statement being inside a function."
+    },
+    {
+      "catch_and_fallback": [
+        "False skips the guarded Triton imports/type additions. functools.cache can reuse one False result across callers; this is not evidence of two distinct requests.",
+        "get_triton_version:17\u201324 also catches ImportError and returns its fallback, but no eager caller was established for that function in this bounded lane."
+      ],
+      "chains": [
+        [
+          "torch._dynamo.utils:90 imports has_triton_package",
+          "torch._dynamo.utils:2414 top-level if has_triton_package()",
+          "torch.utils._triton.has_triton_package:7\u201313 imports triton at:9, catches ImportError at:12, returns False"
+        ],
+        [
+          "torch._inductor.runtime.hints:10 imports has_triton_package",
+          "torch._inductor.runtime.hints:38 top-level if has_triton_package()",
+          "torch.utils._triton.has_triton_package:7\u201313 import/catch returns False"
+        ]
+      ],
+      "minimal_expected_absence": "triton",
+      "name": "triton",
+      "occurrence_limit": "Some additional Triton consumers are deferred, TYPE_CHECKING-only or outside the candidate; they are not automatically included as active paths.",
+      "support": "Source-backed eager catch-compatible import helper called by two registered ordinary03-loaded modules; not dependent on CUDA availability for these two call sites."
+    }
+  ],
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "classification": "Source-backed prospective optional requests under frozen CPU import defaults, not observed held05 requests or complete path coverage.",
+  "conditional_or_excluded": [
+    {
+      "reason": "Sage imports require SAGE_ROOT or MPMATH_SAGE; both are absent from frozen environment. No sage name is justified by this pool.",
+      "site": "mpmath.libmp.backend:82\u201392"
+    },
+    {
+      "reason": "Triton type imports and has_triton call are inside TYPE_CHECKING, not ordinary runtime module execution.",
+      "site": "torch._higher_order_ops.triton_kernel_wrap:35\u201364"
+    },
+    {
+      "reason": "TMA helpers are deferred and first gated by has_triton_package; its expected False means descendants are not required. GPU/XPU checks are not reached after False.",
+      "site": "torch.utils._triton:38\u2013124"
+    },
+    {
+      "reason": "Exploratory reference is not candidate-registered and not ordinary03 cached; it supplies no active-path admission evidence.",
+      "site": "torch.sparse._triton_ops:1326"
+    },
+    {
+      "reason": "Not registered/cached in this candidate/ordinary03; no blanket import-name addition from these sources.",
+      "site": "torch._functorch._aot_autograd.autograd_cache and torch.distributed._symmetric_memory._nvshmem_triton"
+    }
+  ],
+  "contract_requirements": [
+    "Keep exact-name absence validation before package entry and on every matching request. Do not add guessed descendants or use the whole AST list as an allowlist.",
+    "Authored regression should exercise nested gmpy2->gmpy catches, top-level helper-to-import calls, and cached triton False fallback while retaining unexpected-import poison and later registered import success.",
+    "Keep a separate bare-find_spec regression documenting that declared absence raises ModuleNotFoundError and does not yield None; fixed four-import acceptance must not imply deferred API compatibility.",
+    "Pin callers/branches/source hashes to the same current candidate, retained inventory, interpreter and fixed environment; full live held absence remains a later admission check."
+  ],
+  "environment_defaults": {
+    "MPMATH_NOGMPY_absent_means_gmpy_attempts_enabled": true,
+    "SYMPY_GROUND_TYPES_absent_means_auto": true,
+    "environment_changed": false,
+    "frozen_environment_keys_absent": [
+      "MPMATH_NOGMPY",
+      "MPMATH_NOSAGE",
+      "SAGE_ROOT",
+      "MPMATH_SAGE",
+      "MPMATH_STRICT",
+      "SYMPY_GROUND_TYPES"
+    ],
+    "sage_branch_disabled_under_frozen_env": true,
+    "torch_version_source": "2.9.0+cpu; cuda=None, hip=None, xpu=None"
+  },
+  "input_pins": [
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-05.json",
+      "sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+      "size_bytes": 8833
+    }
+  ],
+  "kind": "palimpsest-optional-numeric-callpaths-v1",
+  "proof_boundaries": [
+    "Call chains are sufficient static dependency edges with ordinary03 terminal presence anchors; they are not a recorded chronological call trace.",
+    "Actual05 stopped earlier at pynvml; none of these four misses is claimed observed in actual05.",
+    "No import, execution, native query, runtime probe, production edit, Git/network mutation, model or protected-catalogue read was performed.",
+    "This finite pool is not full optional-import, dynamic-request or native-trigger completeness. Root owns other families and the full AST survey."
+  ],
+  "proposed_finite_contract_contribution": [
+    "flint",
+    "gmpy",
+    "gmpy2",
+    "triton"
+  ],
+  "review_scope": [
+    "gmpy2",
+    "gmpy",
+    "flint",
+    "triton"
+  ],
+  "reviewed_at_utc": "2026-10-15T21:11:53.828531+00:00",
+  "source_pins": [
+    {
+      "loaded03": true,
+      "module": "torch",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py",
+      "registered_path": "torch/__init__.py",
+      "sha256": "3caf7f40140ede2465bde40b9003af10cbbc8f7bcf436fa1de026471daa1b288",
+      "size_bytes": 102969
+    },
+    {
+      "loaded03": true,
+      "module": "torch._dynamo.utils",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/utils.py",
+      "registered_path": "torch/_dynamo/utils.py",
+      "sha256": "daba4f1b89ec099f58f3ceafd5fe0f52f7ee0e1bacf45447307501e70c63021a",
+      "size_bytes": 170108
+    },
+    {
+      "loaded03": true,
+      "module": "torch.fx.experimental.symbolic_shapes",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/fx/experimental/symbolic_shapes.py",
+      "registered_path": "torch/fx/experimental/symbolic_shapes.py",
+      "sha256": "d3532c5e343bdf0636cd27dfefbd1c4f70b0d791777e6798a9a5f24be8d72439",
+      "size_bytes": 334720
+    },
+    {
+      "loaded03": true,
+      "module": "torch.utils._triton",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/_triton.py",
+      "registered_path": "torch/utils/_triton.py",
+      "sha256": "4ef74300d0d27432094d88a56f2550190ff538948593fd41eb5c5ef09822f17d",
+      "size_bytes": 4665
+    },
+    {
+      "loaded03": true,
+      "module": "torch._inductor.runtime.hints",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/runtime/hints.py",
+      "registered_path": "torch/_inductor/runtime/hints.py",
+      "sha256": "e47b259b2957c9c64ba83b8e132fb05d71d9b5c4ce19e5745d5d562596ad8da3",
+      "size_bytes": 6981
+    },
+    {
+      "loaded03": true,
+      "module": "torch._inductor.utils",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/utils.py",
+      "registered_path": "torch/_inductor/utils.py",
+      "sha256": "4e28cf6225ba3e0cd5d00bd03f69c4514b65c2067febe6e0edd050aeb5aaf50c",
+      "size_bytes": 121097
+    },
+    {
+      "loaded03": true,
+      "module": "torch.cuda",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/cuda/__init__.py",
+      "registered_path": "torch/cuda/__init__.py",
+      "sha256": "9ba786aee9b5aac710f49c3beade1722610a0d6d8ec406fad9a9793df1316e99",
+      "size_bytes": 64667
+    },
+    {
+      "loaded03": true,
+      "module": "torch.version",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/version.py",
+      "registered_path": "torch/version.py",
+      "sha256": "ff8ea659d7cbeaf99c9a3fb1307fcc6ec324ce9b9f752464dd7934f32a1e73c8",
+      "size_bytes": 277
+    },
+    {
+      "loaded03": true,
+      "module": "torch._higher_order_ops.triton_kernel_wrap",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_higher_order_ops/triton_kernel_wrap.py",
+      "registered_path": "torch/_higher_order_ops/triton_kernel_wrap.py",
+      "sha256": "92c92d16d1e216f22b90336986b4b88a9d11f320b3189fc5871b4277a65f71ba",
+      "size_bytes": 83073
+    },
+    {
+      "loaded03": true,
+      "module": "sympy",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/__init__.py",
+      "registered_path": "sympy/__init__.py",
+      "sha256": "4e9476348ba105feab28d82f5bcf6cdba2e3e84de6e059bbfe7a13728c0a4ab0",
+      "size_bytes": 29422
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.core",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/core/__init__.py",
+      "registered_path": "sympy/core/__init__.py",
+      "sha256": "d0bef64c69e0ac88362649d6dde95a3d22039a4a4f8d618d55f364df7c0a5c9d",
+      "size_bytes": 3123
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.core.numbers",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/core/numbers.py",
+      "registered_path": "sympy/core/numbers.py",
+      "sha256": "584912d4927da2ffa7e215efc70ac7d4d3e290d9720428cb379bfe8ce671becc",
+      "size_bytes": 136741
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.core.intfunc",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/core/intfunc.py",
+      "registered_path": "sympy/core/intfunc.py",
+      "sha256": "4e280923d6efb1be1a3746992600b3c481e5bff7a1d2b12559e4eeae27abdf22",
+      "size_bytes": 14219
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.external",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/__init__.py",
+      "registered_path": "sympy/external/__init__.py",
+      "sha256": "0bab38eb9e0495cfd7f83f54808d9c5105a2432183b7d2c6dc829473caaaceea",
+      "size_bytes": 578
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.external.gmpy",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/gmpy.py",
+      "registered_path": "sympy/external/gmpy.py",
+      "sha256": "f3dbd7735283e53890093c252fef7caf4d4a76ab0eb09a7373c5cdd51ed3c0ce",
+      "size_bytes": 9768
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.external.importtools",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/importtools.py",
+      "registered_path": "sympy/external/importtools.py",
+      "sha256": "43bb52d9c74667d6b8348ff5b201aea157120effeb224f80bf40691536ba1330",
+      "size_bytes": 7671
+    },
+    {
+      "loaded03": true,
+      "module": "sympy.polys.domains.groundtypes",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/polys/domains/groundtypes.py",
+      "registered_path": "sympy/polys/domains/groundtypes.py",
+      "sha256": "84095adbbc397a4a0947ff1cfb5628f2fac480822080f73ad79b5f7b5b9d73d0",
+      "size_bytes": 2102
+    },
+    {
+      "loaded03": true,
+      "module": "mpmath",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/__init__.py",
+      "registered_path": "mpmath/__init__.py",
+      "sha256": "b241584d2c1fc0304b0a1015ea923749d7b0800411dd406dcab7c82bf25d9fe8",
+      "size_bytes": 8765
+    },
+    {
+      "loaded03": true,
+      "module": "mpmath.ctx_fp",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/ctx_fp.py",
+      "registered_path": "mpmath/ctx_fp.py",
+      "sha256": "72d523c7f3685348855a4d397170d808bd99b4b64e956b359fa65aa37a5b1b68",
+      "size_bytes": 6572
+    },
+    {
+      "loaded03": true,
+      "module": "mpmath.ctx_mp",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/ctx_mp.py",
+      "registered_path": "mpmath/ctx_mp.py",
+      "sha256": "777af8b7bc4736a485b66aac03d06dab5369cb759333ea5c336fe3782c840b16",
+      "size_bytes": 49452
+    },
+    {
+      "loaded03": true,
+      "module": "mpmath.libmp",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/__init__.py",
+      "registered_path": "mpmath/libmp/__init__.py",
+      "sha256": "5020e32d9c386eb6e495a0a64a2c4270f74b747933f2c17ffba17fc2bd1db808",
+      "size_bytes": 3790
+    },
+    {
+      "loaded03": true,
+      "module": "mpmath.libmp.libmpf",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/libmpf.py",
+      "registered_path": "mpmath/libmp/libmpf.py",
+      "sha256": "be93f490d56449c6c2568668809e166ad97823b09ed1de1dcc75637d57b9eeca",
+      "size_bytes": 45021
+    },
+    {
+      "loaded03": true,
+      "module": "mpmath.libmp.backend",
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/backend.py",
+      "registered_path": "mpmath/libmp/backend.py",
+      "sha256": "dba03ca5491a1a8bf6eafaeb14d415c962792c3b4af2c977507ad82de71a4e30",
+      "size_bytes": 3360
+    }
+  ],
+  "triton_bare_probe_limits": [
+    {
+      "branch": "_initialized begins False at cuda.py:48; is_initialized:333\u2013335 and _lazy_call:338\u2013353 call immediately only if initialized, otherwise append to _queued_calls. This is source-supported deferred CUDA initialization, not an eager call merely because the queueing statement is top-level.",
+      "catch": "No ImportError handler around the find_spec in this function. A declared negative raises ModuleNotFoundError instead of ordinary None; a future CUDA initialization could therefore fail.",
+      "entry": "torch.cuda:1728 _lazy_call(_register_triton_kernels)",
+      "quote": "has_triton = importlib.util.find_spec(\"triton\") is not None",
+      "scope_limit": "Do not claim CUDA initialization/operator compatibility from a four-import contract. No native/CUDA initialization query was performed; this review does not prove every possible native trigger absent.",
+      "site": "torch.cuda._register_triton_kernels:1708"
+    },
+    {
+      "branch": "Function and its caller are defined in an ordinary03-loaded module, but module presence does not prove those function bodies ran. The code-generation/autotuning call sites found are not proof of eager import execution.",
+      "catch": "Bare probe is uncaught here. The existing negative contract is not transparent find_spec(None) semantics.",
+      "entry": "Deferred cached function; triton_version_uses_attrs_dict:3354\u20133355 calls it.",
+      "quote": "if importlib.util.find_spec(\"triton\") is None:",
+      "scope_limit": "Do not globally change find_spec behavior or whitelist descendants based on this deferred code.",
+      "site": "torch._inductor.utils.get_triton_attrs_descriptor_version:3329\u20133334"
+    }
+  ],
+  "verdict": "FINITE_POOL_GMPY2_GMPY_FLINT_TRITON_SOURCE_SUPPORTED_WITH_PROBE_LIMITS",
+  "version": 1
+}

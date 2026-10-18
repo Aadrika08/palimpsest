@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-affected-persistent-01/tmp/test_authored05_corrects_only_0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 786, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-profile-affected-persistent-01/tmp/test_authored05_corrects_only_0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 775, in main
+    if os.path.lexists(ROOT/allocation_output(config)):raise FileExistsError('CPU allocation already reserved')
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: CPU allocation already reserved

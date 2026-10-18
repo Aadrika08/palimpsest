@@ -1,0 +1,46 @@
+{
+  "cause": "Existing .gitignore line12 runs/ omitted exactly three nested input evidence copies from initial git add.",
+  "correction": "Force-add only the three unchanged indexed files; preserve initial commit and original index.",
+  "failed_check": {
+    "command": [
+      "python",
+      "-I",
+      "-S",
+      "-B",
+      "docs/reports/puck-cpu-characterization-03/verify_evidence.py",
+      "--originals",
+      "--git-revision",
+      "HEAD"
+    ],
+    "exit_code": 1,
+    "tool_chunk": "785c41"
+  },
+  "index_changed": false,
+  "initial_commit": "50d41fa754243bdc43b3d5861158a0984f229c55",
+  "kind": "puck-cpu-observation03-archive-correction-v1",
+  "missing_artifacts": [
+    {
+      "archived_path": "inputs/runs/puck-cpu-retained-admission-02/inventory.json",
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "archived_path": "inputs/runs/puck-cpu-retained-admission-02/result.json",
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/result.json",
+      "sha256": "29a9e4a84d16cb9a20ee95749a44d12631aa7d21ba5a9019f091a674ad80d618",
+      "size_bytes": 1154
+    },
+    {
+      "archived_path": "inputs/runs/puck-cpu-retained-admission-02/snapshot.json",
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/snapshot.json",
+      "sha256": "db66e69a1a39e950b0bbfe8c7f1e9134cd3c3e3251dceb82db3692e6b407f70b",
+      "size_bytes": 663
+    }
+  ],
+  "observer_rerun": false,
+  "outcome_auditor_rerun": false,
+  "packet_bytes_changed": false,
+  "runtime_qualified": false,
+  "runtime_sources_changed": false
+}

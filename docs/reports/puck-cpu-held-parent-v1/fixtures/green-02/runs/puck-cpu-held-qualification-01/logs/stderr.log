@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 647, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 638, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 439, in __enter__
+    self._process = _process(os.getpid()); self._parent = _process(os.getppid())
+                                                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 247, in _process
+    with open('/proc/'+str(pid)+'/stat', 'rb') as stream: raw = stream.read(4097)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/proc/0/stat'

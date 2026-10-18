@@ -1,0 +1,90 @@
+{
+  "accepted_installation": false,
+  "active_children": [],
+  "collection_authorized": false,
+  "elapsed_seconds": 4.702188771974761,
+  "fd_count_after": 4,
+  "fd_count_before": 4,
+  "fixture": {
+    "directory_count": 2074,
+    "explicit_empty_directories": 2,
+    "file_count": 27225,
+    "nonempty_directories": 2072,
+    "regular_file_bytes": 122508
+  },
+  "fixture_root": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-retained-scale-fixture-01",
+  "kind": "authored-retained-installation-scale-preflight-v1",
+  "limits": {
+    "address_space_bytes": 2147483648,
+    "hard_seconds": 130,
+    "max_children": 0,
+    "max_fds": 40000,
+    "normal_seconds": 120,
+    "regular_fixture_bytes": 134217728,
+    "sampled_rss_stop_bytes": 536870912
+  },
+  "peak_rss_bytes": 1468104704,
+  "phases": [
+    {
+      "elapsed_seconds": 1.0533779649995267,
+      "fd_count": 4,
+      "name": "fixture_creation",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 1.0250971870264038
+    },
+    {
+      "elapsed_seconds": 1.2463801029953174,
+      "fd_count": 4,
+      "name": "holder_construction",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 0.19294103200081736
+    },
+    {
+      "elapsed_seconds": 2.609693896956742,
+      "fd_count": 29313,
+      "name": "enter",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 1.3632739380118437
+    },
+    {
+      "elapsed_seconds": 3.2700013800058514,
+      "fd_count": 29313,
+      "name": "explicit_recheck",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 0.6602426600293256
+    },
+    {
+      "elapsed_seconds": 3.359810271009337,
+      "fd_count": 29313,
+      "name": "snapshot_write",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 0.08974523097276688
+    },
+    {
+      "elapsed_seconds": 4.022057524009142,
+      "fd_count": 29313,
+      "name": "post_snapshot_recheck",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 0.6621819389984012
+    },
+    {
+      "elapsed_seconds": 4.701958887977526,
+      "fd_count": 4,
+      "name": "exit",
+      "peak_rss_bytes": 1468104704,
+      "seconds": 0.6798371630138718
+    }
+  ],
+  "provenance": "authored-only-no-target-packages-or-data",
+  "resource_observations": 89,
+  "runtime_qualified": false,
+  "sampled_peak_fd_count": 29315,
+  "sampled_peak_rss_bytes": 57315328,
+  "source_sha256": {
+    "scripts/admit_puck_retained_installation.py": "6c0dbfb4d5d0845e20540f61a88a800132ac568fccd48ef23dd51748aae8bc1b",
+    "src/palimpsest/puck_execution_files.py": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+    "src/palimpsest/puck_retained_installation.py": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc"
+  },
+  "status": "PASS",
+  "study_authorized": false
+}

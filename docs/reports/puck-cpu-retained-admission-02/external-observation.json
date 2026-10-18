@@ -1,0 +1,40 @@
+{
+  "acceptance_audit_02": {
+    "failure_stage": "configuration copy byte identity assumption",
+    "observed_terminal_exit_code": 1,
+    "status": "FAIL",
+    "target_code_executed": false,
+    "terminal_chunk_id": "e952f1"
+  },
+  "acceptance_audit_03": {
+    "exec_session_id": 31109,
+    "initial_chunk_id": "7966ed",
+    "observed_terminal_exit_code": 0,
+    "status": "PASS",
+    "target_code_executed": false,
+    "terminal_chunk_id": "18e771"
+  },
+  "admission": {
+    "exec_session_id": 61097,
+    "initial_chunk_id": "684459",
+    "observed_terminal_exit_code": 0,
+    "running_poll_chunk_id": "aa0794",
+    "stdout_result_matches_retained_result": true,
+    "terminal_chunk_id": "81d42c"
+  },
+  "configuration_sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+  "invocation_argv": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/admit_puck_retained_installation.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-retained-admission-02.json",
+    "--sha256",
+    "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96"
+  ],
+  "kind": "retained-admission-02-external-terminal-observation-v1",
+  "note": "Tool terminal exits are externally observed. elapsed_seconds fields are parent/auditor-reported durations; no separate precise outer wall duration is claimed.",
+  "source_commit": "41e128c025ac2d9c52f434ca674bdf4d1f31dadf"
+}

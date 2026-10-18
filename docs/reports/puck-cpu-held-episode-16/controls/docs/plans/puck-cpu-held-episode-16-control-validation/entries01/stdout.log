@@ -1,0 +1,53 @@
+{
+  "calibration": {
+    "attempt14": {
+      "byte_ceiling": 2147483648,
+      "byte_margin": 580497304,
+      "bytes": 1566986344,
+      "directories": 3273,
+      "entries": 38681,
+      "entry_margin": 1319,
+      "files": 34337,
+      "links": 1071,
+      "staged_bytes": 1318494346,
+      "staged_directories": 2076,
+      "staged_files": 27255
+    },
+    "measured_admission14_held_bytes": 1566986344,
+    "measured_admission14_peak_files": 34337,
+    "reproduced": true
+  },
+  "episode16_frozen": {
+    "byte_ceiling": 2147483648,
+    "byte_margin": 103078275,
+    "bytes": 2044405373,
+    "directories": 3061,
+    "entries": 37982,
+    "entry_margin": 2018,
+    "files": 33824,
+    "links": 1097,
+    "staged_bytes": 1590197452,
+    "staged_directories": 2079,
+    "staged_files": 27286
+  },
+  "episode16_full_history": {
+    "byte_ceiling": 2147483648,
+    "byte_margin": 19192977,
+    "bytes": 2128290671,
+    "directories": 3401,
+    "entries": 39422,
+    "entry_margin": 578,
+    "files": 34924,
+    "links": 1097,
+    "staged_bytes": 1590197452,
+    "staged_directories": 2079,
+    "staged_files": 27286
+  },
+  "freeze": {
+    "pinned_bytes": 66739051,
+    "pins": 2128
+  },
+  "kind": "held16-entry-and-byte-ceiling-model-v1",
+  "scope": "read-only model from pins, the preparation04 plan and metadata; staged paths and sizes from the plan; no stage opened",
+  "stop_threshold_entries": 39500
+}

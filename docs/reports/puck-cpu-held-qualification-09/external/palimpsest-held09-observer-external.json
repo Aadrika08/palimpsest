@@ -1,0 +1,40 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_held_allocation.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09.json",
+    "--sha256",
+    "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 180.5176759089809,
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "external_deadline_seconds": 240,
+  "implicit_retry": false,
+  "kind": "puck-cpu-held09-external-transport-v1",
+  "normal_exit": true,
+  "phase": "observer",
+  "returncode": 1,
+  "runtime_qualified": false,
+  "stderr": {
+    "path": "/tmp/palimpsest-held09-observer-external.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-held09-observer-external.stdout",
+    "sha256": "7e8396f9b44a83980459b5f59e2b544b7e02fc7da431e5a0e99e13b42b1feec1",
+    "size_bytes": 951
+  },
+  "study_authorized": false,
+  "timed_out": false
+}

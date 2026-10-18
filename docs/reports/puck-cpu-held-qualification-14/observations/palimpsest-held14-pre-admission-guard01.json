@@ -1,0 +1,82 @@
+{
+  "absence": {
+    "historical_missing_receipts": 19,
+    "new_paths": [
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-14",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-14-external-cli.stdout",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-14-external-cli.stderr",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-14-external-cli-transport.json",
+      "/tmp/palimpsest-puck-cpu-held-qualification-14-audit-01.json",
+      "/tmp/palimpsest-puck-cpu-held-qualification-14-admission-01.json"
+    ]
+  },
+  "admission_main_invoked": false,
+  "attempt11_d83dab3": "NEVER_INVOKED",
+  "checked_at_utc": "2026-10-17T07:48:29.712649+00:00",
+  "control_commit": "eb34d5c2a66730c248b00229c17ce84e197b3d68",
+  "control_files": 78,
+  "historical_empty_directories": 41,
+  "historical_records_unchanged": 126,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 133828234,
+  "pins": 2768,
+  "preparation02_run_files": 51,
+  "preparation03_run_files": 51,
+  "resources": {
+    "at_utc": "2026-10-17T07:48:29.477663+00:00",
+    "mem_available_bytes": 6946209792,
+    "nofile_hard": 524288,
+    "nofile_soft": 524288,
+    "project_free_bytes": 43946336256,
+    "tmpfs_free_bytes": 4905218048
+  },
+  "runtime_invoked": false,
+  "source_commit": "f05bd699af337e44de54584bb334690ec405f994",
+  "stage_guard": {
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "directories": {
+      "inputs": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 43193,
+        "mode": "0700"
+      },
+      "root-0000": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 43194,
+        "mode": "0700"
+      },
+      "root-0001": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 43195,
+        "mode": "0700"
+      },
+      "root-0002": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 43196,
+        "mode": "0700"
+      },
+      "root-0003": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 43197,
+        "mode": "0700"
+      },
+      "stage_parent": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 43108,
+        "mode": "0700"
+      }
+    },
+    "kind": "held14-stage-boot-guard-v1",
+    "result_sha256": "c7e6c0e8baf8daf2d221b5a3510cd586fedc50de71c3bd2b21cc8c36e79dfebf",
+    "scope": "metadata of five directories only; staged bytes are re-hashed by admission/runtime/audit",
+    "stage_parent": "/tmp/palimpsest-puck-cpu-held-03",
+    "status": "PASS_STAGE_AND_BOOT"
+  },
+  "status": "PASS_PRE_ADMISSION_GUARD_ONLY"
+}

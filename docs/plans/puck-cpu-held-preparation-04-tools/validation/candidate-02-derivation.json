@@ -1,0 +1,98 @@
+{
+  "at_utc": "2026-10-18T10:35:48.730615+00:00",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/derive_puck_episode_profile.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04/frozen-configuration.json",
+    "--result",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04/raw/result.json",
+    "--source",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04/raw/payload/source/characterization.json",
+    "--replay",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04/raw/payload/replay/characterization.json",
+    "--audit",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04/outcome-audit-04.json",
+    "--template",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+    "--inventory",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventory.json",
+    "--native",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-characterization-native-metadata-06.json",
+    "--site-root",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site",
+    "--output",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-episode-import-profile-candidate-02.json"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 0.45268308599770535,
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "inputs": {
+    "audit": {
+      "path": "docs/reports/puck-cpu-characterization-04/outcome-audit-04.json",
+      "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+      "size_bytes": 3662
+    },
+    "configuration": {
+      "path": "docs/reports/puck-cpu-characterization-04/frozen-configuration.json",
+      "sha256": "efa1c03dc18492d5382369f0d9756d252cc90c647fd351dd0d62804594735cdc",
+      "size_bytes": 22020
+    },
+    "deriver": {
+      "path": "scripts/derive_puck_episode_profile.py",
+      "sha256": "64c6cd18e422ea579d41b8d63ef7967db83f786bab08a2703dd842a8d1704ce3",
+      "size_bytes": 18865
+    },
+    "inventory": {
+      "path": "runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    "native": {
+      "path": "docs/plans/puck-cpu-characterization-native-metadata-06.json",
+      "sha256": "48ca37b1c45366bcd53ac195277ade6236537f89a720b50591906764eaf72569",
+      "size_bytes": 17199
+    },
+    "replay": {
+      "path": "docs/reports/puck-cpu-characterization-04/raw/payload/replay/characterization.json",
+      "sha256": "e86ff1fb2044812b8d91c8b1daa91385054adb3bc35d2f19a1ffdf9a24ab6438",
+      "size_bytes": 383201
+    },
+    "result": {
+      "path": "docs/reports/puck-cpu-characterization-04/raw/result.json",
+      "sha256": "30309af0c74a055d3332ac32b9cad6add3f2e5c4adbb748b8a59d2d7696243c0",
+      "size_bytes": 2760
+    },
+    "source": {
+      "path": "docs/reports/puck-cpu-characterization-04/raw/payload/source/characterization.json",
+      "sha256": "a4e69a333982f7f2b0f47546a8209303c6e26e9b2afae7b28ca4003906978f9c",
+      "size_bytes": 383183
+    },
+    "template": {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    }
+  },
+  "inputs_unchanged": true,
+  "kind": "palimpsest-prep04-candidate02-derivation-v1",
+  "output": {
+    "path": "docs/plans/puck-cpu-episode-import-profile-candidate-02.json",
+    "sha256": "3a59499b3f5eb661ec12256baf85b002f8ef5f234e64fc450ef3c8645ffa0704",
+    "size_bytes": 230700
+  },
+  "returncode": 0,
+  "stderr": "",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "{\"namespaces\": 2, \"path\": \"/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-episode-import-profile-candidate-02.json\", \"physical_modules\": 1147, \"sha256\": \"3a59499b3f5eb661ec12256baf85b002f8ef5f234e64fc450ef3c8645ffa0704\", \"size_bytes\": 230700, \"source_modules\": 82}\n",
+  "stdout_sha256": "d270c9f7b266eac040be151fa31deae2605cc7e6ad410385b5660d41fb984d56",
+  "template_role": "epoch-14 accepted candidate D (qualification-10 admission amendment 02 inputs.candidate)"
+}

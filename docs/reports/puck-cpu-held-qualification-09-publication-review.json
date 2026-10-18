@@ -1,0 +1,53 @@
+{
+  "all_seven_release_gates_open": true,
+  "boundaries": [
+    "Normal180s failed invocation and generic-v1 early audit refusal remain failures; no runtime, post-run payload/custody or episode acceptance.",
+    "Report keeps optional cumulative diagnostics incomplete/nonexclusive/noncausal and recorded PID samples nonexhaustive.",
+    "Reviewed all144 archived metadata/source/log files and65 exact source/control Git blobs. No installed/staged/native/interpreter payload reads, target/control/helper functions, tests/jobs, Git mutations or network.",
+    "Sibling report is outside index; this final review is also outside the indexed packet to avoid a hash cycle. Evidence commit not yet checked."
+  ],
+  "checks": {
+    "archived_artifacts": 144,
+    "archived_bytes": 13668698,
+    "closed_membership": true,
+    "control_commit": "60e5756d8c670e898320b26b3a2cee267577e53c",
+    "control_git_origins": 39,
+    "empty_files": 7,
+    "false_authority_preserved": true,
+    "missing_result_baseline_preserved": true,
+    "no_placeholder_claims": true,
+    "report_consistent_with_independent_failed_outcome": true,
+    "size_sha_mismatches": 0,
+    "source_commit": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+    "source_control_git_mismatches": 0,
+    "source_git_origins": 26,
+    "unindexed_extra_files": 0
+  },
+  "kind": "puck-cpu-held09-final-publication-review-v1",
+  "material_findings": [],
+  "pins": {
+    "independent_outcome_review": {
+      "path": "/tmp/palimpsest-held09-outcome-review.json",
+      "sha256": "322da785615245e03f497570cc102be61dad7f87dbbdb4bf5cd7ffa1340c5f3e",
+      "size_bytes": 12762
+    },
+    "index": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-09/evidence-index.json",
+      "sha256": "cbabb4c0397171a8976bc6e4e62f873ddf280a09a2afc1d3845ef5d631dbb1fb",
+      "size_bytes": 62392
+    },
+    "report": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-09.md",
+      "sha256": "2d928efe85ebf17f34ddb828605f0b5c904bb68e8157258da3b6c5dfc9f48854",
+      "size_bytes": 6625
+    }
+  },
+  "qualification_claims": [],
+  "reviewed_at_utc": "2026-10-16T02:59:02.931503+00:00",
+  "reviewer_writes": [
+    "/tmp/palimpsest-held09-final-publication-review.json"
+  ],
+  "runtime_qualified": false,
+  "status": "PASS_FAILED_OUTCOME_PUBLICATION_NO_RUNTIME_ACCEPTANCE",
+  "version": 1
+}

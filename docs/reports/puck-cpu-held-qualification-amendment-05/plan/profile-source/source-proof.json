@@ -1,0 +1,158 @@
+{
+  "actual05_configuration_created": false,
+  "actual05_invoked": false,
+  "candidate": {
+    "path": "docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+    "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648",
+    "size_bytes": 342451
+  },
+  "collection_authorized": false,
+  "creator_evidence": {
+    "cpp_creation_line": 135,
+    "cpp_final_tracer_line": 599,
+    "cpp_first_delegate_line": 147,
+    "cpp_intermediate_import_line": 138,
+    "factory_register_lines": [
+      33,
+      45
+    ],
+    "python_call_line": 558,
+    "tracer_init_lines": [
+      1591,
+      1598
+    ]
+  },
+  "executable": false,
+  "kind": "puck-cpu-autograd-publication-profile-source-proof-v1",
+  "limitations": [
+    "Exact package-declared source is not linked-binary build provenance.",
+    "Guarded snapshots and direct dispatch references only; runtime mismatches still refuse.",
+    "Other35 native-create declarations remain unchanged and unqualified.",
+    "No real configuration or actual attempt is created by this source candidate."
+  ],
+  "native_authorized": false,
+  "previous_candidate": {
+    "path": "docs/reports/puck-cpu-held-qualification-04/inspection/profile-candidate.json",
+    "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+    "size_bytes": 340908
+  },
+  "proposed_export": {
+    "attributes": [
+      "torch",
+      "_C",
+      "_autograd"
+    ],
+    "class_binding": null,
+    "delegate_attributes": [
+      "CreationMeta",
+      "DeviceType",
+      "ProfilerEvent",
+      "SavedTensor",
+      "TensorGeometry",
+      "_InputMetadata",
+      "_KinetoEvent",
+      "_ProfilerDisableOptions",
+      "_ProfilerResult",
+      "_add_metadata_json",
+      "_clear_callbacks",
+      "_disable_profiler",
+      "_disable_profiler_legacy",
+      "_enable_profiler",
+      "_enable_profiler_legacy",
+      "_enable_record_function",
+      "_get_creation_meta",
+      "_get_current_graph_task_keep_graph",
+      "_get_data_attr",
+      "_get_sequence_nr",
+      "_kineto_step",
+      "_pop_saved_tensors_default_hooks",
+      "_prepare_profiler",
+      "_profiler_enabled",
+      "_profiler_type",
+      "_push_saved_tensors_default_hooks",
+      "_record_function_with_args_enter",
+      "_record_function_with_args_exit",
+      "_saved_tensors_hooks_disable",
+      "_saved_tensors_hooks_enable",
+      "_saved_tensors_hooks_get_disabled_error_message",
+      "_saved_tensors_hooks_is_enabled",
+      "_saved_tensors_hooks_set_tracing",
+      "_set_creation_meta",
+      "_set_empty_test_observer",
+      "_soft_assert_raises",
+      "_supported_activities",
+      "_toggle_collection_dynamic",
+      "_top_saved_tensors_default_hooks",
+      "_unsafe_set_version_counter",
+      "kineto_available"
+    ],
+    "name": "torch._C._autograd",
+    "phase": "module_exec_publish",
+    "producer": "torch.autograd"
+  },
+  "qualification_claims": [],
+  "replaced_export": {
+    "attributes": [
+      "_autograd"
+    ],
+    "class_binding": null,
+    "name": "torch._C._autograd",
+    "phase": "native_create",
+    "producer": "torch._C"
+  },
+  "roster_evidence": {
+    "build_conditionals_do_not_change_top_level_names": true,
+    "literal_classes_enums": 9,
+    "literal_functions": 32,
+    "source_initialization_only": true
+  },
+  "runtime_qualified": false,
+  "source_files": [
+    {
+      "original": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-04/upstream/LICENSE",
+      "path": "upstream/LICENSE",
+      "sha256": "a8a2c6b67cf8a597ffaa5c82380a6bd1b82629c0417e00673d8013d662eb500a",
+      "size_bytes": 3464,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/LICENSE"
+    },
+    {
+      "original": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-04/upstream/torch/csrc/autograd/init.cpp",
+      "path": "upstream/torch/csrc/autograd/init.cpp",
+      "sha256": "8648b41b178106a655e2d09d7e3a9f9b3b582a5e98bb5e5dedf1cca03e0aa883",
+      "size_bytes": 54809,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/autograd/init.cpp"
+    },
+    {
+      "original": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-04/upstream/torch/csrc/Module.cpp",
+      "path": "upstream/torch/csrc/Module.cpp",
+      "sha256": "aa61d768ccbb9bbb7e235d688289f79a4f25954472143a46961e11dcf4860da1",
+      "size_bytes": 87615,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/Module.cpp"
+    },
+    {
+      "original": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-04/upstream/torch/autograd/__init__.py",
+      "path": "upstream/torch/autograd/__init__.py",
+      "sha256": "0439167a6a8a4c50f73457c9961698611109638a1b146f0a084fa1ee3825273d",
+      "size_bytes": 25424,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/autograd/__init__.py"
+    },
+    {
+      "original": "/tmp/palimpsest-autograd-publication-profile-01/upstream/torch/csrc/autograd/profiler_python.cpp",
+      "path": "upstream/torch/csrc/autograd/profiler_python.cpp",
+      "sha256": "4efdef637b11a84d866ccfed5b8527d3ae442198ff572300c3e5f4a99c4223c0",
+      "size_bytes": 53787,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/autograd/profiler_python.cpp"
+    },
+    {
+      "original": "/tmp/palimpsest-autograd-publication-profile-01/upstream/torch/csrc/profiler/orchestration/python_tracer.cpp",
+      "path": "upstream/torch/csrc/profiler/orchestration/python_tracer.cpp",
+      "sha256": "1f1e02a739c227b9cc69075d511e9e623b48fd7c78c0d9fb1441b093aafb23fb",
+      "size_bytes": 1480,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/profiler/orchestration/python_tracer.cpp"
+    }
+  ],
+  "status": "prospective static candidate; not binary or runtime qualification",
+  "study_authorized": false,
+  "unchanged_other_exports": 37,
+  "upstream_package_declared_commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1"
+}

@@ -1,0 +1,86 @@
+{
+  "absent": 17,
+  "at_utc": "2026-10-18T10:43:41.288180+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "consumed": [
+    {
+      "ctime_ns": 1792202510972139931,
+      "device": 55,
+      "directory": true,
+      "exists": true,
+      "inode": 10398,
+      "mode": 16832,
+      "mtime_ns": 1792202510972139931,
+      "path": "/tmp/palimpsest-puck-cpu-held-02"
+    },
+    {
+      "ctime_ns": 1792222014167700783,
+      "device": 55,
+      "directory": true,
+      "exists": true,
+      "inode": 43108,
+      "mode": 16832,
+      "mtime_ns": 1792222014167700783,
+      "path": "/tmp/palimpsest-puck-cpu-held-03"
+    },
+    {
+      "ctime_ns": 1792202523976335562,
+      "device": 56,
+      "directory": true,
+      "exists": true,
+      "inode": 27531034,
+      "mode": 16832,
+      "mtime_ns": 1792202523976335562,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-02"
+    },
+    {
+      "ctime_ns": 1792222029962860011,
+      "device": 56,
+      "directory": true,
+      "exists": true,
+      "inode": 27580920,
+      "mode": 16832,
+      "mtime_ns": 1792222029962860011,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-03"
+    }
+  ],
+  "dry_run": true,
+  "git": {
+    "branch": "research/puck-cpu-held-preparation-04",
+    "clean": false,
+    "controls_git_bound": 13,
+    "head": "407200ec3b22038cc4012228381d118ccea15332",
+    "origin": null,
+    "upstream": {
+      "clean": true,
+      "gitlink": "8d964599119b420de67ee259434d273651a1a76d",
+      "head": "8d964599119b420de67ee259434d273651a1a76d"
+    }
+  },
+  "host": {
+    "baseline_external_files": 10,
+    "baseline_files": 4233,
+    "baseline_links": 1048,
+    "egl_vendor": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+    "native_aliases": 49,
+    "native_files": 60
+  },
+  "kind": "palimpsest-prep04-preflight-v1",
+  "phase": "observer",
+  "pins_checked": 122,
+  "resources": {
+    "disk_available_bytes": 13757890560,
+    "floors_met": false,
+    "mem_available_bytes": 6500536320,
+    "nofile": [
+      524288,
+      524288
+    ],
+    "required_tmpfs_free_bytes": 3737681100,
+    "tmp_flags": 6,
+    "tmpfs_available_bytes": 2912661504
+  },
+  "retirement": null,
+  "status": "PASS_PREFLIGHT_OBSERVER",
+  "validate_inputs": "PASS"
+}

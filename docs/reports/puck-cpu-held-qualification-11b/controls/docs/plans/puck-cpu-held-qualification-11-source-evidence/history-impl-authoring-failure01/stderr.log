@@ -1,0 +1,101 @@
+test_admission01_manifest_first_raw_reservations (__main__.HistoryChecks.test_admission01_manifest_first_raw_reservations) ... ok
+test_admission02_manifest_first_raw_reservations (__main__.HistoryChecks.test_admission02_manifest_first_raw_reservations) ... ok
+test_changed07_transport_is_refused (__main__.HistoryChecks.test_changed07_transport_is_refused) ... ok
+test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused) ... ok
+test_changed09_transport_is_refused (__main__.HistoryChecks.test_changed09_transport_is_refused) ... ok
+test_changed10_transport_is_refused (__main__.HistoryChecks.test_changed10_transport_is_refused) ... ok
+test_changed_admission01_transport_is_refused (__main__.HistoryChecks.test_changed_admission01_transport_is_refused) ... ok
+test_changed_admission02_transport_is_refused (__main__.HistoryChecks.test_changed_admission02_transport_is_refused) ... ok
+test_fabricated07_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated07_baseline_after_is_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused) ... ok
+test_fabricated08_result_is_refused (__main__.HistoryChecks.test_fabricated08_result_is_refused) ... ok
+test_fabricated09_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated09_baseline_after_is_refused) ... ok
+test_fabricated09_result_is_refused (__main__.HistoryChecks.test_fabricated09_result_is_refused) ... ok
+test_fabricated10_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated10_baseline_after_is_refused) ... ok
+test_fabricated10_success_result_is_refused (__main__.HistoryChecks.test_fabricated10_success_result_is_refused) ... ok
+test_fabricated11_admission_receipt_is_refused (__main__.HistoryChecks.test_fabricated11_admission_receipt_is_refused) ... ok
+test_fabricated11_result_is_refused (__main__.HistoryChecks.test_fabricated11_result_is_refused) ... ok
+test_fabricated_d83dab3_receipt_is_refused (__main__.HistoryChecks.test_fabricated_d83dab3_receipt_is_refused) ... ERROR
+test_fabricated_prior_admission_result_is_refused (__main__.HistoryChecks.test_fabricated_prior_admission_result_is_refused) ... ok
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine09_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine09_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine10_failure_has_fail_result_but_no_success_receipt (__main__.HistoryChecks.test_genuine10_failure_has_fail_result_but_no_success_receipt) ... ok
+test_genuine_admission01_failure_is_consumed_without_runtime (__main__.HistoryChecks.test_genuine_admission01_failure_is_consumed_without_runtime) ... ok
+test_genuine_admission02_was_consumed_by_sole_runtime10 (__main__.HistoryChecks.test_genuine_admission02_was_consumed_by_sole_runtime10) ... ok
+test_genuine_preparation02_binds_epoch11 (__main__.HistoryChecks.test_genuine_preparation02_binds_epoch11) ... ERROR
+test_historical_empty_directories_remain_empty (__main__.HistoryChecks.test_historical_empty_directories_remain_empty) ... ERROR
+test_inserted_file_in_historical_empty_directory_is_refused (__main__.HistoryChecks.test_inserted_file_in_historical_empty_directory_is_refused) ... ERROR
+test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes) ... ok
+test_preparation01_is_recorded_but_cannot_satisfy_epoch11 (__main__.HistoryChecks.test_preparation01_is_recorded_but_cannot_satisfy_epoch11) ... ERROR
+test_preparation02_pin_drift_is_refused (__main__.HistoryChecks.test_preparation02_pin_drift_is_refused) ... ERROR
+test_unexecuted_d83dab3_packet_is_recorded_never_invoked (__main__.HistoryChecks.test_unexecuted_d83dab3_packet_is_recorded_never_invoked) ... ERROR
+
+======================================================================
+ERROR: test_fabricated_d83dab3_receipt_is_refused (__main__.HistoryChecks.test_fabricated_d83dab3_receipt_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 275, in test_fabricated_d83dab3_receipt_is_refused
+    with self.assertRaises(AssertionError):control.check_unexecuted11(held)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'check_unexecuted11'
+
+======================================================================
+ERROR: test_genuine_preparation02_binds_epoch11 (__main__.HistoryChecks.test_genuine_preparation02_binds_epoch11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 239, in test_genuine_preparation02_binds_epoch11
+    value=control.check_preparation02(held,auditor,self.current(held),self.frozen())[-1]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'check_preparation02'
+
+======================================================================
+ERROR: test_historical_empty_directories_remain_empty (__main__.HistoryChecks.test_historical_empty_directories_remain_empty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 279, in test_historical_empty_directories_remain_empty
+    self.assertEqual(control.check_empty_directories()['directories'],35)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'check_empty_directories'
+
+======================================================================
+ERROR: test_inserted_file_in_historical_empty_directory_is_refused (__main__.HistoryChecks.test_inserted_file_in_historical_empty_directory_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 286, in test_inserted_file_in_historical_empty_directory_is_refused
+    for name in control.EMPTY_DIRECTORIES:(control.ROOT/name).mkdir(parents=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'EMPTY_DIRECTORIES'
+
+======================================================================
+ERROR: test_preparation01_is_recorded_but_cannot_satisfy_epoch11 (__main__.HistoryChecks.test_preparation01_is_recorded_but_cannot_satisfy_epoch11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 254, in test_preparation01_is_recorded_but_cannot_satisfy_epoch11
+    value=control.record_preparation01()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'record_preparation01'
+
+======================================================================
+ERROR: test_preparation02_pin_drift_is_refused (__main__.HistoryChecks.test_preparation02_pin_drift_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 250, in test_preparation02_pin_drift_is_refused
+    with self.assertRaises(AssertionError):control.check_preparation02(held,auditor,self.current(held),self.frozen())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'check_preparation02'
+
+======================================================================
+ERROR: test_unexecuted_d83dab3_packet_is_recorded_never_invoked (__main__.HistoryChecks.test_unexecuted_d83dab3_packet_is_recorded_never_invoked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py", line 267, in test_unexecuted_d83dab3_packet_is_recorded_never_invoked
+    value=control.check_unexecuted11(held)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held11b_history_control' has no attribute 'check_unexecuted11'
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.022s
+
+FAILED (errors=7)

@@ -1,0 +1,1358 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                         [100%]
+=================================== FAILURES ===================================
+_______ test_separately_executes_fixed_parent_and_preserves_transport[0] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_separately_executes_fixed0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528162210>
+code = 0
+
+    @pytest.mark.parametrize('code', [0, 7])
+    def test_separately_executes_fixed_parent_and_preserves_transport(tmp_path, monkeypatch, code):
+        body = ('import json,os,resource,sys,time\n'
+                'print(json.dumps(dict(argv=sys.argv[1:],environment=dict(os.environ),'
+                'isolated=sys.flags.isolated,no_site=sys.flags.no_site,bytecode=sys.dont_write_bytecode)),flush=True)\n'
+                'print("AUTHORED stderr",file=sys.stderr,flush=True)\ntime.sleep(.08)\nsys.exit(' + str(code) + ')\n')
+>       module, path, config = fixture(tmp_path, monkeypatch, body)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_______ test_separately_executes_fixed_parent_and_preserves_transport[7] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_separately_executes_fixed1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5286da6d0>
+code = 7
+
+    @pytest.mark.parametrize('code', [0, 7])
+    def test_separately_executes_fixed_parent_and_preserves_transport(tmp_path, monkeypatch, code):
+        body = ('import json,os,resource,sys,time\n'
+                'print(json.dumps(dict(argv=sys.argv[1:],environment=dict(os.environ),'
+                'isolated=sys.flags.isolated,no_site=sys.flags.no_site,bytecode=sys.dont_write_bytecode)),flush=True)\n'
+                'print("AUTHORED stderr",file=sys.stderr,flush=True)\ntime.sleep(.08)\nsys.exit(' + str(code) + ')\n')
+>       module, path, config = fixture(tmp_path, monkeypatch, body)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_closed_configuration_identity_refused_before_launch[kind-puck-cpu-runtime-characterization-v1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52812c410>
+field = 'kind', value = 'puck-cpu-runtime-characterization-v1'
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____ test_closed_configuration_identity_refused_before_launch[version-1] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5283bd050>
+field = 'version', value = 1
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+____ test_closed_configuration_identity_refused_before_launch[version-True] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5283c8510>
+field = 'version', value = True
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_closed_configuration_identity_refused_before_launch[output-runs/puck-cpu-runtime-characterization-02] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5281617d0>
+field = 'output', value = 'runs/puck-cpu-runtime-characterization-02'
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_closed_configuration_identity_refused_before_launch[output-/tmp/arbitrary] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5283c45d0>
+field = 'output', value = '/tmp/arbitrary'
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_closed_configuration_identity_refused_before_launch[site_root-runs/other/site] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528471790>
+field = 'site_root', value = 'runs/other/site'
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_closed_configuration_identity_refused_before_launch[entrypoint-scripts/characterize_puck_cpu_runtime.py] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5284c5c90>
+field = 'entrypoint', value = 'scripts/characterize_puck_cpu_runtime.py'
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+__ test_closed_configuration_identity_refused_before_launch[allocation_id-3] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_closed_configuration_iden7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5284c40d0>
+field = 'allocation_id', value = 3
+
+    @pytest.mark.parametrize('field,value', [
+        ('kind', 'puck-cpu-runtime-characterization-v1'), ('version', 1), ('version', True),
+        ('output', 'runs/puck-cpu-runtime-characterization-02'), ('output', '/tmp/arbitrary'),
+        ('site_root', 'runs/other/site'), ('entrypoint', PARENT), ('allocation_id', 3),
+    ])
+    def test_closed_configuration_identity_refused_before_launch(tmp_path, monkeypatch, field, value):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+______ test_configuration_bytes_and_canonical_root_path_are_bound[digest] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5280e34d0>
+change = 'digest'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____ test_configuration_bytes_and_canonical_root_path_are_bound[compact] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528623010>
+change = 'compact'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____ test_configuration_bytes_and_canonical_root_path_are_bound[relative] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52852bd50>
+change = 'relative'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+______ test_configuration_bytes_and_canonical_root_path_are_bound[dotdot] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5284c4990>
+change = 'dotdot'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____ test_configuration_bytes_and_canonical_root_path_are_bound[outside] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5281007d0>
+change = 'outside'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____ test_configuration_bytes_and_canonical_root_path_are_bound[symlink] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52812d610>
+change = 'symlink'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+__ test_configuration_bytes_and_canonical_root_path_are_bound[parent-symlink] __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_configuration_bytes_and_c6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5281476d0>
+change = 'parent-symlink'
+
+    @pytest.mark.parametrize('change', ['digest', 'compact', 'relative', 'dotdot', 'outside', 'symlink', 'parent-symlink'])
+    def test_configuration_bytes_and_canonical_root_path_are_bound(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[missing-parent] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5286d3350>
+change = 'missing-parent'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[missing-worker] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5280e1d10>
+change = 'missing-worker'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[missing-observer] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528135290>
+change = 'missing-observer'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[duplicate] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52817f990>
+change = 'duplicate'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[unsorted] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5283d9710>
+change = 'unsorted'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[size] __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52817ee50>
+change = 'size'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[hash] __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52848f310>
+change = 'hash'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[extra-field] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52850a890>
+change = 'extra-field'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[dotdot] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5286d8090>
+change = 'dotdot'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[absolute] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52852ba50>
+change = 'absolute'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_source_rows_are_unique_canonical_and_authenticated_before_launch[symlink] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_source_rows_are_unique_ca10')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52848fbd0>
+change = 'symlink'
+
+    @pytest.mark.parametrize('change', ['missing-parent', 'missing-worker', 'missing-observer', 'duplicate',
+                                       'unsorted', 'size', 'hash', 'extra-field', 'dotdot', 'absolute', 'symlink'])
+    def test_source_rows_are_unique_canonical_and_authenticated_before_launch(tmp_path, monkeypatch, change):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'raise AssertionError("must not execute")\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+______ test_all_reserved_paths_refuse_existing_files_and_symlinks[False-] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528620690>
+suffix = '', symlink = False
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_all_reserved_paths_refuse_existing_files_and_symlinks[False--external-cli.stdout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52811aad0>
+suffix = '-external-cli.stdout', symlink = False
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_all_reserved_paths_refuse_existing_files_and_symlinks[False--external-cli.stderr] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5284c5d10>
+suffix = '-external-cli.stderr', symlink = False
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_all_reserved_paths_refuse_existing_files_and_symlinks[False--external-cli-transport.json] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5280f2fd0>
+suffix = '-external-cli-transport.json', symlink = False
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+______ test_all_reserved_paths_refuse_existing_files_and_symlinks[True-] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5285024d0>
+suffix = '', symlink = True
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_all_reserved_paths_refuse_existing_files_and_symlinks[True--external-cli.stdout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528146d10>
+suffix = '-external-cli.stdout', symlink = True
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_all_reserved_paths_refuse_existing_files_and_symlinks[True--external-cli.stderr] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52812d110>
+suffix = '-external-cli.stderr', symlink = True
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_all_reserved_paths_refuse_existing_files_and_symlinks[True--external-cli-transport.json] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_all_reserved_paths_refuse7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52852a850>
+suffix = '-external-cli-transport.json', symlink = True
+
+    @pytest.mark.parametrize('suffix', ['', '-external-cli.stdout', '-external-cli.stderr', '-external-cli-transport.json'])
+    @pytest.mark.parametrize('symlink', [False, True])
+    def test_all_reserved_paths_refuse_existing_files_and_symlinks(tmp_path, monkeypatch, suffix, symlink):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____________ test_runs_directory_symlink_cannot_redirect_receipts _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_runs_directory_symlink_ca0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528152410>
+
+    def test_runs_directory_symlink_cannot_redirect_receipts(tmp_path, monkeypatch):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_launch_failure_still_retains_false_authority_receipt_and_empty_streams __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_launch_failure_still_reta0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528620290>
+
+    def test_launch_failure_still_retains_false_authority_receipt_and_empty_streams(tmp_path, monkeypatch):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:229: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_______ test_timeout_kills_and_reaps_only_owned_parent_and_sampled_child _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_timeout_kills_and_reaps_o0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52812ee90>
+
+    def test_timeout_kills_and_reaps_only_owned_parent_and_sampled_child(tmp_path, monkeypatch):
+        body = ('import os,subprocess,sys,time\n'
+                'child=subprocess.Popen([sys.executable,"-I","-S","-c","import time;time.sleep(30)"])\n'
+                'print(str(os.getpid())+" "+str(child.pid),flush=True)\n'
+                'try: time.sleep(30)\nfinally: child.kill();child.wait()\n')
+>       module, path, config = fixture(tmp_path, monkeypatch, body)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:245: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+______________________ test_pid_reuse_is_never_signalled _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_pid_reuse_is_never_signal0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52850acd0>
+
+    def test_pid_reuse_is_never_signalled(tmp_path, monkeypatch):
+>       module = api()
+                 ^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_sample_identity_limit_becomes_failed_transport_and_cleans_owned_parent __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_sample_identity_limit_bec0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528146790>
+
+    def test_sample_identity_limit_becomes_failed_transport_and_cleans_owned_parent(tmp_path, monkeypatch):
+>       module, path, config = fixture(tmp_path, monkeypatch, 'import time\ntime.sleep(30)\n')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_______ test_cli_reports_authored_exit_and_inherited_resource_limits[0] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_reports_authored_exit0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528137610>
+code = 0
+
+    @pytest.mark.parametrize('code', [0, 9])
+    def test_cli_reports_authored_exit_and_inherited_resource_limits(tmp_path, monkeypatch, code):
+        body = ('import json,resource,sys\n'
+                'print(json.dumps({name:resource.getrlimit(getattr(resource,"RLIMIT_"+name))'
+                ' for name in ("NOFILE","AS","FSIZE")}),flush=True)\nsys.exit(' + str(code) + ')\n')
+>       module, path, config = fixture(tmp_path, monkeypatch, body)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:285: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_______ test_cli_reports_authored_exit_and_inherited_resource_limits[9] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_reports_authored_exit1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52812efd0>
+code = 9
+
+    @pytest.mark.parametrize('code', [0, 9])
+    def test_cli_reports_authored_exit_and_inherited_resource_limits(tmp_path, monkeypatch, code):
+        body = ('import json,resource,sys\n'
+                'print(json.dumps({name:resource.getrlimit(getattr(resource,"RLIMIT_"+name))'
+                ' for name in ("NOFILE","AS","FSIZE")}),flush=True)\nsys.exit(' + str(code) + ')\n')
+>       module, path, config = fixture(tmp_path, monkeypatch, body)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:285: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags0-extra0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_requires_original_iso0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528168fd0>
+flags = ('-S', '-B'), extra = {}
+
+    @pytest.mark.parametrize('flags,extra', [(('-S', '-B'), {}), (('-I', '-B'), {}),
+                                          (('-I', '-S'), {}), (('-I', '-S', '-B'), {'LD_LIBRARY_PATH': '/tmp/authored'})])
+    def test_cli_requires_original_isolated_interpreter_and_clean_loader_environment(tmp_path, monkeypatch, flags, extra):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags1-extra1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_requires_original_iso1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5286e9b10>
+flags = ('-I', '-B'), extra = {}
+
+    @pytest.mark.parametrize('flags,extra', [(('-S', '-B'), {}), (('-I', '-B'), {}),
+                                          (('-I', '-S'), {}), (('-I', '-S', '-B'), {'LD_LIBRARY_PATH': '/tmp/authored'})])
+    def test_cli_requires_original_isolated_interpreter_and_clean_loader_environment(tmp_path, monkeypatch, flags, extra):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags2-extra2] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_requires_original_iso2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af52851aa50>
+flags = ('-I', '-S'), extra = {}
+
+    @pytest.mark.parametrize('flags,extra', [(('-S', '-B'), {}), (('-I', '-B'), {}),
+                                          (('-I', '-S'), {}), (('-I', '-S', '-B'), {'LD_LIBRARY_PATH': '/tmp/authored'})])
+    def test_cli_requires_original_isolated_interpreter_and_clean_loader_environment(tmp_path, monkeypatch, flags, extra):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_ test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags3-extra3] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_requires_original_iso3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af5283db050>
+flags = ('-I', '-S', '-B'), extra = {'LD_LIBRARY_PATH': '/tmp/authored'}
+
+    @pytest.mark.parametrize('flags,extra', [(('-S', '-B'), {}), (('-I', '-B'), {}),
+                                          (('-I', '-S'), {}), (('-I', '-S', '-B'), {'LD_LIBRARY_PATH': '/tmp/authored'})])
+    def test_cli_requires_original_isolated_interpreter_and_clean_loader_environment(tmp_path, monkeypatch, flags, extra):
+>       module, path, config = fixture(tmp_path, monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+_____ test_cli_file_limit_preserves_bounded_raw_stream_and_failure_receipt _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-469/test_cli_file_limit_preserves_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7af528518490>
+
+    def test_cli_file_limit_preserves_bounded_raw_stream_and_failure_receipt(tmp_path, monkeypatch):
+        body = 'import os\nfor i in range(18): os.write(1,b"x"*(1024**2))\n'
+>       module, path, config = fixture(tmp_path, monkeypatch, body)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:306: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_observer.py:43: in fixture
+    module = api()
+             ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert SCRIPT.is_file(), 'Ordinary CPU characterization observer is not implemented'
+E       AssertionError: Ordinary CPU characterization observer is not implemented
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/observe_puck_cpu_runtime_characterization.py').is_file
+
+tests/test_puck_cpu_distributed_observer.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observer.py::test_separately_executes_fixed_parent_and_preserves_transport[0]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_separately_executes_fixed_parent_and_preserves_transport[7]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[kind-puck-cpu-runtime-characterization-v1]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[version-1]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[version-True]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[output-runs/puck-cpu-runtime-characterization-02]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[output-/tmp/arbitrary]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[site_root-runs/other/site]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[entrypoint-scripts/characterize_puck_cpu_runtime.py]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_closed_configuration_identity_refused_before_launch[allocation_id-3]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[digest]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[compact]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[relative]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[dotdot]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[outside]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[symlink]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_configuration_bytes_and_canonical_root_path_are_bound[parent-symlink]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[missing-parent]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[missing-worker]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[missing-observer]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[duplicate]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[unsorted]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[size]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[hash]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[extra-field]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[dotdot]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[absolute]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_source_rows_are_unique_canonical_and_authenticated_before_launch[symlink]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[False-]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[False--external-cli.stdout]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[False--external-cli.stderr]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[False--external-cli-transport.json]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[True-]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[True--external-cli.stdout]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[True--external-cli.stderr]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_all_reserved_paths_refuse_existing_files_and_symlinks[True--external-cli-transport.json]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_runs_directory_symlink_cannot_redirect_receipts
+FAILED tests/test_puck_cpu_distributed_observer.py::test_launch_failure_still_retains_false_authority_receipt_and_empty_streams
+FAILED tests/test_puck_cpu_distributed_observer.py::test_timeout_kills_and_reaps_only_owned_parent_and_sampled_child
+FAILED tests/test_puck_cpu_distributed_observer.py::test_pid_reuse_is_never_signalled
+FAILED tests/test_puck_cpu_distributed_observer.py::test_sample_identity_limit_becomes_failed_transport_and_cleans_owned_parent
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_reports_authored_exit_and_inherited_resource_limits[0]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_reports_authored_exit_and_inherited_resource_limits[9]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags0-extra0]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags1-extra1]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags2-extra2]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_requires_original_isolated_interpreter_and_clean_loader_environment[flags3-extra3]
+FAILED tests/test_puck_cpu_distributed_observer.py::test_cli_file_limit_preserves_bounded_raw_stream_and_failure_receipt
+48 failed in 1.95s

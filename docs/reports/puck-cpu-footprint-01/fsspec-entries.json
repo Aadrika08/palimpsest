@@ -1,0 +1,498 @@
+[
+  {
+    "compressed_size": 772,
+    "compression": 8,
+    "crc32": 3320853451,
+    "external_attr": 2175008768,
+    "name": "fsspec/__init__.py",
+    "size_bytes": 2111
+  },
+  {
+    "compressed_size": 236,
+    "compression": 8,
+    "crc32": 3918514934,
+    "external_attr": 2175008768,
+    "name": "fsspec/_version.py",
+    "size_bytes": 526
+  },
+  {
+    "compressed_size": 976,
+    "compression": 8,
+    "crc32": 2448364045,
+    "external_attr": 2175008768,
+    "name": "fsspec/archive.py",
+    "size_bytes": 2733
+  },
+  {
+    "compressed_size": 10694,
+    "compression": 8,
+    "crc32": 1656970828,
+    "external_attr": 2175008768,
+    "name": "fsspec/asyn.py",
+    "size_bytes": 42244
+  },
+  {
+    "compressed_size": 8405,
+    "compression": 8,
+    "crc32": 2902468628,
+    "external_attr": 2175008768,
+    "name": "fsspec/caching.py",
+    "size_bytes": 38542
+  },
+  {
+    "compressed_size": 2862,
+    "compression": 8,
+    "crc32": 3059194853,
+    "external_attr": 2175008768,
+    "name": "fsspec/callbacks.py",
+    "size_bytes": 9210
+  },
+  {
+    "compressed_size": 1718,
+    "compression": 8,
+    "crc32": 233822558,
+    "external_attr": 2175008768,
+    "name": "fsspec/compression.py",
+    "size_bytes": 5132
+  },
+  {
+    "compressed_size": 1521,
+    "compression": 8,
+    "crc32": 3595920431,
+    "external_attr": 2175008768,
+    "name": "fsspec/config.py",
+    "size_bytes": 4238
+  },
+  {
+    "compressed_size": 1205,
+    "compression": 8,
+    "crc32": 1189978444,
+    "external_attr": 2175008768,
+    "name": "fsspec/conftest.py",
+    "size_bytes": 3446
+  },
+  {
+    "compressed_size": 6940,
+    "compression": 8,
+    "crc32": 2210969099,
+    "external_attr": 2175008768,
+    "name": "fsspec/core.py",
+    "size_bytes": 24428
+  },
+  {
+    "compressed_size": 879,
+    "compression": 8,
+    "crc32": 3450735905,
+    "external_attr": 2175008768,
+    "name": "fsspec/dircache.py",
+    "size_bytes": 2717
+  },
+  {
+    "compressed_size": 196,
+    "compression": 8,
+    "crc32": 1071151186,
+    "external_attr": 2175008768,
+    "name": "fsspec/exceptions.py",
+    "size_bytes": 331
+  },
+  {
+    "compressed_size": 3263,
+    "compression": 8,
+    "crc32": 2021273501,
+    "external_attr": 2175008768,
+    "name": "fsspec/fuse.py",
+    "size_bytes": 10177
+  },
+  {
+    "compressed_size": 3774,
+    "compression": 8,
+    "crc32": 2737615063,
+    "external_attr": 2175008768,
+    "name": "fsspec/generic.py",
+    "size_bytes": 13752
+  },
+  {
+    "compressed_size": 4281,
+    "compression": 8,
+    "crc32": 609224672,
+    "external_attr": 2175008768,
+    "name": "fsspec/gui.py",
+    "size_bytes": 14002
+  },
+  {
+    "compressed_size": 1086,
+    "compression": 8,
+    "crc32": 3073336768,
+    "external_attr": 2175008768,
+    "name": "fsspec/json.py",
+    "size_bytes": 3768
+  },
+  {
+    "compressed_size": 2898,
+    "compression": 8,
+    "crc32": 2012347649,
+    "external_attr": 2175008768,
+    "name": "fsspec/mapping.py",
+    "size_bytes": 8537
+  },
+  {
+    "compressed_size": 5462,
+    "compression": 8,
+    "crc32": 1539679995,
+    "external_attr": 2175008768,
+    "name": "fsspec/parquet.py",
+    "size_bytes": 20506
+  },
+  {
+    "compressed_size": 7800,
+    "compression": 8,
+    "crc32": 4147768182,
+    "external_attr": 2175008768,
+    "name": "fsspec/prefetcher.py",
+    "size_bytes": 32611
+  },
+  {
+    "compressed_size": 3297,
+    "compression": 8,
+    "crc32": 1272847225,
+    "external_attr": 2175008768,
+    "name": "fsspec/registry.py",
+    "size_bytes": 12344
+  },
+  {
+    "compressed_size": 20310,
+    "compression": 8,
+    "crc32": 1115736723,
+    "external_attr": 2175008768,
+    "name": "fsspec/spec.py",
+    "size_bytes": 80278
+  },
+  {
+    "compressed_size": 1032,
+    "compression": 8,
+    "crc32": 3603173042,
+    "external_attr": 2175008768,
+    "name": "fsspec/transaction.py",
+    "size_bytes": 3392
+  },
+  {
+    "compressed_size": 9450,
+    "compression": 8,
+    "crc32": 392772070,
+    "external_attr": 2175008768,
+    "name": "fsspec/utils.py",
+    "size_bytes": 28458
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2565,
+    "compression": 8,
+    "crc32": 1461462172,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/arrow.py",
+    "size_bytes": 9344
+  },
+  {
+    "compressed_size": 1333,
+    "compression": 8,
+    "crc32": 1355287721,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/asyn_wrapper.py",
+    "size_bytes": 4304
+  },
+  {
+    "compressed_size": 885,
+    "compression": 8,
+    "crc32": 3275855134,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/cache_mapper.py",
+    "size_bytes": 2421
+  },
+  {
+    "compressed_size": 2422,
+    "compression": 8,
+    "crc32": 277189737,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/cache_metadata.py",
+    "size_bytes": 7942
+  },
+  {
+    "compressed_size": 9717,
+    "compression": 8,
+    "crc32": 4200071958,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/cached.py",
+    "size_bytes": 38867
+  },
+  {
+    "compressed_size": 354,
+    "compression": 8,
+    "crc32": 2034697783,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/chained.py",
+    "size_bytes": 680
+  },
+  {
+    "compressed_size": 1216,
+    "compression": 8,
+    "crc32": 4292569478,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/dask.py",
+    "size_bytes": 4466
+  },
+  {
+    "compressed_size": 948,
+    "compression": 8,
+    "crc32": 1655533224,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/data.py",
+    "size_bytes": 2131
+  },
+  {
+    "compressed_size": 4344,
+    "compression": 8,
+    "crc32": 296772836,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/dbfs.py",
+    "size_bytes": 16249
+  },
+  {
+    "compressed_size": 2732,
+    "compression": 8,
+    "crc32": 1829808649,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/dirfs.py",
+    "size_bytes": 15120
+  },
+  {
+    "compressed_size": 3895,
+    "compression": 8,
+    "crc32": 2246336026,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/ftp.py",
+    "size_bytes": 13539
+  },
+  {
+    "compressed_size": 2807,
+    "compression": 8,
+    "crc32": 2649852430,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/gist.py",
+    "size_bytes": 8528
+  },
+  {
+    "compressed_size": 1361,
+    "compression": 8,
+    "crc32": 2275749746,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/git.py",
+    "size_bytes": 3731
+  },
+  {
+    "compressed_size": 3612,
+    "compression": 8,
+    "crc32": 3587236241,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/github.py",
+    "size_bytes": 11653
+  },
+  {
+    "compressed_size": 8491,
+    "compression": 8,
+    "crc32": 3058782652,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/http.py",
+    "size_bytes": 30894
+  },
+  {
+    "compressed_size": 8597,
+    "compression": 8,
+    "crc32": 3340737003,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/http_sync.py",
+    "size_bytes": 30332
+  },
+  {
+    "compressed_size": 1314,
+    "compression": 8,
+    "crc32": 597631600,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/jupyter.py",
+    "size_bytes": 4002
+  },
+  {
+    "compressed_size": 2559,
+    "compression": 8,
+    "crc32": 116151954,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/libarchive.py",
+    "size_bytes": 7098
+  },
+  {
+    "compressed_size": 4868,
+    "compression": 8,
+    "crc32": 3155572695,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/local.py",
+    "size_bytes": 17726
+  },
+  {
+    "compressed_size": 4190,
+    "compression": 8,
+    "crc32": 1606370834,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/memory.py",
+    "size_bytes": 15956
+  },
+  {
+    "compressed_size": 13068,
+    "compression": 8,
+    "crc32": 2915253472,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/reference.py",
+    "size_bytes": 50997
+  },
+  {
+    "compressed_size": 2737,
+    "compression": 8,
+    "crc32": 1075484155,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/sftp.py",
+    "size_bytes": 8864
+  },
+  {
+    "compressed_size": 4425,
+    "compression": 8,
+    "crc32": 766774113,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/smb.py",
+    "size_bytes": 15236
+  },
+  {
+    "compressed_size": 1945,
+    "compression": 8,
+    "crc32": 1486579242,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/tar.py",
+    "size_bytes": 5573
+  },
+  {
+    "compressed_size": 5201,
+    "compression": 8,
+    "crc32": 300551971,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/webhdfs.py",
+    "size_bytes": 17589
+  },
+  {
+    "compressed_size": 2231,
+    "compression": 8,
+    "crc32": 4025010310,
+    "external_attr": 2175008768,
+    "name": "fsspec/implementations/zip.py",
+    "size_bytes": 6712
+  },
+  {
+    "compressed_size": 1790,
+    "compression": 8,
+    "crc32": 2140962766,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/__init__.py",
+    "size_bytes": 10197
+  },
+  {
+    "compressed_size": 446,
+    "compression": 8,
+    "crc32": 1842233942,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/common.py",
+    "size_bytes": 4973
+  },
+  {
+    "compressed_size": 2175,
+    "compression": 8,
+    "crc32": 261216139,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/copy.py",
+    "size_bytes": 19967
+  },
+  {
+    "compressed_size": 2191,
+    "compression": 8,
+    "crc32": 3353721514,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/get.py",
+    "size_bytes": 20755
+  },
+  {
+    "compressed_size": 672,
+    "compression": 8,
+    "crc32": 3936886264,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/mv.py",
+    "size_bytes": 1982
+  },
+  {
+    "compressed_size": 173,
+    "compression": 8,
+    "crc32": 1461067414,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/open.py",
+    "size_bytes": 329
+  },
+  {
+    "compressed_size": 182,
+    "compression": 8,
+    "crc32": 1011136614,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/pipe.py",
+    "size_bytes": 402
+  },
+  {
+    "compressed_size": 2366,
+    "compression": 8,
+    "crc32": 918622792,
+    "external_attr": 2175008768,
+    "name": "fsspec/tests/abstract/put.py",
+    "size_bytes": 21201
+  },
+  {
+    "compressed_size": 3179,
+    "compression": 8,
+    "crc32": 3339108843,
+    "external_attr": 27525120,
+    "name": "fsspec-2026.9.0.dist-info/METADATA",
+    "size_bytes": 10609
+  },
+  {
+    "compressed_size": 86,
+    "compression": 8,
+    "crc32": 965398679,
+    "external_attr": 27525120,
+    "name": "fsspec-2026.9.0.dist-info/WHEEL",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 792,
+    "compression": 8,
+    "crc32": 3275830942,
+    "external_attr": 27525120,
+    "name": "fsspec-2026.9.0.dist-info/licenses/LICENSE",
+    "size_bytes": 1513
+  },
+  {
+    "compressed_size": 2812,
+    "compression": 8,
+    "crc32": 3068304796,
+    "external_attr": 27525120,
+    "name": "fsspec-2026.9.0.dist-info/RECORD",
+    "size_bytes": 5130
+  }
+]

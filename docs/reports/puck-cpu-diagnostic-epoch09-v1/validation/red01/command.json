@@ -1,0 +1,49 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "60s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch09-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-epoch09-red01",
+    "tests/test_puck_cpu_held_amendment09.py::test09_accepts_only_fixed_identity_and_five_source_projection",
+    "tests/test_puck_cpu_held_amendment09.py::test09_observer_preserves_consumed07_08_and_reserves_once"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/qualify_puck_cpu_held_runtime.py": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+    "scripts/audit_puck_cpu_held_runtime.py": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+    "scripts/observe_puck_cpu_held_allocation.py": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+    "scripts/puck_worker_bootstrap.py": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+    "src/palimpsest/puck_runtime_qualification.py": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+    "tests/test_puck_cpu_held_amendment09.py": "6b300220a8a5a14d0959ea7faacfa1d87759a2e10c44fa95e137e79b85df58c3"
+  },
+  "scope": "Authored source tests only; inherited environment not fully recorded."
+}

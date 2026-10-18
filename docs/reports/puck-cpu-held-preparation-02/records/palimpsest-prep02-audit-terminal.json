@@ -1,0 +1,131 @@
+{
+  "acceptance_proof": {
+    "auditor_configuration": "PASS",
+    "auditor_preparation_epoch": "PASS",
+    "parent_validate_preparation_acceptance": "PASS"
+  },
+  "audit": {
+    "elapsed_seconds": 8.537554760998319,
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.json",
+    "sha256": "fe155208053f522c92e5e1d4a294e5be768ede398c4abc57ea8305b93556e792",
+    "size_bytes": 1583,
+    "status": "PASS"
+  },
+  "boot_id_after": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "boot_id_before": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-preparation-02.json",
+    "--sha256",
+    "1acfb10b40d561b8e56c96f4cd0d59ee1f00b4d0a14f62c80ffe64e22e1de3ed",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-02-external-cli-transport.json",
+    "--transport-sha256",
+    "63a90878fb5841342ea94950da81f7816d674daa3d4497d420a2f2410f9cd2a4",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.json"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 8.633933819999584,
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "error": null,
+  "kind": "palimpsest-prep02-audit-terminal-v1",
+  "outer_timeout": false,
+  "preflight": {
+    "absent": 10,
+    "at_utc": "2026-10-17T02:02:09.775135+00:00",
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "dry_run": false,
+    "git": {
+      "clean": true,
+      "controls_git_bound": 15,
+      "head": "8a0a579c70767bddcc5bfd5082d9c6465d975a2c",
+      "origin": "8a0a579c70767bddcc5bfd5082d9c6465d975a2c"
+    },
+    "host": {
+      "baseline_external_files": 10,
+      "baseline_files": 4233,
+      "baseline_links": 1048,
+      "native_aliases": 23,
+      "native_files": 29
+    },
+    "kind": "palimpsest-prep02-preflight-v1",
+    "phase": "audit",
+    "pins_checked": 44,
+    "prepared": {
+      "observer_boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+      "result_sha256": "4ef13965e6f312a0bcdef9c49e57190f6a9526988f20f1959357bcc31400e0d4",
+      "staged_roots": {
+        "roots": [
+          {
+            "device": 55,
+            "inode": 10400,
+            "matches": true,
+            "root_index": 0
+          },
+          {
+            "device": 55,
+            "inode": 10401,
+            "matches": true,
+            "root_index": 1
+          },
+          {
+            "device": 55,
+            "inode": 10402,
+            "matches": true,
+            "root_index": 2
+          },
+          {
+            "device": 55,
+            "inode": 10403,
+            "matches": true,
+            "root_index": 3
+          }
+        ],
+        "stage_parent": "/tmp/palimpsest-puck-cpu-held-02",
+        "stage_parent_device": 55,
+        "stage_parent_inode": 10398
+      },
+      "transport_sha256": "63a90878fb5841342ea94950da81f7816d674daa3d4497d420a2f2410f9cd2a4"
+    },
+    "resources": {
+      "disk_available_bytes": 44348514304,
+      "floors_met": true,
+      "mem_available_bytes": 8316420096,
+      "nofile": [
+        524288,
+        524288
+      ],
+      "tmp_flags": 6,
+      "tmpfs_available_bytes": 6295539712
+    },
+    "status": "PASS_PREFLIGHT_AUDIT"
+  },
+  "record": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.external-cli.json",
+    "sha256": "50e452aa92f61fcb2743421d30b6d04334796250eb1b96ae0f16e9e229b1a073",
+    "size_bytes": 1465
+  },
+  "returncode": 0,
+  "status": "PASS_RECORD_WRITTEN",
+  "stderr": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-02-audit-01.stdout",
+    "sha256": "fe155208053f522c92e5e1d4a294e5be768ede398c4abc57ea8305b93556e792",
+    "size_bytes": 1583
+  }
+}

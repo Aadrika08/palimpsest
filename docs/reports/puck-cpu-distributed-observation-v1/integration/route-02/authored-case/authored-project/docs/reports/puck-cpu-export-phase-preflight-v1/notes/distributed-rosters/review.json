@@ -1,0 +1,344 @@
+{
+  "acceptance": {
+    "actual_configuration_created": false,
+    "collection_authorized": false,
+    "dispatch_roster_observed": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "replacement_phase_accepted": false,
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "additional_input_pins": [
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/share/cmake/Caffe2/Caffe2Targets.cmake",
+      "sha256": "69cca1ead63094fbbb67ee97c763345e870c19798a7647846e70f1b26abc7997",
+      "size_bytes": 6857
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/share/cmake/Caffe2/Caffe2Config.cmake",
+      "sha256": "1751b5ae590844e9ddf3fb72aebc6e26ecab6def33b0d2ce88d419eac99c71d5",
+      "size_bytes": 5344
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/include/pybind11/chrono.h",
+      "sha256": "b00be9f25145323936d54477cfac6ac07963c0b84b866c9e44a01580280e9ae2",
+      "size_bytes": 8613
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/installed-source/torch/distributed/__init__.py",
+      "sha256": "0e1ba0d76a5135e0109d213157e709b35f1a234afb9306c00bf6adf4f5c3d7d7",
+      "size_bytes": 5407
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/installed-source/torch/distributed/autograd/__init__.py",
+      "sha256": "a356307e34629fc35f6240a3cdc7400454f46c6446022b989922c4c266e6789e",
+      "size_bytes": 1931
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/installed-source/torch/distributed/rpc/__init__.py",
+      "sha256": "8474ae8306a9e4c48e6311457784bfb819987c4e1070e72ec8e2541342c3b823",
+      "size_bytes": 9945
+    }
+  ],
+  "build_evidence": {
+    "configured_cuda": 0,
+    "configured_xpu": "OFF",
+    "interface_declared_true": [
+      "USE_DISTRIBUTED",
+      "USE_C10D_GLOO",
+      "USE_RPC",
+      "USE_TENSORPIPE"
+    ],
+    "interface_source_line": 73,
+    "limits": "Exported torch_cpu downstream interface definitions do not prove the complete private torch_python init.cpp compilation flag set. Header presence alone is not enabled-feature evidence.",
+    "smallest_missing": "Pinned package build configuration establishing the private torch_python init.cpp feature definitions, or separately authorized empirical roster evidence. This review did not execute _show_config or import vendors.",
+    "unresolved_private_flags": [
+      "USE_C10D_NCCL",
+      "USE_C10D_MPI",
+      "USE_C10D_XCCL",
+      "USE_C10D_UCC",
+      "USE_NVSHMEM"
+    ]
+  },
+  "data_assignment_exclusion": "module.attr assignments here cast numeric/string/chrono-duration values; they are data instances, not direct module/class/Python-function/builtin-function dispatch edges sealed by ModuleSeal.",
+  "evidence_tags": [
+    "UPSTREAM_EXACT_PACKAGE_DECLARED_COMMIT_SOURCE",
+    "INSTALLED_PYTHON_SOURCE_COPY",
+    "INSTALLED_PACKAGE_BUILD_METADATA",
+    "PROPOSED_NOT_OBSERVED"
+  ],
+  "imported_module_dispatch_members": "No literal module assignment to the exported native children in the three retained C++ initializers. Python creator imports bind to Python creator namespaces, not the native child. Arbitrary helper alias mutation was not exhaustively proved absent.",
+  "kind": "distributed-export-prospective-roster-review-v1",
+  "lifecycles": {
+    "autograd": {
+      "cpp_callback_return_line": 223,
+      "cpp_first_dispatch_line": 36,
+      "cpp_prepublication_imports": [
+        19,
+        24
+      ],
+      "cpp_publication_line": 30,
+      "ordinary_module_exec": "plausible from visible eager source: no explicit fresh import after publication; no runtime claim",
+      "publication_choice": "conservative explicit finite11 declaration; source proposal only",
+      "python_afterpublication_cached_import_line": 20,
+      "python_afterpublication_fresh_imports": [],
+      "python_callback_line": 16,
+      "python_remaining_execution": "class context definition lines37-66; method bodies deferred"
+    },
+    "c10d": {
+      "cpp_callback_return_line": 4193,
+      "cpp_first_dispatch_line": 471,
+      "cpp_prepublication_imports": [
+        454,
+        459
+      ],
+      "cpp_publication_line": 466,
+      "publication_choice": "required to admit native child before fresh nested physical imports while Python creator remains open",
+      "python_afterpublication_cached_import_lines": [
+        40,
+        129
+      ],
+      "python_afterpublication_fresh_imports": [
+        {
+          "line": 131,
+          "modules": [
+            "torch.distributed.device_mesh"
+          ]
+        },
+        {
+          "line": 136,
+          "modules": [
+            "torch.distributed.distributed_c10d"
+          ]
+        },
+        {
+          "line": 148,
+          "modules": [
+            "torch.distributed.remote_device"
+          ]
+        },
+        {
+          "line": 149,
+          "modules": [
+            "torch.distributed.rendezvous"
+          ]
+        }
+      ],
+      "python_callback_line": 29
+    },
+    "rpc": {
+      "chrono_caster_note": "retained pybind11/chrono.h77-99 lazily initializes datetime API then returns timedelta instance; possible earlier import inside native callback; no imported module assigned to child",
+      "cpp_callback_return_line": 847,
+      "cpp_eager_chrono_cast_lines": [
+        79,
+        80
+      ],
+      "cpp_first_dispatch_line": 52,
+      "cpp_prepublication_imports": [
+        35,
+        40
+      ],
+      "cpp_publication_line": 47,
+      "publication_choice": "required to admit native child before nested imports while Python creator remains open",
+      "python_afterpublication_fresh_imports": [
+        {
+          "line": 37,
+          "modules": [
+            "numbers"
+          ]
+        },
+        {
+          "line": 39,
+          "modules": [
+            "torch.distributed.autograd"
+          ]
+        },
+        {
+          "line": 81,
+          "modules": [
+            "torch.distributed.rpc.api",
+            "torch.distributed.rpc.backend_registry",
+            "torch.distributed.rpc.functions"
+          ]
+        },
+        {
+          "line": 84,
+          "modules": [
+            "torch.distributed.rpc.options"
+          ]
+        },
+        {
+          "line": 85,
+          "modules": [
+            "torch.distributed.rpc.server_process_global_profiler"
+          ]
+        }
+      ],
+      "python_callback_line": 28
+    }
+  },
+  "literal_analysis": {
+    "path": "literal-rosters.json",
+    "sha256": "b3ae33519cc74698aa0eef4d17a85beb2d0a3f7a412caf14341bf0d88cb7f787"
+  },
+  "proposal_counts": {
+    "autograd": 11,
+    "c10d": 69,
+    "rpc": 29
+  },
+  "proposed_branch": "Linux + Gloo + TensorPipe; other optional c10d branches assumed disabled pending private-flag proof",
+  "proposed_rows": {
+    "autograd": {
+      "attributes": [
+        "torch",
+        "_C",
+        "_distributed_autograd"
+      ],
+      "class_binding": null,
+      "delegate_attributes": [
+        "DistAutogradContext",
+        "_current_context",
+        "_get_debug_info",
+        "_get_max_id",
+        "_init",
+        "_is_valid_context",
+        "_new_context",
+        "_release_context",
+        "_retrieve_context",
+        "backward",
+        "get_gradients"
+      ],
+      "name": "torch._C._distributed_autograd",
+      "phase": "module_exec_publish",
+      "producer": "torch.distributed.autograd"
+    },
+    "c10d": {
+      "attributes": [
+        "torch",
+        "_C",
+        "_distributed_c10d"
+      ],
+      "class_binding": null,
+      "delegate_attributes": [
+        "AllToAllOptions",
+        "AllgatherOptions",
+        "AllreduceCoalescedOptions",
+        "AllreduceOptions",
+        "Backend",
+        "BarrierOptions",
+        "BroadcastOptions",
+        "BuiltinCommHookType",
+        "DDPLoggingData",
+        "DebugLevel",
+        "ErrorType",
+        "FakeProcessGroup",
+        "FakeWork",
+        "FileStore",
+        "GatherOptions",
+        "GradBucket",
+        "HashStore",
+        "Logger",
+        "OpType",
+        "PrefixStore",
+        "ProcessGroup",
+        "ProcessGroupGloo",
+        "ReduceOp",
+        "ReduceOptions",
+        "ReduceScatterOptions",
+        "Reducer",
+        "ScatterOptions",
+        "Store",
+        "TCPStore",
+        "Work",
+        "WorkInfo",
+        "WorkResult",
+        "_ControlCollectives",
+        "_DMAConnectivity",
+        "_DistributedBackendOptions",
+        "_ProcessGroupWrapper",
+        "_Request",
+        "_Response",
+        "_StoreCollectives",
+        "_SymmetricMemory",
+        "_WorkerServer",
+        "_allow_inflight_collective_as_graph_input",
+        "_broadcast_coalesced",
+        "_compute_bucket_assignment_by_size",
+        "_create_work_from_future",
+        "_current_process_group",
+        "_detect_dma_connectivity",
+        "_dump_fr_trace",
+        "_dump_fr_trace_json",
+        "_get_handler",
+        "_get_handler_names",
+        "_get_work_registry_size",
+        "_make_nccl_premul_sum",
+        "_register_builtin_comm_hook",
+        "_register_comm_hook",
+        "_register_process_group",
+        "_register_work",
+        "_resolve_process_group",
+        "_set_allow_inflight_collective_as_graph_input",
+        "_set_global_rank",
+        "_set_process_group",
+        "_set_thread_isolation_mode",
+        "_test_python_store",
+        "_unregister_all_process_groups",
+        "_unregister_process_group",
+        "_verify_params_across_processes",
+        "get_debug_level",
+        "set_debug_level",
+        "set_debug_level_from_env"
+      ],
+      "name": "torch._C._distributed_c10d",
+      "phase": "module_exec_publish",
+      "producer": "torch.distributed"
+    },
+    "rpc": {
+      "attributes": [
+        "torch",
+        "_C",
+        "_distributed_rpc"
+      ],
+      "class_binding": null,
+      "delegate_attributes": [
+        "PyRRef",
+        "RemoteProfilerManager",
+        "RpcAgent",
+        "RpcBackendOptions",
+        "TensorPipeAgent",
+        "WorkerInfo",
+        "_TensorPipeRpcBackendOptionsBase",
+        "_cleanup_python_rpc_handler",
+        "_delete_all_user_and_unforked_owner_rrefs",
+        "_destroy_rref_context",
+        "_disable_jit_rref_pickle",
+        "_disable_server_process_global_profiler",
+        "_enable_jit_rref_pickle",
+        "_enable_server_process_global_profiler",
+        "_get_current_rpc_agent",
+        "_invoke_remote_builtin",
+        "_invoke_remote_python_udf",
+        "_invoke_remote_torchscript",
+        "_invoke_rpc_builtin",
+        "_invoke_rpc_python_udf",
+        "_invoke_rpc_torchscript",
+        "_is_current_rpc_agent_set",
+        "_reset_current_rpc_agent",
+        "_rref_context_get_debug_info",
+        "_set_and_start_rpc_agent",
+        "_set_profiler_node_id",
+        "_set_rpc_timeout",
+        "enable_gil_profiling",
+        "get_rpc_timeout"
+      ],
+      "name": "torch._C._distributed_rpc",
+      "phase": "module_exec_publish",
+      "producer": "torch.distributed.rpc"
+    }
+  },
+  "scope": "read-only source and installed package metadata; no vendor import, observation, binary qualification, protected model/catalog access, or actual configuration",
+  "upstream_commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1"
+}

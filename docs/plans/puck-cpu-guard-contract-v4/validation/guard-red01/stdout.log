@@ -1,0 +1,1753 @@
+{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F{"kind": "authored-q4-guard-contract-case-v1", "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py\", line 802, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py\", line 793, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py\", line 327, in __init__\n    self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py\", line 171, in _parse\n    raise ValueError('Exact fixed runtime qualification descriptor required')\nValueError: Exact fixed runtime qualification descriptor required\n", "stdout": "", "worker_returncode": 1}
+F
+=================================== FAILURES ===================================
+______ test_q4_accepts_registered_numpy_while_its_initializer_is_inflight ______
+
+    def test_q4_accepts_registered_numpy_while_its_initializer_is_inflight():
+>       succeeded(run_q4('''
+            assert 'numpy' in deps.loading and 'numpy' not in deps.loaded
+            assert sys.modules['numpy'].__dict__ is globals()
+            owner._import_recheck()
+            assert owner._state == 'active' and owner._first_failure is None
+        '''))
+
+tests/test_puck_guard_contract_v4.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def succeeded(result):
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-7mx5z0cf/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').returncode
+
+tests/test_puck_guard_contract_v4.py:77: AssertionError
+______ test_q4_unknown_cache_name_retains_exact_refusal_close_and_poison _______
+
+    def test_q4_unknown_cache_name_retains_exact_refusal_close_and_poison():
+>       refused(run_q4('''
+            name = 'fixture_q4_unknown'
+            assert name not in sys.modules
+            sys.modules[name] = types.ModuleType(name)
+            def restore():
+                sys.modules.pop(name, None)
+            expect_refusal(restore=restore, reason='Unregistered module cache entry: '+name)
+        '''))
+
+tests/test_puck_guard_contract_v4.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-60e5xiyi/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-60e5x...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-60e5x...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+________ test_q4_rejects_container_subclasses_before_their_hooks[cache] ________
+
+receiver = 'cache'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'source-loading',
+        'dependency-loaded', 'dependency-loading', 'stdlib'])
+    def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
+>       refused(run_q4('''
+            events = []
+            def hook(*args, **kwargs):
+                events.append('hook')
+                raise AssertionError('Q4_CONTAINER_HOOK_RAN')
+            class BadDict(dict):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                items = hook
+                keys = hook
+                get = hook
+            class BadSet(set):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                __or__ = hook
+                __ror__ = hook
+            class BadFrozen(frozenset):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+            receiver = RECEIVER
+            if receiver == 'cache':
+                previous = sys.modules
+                sys.modules = BadDict(previous)
+                def restore():
+                    sys.modules = previous
+            elif receiver == 'stdlib':
+                previous = sys.stdlib_module_names
+                sys.stdlib_module_names = BadFrozen(previous)
+                def restore():
+                    sys.stdlib_module_names = previous
+            else:
+                target, attribute = ((owner, '_loaded') if receiver == 'source-loaded' else
+                    (owner, '_loading') if receiver == 'source-loading' else
+                    (deps, 'loaded') if receiver == 'dependency-loaded' else (deps, 'loading'))
+                previous = getattr(target, attribute)
+                setattr(target, attribute, BadDict(previous) if attribute in ('loaded', '_loaded') else BadSet(previous))
+                def restore():
+                    setattr(target, attribute, previous)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_CONTAINER_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-_karj8cl/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-_karj...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-_karj...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+____ test_q4_rejects_container_subclasses_before_their_hooks[source-loaded] ____
+
+receiver = 'source-loaded'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'source-loading',
+        'dependency-loaded', 'dependency-loading', 'stdlib'])
+    def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
+>       refused(run_q4('''
+            events = []
+            def hook(*args, **kwargs):
+                events.append('hook')
+                raise AssertionError('Q4_CONTAINER_HOOK_RAN')
+            class BadDict(dict):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                items = hook
+                keys = hook
+                get = hook
+            class BadSet(set):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                __or__ = hook
+                __ror__ = hook
+            class BadFrozen(frozenset):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+            receiver = RECEIVER
+            if receiver == 'cache':
+                previous = sys.modules
+                sys.modules = BadDict(previous)
+                def restore():
+                    sys.modules = previous
+            elif receiver == 'stdlib':
+                previous = sys.stdlib_module_names
+                sys.stdlib_module_names = BadFrozen(previous)
+                def restore():
+                    sys.stdlib_module_names = previous
+            else:
+                target, attribute = ((owner, '_loaded') if receiver == 'source-loaded' else
+                    (owner, '_loading') if receiver == 'source-loading' else
+                    (deps, 'loaded') if receiver == 'dependency-loaded' else (deps, 'loading'))
+                previous = getattr(target, attribute)
+                setattr(target, attribute, BadDict(previous) if attribute in ('loaded', '_loaded') else BadSet(previous))
+                def restore():
+                    setattr(target, attribute, previous)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_CONTAINER_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-h8qycofi/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-h8qyc...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-h8qyc...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+___ test_q4_rejects_container_subclasses_before_their_hooks[source-loading] ____
+
+receiver = 'source-loading'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'source-loading',
+        'dependency-loaded', 'dependency-loading', 'stdlib'])
+    def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
+>       refused(run_q4('''
+            events = []
+            def hook(*args, **kwargs):
+                events.append('hook')
+                raise AssertionError('Q4_CONTAINER_HOOK_RAN')
+            class BadDict(dict):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                items = hook
+                keys = hook
+                get = hook
+            class BadSet(set):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                __or__ = hook
+                __ror__ = hook
+            class BadFrozen(frozenset):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+            receiver = RECEIVER
+            if receiver == 'cache':
+                previous = sys.modules
+                sys.modules = BadDict(previous)
+                def restore():
+                    sys.modules = previous
+            elif receiver == 'stdlib':
+                previous = sys.stdlib_module_names
+                sys.stdlib_module_names = BadFrozen(previous)
+                def restore():
+                    sys.stdlib_module_names = previous
+            else:
+                target, attribute = ((owner, '_loaded') if receiver == 'source-loaded' else
+                    (owner, '_loading') if receiver == 'source-loading' else
+                    (deps, 'loaded') if receiver == 'dependency-loaded' else (deps, 'loading'))
+                previous = getattr(target, attribute)
+                setattr(target, attribute, BadDict(previous) if attribute in ('loaded', '_loaded') else BadSet(previous))
+                def restore():
+                    setattr(target, attribute, previous)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_CONTAINER_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-1wo9tkcs/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-1wo9t...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-1wo9t...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+__ test_q4_rejects_container_subclasses_before_their_hooks[dependency-loaded] __
+
+receiver = 'dependency-loaded'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'source-loading',
+        'dependency-loaded', 'dependency-loading', 'stdlib'])
+    def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
+>       refused(run_q4('''
+            events = []
+            def hook(*args, **kwargs):
+                events.append('hook')
+                raise AssertionError('Q4_CONTAINER_HOOK_RAN')
+            class BadDict(dict):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                items = hook
+                keys = hook
+                get = hook
+            class BadSet(set):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                __or__ = hook
+                __ror__ = hook
+            class BadFrozen(frozenset):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+            receiver = RECEIVER
+            if receiver == 'cache':
+                previous = sys.modules
+                sys.modules = BadDict(previous)
+                def restore():
+                    sys.modules = previous
+            elif receiver == 'stdlib':
+                previous = sys.stdlib_module_names
+                sys.stdlib_module_names = BadFrozen(previous)
+                def restore():
+                    sys.stdlib_module_names = previous
+            else:
+                target, attribute = ((owner, '_loaded') if receiver == 'source-loaded' else
+                    (owner, '_loading') if receiver == 'source-loading' else
+                    (deps, 'loaded') if receiver == 'dependency-loaded' else (deps, 'loading'))
+                previous = getattr(target, attribute)
+                setattr(target, attribute, BadDict(previous) if attribute in ('loaded', '_loaded') else BadSet(previous))
+                def restore():
+                    setattr(target, attribute, previous)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_CONTAINER_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-pdiudi8z/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-pdiud...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-pdiud...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_rejects_container_subclasses_before_their_hooks[dependency-loading] __
+
+receiver = 'dependency-loading'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'source-loading',
+        'dependency-loaded', 'dependency-loading', 'stdlib'])
+    def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
+>       refused(run_q4('''
+            events = []
+            def hook(*args, **kwargs):
+                events.append('hook')
+                raise AssertionError('Q4_CONTAINER_HOOK_RAN')
+            class BadDict(dict):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                items = hook
+                keys = hook
+                get = hook
+            class BadSet(set):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                __or__ = hook
+                __ror__ = hook
+            class BadFrozen(frozenset):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+            receiver = RECEIVER
+            if receiver == 'cache':
+                previous = sys.modules
+                sys.modules = BadDict(previous)
+                def restore():
+                    sys.modules = previous
+            elif receiver == 'stdlib':
+                previous = sys.stdlib_module_names
+                sys.stdlib_module_names = BadFrozen(previous)
+                def restore():
+                    sys.stdlib_module_names = previous
+            else:
+                target, attribute = ((owner, '_loaded') if receiver == 'source-loaded' else
+                    (owner, '_loading') if receiver == 'source-loading' else
+                    (deps, 'loaded') if receiver == 'dependency-loaded' else (deps, 'loading'))
+                previous = getattr(target, attribute)
+                setattr(target, attribute, BadDict(previous) if attribute in ('loaded', '_loaded') else BadSet(previous))
+                def restore():
+                    setattr(target, attribute, previous)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_CONTAINER_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-gm3bxg0u/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-gm3bx...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-gm3bx...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_______ test_q4_rejects_container_subclasses_before_their_hooks[stdlib] ________
+
+receiver = 'stdlib'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'source-loading',
+        'dependency-loaded', 'dependency-loading', 'stdlib'])
+    def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
+>       refused(run_q4('''
+            events = []
+            def hook(*args, **kwargs):
+                events.append('hook')
+                raise AssertionError('Q4_CONTAINER_HOOK_RAN')
+            class BadDict(dict):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                items = hook
+                keys = hook
+                get = hook
+            class BadSet(set):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+                __or__ = hook
+                __ror__ = hook
+            class BadFrozen(frozenset):
+                __iter__ = hook
+                __len__ = hook
+                __contains__ = hook
+            receiver = RECEIVER
+            if receiver == 'cache':
+                previous = sys.modules
+                sys.modules = BadDict(previous)
+                def restore():
+                    sys.modules = previous
+            elif receiver == 'stdlib':
+                previous = sys.stdlib_module_names
+                sys.stdlib_module_names = BadFrozen(previous)
+                def restore():
+                    sys.stdlib_module_names = previous
+            else:
+                target, attribute = ((owner, '_loaded') if receiver == 'source-loaded' else
+                    (owner, '_loading') if receiver == 'source-loading' else
+                    (deps, 'loaded') if receiver == 'dependency-loaded' else (deps, 'loading'))
+                previous = getattr(target, attribute)
+                setattr(target, attribute, BadDict(previous) if attribute in ('loaded', '_loaded') else BadSet(previous))
+                def restore():
+                    setattr(target, attribute, previous)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_CONTAINER_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-p0_q7pdr/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-p0_q7...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-p0_q7...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+____ test_q4_rejects_str_subclass_names_before_hash_lookup_or_split[cache] _____
+
+receiver = 'cache'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'dependency-loading'])
+    def test_q4_rejects_str_subclass_names_before_hash_lookup_or_split(receiver):
+>       refused(run_q4('''
+            armed = False
+            events = []
+            class Key(str):
+                def __hash__(self):
+                    if armed:
+                        events.append('hash')
+                        raise AssertionError('Q4_NAME_HOOK_RAN')
+                    return str.__hash__(self)
+                def __eq__(self, other):
+                    if armed:
+                        events.append('equality')
+                        raise AssertionError('Q4_NAME_HOOK_RAN')
+                    return str.__eq__(self, other)
+                def split(self, *args, **kwargs):
+                    events.append('split')
+                    raise AssertionError('Q4_NAME_HOOK_RAN')
+            receiver = RECEIVER
+            if receiver == 'source-loaded':
+                previous = owner._loaded
+                replacement = dict(previous)
+                original = next(iter(replacement))
+                binding = replacement.pop(original)
+                replacement[Key(original)] = binding
+                owner._loaded = replacement
+            else:
+                key = Key('json.fixture_q4_subclass')
+                if receiver == 'cache':
+                    sys.modules[key] = types.ModuleType(str(key))
+                else:
+                    deps.loading.add(key)
+            armed = True
+            def restore():
+                global armed
+                armed = False
+                if receiver == 'source-loaded':
+                    owner._loaded = previous
+                elif receiver == 'cache':
+                    sys.modules.pop(key, None)
+                else:
+                    deps.loading.discard(key)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_NAME_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-h8z_ipnp/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-h8z_i...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-h8z_i...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_rejects_str_subclass_names_before_hash_lookup_or_split[source-loaded] _
+
+receiver = 'source-loaded'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'dependency-loading'])
+    def test_q4_rejects_str_subclass_names_before_hash_lookup_or_split(receiver):
+>       refused(run_q4('''
+            armed = False
+            events = []
+            class Key(str):
+                def __hash__(self):
+                    if armed:
+                        events.append('hash')
+                        raise AssertionError('Q4_NAME_HOOK_RAN')
+                    return str.__hash__(self)
+                def __eq__(self, other):
+                    if armed:
+                        events.append('equality')
+                        raise AssertionError('Q4_NAME_HOOK_RAN')
+                    return str.__eq__(self, other)
+                def split(self, *args, **kwargs):
+                    events.append('split')
+                    raise AssertionError('Q4_NAME_HOOK_RAN')
+            receiver = RECEIVER
+            if receiver == 'source-loaded':
+                previous = owner._loaded
+                replacement = dict(previous)
+                original = next(iter(replacement))
+                binding = replacement.pop(original)
+                replacement[Key(original)] = binding
+                owner._loaded = replacement
+            else:
+                key = Key('json.fixture_q4_subclass')
+                if receiver == 'cache':
+                    sys.modules[key] = types.ModuleType(str(key))
+                else:
+                    deps.loading.add(key)
+            armed = True
+            def restore():
+                global armed
+                armed = False
+                if receiver == 'source-loaded':
+                    owner._loaded = previous
+                elif receiver == 'cache':
+                    sys.modules.pop(key, None)
+                else:
+                    deps.loading.discard(key)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_NAME_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-3y3tc47t/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-3y3tc...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-3y3tc...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_rejects_str_subclass_names_before_hash_lookup_or_split[dependency-loading] _
+
+receiver = 'dependency-loading'
+
+    @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'dependency-loading'])
+    def test_q4_rejects_str_subclass_names_before_hash_lookup_or_split(receiver):
+>       refused(run_q4('''
+            armed = False
+            events = []
+            class Key(str):
+                def __hash__(self):
+                    if armed:
+                        events.append('hash')
+                        raise AssertionError('Q4_NAME_HOOK_RAN')
+                    return str.__hash__(self)
+                def __eq__(self, other):
+                    if armed:
+                        events.append('equality')
+                        raise AssertionError('Q4_NAME_HOOK_RAN')
+                    return str.__eq__(self, other)
+                def split(self, *args, **kwargs):
+                    events.append('split')
+                    raise AssertionError('Q4_NAME_HOOK_RAN')
+            receiver = RECEIVER
+            if receiver == 'source-loaded':
+                previous = owner._loaded
+                replacement = dict(previous)
+                original = next(iter(replacement))
+                binding = replacement.pop(original)
+                replacement[Key(original)] = binding
+                owner._loaded = replacement
+            else:
+                key = Key('json.fixture_q4_subclass')
+                if receiver == 'cache':
+                    sys.modules[key] = types.ModuleType(str(key))
+                else:
+                    deps.loading.add(key)
+            armed = True
+            def restore():
+                global armed
+                armed = False
+                if receiver == 'source-loaded':
+                    owner._loaded = previous
+                elif receiver == 'cache':
+                    sys.modules.pop(key, None)
+                else:
+                    deps.loading.discard(key)
+            expect_refusal(restore=restore)
+            assert events == [], 'Q4_NAME_HOOK_RAN'
+        '''.replace('RECEIVER', repr(receiver))))
+
+tests/test_puck_guard_contract_v4.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-i8mbkfmq/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-i8mbk...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-i8mbk...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[cache-object] _
+
+mutation = 'cache-object'
+
+    @pytest.mark.parametrize('mutation', ['cache-object', 'cache-key', 'allowance-content',
+        'allowance-receiver', 'second-export'])
+    def test_q4_late_observed_change_cannot_escape_fail_closed_snapshot(mutation):
+>       refused(run_q4('''
+            mutation = MUTATION
+            original_write = os.write
+            original_loading = owner._loading
+            loading_contents = set(original_loading)
+            original_active = dict(deps.bindings.active)
+            original_json = sys.modules['json']
+            before = 'json.fixture_q4_before'
+            after = 'json.fixture_q4_after'
+            module = types.ModuleType(before)
+            fired = False
+            if mutation == 'cache-key':
+                sys.modules[before] = module
+            if mutation == 'allowance-content':
+                original_loading.add(before)
+            def write(fd, payload):
+                global fired
+                result = original_write(fd, payload)
+                if b'"kind":"puck-worker-guard-cost-v1"' not in payload:
+                    return result
+                if not fired and ((mutation == 'second-export' and b'"section":"custody"' in payload)
+                        or (mutation != 'second-export' and b'"active":null' in payload)):
+                    fired = True
+                    if mutation == 'cache-object':
+                        sys.modules['json'] = types.ModuleType('json')
+                    elif mutation == 'cache-key':
+                        sys.modules.pop(before)
+                        sys.modules[after] = module
+                    elif mutation == 'allowance-content':
+                        original_loading.remove(before)
+                        original_loading.add(after)
+                    elif mutation == 'allowance-receiver':
+                        owner._loading = set(original_loading)
+                    else:
+                        deps.bindings.active['fixture_q4_late_export'] = sys.modules['sys']
+                owner._guard_next = 0
+                return result
+            def restore():
+                os.write = original_write
+                sys.modules['json'] = original_json
+                sys.modules.pop(before, None)
+                sys.modules.pop(after, None)
+                owner._loading = original_loading
+                original_loading.clear()
+                original_loading.update(loading_contents)
+                deps.bindings.active.clear()
+                deps.bindings.active.update(original_active)
+            owner._guard_next = 0
+            os.write = write
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_LATE_MUTATION_NOT_REACHED'
+        '''.replace('MUTATION', repr(mutation))))
+
+tests/test_puck_guard_contract_v4.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-fmvnmo7p/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-fmvnm...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-fmvnm...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+__ test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[cache-key] __
+
+mutation = 'cache-key'
+
+    @pytest.mark.parametrize('mutation', ['cache-object', 'cache-key', 'allowance-content',
+        'allowance-receiver', 'second-export'])
+    def test_q4_late_observed_change_cannot_escape_fail_closed_snapshot(mutation):
+>       refused(run_q4('''
+            mutation = MUTATION
+            original_write = os.write
+            original_loading = owner._loading
+            loading_contents = set(original_loading)
+            original_active = dict(deps.bindings.active)
+            original_json = sys.modules['json']
+            before = 'json.fixture_q4_before'
+            after = 'json.fixture_q4_after'
+            module = types.ModuleType(before)
+            fired = False
+            if mutation == 'cache-key':
+                sys.modules[before] = module
+            if mutation == 'allowance-content':
+                original_loading.add(before)
+            def write(fd, payload):
+                global fired
+                result = original_write(fd, payload)
+                if b'"kind":"puck-worker-guard-cost-v1"' not in payload:
+                    return result
+                if not fired and ((mutation == 'second-export' and b'"section":"custody"' in payload)
+                        or (mutation != 'second-export' and b'"active":null' in payload)):
+                    fired = True
+                    if mutation == 'cache-object':
+                        sys.modules['json'] = types.ModuleType('json')
+                    elif mutation == 'cache-key':
+                        sys.modules.pop(before)
+                        sys.modules[after] = module
+                    elif mutation == 'allowance-content':
+                        original_loading.remove(before)
+                        original_loading.add(after)
+                    elif mutation == 'allowance-receiver':
+                        owner._loading = set(original_loading)
+                    else:
+                        deps.bindings.active['fixture_q4_late_export'] = sys.modules['sys']
+                owner._guard_next = 0
+                return result
+            def restore():
+                os.write = original_write
+                sys.modules['json'] = original_json
+                sys.modules.pop(before, None)
+                sys.modules.pop(after, None)
+                owner._loading = original_loading
+                original_loading.clear()
+                original_loading.update(loading_contents)
+                deps.bindings.active.clear()
+                deps.bindings.active.update(original_active)
+            owner._guard_next = 0
+            os.write = write
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_LATE_MUTATION_NOT_REACHED'
+        '''.replace('MUTATION', repr(mutation))))
+
+tests/test_puck_guard_contract_v4.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-t9sl94bt/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-t9sl9...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-t9sl9...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[allowance-content] _
+
+mutation = 'allowance-content'
+
+    @pytest.mark.parametrize('mutation', ['cache-object', 'cache-key', 'allowance-content',
+        'allowance-receiver', 'second-export'])
+    def test_q4_late_observed_change_cannot_escape_fail_closed_snapshot(mutation):
+>       refused(run_q4('''
+            mutation = MUTATION
+            original_write = os.write
+            original_loading = owner._loading
+            loading_contents = set(original_loading)
+            original_active = dict(deps.bindings.active)
+            original_json = sys.modules['json']
+            before = 'json.fixture_q4_before'
+            after = 'json.fixture_q4_after'
+            module = types.ModuleType(before)
+            fired = False
+            if mutation == 'cache-key':
+                sys.modules[before] = module
+            if mutation == 'allowance-content':
+                original_loading.add(before)
+            def write(fd, payload):
+                global fired
+                result = original_write(fd, payload)
+                if b'"kind":"puck-worker-guard-cost-v1"' not in payload:
+                    return result
+                if not fired and ((mutation == 'second-export' and b'"section":"custody"' in payload)
+                        or (mutation != 'second-export' and b'"active":null' in payload)):
+                    fired = True
+                    if mutation == 'cache-object':
+                        sys.modules['json'] = types.ModuleType('json')
+                    elif mutation == 'cache-key':
+                        sys.modules.pop(before)
+                        sys.modules[after] = module
+                    elif mutation == 'allowance-content':
+                        original_loading.remove(before)
+                        original_loading.add(after)
+                    elif mutation == 'allowance-receiver':
+                        owner._loading = set(original_loading)
+                    else:
+                        deps.bindings.active['fixture_q4_late_export'] = sys.modules['sys']
+                owner._guard_next = 0
+                return result
+            def restore():
+                os.write = original_write
+                sys.modules['json'] = original_json
+                sys.modules.pop(before, None)
+                sys.modules.pop(after, None)
+                owner._loading = original_loading
+                original_loading.clear()
+                original_loading.update(loading_contents)
+                deps.bindings.active.clear()
+                deps.bindings.active.update(original_active)
+            owner._guard_next = 0
+            os.write = write
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_LATE_MUTATION_NOT_REACHED'
+        '''.replace('MUTATION', repr(mutation))))
+
+tests/test_puck_guard_contract_v4.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-9ywc28be/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-9ywc2...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-9ywc2...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[allowance-receiver] _
+
+mutation = 'allowance-receiver'
+
+    @pytest.mark.parametrize('mutation', ['cache-object', 'cache-key', 'allowance-content',
+        'allowance-receiver', 'second-export'])
+    def test_q4_late_observed_change_cannot_escape_fail_closed_snapshot(mutation):
+>       refused(run_q4('''
+            mutation = MUTATION
+            original_write = os.write
+            original_loading = owner._loading
+            loading_contents = set(original_loading)
+            original_active = dict(deps.bindings.active)
+            original_json = sys.modules['json']
+            before = 'json.fixture_q4_before'
+            after = 'json.fixture_q4_after'
+            module = types.ModuleType(before)
+            fired = False
+            if mutation == 'cache-key':
+                sys.modules[before] = module
+            if mutation == 'allowance-content':
+                original_loading.add(before)
+            def write(fd, payload):
+                global fired
+                result = original_write(fd, payload)
+                if b'"kind":"puck-worker-guard-cost-v1"' not in payload:
+                    return result
+                if not fired and ((mutation == 'second-export' and b'"section":"custody"' in payload)
+                        or (mutation != 'second-export' and b'"active":null' in payload)):
+                    fired = True
+                    if mutation == 'cache-object':
+                        sys.modules['json'] = types.ModuleType('json')
+                    elif mutation == 'cache-key':
+                        sys.modules.pop(before)
+                        sys.modules[after] = module
+                    elif mutation == 'allowance-content':
+                        original_loading.remove(before)
+                        original_loading.add(after)
+                    elif mutation == 'allowance-receiver':
+                        owner._loading = set(original_loading)
+                    else:
+                        deps.bindings.active['fixture_q4_late_export'] = sys.modules['sys']
+                owner._guard_next = 0
+                return result
+            def restore():
+                os.write = original_write
+                sys.modules['json'] = original_json
+                sys.modules.pop(before, None)
+                sys.modules.pop(after, None)
+                owner._loading = original_loading
+                original_loading.clear()
+                original_loading.update(loading_contents)
+                deps.bindings.active.clear()
+                deps.bindings.active.update(original_active)
+            owner._guard_next = 0
+            os.write = write
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_LATE_MUTATION_NOT_REACHED'
+        '''.replace('MUTATION', repr(mutation))))
+
+tests/test_puck_guard_contract_v4.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-twtd1lyj/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-twtd1...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-twtd1...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+_ test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[second-export] _
+
+mutation = 'second-export'
+
+    @pytest.mark.parametrize('mutation', ['cache-object', 'cache-key', 'allowance-content',
+        'allowance-receiver', 'second-export'])
+    def test_q4_late_observed_change_cannot_escape_fail_closed_snapshot(mutation):
+>       refused(run_q4('''
+            mutation = MUTATION
+            original_write = os.write
+            original_loading = owner._loading
+            loading_contents = set(original_loading)
+            original_active = dict(deps.bindings.active)
+            original_json = sys.modules['json']
+            before = 'json.fixture_q4_before'
+            after = 'json.fixture_q4_after'
+            module = types.ModuleType(before)
+            fired = False
+            if mutation == 'cache-key':
+                sys.modules[before] = module
+            if mutation == 'allowance-content':
+                original_loading.add(before)
+            def write(fd, payload):
+                global fired
+                result = original_write(fd, payload)
+                if b'"kind":"puck-worker-guard-cost-v1"' not in payload:
+                    return result
+                if not fired and ((mutation == 'second-export' and b'"section":"custody"' in payload)
+                        or (mutation != 'second-export' and b'"active":null' in payload)):
+                    fired = True
+                    if mutation == 'cache-object':
+                        sys.modules['json'] = types.ModuleType('json')
+                    elif mutation == 'cache-key':
+                        sys.modules.pop(before)
+                        sys.modules[after] = module
+                    elif mutation == 'allowance-content':
+                        original_loading.remove(before)
+                        original_loading.add(after)
+                    elif mutation == 'allowance-receiver':
+                        owner._loading = set(original_loading)
+                    else:
+                        deps.bindings.active['fixture_q4_late_export'] = sys.modules['sys']
+                owner._guard_next = 0
+                return result
+            def restore():
+                os.write = original_write
+                sys.modules['json'] = original_json
+                sys.modules.pop(before, None)
+                sys.modules.pop(after, None)
+                owner._loading = original_loading
+                original_loading.clear()
+                original_loading.update(loading_contents)
+                deps.bindings.active.clear()
+                deps.bindings.active.update(original_active)
+            owner._guard_next = 0
+            os.write = write
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_LATE_MUTATION_NOT_REACHED'
+        '''.replace('MUTATION', repr(mutation))))
+
+tests/test_puck_guard_contract_v4.py:218: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-quu4mbk3/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-quu4m...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-quu4m...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+___ test_q4_completion_counter_callback_cannot_change_cache_after_late_check ___
+
+    def test_q4_completion_counter_callback_cannot_change_cache_after_late_check():
+>       refused(run_q4('''
+            original_json = sys.modules['json']
+            original_completed = owner._guard_checks[False][1]
+            fired = False
+            class Completed(int):
+                def __add__(self, value):
+                    global fired
+                    fired = True
+                    sys.modules['json'] = types.ModuleType('json')
+                    return int(self)+value
+            owner._guard_checks[False][1] = Completed(original_completed)
+            def restore():
+                sys.modules['json'] = original_json
+                owner._guard_checks[False][1] = original_completed
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_COMPLETION_CALLBACK_NOT_REACHED'
+        '''))
+
+tests/test_puck_guard_contract_v4.py:273: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-4d37525i/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-4d375...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-4d375...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+__________ test_q4_stdlib_name_baseline_cannot_be_replaced_or_widened __________
+
+    def test_q4_stdlib_name_baseline_cannot_be_replaced_or_widened():
+>       refused(run_q4('''
+            previous = sys.stdlib_module_names
+            sys.stdlib_module_names = frozenset(previous) | {'fixture_q4_widened'}
+            def restore():
+                sys.stdlib_module_names = previous
+            expect_refusal(restore=restore)
+        '''))
+
+tests/test_puck_guard_contract_v4.py:293: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-vexd9xg2/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-vexd9...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-vexd9...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+___ test_q4_nested_guard_and_real_dependency_publication_keep_outer_snapshot ___
+
+    def test_q4_nested_guard_and_real_dependency_publication_keep_outer_snapshot():
+>       succeeded(run_q4('''
+            import fixture_dep
+            assert deps.loaded['fixture_dep'][0] is fixture_dep
+            assert fixture_dep.answer == 43
+            original_write = os.write
+            fired = False
+            nested_before = owner._guard_nested
+            def write(fd, payload):
+                global fired
+                if not fired and b'"kind":"puck-worker-guard-cost-v1"' in payload:
+                    fired = True
+                    owner._import_recheck()
+                return original_write(fd, payload)
+            owner._guard_next = 0
+            os.write = write
+            try:
+                owner._import_recheck()
+            finally:
+                os.write = original_write
+            assert fired and owner._guard_nested == nested_before+1
+            assert owner._guard_depth == 0 and owner._guard_current is None
+            assert owner._state == 'active' and owner._first_failure is None
+            assert deps.loaded['fixture_dep'][0] is sys.modules['fixture_dep']
+        '''))
+
+tests/test_puck_guard_contract_v4.py:303: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def succeeded(result):
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-n3zznpws/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').returncode
+
+tests/test_puck_guard_contract_v4.py:77: AssertionError
+___________ test_q4_preserves_main_alias_identity_refusal_and_poison ___________
+
+    def test_q4_preserves_main_alias_identity_refusal_and_poison():
+>       refused(run_q4('''
+            previous = sys.modules['__mp_main__']
+            sys.modules['__mp_main__'] = types.ModuleType('foreign')
+            def restore():
+                sys.modules['__mp_main__'] = previous
+            expect_refusal(restore=restore, reason='Runtime qualification stdlib alias identity changed')
+        '''))
+
+tests/test_puck_guard_contract_v4.py:330: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-j8v0o5b1/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-j8v0o...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-j8v0o...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+________ test_q4_keeps_final_real_deadline_after_late_diagnostic_write _________
+
+    def test_q4_keeps_final_real_deadline_after_late_diagnostic_write():
+>       refused(run_q4('''
+            original_write = os.write
+            fired = False
+            def write(fd, payload):
+                global fired
+                result = original_write(fd, payload)
+                if b'"kind":"puck-worker-guard-cost-v1"' in payload:
+                    if b'"active":null' in payload:
+                        fired = True
+                        owner._deadline = 0
+                    else:
+                        owner._guard_next = 0
+                return result
+            def restore():
+                os.write = original_write
+            owner._guard_next = 0
+            os.write = write
+            expect_refusal(restore=restore, reason='Fresh worker deadline exhausted')
+            assert fired, 'Q4_FINAL_DEADLINE_WRITE_NOT_REACHED'
+        '''))
+
+tests/test_puck_guard_contract_v4.py:340: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-f5rrv8rm/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-f5rrv...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-f5rrv...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+______ test_q4_cache_name_ceiling_has_exact_boundary_and_one_over[65536] _______
+
+count = 65536
+
+    @pytest.mark.parametrize('count', [65536, 65537])
+    def test_q4_cache_name_ceiling_has_exact_boundary_and_one_over(count):
+        body = '''
+            target = TARGET
+            original_count = len(sys.modules)
+            assert original_count < target
+            names = ['json.fixture_q4_cache_'+str(i) for i in range(target-original_count)]
+            module = types.ModuleType('json.fixture_q4_cache')
+            for name in names:
+                sys.modules[name] = module
+            assert len(sys.modules) == target
+            def restore():
+                for name in names:
+                    sys.modules.pop(name, None)
+            if target == 65536:
+                try:
+                    owner._import_recheck()
+                finally:
+                    restore()
+            else:
+                expect_refusal(restore=restore)
+            assert len(sys.modules) == original_count
+        '''.replace('TARGET', str(count))
+        result = run_q4(body)
+>       (succeeded if count == 65536 else refused)(result)
+
+tests/test_puck_guard_contract_v4.py:386: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def succeeded(result):
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-qu3bjk9w/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').returncode
+
+tests/test_puck_guard_contract_v4.py:77: AssertionError
+______ test_q4_cache_name_ceiling_has_exact_boundary_and_one_over[65537] _______
+
+count = 65537
+
+    @pytest.mark.parametrize('count', [65536, 65537])
+    def test_q4_cache_name_ceiling_has_exact_boundary_and_one_over(count):
+        body = '''
+            target = TARGET
+            original_count = len(sys.modules)
+            assert original_count < target
+            names = ['json.fixture_q4_cache_'+str(i) for i in range(target-original_count)]
+            module = types.ModuleType('json.fixture_q4_cache')
+            for name in names:
+                sys.modules[name] = module
+            assert len(sys.modules) == target
+            def restore():
+                for name in names:
+                    sys.modules.pop(name, None)
+            if target == 65536:
+                try:
+                    owner._import_recheck()
+                finally:
+                    restore()
+            else:
+                expect_refusal(restore=restore)
+            assert len(sys.modules) == original_count
+        '''.replace('TARGET', str(count))
+        result = run_q4(body)
+>       (succeeded if count == 65536 else refused)(result)
+
+tests/test_puck_guard_contract_v4.py:386: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-zprzq8rs/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-zprzq...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-zprzq...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+___ test_q4_combined_allowance_ceiling_counts_duplicate_input_entries[65536] ___
+
+count = 65536
+
+    @pytest.mark.parametrize('count', [65536, 65537])
+    def test_q4_combined_allowance_ceiling_counts_duplicate_input_entries(count):
+        body = '''
+            target = TARGET
+            source_before = set(owner._loading)
+            dependency_before = set(deps.loading)
+            exported = deps.bindings.recheck()
+            aliases = {'__mp_main__'} if '__mp_main__' in sys.modules else set()
+            def allowance_count():
+                return (2+len(aliases)+len(owner._loaded)+len(owner._loading)
+                    +len(deps.loaded)+len(deps.loading)+len(exported))
+            initial_count = allowance_count()
+            extra = target-initial_count
+            assert extra > 0
+            names = ['json.fixture_q4_allowance_'+str(i) for i in range((extra+1)//2)]
+            for name in names[:extra//2]:
+                owner._loading.add(name)
+                deps.loading.add(name)
+            if extra % 2:
+                owner._loading.add(names[-1])
+            assert allowance_count() == target
+            assert len(owner._loading | deps.loading) < target
+            def restore():
+                owner._loading.clear()
+                owner._loading.update(source_before)
+                deps.loading.clear()
+                deps.loading.update(dependency_before)
+            if target == 65536:
+                try:
+                    owner._import_recheck()
+                finally:
+                    restore()
+            else:
+                expect_refusal(restore=restore)
+            assert owner._loading == source_before and deps.loading == dependency_before
+        '''.replace('TARGET', str(count))
+        result = run_q4(body)
+>       (succeeded if count == 65536 else refused)(result)
+
+tests/test_puck_guard_contract_v4.py:426: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def succeeded(result):
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-qsurig7l/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').returncode
+
+tests/test_puck_guard_contract_v4.py:77: AssertionError
+___ test_q4_combined_allowance_ceiling_counts_duplicate_input_entries[65537] ___
+
+count = 65537
+
+    @pytest.mark.parametrize('count', [65536, 65537])
+    def test_q4_combined_allowance_ceiling_counts_duplicate_input_entries(count):
+        body = '''
+            target = TARGET
+            source_before = set(owner._loading)
+            dependency_before = set(deps.loading)
+            exported = deps.bindings.recheck()
+            aliases = {'__mp_main__'} if '__mp_main__' in sys.modules else set()
+            def allowance_count():
+                return (2+len(aliases)+len(owner._loaded)+len(owner._loading)
+                    +len(deps.loaded)+len(deps.loading)+len(exported))
+            initial_count = allowance_count()
+            extra = target-initial_count
+            assert extra > 0
+            names = ['json.fixture_q4_allowance_'+str(i) for i in range((extra+1)//2)]
+            for name in names[:extra//2]:
+                owner._loading.add(name)
+                deps.loading.add(name)
+            if extra % 2:
+                owner._loading.add(names[-1])
+            assert allowance_count() == target
+            assert len(owner._loading | deps.loading) < target
+            def restore():
+                owner._loading.clear()
+                owner._loading.update(source_before)
+                deps.loading.clear()
+                deps.loading.update(dependency_before)
+            if target == 65536:
+                try:
+                    owner._import_recheck()
+                finally:
+                    restore()
+            else:
+                expect_refusal(restore=restore)
+            assert owner._loading == source_before and deps.loading == dependency_before
+        '''.replace('TARGET', str(count))
+        result = run_q4(body)
+>       (succeeded if count == 65536 else refused)(result)
+
+tests/test_puck_guard_contract_v4.py:426: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py", line 802, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py", line 793, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py", line 327, in __init__
+E             self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
+E                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-k5dbsz_b/source/scripts/puck_worker_bootstrap.py", line 171, in _parse
+E             raise ValueError('Exact fixed runtime qualification descriptor required')
+E         ValueError: Exact fixed runtime qualification descriptor required
+E         
+E       assert 'Q4_BODY_ENTERED\n' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-k5dbs...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-tmpfs-deps-k5dbs...ixed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...xed runtime qualification descriptor required\')\nValueError: Exact fixed runtime qualification descriptor required\n').stderr
+
+tests/test_puck_guard_contract_v4.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_accepts_registered_numpy_while_its_initializer_is_inflight
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_unknown_cache_name_retains_exact_refusal_close_and_poison
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_container_subclasses_before_their_hooks[cache]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_container_subclasses_before_their_hooks[source-loaded]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_container_subclasses_before_their_hooks[source-loading]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_container_subclasses_before_their_hooks[dependency-loaded]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_container_subclasses_before_their_hooks[dependency-loading]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_container_subclasses_before_their_hooks[stdlib]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_str_subclass_names_before_hash_lookup_or_split[cache]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_str_subclass_names_before_hash_lookup_or_split[source-loaded]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_rejects_str_subclass_names_before_hash_lookup_or_split[dependency-loading]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[cache-object]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[cache-key]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[allowance-content]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[allowance-receiver]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_late_observed_change_cannot_escape_fail_closed_snapshot[second-export]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_completion_counter_callback_cannot_change_cache_after_late_check
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_stdlib_name_baseline_cannot_be_replaced_or_widened
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_nested_guard_and_real_dependency_publication_keep_outer_snapshot
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_preserves_main_alias_identity_refusal_and_poison
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_keeps_final_real_deadline_after_late_diagnostic_write
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_cache_name_ceiling_has_exact_boundary_and_one_over[65536]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_cache_name_ceiling_has_exact_boundary_and_one_over[65537]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_combined_allowance_ceiling_counts_duplicate_input_entries[65536]
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_combined_allowance_ceiling_counts_duplicate_input_entries[65537]
+25 failed in 2.17s

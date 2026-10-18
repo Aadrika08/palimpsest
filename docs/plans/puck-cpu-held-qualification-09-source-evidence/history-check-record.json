@@ -1,0 +1,41 @@
+{
+  "admission_main_invoked": false,
+  "earlier_partial_setup": {
+    "retained": "authoring-setup-failure01.json",
+    "test_process_launched": false,
+    "tool_chunks": [
+      "32e3e1",
+      "266104",
+      "8ed6e1"
+    ]
+  },
+  "green01": {
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "tests": 9,
+    "tool_chunk": "a99f4d"
+  },
+  "implicit_retry": false,
+  "kind": "held09-small-control-history-check-v1",
+  "red02": {
+    "errors": 3,
+    "exit_code": 1,
+    "failures": 2,
+    "passed": 4,
+    "reason": "08 helper/constant absent and fabricated08receipt missing guards",
+    "tests": 9,
+    "tool_chunk": "a55973"
+  },
+  "red03": {
+    "errors": 1,
+    "exit_code": 1,
+    "failures": 0,
+    "passed": 8,
+    "reason": "first-read08 external stream metadata/data role mismatch",
+    "tests": 9,
+    "tool_chunk": "8ee99e"
+  },
+  "runtime_invoked": false,
+  "scope": "nine small history/control cases; no admission main, payload census/rehash, observer or installed runtime"
+}

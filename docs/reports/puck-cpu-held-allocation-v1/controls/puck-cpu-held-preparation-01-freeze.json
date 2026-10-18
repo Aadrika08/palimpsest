@@ -1,0 +1,85 @@
+{
+  "audit": {
+    "acceptance": [
+      "normal externally observed zero auditor CLI exit",
+      "published and stdout PASS bytes identical",
+      "auditor_source_sha256 equals frozen auditor pin",
+      "evidence_scope ordinary CPU held allocation only",
+      "all broader authority fields false"
+    ],
+    "command_prefix": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-preparation-01.json",
+      "--sha256",
+      "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "--transport",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-01-external-cli-transport.json"
+    ],
+    "output": "/tmp/palimpsest-puck-cpu-held-preparation-01-audit-01.json",
+    "transport_sha256_binding": "Compute from the new raw fixed-observer transport after its single completed invocation; never use a placeholder digest"
+  },
+  "collection_authorized": false,
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_held_allocation.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-preparation-01.json",
+    "--sha256",
+    "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6"
+  ],
+  "created_at": "2026-10-15T13:07:12.460661+00:00",
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": false,
+  "fresh_admission_required": true,
+  "kind": "puck-cpu-held-preparation-prospective-freeze-v1",
+  "native_authorized": false,
+  "pins": {
+    "auditor": {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9",
+      "size_bytes": 58090
+    },
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    "observer": {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "c7ec9aa2cdf639f77a42b26444c3eacbb5f6a1a188c66fd262e4e32fab332dc2",
+      "size_bytes": 5554
+    }
+  },
+  "qualification_claims": [],
+  "qualification_configuration_frozen": false,
+  "review": {
+    "scope": "independent source/configuration review; not runtime evidence",
+    "status": "GO for one actual preparation after fresh admission"
+  },
+  "runtime_qualified": false,
+  "scope": "One data-only CPU preparation; actual invocation still requires fresh resource admission",
+  "source_commit": "01f7248f9a8e16fd54ef0a52a8b27eb5d6cf059c",
+  "study_authorized": false,
+  "transport_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-01-external-cli-transport.json",
+  "verification": {
+    "affected_tests": 55,
+    "scope": "authored/stdlib controls; not actual stack",
+    "seconds": 7.91,
+    "terminal": "8a51d2"
+  },
+  "version": 1
+}

@@ -1,0 +1,9 @@
+import sys, types, torch
+def authored_delegate():
+    return 47
+torch._C._distributed_c10d = types.ModuleType('torch._C._distributed_c10d')
+torch._C._distributed_c10d.__file__ = __file__
+sys.modules['torch._C._distributed_c10d'] = torch._C._distributed_c10d
+import _authored_publication_gate_distributed_c10d
+for name in ['AllToAllOptions', 'AllgatherOptions', 'AllreduceCoalescedOptions', 'AllreduceOptions', 'Backend', 'BarrierOptions', 'BroadcastOptions', 'BuiltinCommHookType', 'DDPLoggingData', 'DebugLevel', 'ErrorType', 'FakeProcessGroup', 'FakeWork', 'FileStore', 'GatherOptions', 'GradBucket', 'HashStore', 'Logger', 'OpType', 'PrefixStore', 'ProcessGroup', 'ProcessGroupGloo', 'ReduceOp', 'ReduceOptions', 'ReduceScatterOptions', 'Reducer', 'ScatterOptions', 'Store', 'TCPStore', 'Work', 'WorkInfo', 'WorkResult', '_ControlCollectives', '_DMAConnectivity', '_DistributedBackendOptions', '_ProcessGroupWrapper', '_Request', '_Response', '_StoreCollectives', '_SymmetricMemory', '_WorkerServer', '_allow_inflight_collective_as_graph_input', '_broadcast_coalesced', '_compute_bucket_assignment_by_size', '_create_work_from_future', '_current_process_group', '_detect_dma_connectivity', '_dump_fr_trace', '_dump_fr_trace_json', '_get_handler', '_get_handler_names', '_get_work_registry_size', '_make_nccl_premul_sum', '_register_builtin_comm_hook', '_register_comm_hook', '_register_process_group', '_register_work', '_resolve_process_group', '_set_allow_inflight_collective_as_graph_input', '_set_global_rank', '_set_process_group', '_set_thread_isolation_mode', '_test_python_store', '_unregister_all_process_groups', '_unregister_process_group', '_verify_params_across_processes', 'get_debug_level', 'set_debug_level', 'set_debug_level_from_env']:
+    setattr(torch._C._distributed_c10d, name, authored_delegate)

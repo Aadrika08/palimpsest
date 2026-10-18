@@ -1,0 +1,46 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/configuration.json",
+    "--sha256",
+    "4cc0cf9ab118eba0cdb8522014ee9990c33502f44e3e32f9366c65ff4bd40170",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-10-external-cli-transport.json",
+    "--transport-sha256",
+    "289d662ede04c0ae59d15e97aae6be11bda4ec3cdc8761991956ab919f197b94",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-10-audit-01.json"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 0.06665625999448821,
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "external_deadline_seconds": 145,
+  "implicit_retry": false,
+  "kind": "puck-cpu-held10-amendment02-external-transport-v1",
+  "normal_exit": true,
+  "phase": "audit",
+  "returncode": 1,
+  "runtime_qualified": false,
+  "stderr": {
+    "path": "/tmp/palimpsest-held10-amendment02-audit-external.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-held10-amendment02-audit-external.stdout",
+    "sha256": "f17938df7352a2ccd369e338ce80e1fffa36592b0eb96b2f4ab0dfa2850daad9",
+    "size_bytes": 617
+  },
+  "study_authorized": false,
+  "timed_out": false
+}

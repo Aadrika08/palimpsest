@@ -1,0 +1,426 @@
+[
+  {
+    "compressed_size": 1481,
+    "compression": 8,
+    "crc32": 1052747562,
+    "external_attr": 2175008768,
+    "name": "anyio/__init__.py",
+    "size_bytes": 7602
+  },
+  {
+    "compressed_size": 1698,
+    "compression": 8,
+    "crc32": 1939210338,
+    "external_attr": 2175008768,
+    "name": "anyio/_lazyimport.py",
+    "size_bytes": 6082
+  },
+  {
+    "compressed_size": 4530,
+    "compression": 8,
+    "crc32": 2602231157,
+    "external_attr": 2175008768,
+    "name": "anyio/from_thread.py",
+    "size_bytes": 19415
+  },
+  {
+    "compressed_size": 2893,
+    "compression": 8,
+    "crc32": 3314505646,
+    "external_attr": 2175008768,
+    "name": "anyio/functools.py",
+    "size_bytes": 11797
+  },
+  {
+    "compressed_size": 3296,
+    "compression": 8,
+    "crc32": 1954897914,
+    "external_attr": 2175008768,
+    "name": "anyio/itertools.py",
+    "size_bytes": 16255
+  },
+  {
+    "compressed_size": 1918,
+    "compression": 8,
+    "crc32": 2483756880,
+    "external_attr": 2175008768,
+    "name": "anyio/lowlevel.py",
+    "size_bytes": 6280
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "anyio/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 4223,
+    "compression": 8,
+    "crc32": 2618094617,
+    "external_attr": 2175008768,
+    "name": "anyio/pytest_plugin.py",
+    "size_bytes": 14516
+  },
+  {
+    "compressed_size": 2141,
+    "compression": 8,
+    "crc32": 3315445506,
+    "external_attr": 2175008768,
+    "name": "anyio/to_interpreter.py",
+    "size_bytes": 7100
+  },
+  {
+    "compressed_size": 2924,
+    "compression": 8,
+    "crc32": 2534078900,
+    "external_attr": 2175008768,
+    "name": "anyio/to_process.py",
+    "size_bytes": 9850
+  },
+  {
+    "compressed_size": 1067,
+    "compression": 8,
+    "crc32": 351576184,
+    "external_attr": 2175008768,
+    "name": "anyio/to_thread.py",
+    "size_bytes": 2750
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "anyio/_backends/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 21109,
+    "compression": 8,
+    "crc32": 3304591613,
+    "external_attr": 2175008768,
+    "name": "anyio/_backends/_asyncio.py",
+    "size_bytes": 107767
+  },
+  {
+    "compressed_size": 8740,
+    "compression": 8,
+    "crc32": 3577603865,
+    "external_attr": 2175008768,
+    "name": "anyio/_backends/_trio.py",
+    "size_bytes": 45715
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1496,
+    "compression": 8,
+    "crc32": 2341090459,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_asyncio_selector_thread.py",
+    "size_bytes": 5626
+  },
+  {
+    "compressed_size": 1324,
+    "compression": 8,
+    "crc32": 144082791,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_concurrency_utils.py",
+    "size_bytes": 4522
+  },
+  {
+    "compressed_size": 1456,
+    "compression": 8,
+    "crc32": 2855124694,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_contextmanagers.py",
+    "size_bytes": 7215
+  },
+  {
+    "compressed_size": 2162,
+    "compression": 8,
+    "crc32": 3932039845,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_eventloop.py",
+    "size_bytes": 6658
+  },
+  {
+    "compressed_size": 1641,
+    "compression": 8,
+    "crc32": 2619939280,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_exceptions.py",
+    "size_bytes": 5618
+  },
+  {
+    "compressed_size": 5678,
+    "compression": 8,
+    "crc32": 2287244746,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_fileio.py",
+    "size_bytes": 34163
+  },
+  {
+    "compressed_size": 1493,
+    "compression": 8,
+    "crc32": 1310440787,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_futures.py",
+    "size_bytes": 6177
+  },
+  {
+    "compressed_size": 244,
+    "compression": 8,
+    "crc32": 2448275535,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_resources.py",
+    "size_bytes": 450
+  },
+  {
+    "compressed_size": 499,
+    "compression": 8,
+    "crc32": 1186827558,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_signals.py",
+    "size_bytes": 1016
+  },
+  {
+    "compressed_size": 8894,
+    "compression": 8,
+    "crc32": 3108653460,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_sockets.py",
+    "size_bytes": 35289
+  },
+  {
+    "compressed_size": 711,
+    "compression": 8,
+    "crc32": 3215976936,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_streams.py",
+    "size_bytes": 1806
+  },
+  {
+    "compressed_size": 1989,
+    "compression": 8,
+    "crc32": 2333076804,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_subprocesses.py",
+    "size_bytes": 7938
+  },
+  {
+    "compressed_size": 3746,
+    "compression": 8,
+    "crc32": 364219765,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_synchronization.py",
+    "size_bytes": 21658
+  },
+  {
+    "compressed_size": 3637,
+    "compression": 8,
+    "crc32": 229001019,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_tasks.py",
+    "size_bytes": 15391
+  },
+  {
+    "compressed_size": 3286,
+    "compression": 8,
+    "crc32": 719959289,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_tempfile.py",
+    "size_bytes": 19726
+  },
+  {
+    "compressed_size": 847,
+    "compression": 8,
+    "crc32": 2345941620,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_testing.py",
+    "size_bytes": 2340
+  },
+  {
+    "compressed_size": 991,
+    "compression": 8,
+    "crc32": 3416935423,
+    "external_attr": 2175008768,
+    "name": "anyio/_core/_typedattr.py",
+    "size_bytes": 2607
+  },
+  {
+    "compressed_size": 653,
+    "compression": 8,
+    "crc32": 3195029817,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/__init__.py",
+    "size_bytes": 3050
+  },
+  {
+    "compressed_size": 2588,
+    "compression": 8,
+    "crc32": 2162227643,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_eventloop.py",
+    "size_bytes": 11127
+  },
+  {
+    "compressed_size": 428,
+    "compression": 8,
+    "crc32": 4244687279,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_resources.py",
+    "size_bytes": 900
+  },
+  {
+    "compressed_size": 2677,
+    "compression": 8,
+    "crc32": 2225520104,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_sockets.py",
+    "size_bytes": 13162
+  },
+  {
+    "compressed_size": 1878,
+    "compression": 8,
+    "crc32": 1790211290,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_streams.py",
+    "size_bytes": 7620
+  },
+  {
+    "compressed_size": 625,
+    "compression": 8,
+    "crc32": 578824050,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_subprocesses.py",
+    "size_bytes": 2123
+  },
+  {
+    "compressed_size": 2206,
+    "compression": 8,
+    "crc32": 27053716,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_tasks.py",
+    "size_bytes": 7070
+  },
+  {
+    "compressed_size": 711,
+    "compression": 8,
+    "crc32": 1664309823,
+    "external_attr": 2175008768,
+    "name": "anyio/abc/_testing.py",
+    "size_bytes": 2145
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1948,
+    "compression": 8,
+    "crc32": 476037641,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/buffered.py",
+    "size_bytes": 6746
+  },
+  {
+    "compressed_size": 1342,
+    "compression": 8,
+    "crc32": 2403258300,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/file.py",
+    "size_bytes": 4524
+  },
+  {
+    "compressed_size": 2357,
+    "compression": 8,
+    "crc32": 843601695,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/memory.py",
+    "size_bytes": 10793
+  },
+  {
+    "compressed_size": 1252,
+    "compression": 8,
+    "crc32": 54592972,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/stapled.py",
+    "size_bytes": 4845
+  },
+  {
+    "compressed_size": 1402,
+    "compression": 8,
+    "crc32": 281780023,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/text.py",
+    "size_bytes": 5765
+  },
+  {
+    "compressed_size": 4264,
+    "compression": 8,
+    "crc32": 586494010,
+    "external_attr": 2175008768,
+    "name": "anyio/streams/tls.py",
+    "size_bytes": 15818
+  },
+  {
+    "compressed_size": 644,
+    "compression": 8,
+    "crc32": 782987863,
+    "external_attr": 2175008768,
+    "name": "anyio-4.15.1.dist-info/licenses/LICENSE",
+    "size_bytes": 1081
+  },
+  {
+    "compressed_size": 1885,
+    "compression": 8,
+    "crc32": 2345514162,
+    "external_attr": 2175008768,
+    "name": "anyio-4.15.1.dist-info/METADATA",
+    "size_bytes": 4733
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 761929357,
+    "external_attr": 2175008768,
+    "name": "anyio-4.15.1.dist-info/WHEEL",
+    "size_bytes": 91
+  },
+  {
+    "compressed_size": 33,
+    "compression": 8,
+    "crc32": 3805521830,
+    "external_attr": 2175008768,
+    "name": "anyio-4.15.1.dist-info/entry_points.txt",
+    "size_bytes": 39
+  },
+  {
+    "compressed_size": 8,
+    "compression": 8,
+    "crc32": 132724159,
+    "external_attr": 2175008768,
+    "name": "anyio-4.15.1.dist-info/top_level.txt",
+    "size_bytes": 6
+  },
+  {
+    "compressed_size": 2338,
+    "compression": 8,
+    "crc32": 3162265203,
+    "external_attr": 2176057344,
+    "name": "anyio-4.15.1.dist-info/RECORD",
+    "size_bytes": 4250
+  }
+]

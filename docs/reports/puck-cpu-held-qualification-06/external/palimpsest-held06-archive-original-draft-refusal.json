@@ -1,0 +1,8 @@
+{
+  "allocation_retried": false,
+  "reason": "The mutable /tmp draft was edited after its archive snapshot. Runtime/control artifacts and the archived draft bytes were unchanged.",
+  "resolution": "Preserve the captured draft as a distinct original snapshot and record its original-path role explicitly. Reverify before pushing.",
+  "status": "ORIGINAL_DRAFT_MISMATCH_DETECTED",
+  "tool_chunk": "b5a7c1",
+  "verification_returncode": 1
+}

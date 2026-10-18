@@ -1,0 +1,11 @@
+{"diagnostic_only":true,"elapsed_seconds":3.676977939903736e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+{"diagnostic_only":true,"elapsed_seconds":0.06044706201646477,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+{"diagnostic_only":true,"elapsed_seconds":0.06049553398042917,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+{"diagnostic_only":true,"elapsed_seconds":22.404091444972437,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+{"diagnostic_only":true,"elapsed_seconds":23.27430531900609,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+{"diagnostic_only":true,"elapsed_seconds":23.274387162993662,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+{"diagnostic_only":true,"elapsed_seconds":28.67646904900903,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+{"diagnostic_only":true,"elapsed_seconds":38.08406089199707,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+{"diagnostic_only":true,"elapsed_seconds":39.832562963012606,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+{"diagnostic_only":true,"elapsed_seconds":79.74112977000186,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+{"diagnostic_only":true,"elapsed_seconds":81.56448395497864,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}

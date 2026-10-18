@@ -1,0 +1,484 @@
+{
+  "actual": {
+    "audit_external_exit_code": 0,
+    "audit_invocations_in_retained_record": 1,
+    "audit_terminal_chunk": "02de7e",
+    "auditor_reported_seconds": 3.5578294550068676,
+    "distributed_rosters": [
+      {
+        "cache_identity": true,
+        "dispatch_count": 11,
+        "dispatch_names_sha256": "2a252486def6c4729713c36f3c3807a7ac18af5fcf869e4bf9b8821d1ccb1204",
+        "extra": [],
+        "matches": true,
+        "metadata": {
+          "file": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+          "loader_type": null,
+          "module_type": "builtins.module",
+          "name": "torch._C._distributed_autograd",
+          "package": null,
+          "path": [],
+          "spec": null
+        },
+        "missing": [],
+        "name": "torch._C._distributed_autograd",
+        "raw_attribute_identity": true,
+        "terminal_stable": true
+      },
+      {
+        "cache_identity": true,
+        "dispatch_count": 69,
+        "dispatch_names_sha256": "701782d4080147caf60bae7615a9e6828b37771f7624fc3602ae4a1b71a29db1",
+        "extra": [],
+        "matches": true,
+        "metadata": {
+          "file": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+          "loader_type": null,
+          "module_type": "builtins.module",
+          "name": "torch._C._distributed_c10d",
+          "package": null,
+          "path": [],
+          "spec": null
+        },
+        "missing": [],
+        "name": "torch._C._distributed_c10d",
+        "raw_attribute_identity": true,
+        "terminal_stable": true
+      },
+      {
+        "cache_identity": true,
+        "dispatch_count": 29,
+        "dispatch_names_sha256": "15a966a9027e2dc85801112f70fa859eac9025e92644eb7980c86df3799e18f8",
+        "extra": [],
+        "matches": true,
+        "metadata": {
+          "file": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+          "loader_type": null,
+          "module_type": "builtins.module",
+          "name": "torch._C._distributed_rpc",
+          "package": null,
+          "path": [],
+          "spec": null
+        },
+        "missing": [],
+        "name": "torch._C._distributed_rpc",
+        "raw_attribute_identity": true,
+        "terminal_stable": true
+      }
+    ],
+    "distributed_terminal_stable": true,
+    "observer_external_exit_code": 0,
+    "observer_invocations_in_retained_record": 1,
+    "observer_receipt_seconds": 14.163679149991367,
+    "observer_reported_sampled_survivors": [],
+    "observer_sampled_identities": [
+      {
+        "pid": 3305575,
+        "start_ticks": 52884674
+      },
+      {
+        "pid": 3305713,
+        "start_ticks": 52885124
+      },
+      {
+        "pid": 3305722,
+        "start_ticks": 52885132
+      },
+      {
+        "pid": 3305767,
+        "start_ticks": 52885158
+      },
+      {
+        "pid": 3305769,
+        "start_ticks": 52885165
+      }
+    ],
+    "observer_session_id": 79047,
+    "observer_terminal_chunk": "af9236",
+    "ordinary_imports_observed": true,
+    "parent_closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "all_handles_closed": true,
+      "all_receipts_fsynced": true,
+      "fd_count_after": 5,
+      "fd_count_before": 5
+    },
+    "parent_reported_seconds": 14.076115132018458,
+    "parent_sampled_peak_rss_bytes": 83537920,
+    "supervision": {
+      "probe": {
+        "failure": null,
+        "finished_monotonic": 482537.044992144,
+        "matching_survivors": [],
+        "pid": 3305713,
+        "returncode": 0,
+        "rss_sampling_seconds": 0.05,
+        "sampled_peak_rss_bytes": 101814272,
+        "status": "completed"
+      },
+      "worker": {
+        "failure": null,
+        "finished_monotonic": 482542.881901689,
+        "matching_survivors": [],
+        "pid": 3305767,
+        "returncode": 0,
+        "rss_sampling_seconds": 0.05,
+        "sampled_peak_rss_bytes": 410083328,
+        "status": "completed"
+      }
+    },
+    "worker_import_order": [
+      "numpy",
+      "torch",
+      "torchvision",
+      "mujoco"
+    ],
+    "worker_reported_seconds": 4.957882209972013,
+    "worker_versions": {
+      "mujoco": "3.3.6",
+      "numpy": "2.2.5",
+      "torch": "2.9.0+cpu",
+      "torchvision": "0.24.0+cpu"
+    }
+  },
+  "baseline_before_after_bytes_identical": true,
+  "bindings": {
+    "auditor_publication_sha256": "465b8e30496aae9df13fc4411060cc4cfe98f793d27f4738490f50149cec9a5a",
+    "concrete_auditor_command": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_runtime_characterization.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03.json",
+      "--sha256",
+      "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+      "--transport",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli-transport.json",
+      "--transport-sha256",
+      "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3"
+    ],
+    "configuration_sha256": "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+    "manifest_sha256": "435a4679c2bcc525ef78c6cd4de878b3599f3c23ff3ab69112473ec36000a523",
+    "observer_transport_sha256": "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3",
+    "parent_result_sha256": "9670bdf9d297dd14459912d0a71d55a75da13b8723b4f5d79d88dc6c12748569",
+    "report_sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+    "request_sha256": "fffca5d5ce56c1a75b5f8d15402c7d736b162bae93956938fd0b68e4bbb9a692",
+    "worker_source_sha256": "ef16972ee5a7657c2a5d2144473610913be2b97278e71644af1f768d4e05bd8d"
+  },
+  "collection_authorized": false,
+  "executable": false,
+  "held05_configuration_and_output_absent": true,
+  "historical_failures": [
+    {
+      "path": "runs/puck-cpu-runtime-characterization-01/result.json",
+      "sha256": "bd700625635bd47a170b70ce955097c47c0e4a27c1c3d9a04c137461d848288a",
+      "status": "FAIL"
+    },
+    {
+      "path": "runs/puck-cpu-install-01/result.json",
+      "sha256": "d6d33b99dfe0300fc57b018e9cbadce0fb570debfe359974b55984a9ed687ea1",
+      "status": "FAIL"
+    },
+    {
+      "path": "runs/puck-cpu-retained-admission-01/result.json",
+      "sha256": "14bfe97b5792136e156ddaa6d84767e934fb8358e7b5c2426caefa19a786674e",
+      "status": "FAIL"
+    },
+    {
+      "baseline_after_absent": true,
+      "path": "runs/puck-cpu-held-qualification-01/result.json",
+      "sha256": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "status": "FAIL"
+    },
+    {
+      "baseline_after_absent": true,
+      "path": "runs/puck-cpu-held-qualification-02/result.json",
+      "sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "status": "FAIL"
+    },
+    {
+      "baseline_after_absent": true,
+      "path": "runs/puck-cpu-held-qualification-03/result.json",
+      "sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "status": "FAIL"
+    },
+    {
+      "baseline_after_absent": true,
+      "path": "runs/puck-cpu-held-qualification-04/result.json",
+      "sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+      "status": "FAIL"
+    }
+  ],
+  "historical_missing_receipts_absent": [
+    "runs/puck-cpu-runtime-characterization-01/baseline-after.json",
+    "runs/puck-cpu-install-01/inventory.json",
+    "runs/puck-cpu-install-01/licences.json",
+    "runs/puck-cpu-install-01/baseline-after.json",
+    "runs/puck-cpu-install-01/logs/namespace.json",
+    "runs/puck-cpu-retained-admission-01/inventory.json",
+    "runs/puck-cpu-retained-admission-01/snapshot.json",
+    "runs/puck-cpu-retained-admission-01/baseline-after.json"
+  ],
+  "independent_cli_audit_verified": {
+    "accepted_source_capsules": 16,
+    "baseline_declared_files": 4233,
+    "baseline_declared_symlinks": 1048,
+    "input_pins": 63,
+    "native_aliases": 23,
+    "native_files": 29,
+    "observation_source_capsules": 14,
+    "old_missing_receipts": 8,
+    "prior_source_capsules": 14,
+    "receipt_fingerprints": 5790,
+    "roles": 19,
+    "sampling_limitation": "Sampled PID/start identities only; not exhaustive unseen-process proof. PID/start recheck and signal are not atomic lifetime proof. Parent process-group supervision and closure require independent audit.",
+    "scope": "ordinary fixed imports and terminal snapshots only; no lifecycle, held, native, renderer or study qualification",
+    "site_directory_count": 2074,
+    "site_file_count": 27225,
+    "site_regular_file_bytes": 1304701872,
+    "source_pins": 19
+  },
+  "kind": "puck-cpu-observation03-result-review-v1",
+  "limitations": [
+    "Terminal observations do not prove creator-close timing, intermediate publication, linked-binary provenance, held/native/renderer qualification or physical behavior.",
+    "SITE/native/prefix full-byte and final sampled-lifetime checks are supported by the externally completed independent CLI audit; this peer review did not rerun those operations.",
+    "External tool terminal zero is checked separately from report PASS; reported program durations are not physical timing bounds.",
+    "Packet/index/Git-copy validation was still being finalized and is outside this result review."
+  ],
+  "material_findings": [],
+  "native_qualified": false,
+  "pins": [
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03-admission.py",
+      "sha256": "bfa51276101dea166f9fde32f6098e7496bdedc9d3a7585adef1cdb40ee24961",
+      "size_bytes": 14727
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03-controls.json",
+      "sha256": "435a4679c2bcc525ef78c6cd4de878b3599f3c23ff3ab69112473ec36000a523",
+      "size_bytes": 3980
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03-execution.md",
+      "sha256": "7a08beaec565e57e59c8b4db6d69ef767a974e189ca4b55f707a6596e044e496",
+      "size_bytes": 5592
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03.json",
+      "sha256": "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+      "size_bytes": 20311
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/admission-cli-output.txt",
+      "sha256": "ca4bbf9e36dfa60e15e47cc8f99138425f57aa263dd367722f5e0234ea02cf12",
+      "size_bytes": 3112
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/admission-external-tool.json",
+      "sha256": "6c0f32a83c671b4a3a2b6be44342f69a5b9c4ac0cc1cac55ecc6719fb7863d46",
+      "size_bytes": 4006
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/audit-external-tool.json",
+      "sha256": "57e38d00e758a31b3f5842d6f8387e9a76907a275ec11e56f3e2b81c494aaa1b",
+      "size_bytes": 6580
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/audit-preparation-error-01.json",
+      "sha256": "a41fc7bbdcd35588832560e9eca239723fd79470a99f83135529faed390006db",
+      "size_bytes": 701
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/concrete-audit-command.json",
+      "sha256": "80e3020d37f066dd9ca2d38e8a12731d458f963ef15fd077a70709d468ab1f82",
+      "size_bytes": 1265
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/immediate-prelaunch.json",
+      "sha256": "513bf2ef7a4d5d1ad30f25f6e424370bba972e7dcf1e317138d8bdaea1739bce",
+      "size_bytes": 1212
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/observer-cli-output.txt",
+      "sha256": "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3",
+      "size_bytes": 1940
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/observer-external-tool.json",
+      "sha256": "7f29350d82689256279ddae6929d6cb3e19c85849d2e56ffaec0cf53247d9389",
+      "size_bytes": 3189
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/outcome-audit-03.json",
+      "sha256": "465b8e30496aae9df13fc4411060cc4cfe98f793d27f4738490f50149cec9a5a",
+      "size_bytes": 5015
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-01/result.json",
+      "sha256": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "size_bytes": 618
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-02/result.json",
+      "sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "size_bytes": 616
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-03/result.json",
+      "sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "size_bytes": 617
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-04/result.json",
+      "sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+      "size_bytes": 617
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/result.json",
+      "sha256": "d6d33b99dfe0300fc57b018e9cbadce0fb570debfe359974b55984a9ed687ea1",
+      "size_bytes": 1279
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-01/result.json",
+      "sha256": "14bfe97b5792136e156ddaa6d84767e934fb8358e7b5c2426caefa19a786674e",
+      "size_bytes": 484
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-01/result.json",
+      "sha256": "bd700625635bd47a170b70ce955097c47c0e4a27c1c3d9a04c137461d848288a",
+      "size_bytes": 613
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli-transport.json",
+      "sha256": "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3",
+      "size_bytes": 1940
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli.stdout",
+      "sha256": "28a0ebc9286ad00b798ebe02e40ba1b2504b3b63e1c49d0bef19a0fdaae3e07d",
+      "size_bytes": 889
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/configuration.json",
+      "sha256": "239efab01fba514d2bc90e7ecf8203032475b37f05a08437a2aedc1d5b2e1e91",
+      "size_bytes": 17146
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/namespace.json",
+      "sha256": "edd25522487e75792e1e8dde7d6abc8744727957bbbdbb00f20fd3d538482636",
+      "size_bytes": 141
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/probe-invocation.json",
+      "sha256": "26bbec5f5f6d327332776f173ef42dedcc23765a09a1432b8e3dd4c33d7511e6",
+      "size_bytes": 6258
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/probe-logs/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/probe-logs/stdout.log",
+      "sha256": "5cc3803b451f40446c29b7a935c6f95334c475541ddbe231bf544b093dd0cf37",
+      "size_bytes": 150
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/probe-supervision.json",
+      "sha256": "fe28c41d4e93a2e9ec206a4609a33c4fddd34feae8ae3abb9f5c89998e87c4b2",
+      "size_bytes": 192
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/request.json",
+      "sha256": "fffca5d5ce56c1a75b5f8d15402c7d736b162bae93956938fd0b68e4bbb9a692",
+      "size_bytes": 3145
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/result.json",
+      "sha256": "9670bdf9d297dd14459912d0a71d55a75da13b8723b4f5d79d88dc6c12748569",
+      "size_bytes": 838
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/worker-invocation.json",
+      "sha256": "21c806baca5bb012f7e7cc36ffd497a6c96302627dc8fc3f0259bcac39700e85",
+      "size_bytes": 5247
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/worker-logs/stderr.log",
+      "sha256": "a4faa34dc9154e7f6ea9c7553ee483c4bc3dc168882af3298f4313f01edbdfb0",
+      "size_bytes": 194
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/worker-logs/stdout.log",
+      "sha256": "13acd67ab0002c2f0e9a94192157bfa1c075f3563fc945ec98b18f72b8fc62d6",
+      "size_bytes": 127
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/worker-supervision.json",
+      "sha256": "b048dc6f323de1bddce6edf08484795ad9157a6eea424612210f134bdfb36b65",
+      "size_bytes": 192
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_runtime_characterization.py",
+      "sha256": "be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4",
+      "size_bytes": 53991
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/characterize_puck_cpu_runtime.py",
+      "sha256": "3165fa464d4950690da5c6673f1320ea4c8bc7d310aca54026ad4b113194986e",
+      "size_bytes": 44371
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/characterize_puck_runtime_imports.py",
+      "sha256": "ef16972ee5a7657c2a5d2144473610913be2b97278e71644af1f768d4e05bd8d",
+      "size_bytes": 29023
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_runtime_characterization.py",
+      "sha256": "35f969bf9288d5ba079c2a84c8e868a62f3e432a2a15b1c94599ce8817121d0b",
+      "size_bytes": 16239
+    }
+  ],
+  "preparation_error": {
+    "controls_changed": false,
+    "exact_failing_pre_read_fields_retained": false,
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-03/audit-preparation-error-01.json",
+    "reported_cause": "Overbroad stat_result equality check after reading transport refused; it included access-time fields. Exact failing pre-read fields were not retained.",
+    "scope": "Audit-command preparation AssertionError before the sole auditor invocation; observer and auditor were not retried.",
+    "sha256": "a41fc7bbdcd35588832560e9eca239723fd79470a99f83135529faed390006db"
+  },
+  "profile_accepted": false,
+  "qualification_claims": [],
+  "reviewed_at_utc": "2026-10-15T20:10:55.885119+00:00",
+  "reviewer_auditor_invocations": 0,
+  "reviewer_installed_tree_censuses": 0,
+  "reviewer_target_code_executed": false,
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "runtime_qualified": false,
+  "scope": "Peer read/hash review of exact retained actual03 terminal and metadata receipts; no auditor rerun, target execution, installed-tree recensus, Git or auth action.",
+  "status": "NO_MATERIAL_FINDINGS",
+  "study_authorized": false
+}
