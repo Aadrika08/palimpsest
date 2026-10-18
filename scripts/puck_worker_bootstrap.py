@@ -20,6 +20,7 @@ import types
 
 MiB = 1024**2
 EXTENDED_SECONDS = 360  # Only an explicit policy-v5 registration may extend the 180 s worker clock.
+EPISODE_SECONDS = 600  # The v4 held episode worker clock, by user decision after the guarded rehearsal.
 BOOTSTRAP = 'scripts/puck_worker_bootstrap.py'
 HOLDER = 'src/palimpsest/puck_execution_files.py'
 ENTRY = 'palimpsest.puck_worker_preflight'
@@ -268,7 +269,8 @@ def _parse(raw, expected):
             _declared_rosters(negatives, q['hidden_imports'] if q['version']==5 else None)
     if reg['version']==4: _episode(reg['episode'])
     if 'deadline_seconds' in reg and (type(reg['deadline_seconds']) is not int
-            or reg['deadline_seconds']!=EXTENDED_SECONDS or (reg['version']==3 and reg['qualification']['version']!=5)):
+            or reg['deadline_seconds']!=(EPISODE_SECONDS if reg['version']==4 else EXTENDED_SECONDS)
+            or (reg['version']==3 and reg['qualification']['version']!=5)):
         raise ValueError('Exact extended worker deadline requires qualification v5' if reg['version']==3
                          else 'Exact extended worker deadline required for the held episode')
     _path(reg['source_root']); _path(reg['cwd'])
@@ -460,7 +462,7 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
 class HeldWorkerBootstrap:
     """Fresh process source custody only; later dependency admission is required."""
     def __init__(self, registration_raw, *, expected_sha256, deadline, registration_path):
-        if type(deadline) not in (int, float) or not math.isfinite(deadline) or not time.monotonic() < deadline <= time.monotonic()+EXTENDED_SECONDS:
+        if type(deadline) not in (int, float) or not math.isfinite(deadline) or not time.monotonic() < deadline <= time.monotonic()+EPISODE_SECONDS:
             raise ValueError('Bounded worker deadline required')
         self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
         self._deadline_seconds = self._reg.get('deadline_seconds', 180)
@@ -738,7 +740,8 @@ class HeldWorkerBootstrap:
                 if len(raw) != dep['size_bytes']:
                     raise ValueError('Dependency registration reference size differs')
                 provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
-                    deadline=self._deadline, registration_path=dep['path'], deadline_seconds=self._deadline_seconds))
+                    deadline=self._deadline, registration_path=dep['path'], deadline_seconds=self._deadline_seconds,
+                    **({'episode':True} if self._reg['version']==4 else {})))
                 self._dependencies = DependencyImports(provider, self._import_recheck, self.recheck, self._fail,
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']], episode=self._reg['version']==4)

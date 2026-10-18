@@ -1,8 +1,9 @@
 """Record one exact CPU-parent CLI transport; grants no runtime authority.
 
 Allocation 16 (the held episode) runs scripts/run_puck_cpu_held_episode.py with
-720/735/750 s clocks; this observer then waits up to 780 s and arms a 795 s
-outer alarm. Any outer wrapper must allow more than 795 s (for example 810 s).
+1200/1215/1230 s clocks (two 600 s workers, by user decision); this observer then
+waits up to 1260 s and arms a 1275 s outer alarm. Any outer wrapper must allow
+more than 1275 s (for example 1290 s).
 """
 import argparse
 import hashlib
@@ -25,7 +26,7 @@ EXTENDED_SECONDS={14:(400,415)}
 EPISODE_KIND='puck-cpu-held-episode-allocation-v16'
 EPISODE_PARENT='scripts/run_puck_cpu_held_episode.py'
 EPISODE_OUTPUT='runs/puck-cpu-held-episode-16'
-EPISODE_SECONDS=(780,795)
+EPISODE_SECONDS=(1260,1275)
 MAX_STREAM_BYTES=16*1024**2
 MAX_INHERITED_FILE_BYTES=1024**3
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')

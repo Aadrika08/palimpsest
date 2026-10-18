@@ -207,13 +207,14 @@ class HeldDependencyNamespace:
     A single fresh main-thread SIGIO owner covers registration/package leases.
     Ceilings bound admitted bytes and serialized metadata, not RSS or hard WCET.
     """
-    def __init__(self, registration_raw, *, expected_sha256, deadline, registration_path, deadline_seconds=180):
+    def __init__(self, registration_raw, *, expected_sha256, deadline, registration_path, deadline_seconds=180, episode=False):
         self._state = 'new'; self._holders = []; self._registration_holder = None
         self._owner_pid = None; self._owner_thread = None; self._deferred_cleanup = False
         self._handler = None; self._break = False; self._census_count = 0
         self._deadline = deadline
-        # Only the explicit extended policy-v5 worker clock may exceed the original 180 s.
-        if (type(deadline_seconds) is not int or deadline_seconds not in (180, 360)
+        # Only the explicit extended policy-v5 worker clock may exceed the original 180 s,
+        # and only the v4 held episode worker (episode=True) may hold for 600 s.
+        if (type(deadline_seconds) is not int or deadline_seconds not in ((180, 360, 600) if episode is True else (180, 360))
                 or type(deadline) not in (int, float) or not math.isfinite(deadline)
                 or not 0 < deadline - time.monotonic() <= deadline_seconds):
             raise ValueError('Dependency deadline must be one future absolute deadline at most '+str(deadline_seconds)+' seconds')

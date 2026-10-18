@@ -30,6 +30,27 @@ release gate.
    bound to the pinned interpreter file bytes. scipy requests it, and it is missing
    from `sys.stdlib_module_names`.
 
+## User decision (2026-10-18): 600s per worker
+
+This replaces the 360s clock in decision 1. The change was decided after the
+sixth guarded rehearsal, a diagnostic run in scratch and not an allocation:
+
+- The guarded source worker finished 48 ticks in 337.65s, only 23s inside 360s.
+- The guarded replay worker used up its 360s before its first tick.
+- Guard custody rechecks over 27,286 held files took 75-80% of each worker's time.
+
+The new clocks:
+
+- Each v4 episode worker has a clock of exactly 600s. The bootstrap refuses any
+  other value for v4. Only the v4 episode worker may hold dependencies that long.
+- The epoch-14 policy-v5 qualification clock stays exactly 360s. All older
+  clocks are unchanged.
+- Allocation 16 runs on 1200/1215/1230s. Each worker is supervised until
+  start+605s (normal) and start+615s (hard).
+- The observer waits up to 1260s and sets a 1275s alarm. Any outer wrapper must
+  allow more than 1275s, for example 1290s.
+- The episode auditor accepts a transport elapsed time of up to 1260s.
+
 ## Design
 
 - **Construction.** Use the reviewed direct public constructor (`52a8f5d`,
@@ -108,7 +129,7 @@ outcome audits, and its outputs are never overwritten or retried.
   path traversal, valid CRCs, and every file within the limit.
 - **Process and file hygiene:** zero process-creation attempts and no survivors.
   The output directory has exactly the expected members. Staged and native
-  originals and the baseline are unchanged. Each worker finishes in under 360s.
+  originals and the baseline are unchanged. Each worker finishes in under 600s.
 
 ## Risks
 

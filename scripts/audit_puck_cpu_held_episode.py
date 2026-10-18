@@ -46,10 +46,13 @@ ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     OPENBLAS_MAIN_FREE='1',GOTOBLAS_MAIN_FREE='1',TORCH_DEVICE_BACKEND_AUTOLOAD='0',
     PYGLFW_LIBRARY='/puck/staged/inputs/root-0000/glfw/x11/libglfw.so',MESA_SHADER_CACHE_DISABLE='true',
     PYGAME_HIDE_SUPPORT_PROMPT='hide',__EGL_VENDOR_LIBRARY_FILENAMES='/puck/control/egl-vendor.json')
-LIMITS=dict(normal_seconds=720,child_hard_seconds=735,hard_seconds=750,
+LIMITS=dict(normal_seconds=1200,child_hard_seconds=1215,hard_seconds=1230,
     rss_bytes=2048*MiB,address_space_bytes=8192*MiB,output_bytes=64*MiB,
     scratch_bytes=64*MiB,file_bytes=16*MiB,min_free_bytes=4096*MiB,
     min_available_ram_bytes=2048*MiB,min_tmpfs_free_bytes=256*MiB,max_processes=3,max_fds=40000)
+# The user-decided 600 s worker clock; the observer waits at most 1260 s for the parent.
+WORKER_SECONDS=600
+TRANSPORT_SECONDS=1260
 NEGATIVE_IMPORTS=sorted(['OpenGL_accelerate','accimage','av','backports_abc','colorama','defusedxml','dill','flint',
     'fx2trt_oss','gmpy','gmpy2','hypothesis','monkeytype','numpy._distributor_init_local','onnx','onnx_tf',
     'onnxruntime','opt_einsum','org','pydot','pynvml','tabulate','tensorflow','tensorrt','torch._rocm_init',
@@ -261,7 +264,7 @@ def registration(config,phase,files,dependency_raw,bootstrap_raw):
         namespaces=[],runtime=dict(root=str(Path(PYTHON).parent),files=[{k:INTERPRETER[k] for k in ('size_bytes','sha256')}|{'path':'python3.11'}],
         python_version='3.11.15'),environment=ENVIRONMENT,cwd='/puck/source',argv_prefix=prefix,
         dependencies=dict(path='/puck/control/dependencies.json',size_bytes=len(dependency_raw),sha256=sha(dependency_raw)),
-        episode=episode,qualification_claims=[],executable=False,deadline_seconds=360)
+        episode=episode,qualification_claims=[],executable=False,deadline_seconds=WORKER_SECONDS)
     raw=canonical(value,False)
     return value,raw,[PYTHON,'-I','-B','-S','-c',LAUNCHER]+prefix+[sha(raw)]
 
@@ -508,7 +511,7 @@ def audit(configuration,expected_sha,transport,transport_sha,deadline):
             and observed.get('timed_out') is False),'Episode transport kind differs')
     require(not authored or str(observed.get('authored_scope','')).startswith('AUTHORED fixture only;'),'Explicit authored transport scope required')
     require(observed.get('configuration_sha256')==expected_sha and observed.get('observed_returncode')==0
-            and finite(observed.get('elapsed_seconds'),780) and observed.get('command')==[PYTHON,'-I','-S','-B',str(ROOT/PARENT),
+            and finite(observed.get('elapsed_seconds'),TRANSPORT_SECONDS) and observed.get('command')==[PYTHON,'-I','-S','-B',str(ROOT/PARENT),
             '--configuration',str(configuration),'--sha256',expected_sha],'Normal external episode transport required')
     for name in ('stdout','stderr'):
         path=('authored-episode16-cli.' if authored else OUTPUT+'-external-cli.')+name;row=observed.get(name,{})

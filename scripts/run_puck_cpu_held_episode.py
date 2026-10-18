@@ -1,7 +1,7 @@
 """Allocation 16: one held public manual episode over accepted preparation04.
 
 Worker A records the source episode and worker B replays it from A's read-only
-output, each inside the held, import-guarded v4 bootstrap with a 360 s clock,
+output, each inside the held, import-guarded v4 bootstrap with a 600 s clock (user decision),
 over preparation04's staged roots and its single source capsule. The parent
 admits only the exact frozen configuration, binds preparation04's independent
 acceptance, and requires no audited Python-level process creation (alongside the
@@ -47,11 +47,12 @@ ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     OPENBLAS_MAIN_FREE='1',GOTOBLAS_MAIN_FREE='1',TORCH_DEVICE_BACKEND_AUTOLOAD='0',
     PYGLFW_LIBRARY=STAGED_SITE+'/glfw/x11/libglfw.so',MESA_SHADER_CACHE_DISABLE='true',
     PYGAME_HIDE_SUPPORT_PROMPT='hide',__EGL_VENDOR_LIBRARY_FILENAMES='/puck/control/egl-vendor.json')
-LIMITS=dict(normal_seconds=720,child_hard_seconds=735,hard_seconds=750,
+LIMITS=dict(normal_seconds=1200,child_hard_seconds=1215,hard_seconds=1230,
     rss_bytes=2048*MiB,address_space_bytes=8192*MiB,output_bytes=64*MiB,
     scratch_bytes=64*MiB,file_bytes=16*MiB,min_free_bytes=4096*MiB,
     min_available_ram_bytes=2048*MiB,min_tmpfs_free_bytes=256*MiB,max_processes=3,max_fds=40000)
-WORKER_SECONDS=360
+# By user decision after rehearsal 6 (guarded source 337.65 s; replay over 360 s): 600 s per worker.
+WORKER_SECONDS=600
 # Policy v5 absent names (epoch14's 32) plus the ten the offline episode census requested.
 NEGATIVE_IMPORTS=sorted(['OpenGL_accelerate','accimage','av','backports_abc','colorama','defusedxml','dill','flint',
     'fx2trt_oss','gmpy','gmpy2','hypothesis','monkeytype','numpy._distributor_init_local','onnx','onnx_tf',
