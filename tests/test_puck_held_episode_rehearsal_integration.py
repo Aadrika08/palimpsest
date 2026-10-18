@@ -19,7 +19,7 @@ def test_the_rehearsal_runs_both_guarded_workers_into_scratch(tmp_path):
     write(root,'docs/authored/template-candidate.json',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
         import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=[],module_changes=[],native_origins=[],
             native_cache=[dict(name='_cython_authored',producer='authoredcy._creator',phase='module_exec',
-                               delegate_attributes=['cython_function_or_method'])]),
+                               delegate_attributes=['cython_function_or_method','generator'])]),
         additional_package_inputs=[dict(root='docs/authored/generated',files=[dict(generated,path='_authored_cpu_generated.py')])]))
     output=tmp_path/'rehearsal';stage='/tmp/puck-held-rehearsal-'+secrets.token_hex(6)
     code,stdout,stderr=run([PYTHON,'-I','-B',str(root/'scripts/rehearse_puck_held_episode.py'),'--site',str(project['site']),

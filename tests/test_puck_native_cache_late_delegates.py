@@ -20,27 +20,39 @@ from test_puck_worker_dependencies import dependency_fixture
 LATE=[{'attribute':'fused','producers':[{'producer':'fixture_dep._fused','phase':'module_exec'}]}]
 
 
-def late_source(name='_fused',attribute='fused'):
+def late_source(name='_fused',attribute='fused',after=''):
     return ('#include <Python.h>\n'
             'static PyObject* fused(PyObject* s,PyObject* a){return PyLong_FromLong(48);}\n'
             'static PyMethodDef methods[]={{"fused",fused,METH_NOARGS,NULL},{NULL,NULL,0,NULL}};\n'
             'static int populate(PyObject* m){PyObject* cache=PyDict_GetItemString(PyImport_GetModuleDict(),"'+NAME+'");'
             'if(!cache){PyErr_SetString(PyExc_RuntimeError,"shared cache module is absent");return -1;}'
             'PyObject* f=PyObject_GetAttrString(m,"fused");if(!f||PyObject_SetAttrString(cache,"'+attribute+'",f)<0)return -1;'
-            'Py_DECREF(f);return 0;}\n'
+            'Py_DECREF(f);'+after+'return 0;}\n'
             'static PyModuleDef_Slot slots[]={{Py_mod_exec,populate},{0,NULL}};\n'
             'static struct PyModuleDef mod={PyModuleDef_HEAD_INIT,"'+name+'",NULL,0,methods,slots,NULL,NULL,NULL};\n'
             'PyMODINIT_FUNC PyInit_'+name+'(void){return PyModuleDef_Init(&mod);}\n')
 
 
-def run(body,*,late=LATE,others=()):
+def nested_source(name,body=''):
+    """A plain extension imported from C by a late producer's exec, as scipy cimports cython_lapack."""
+    return ('#include <Python.h>\n'
+            'static int populate(PyObject* m){'+body+'return 0;}\n'
+            'static PyModuleDef_Slot slots[]={{Py_mod_exec,populate},{0,NULL}};\n'
+            'static struct PyModuleDef mod={PyModuleDef_HEAD_INIT,"'+name+'",NULL,0,NULL,slots,NULL,NULL,NULL};\n'
+            'PyMODINIT_FUNC PyInit_'+name+'(void){return PyModuleDef_Init(&mod);}\n')
+
+
+IMPORT_NESTED='PyObject* n=PyImport_ImportModule("fixture_dep._nested");if(!n)return -1;Py_DECREF(n);'
+
+
+def run(body,*,late=LATE,others=(),fused=None):
     with tempfile.TemporaryDirectory(prefix='puck-native-cache-late-',dir='/tmp') as temp:
         def mutate(deps,root):
             p=profile()
             if late is not None:p['native_cache'][0]['late_delegates']=copy.deepcopy(late)
             deps.update(kind='puck-worker-dependencies-v3',version=3,native_identity='tmpfs-raw-dev-inode-v1',import_profile=p)
             compile_native(root,'_native',native_source())
-            for name,source in (('_fused',late_source()),*others):
+            for name,source in (('_fused',fused or late_source()),*others):
                 leaf=compile_native(root,name,source)
                 deps['modules'].append({'name':'fixture_dep.'+name,'root_index':0,'path':leaf.relative_to(root).as_posix(),
                                         'kind':'extension','is_package':False})
@@ -58,6 +70,28 @@ def test_a_declared_later_producer_extends_the_shared_cache_and_is_sealed():
     assert receipt['entry_result']=={'answer':47,'fused':48}
     assert receipt['dependencies']['native_cache_modules']==[{'name':NAME,'producer':'fixture_dep._native','phase':'module_exec',
         'delegate_attributes':['answer'],'late_delegates':LATE}]
+
+
+def test_a_late_producer_may_import_nested_extensions_before_it_closes():
+    # The key is first seen at the nested extension's create start, with _fused's exec innermost;
+    # it stays pending through the nested phases and is sealed at _fused's own close.
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\nimport sys\n'
+               'return {"fused":sys.modules["'+NAME+'"].fused(),"nested":"fixture_dep._nested" in sys.modules}',
+               fused=late_source(after=IMPORT_NESTED),others=(('_nested',nested_source('_nested')),))
+    assert result.returncode==0,result.stderr
+    receipt=json.loads(result.stdout)
+    assert receipt['entry_result']=={'fused':48,'nested':True}
+    assert receipt['dependencies']['native_cache_modules'][0]['late_delegates']==LATE
+
+
+def test_a_pending_late_key_cannot_be_replaced_by_a_nested_phase():
+    replace=('PyObject* c=PyDict_GetItemString(PyImport_GetModuleDict(),"'+NAME+'");'
+             'PyObject* d=PyDict_GetItemString(PyModule_GetDict(c),"answer");'
+             'if(!d||PyObject_SetAttrString(c,"fused",d)<0)return -1;')
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\nreturn {}',
+               fused=late_source(after=IMPORT_NESTED),others=(('_nested',nested_source('_nested',replace)),))
+    assert result.returncode!=0 and result.stdout==''
+    assert 'Native cache late delegate changed' in result.stderr,result.stderr
 
 
 def test_an_undeclared_later_key_still_poisons_the_closed_cache():

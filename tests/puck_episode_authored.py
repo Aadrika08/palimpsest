@@ -221,7 +221,7 @@ def derive_candidate(characterized):
     template=write(root,'docs/authored/template-candidate.json',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
         import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=[],module_changes=[],native_origins=[],
             native_cache=[dict(name='_cython_authored',producer='authoredcy._creator',phase='module_exec',
-                               delegate_attributes=['cython_function_or_method'])]),
+                               delegate_attributes=['cython_function_or_method','generator'])]),
         additional_package_inputs=[dict(root='docs/authored/generated',files=[dict(generated,path='_authored_cpu_generated.py')])],
         authored_scope=AUTHORED))
     run_root=root/'runs/puck-cpu-runtime-characterization-04';candidate='docs/plans/puck-cpu-episode-import-profile-candidate-02.json'
@@ -308,17 +308,24 @@ def allocation16(prepared,run_ids=RUN_IDS):
 
 
 def authored_cython(site):
-    """Two authored extensions: a creator of the shared virtual cache module and a later producer extending it."""
+    """Authored extensions shaped like numpy.random and scipy's Cython modules.
+
+    ``_creator``'s exec creates the shared virtual cache module and then imports
+    ``_common`` from C (as bit_generator cimports numpy.random._common), whose exec
+    adds a second creator key before the creator closes. ``_fused``'s exec later
+    adds a key to the closed cache and then imports ``_lapack`` from C, as scipy's
+    fused Cython modules cimport scipy.linalg.cython_lapack.
+    """
     import importlib.machinery
     import sysconfig
     suffix=importlib.machinery.EXTENSION_SUFFIXES[0];package=site/'authoredcy';package.mkdir(parents=True,exist_ok=True)
     (package/'__init__.py').write_text('AUTHORED_CYTHON = True\n')
-    def build(name,attribute,body):
+    def build(name,attribute,body,after=''):
         source=('#include <Python.h>\n'
             'static PyObject* f(PyObject* s,PyObject* a){return PyLong_FromLong(7);}\n'
             'static PyMethodDef methods[]={{"'+attribute+'",f,METH_NOARGS,NULL},{NULL,NULL,0,NULL}};\n'
-            'static int populate(PyObject* m){'+body+'PyObject* v=PyObject_GetAttrString(m,"'+attribute+'");'
-            'if(!v||PyObject_SetAttrString(cache,"'+attribute+'",v)<0)return -1;Py_DECREF(v);return 0;}\n'
+            'static int populate(PyObject* m){'+body+(('PyObject* v=PyObject_GetAttrString(m,"'+attribute+'");'
+            'if(!v||PyObject_SetAttrString(cache,"'+attribute+'",v)<0)return -1;Py_DECREF(v);') if 'cache' in body else '')+after+'return 0;}\n'
             'static PyModuleDef_Slot slots[]={{Py_mod_exec,populate},{0,NULL}};\n'
             'static struct PyModuleDef mod={PyModuleDef_HEAD_INIT,"'+name+'",NULL,0,methods,slots,NULL,NULL,NULL};\n'
             'PyMODINIT_FUNC PyInit_'+name+'(void){return PyModuleDef_Init(&mod);}\n')
@@ -326,8 +333,13 @@ def authored_cython(site):
         subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),'-o',str(target)],
                        check=True,capture_output=True,timeout=30)
         c.unlink();return target
+    existing='PyObject* cache=PyDict_GetItemString(PyImport_GetModuleDict(),"_cython_authored");'\
+             'if(!cache){PyErr_SetString(PyExc_RuntimeError,"shared cache module is absent");return -1;}'
+    def nested(name):
+        return 'PyObject* n=PyImport_ImportModule("authoredcy.'+name+'");if(!n)return -1;Py_DECREF(n);'
     build('_creator','cython_function_or_method','PyObject* cache=PyModule_New("_cython_authored");if(!cache)return -1;'
-          'if(PyDict_SetItemString(PyImport_GetModuleDict(),"_cython_authored",cache)<0)return -1;Py_DECREF(cache);')
-    build('_fused','fused_cython_function','PyObject* cache=PyDict_GetItemString(PyImport_GetModuleDict(),"_cython_authored");'
-          'if(!cache){PyErr_SetString(PyExc_RuntimeError,"shared cache module is absent");return -1;}')
+          'if(PyDict_SetItemString(PyImport_GetModuleDict(),"_cython_authored",cache)<0)return -1;Py_DECREF(cache);',nested('_common'))
+    build('_common','generator',existing)
+    build('_fused','fused_cython_function',existing,nested('_lapack'))
+    build('_lapack','lapack','')
     return sorted(p for p in package.iterdir() if p.is_file())

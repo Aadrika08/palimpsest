@@ -84,9 +84,13 @@ SITE_FILES=('numpy/__init__.py','numpy/random/__init__.py','numpy/random/bit_gen
     'torch/__init__.py','mujoco/__init__.py','gymnasium/__init__.py','gymnasium/envs/__init__.py','scipy/__init__.py',
     'scipy/_lib/__init__.py','scipy/_lib/_ccallback_c.cpython-311-x86_64-linux-gnu.so',
     'scipy/_lib/_fpumode.cpython-311-x86_64-linux-gnu.so')
+# As the held guard sees numpy.random: bit_generator's exec creates the cache, and a key added by the
+# nested _common exec before bit_generator closes is still a creator key. Keys after the close are late.
 CREATOR=dict(cache='_cython_3_0_12',producer='numpy.random.bit_generator',phase='module_exec',
-             added=['cython_function_or_method','generator'],first=True)
-LATER=dict(cache='_cython_3_0_12',producer='scipy._lib._ccallback_c',phase='module_exec',added=['fused_cython_function'],first=False)
+             added=['cython_function_or_method'],first=True,closed=False)
+NESTED=dict(cache='_cython_3_0_12',producer='numpy.random._common',phase='module_exec',added=['generator'],first=False,closed=False)
+LATER=dict(cache='_cython_3_0_12',producer='scipy._lib._ccallback_c',phase='module_exec',added=['fused_cython_function'],
+           first=False,closed=True)
 
 
 def cache(extra=()):
@@ -137,7 +141,7 @@ def evidence(monkeypatch):
         value['environment_sha256']=sha(canonical(parent.ENVIRONMENT))
         value['cache']['modules']=cache([module('palimpsest.body_profile','/puck/source/src/palimpsest/body_profile.py')] if phase=='replay' else [])
         value['import_misses']=['imp','json.tool_missing','org','scipy._distributor_init_local'] if phase=='source' else ['org','pandas']
-        value['native_cache_dispatch']=dict(events=[dict(CREATOR),dict(LATER)],unattributed=[],errors=[])
+        value['native_cache_dispatch']=dict(events=[dict(CREATOR),dict(NESTED),dict(LATER)],unattributed=[],errors=[])
         raws[phase]=canonical(value)
     result=dict(kind='puck-cpu-characterization-outcome-v3',version=3,status='observed',
         configuration_sha256=sha(raws['configuration']),source_report_sha256=sha(raws['source']),
@@ -196,7 +200,8 @@ def test_derivation_writes_once(evidence,tmp_path):
 
 @pytest.mark.parametrize('defect',['result-failed','result-config','report-spawn','report-sha','audit-failed','audit-result',
     'outside-site','unlisted-source','generated-helper','phase-conflict','unmapped-site-file','config-sha','site-root',
-    'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss','native-pin'])
+    'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss','native-pin',
+    'dispatch-nested-key','dispatch-late-outside','dispatch-reopened','dispatch-closed-creator'])
 def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
     m,raws=evidence;changes={}
     def edit(name,function,encode=canonical):
@@ -218,11 +223,16 @@ def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
     elif defect=='dispatch-unlisted-cache':edit('source',lambda v:v['native_cache_dispatch']['events'].append(
         dict(LATER,cache='_cython_other',added=['x'],first=True)))
     elif defect=='undeclared-miss':edit('source',lambda v:v['import_misses'].append('requests'))
+    elif defect=='dispatch-nested-key':edit('source',lambda v:v['native_cache_dispatch']['events'][1].update(added=['other']))
+    elif defect=='dispatch-late-outside':edit('source',lambda v:v['native_cache_dispatch']['events'][2].update(producer=None,phase=None))
+    elif defect=='dispatch-reopened':edit('source',lambda v:v['native_cache_dispatch']['events'].append(dict(NESTED,added=['zeta'])))
+    elif defect=='dispatch-closed-creator':edit('source',lambda v:v['native_cache_dispatch']['events'][0].update(closed=True))
     elif defect=='native-pin':changes['native']=pretty(dict(dynamic_leaves=LEAVES[:1]))
     elif defect=='config-sha':changes['configuration']=raws['configuration'][:-1]+b' \n'
     else:changes['site_root']='/other/site'
     if defect in ('report-spawn','report-sha','outside-site','unlisted-source','generated-helper','phase-conflict','unmapped-site-file',
-                  'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss'):
+                  'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss',
+                  'dispatch-nested-key','dispatch-late-outside','dispatch-reopened','dispatch-closed-creator'):
         name='replay' if defect in ('phase-conflict','dispatch-absent') else 'source'
         result=json.loads(raws['result']);result[name+'_report_sha256']=sha(changes[name]);changes['result']=pretty(result)
         audit=json.loads(raws['audit']);audit['verified'][name+'_report_sha256']=sha(changes[name])
@@ -232,7 +242,7 @@ def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
 
 
 def replay_producer(m,raws,producer):
-    value=json.loads(raws['replay']);value['native_cache_dispatch']['events'][1]['producer']=producer
+    value=json.loads(raws['replay']);value['native_cache_dispatch']['events'][2]['producer']=producer
     replay=canonical(value);result=json.loads(raws['result']);result['replay_report_sha256']=sha(replay);result_raw=pretty(result)
     audit=json.loads(raws['audit']);audit['verified'].update(replay_report_sha256=sha(replay),result_sha256=sha(result_raw))
     return derive(m,raws,replay=replay,result=result_raw,audit=pretty(audit))
