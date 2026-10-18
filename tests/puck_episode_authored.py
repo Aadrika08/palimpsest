@@ -89,7 +89,10 @@ def episode_project(tmp_path,*,defect=None):
     metadata=b'Name: scipy\nVersion: 1.15.3\n\n';path='scipy-1.15.3.dist-info/METADATA';write(site,path,metadata)
     entries.append(dict(path=path,size_bytes=len(metadata),sha256=sha(metadata)))
     wheels.append(dict(name='scipy',version='1.15.3',metadata_path=path,metadata_sha256=sha(metadata)))
-    directories=sorted([w['metadata_path'].split('/')[0] for w in wheels]+list(VERSIONS)+['scipy','scipy/linalg','torch/utils'])
+    # A shared virtual cache module created by one extension and extended by a later one, as scipy's fused Cython does.
+    for path in authored_cython(site):
+        raw=path.read_bytes();entries.append(dict(path=path.relative_to(site).as_posix(),size_bytes=len(raw),sha256=sha(raw)))
+    directories=sorted([w['metadata_path'].split('/')[0] for w in wheels]+list(VERSIONS)+['scipy','scipy/linalg','torch/utils','authoredcy'])
     inventory=dict(kind='puck-cpu-installed-files-v1',entries=sorted(entries,key=lambda r:r['path']),file_count=len(entries),
                    directory_count=len(directories),total_bytes=sum(r['size_bytes'] for r in entries))
     inputs={'inventory':write(root,'runs/puck-cpu-retained-admission-02/inventory.json',inventory)}
@@ -203,7 +206,9 @@ def derive_candidate(characterized):
     helper=b'AUTHORED_PROSPECTIVE_HELPER = True\n'
     generated=write(root,'docs/authored/generated/_authored_cpu_generated.py',helper)
     template=write(root,'docs/authored/template-candidate.json',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
-        import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=[],module_changes=[],native_origins=[],native_cache=[]),
+        import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=[],module_changes=[],native_origins=[],
+            native_cache=[dict(name='_cython_authored',producer='authoredcy._creator',phase='module_exec',
+                               delegate_attributes=['cython_function_or_method'])]),
         additional_package_inputs=[dict(root='docs/authored/generated',files=[dict(generated,path='_authored_cpu_generated.py')])],
         authored_scope=AUTHORED))
     run_root=root/'runs/puck-cpu-runtime-characterization-04';candidate='docs/plans/puck-cpu-episode-import-profile-candidate-02.json'
@@ -286,3 +291,29 @@ def allocation16(prepared,run_ids=RUN_IDS):
     result_path=root/parent.OUTPUT/'result.json'
     return dict(prepared,parent=parent,allocation=config,episode=(code,stdout,stderr),episode_configuration=configuration,
                 result=json.loads(result_path.read_bytes()) if result_path.exists() else None)
+
+
+def authored_cython(site):
+    """Two authored extensions: a creator of the shared virtual cache module and a later producer extending it."""
+    import importlib.machinery
+    import sysconfig
+    suffix=importlib.machinery.EXTENSION_SUFFIXES[0];package=site/'authoredcy';package.mkdir(parents=True,exist_ok=True)
+    (package/'__init__.py').write_text('AUTHORED_CYTHON = True\n')
+    def build(name,attribute,body):
+        source=('#include <Python.h>\n'
+            'static PyObject* f(PyObject* s,PyObject* a){return PyLong_FromLong(7);}\n'
+            'static PyMethodDef methods[]={{"'+attribute+'",f,METH_NOARGS,NULL},{NULL,NULL,0,NULL}};\n'
+            'static int populate(PyObject* m){'+body+'PyObject* v=PyObject_GetAttrString(m,"'+attribute+'");'
+            'if(!v||PyObject_SetAttrString(cache,"'+attribute+'",v)<0)return -1;Py_DECREF(v);return 0;}\n'
+            'static PyModuleDef_Slot slots[]={{Py_mod_exec,populate},{0,NULL}};\n'
+            'static struct PyModuleDef mod={PyModuleDef_HEAD_INIT,"'+name+'",NULL,0,methods,slots,NULL,NULL,NULL};\n'
+            'PyMODINIT_FUNC PyInit_'+name+'(void){return PyModuleDef_Init(&mod);}\n')
+        c=package/(name+'.c');c.write_text(source);target=package/(name+suffix)
+        subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),'-o',str(target)],
+                       check=True,capture_output=True,timeout=30)
+        c.unlink();return target
+    build('_creator','cython_function_or_method','PyObject* cache=PyModule_New("_cython_authored");if(!cache)return -1;'
+          'if(PyDict_SetItemString(PyImport_GetModuleDict(),"_cython_authored",cache)<0)return -1;Py_DECREF(cache);')
+    build('_fused','fused_cython_function','PyObject* cache=PyDict_GetItemString(PyImport_GetModuleDict(),"_cython_authored");'
+          'if(!cache){PyErr_SetString(PyExc_RuntimeError,"shared cache module is absent");return -1;}')
+    return sorted(p for p in package.iterdir() if p.is_file())

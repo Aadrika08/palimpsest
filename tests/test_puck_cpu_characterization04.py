@@ -209,7 +209,7 @@ def report(m,phase,request_sha='a'*64,worker_sha='b'*64):
             classification='module',exports=[])],attribute_edges=1,module_objects=1,cache_entries=1,
             export_scope='exceptional_cache_identities'),
         maps=copy.deepcopy(images),baseline_maps=copy.deepcopy(images),environment_unchanged=True,pycache_unchanged=True,
-        observation_errors=[],seconds=6.5)
+        native_cache_dispatch=dict(events=[],unattributed=[],errors=[]),observation_errors=[],seconds=6.5)
 
 
 @pytest.mark.parametrize('phase',['source','replay'])
@@ -219,7 +219,7 @@ def test_report_validation_accepts_the_exact_observation(phase):
 
 @pytest.mark.parametrize('defect',['spawn','spawn-events','short','diverged','compared','torchvision','gl-version','renderer',
     'egl','versions','failed','observation-error','claims','phase','request-sha','worker-sha','environment','bundle-size',
-    'run-id','error-key','slow'])
+    'run-id','error-key','slow','dispatch-unattributed','dispatch-error','dispatch-missing'])
 def test_report_validation_refuses_incomplete_or_unsafe_observation(defect):
     m=api();phase='replay' if defect in ('diverged','compared') else 'source';value=report(m,phase)
     result=value['episode_result']
@@ -243,6 +243,9 @@ def test_report_validation_refuses_incomplete_or_unsafe_observation(defect):
     elif defect=='bundle-size':result['bundle']['size_bytes']=16*1024**2+1
     elif defect=='run-id':result['run_id']='0'*32
     elif defect=='error-key':value['error']=dict(type='x',message='y')
+    elif defect=='dispatch-unattributed':value['native_cache_dispatch']['unattributed']=[dict(cache='_cython_x',keys=['late'])]
+    elif defect=='dispatch-error':value['native_cache_dispatch']['errors']=[dict(error='dispatch changed or removed')]
+    elif defect=='dispatch-missing':value.pop('native_cache_dispatch')
     else:value['seconds']=float(m.LIMITS['normal_seconds'])
     with pytest.raises(ValueError):m.validate_report(value,phase=phase,request_sha256='a'*64,worker_sha256='b'*64)
 
@@ -257,6 +260,8 @@ def run(admission):
     assert admission._source.read('pyproject.toml',1024)==b'[project]\\nversion = "0.0.0"\\n'
     assert len(admission._dependencies.distributions)==1 and admission._reg['runtime']['python_version']=='3.11.15'
     import numpy,torch,mujoco,gymnasium
+    if MODE=='dispatch':
+        import authoredcy._creator,authoredcy._fused
     if MODE=='spawn':
         import subprocess
         try:subprocess.run(['/bin/true'])
@@ -283,6 +288,9 @@ def capsule(tmp_path,mode):
     for path in (WORKER,HELPER):shutil.copyfile(path,root/'scripts'/path.name)
     for name,version in VERSIONS04.items():
         (site/name).mkdir(parents=True);(site/name/'__init__.py').write_text('__version__='+repr(version)+'\n')
+    if mode=='dispatch':
+        from puck_episode_authored import authored_cython
+        authored_cython(site)
     files=sorted(p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file())
     pins=[dict(path=p,size_bytes=(root/p).stat().st_size,sha256=sha((root/p).read_bytes())) for p in files]
     return root,site,pins
@@ -389,3 +397,13 @@ def test_main_refuses_a_different_configuration_sha_before_any_reservation(tmp_p
         capture_output=True,text=True,timeout=30,start_new_session=True)
     assert observed.returncode!=0 and 'Configuration SHA differs' in observed.stderr
     assert not (ROOT/OUTPUT04).exists()
+
+
+def test_worker_attributes_shared_cache_dispatch_to_each_producer_phase(tmp_path):
+    m=api();observed,value,_,_=run_worker(m,tmp_path,mode='dispatch')
+    assert observed.returncode==0,observed.stderr
+    dispatch=value['native_cache_dispatch']
+    assert dispatch['unattributed']==[] and dispatch['errors']==[]
+    assert [e for e in dispatch['events'] if e['cache']=='_cython_authored']==[
+        dict(cache='_cython_authored',producer='authoredcy._creator',phase='module_exec',added=['cython_function_or_method'],first=True),
+        dict(cache='_cython_authored',producer='authoredcy._fused',phase='module_exec',added=['fused_cython_function'],first=False)]
