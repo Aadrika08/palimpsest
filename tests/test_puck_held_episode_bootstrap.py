@@ -52,7 +52,8 @@ def run(admission):
 '''
 
 
-def run_v4(body='return {"kind": "authored-episode"}',*,phase='source',change=None,preflight='raise AssertionError("PREFLIGHT_RAN")'):
+def v4_source_change(body,*,phase='source',change=None):
+    """A dependency_fixture source_change that runs body as the fixed v4 held episode entry."""
     def source_change(reg,source):
         path=source/ENTRY;path.write_text(ENTRY_PRELUDE+textwrap.indent(textwrap.dedent(body),'    ')+'\n')
         reg['source_files'].append(descriptor(path,ENTRY))
@@ -61,8 +62,13 @@ def run_v4(body='return {"kind": "authored-episode"}',*,phase='source',change=No
         reg.update(kind='puck-worker-source-bootstrap-v4',version=4,deadline_seconds=600,
                    episode=episode(reg['runtime']['root'],phase))
         if change:change(reg)
+    return source_change
+
+
+def run_v4(body='return {"kind": "authored-episode"}',*,phase='source',change=None,preflight='raise AssertionError("PREFLIGHT_RAN")'):
     with authored() as base:
-        result,_=dependency_fixture(base,preflight,mutate=lambda deps,root:v3(deps),source_change=source_change)
+        result,_=dependency_fixture(base,preflight,mutate=lambda deps,root:v3(deps),
+                                    source_change=v4_source_change(body,phase=phase,change=change))
     print(json.dumps({'kind':'authored-v4-episode-worker-v1','returncode':result.returncode,
                       'stdout':result.stdout,'stderr':result.stderr},sort_keys=True))
     return result

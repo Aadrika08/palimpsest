@@ -5,7 +5,8 @@ scipy's fused Cython modules add ``fused_cython_function`` to the shared
 cache row may declare such keys as ``late_delegates``: each key may appear only
 while one of its declared producer phases is innermost, and is sealed at that
 producer's close. Rows without the field keep the closed-at-creator contract.
-These run the real held bootstrap over authored C extensions.
+These run the real held v4 episode bootstrap over authored C extensions; any
+other worker refuses the declaration (v4-only semantics).
 """
 import copy
 import json
@@ -14,6 +15,7 @@ import tempfile
 
 import pytest
 
+from test_puck_held_episode_bootstrap import v4_source_change
 from test_puck_native_cache_bindings import NAME, compile_native, descriptor, native_source, profile
 from test_puck_worker_dependencies import dependency_fixture
 
@@ -45,7 +47,7 @@ def nested_source(name,body=''):
 IMPORT_NESTED='PyObject* n=PyImport_ImportModule("fixture_dep._nested");if(!n)return -1;Py_DECREF(n);'
 
 
-def run(body,*,late=LATE,others=(),fused=None):
+def run(body,*,late=LATE,others=(),fused=None,episode=True):
     with tempfile.TemporaryDirectory(prefix='puck-native-cache-late-',dir='/tmp') as temp:
         def mutate(deps,root):
             p=profile()
@@ -58,12 +60,13 @@ def run(body,*,late=LATE,others=(),fused=None):
                                         'kind':'extension','is_package':False})
             deps['roots'][0]['files']=[descriptor(path,path.relative_to(root).as_posix())
                 for path in sorted(root.rglob('*'),key=lambda p:p.relative_to(root).as_posix()) if path.is_file()]
-        result,_=dependency_fixture(Path(temp),body,native=True,mutate=mutate)
+        result,_=dependency_fixture(Path(temp),'raise AssertionError("PREFLIGHT_RAN")' if episode else body,native=True,mutate=mutate,
+                                    source_change=v4_source_change(body) if episode else None)
         return result
 
 
 def test_a_declared_later_producer_extends_the_shared_cache_and_is_sealed():
-    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\nimport sys\n'
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\n'
                'return {"answer":sys.modules["'+NAME+'"].answer(),"fused":sys.modules["'+NAME+'"].fused()}')
     assert result.returncode==0,result.stderr
     receipt=json.loads(result.stdout)
@@ -75,7 +78,7 @@ def test_a_declared_later_producer_extends_the_shared_cache_and_is_sealed():
 def test_a_late_producer_may_import_nested_extensions_before_it_closes():
     # The key is first seen at the nested extension's create start, with _fused's exec innermost;
     # it stays pending through the nested phases and is sealed at _fused's own close.
-    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\nimport sys\n'
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\n'
                'return {"fused":sys.modules["'+NAME+'"].fused(),"nested":"fixture_dep._nested" in sys.modules}',
                fused=late_source(after=IMPORT_NESTED),others=(('_nested',nested_source('_nested')),))
     assert result.returncode==0,result.stderr
@@ -92,6 +95,12 @@ def test_a_pending_late_key_cannot_be_replaced_by_a_nested_phase():
                fused=late_source(after=IMPORT_NESTED),others=(('_nested',nested_source('_nested',replace)),))
     assert result.returncode!=0 and result.stdout==''
     assert 'Native cache late delegate changed' in result.stderr,result.stderr
+
+
+def test_late_delegates_are_refused_outside_the_v4_episode_worker():
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\nreturn {}',episode=False)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'Native cache late delegates and module aliases require the v4 held episode worker' in result.stderr,result.stderr
 
 
 def test_an_undeclared_later_key_still_poisons_the_closed_cache():
@@ -116,7 +125,7 @@ def test_a_declared_later_key_that_never_appears_is_incomplete():
 
 
 def test_a_sealed_later_key_cannot_be_replaced():
-    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\nimport sys\n'
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _fused\n'
                'sys.modules["'+NAME+'"].fused=lambda:0\nreturn {}')
     assert result.returncode!=0 and result.stdout==''
     assert 'Native cache late delegate changed' in result.stderr or 'Native cache dispatch' in result.stderr,result.stderr

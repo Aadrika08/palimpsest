@@ -6,7 +6,8 @@ puts the module object into ``sys.modules`` under ``_csparsetools`` and
 (the bare name and its extension); the alias may appear only while that
 extension's own exec is innermost, must be that very module object, is sealed
 at first sight and must have appeared by terminal completion. These run the
-real held bootstrap over authored C extensions.
+real held v4 episode bootstrap over authored C extensions; any other worker
+refuses the declaration (v4-only semantics).
 """
 import copy
 import json
@@ -15,6 +16,7 @@ import tempfile
 
 import pytest
 
+from test_puck_held_episode_bootstrap import v4_source_change
 from test_puck_native_cache_bindings import compile_native, descriptor, native_source, profile
 from test_puck_worker_dependencies import dependency_fixture
 
@@ -32,7 +34,7 @@ def alias_source(name='_tools',alias='_tools',after=''):
             'PyMODINIT_FUNC PyInit_'+name+'(void){return PyModuleDef_Init(&mod);}\n')
 
 
-def run(body,*,aliases=ALIASES,extensions=(('_tools',None),)):
+def run(body,*,aliases=ALIASES,extensions=(('_tools',None),),episode=True):
     with tempfile.TemporaryDirectory(prefix='puck-module-alias-',dir='/tmp') as temp:
         def mutate(deps,root):
             p=profile()
@@ -45,17 +47,24 @@ def run(body,*,aliases=ALIASES,extensions=(('_tools',None),)):
                                         'kind':'extension','is_package':False})
             deps['roots'][0]['files']=[descriptor(path,path.relative_to(root).as_posix())
                 for path in sorted(root.rglob('*'),key=lambda p:p.relative_to(root).as_posix()) if path.is_file()]
-        result,_=dependency_fixture(Path(temp),body,native=True,mutate=mutate)
+        result,_=dependency_fixture(Path(temp),'raise AssertionError("PREFLIGHT_RAN")' if episode else body,native=True,mutate=mutate,
+                                    source_change=v4_source_change(body) if episode else None)
         return result
 
 
 def test_a_declared_alias_registered_by_its_own_exec_is_sealed_and_receipted():
-    result=run('from fixture_dep import _native\nfrom fixture_dep import _tools\nimport sys\n'
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _tools\n'
                'return {"same":sys.modules["_tools"] is _tools,"tool":sys.modules["_tools"].tool()}')
     assert result.returncode==0,result.stderr
     receipt=json.loads(result.stdout)
     assert receipt['entry_result']=={'same':True,'tool':49}
     assert receipt['dependencies']['module_aliases']==ALIASES
+
+
+def test_module_aliases_are_refused_outside_the_v4_episode_worker():
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _tools\nreturn {}',episode=False)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'Native cache late delegates and module aliases require the v4 held episode worker' in result.stderr,result.stderr
 
 
 def test_an_undeclared_alias_is_an_unregistered_cache_entry():
@@ -73,7 +82,7 @@ def test_an_alias_registered_by_another_extension_is_refused():
 
 
 def test_a_sealed_alias_cannot_be_replaced():
-    result=run('from fixture_dep import _native\nfrom fixture_dep import _tools\nimport sys,types\n'
+    result=run('from fixture_dep import _native\nfrom fixture_dep import _tools\nimport types  # the v4 entry prelude imports sys\n'
                'sys.modules["_tools"]=types.ModuleType("_tools")\nreturn {}')
     assert result.returncode!=0 and result.stdout==''
     assert 'Dependency module alias changed or disappeared' in result.stderr,result.stderr
