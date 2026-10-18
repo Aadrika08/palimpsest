@@ -127,7 +127,8 @@ def validate_profile(profile, modules, namespaces, *, allow_native_cache=False):
         raise ValueError('Native cache name count exceeds the physical-absence proof bound')
     cached=set()
     for row in profile.get('native_cache', []):
-        _fields(row, ('name','producer','phase','delegate_attributes'))
+        # late_delegates is optional; rows without it keep the closed-at-creator contract.
+        _fields(row, ('name','producer','phase','delegate_attributes')+(('late_delegates',) if 'late_delegates' in row else ()))
         name=_name(row['name']); source=_name(row['producer'])
         if ('.' in name or name in names or name in exports or name in cached
                 or name.split('.')[0] in sys.stdlib_module_names
@@ -143,6 +144,31 @@ def validate_profile(profile, modules, namespaces, *, allow_native_cache=False):
                 or v.startswith('__') for v in attributes)
                 or attributes!=sorted(set(attributes))):
             raise ValueError('Native cache dispatch keys must be finite, sorted and distinct')
+        if 'late_delegates' in row:
+            late=row['late_delegates']
+            if type(late) is not list or not 1<=len(late)<=64:
+                raise ValueError('Native cache late delegates must be a finite nonempty list')
+            keys=[]
+            for item in late:
+                _fields(item,('attribute','producers'))
+                key=item['attribute'];producers=item['producers']
+                if (type(key) is not str or len(key)>256 or not _IDENTIFIER.fullmatch(key) or key.startswith('__')
+                        or key in attributes):
+                    raise ValueError('Native cache late delegate key is invalid or already a creator key')
+                if type(producers) is not list or not 1<=len(producers)<=16:
+                    raise ValueError('Native cache late delegate requires finite declared producers')
+                pairs=[]
+                for producer in producers:
+                    _fields(producer,('producer','phase'))
+                    if (_name(producer['producer']) not in physical or physical[producer['producer']]['kind']!='extension'
+                            or producer['phase'] not in ('native_create','module_exec')):
+                        raise ValueError('Native cache late delegate producer must be a registered extension phase')
+                    pairs.append((producer['producer'],producer['phase']))
+                if pairs!=sorted(set(pairs)):
+                    raise ValueError('Native cache late delegate producers must be sorted and distinct')
+                keys.append(key)
+            if keys!=sorted(set(keys)):
+                raise ValueError('Native cache late delegate keys must be sorted and distinct')
         cached.add(name)
 
 
@@ -275,6 +301,10 @@ class ExportBindings:
         self.class_seals=[]; self.anchors=[]; self.originals={}
         self.native_cache={v['name']:v for v in profile.get('native_cache',[])}
         self.cache_seals={}; self.cache_closed=set(); self.phase_stack=[]; self.cache_phases=set()
+        # Declared later producers per (cache, key), and each key's reference sealed at its producer's close.
+        self.late={(v['name'],item['attribute']):{(p['producer'],p['phase']) for p in item['producers']}
+                   for v in profile.get('native_cache',[]) for item in v.get('late_delegates',[])}
+        self.late_seals={}
         self.published={r['name']:r for r in profile['exports'] if r['phase']==_PUBLISH_PHASE}
         self.publication_closed=set(); self.publication_phases=set()
         if any(name in sys.modules for name in self.native_cache):
@@ -293,6 +323,8 @@ class ExportBindings:
             self.publication_phases.add(key)
         if any((r['producer'],r['phase'])==key for r in self.native_cache.values()):
             if key in self.cache_phases: raise RuntimeError('Native cache creator phase repeated')
+            self.cache_phases.add(key)
+        if any(key in producers for producers in self.late.values()):
             self.cache_phases.add(key)
         self.phase_stack.append(key)
     def _cache_recheck(self):
@@ -321,12 +353,20 @@ class ExportBindings:
             observed=ModuleSeal(value,virtual=True,expected_name=name)
             keys={key for key,_ in observed.delegates}
             expected=set(row['delegate_attributes'])
-            if not keys<=expected or (name in self.cache_closed and keys!=expected):
+            late={item['attribute'] for item in row.get('late_delegates',[])}
+            if not keys<=expected|late or (name in self.cache_closed and keys-late!=expected):
                 raise RuntimeError('Native cache dispatch keys differ from the finite declaration')
             if name in self.cache_closed and any(
                     module_dict(value).get(key,_MISSING) is not delegate
                     for key,delegate in previous.delegates):
                 raise RuntimeError('Native cache dispatch reference changed')
+            for key in late:
+                sealed=self.late_seals.get((name,key),_MISSING)
+                present=module_dict(value).get(key,_MISSING)
+                if sealed is not _MISSING:
+                    if present is not sealed:raise RuntimeError('Native cache late delegate changed or disappeared')
+                elif present is not _MISSING and (name not in self.cache_closed or current_phase not in self.late[(name,key)]):
+                    raise RuntimeError('Native cache late delegate appeared outside its declared producer')
     def _publication_recheck(self):
         current_phase=self.phase_stack[-1] if self.phase_stack else None
         for name,row in self.published.items():
@@ -389,6 +429,12 @@ class ExportBindings:
             # Existing metadata/references were proved unchanged above. Capture
             # only the additional declared delegates produced by nested imports.
             self.cache_seals[cache]=complete; self.cache_closed.add(cache)
+        # Seal each declared late key at the close of the producer phase that added it.
+        for (cache,attribute),producers in self.late.items():
+            if key not in producers or (cache,attribute) in self.late_seals:continue
+            value=sys.modules.get(cache,_MISSING)
+            delegate=module_dict(value).get(attribute,_MISSING) if value is not _MISSING else _MISSING
+            if delegate is not _MISSING:self.late_seals[(cache,attribute)]=delegate
         self.phase_stack.pop()
         ExportBindings._cache_recheck(self)
         ExportBindings._publication_recheck(self)
@@ -398,7 +444,8 @@ class ExportBindings:
         ExportBindings._publication_recheck(self)
         if self.published and (self.phase_stack or self.publication_closed!=set(self.published)):
             raise RuntimeError('Published dependency export terminal completion is incomplete')
-        if self.phase_stack or set(self.cache_seals)!=set(self.native_cache) or self.cache_closed!=set(self.native_cache):
+        if (self.phase_stack or set(self.cache_seals)!=set(self.native_cache) or self.cache_closed!=set(self.native_cache)
+                or set(self.late_seals)!=set(self.late)):
             raise RuntimeError('Native cache terminal completion is incomplete')
     def begin(self, name, module, code=None):
         require_instance_dispatch(self,ExportBindings)

@@ -275,7 +275,9 @@ class DependencyImports:
             for name,(_,seal) in sorted(self.loaded.items())]
         if self.bindings.native_cache:
             receipt['native_cache_modules']=[{'name':name,'producer':row['producer'],
-                'phase':row['phase'],'delegate_attributes':list(row['delegate_attributes'])}
+                'phase':row['phase'],'delegate_attributes':list(row['delegate_attributes']),
+                **({'late_delegates':[{'attribute':item['attribute'],'producers':[dict(p) for p in item['producers']]}
+                    for item in row['late_delegates']]} if 'late_delegates' in row else {})}
                 for name,row in sorted(self.bindings.native_cache.items())
                 if name in self.bindings.cache_closed]
         receipt['native_origin_policies']=dict(self.native_origins)
