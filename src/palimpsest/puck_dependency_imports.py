@@ -195,6 +195,10 @@ class DependencyImports:
         self.namespaces = {r['name']:r for r in provider.namespace_records()}
         self.distributions = provider.distribution_records()
         profile=provider.import_profile()
+        # Late delegates (with their pending seal) and module aliases are v4 held-episode semantics only.
+        if not self.episode and ('module_aliases' in profile
+                                 or any('late_delegates' in row for row in profile.get('native_cache',[]))):
+            raise ValueError('Native cache late delegates and module aliases require the v4 held episode worker')
         self.bindings=ExportBindings(profile)
         self._binding_receiver=self.bindings; self._provider_receiver=provider
         self.native_origins={v['name']:v['policy'] for v in profile['native_origins']}
