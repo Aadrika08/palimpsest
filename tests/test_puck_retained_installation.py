@@ -84,6 +84,7 @@ def driver():
     value=importlib.util.module_from_spec(spec);spec.loader.exec_module(value);return value
 
 
+@pytest.mark.process_isolated  # needs no torch, threads or children left by other tests (docs/testing.md)
 def test_completion_refuses_live_thread_or_leaked_descriptor(tmp_path):
     import threading
     m=driver();before=len(os.listdir('/proc/self/fd'))

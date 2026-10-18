@@ -238,6 +238,7 @@ def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,bind
             (root/'authored-amendment-stage-cleanup.json').write_bytes(canonical(dict(stage=str(stage),absent=not stage.exists(),actual_vendor_imports=False)))
 
 
+@pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
 def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
     with amendment_fixture(tmp_path) as case:
         root,m,config,stage=(case[k] for k in ('root','api','config','stage'))

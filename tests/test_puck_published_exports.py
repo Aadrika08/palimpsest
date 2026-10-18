@@ -76,6 +76,7 @@ def refused(result):
     assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata(tmp_path):
     metadata=('import importlib.machinery\nchild.__file__=__file__\n'
         'child.__spec__=importlib.machinery.ModuleSpec("'+NAME+'",__loader__,origin=__file__)\n'
@@ -92,6 +93,7 @@ def test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadat
     assert receipt['native_authorized'] is receipt['dependencies_qualified'] is False
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_declared_delegate_growth_is_captured_between_two_reentrant_guards(tmp_path):
     producer=PREFIX+PUBLISH+GUARD_ONE+'def late(): return 53\nchild.late=late\n'+GUARD_TWO
     body='import fixture_dep.producer as p\nreturn {"answer":p.child.answer(),"late":p.child.late()}'
@@ -103,6 +105,7 @@ def test_declared_delegate_growth_is_captured_between_two_reentrant_guards(tmp_p
         dict(name=NAME,producer=PRODUCER,phase=PHASE,attributes=['child'],delegate_attributes=['answer','late'])]
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_ordinary_module_exec_export_cannot_authorize_early_cache_publication(tmp_path):
     result=run(tmp_path,defect='ordinary-phase')
     refused(result)

@@ -146,6 +146,7 @@ def test_baseline_inventory_detects_added_files_and_changed_symlink(tmp_path):
     with pytest.raises(ValueError): value.verify_baseline(baseline, time.monotonic() + 5)
 
 
+@pytest.mark.process_isolated  # needs no torch, threads or children left by other tests (docs/testing.md)
 def test_stage_retains_failed_child_without_publishing_a_wheel(tmp_path):
     value = module(PARENT)
     stage = tmp_path / "stage"

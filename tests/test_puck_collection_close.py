@@ -13,6 +13,7 @@ def api():
     return importlib.import_module(name)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_no_durable_owner_close_for_unfinished_prefix(tmp_path):
     module=api()
     path,scene,event=recording(tmp_path,terminal=False)
@@ -94,6 +95,7 @@ def close(tmp_path,ordinal=0,guard=None,*,covered=False,contact_enabled=None):
     return result,path,event
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_natural_nongoal_recording_closes_without_any_execution_grant(tmp_path):
     module=api();result,path,event=close(tmp_path)
     receipt=module.read_closed_owner(Path(result['manifest_path']))
@@ -107,6 +109,7 @@ def test_natural_nongoal_recording_closes_without_any_execution_grant(tmp_path):
             recording_path=path,execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_final_guard_failure_never_admits_a_terminal(tmp_path):
     module=api()
     def fail():raise RuntimeError('held inputs changed')
@@ -115,6 +118,7 @@ def test_final_guard_failure_never_admits_a_terminal(tmp_path):
     with pytest.raises(ValueError):module.read_closed_owner(tmp_path/'owner-terminal.json')
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_uncommitted_tail_cannot_be_reported_as_complete(tmp_path):
     module=api();path,scene,event=recording(tmp_path)
     (path/'000002').mkdir()
@@ -123,6 +127,7 @@ def test_uncommitted_tail_cannot_be_reported_as_complete(tmp_path):
             execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_closed_owner_rereads_actual_committed_rows(tmp_path):
     module=api();result,path,event=close(tmp_path)
     manifest=path/'000001/recording/manifest.json'
@@ -130,6 +135,7 @@ def test_closed_owner_rereads_actual_committed_rows(tmp_path):
     with pytest.raises(ValueError):module.read_closed_owner(Path(result['manifest_path']))
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_twelve_natural_nongoals_publish_coverage_failure_without_training(tmp_path):
     module=api();roots=[]
     for ordinal in range(12):
@@ -146,6 +152,7 @@ def test_twelve_natural_nongoals_publish_coverage_failure_without_training(tmp_p
     assert len(receipt['owners'])==12
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_partial_or_reordered_roster_is_not_collection_close(tmp_path):
     module=api();result,path,event=close(tmp_path)
     with pytest.raises(ValueError,match='twelve|roster'):
@@ -239,6 +246,7 @@ fixture.doCleanups()
 
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_each_collector_model_must_have_motivating_rows_and_all_rows_are_retained(tmp_path):
     module=api();roots=[]
     for ordinal in range(12):
@@ -253,6 +261,7 @@ def test_each_collector_model_must_have_motivating_rows_and_all_rows_are_retaine
     assert receipt['fitting_authorized'] is False
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_owner_recording_cannot_alias_another_owner_namespace(tmp_path):
     module=api();path,scene,event=recording(tmp_path)
     output=tmp_path/'different';output.mkdir()
@@ -261,6 +270,7 @@ def test_owner_recording_cannot_alias_another_owner_namespace(tmp_path):
             execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_same_scene_cannot_change_between_collectors(tmp_path):
     module=api();roots=[]
     for ordinal in range(12):
@@ -272,6 +282,7 @@ def test_same_scene_cannot_change_between_collectors(tmp_path):
             execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_terminal_reader_bounds_bytes_before_copying_manifest(tmp_path,monkeypatch):
     module=api();result,path,event=close(tmp_path)
     original=p._read_exact_file;limits=[]
@@ -283,6 +294,7 @@ def test_terminal_reader_bounds_bytes_before_copying_manifest(tmp_path,monkeypat
     assert limits and max(limits)<=1024**2
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_collection_scene_identity_aliases_are_not_a_new_scene_roster(tmp_path,monkeypatch):
     import sys
     module=api();original=scene_entry
@@ -304,6 +316,7 @@ def test_collection_scene_identity_aliases_are_not_a_new_scene_roster(tmp_path,m
 
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_two_locally_valid_rows_cannot_reset_world_between_intervals(tmp_path):
     from test_puck_profile import OWNERSHIP,raw_contacts
     from palimpsest import puck_profile as puck
@@ -325,6 +338,7 @@ def test_two_locally_valid_rows_cannot_reset_world_between_intervals(tmp_path):
     finally:fixture.doCleanups()
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_one_uncovered_model_fails_without_dropping_its_complete_owners(tmp_path):
     module=api();roots=[]
     for ordinal in range(12):
@@ -340,6 +354,7 @@ def test_one_uncovered_model_fails_without_dropping_its_complete_owners(tmp_path
 
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_extra_recording_file_cannot_hide_retained_bytes(tmp_path):
     module=api();path,scene,event=recording(tmp_path)
     extra=path/'000001/recording/extra.bin'
@@ -349,6 +364,7 @@ def test_extra_recording_file_cannot_hide_retained_bytes(tmp_path):
             execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_terminal_publisher_bounds_every_manifest_read_before_copy(tmp_path,monkeypatch):
     original=p._read_exact_file;limits=[]
     def read(root,path,maximum,label,**kwargs):

@@ -180,7 +180,7 @@ d.historical_identity=lambda p,deadline,enforce=True:initial if enforce else {**
 d.imported_historical_sources=lambda identity:{}
 d.historical_child(sys.argv[4])
 """
-            completed=subprocess.run([sys.executable,'-I','-c',code,str(ROOT/'scripts'),json.dumps(p),json.dumps(identity),
+            completed=subprocess.run([sys.executable,'-I','-B','-c',code,str(ROOT/'scripts'),json.dumps(p),json.dumps(identity),
                 str(child_output/'historical-context.json')],capture_output=True,text=True,timeout=25)
             self.assertNotEqual(completed.returncode,0);self.assertIn('injected reader drift',completed.stderr)
             self.assertEqual(data.read_json(child_output/'historical-after-failure.json')['historical_identity']['head'],'after')

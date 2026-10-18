@@ -40,6 +40,7 @@ def test_invalid_deadline_is_not_an_audit(tmp_path,deadline):
     with pytest.raises(ValueError):m.audit(tmp_path/'absent','0'*64,tmp_path/'absent2','0'*64,deadline=deadline)
 
 
+@pytest.mark.process_isolated  # needs no torch, threads or children left by other tests (docs/testing.md)
 def test_external_hashes_are_required_before_decoding(tmp_path):
     m=api();config=tmp_path/'config.json';config.write_bytes(b'not json')
     transport=tmp_path/'transport.json';transport.write_bytes(b'{}')

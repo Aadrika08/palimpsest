@@ -13,6 +13,8 @@ import types
 import unittest
 from unittest.mock import patch
 
+import pytest
+
 try:
     from palimpsest import male_matched_budget as budget
 except ImportError as error:  # RED until Task 1's module exists.
@@ -84,6 +86,7 @@ class MatchedBudgetSchedule(unittest.TestCase):
         self.assertEqual(schedules[0].remainder_starts,
                          schedules[1].remainder_starts[:len(OLD_ROWS)])
 
+    @pytest.mark.process_isolated  # needs no torch, threads or children left by other tests (docs/testing.md)
     def test_fragments_mark_source_resets_update_continuations_and_wraps(self):
         sources = self.sources((1, 31, 32, 33))
         schedule = budget.build_schedule(sources, seed=6, presentations=104,

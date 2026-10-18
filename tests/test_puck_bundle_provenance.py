@@ -74,6 +74,7 @@ def amend(sample, filename, mutate):
         sample['bundle_payloads']['report.json'] = raw(report)
 
 
+@pytest.mark.process_isolated  # needs no torch, threads or children left by other tests (docs/testing.md)
 @pytest.mark.parametrize('seed',[21,22,23])
 def test_private_lineage_preserves_arrays_and_historical_identity_without_torch(seed):
     sample = fixture(seed);before = copy.deepcopy(sample)

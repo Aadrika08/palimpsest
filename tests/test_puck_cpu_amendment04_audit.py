@@ -107,6 +107,7 @@ def test04_success_cannot_reuse03_outcome_identity():
     with pytest.raises(ValueError):m.outcome(old,config,'a'*64)
 
 
+@pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
 def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
     from test_puck_cpu_held_amendment04_integration import amendment04_fixture
     from test_puck_cpu_held_parent_integration import run_cli

@@ -191,6 +191,7 @@ def _load_in_child(package, native, policy, expected_result):
         os.close(parent_fd)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 @pytest.mark.parametrize('origin', ['$ORIGIN', '$ORIGIN/../lib'])
 def test_held_directory_origin_loads_authored_sibling_and_observes_exact_target(tmp_path, origin):
     package, native = _authored_images(tmp_path, origin)

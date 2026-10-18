@@ -412,7 +412,7 @@ class PublicationTests(unittest.TestCase):
 
     def test_import_does_not_load_torch_or_simulator(self):
         command = [
-            sys.executable, "-I", "-c",
+            sys.executable, "-I", "-B", "-c",
             ("import importlib.util, pathlib, sys;"
              f"p=pathlib.Path({str(SCRIPT)!r});s=importlib.util.spec_from_file_location('audit',p);"
              "m=importlib.util.module_from_spec(s);s.loader.exec_module(m);"
