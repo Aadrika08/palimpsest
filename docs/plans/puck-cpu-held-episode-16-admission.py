@@ -17,6 +17,9 @@ from pathlib import Path
 import resource
 import signal
 import sys
+# The frozen qualifier imports tempfile, whose random seeding keeps one /dev/urandom descriptor open for the
+# process lifetime; importing it here, before the descriptor baseline, keeps the admission's closure exact.
+import tempfile  # noqa: F401
 import time
 import types
 

@@ -269,6 +269,21 @@ class HistoryChecks(unittest.TestCase):
                 with self.assertRaises(AssertionError):control.check_empty_directories()
         finally:control.ROOT=original
 
+    def test_loading_the_frozen_qualifier_keeps_the_descriptor_baseline(self):
+        # A fresh isolated process, as admission main runs: loading the qualifier through Held must not add a descriptor.
+        import subprocess
+        code=('import importlib.util,os,time,json\n'
+            'spec=importlib.util.spec_from_file_location("c",%r);c=importlib.util.module_from_spec(spec);spec.loader.exec_module(c)\n'
+            'raw=c.AUDITOR.read_bytes();import types;m=types.ModuleType("m");m.__file__=str(c.AUDITOR);exec(compile(raw,str(c.AUDITOR),"exec"),m.__dict__)\n'
+            'before=len(os.listdir("/proc/self/fd"));held=m.Held(time.monotonic()+30)\n'
+            'config=json.loads(c.CONFIGURATION.read_bytes());row=next(r for r in config["sources"] if r["path"]=="scripts/qualify_puck_cpu_held_runtime.py")\n'
+            'c.module(held,c.ROOT/row["path"],row["sha256"]);held.close()\n'
+            'print(before,len(os.listdir("/proc/self/fd")))\n') % str(SOURCE)
+        result=subprocess.run([control.PYTHON,'-I','-S','-B','-c',code],capture_output=True,timeout=60,
+            env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+        self.assertEqual(result.returncode,0,result.stderr.decode()[-2000:])
+        before,after=result.stdout.split();self.assertEqual(before,after)
+
     def test_process_identities_add_runtime14_to_the_eighteen(self):
         self.assertEqual(len(control.PROCESS_IDENTITIES),21)
         self.assertEqual(control.PROCESS_IDENTITIES[-3:],[(493563,7246806),(493564,7246807),(493565,7246808)])
