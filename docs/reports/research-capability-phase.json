@@ -1,0 +1,123 @@
+{
+  "base_commit": "ee6bf61ea8faec02d5522c7eee30ab7cf333f29d",
+  "caps_seconds": {
+    "combined_reproduction": 1200,
+    "nav_explore": 3000,
+    "puck_explore": 2400,
+    "readout": 600
+  },
+  "coordinator_seconds": 986.7321827330002,
+  "draft_pr_status": "Prepared bodies; submission blocked on requested Aadrika08 API authentication",
+  "held_out_used": false,
+  "inputs_unchanged": true,
+  "label": "EXPLORATORY \u2014 not gate evidence",
+  "limitations": [
+    "No native rollouts or hardware",
+    "Retained seen development only",
+    "No topology qualification",
+    "No prospective held-out inference"
+  ],
+  "published_invocation_receipts": [
+    {
+      "bytes": 9660,
+      "path": "research-capability-execution/execution.json",
+      "sha256": "f178b16443f577201c244d62b79c1f178f560ce00a74d126a0ab26ffb7c7c32c"
+    },
+    {
+      "bytes": 13972,
+      "path": "research-capability-execution/nav-continuation.json",
+      "sha256": "181123b5a79d0a06ce11173c0ff4a39b03fffeeb25692015eb86a0659bb1a5fa"
+    },
+    {
+      "bytes": 6322,
+      "path": "research-capability-execution/invocation.py",
+      "sha256": "4c06ae83b672c0639691f35b2db49af491b3f53c13c6d3c867e6f5cf2962c535"
+    },
+    {
+      "bytes": 5899,
+      "path": "research-capability-execution/nav-continuation-invocation.py",
+      "sha256": "e155a685e8e557d7cec5e83b1173107ecb81d2680cd21ff12050d8a15c2bd772"
+    },
+    {
+      "bytes": 938,
+      "path": "research-capability-execution/validation-invocation.py",
+      "sha256": "5c6c1a673feda10b2caa3f268bde82938cf92aecd5e5e05bddb86981e8dd7b4b"
+    },
+    {
+      "bytes": 1209,
+      "path": "research-capability-execution/api-module-validation-invocation.py",
+      "sha256": "afe2bdf04af2f704fb7db4861e62c63446b1a6becb57b41680961d0aab805185"
+    },
+    {
+      "bytes": 5842,
+      "path": "research-capability-execution/validation.json",
+      "sha256": "68ea948350362de9ad0647be4457e7fb21be1e3728862e3b745b27421ad8ea88"
+    },
+    {
+      "bytes": 5924,
+      "path": "research-capability-execution/regression-non-api.log",
+      "sha256": "26a0eba1ce44721eb797993074b22332657f5f1f4bf66ba898f3e2d2d8585c0c"
+    },
+    {
+      "bytes": 725,
+      "path": "research-capability-execution/regression-lab.log",
+      "sha256": "a00c3f3fd0347c5cc350288bc3d2fd663b73703dd1920be3c11f279ec0dee3d4"
+    },
+    {
+      "bytes": 712,
+      "path": "research-capability-execution/regression-male-lab.log",
+      "sha256": "9770a0c6641b6542fe997aa33cd2276c05eb56503873e18df027f69c8c8cc155"
+    },
+    {
+      "bytes": 759,
+      "path": "research-capability-execution/regression-memory-branch.log",
+      "sha256": "b465d8f298eac4149c597edbab811246fe436886fd2e99ef9a63842e71a1f187"
+    },
+    {
+      "bytes": 1161,
+      "path": "research-capability-execution/standalone-research-asgi.log",
+      "sha256": "ec18c94881bdae84bcfbd351683ad7e129ebf3c0863c806f1a5bd4f7a29a1ae2"
+    },
+    {
+      "bytes": 1143,
+      "path": "research-capability-execution/standalone-baseline-asgi.log",
+      "sha256": "e89ff1495607cfbaa6cd8cbe4654b9c4e54aecee1dce25320943cf08be946e19"
+    },
+    {
+      "bytes": 4252,
+      "path": "research-capability-execution/validation.md",
+      "sha256": "f5f36469517327355c0ddd0d77b78ad5173a0831b7a01c6274543dea3ad6c9c4"
+    }
+  ],
+  "qualification_claims": [],
+  "reproduction_allocation_used_seconds": 353.23280158100033,
+  "results": {
+    "historical_navigation_reproductions": 6,
+    "historical_puck_reproductions": 3,
+    "memory_v1": "retired; 44/48 retained; R2 open",
+    "memory_v2": "design only",
+    "navigation_conditional_injection_unattempted": 6,
+    "navigation_fits": 12,
+    "puck_neural_fits": 9,
+    "selected_models": 0
+  },
+  "run_retained_bytes": 5360584,
+  "supervised_readout_seconds": 0.015119847999812919,
+  "supervised_seconds": {
+    "nav-explore": 312.38455900900044,
+    "nav-reproduce-initial": 0.07243946000016876,
+    "nav-reproduce-v2": 328.7223613780002,
+    "puck-explore": 321.05432322499973,
+    "puck-reproduce": 24.438000742999975
+  },
+  "total_supervised_seconds": 986.6716838150005,
+  "verification": {
+    "combined_process_pass": false,
+    "focused_passed": 47,
+    "limitation": "Unresolved TestClient startup hang in combined suite",
+    "partitioned_default_passed": 812,
+    "partitioned_default_skipped": 24,
+    "receipt": "research-capability-execution/validation.json"
+  },
+  "wall_to_scientific_finish_seconds": 1079.4514817048503
+}

@@ -1,0 +1,14 @@
+{
+  "exit_code": 1,
+  "elapsed_seconds": 295.4841327340109,
+  "command": "python -m pytest -q",
+  "native_opt_ins": false,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "MUJOCO_GL": "egl",
+    "CUDA_VISIBLE_DEVICES": ""
+  }
+}

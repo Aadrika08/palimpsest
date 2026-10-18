@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/execute-campaign.py",
+    "--pipeline",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/registration.json"
+  ],
+  "implementation_head": "61d0116bf1d3bbd8bb581ec532c4de6dc1d05698",
+  "registration_sha256": "8567bc446b265c36a3063dc5d3fcb2cf354bcd2a3684ec4a068e6c98007f12f9",
+  "started_monotonic": 92525.006420106,
+  "watchdog_command": [
+    "timeout",
+    "--foreground",
+    "--signal=TERM",
+    "--kill-after=5",
+    "4890s",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/execute-campaign.py",
+    "--supervised"
+  ]
+}

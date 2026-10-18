@@ -1,0 +1,78 @@
+{
+  "component_hashes": [
+    {
+      "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+      "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+      "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+      "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+      "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+      "native_data": "2994f687dae9e2d2320044b4f521374ac0254f51dcbb8c727e17009d65789d22",
+      "native_sha256": "a751745128170a896170595fabd8cc2acfd41fcf780992ba1500a92573c06cd4",
+      "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+      "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+      "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+      "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+      "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+    },
+    {
+      "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+      "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+      "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+      "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+      "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+      "native_data": "408681d5e976e4918ec2f140fcd0893ff59ffe5811cef43d54197e8edf03f726",
+      "native_sha256": "fc2931bf8fad35d011bccfbd4c18580ba51819ced2b603848948ac16a21c2bf2",
+      "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+      "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+      "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+      "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+      "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+    }
+  ],
+  "detail_limit": 64,
+  "details_may_be_truncated": false,
+  "differences": [
+    {
+      "different_bytes": 74,
+      "first_offsets": [
+        279971,
+        279972,
+        279973,
+        279974,
+        279975,
+        279976,
+        279987,
+        279988,
+        279989,
+        279990,
+        279991,
+        280019,
+        280020,
+        280021,
+        280022,
+        280023
+      ],
+      "left_bytes": 458761,
+      "left_type": "bytes",
+      "path": "/native_data",
+      "reason": "opaque-bytes",
+      "right_bytes": 458761,
+      "right_type": "bytes"
+    },
+    {
+      "left_preview": "'3283d9e5f5a4125f0869459580c09819c40f725449aa2242b701a934b0642c18'",
+      "left_type": "str",
+      "path": "/native_sha256",
+      "right_preview": "'5b08d7472891e8f573ffdcba7a04993585e203185d6f5b863c3b228b9c133d75'",
+      "right_type": "str"
+    }
+  ],
+  "differing_components": [
+    "native_data",
+    "native_sha256"
+  ],
+  "equal": false,
+  "left_digest": "0839f44bc3d01be7866bac19b189f096e34e3901667b684c8c2d5dd8a3a662f0",
+  "normalization": "unchanged condition_state and new-destination-receipt IDs only",
+  "right_digest": "01510ccb85899253385a8790ff35babc3f9be3e031fbce4ea1829f5f115133b7"
+}

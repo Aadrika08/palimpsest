@@ -1,0 +1,230 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_development_advances_only_on_audited_task_failure_and_stops_at_first_success _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7821a2234cd0>
+
+    def test_development_advances_only_on_audited_task_failure_and_stops_at_first_success(monkeypatch):
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_ test_infrastructure_or_incomplete_acquisition_never_selects_or_advances[outcome0] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7821a24ab390>
+outcome = {'acquired': False, 'raw_audit_pass': False, 'retained_task_failure': True, 'status': 'failed'}
+
+    @pytest.mark.parametrize('outcome',[
+        dict(status='failed',raw_audit_pass=False,retained_task_failure=True,acquired=False),
+        dict(status='failed',raw_audit_pass=True,retained_task_failure=False,acquired=False),
+        dict(status='recorded',raw_audit_pass=True,acquired=False),
+    ])
+    def test_infrastructure_or_incomplete_acquisition_never_selects_or_advances(monkeypatch,outcome):
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_ test_infrastructure_or_incomplete_acquisition_never_selects_or_advances[outcome1] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7821a24dc350>
+outcome = {'acquired': False, 'raw_audit_pass': True, 'retained_task_failure': False, 'status': 'failed'}
+
+    @pytest.mark.parametrize('outcome',[
+        dict(status='failed',raw_audit_pass=False,retained_task_failure=True,acquired=False),
+        dict(status='failed',raw_audit_pass=True,retained_task_failure=False,acquired=False),
+        dict(status='recorded',raw_audit_pass=True,acquired=False),
+    ])
+    def test_infrastructure_or_incomplete_acquisition_never_selects_or_advances(monkeypatch,outcome):
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_ test_infrastructure_or_incomplete_acquisition_never_selects_or_advances[outcome2] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7821a2234710>
+outcome = {'acquired': False, 'raw_audit_pass': True, 'status': 'recorded'}
+
+    @pytest.mark.parametrize('outcome',[
+        dict(status='failed',raw_audit_pass=False,retained_task_failure=True,acquired=False),
+        dict(status='failed',raw_audit_pass=True,retained_task_failure=False,acquired=False),
+        dict(status='recorded',raw_audit_pass=True,acquired=False),
+    ])
+    def test_infrastructure_or_incomplete_acquisition_never_selects_or_advances(monkeypatch,outcome):
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_______________ test_candidate_exhaustion_does_not_wrap_or_retry _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7821a225d790>
+
+    def test_candidate_exhaustion_does_not_wrap_or_retry(monkeypatch):
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+__ test_amendment_allocations_are_explicit_and_do_not_change_legacy_deadlines __
+
+    def test_amendment_allocations_are_explicit_and_do_not_change_legacy_deadlines():
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____ test_job_cannot_change_selected_geometry_or_cross_protocol_boundary ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_job_cannot_change_selecte0')
+
+    def test_job_cannot_change_selected_geometry_or_cross_protocol_boundary(tmp_path):
+>       module = study()
+                 ^^^^^^^
+
+tests/test_memory_waypoint_study.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_waypoint_study.py:9: in study
+    return importlib.import_module('scripts.memory_waypoint_study')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_waypoint_study'
+import_ = <function _gcd_import at 0x7821a374fd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_waypoint_study'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_memory_waypoint_study.py::test_development_advances_only_on_audited_task_failure_and_stops_at_first_success
+FAILED tests/test_memory_waypoint_study.py::test_infrastructure_or_incomplete_acquisition_never_selects_or_advances[outcome0]
+FAILED tests/test_memory_waypoint_study.py::test_infrastructure_or_incomplete_acquisition_never_selects_or_advances[outcome1]
+FAILED tests/test_memory_waypoint_study.py::test_infrastructure_or_incomplete_acquisition_never_selects_or_advances[outcome2]
+FAILED tests/test_memory_waypoint_study.py::test_candidate_exhaustion_does_not_wrap_or_retry
+FAILED tests/test_memory_waypoint_study.py::test_amendment_allocations_are_explicit_and_do_not_change_legacy_deadlines
+FAILED tests/test_memory_waypoint_study.py::test_job_cannot_change_selected_geometry_or_cross_protocol_boundary
+7 failed in 0.25s

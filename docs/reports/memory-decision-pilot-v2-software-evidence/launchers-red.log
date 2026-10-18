@@ -1,0 +1,391 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+_____ test_pipeline_requires_driver_independent_audit_and_close[0-0-True] ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_pipeline_requires_driver_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e1560da090>
+driver = 0, auditor = 0, passed = True
+
+    @pytest.mark.parametrize('driver,auditor,passed',[(0,0,True),(1,0,True),(0,1,True),(0,0,False)])
+    def test_pipeline_requires_driver_independent_audit_and_close(tmp_path,monkeypatch,driver,auditor,passed):
+>       module=load('execute-pilot.py');root=tmp_path/'output';path=tmp_path/'registration.json'
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execute-pilot.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+_____ test_pipeline_requires_driver_independent_audit_and_close[1-0-True] ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_pipeline_requires_driver_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e1560d83d0>
+driver = 1, auditor = 0, passed = True
+
+    @pytest.mark.parametrize('driver,auditor,passed',[(0,0,True),(1,0,True),(0,1,True),(0,0,False)])
+    def test_pipeline_requires_driver_independent_audit_and_close(tmp_path,monkeypatch,driver,auditor,passed):
+>       module=load('execute-pilot.py');root=tmp_path/'output';path=tmp_path/'registration.json'
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execute-pilot.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+_____ test_pipeline_requires_driver_independent_audit_and_close[0-1-True] ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_pipeline_requires_driver_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e1560ce1d0>
+driver = 0, auditor = 1, passed = True
+
+    @pytest.mark.parametrize('driver,auditor,passed',[(0,0,True),(1,0,True),(0,1,True),(0,0,False)])
+    def test_pipeline_requires_driver_independent_audit_and_close(tmp_path,monkeypatch,driver,auditor,passed):
+>       module=load('execute-pilot.py');root=tmp_path/'output';path=tmp_path/'registration.json'
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execute-pilot.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+_____ test_pipeline_requires_driver_independent_audit_and_close[0-0-False] _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_pipeline_requires_driver_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156036d50>
+driver = 0, auditor = 0, passed = False
+
+    @pytest.mark.parametrize('driver,auditor,passed',[(0,0,True),(1,0,True),(0,1,True),(0,0,False)])
+    def test_pipeline_requires_driver_independent_audit_and_close(tmp_path,monkeypatch,driver,auditor,passed):
+>       module=load('execute-pilot.py');root=tmp_path/'output';path=tmp_path/'registration.json'
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execute-pilot.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+_____ test_pilot_watchdogs_preserve_ancestor_containment_and_invalidate[0] _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_pilot_watchdogs_preserve_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156091990>
+code = 0
+
+    @pytest.mark.parametrize('code',[0,124])
+    def test_pilot_watchdogs_preserve_ancestor_containment_and_invalidate(tmp_path,monkeypatch,code):
+>       module=load('execute-pilot.py');runner=module.runner
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execute-pilot.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+____ test_pilot_watchdogs_preserve_ancestor_containment_and_invalidate[124] ____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_pilot_watchdogs_preserve_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e1561eba50>
+code = 124
+
+    @pytest.mark.parametrize('code',[0,124])
+    def test_pilot_watchdogs_preserve_ancestor_containment_and_invalidate(tmp_path,monkeypatch,code):
+>       module=load('execute-pilot.py');runner=module.runner
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execute-pilot.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+_______ test_preparation_rechecks_reserves_and_commits_only_registration _______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_rechecks_rese0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e15604b4d0>
+
+    def test_preparation_rechecks_reserves_and_commits_only_registration(tmp_path,monkeypatch):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+________ test_preparation_refusal_never_writes_or_commits[registration] ________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_refusal_never0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e1560d8ad0>
+reason = 'registration'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+__________ test_preparation_refusal_never_writes_or_commits[control] ___________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_refusal_never1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156034cd0>
+reason = 'control'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+___________ test_preparation_refusal_never_writes_or_commits[output] ___________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_refusal_never2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156269cd0>
+reason = 'output'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+___________ test_preparation_refusal_never_writes_or_commits[dirty] ____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_refusal_never3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e1562685d0>
+reason = 'dirty'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+________ test_preparation_refusal_never_writes_or_commits[reservation] _________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_refusal_never4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156258250>
+reason = 'reservation'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+__________ test_preparation_refusal_never_writes_or_commits[deadline] __________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-8/test_preparation_refusal_never5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156049890>
+reason = 'deadline'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+>       module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot_launcher.py:78: in preparer_fixture
+    module=load('register.py');evidence=tmp_path/'docs/reports/memory-decision-pilot-v2-evidence'
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+__________ test_preparation_absolute_cap_includes_registration_commit __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78e156258b50>
+
+    def test_preparation_absolute_cap_includes_registration_commit(monkeypatch):
+>       module=load('register.py');calls=[]
+               ^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'register.py'
+
+    def load(name):
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence'/name
+>       assert source.exists(), 'Selected pilot wrapper is not implemented'
+E       AssertionError: Selected pilot wrapper is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/register.py').exists
+
+tests/test_memory_selected_pilot_launcher.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot_launcher.py::test_pipeline_requires_driver_independent_audit_and_close[0-0-True]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_pipeline_requires_driver_independent_audit_and_close[1-0-True]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_pipeline_requires_driver_independent_audit_and_close[0-1-True]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_pipeline_requires_driver_independent_audit_and_close[0-0-False]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_pilot_watchdogs_preserve_ancestor_containment_and_invalidate[0]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_pilot_watchdogs_preserve_ancestor_containment_and_invalidate[124]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_rechecks_reserves_and_commits_only_registration
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[registration]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[control]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[output]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[dirty]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[reservation]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[deadline]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_absolute_cap_includes_registration_commit
+14 failed in 0.12s

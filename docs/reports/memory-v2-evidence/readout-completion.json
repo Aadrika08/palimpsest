@@ -1,0 +1,166 @@
+{
+  "artifacts": [
+    {
+      "bytes": 0,
+      "path": ".palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 567999,
+      "path": "diagnostics/report.json",
+      "sha256": "41fdb0dfef615b267291e12beab9de79f1ed352916eff1340853c8891b59a9b7"
+    },
+    {
+      "bytes": 0,
+      "path": "diagnostics-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 287,
+      "path": "diagnostics-supervisor/stdout.log",
+      "sha256": "8aa820d5d90d1f38f4c7d2f0ef5fda3081ca84d5943b80946cfdd2bb88160c40"
+    },
+    {
+      "bytes": 345,
+      "path": "diagnostics-supervisor/supervisor.json",
+      "sha256": "b03ead42a242e051eaa9ff155656d28828f36838b739e9b35246272618b8f3dd"
+    },
+    {
+      "bytes": 8784,
+      "path": "execution.json",
+      "sha256": "741bd0b481ebbfb2057119e6c85ec714a144cd9ecf2066586596bcc6aec5868d"
+    },
+    {
+      "bytes": 8341,
+      "path": "invocation.py",
+      "sha256": "711d63c2a1258babb14e81475210ef81b7a843ffb73ee00018cf21b5d06ccf61"
+    },
+    {
+      "bytes": 100729,
+      "path": "prerequisite-path.svg",
+      "sha256": "f2aea58bd3305e537b3241a6d4f689953656a4970da9824d26aff092b0def0cf"
+    },
+    {
+      "bytes": 26779,
+      "path": "prerequisites/jobs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a.json",
+      "sha256": "b883add40151974aaf76b46945580d12c05fd07c60560d41dbf444bc1c1e77c7"
+    },
+    {
+      "bytes": 94646,
+      "path": "prerequisites/preflight.json",
+      "sha256": "db32979d92ef21badb461f2a256514291a2fe12f3f8bff0e9f10d60afbf497db"
+    },
+    {
+      "bytes": 141815,
+      "path": "prerequisites/report.json",
+      "sha256": "c8f8caddadc688149d2acd0abf88d0334ff411007ec62d1af16ccbc94c1dd6b1"
+    },
+    {
+      "bytes": 102,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/owner.json",
+      "sha256": "a98ca924a82a3605b6f2bff3681cb54f4ae07791604e4b69e6ea1413e07c180f"
+    },
+    {
+      "bytes": 6919538,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000000.npz",
+      "sha256": "47f9bfb5e30877ed28ae0d44e7eb1ef1390654c013e4daae47a7cd6df843debf"
+    },
+    {
+      "bytes": 6919538,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000001.npz",
+      "sha256": "4f01824c19962db527f4e13fe909a09f0bdfed7e5b872bdc9a57142d3f4ec179"
+    },
+    {
+      "bytes": 6919538,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000002.npz",
+      "sha256": "6e578e6f493923e62dd55fc94eb9741477dda4a394db0748e008a0ab917a878f"
+    },
+    {
+      "bytes": 1085000,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000003.npz",
+      "sha256": "8bcfdd12a4b408dd957d48a4eea57226357ff1f845f91160d3a796707ae22145"
+    },
+    {
+      "bytes": 878116,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/events.jsonl",
+      "sha256": "fa71e6887aca9041c691ee0388b268babd001ebbd396b3171e1374b877d8e942"
+    },
+    {
+      "bytes": 31256,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/manifest.json",
+      "sha256": "60a6932f70ff31f54b40be69bbe2d99d0ed1ccfcd1bb435898792ec321637234"
+    },
+    {
+      "bytes": 99897,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/worker-report.json",
+      "sha256": "d45d13ea48cf1419c8feb15635401f236f8228a526a67b5d50318d4970d06798"
+    },
+    {
+      "bytes": 1176,
+      "path": "prerequisites/supervision/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/stderr.log",
+      "sha256": "d498f1f441f62e1f6ad4cacba667b21f1970f70679fa3a196d6e7b737fe3fb27"
+    },
+    {
+      "bytes": 927,
+      "path": "prerequisites/supervision/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8"
+    },
+    {
+      "bytes": 364,
+      "path": "prerequisites/supervision/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/supervisor.json",
+      "sha256": "2c352a91d0279471294b76abcfabea07fe563df01f7acca2b3e750ca9eae7efc"
+    },
+    {
+      "bytes": 0,
+      "path": "prerequisites-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 341,
+      "path": "prerequisites-supervisor/stdout.log",
+      "sha256": "55889b68678fc1d35d32ce5e4736fb60ef47afb202f499aa9b4b733a6ecdab2d"
+    },
+    {
+      "bytes": 345,
+      "path": "prerequisites-supervisor/supervisor.json",
+      "sha256": "c704f15067d1b88a29927cb782add7e34b8b966be79f16c8b93a431529ea8250"
+    },
+    {
+      "bytes": 5285,
+      "path": "readout-invocation.py",
+      "sha256": "e1192736a6b3f315f0991d1471c8cf74a082b79d55e688ad767a2c5ca6cc8140"
+    },
+    {
+      "bytes": 60602,
+      "path": "readout.json",
+      "sha256": "14cac90b10b77c6e41df799868fa7ff8172921d941547752c054e9cc57f2d173"
+    },
+    {
+      "bytes": 1299,
+      "path": "retained-failure-audit-v2.json",
+      "sha256": "c0ccf3a973ea199e0a42a67fd1008a87fc4baf39b6474db867673e5a6ccc607d"
+    },
+    {
+      "bytes": 1071,
+      "path": "retained-failure-audit.json",
+      "sha256": "bf5359608b8bff77179a47d6666fb818c1e1a6f27b9e2a4aa690cd60bfb22c5c"
+    }
+  ],
+  "closed_utc": "2026-10-04T09:39:18.043759+00:00",
+  "execution_monotonic_seconds": 131.7799124209996,
+  "independent_audit": "23 original artifacts rehashed;101 raw policy bindings and102 packets+memory replay confirmed; code/upstream rehash confirmed; assets worker/preflight hash proofs only",
+  "post_execution_readout_conservative_wall_seconds": 326,
+  "qualification_claims": [],
+  "readout_tool_seconds": 5.110274403999938,
+  "schema": "memory-v2-readout-completion-v1",
+  "storage_before_completion": {
+    "files": 29,
+    "headroom_bytes": 0,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 8566060472,
+    "used_bytes": 23874120
+  },
+  "total_conservative_wall_seconds": 458,
+  "wall_accounting_note": "UTC window plus2s headroom; includes root interpretation, plot and independent audit; original execution used monotonic bounds. No further scientific analysis authorized by this invocation."
+}

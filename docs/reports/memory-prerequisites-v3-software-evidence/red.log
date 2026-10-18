@@ -1,0 +1,81 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_native_sized_reports_publish_complete_bounded_driver_and_independent_close[v3] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-50/test_native_sized_reports_publ0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x751e5cf04c50>
+version = 'v3'
+
+    @pytest.mark.parametrize('version',['v2','v3'])
+    def test_native_sized_reports_publish_complete_bounded_driver_and_independent_close(tmp_path,monkeypatch,version):
+        # Synthetic source identities and nested reports reproduce the eight-owner
+        # envelope pressure without reading retained evidence or launching physics.
+        receipts = {'neural-'+str(i):{'received_run_id':'source','applied_tick':i} for i in range(727)}
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch,source_receipts=receipts,version=version)
+        memory = {'u':{'cache':{'neural-'+str(i):{'packet':{'tick':i,
+            'subject_id':'south-aperture','status':'observed'}} for i in range(280)}},
+            'selector':{}, 'm':{'facts':[]}, 'supervisor':{'phase':'await_decision'}}
+        launch = p.launch_owner
+        def large_report(*args,**kwargs):
+            report = launch(*args,**kwargs)
+            report['final_memory'] = copy.deepcopy(memory)
+            Path(report['run'],'worker-report.json').write_text(json.dumps(report))
+            return report
+        monkeypatch.setattr(p,'launch_owner',large_report)
+    
+>       assert m.run(path) == 0
+               ^^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_prerequisites_v2.py:236: in run
+    path = p.checked_path(path); reg = p.read_json(path); validate_registration(reg)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+reg = {'assets': '/tmp/pytest-of-utkarsh/pytest-50/test_native_sized_reports_publ0/repo/assets', 'auditor_path': '/tmp/pytes...pytest-50/test_native_sized_reports_publ0/repo/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py', ...}
+
+    def validate_registration(reg):
+        if (reg.get('schema') != 'memory-prerequisites-registration-v2' or
+                reg.get('mode') != 'prerequisites-v2' or reg.get('seconds_caps') != [4300, 600] or
+                reg.get('state_contract') != d.STATE_CONTRACT or reg.get('profile_sha256') != d.PROFILE or
+                reg.get('protocol_sha256') != p.TRAVEL_PROTOCOL_SHA256 or
+                reg.get('expected_specs') != p.travel_specs('travel-feasibility', d.PROFILE) or
+                reg.get('source_derivation') != DERIVATION or not isinstance(reg.get('runtime'), dict) or
+                not reg['runtime'] or any(type(reg.get(key)) is not int or reg[key] != value for key, value in
+                    {'native_invocations': 1, 'native_owners_max': 8, 'corrective_studies': 0,
+                     'preparation_seconds_cap': 180}.items())):
+>           raise ValueError('Unknown or incomplete campaign registration')
+E           ValueError: Unknown or incomplete campaign registration
+
+scripts/memory_prerequisites_v2.py:30: ValueError
+________ test_campaign_pipeline_requires_all_three_results[v3-0-0-True] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-50/test_campaign_pipeline_require0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x751e5cb40410>
+driver_code = 0, audit_code = 0, passed = True, version = 'v3'
+
+    @pytest.mark.parametrize('driver_code,audit_code,passed', [(0,0,True),(0,0,False),(1,0,True),(0,1,True)])
+    @pytest.mark.parametrize('version',['v2','v3'])
+    def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed,version):
+>       module = launcher(version); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
+                 ^^^^^^^^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+version = 'v3'
+
+    def launcher(version='v2'):
+        source = Path(__file__).resolve().parents[1] / f'docs/reports/memory-prerequisites-{version}-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2.py::test_native_sized_reports_publish_complete_bounded_driver_and_independent_close[v3]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_campaign_pipeline_requires_all_three_results[v3-0-0-True]
+2 failed in 0.27s

@@ -1,0 +1,146 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_same_versions_cannot_admit_a_different_prerequisite_runtime[python_sha256] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-19/test_same_versions_cannot_admi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70a456eb4910>
+key = 'python_sha256'
+
+    @pytest.mark.parametrize('key',['python_sha256','host','platform'])
+    def test_same_versions_cannot_admit_a_different_prerequisite_runtime(tmp_path,monkeypatch,key):
+        s,reg,path=registration_fixture(tmp_path,monkeypatch)
+        runtime=copy.deepcopy(reg['runtime']);runtime[key]='changed'
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:runtime)
+>       with pytest.raises(ValueError):s.build_registration(reg['repo'],reg['prerequisite']['registration_path'],stamp='changed')
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_selected_pilot.py:427: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+____ test_same_versions_cannot_admit_a_different_prerequisite_runtime[host] ____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-19/test_same_versions_cannot_admi1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70a456c5f910>
+key = 'host'
+
+    @pytest.mark.parametrize('key',['python_sha256','host','platform'])
+    def test_same_versions_cannot_admit_a_different_prerequisite_runtime(tmp_path,monkeypatch,key):
+        s,reg,path=registration_fixture(tmp_path,monkeypatch)
+        runtime=copy.deepcopy(reg['runtime']);runtime[key]='changed'
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:runtime)
+>       with pytest.raises(ValueError):s.build_registration(reg['repo'],reg['prerequisite']['registration_path'],stamp='changed')
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_selected_pilot.py:427: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+__ test_same_versions_cannot_admit_a_different_prerequisite_runtime[platform] __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-19/test_same_versions_cannot_admi2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70a454b51b90>
+key = 'platform'
+
+    @pytest.mark.parametrize('key',['python_sha256','host','platform'])
+    def test_same_versions_cannot_admit_a_different_prerequisite_runtime(tmp_path,monkeypatch,key):
+        s,reg,path=registration_fixture(tmp_path,monkeypatch)
+        runtime=copy.deepcopy(reg['runtime']);runtime[key]='changed'
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:runtime)
+>       with pytest.raises(ValueError):s.build_registration(reg['repo'],reg['prerequisite']['registration_path'],stamp='changed')
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_selected_pilot.py:427: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_current_prerequisite_helpers_are_pinned_and_cannot_be_derived[memory_prerequisites_v2.py] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-19/test_current_prerequisite_help0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70a456cd6c90>
+name = 'memory_prerequisites_v2.py'
+
+    @pytest.mark.parametrize('name',['memory_prerequisites_v2.py','memory_restore_offline_readout.py'])
+    def test_current_prerequisite_helpers_are_pinned_and_cannot_be_derived(tmp_path,monkeypatch,name):
+        s,reg,path=registration_fixture(tmp_path,monkeypatch)
+        target=Path(reg['repo'])/'scripts'/name;target.write_text('changed admission helper')
+>       with pytest.raises(ValueError):s.recheck_inputs(reg)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_selected_pilot.py:436: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_current_prerequisite_helpers_are_pinned_and_cannot_be_derived[memory_restore_offline_readout.py] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-19/test_current_prerequisite_help1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70a45619cc90>
+name = 'memory_restore_offline_readout.py'
+
+    @pytest.mark.parametrize('name',['memory_prerequisites_v2.py','memory_restore_offline_readout.py'])
+    def test_current_prerequisite_helpers_are_pinned_and_cannot_be_derived(tmp_path,monkeypatch,name):
+        s,reg,path=registration_fixture(tmp_path,monkeypatch)
+        target=Path(reg['repo'])/'scripts'/name;target.write_text('changed admission helper')
+>       with pytest.raises(ValueError):s.recheck_inputs(reg)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_selected_pilot.py:436: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+____ test_restored_stall_action_threshold_uses_the_native_float32_boundary _____
+
+    def test_restored_stall_action_threshold_uses_the_native_float32_boundary():
+        import numpy as np
+        outcome={'reason':'time_limit','episode':0,'steps':777}
+        report={'outcome':outcome,'total_ticks':777,'final_phase':'truncated'}
+        rows=[{'tick':tick,'pose':[0.,0.,0.],'next_pose':[0.,0.,0.],
+            'action':np.array([.05,0.],np.float32)} for tick in range(727,777)]
+        data={'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}
+>       assert p.audit_native_prefix_terminal(data,report,start_tick=727,expected_cap=777)=='time_limit'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:447: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'events': [{'kind': 'episode_finished', 'outcome': {'episode': 0, 'reason': 'time_limit', 'steps': 777}}], 'rows': [{...action': array([0.05, 0.  ], dtype=float32), 'next_pose': [0.0, 0.0, 0.0], 'pose': [0.0, 0.0, 0.0], 'tick': 732}, ...]}
+report = {'final_phase': 'truncated', 'outcome': {'episode': 0, 'reason': 'time_limit', 'steps': 777}, 'total_ticks': 777}
+
+    def audit_native_prefix_terminal(data, report, *, expected_cap=1200, start_tick=None, stall_steps=0):
+        """Reconstruct pinned CPU-world stall/time-limit termination from raw rows."""
+        verify_ticks = start_tick is not None
+        start_tick = 0 if start_tick is None else start_tick
+        outcome = report.get('outcome') or {}
+        reason, total = outcome.get('reason'), report['total_ticks']
+        ended = [e for e in data['events'] if e['kind'] == 'episode_finished']
+        if (reason not in ('stalled','time_limit') or outcome.get('episode') != 0 or
+                outcome.get('steps') != total or len(ended) != 1 or ended[0].get('outcome') != outcome or
+                type(start_tick) is not int or type(stall_steps) is not int or not 0 <= start_tick <= total
+                or not 0 <= stall_steps < 50 or len(data['rows']) != total-start_tick
+                or (verify_ticks and [int(r['tick']) for r in data['rows']] != list(range(start_tick,total)))
+                or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
+            raise ValueError('Native prefix termination differs from actual terminal event')
+        counter, stalls = stall_steps, []
+        for index, row in enumerate(data['rows']):
+            moved = math.dist(row['pose'][:2],row['next_pose'][:2])
+            if verify_ticks:
+                import numpy as np
+                moved = np.linalg.norm(np.asarray(row['next_pose'][:2],np.float32)-np.asarray(row['pose'][:2],np.float32))
+            counter = counter+1 if moved < .002 and abs(float(row['action'][0])) > .05 else 0
+            if counter >= 50:
+                stalls.append(start_tick+index)
+        if reason == 'stalled' and stalls != [total-1]:
+            raise ValueError('Native stall not independently reproduced at its final motor row')
+        if reason == 'time_limit' and (total != expected_cap or stalls):
+>           raise ValueError('Native acquisition cap not reached or earlier stall ignored')
+E           ValueError: Native acquisition cap not reached or earlier stall ignored
+
+scripts/memory_decision_pilot.py:806: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_same_versions_cannot_admit_a_different_prerequisite_runtime[python_sha256]
+FAILED tests/test_memory_selected_pilot.py::test_same_versions_cannot_admit_a_different_prerequisite_runtime[host]
+FAILED tests/test_memory_selected_pilot.py::test_same_versions_cannot_admit_a_different_prerequisite_runtime[platform]
+FAILED tests/test_memory_selected_pilot.py::test_current_prerequisite_helpers_are_pinned_and_cannot_be_derived[memory_prerequisites_v2.py]
+FAILED tests/test_memory_selected_pilot.py::test_current_prerequisite_helpers_are_pinned_and_cannot_be_derived[memory_restore_offline_readout.py]
+FAILED tests/test_memory_selected_pilot.py::test_restored_stall_action_threshold_uses_the_native_float32_boundary
+6 failed, 38 deselected in 7.18s

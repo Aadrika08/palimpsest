@@ -1,0 +1,64 @@
+{
+  "anchors": [
+    {
+      "bytes": 9512,
+      "path": "publication.json",
+      "sha256": "5dbba3e57e450201b9253d06988f62cd959a1cb52ad1e59be5b14d196426b521"
+    },
+    {
+      "bytes": 268060,
+      "path": "publication-index.json",
+      "sha256": "4d1fa4421e1ba02d809cb100cf9e21d9e4553fd013dd8d5732f4b859657682e5"
+    },
+    {
+      "bytes": 28878291,
+      "path": "evidence.zip",
+      "sha256": "c76edd97111a4dbaa5089821c86a2e9ed04828e0abbdda71d3ac4a866695758d"
+    },
+    {
+      "bytes": 12532,
+      "path": "report.md",
+      "sha256": "8595405d998f58022659df3c8bd6ad5941c0a93292970c8d3ace428acf68e36f"
+    }
+  ],
+  "anchors_verified": 47,
+  "archive_members_verified": 384,
+  "archive_uncompressed_bytes": 152228280,
+  "control_bytes": 1202,
+  "control_files": 4,
+  "copied_execution_and_close_match_originals": true,
+  "copied_report_matches_report": true,
+  "errors": [],
+  "expected_storage_after_receipt": {
+    "files": 778,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 5791612144,
+    "used_bytes": 2798322448
+  },
+  "held_out_used": false,
+  "literal_results_match_close": true,
+  "output_bytes": 2766687296,
+  "output_files": 725,
+  "output_inventory_sha256": "c5f531a808fd9a563dcbc37131ad423e40bfc935ed28677257b0900f59364675",
+  "qualification_claims": [],
+  "r2_complete": false,
+  "raw_npz_omissions": 390,
+  "raw_npz_omitted_bytes": 2616936288,
+  "receipt_bytes": 2017,
+  "retained_owners": 30,
+  "retained_pairs": 6,
+  "reviewer": "pilot_v2_post_exit_integrity",
+  "schema": "selected-pilot-documentary-readback-v2",
+  "scope": "Independent stdlib byte/hash/CRC and literal metadata verification only; no writes, physics, decoding, regrading or current process checks",
+  "source_records_verified": 774,
+  "storage_before_receipt": {
+    "files": 777,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 5791614161,
+    "used_bytes": 2798320431
+  }
+}

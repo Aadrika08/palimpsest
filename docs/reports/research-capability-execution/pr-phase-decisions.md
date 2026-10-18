@@ -1,0 +1,3 @@
+The retained memory-v1 scene does not make passability affect route commitment, and its development comparisons remain null. Retire further v1 collection without completing R2, freeze the approved capability-first exploratory bounds, and specify a memory-v2 route-decision scene under one shared supervisor.
+
+The v2 specification was independently reviewed and corrected for shared sensing, identical base snapshots, deferred inspections and retreat uncertainty. This PR contains design and allocation decisions only; it does not implement v2, open reserved data, or qualify memory capability. Historical reports remain evidence of their original scopes.

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-s",
+    "tests/test_memory_prerequisites_v2.py::test_native_sized_reports_publish_complete_bounded_driver_and_independent_close",
+    "--basetemp",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size/.superpowers/sdd/software-tmp-memory-campaign-receipt-size/red-fixture"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size",
+  "started_utc": "2026-10-07T17:50:51.860547+00:00",
+  "elapsed_seconds": 4.0217452899960335,
+  "exit_code": 1,
+  "software_only": true,
+  "native_opt_ins": false
+}

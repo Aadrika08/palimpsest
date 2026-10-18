@@ -1,6 +1,7 @@
 """Storage bounds for one admitted writer; no persisted accounting ledger."""
 from contextlib import contextmanager
 from dataclasses import dataclass
+import errno
 import fcntl
 import os
 from pathlib import Path
@@ -152,12 +153,22 @@ class StorageBudget:
             for path in paths:
                 path = _safe_path(path)
                 flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0)
-                descriptor = os.open(path, flags, 0o600)
+                writable = True
+                try:
+                    descriptor = os.open(path, flags, 0o600)
+                except OSError as error:
+                    if path != paths[0] or error.errno != errno.EROFS:
+                        raise
+                    # flock needs no file writes. Reuse an existing user lease
+                    # on a read-only mount while preserving ownership and the
+                    # same exclusive lock; never create an alternative lease.
+                    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+                    writable = False
                 try:
                     info = os.fstat(descriptor)
                     if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid():
                         raise StorageLimitError("Writer lease must be a regular file owned by the current user")
-                    stream = os.fdopen(descriptor, "r+b")
+                    stream = os.fdopen(descriptor, "r+b" if writable else "rb")
                 except BaseException:
                     os.close(descriptor)
                     raise

@@ -1,0 +1,220 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+__ test_self_consistent_unapproved_runtime_refuses_before_allocation[python] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_self_consistent_unapprove0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x715544213810>
+component = 'python'
+
+    @pytest.mark.parametrize('component',['python','numpy','mujoco','torch'])
+    def test_self_consistent_unapproved_runtime_refuses_before_allocation(tmp_path,monkeypatch,component):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        actual = copy.deepcopy(reg['runtime'])
+        if component == 'python': actual['python_version'][:2] = [3,12]
+        else: actual['versions'][component] = {'numpy':'2.2.6','mujoco':'3.3.7','torch':'2.9.1'}[component]
+        reg['runtime'] = actual
+        path.write_text(json.dumps(reg))
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:copy.deepcopy(actual))
+>       with pytest.raises(ValueError,match='runtime'): m.run(path)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_prerequisites_v2.py:190: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+___ test_self_consistent_unapproved_runtime_refuses_before_allocation[numpy] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_self_consistent_unapprove1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x715543acd150>
+component = 'numpy'
+
+    @pytest.mark.parametrize('component',['python','numpy','mujoco','torch'])
+    def test_self_consistent_unapproved_runtime_refuses_before_allocation(tmp_path,monkeypatch,component):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        actual = copy.deepcopy(reg['runtime'])
+        if component == 'python': actual['python_version'][:2] = [3,12]
+        else: actual['versions'][component] = {'numpy':'2.2.6','mujoco':'3.3.7','torch':'2.9.1'}[component]
+        reg['runtime'] = actual
+        path.write_text(json.dumps(reg))
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:copy.deepcopy(actual))
+>       with pytest.raises(ValueError,match='runtime'): m.run(path)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_prerequisites_v2.py:190: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+__ test_self_consistent_unapproved_runtime_refuses_before_allocation[mujoco] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_self_consistent_unapprove2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x715542f82f50>
+component = 'mujoco'
+
+    @pytest.mark.parametrize('component',['python','numpy','mujoco','torch'])
+    def test_self_consistent_unapproved_runtime_refuses_before_allocation(tmp_path,monkeypatch,component):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        actual = copy.deepcopy(reg['runtime'])
+        if component == 'python': actual['python_version'][:2] = [3,12]
+        else: actual['versions'][component] = {'numpy':'2.2.6','mujoco':'3.3.7','torch':'2.9.1'}[component]
+        reg['runtime'] = actual
+        path.write_text(json.dumps(reg))
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:copy.deepcopy(actual))
+>       with pytest.raises(ValueError,match='runtime'): m.run(path)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_prerequisites_v2.py:190: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+___ test_self_consistent_unapproved_runtime_refuses_before_allocation[torch] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_self_consistent_unapprove3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x715541936d90>
+component = 'torch'
+
+    @pytest.mark.parametrize('component',['python','numpy','mujoco','torch'])
+    def test_self_consistent_unapproved_runtime_refuses_before_allocation(tmp_path,monkeypatch,component):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        actual = copy.deepcopy(reg['runtime'])
+        if component == 'python': actual['python_version'][:2] = [3,12]
+        else: actual['versions'][component] = {'numpy':'2.2.6','mujoco':'3.3.7','torch':'2.9.1'}[component]
+        reg['runtime'] = actual
+        path.write_text(json.dumps(reg))
+        monkeypatch.setattr(d,'runtime_v2_identity',lambda:copy.deepcopy(actual))
+>       with pytest.raises(ValueError,match='runtime'): m.run(path)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_prerequisites_v2.py:190: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+___ test_first_restore_failure_prohibits_second_restore_owner[missing-post] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_first_restore_failure_pro0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x715542f82710>
+failure = 'missing-post'
+
+    @pytest.mark.parametrize('failure',['missing-post','corrupt-post','invariant','tick-count'])
+    def test_first_restore_failure_prohibits_second_restore_owner(tmp_path,monkeypatch,failure):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        launch = p.launch_owner
+        def fail_first_restore(*args,**kwargs):
+            result = launch(*args,**kwargs)
+            if result['job_id'] == 'restore-1':
+                if failure == 'missing-post': Path(result['post_snapshot_path']).unlink()
+                elif failure == 'corrupt-post': Path(result['post_snapshot_path']).write_bytes(b'corrupt')
+                elif failure == 'invariant': result['invariants_preserved'] = False
+                else: result['continuation_ticks'] = 4
+                Path(result['run'],'worker-report.json').write_text(json.dumps(result))
+            return result
+        monkeypatch.setattr(p,'launch_owner',fail_first_restore)
+        assert m.run(path) == 1
+>       assert launched == ['south-no-event','south-change','north-no-event','north-change',
+                            'south-prefix','north-prefix','restore-1']
+E       AssertionError: assert ['south-no-ev...-prefix', ...] == ['south-no-ev...-prefix', ...]
+E         
+E         Left contains one more item: 'restore-2'
+E         Use -v to get more diff
+
+tests/test_memory_prerequisites_v2.py:209: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": []}
+___ test_first_restore_failure_prohibits_second_restore_owner[corrupt-post] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_first_restore_failure_pro1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x715542f502d0>
+failure = 'corrupt-post'
+
+    @pytest.mark.parametrize('failure',['missing-post','corrupt-post','invariant','tick-count'])
+    def test_first_restore_failure_prohibits_second_restore_owner(tmp_path,monkeypatch,failure):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        launch = p.launch_owner
+        def fail_first_restore(*args,**kwargs):
+            result = launch(*args,**kwargs)
+            if result['job_id'] == 'restore-1':
+                if failure == 'missing-post': Path(result['post_snapshot_path']).unlink()
+                elif failure == 'corrupt-post': Path(result['post_snapshot_path']).write_bytes(b'corrupt')
+                elif failure == 'invariant': result['invariants_preserved'] = False
+                else: result['continuation_ticks'] = 4
+                Path(result['run'],'worker-report.json').write_text(json.dumps(result))
+            return result
+        monkeypatch.setattr(p,'launch_owner',fail_first_restore)
+        assert m.run(path) == 1
+>       assert launched == ['south-no-event','south-change','north-no-event','north-change',
+                            'south-prefix','north-prefix','restore-1']
+E       AssertionError: assert ['south-no-ev...-prefix', ...] == ['south-no-ev...-prefix', ...]
+E         
+E         Left contains one more item: 'restore-2'
+E         Use -v to get more diff
+
+tests/test_memory_prerequisites_v2.py:209: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": []}
+_____ test_first_restore_failure_prohibits_second_restore_owner[invariant] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_first_restore_failure_pro2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7155419363d0>
+failure = 'invariant'
+
+    @pytest.mark.parametrize('failure',['missing-post','corrupt-post','invariant','tick-count'])
+    def test_first_restore_failure_prohibits_second_restore_owner(tmp_path,monkeypatch,failure):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        launch = p.launch_owner
+        def fail_first_restore(*args,**kwargs):
+            result = launch(*args,**kwargs)
+            if result['job_id'] == 'restore-1':
+                if failure == 'missing-post': Path(result['post_snapshot_path']).unlink()
+                elif failure == 'corrupt-post': Path(result['post_snapshot_path']).write_bytes(b'corrupt')
+                elif failure == 'invariant': result['invariants_preserved'] = False
+                else: result['continuation_ticks'] = 4
+                Path(result['run'],'worker-report.json').write_text(json.dumps(result))
+            return result
+        monkeypatch.setattr(p,'launch_owner',fail_first_restore)
+        assert m.run(path) == 1
+>       assert launched == ['south-no-event','south-change','north-no-event','north-change',
+                            'south-prefix','north-prefix','restore-1']
+E       AssertionError: assert ['south-no-ev...-prefix', ...] == ['south-no-ev...-prefix', ...]
+E         
+E         Left contains one more item: 'restore-2'
+E         Use -v to get more diff
+
+tests/test_memory_prerequisites_v2.py:209: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": []}
+____ test_first_restore_failure_prohibits_second_restore_owner[tick-count] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-44/test_first_restore_failure_pro3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7155419a3650>
+failure = 'tick-count'
+
+    @pytest.mark.parametrize('failure',['missing-post','corrupt-post','invariant','tick-count'])
+    def test_first_restore_failure_prohibits_second_restore_owner(tmp_path,monkeypatch,failure):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        launch = p.launch_owner
+        def fail_first_restore(*args,**kwargs):
+            result = launch(*args,**kwargs)
+            if result['job_id'] == 'restore-1':
+                if failure == 'missing-post': Path(result['post_snapshot_path']).unlink()
+                elif failure == 'corrupt-post': Path(result['post_snapshot_path']).write_bytes(b'corrupt')
+                elif failure == 'invariant': result['invariants_preserved'] = False
+                else: result['continuation_ticks'] = 4
+                Path(result['run'],'worker-report.json').write_text(json.dumps(result))
+            return result
+        monkeypatch.setattr(p,'launch_owner',fail_first_restore)
+        assert m.run(path) == 1
+>       assert launched == ['south-no-event','south-change','north-no-event','north-change',
+                            'south-prefix','north-prefix','restore-1']
+E       AssertionError: assert ['south-no-ev...-prefix', ...] == ['south-no-ev...-prefix', ...]
+E         
+E         Left contains one more item: 'restore-2'
+E         Use -v to get more diff
+
+tests/test_memory_prerequisites_v2.py:209: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": []}
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2.py::test_self_consistent_unapproved_runtime_refuses_before_allocation[python]
+FAILED tests/test_memory_prerequisites_v2.py::test_self_consistent_unapproved_runtime_refuses_before_allocation[numpy]
+FAILED tests/test_memory_prerequisites_v2.py::test_self_consistent_unapproved_runtime_refuses_before_allocation[mujoco]
+FAILED tests/test_memory_prerequisites_v2.py::test_self_consistent_unapproved_runtime_refuses_before_allocation[torch]
+FAILED tests/test_memory_prerequisites_v2.py::test_first_restore_failure_prohibits_second_restore_owner[missing-post]
+FAILED tests/test_memory_prerequisites_v2.py::test_first_restore_failure_prohibits_second_restore_owner[corrupt-post]
+FAILED tests/test_memory_prerequisites_v2.py::test_first_restore_failure_prohibits_second_restore_owner[invariant]
+FAILED tests/test_memory_prerequisites_v2.py::test_first_restore_failure_prohibits_second_restore_owner[tick-count]
+8 failed, 28 deselected in 2.66s

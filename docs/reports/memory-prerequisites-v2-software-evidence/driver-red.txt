@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________________ test_unknown_registration_cannot_allocate ___________________
+
+    def test_unknown_registration_cannot_allocate():
+        import pytest
+        with pytest.raises(ValueError, match='registration'):
+>           campaign().validate_registration({'mode':'qualify'})
+            ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def campaign():
+>       assert importlib.util.find_spec('scripts.memory_prerequisites_v2'), 'Eight-cell campaign missing'
+E       AssertionError: Eight-cell campaign missing
+E       assert None
+E        +  where None = <function find_spec at 0x70c6253b3ec0>('scripts.memory_prerequisites_v2')
+E        +    where <function find_spec at 0x70c6253b3ec0> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_prerequisites_v2.py:7: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2.py::test_unknown_registration_cannot_allocate
+1 failed in 0.03s

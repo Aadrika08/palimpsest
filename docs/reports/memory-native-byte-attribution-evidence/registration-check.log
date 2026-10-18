@@ -1,0 +1,31 @@
+{
+  "implementation_commit": "65f482cb4c09cf097f3092a17ef522ba55f21e13",
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-native-byte-attribution-20261007T080942Z",
+  "preserved_set_counts": [
+    339,
+    24,
+    25,
+    30,
+    26,
+    25,
+    4
+  ],
+  "bound_files": 18,
+  "runtime_identity": {
+    "python": [
+      3,
+      11,
+      15
+    ],
+    "numpy": "2.2.5",
+    "mujoco": "3.3.6"
+  },
+  "free_bytes": 19639709696,
+  "software_verification": {
+    "focused_passed": 38,
+    "full_passed": 953,
+    "full_skipped": 24,
+    "warnings": 39,
+    "full_seconds": 98.66
+  }
+}

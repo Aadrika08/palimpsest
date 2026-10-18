@@ -1,0 +1,25 @@
+{
+  "initial_important_findings": [
+    "fixed runtime versions",
+    "launcher-origin allocation",
+    "first-repeat post capture stops later owner"
+  ],
+  "followup_important": "detached nonnative pipeline can survive ancestor hard timeout",
+  "resolutions": [
+    "explicit Python3.11 and exact package gates",
+    "marker-bound original owner/readout deadlines with independent readback",
+    "immediate repeat invariants/five controls/post-SNP audit",
+    "foreground inner watchdog and inherited ancestor process group; direct PID signaling in campaign mode"
+  ],
+  "final_static_review": "no remaining Important or Critical finding in reviewed scope",
+  "focused_tests": {
+    "passed": 49,
+    "seconds": 15.99
+  },
+  "native_study": "unattempted",
+  "limits": [
+    "real timeout fixture uses only harmless software sleeper",
+    "hard KILL cannot guarantee instant exit from uninterruptible kernel sleep",
+    "no physical qualification"
+  ]
+}

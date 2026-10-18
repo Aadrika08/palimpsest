@@ -1,0 +1,46 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+____ test_all_eight_fresh_cells_close_only_after_independent_recomputation _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_all_eight_fresh_cells_clo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x6ffd77ba4d90>
+
+    def test_all_eight_fresh_cells_close_only_after_independent_recomputation(tmp_path,monkeypatch):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+>       assert m.run(path) == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <function run at 0x6ffd777f2fc0>(PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_all_eight_fresh_cells_clo0/repo/docs/reports/memory-prerequisites-v2-evidence/registration.json'))
+E        +    where <function run at 0x6ffd777f2fc0> = <module 'scripts.memory_prerequisites_v2' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/scripts/memory_prerequisites_v2.py'>.run
+
+tests/test_memory_prerequisites_v2.py:135: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": ["south-no-event", "south-change", "north-no-event", "north-change", "south-prefix", "north-prefix", "restore-1", "restore-2"]}
+___ test_first_failed_mandatory_cell_stops_later_owners_and_retains_started ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_first_failed_mandatory_ce0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x6ffd77191310>
+
+    def test_first_failed_mandatory_cell_stops_later_owners_and_retains_started(tmp_path,monkeypatch):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        launch = p.launch_owner
+        def failed(*args,**kwargs):
+            report = launch(*args,**kwargs)
+            report['goal'] = False
+            Path(report['run'],'worker-report.json').write_text(json.dumps(report))
+            return report
+        monkeypatch.setattr(p,'launch_owner',failed)
+>       assert m.run(path) == 1 and launched == ['south-no-event']
+E       AssertionError: assert (1 == 1 and [] == ['south-no-event']
+E        +  where 1 = <function run at 0x6ffd777f2fc0>(PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_first_failed_mandatory_ce0/repo/docs/reports/memory-prerequisites-v2-evidence/registration.json'))
+E        +    where <function run at 0x6ffd777f2fc0> = <module 'scripts.memory_prerequisites_v2' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/scripts/memory_prerequisites_v2.py'>.run
+E         
+E         Right contains one more item: 'south-no-event'
+E         Use -v to get more diff)
+
+tests/test_memory_prerequisites_v2.py:162: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": ["south-no-event", "south-change", "north-no-event", "north-change", "south-prefix", "north-prefix", "restore-1", "restore-2"]}
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2.py::test_all_eight_fresh_cells_close_only_after_independent_recomputation
+FAILED tests/test_memory_prerequisites_v2.py::test_first_failed_mandatory_cell_stops_later_owners_and_retains_started
+2 failed, 1 passed in 0.47s

@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_offline_native_decode_exposes_changed_field_without_stepping _______
+
+    def test_offline_native_decode_exposes_changed_field_without_stepping():
+        mujoco = pytest.importorskip('mujoco')
+        d = diagnostic()
+        model = mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><freejoint/><geom size="0.1" mass="1"/></body></worldbody></mujoco>')
+        left = mujoco.MjData(model)
+        right = mujoco.MjData.__new__(mujoco.MjData); right.__setstate__(left.__getstate__())
+        right.qpos[0] = .25
+        one, two = {'native_data': left.__getstate__()}, {'native_data': right.__getstate__()}
+        before = one['native_data']
+>       result = d.compare_native_states(one, two)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_restore_diagnostic' has no attribute 'compare_native_states'
+
+tests/test_memory_restore_diagnostic.py:259: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_diagnostic.py::test_offline_native_decode_exposes_changed_field_without_stepping
+1 failed in 0.21s

@@ -1,0 +1,103 @@
+{
+  "final_suite": {
+    "outer_seconds": 354.4640926569991,
+    "passed": 1168,
+    "returncode": 0,
+    "seconds": 353.0,
+    "skipped": 24,
+    "warnings": 39
+  },
+  "focused_after_review": {
+    "passed": 43,
+    "seconds": 2.96
+  },
+  "native_qualification_claims": [],
+  "registered_diagnostic_run": false,
+  "retained_software_evidence": [
+    {
+      "bytes": 1306,
+      "path": "admission-red.txt",
+      "sha256": "979edaf380ce857c90784a35255c423f293d769ab4e4b65e86ab4b07ffb36b69"
+    },
+    {
+      "bytes": 99,
+      "path": "baseline.txt",
+      "sha256": "1cf8ec33b9e17ba5ed5182ef52ee30b5769883fd1e0fd52d95880bfa61b6e5cf"
+    },
+    {
+      "bytes": 99,
+      "path": "focused-final.txt",
+      "sha256": "2199d07a170e17a015d04baf7cf9caebc149ab65950f96f39c6c01906c20df4c"
+    },
+    {
+      "bytes": 327,
+      "path": "full-suite-final.json",
+      "sha256": "3b37d58fdfc97c8ca8ee29ef9ef911ddbfd0b4c694262a45d3bc0b9d7bd0392c"
+    },
+    {
+      "bytes": 6238,
+      "path": "full-suite-final.txt",
+      "sha256": "26c87952c7a056c716785d90b4ce597947f5ce2b27132d22722314d705d0339d"
+    },
+    {
+      "bytes": 302,
+      "path": "full-suite.json",
+      "sha256": "acbe833333ee77abff597bc2f7d03483cb063ee2a7fec2bcbc8485f01e6ef13f"
+    },
+    {
+      "bytes": 6238,
+      "path": "full-suite.txt",
+      "sha256": "a82cc6a64254a481e3ac33a747b3154010ec89b7e4f952f3992c324978a2bf41"
+    },
+    {
+      "bytes": 99,
+      "path": "green.txt",
+      "sha256": "d5b8e6ce9063980626cf387b8e127adc8844205cd1418c42fa6a9e70795cde74"
+    },
+    {
+      "bytes": 3878,
+      "path": "progress.md",
+      "sha256": "e97553865175581e276fd151a4bbc7cd525e69d20684e2157cbdd54e4d0aca19"
+    },
+    {
+      "bytes": 22141,
+      "path": "red.txt",
+      "sha256": "4ac37db2190dba89b4b6c91af64a69f615effd76757f4db2b72c92148285033a"
+    },
+    {
+      "bytes": 99,
+      "path": "review-green.txt",
+      "sha256": "7e4ee402e4c00a077e997041d0c8c2c85c971f63e4c467f9cdd0f8b6f9cc8c00"
+    },
+    {
+      "bytes": 6597,
+      "path": "review-red.txt",
+      "sha256": "f271648d5a43fd7a517aee5e8019d00b00f7a5d87a4fa206ac29ade2608e49b1"
+    }
+  ],
+  "review": {
+    "critical": 0,
+    "fixes": [
+      "Read/hash registration same bytes and recheck before decoding/final publication",
+      "Exactly one visible bridge per completed control; none at terminal"
+    ],
+    "important": 2,
+    "important_fixed": 2,
+    "minor_deferred": "Failure receipt does not contain final input integrity; independent post-exit verification must cover both success and failure",
+    "root_additional_fix": "Verify imported project modules originate in hashed checkout",
+    "rounds": 1
+  },
+  "schema": "memory-terminal-attribution-software-v1",
+  "sources": [
+    {
+      "bytes": 17243,
+      "path": "scripts/memory_terminal_attribution.py",
+      "sha256": "a6e30e68754e27adadc428bf79c4ed32f267241576c15eaf8a0a714fa0debcf4"
+    },
+    {
+      "bytes": 7005,
+      "path": "tests/test_memory_terminal_attribution.py",
+      "sha256": "f566dd3ad6c89d693d0662b8300639cb730f12254ca375656345b88f75c344ec"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "close_sha256": "ca92aaf06a964ec26daf651ff9203fa313039179a3840b66e107a2977699102d",
+  "current_exit_requalification": false,
+  "errors": [],
+  "execution_sha256": "6eb2da1c07a54ed2a1cdabfd7324ee7d19241c437cd72dc8b766a5b860ed0724",
+  "held_out_used": false,
+  "output": {
+    "bytes": 2766687296,
+    "extra": 0,
+    "files": 725,
+    "inventory_sha256": "c5f531a808fd9a563dcbc37131ad423e40bfc935ed28677257b0900f59364675",
+    "mismatches": 0,
+    "missing": 0
+  },
+  "protected": {
+    "actual_inventory_sha256": "024f65d8aee538fcba052a7e26c2a91d4c756c669b720379d7659caf2117fa2b",
+    "bytes": 4400592526,
+    "expected_inventory_sha256": "024f65d8aee538fcba052a7e26c2a91d4c756c669b720379d7659caf2117fa2b",
+    "extra": 0,
+    "files": 1151,
+    "mismatches": 0,
+    "missing": 0,
+    "roots": 18
+  },
+  "qualification_claims": [],
+  "r2_complete": false,
+  "registration_sha256": "61b295030e692c580331d5ab282ab380da87e7b7d3718f4e31809238835543a1",
+  "retained_close_since_origin_seconds": 2839.7999922519957,
+  "retained_close_since_readout_start_seconds": 344.7671157040022,
+  "retained_deadline_margin_seconds": 255.2328842959978,
+  "retained_matching_owner_exited": 30,
+  "retained_pair_ids": 6,
+  "retained_process_namespace": "pid:[4026531836]",
+  "retained_raw_audit_pass": 30,
+  "retained_registered_slots": 30,
+  "reviewer": "pilot_v2_post_exit_integrity",
+  "schema": "selected-pilot-byte-integrity-v2",
+  "scope": "Independent stdlib byte/metadata readback only; no physics, imports, decoding, regrading or current process lookup"
+}

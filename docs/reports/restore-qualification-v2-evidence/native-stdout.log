@@ -1,0 +1,26 @@
+{
+  "status": "narrow-restore-provisional-pass",
+  "mode": "restore-v2",
+  "total_seconds": 60.079670186998555,
+  "readout_seconds": 4.7291612020053435,
+  "total_new_controls": 10,
+  "restore_pair_matches": false,
+  "comparison": {
+    "equal": false,
+    "left_digest": "0839f44bc3d01be7866bac19b189f096e34e3901667b684c8c2d5dd8a3a662f0",
+    "right_digest": "01510ccb85899253385a8790ff35babc3f9be3e031fbce4ea1829f5f115133b7",
+    "differing_components": [
+      "native_data",
+      "native_sha256"
+    ]
+  },
+  "native_prerequisites_passed": false
+}
+{
+  "status": "narrow-restore-passed",
+  "narrow_restore_passed": true,
+  "restore_pair_matches": false,
+  "candidate_restore_pair_matches": true,
+  "error": null,
+  "failure_publication_error": null
+}

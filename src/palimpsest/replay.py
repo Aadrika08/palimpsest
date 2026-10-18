@@ -23,9 +23,11 @@ _ADAPTIVE_RUNTIME = _BODY_RUNTIME + ('src/palimpsest/body_adaptation.py',)
 _HOMING_RUNTIME = _ADAPTIVE_RUNTIME + ('src/palimpsest/body_homing.py',)
 _MALE_RUNTIME = ('src/palimpsest/male_policy.py', 'src/palimpsest/male_model.py')
 _REFERENCE_RUNTIME = ('src/palimpsest/memory_reference.py',)
+_DECISION_RUNTIME = ('src/palimpsest/memory_decision.py','src/palimpsest/memory_decision_world.py')
 _EVENTS = {"command_received", "command_applied", "command_rejected", "episode_started",
            "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure",
            "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_inspected",
+           "memory_acquired_boundary", "memory_selector_configured", "memory_decision_armed",
            "memory_reference_sensed", "memory_reference_input", "memory_reference_teacher_invalidated",
            "body_homing_started", "body_loaded", "body_measured", "body_failed", "body_calibration_started", "body_calibration_boundary", "task_sensed", "task_decision", "task_cue", "task_inspected"}
 _IGNORED_EVENT_KEYS = {"sequence", "run_id", "received_run_id", "applied_run_id"}
@@ -139,6 +141,8 @@ def _initial_snapshot(data):
 def _compatible(source, destination, controller=None, scenario=None):
     runtime = _RUNTIME + (_MALE_RUNTIME if controller in MALE_CONTROLLERS else ())
     from .memory_reference import REFERENCES
+    if scenario == 'memory-decision-v2':
+        runtime += _DECISION_RUNTIME
     if scenario in REFERENCES:
         runtime += _REFERENCE_RUNTIME
     if scenario == 'calibrated-wheel-compensation':
@@ -212,6 +216,27 @@ def _write_report(destination, report, storage_budget=None):
         temporary.unlink(missing_ok=True)
 
 
+def recorded_memory_case(manifest, scenario):
+    """Dispatch explicitly; v1 history/configuration never becomes a v2 case."""
+    case = manifest.get('memory_case')
+    if case is None:
+        if manifest.get('memory_case_sha256') is not None or manifest.get('acquisition_protocol_sha256') is not None:
+            raise ValueError('Recorded runtime case identity lacks its configuration')
+        if scenario == 'memory-decision-v2':
+            raise ValueError('Memory-v2 replay requires its exact frozen case')
+        return None
+    from .memory import sha256
+    if scenario == 'memory-decision-v2':
+        from .memory_decision_world import validate_case
+        case = validate_case(case)
+    else:
+        from .memory_experiment import validate_world_case
+        case = validate_world_case(case)
+    if manifest.get('memory_case_sha256') != sha256(case) or manifest.get('acquisition_protocol_sha256') != case['acquisition_protocol_sha256']:
+        raise ValueError('Recorded runtime case/acquisition identity differs')
+    return case
+
+
 def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_root, progress=None,
                storage_budget=None, recording_max_bytes=None, diagnostics=None):
     """Replay a completed source in a fresh owner process supplied by the caller.
@@ -276,15 +301,12 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
             report['comparison']['runtime_source_keys'] += list(_HOMING_RUNTIME if profile['id']=='adaptive-encoder-homing' else _ADAPTIVE_RUNTIME if profile['id']=='adaptive-wheel-calibration' else _BODY_RUNTIME)
             if mode == 'actions':
                 report['comparison']['fields'] = sorted(_PHYSICAL | TICK_FIELDS)
-        memory_case = manifest.get('memory_case')
-        if memory_case is not None:
-            from .memory import sha256
-            from .memory_experiment import validate_world_case
-            memory_case = validate_world_case(memory_case)
-            if manifest.get('memory_case_sha256') != sha256(memory_case) or manifest.get('acquisition_protocol_sha256') != memory_case['acquisition_protocol_sha256']:
-                raise ValueError('Recorded runtime case/acquisition identity differs')
-        elif manifest.get('memory_case_sha256') is not None or manifest.get('acquisition_protocol_sha256') is not None:
-            raise ValueError('Recorded runtime case identity lacks its configuration')
+        memory_case = recorded_memory_case(manifest,profile['id'])
+        decision_v2 = profile['id']=='memory-decision-v2'
+        if decision_v2:
+            report['comparison']['runtime_source_keys'] += list(_DECISION_RUNTIME)
+            if mode!='policy':
+                raise ValueError('Memory-v2 replay requires CPU policy actions, no action override')
         snapshot_world = snapshot['application'].get('world_task_state')
         snapshot_case = snapshot_world.get('case') if isinstance(snapshot_world, dict) else None
         if snapshot_case != memory_case:
@@ -295,7 +317,7 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
                 raise ValueError("replay held provenance differs from the source diagnostics event")
         from .engine import Engine
         atomic_memory = (memory_case is not None and memory_case['acquisition'] and
-            profile['id'] == 'memory-passages' and manifest['controller'] == 'flynn')
+            profile['id'] in ('memory-passages','memory-decision-v2') and manifest['controller'] == 'flynn')
         from .memory_reference import REFERENCES, PROTOCOL_SHA256
         reference = profile['id'] in REFERENCES
         if reference:
@@ -379,6 +401,10 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
             if not generated:
                 if kind == "command_received":
                     engine.submit(event["command"])
+                elif kind == 'memory_selector_configured':
+                    engine.configure_memory_selector(event['selector'],event['u'])
+                elif kind == 'memory_decision_armed':
+                    engine.arm_memory_decision()
                 elif kind == "browser_disconnected" or kind == "command_rejected" and event.get("result", {}).get("reason") == "browser disconnected":
                     engine.pause_for_disconnect()
                 elif kind == "command_rejected" and event.get("result", {}).get("reason") == "engine closed before application":

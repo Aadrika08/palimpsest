@@ -1,0 +1,110 @@
+Verification cache fixture: owned temporary Path.home; HOME unchanged
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____ test_actual_phase_can_checkpoint_multiple_failed_candidates_and_finish ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-21/test_actual_phase_can_checkpoi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7384401a3d10>
+
+    def test_actual_phase_can_checkpoint_multiple_failed_candidates_and_finish(tmp_path,monkeypatch):
+        import json
+        from pathlib import Path
+        module = study()
+        repo = Path(module.__file__).resolve().parents[1]
+        identity = {'synthetic-software-fixture':True}
+        def preflight(repo,assets,history,output,phase,deadline):
+            return {'repo':str(repo),'assets':str(assets),'history_root':str(history),
+                'output':str(output),'phase_root':str(phase),'source_identity':identity,
+                'geometry_valid':True}
+        monkeypatch.setattr(module.pilot,'preflight',preflight)
+        monkeypatch.setattr(module.pilot,'source_identity',lambda *a:identity)
+        monkeypatch.setattr(module.pilot,'launch_owner',lambda *a,**kw:dict(
+            status='failed',raw_audit_pass=True,retained_task_failure=True,acquired=False))
+        output = tmp_path/'phase'
+>       assert module.main(['--repo',str(repo),'--assets',str(tmp_path/'assets'),
+            '--history-root',str(tmp_path/'history'),'--output',str(output)]) == 0
+
+tests/test_memory_waypoint_study.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_waypoint_study.py:120: in main
+    output.mkdir(parents=True,exist_ok=False)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-utkarsh/pytest-21/test_actual_phase_can_checkpoi0/phase')
+mode = 511, parents = True, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-utkarsh/pytest-21/test_actual_phase_can_checkpoi0/phase'
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1116: FileExistsError
+_________ test_terminal_sensor_exception_cannot_be_omitted_or_renamed __________
+
+    def test_terminal_sensor_exception_cannot_be_omitted_or_renamed():
+        from palimpsest import memory_decision as decision
+        p = study().pilot
+        case = world.make_case(400,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+        private = {'cues':[],'landmarks':[{'id':case['common_goal_id'],'xy':[2.5,0.]}],
+            'passages':[],'common_goal_id':case['common_goal_id']}
+        packet = decision.capture_symbolic(private,[-2.5,0.,0.],[],episode_id='episode-0',tick=0)
+        state = decision.initialize(case)
+        target = state['supervisor']['waypoint_ids'][0]
+        with pytest.raises(decision.CueUnavailable):
+>           decision.advance_memory(state,packet)
+
+tests/test_memory_waypoint_study.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/memory_decision.py:357: in advance_memory
+    _validate_packet(packet,state)
+src/palimpsest/memory_decision.py:343: in _validate_packet
+    memory_task._validate_packet(old,state)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+packet = {'common_goal_id': 'memory-v2-00000190-local_cue-change-0-goal', 'cues': [], 'episode_id': 'episode-0', 'id': 'sensor-4eafaa63251df4b82b43d9a65937a1ddedf770494cd43abc7794f3ea14ce4000', ...}
+state = {'active': None, 'cursor': None, 'detector': {'cues': [], 'tick': None}, 'e': {'episodes': [], 'version': 1}, ...}
+
+    def _validate_packet(packet, state):
+        memory._fields(packet, 'version id episode_id tick common_goal_id cues landmarks passages')
+        memory._version(packet['version'])
+        memory._id(packet['episode_id'])
+        memory._id(packet['common_goal_id'])
+        memory._int(packet['tick'])
+        if packet['episode_id'] != state['episode_id'] or packet['id'] != _sensor_id(packet['episode_id'], packet['tick'], 'packet'):
+            raise ValueError('Wrong episode or invalid deterministic packet ID')
+        memory._bounded(packet)
+        for channel in ('cues', 'landmarks'):
+            _unique(packet[channel], 'id', memory.MAX_FACTS + (channel == 'landmarks'))
+            for item in packet[channel]:
+                memory._fields(item, 'id state bearing_rad' if channel == 'cues' else 'id bearing_rad')
+                angle = item['bearing_rad']
+                if type(angle) not in (int, float) or not math.isfinite(angle) or abs(angle) > math.pi / 2:
+                    raise ValueError('Invalid visible bearing')
+                if channel == 'cues' and (type(item['state']) is not int or item['state'] not in (0, 1)):
+                    raise ValueError('Invalid cue token')
+        subjects = _unique(packet['passages'], 'subject_id', memory.MAX_FACTS)
+        if subjects != {f['subject_id'] for f in state['m']['facts']}:
+>           raise ValueError('Packet passage subjects differ from the factual bank')
+E           ValueError: Packet passage subjects differ from the factual bank
+
+src/palimpsest/memory_task.py:138: ValueError
+_______ test_prerequisite_accounting_starts_before_geometry_preparation ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-21/test_prerequisite_accounting_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73843fe1e510>
+
+    def test_prerequisite_accounting_starts_before_geometry_preparation(tmp_path,monkeypatch):
+        module = study()
+        now = [100.]
+>       monkeypatch.setattr(module,'monotonic',lambda:now[0])
+E       AttributeError: <module 'scripts.memory_waypoint_study' from '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_waypoint_study.py'> has no attribute 'monotonic'
+
+tests/test_memory_waypoint_study.py:160: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_waypoint_study.py::test_actual_phase_can_checkpoint_multiple_failed_candidates_and_finish
+FAILED tests/test_memory_waypoint_study.py::test_terminal_sensor_exception_cannot_be_omitted_or_renamed
+FAILED tests/test_memory_waypoint_study.py::test_prerequisite_accounting_starts_before_geometry_preparation
+3 failed, 8 deselected in 1.88s

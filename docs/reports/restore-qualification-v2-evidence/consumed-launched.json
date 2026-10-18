@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py",
+    "--pipeline",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/docs/reports/restore-qualification-v2-evidence/registration.json"
+  ],
+  "implementation_head": "f289f880a1cfff1997cf6d66cde475c3d56da31b",
+  "registration_sha256": "d731fb72ff8c10d5a004966ee197a84bf52a5f96e279f43bfbd96c85e4986dc8",
+  "started_monotonic": 79975.028161435,
+  "watchdog_command": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5",
+    "890s",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py",
+    "--supervised"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "attempted": [],
+  "errors": [
+    {
+      "message": "[Errno 28] No space left on device: '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3/supervisor.tmp' -> '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3/supervisor.json'",
+      "type": "OSError"
+    }
+  ],
+  "selected_profile_sha256": null,
+  "stage": "travel-development",
+  "status": "failed",
+  "unattempted": [
+    "candidate-d25",
+    "candidate-d20",
+    "candidate-d15"
+  ],
+  "wall_seconds": 190.5276793610028
+}

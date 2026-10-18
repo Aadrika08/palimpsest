@@ -1,0 +1,57 @@
+{
+  "artifact_index": [
+    {
+      "bytes": 0,
+      "path": ".palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 65008,
+      "path": "analysis.json",
+      "sha256": "0d0ed37d30ff80cad97e8608af726b9bed2cb3bef48a70f1ab7c09320ab07f29"
+    },
+    {
+      "bytes": 135560,
+      "path": "registration.json",
+      "sha256": "5c92b8bb63ba06f456f0daab9642e94d7c4c56d429f195a72abc833b86db20b7"
+    }
+  ],
+  "deadline_monotonic": 55177.674677808,
+  "held_out_used": false,
+  "immutable_inputs_unchanged": true,
+  "implementation_head": "895e56f258ab590d3c75a5717bc67aa1e96d6897",
+  "native_prerequisites_passed": false,
+  "native_retries": 0,
+  "new_native_owners": 0,
+  "offline_pair_audit_complete": true,
+  "original_failed_status": "independent-readout-stop",
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-native-byte-attribution-20261007T080942Z",
+  "paired_pilot": "unattempted-by-scope",
+  "physics_steps": 0,
+  "qualification_claims": [],
+  "registration_sha256": "5c92b8bb63ba06f456f0daab9642e94d7c4c56d429f195a72abc833b86db20b7",
+  "schema": "memory-restore-offline-execution-v1",
+  "started_monotonic": 54877.674677808,
+  "started_utc": "2026-10-07T08:10:17.791851+00:00",
+  "status": "offline-audit-complete",
+  "storage_before_close": {
+    "files": 4,
+    "headroom_bytes": 67108864,
+    "max_bytes": 67108864,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 66907490,
+    "used_bytes": 201374
+  },
+  "summary": {
+    "all_native_differences_are_timer_duration": true,
+    "differing_components": [
+      "native_data",
+      "native_sha256"
+    ],
+    "native_fields_equal": false,
+    "owner_count": 2,
+    "state_equal": false,
+    "trace_equal": true
+  },
+  "total_seconds": 4.552369252000062
+}

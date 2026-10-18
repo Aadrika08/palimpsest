@@ -1,0 +1,192 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_new_study_rehearses_production_admission_and_exclusive_marker[diagnose-execute-diagnostic.py-890s] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-54/test_new_study_rehearses_produ0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a434e6d6710>
+mode = 'diagnose', filename = 'execute-diagnostic.py', seconds = '890s'
+
+    @pytest.mark.parametrize('mode,filename,seconds', [
+        ('diagnose', 'execute-diagnostic.py', '890s'),
+        ('qualify', 'execute-qualification.py', '4890s'),
+    ])
+    def test_new_study_rehearses_production_admission_and_exclusive_marker(
+            tmp_path, monkeypatch, mode, filename, seconds):
+        actual_repo = Path(__file__).resolve().parents[1]
+        source = actual_repo/'docs/reports/memory-restore-study-v2-evidence'/filename
+        spec = importlib.util.spec_from_file_location('study_wrapper_'+mode, source)
+        launcher = importlib.util.module_from_spec(spec); spec.loader.exec_module(launcher)
+        evidence = tmp_path/'docs/reports/memory-restore-study-v2-evidence'
+        evidence.mkdir(parents=True)
+        workspace = tmp_path/'.superpowers/sdd/memory-restore-study-v2'/mode
+        workspace.mkdir(parents=True)
+        old = tmp_path/'.superpowers/sdd/memory-restore-diagnostic'
+        old.mkdir(parents=True)
+        old_marker = old/'diagnostic-launched.json'
+        old_marker.write_text('consumed original invocation; immutable\n')
+        (tmp_path/'.gitignore').write_text('.superpowers/\nruns/\n')
+        subprocess.run(['git','init','-q',str(tmp_path)],check=True)
+        def commit():
+            subprocess.run(['git','-C',str(tmp_path),'add','.'],check=True)
+            subprocess.run(['git','-C',str(tmp_path),'-c','user.name=Fixture',
+                '-c','user.email=fixture@example.test','commit','-qm','fixture'],check=True)
+        commit()
+        registered_head = subprocess.check_output(['git','rev-parse','HEAD'],cwd=tmp_path,text=True).strip()
+        registration_path = evidence/('registration.json' if mode=='diagnose' else 'qualification-registration.json')
+        registration_path.write_text(json.dumps({
+            'schema':'memory-restore-registration-v1', 'mode':mode,
+            'repo':str(tmp_path), 'assets':str(tmp_path/'assets'),
+            'history_root':str(tmp_path/'histories'), 'output':str(tmp_path/'runs'/mode),
+            'python':sys.executable, 'implementation_commit':registered_head,
+            'profile_sha256':d.PROFILE, 'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,
+            'seconds_caps':list(d.CAPS[mode]),
+        }))
+        commit()
+        monkeypatch.setattr(launcher, '__file__', str(evidence/filename))
+        actual_run = subprocess.run
+        calls = []
+        def child(command, **kwargs):
+            if command[0] != 'timeout':
+                return actual_run(command, **kwargs)
+            calls.append(command)
+            assert command[3] == seconds
+            assert command[-1] == str(registration_path)
+            # Real subprocess runs the production main's early admission checks.
+            # Only source/preparation are doubled; stop before root/job allocation.
+            bootstrap = (
+                'import sys; sys.path.insert(0,'+repr(str(actual_repo))+'); '
+                'from scripts import memory_restore_diagnostic as d; '
+                'd.__file__='+repr(str(tmp_path/'scripts/memory_restore_diagnostic.py'))+'; '
+                'd.recheck_inputs=lambda *a: None; '
+                'def_placeholder=None\n'
+                'def stop_before_native(*args, **kwargs):\n'
+                '    print("production clean admission reached; no native allocation", flush=True)\n'
+                '    raise SystemExit(0)\n'
+                'd.p.preflight=stop_before_native\n'
+                'raise SystemExit(d.main(["--registration",'+repr(str(registration_path))+']))\n'
+            )
+            # The source import uses actual source; fixture paths exercise admission.
+            env = dict(kwargs['env'], PYTHONPATH=str(actual_repo/'src')+':'+str(actual_repo))
+            return actual_run(command[:4]+[sys.executable,'-c',bootstrap],
+                              **{**kwargs, 'env':env})
+        monkeypatch.setattr(launcher.subprocess, 'run', child)
+>       assert launcher.main() == 0
+               ^^^^^^^^^^^^^^^
+
+tests/test_memory_restore_study_v2.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-restore-study-v2-evidence/execute-diagnostic.py:22: in main
+    with marker.open('x') as stream:
+         ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-utkarsh/pytest-54/test_new_study_rehearses_produ0/.superpowers/sdd/memory-restore-diagnostic/diagnostic-launched.json')
+mode = 'x', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-utkarsh/pytest-54/test_new_study_rehearses_produ0/.superpowers/sdd/memory-restore-diagnostic/diagnostic-launched.json'
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileExistsError
+_ test_new_study_rehearses_production_admission_and_exclusive_marker[qualify-execute-qualification.py-4890s] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-54/test_new_study_rehearses_produ1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a434e538ed0>
+mode = 'qualify', filename = 'execute-qualification.py', seconds = '4890s'
+
+    @pytest.mark.parametrize('mode,filename,seconds', [
+        ('diagnose', 'execute-diagnostic.py', '890s'),
+        ('qualify', 'execute-qualification.py', '4890s'),
+    ])
+    def test_new_study_rehearses_production_admission_and_exclusive_marker(
+            tmp_path, monkeypatch, mode, filename, seconds):
+        actual_repo = Path(__file__).resolve().parents[1]
+        source = actual_repo/'docs/reports/memory-restore-study-v2-evidence'/filename
+        spec = importlib.util.spec_from_file_location('study_wrapper_'+mode, source)
+        launcher = importlib.util.module_from_spec(spec); spec.loader.exec_module(launcher)
+        evidence = tmp_path/'docs/reports/memory-restore-study-v2-evidence'
+        evidence.mkdir(parents=True)
+        workspace = tmp_path/'.superpowers/sdd/memory-restore-study-v2'/mode
+        workspace.mkdir(parents=True)
+        old = tmp_path/'.superpowers/sdd/memory-restore-diagnostic'
+        old.mkdir(parents=True)
+        old_marker = old/'diagnostic-launched.json'
+        old_marker.write_text('consumed original invocation; immutable\n')
+        (tmp_path/'.gitignore').write_text('.superpowers/\nruns/\n')
+        subprocess.run(['git','init','-q',str(tmp_path)],check=True)
+        def commit():
+            subprocess.run(['git','-C',str(tmp_path),'add','.'],check=True)
+            subprocess.run(['git','-C',str(tmp_path),'-c','user.name=Fixture',
+                '-c','user.email=fixture@example.test','commit','-qm','fixture'],check=True)
+        commit()
+        registered_head = subprocess.check_output(['git','rev-parse','HEAD'],cwd=tmp_path,text=True).strip()
+        registration_path = evidence/('registration.json' if mode=='diagnose' else 'qualification-registration.json')
+        registration_path.write_text(json.dumps({
+            'schema':'memory-restore-registration-v1', 'mode':mode,
+            'repo':str(tmp_path), 'assets':str(tmp_path/'assets'),
+            'history_root':str(tmp_path/'histories'), 'output':str(tmp_path/'runs'/mode),
+            'python':sys.executable, 'implementation_commit':registered_head,
+            'profile_sha256':d.PROFILE, 'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,
+            'seconds_caps':list(d.CAPS[mode]),
+        }))
+        commit()
+        monkeypatch.setattr(launcher, '__file__', str(evidence/filename))
+        actual_run = subprocess.run
+        calls = []
+        def child(command, **kwargs):
+            if command[0] != 'timeout':
+                return actual_run(command, **kwargs)
+            calls.append(command)
+            assert command[3] == seconds
+            assert command[-1] == str(registration_path)
+            # Real subprocess runs the production main's early admission checks.
+            # Only source/preparation are doubled; stop before root/job allocation.
+            bootstrap = (
+                'import sys; sys.path.insert(0,'+repr(str(actual_repo))+'); '
+                'from scripts import memory_restore_diagnostic as d; '
+                'd.__file__='+repr(str(tmp_path/'scripts/memory_restore_diagnostic.py'))+'; '
+                'd.recheck_inputs=lambda *a: None; '
+                'def_placeholder=None\n'
+                'def stop_before_native(*args, **kwargs):\n'
+                '    print("production clean admission reached; no native allocation", flush=True)\n'
+                '    raise SystemExit(0)\n'
+                'd.p.preflight=stop_before_native\n'
+                'raise SystemExit(d.main(["--registration",'+repr(str(registration_path))+']))\n'
+            )
+            # The source import uses actual source; fixture paths exercise admission.
+            env = dict(kwargs['env'], PYTHONPATH=str(actual_repo/'src')+':'+str(actual_repo))
+            return actual_run(command[:4]+[sys.executable,'-c',bootstrap],
+                              **{**kwargs, 'env':env})
+        monkeypatch.setattr(launcher.subprocess, 'run', child)
+>       assert launcher.main() == 0
+               ^^^^^^^^^^^^^^^
+
+tests/test_memory_restore_study_v2.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-restore-study-v2-evidence/execute-qualification.py:14: in main
+    registration = p.read_json(evidence/'registration.json')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-utkarsh/pytest-54/test_new_study_rehearses_produ1/docs/reports/memory-restore-study-v2-evidence/registration.json')
+limit = 1048576
+
+    def read_json(path, limit=MiB):
+        path = checked_path(path)
+        if not path.is_file() or path.stat().st_size > limit:
+>           raise ValueError('Missing or oversized bounded JSON input')
+E           ValueError: Missing or oversized bounded JSON input
+
+scripts/memory_decision_pilot.py:254: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_study_v2.py::test_new_study_rehearses_production_admission_and_exclusive_marker[diagnose-execute-diagnostic.py-890s]
+FAILED tests/test_memory_restore_study_v2.py::test_new_study_rehearses_production_admission_and_exclusive_marker[qualify-execute-qualification.py-4890s]
+2 failed in 0.15s

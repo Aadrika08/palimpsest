@@ -1,0 +1,54 @@
+{
+  "author": {
+    "id": "U_kgDOBwy_ww",
+    "is_bot": false,
+    "login": "Aadrika08",
+    "name": "aadrika "
+  },
+  "baseRefName": "research/capability-integration",
+  "headRefOid": "97ac6fd4d129ece3812a35a85c58df7dc4fdaad9",
+  "isDraft": true,
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-04T09:43:52Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/Aadrika08/palimpsest/actions/runs/37193085569/job/111409202469",
+      "name": "fixtures",
+      "startedAt": "2026-10-04T09:43:50Z",
+      "status": "COMPLETED",
+      "workflowName": "Fixture checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-04T09:43:19Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/Aadrika08/palimpsest/actions/runs/37193055981/job/111409114450",
+      "name": "fixtures",
+      "startedAt": "2026-10-04T09:43:17Z",
+      "status": "COMPLETED",
+      "workflowName": "Fixture checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-04T09:43:52Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/Aadrika08/palimpsest/actions/runs/37193085569/job/111409202557",
+      "name": "frontend",
+      "startedAt": "2026-10-04T09:43:50Z",
+      "status": "COMPLETED",
+      "workflowName": "Fixture checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-04T09:43:19Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/Aadrika08/palimpsest/actions/runs/37193055981/job/111409114544",
+      "name": "frontend",
+      "startedAt": "2026-10-04T09:43:17Z",
+      "status": "COMPLETED",
+      "workflowName": "Fixture checks"
+    }
+  ],
+  "url": "https://github.com/Aadrika08/palimpsest/pull/66"
+}

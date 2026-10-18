@@ -1,0 +1,105 @@
+{
+  "cleanup": [
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1396040,
+        "pid": 1396040,
+        "run_id": "02d04b2c6d45454aafe78f2bd8785514",
+        "starttime": 9253765
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/02d04b2c6d45454aafe78f2bd8785514/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1397816,
+        "pid": 1397816,
+        "run_id": "0ffc6e231d7645ba8c2d2bda87bb184a",
+        "starttime": 9290791
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/0ffc6e231d7645ba8c2d2bda87bb184a/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1399158,
+        "pid": 1399158,
+        "run_id": "4c41bdc2007940a9bbade1f65add77b9",
+        "starttime": 9329229
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/4c41bdc2007940a9bbade1f65add77b9/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1397281,
+        "pid": 1397281,
+        "run_id": "759b84578ddc4925b36763725a477daf",
+        "starttime": 9279156
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/759b84578ddc4925b36763725a477daf/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1398742,
+        "pid": 1398742,
+        "run_id": "9273115c0587491c8427087d09b723cb",
+        "starttime": 9316585
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/9273115c0587491c8427087d09b723cb/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1396287,
+        "pid": 1396287,
+        "run_id": "c2acd119223b4cb68884baa13dbdedf8",
+        "starttime": 9264726
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/c2acd119223b4cb68884baa13dbdedf8/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1399019,
+        "pid": 1399019,
+        "run_id": "e0277617fcd64bc0b1314f723b45b30f",
+        "starttime": 9326500
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/e0277617fcd64bc0b1314f723b45b30f/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 1398420,
+        "pid": 1398420,
+        "run_id": "e91cf0a8efbe4712b01a0a469991fcb8",
+        "starttime": 9306252
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/runs/memory-prerequisites-v3-20261007T183709Z/stage/runs/e91cf0a8efbe4712b01a0a469991fcb8/owner.json",
+      "status": "already-exited"
+    }
+  ],
+  "failures": [],
+  "native_exit_code": 0,
+  "pipeline_exit_code": 0,
+  "qualification_claims": [],
+  "registration_sha256": "8567bc446b265c36a3063dc5d3fcb2cf354bcd2a3684ec4a068e6c98007f12f9",
+  "storage": {
+    "files": 287,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 7254148217,
+    "used_bytes": 1335786375
+  }
+}

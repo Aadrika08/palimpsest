@@ -1,0 +1,374 @@
+{
+  "artifact_index": [
+    {
+      "bytes": 9660,
+      "path": "execution.json",
+      "sha256": "f178b16443f577201c244d62b79c1f178f560ce00a74d126a0ab26ffb7c7c32c"
+    },
+    {
+      "bytes": 6322,
+      "path": "invocation.py",
+      "sha256": "4c06ae83b672c0639691f35b2db49af491b3f53c13c6d3c867e6f5cf2962c535"
+    },
+    {
+      "bytes": 5899,
+      "path": "nav-continuation-invocation.py",
+      "sha256": "e155a685e8e557d7cec5e83b1173107ecb81d2680cd21ff12050d8a15c2bd772"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/conditioned-degree_rewired-seed-10.npz",
+      "sha256": "941ea8df426c2c6bacfc571fda464c9a5af9d1ba6f3fbf7e418ef9129c958c1c"
+    },
+    {
+      "bytes": 306663,
+      "path": "nav-explore/conditioned-degree_rewired-seed-10.pt",
+      "sha256": "418898d37a553a2bf821382bb182708cbf1f59f5149b759c1aca432355b273c6"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/conditioned-degree_rewired-seed-11.npz",
+      "sha256": "1393f347b33dd545c9f934b753aa0c5eb0b1f722986a2059ffbe5fb454909c0b"
+    },
+    {
+      "bytes": 306663,
+      "path": "nav-explore/conditioned-degree_rewired-seed-11.pt",
+      "sha256": "23d69fc25506e8348510543757c2465dc768d285c829ba693fb7a828265bd2f2"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/conditioned-degree_rewired-seed-12.npz",
+      "sha256": "bd1cecd23b64a294cb7e056e584da3e8cc9e2af019a400c260aaa17bbdcc7534"
+    },
+    {
+      "bytes": 306663,
+      "path": "nav-explore/conditioned-degree_rewired-seed-12.pt",
+      "sha256": "1f44f223e0441a2e92a92598ed51a37288acc9e65e31904977eba0e4e25ab7c8"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/conditioned-original-seed-10.npz",
+      "sha256": "24d1de6f608957608a4ab1f1a31a5b5e6654b1f493289933880d6c871710448a"
+    },
+    {
+      "bytes": 306663,
+      "path": "nav-explore/conditioned-original-seed-10.pt",
+      "sha256": "fad416c6556a6bbee3b9eaac8951f17cb64c6a7a2caf45a9114cfd9905f31ce6"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/conditioned-original-seed-11.npz",
+      "sha256": "3a496028d45be1fd255b5a345bf45a8e46d45732cb1895d3ab2138e4b0296ffe"
+    },
+    {
+      "bytes": 306663,
+      "path": "nav-explore/conditioned-original-seed-11.pt",
+      "sha256": "8692f5299bd0871ea85124a651ea2cc816de3425a5387a20546b14660d577a71"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/conditioned-original-seed-12.npz",
+      "sha256": "855432b6599549d28a4a89721cccad019c67fa563140e40e19f7b15f0501f0a2"
+    },
+    {
+      "bytes": 306663,
+      "path": "nav-explore/conditioned-original-seed-12.pt",
+      "sha256": "45f476f56b0deca7bf42becc6089b0c21c0d5f6b382295f64cca772348db629b"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/gru-graph-free-seed-10.npz",
+      "sha256": "28af9fa81e830d4cbb459e87f0759d4c167c4e02993fb8710678f248cab1f1cc"
+    },
+    {
+      "bytes": 355533,
+      "path": "nav-explore/gru-graph-free-seed-10.pt",
+      "sha256": "f8c00bafee46421285ca11c39f7383db73644cc03d45d0ca296372dc8a5d683c"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/gru-graph-free-seed-11.npz",
+      "sha256": "9f3d094a898f194da7a295e5e10048d04365269c433ae48306eeb644675c5468"
+    },
+    {
+      "bytes": 355533,
+      "path": "nav-explore/gru-graph-free-seed-11.pt",
+      "sha256": "344e2500b6200792206218a66570b88b6365d3fbe96f550258ccd31019d69973"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/gru-graph-free-seed-12.npz",
+      "sha256": "888d78fa9a2eaac66d89c63670c0eae34251e295fa9da6d198cb30abdc690458"
+    },
+    {
+      "bytes": 355533,
+      "path": "nav-explore/gru-graph-free-seed-12.pt",
+      "sha256": "78022eedf96f3acc7ee41e4d9835fa6fff21562d4c32db1e54005887ed72d752"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/mlp-graph-free-seed-10.npz",
+      "sha256": "147006553a8759bd97999a383bdc397d2b7b33b991559a96d978332104af7425"
+    },
+    {
+      "bytes": 123149,
+      "path": "nav-explore/mlp-graph-free-seed-10.pt",
+      "sha256": "989a3e5998e82ceea40733b5405c027cd2c50172c0d4aabbe8c18708f2a39ebc"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/mlp-graph-free-seed-11.npz",
+      "sha256": "8063c4924b70169aa7d7948a1cd3a54455335a2f749e6e90eb32a6dc6fb80a6f"
+    },
+    {
+      "bytes": 123149,
+      "path": "nav-explore/mlp-graph-free-seed-11.pt",
+      "sha256": "577f630eba965b1b56cced3949277d5cf729d28a302b47d823370d8c7f556827"
+    },
+    {
+      "bytes": 29238,
+      "path": "nav-explore/mlp-graph-free-seed-12.npz",
+      "sha256": "b5973f3cbb4e2384826144f1db97b93b861e19e703ff89255915d81feeff26d5"
+    },
+    {
+      "bytes": 123149,
+      "path": "nav-explore/mlp-graph-free-seed-12.pt",
+      "sha256": "3e775d7eab312928bf83d111b46ae0e5b88345b5a56deb4f3a93685954091b29"
+    },
+    {
+      "bytes": 270061,
+      "path": "nav-explore/report.json",
+      "sha256": "025f61e88d58688a7a3113b3169e1cc1a7008f506538399fa994382df9e1564d"
+    },
+    {
+      "bytes": 423,
+      "path": "nav-explore-supervisor/stderr.log",
+      "sha256": "9c463760422c9f1eb39fb8b4b6c6a14f8b9241d07ba603f24231c4d3bb55416d"
+    },
+    {
+      "bytes": 179,
+      "path": "nav-explore-supervisor/stdout.log",
+      "sha256": "4df5cc9a983e0bbb3d7720e7b9d8fb7008e2f76cc561359da74a88f627cebecc"
+    },
+    {
+      "bytes": 331,
+      "path": "nav-explore-supervisor/supervisor.json",
+      "sha256": "50e5e7f0687bb5cb72ccd0f7e8fa520d9fbb8af67f5038b36f70cc34fd6ea034"
+    },
+    {
+      "bytes": 95,
+      "path": "nav-reproduce-supervisor/stderr.log",
+      "sha256": "0c2b1e3b04858a757bc365d759a303dca88f38330aad25d7df3243217356c6f8"
+    },
+    {
+      "bytes": 0,
+      "path": "nav-reproduce-supervisor/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 345,
+      "path": "nav-reproduce-supervisor/supervisor.json",
+      "sha256": "ff24a65117fc2b75672bf212853297d7455d437b3502ef4d756b61c5d71204a4"
+    },
+    {
+      "bytes": 210357,
+      "path": "nav-reproduce-v2/report.json",
+      "sha256": "b5bb8ab2b6c476bf1aaf6c35ce9443c1474e279300d6b85214347b4deb37a3c7"
+    },
+    {
+      "bytes": 423,
+      "path": "nav-reproduce-v2-supervisor/stderr.log",
+      "sha256": "9c463760422c9f1eb39fb8b4b6c6a14f8b9241d07ba603f24231c4d3bb55416d"
+    },
+    {
+      "bytes": 181,
+      "path": "nav-reproduce-v2-supervisor/stdout.log",
+      "sha256": "202e357eeab85c0db7211d7e0c461a4103e0958ab24b9cc0219831c816fed8d3"
+    },
+    {
+      "bytes": 349,
+      "path": "nav-reproduce-v2-supervisor/supervisor.json",
+      "sha256": "951f491c6fe604cf0686d7f8e3cc0996f031ec4b2d688afd538f4b427fe71a8f"
+    },
+    {
+      "bytes": 277516,
+      "path": "puck-explore/capacity256-seed-21.npz",
+      "sha256": "dc4b7a07db364bf4e7adc384ff030a12a7fbeb5aca8699a3ecaf2162f0784ea5"
+    },
+    {
+      "bytes": 277516,
+      "path": "puck-explore/capacity256-seed-22.npz",
+      "sha256": "eb7d3479af2f6e466608bf0a5c7264318303bede7a85aa59c2361b03960e86b1"
+    },
+    {
+      "bytes": 277516,
+      "path": "puck-explore/capacity256-seed-23.npz",
+      "sha256": "d690d3651364825a05e8d70a757b036acbaacdf6002301a554a4bc6d3e888f89"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/conditioned32-seed-21.npz",
+      "sha256": "22057eedb1f7526f42ed06f9b63e5e660c606547b48bd7bcddf3eb8f5e05c527"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/conditioned32-seed-22.npz",
+      "sha256": "96a3a6d989d8497720e17289ab30775a412d927719d75809d630182559f1e2c8"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/conditioned32-seed-23.npz",
+      "sha256": "57afffbcd6c5693c9e26c979072f02c70270b6674637b2ea525dcec6b83e52cc"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/longer32-seed-21.npz",
+      "sha256": "b5e56bfdd0e88d922b2fddb7f179919fc2a4417bb17066fdae2e856e184c1e55"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/longer32-seed-22.npz",
+      "sha256": "490b2a3ab300cfb380c69e437fd7dcd472a81dc7b739a51a400e2cb7500d68ea"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/longer32-seed-23.npz",
+      "sha256": "687d0a10087b7f8e94ebfe653792af44be8f84aeef1abda811e9ec6f86e14814"
+    },
+    {
+      "bytes": 262190,
+      "path": "puck-explore/report.json",
+      "sha256": "e25c3c933abe7a5b07bf79461018a1ba77fc54ea7ff712173a68848db147f9e2"
+    },
+    {
+      "bytes": 0,
+      "path": "puck-explore-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 161,
+      "path": "puck-explore-supervisor/stdout.log",
+      "sha256": "4412543390ea18d19d4ccffa04faf80dbb0f9610a48286e70357595997f871da"
+    },
+    {
+      "bytes": 346,
+      "path": "puck-explore-supervisor/supervisor.json",
+      "sha256": "fb663ea03d8405a383d5136ad41c503a547fda6ede40e727af6d6c2ac61500d8"
+    },
+    {
+      "bytes": 53964,
+      "path": "puck-reproduce/report.json",
+      "sha256": "b826434680979b866556d4ced254f9d99c37f41c40a38e9a143f3cf78f5bf54b"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-reproduce/reproduction-seed-21.npz",
+      "sha256": "e5284de291a94276b5f9dafcd8ab52abb3566741b72d4666aef3a3ac916de680"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-reproduce/reproduction-seed-22.npz",
+      "sha256": "d6a17a528e80a2d4fb97a93790b404092a3761e8c485f06f535dca0cf06e6684"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-reproduce/reproduction-seed-23.npz",
+      "sha256": "afda5c0cd948b09f9f08c130f2ecb24243b135820affab840bc67633c0288d3b"
+    },
+    {
+      "bytes": 0,
+      "path": "puck-reproduce-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 160,
+      "path": "puck-reproduce-supervisor/stdout.log",
+      "sha256": "f462fa7ded0f5560f094d35f623440a762845d895b312a5d086b576084113d75"
+    },
+    {
+      "bytes": 344,
+      "path": "puck-reproduce-supervisor/supervisor.json",
+      "sha256": "d2e22edda7f825ef59c5bd9d677064aa34fedb146ca7535541fbdd0440e5094e"
+    }
+  ],
+  "elapsed_seconds": 641.1406210710002,
+  "held_out_used": false,
+  "implementation_head": "cd93d6d370da3f357066da252ddbc8057e3a6d68",
+  "initial_execution_sha256": "f178b16443f577201c244d62b79c1f178f560ce00a74d126a0ab26ffb7c7c32c",
+  "initial_reproduction_seconds": 24.510440203000144,
+  "label": "EXPLORATORY \u2014 not gate evidence",
+  "origin_age_seconds": 438.3108606338501,
+  "qualification_claims": [],
+  "readout_seconds": 0.012463572999877215,
+  "reason": "Correct producer publication HEAD; pinned reader sources unchanged; no earlier nav corpus read or fit",
+  "remaining_reproduction_seconds": 1175.4895597969999,
+  "stages": {
+    "nav-explore": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/nav_fit_ladder.py",
+        "--stage",
+        "explore",
+        "--seconds",
+        "2980",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-explore",
+        "--historical-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2",
+        "--historical-bundles",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles",
+        "--reproduction-receipt",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-reproduce-v2/report.json"
+      ],
+      "report_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-explore/report.json",
+      "report_sha256": "025f61e88d58688a7a3113b3169e1cc1a7008f506538399fa994382df9e1564d",
+      "runner_status": "completed",
+      "supervisor": {
+        "elapsed_seconds": 312.38455900900044,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-explore-supervisor",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T07:18:16.048018+00:00",
+        "status": "completed",
+        "timeout_seconds": 2995
+      }
+    },
+    "nav-reproduce-v2": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/nav_fit_ladder.py",
+        "--stage",
+        "reproduce",
+        "--seconds",
+        "1155",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-reproduce-v2",
+        "--historical-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2",
+        "--historical-bundles",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles"
+      ],
+      "report_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-reproduce-v2/report.json",
+      "report_sha256": "b5bb8ab2b6c476bf1aaf6c35ce9443c1474e279300d6b85214347b4deb37a3c7",
+      "runner_status": "passed",
+      "supervisor": {
+        "elapsed_seconds": 328.7223613780002,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-reproduce-v2-supervisor",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T07:12:47.319052+00:00",
+        "status": "completed",
+        "timeout_seconds": 1170.4895597969999
+      }
+    }
+  },
+  "status": "finished-bounded-exploration",
+  "storage": {
+    "files": 59,
+    "headroom_bytes": 0,
+    "max_bytes": 2147483648,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 2142133377,
+    "used_bytes": 5350271
+  }
+}
