@@ -13,7 +13,9 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path, PurePosixPath
+import posixpath
 import stat
+import struct
 import sys
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -145,6 +147,54 @@ def export_reached(export,by_name):
         edge['attribute']==export['attributes'][-1] for edge in row.get('exports',[]))
 
 
+def elf_dynamic(raw):
+    """DT_NEEDED names and RPATH/RUNPATH entries of one ELF64 little-endian shared object."""
+    if raw[:4]!=b'\x7fELF' or raw[4]!=2 or raw[5]!=1:
+        raise ValueError('Site extension is not an ELF64 little-endian object')
+    phoff,=struct.unpack_from('<Q',raw,0x20);size,count=struct.unpack_from('<HH',raw,0x36)
+    loads=[];dynamic=None
+    for index in range(count):
+        kind,_,offset,address,_,length=struct.unpack_from('<IIQQQQ',raw,phoff+index*size)
+        if kind==1:loads.append((address,offset,length))
+        elif kind==2:dynamic=(offset,length)
+    if dynamic is None:return [],[]
+    entries=[];strtab=None
+    for offset in range(dynamic[0],dynamic[0]+dynamic[1]-15,16):
+        tag,value=struct.unpack_from('<qQ',raw,offset)
+        if tag==0:break
+        if tag==5:strtab=value
+        elif tag in (1,15,29):entries.append((tag,value))
+    if not entries:return [],[]
+    base=next((offset+strtab-address for address,offset,length in loads if strtab is not None and address<=strtab<address+length),None)
+    if base is None:raise ValueError('Site extension string table is outside its loaded segments')
+    def text(at):return raw[base+at:raw.index(b'\0',base+at)].decode()
+    return ([text(v) for t,v in entries if t==1],
+            [path for t,v in entries if t in (15,29) for path in text(v).split(':') if path])
+
+
+def native_origin_rows(rows,modules,files,site_root):
+    """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+
+    A leaf-FD load (/proc/self/fd/N) cannot resolve a DT_NEEDED library found only
+    through an \$ORIGIN-relative RUNPATH/RPATH directory, as the accepted Pillow
+    correction established; each such extension's bytes must match the inventory.
+    """
+    files={row['path']:row for row in files};declared={row['name']:row for row in rows}
+    for module in modules:
+        if module['kind']!='extension' or module['name'] in declared:continue
+        entry=files.get(module['path']);raw=(Path(site_root)/module['path']).read_bytes()
+        if entry is None or len(raw)!=entry['size_bytes'] or sha(raw)!=entry['sha256']:
+            raise ValueError('Site extension bytes differ from the retained inventory: '+module['name'])
+        needed,paths=elf_dynamic(raw);origin=posixpath.dirname(module['path'])
+        for path in paths:
+            if '$ORIGIN' not in path.replace('${ORIGIN}','$ORIGIN'):continue
+            directory=posixpath.normpath(path.replace('${ORIGIN}','$ORIGIN').replace('$ORIGIN',origin))
+            if directory=='..' or directory.startswith('../') or directory.startswith('/'):continue
+            if any(posixpath.normpath(posixpath.join(directory,name)) in files for name in needed):
+                declared[module['name']]=dict(name=module['name'],policy='held-directory-observed-v1');break
+    return sorted(declared.values(),key=lambda r:r['name'])
+
+
 def derive_profile(reports,template,inventory,site_root):
     """The candidate profile, module paths and namespaces from two validated characterization reports."""
     old=load(template,'Template candidate');profile=copy.deepcopy(old.get('import_profile'))
@@ -175,6 +225,7 @@ def derive_profile(reports,template,inventory,site_root):
                 if target.setdefault(item['name'],item)!=item:
                     raise ValueError('Source and replay map one module differently: '+item['name'])
     module_paths=sorted(modules.values(),key=lambda r:r['name']);namespace_rows=sorted(namespaces.values(),key=lambda r:r['name'])
+    profile['native_origins']=native_origin_rows(profile['native_origins'],module_paths,rows,site_root)
     validate_profile(profile,module_paths,namespace_rows,allow_native_cache=True)
     misses=sorted({name for value in reports.values() for name in value['import_misses']
                    if name.split('.')[0] not in QUALIFIER.STDLIB_311})
