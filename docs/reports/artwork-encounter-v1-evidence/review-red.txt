@@ -1,0 +1,35 @@
+test_archive_and_encounter_preserve_all_six_targets_and_alignment (test_artwork_encounter.EncounterTests.test_archive_and_encounter_preserve_all_six_targets_and_alignment) ... ok
+test_checksum_size_hash_and_symlink_rejected (test_artwork_encounter.EncounterTests.test_checksum_size_hash_and_symlink_rejected) ... ok
+test_emitted_javascript_controls_exact_prefix_and_stop_audio (test_artwork_encounter.EncounterTests.test_emitted_javascript_controls_exact_prefix_and_stop_audio) ... ok
+test_html_and_json_embedding_cannot_close_script (test_artwork_encounter.EncounterTests.test_html_and_json_embedding_cannot_close_script) ... ok
+test_malformed_alignment_and_single_frame_boundary (test_artwork_encounter.EncounterTests.test_malformed_alignment_and_single_frame_boundary) ... ok
+test_missing_unexpected_duplicate_and_escaping_members_rejected (test_artwork_encounter.EncounterTests.test_missing_unexpected_duplicate_and_escaping_members_rejected) ... /usr/lib/python3.14/zipfile/__init__.py:1730: UserWarning: Duplicate name: 'afterimage.svg'
+  return self._open_to_write(zinfo, force_zip64=force_zip64)
+ok
+test_output_reuse_escape_and_budget_deadline_rejected (test_artwork_encounter.EncounterTests.test_output_reuse_escape_and_budget_deadline_rejected) ... ok
+test_producer_float32_heading_endpoints_remain_admissible (test_artwork_encounter.EncounterTests.test_producer_float32_heading_endpoints_remain_admissible) ... ERROR
+test_synthetic_preparation_preserves_bytes_and_retains_failure (test_artwork_encounter.EncounterTests.test_synthetic_preparation_preserves_bytes_and_retains_failure) ... ok
+test_whole_file_corruption_and_wrong_pin_rejected (test_artwork_encounter.EncounterTests.test_whole_file_corruption_and_wrong_pin_rejected) ... ok
+
+======================================================================
+ERROR: test_producer_float32_heading_endpoints_remain_admissible (test_artwork_encounter.EncounterTests.test_producer_float32_heading_endpoints_remain_admissible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-encounter-v1/tests/test_artwork_encounter.py", line 144, in test_producer_float32_heading_endpoints_remain_admissible
+    self.assertEqual(encounter.alignment(self.svg())[0], row)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-encounter-v1/scripts/prepare_artwork_encounter.py", line 130, in alignment
+    require(isinstance(action, list) and isinstance(point, list) and len(action) == len(point) == 2
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and all(number(v) for v in (*action, *point)) and abs(action[0]) <= 3 and abs(action[1]) <= math.pi
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and point == [360 * action[0] / 3, -360 * action[1] / math.pi], 'exact response-plane alignment differs')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-encounter-v1/scripts/prepare_artwork_encounter.py", line 31, in require
+    raise ValueError(message)
+ValueError: exact response-plane alignment differs
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.039s
+
+FAILED (errors=1)

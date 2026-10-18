@@ -1,0 +1,36 @@
+{
+  "error": "ValueError: export failed: borrowed-body.svg",
+  "numpy_version": "2.2.5",
+  "process": {
+    "pid": 808174,
+    "process_group": 808174,
+    "start_ticks": 6762178
+  },
+  "qualification_claims": [],
+  "rows": [
+    {
+      "argv": [
+        "--repo",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack",
+        "export",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+        "--format",
+        "svg",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/artifacts/borrowed-body.svg",
+        "--storage-max-bytes",
+        "67108864",
+        "--min-free-bytes",
+        "2147483648",
+        "--max-exports",
+        "3",
+        "--log-max-bytes",
+        "1048576"
+      ],
+      "output": "borrowed-body.svg",
+      "returncode": 1
+    }
+  ],
+  "runtime_imported": [],
+  "status": "failed"
+}

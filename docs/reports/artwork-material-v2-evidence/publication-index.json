@@ -1,0 +1,134 @@
+{
+  "archive": {
+    "sha256": "89d951d296e850ef1ce3609b4b76e020290e8b5027a48323fb7b5fd4a46de794",
+    "size_bytes": 1821526
+  },
+  "copies": {
+    "export-0.json": {
+      "sha256": "454b04a20ff4c69bcae4f77c7c549fcc626fd33f3cc6f5a02f1b0f59ff971b95",
+      "size_bytes": 990
+    },
+    "export-1.json": {
+      "sha256": "3671ec26b30f85ae19c1363e8b8975de73af192d3d20bda1789019daf9201175",
+      "size_bytes": 1120
+    },
+    "export-2.json": {
+      "sha256": "24507aba95ecb43bc704524eb41c40f529e976a016f48b58f273c72177f85784",
+      "size_bytes": 1041
+    },
+    "launched.json": {
+      "sha256": "c2ebd7632f06d4e89cb40dbaf8565ae76123c3d9d88de9d1226155f26f15b8c4",
+      "size_bytes": 178
+    },
+    "result.json": {
+      "sha256": "729605bd23cef5d2389b9f410b555ec165ebd7f9c0eef9965af380cd624daf87",
+      "size_bytes": 5669
+    }
+  },
+  "members": {
+    ".palimpsest-storage.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "artifacts/.palimpsest-storage.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "artifacts/borrowed-body.svg": {
+      "sha256": "ba503844aea46a7bffb41c6eb9b083316b648dc27152e7fcefe7507d650a1bf5",
+      "size_bytes": 8332995
+    },
+    "artifacts/counterfactual-choir.wav": {
+      "sha256": "7fee0e336ca137c6431517b3d4eaaaa012c501987fb33b95909c41891b811f61",
+      "size_bytes": 2460152
+    },
+    "artwork-material-v2-registration.json": {
+      "sha256": "b7438a8900f6ba5b4cf3c17b95e8d800ed3625f951318d4692a5217bd1840d7c",
+      "size_bytes": 29114
+    },
+    "artwork-material-v2.md": {
+      "sha256": "a40325333ae1370464d208c9c499cc70ca6dff43ec8d87209d521186b5264f1d",
+      "size_bytes": 4265
+    },
+    "export-0-supervision/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "export-0-supervision/stdout.log": {
+      "sha256": "599662358addeced6c6e3675fc945e602f4b8c9bae7d985f7623725bdba5b669",
+      "size_bytes": 150
+    },
+    "export-0-supervision/supervisor.json": {
+      "sha256": "85ae377c1457bb1d82ed0583c74d6d2168709cfbda772cd0aa3621b35a1dbffa",
+      "size_bytes": 328
+    },
+    "export-0.json": {
+      "sha256": "454b04a20ff4c69bcae4f77c7c549fcc626fd33f3cc6f5a02f1b0f59ff971b95",
+      "size_bytes": 990
+    },
+    "export-1-supervision/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "export-1-supervision/stdout.log": {
+      "sha256": "657f7225fa737e9186bf0b704656eb88954d4093646ede4bc3964a9e557df181",
+      "size_bytes": 157
+    },
+    "export-1-supervision/supervisor.json": {
+      "sha256": "2c1b0e307b2df6ebf68101ea4d3087963e96b0c98542a2295c826a8cdd4fca2f",
+      "size_bytes": 328
+    },
+    "export-1.json": {
+      "sha256": "3671ec26b30f85ae19c1363e8b8975de73af192d3d20bda1789019daf9201175",
+      "size_bytes": 1120
+    },
+    "export-2-supervision/stderr.log": {
+      "sha256": "518935a1a2a1d9ac1c9659f5410c94c8718d92f31b126be074eee1e325970aeb",
+      "size_bytes": 76
+    },
+    "export-2-supervision/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "export-2-supervision/supervisor.json": {
+      "sha256": "ccee97166b69d9e7a1a44b1bea92b65e9b9b1ffa78966a5e39e3c2e29d900ab1",
+      "size_bytes": 324
+    },
+    "export-2.json": {
+      "sha256": "24507aba95ecb43bc704524eb41c40f529e976a016f48b58f273c72177f85784",
+      "size_bytes": 1041
+    },
+    "launched.json": {
+      "sha256": "c2ebd7632f06d4e89cb40dbaf8565ae76123c3d9d88de9d1226155f26f15b8c4",
+      "size_bytes": 178
+    },
+    "prepare_artwork_material_v2.py": {
+      "sha256": "6a0538ca113d1130df59513dd597145f54e0ddb2788d775ab0c34b0f9475c2ea",
+      "size_bytes": 19837
+    },
+    "result.json": {
+      "sha256": "729605bd23cef5d2389b9f410b555ec165ebd7f9c0eef9965af380cd624daf87",
+      "size_bytes": 5669
+    }
+  },
+  "producer_commit": "014e1c0",
+  "qualification_claims": [],
+  "scope": "Post-failure byte-preserving handoff; no new export or acceptance check",
+  "source_zip": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/palimpsest-artwork-inputs-development-v1.zip",
+    "pin": {
+      "sha256": "80251ccd5889ce01ac2cf447f7ff591848be69b3d5fb38a70ec6ef55c7708aed",
+      "size_bytes": 577247342
+    }
+  },
+  "storage": {
+    "additional_bytes": 0,
+    "files": 126,
+    "free_bytes": 17067204608,
+    "headroom_bytes": 1048576,
+    "max_bytes": 2147483648,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 1557588954,
+    "used_bytes": 589894694
+  }
+}

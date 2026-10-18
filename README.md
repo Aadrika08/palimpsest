@@ -29,6 +29,8 @@ Commands use [`uv run --no-sync`](https://docs.astral.sh/uv/concepts/projects/sy
 uv run --no-sync palimpsest doctor --probe-renderer
 ```
 
+Before fetching FLYNN assets, an `assets: missing` check and exit status 1 are expected. If the remaining required checks pass, continue to [Interactive lab](#interactive-lab) for manual or teacher control. Inspect the renderer check separately; missing assets can still make the probe command exit 1 even when rendering works.
+
 ## Model assets
 
 Read [third-party notices](THIRD_PARTY_NOTICES.md) before acquisition or reuse. The graph archive and full-vision checkpoint are distributed under **CC BY-NC 4.0**. Their exact URLs, sizes, hashes, source revisions, mappings, and provenance limitations are recorded in [the model manifest](model_manifests/flynn-full-vision.json).
@@ -68,6 +70,9 @@ Open `http://127.0.0.1:8765`. The service binds to loopback and authenticates br
 Create a run, start or step it, then pause to capture a snapshot. World edits have a validated preview and are rechecked at the application boundary. An eye mask changes the actual policy input; the inspector distinguishes the input/action tick from the resulting world boundary. Focus the manual drive control for arrow keys; losing focus clears held input. Closing the browser pauses at the next boundary. Only the explicit `--headless-continue` option changes disconnect behavior.
 
 Branches run sequentially in fresh workers. Preserving the controller restores its state; choosing a different controller retains the world but starts fresh controller state and records that distinction. Compare provenance before interpreting route overlays. Loading, replay, failure, termination and time limits retain explicit labels. CPU full-model continuation is qualified only for the measured profile; CUDA has the known strict-continuation limitation described below.
+
+To recover a closed run's snapshots after reloading, select its entry in
+**Recorded run**, then select a **Snapshot** and choose **Start branch**.
 
 The inspector reports measured active execution time and real-time factor (advanced simulated seconds divided by active wall seconds). Loading and paused periods are excluded; logging, rendering and waiting for a requested pause boundary are included. A value below one means slower than real time. Trajectory visibility is a presentation-only control and sends no simulation command. Close the active owner before exporting a completed recording.
 

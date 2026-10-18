@@ -56,6 +56,10 @@ completed experiment. Snapshots carry software/model/numerical identity and a
 durable event prefix. Preserving a controller restores its state; replacing one
 preserves the world but explicitly starts fresh controller state.
 
+The shared artifact reader validates every explicit event `run_id` against its
+run manifest before playback, comparison or export. Unlabelled legacy events
+remain supported.
+
 Playback displays recorded values without running physics. Action replay runs
 physics with recorded actions and skips inference. Policy replay recomputes
 inference and compares it with the record. Successful execution alone does not

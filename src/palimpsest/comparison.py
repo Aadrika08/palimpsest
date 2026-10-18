@@ -1,4 +1,5 @@
 """Standalone, static presentations of validated recorded comparisons."""
+from collections import Counter
 import hashlib
 import html
 import json
@@ -83,9 +84,12 @@ def _overlay(report, projection):
 def _world_view(metadata, label):
     root = ET.fromstring(artifacts._svg(metadata))
     root.remove(root.find(f'{{{NS}}}metadata'))  # Full provenance appears once in the HTML.
-    root.set('role', 'img')
-    root.set('aria-labelledby', f'world-{label}')
-    ET.SubElement(root, f'{{{NS}}}title', {'id': f'world-{label}'}).text = f'{label}: last recorded world per episode and recorded routes'
+    root.set('aria-labelledby', f'world-{label} world-{label}-description')
+    title, description = root.find(f'{{{NS}}}title'), root.find(f'{{{NS}}}desc')
+    title.set('id', f'world-{label}')
+    title.text = f'{label}: last recorded world per episode and recorded routes'
+    description.set('id', f'world-{label}-description')
+    description.text = f'{label}: {description.text}'
     if label == 'B':
         scale = 360 / metadata['projection']['arena']
         for line in root.iter(f'{{{NS}}}polyline'):
@@ -106,7 +110,8 @@ def _render(metadata, views):
     rows += [('Source snapshot', [report[side]['provenance'].get('source_snapshot_id') or report[side]['provenance'].get('snapshot_id') for side in ('left', 'right')]),
              ('Recorded eye masks', [report[side]['recorded_eye_masks'] for side in ('left', 'right')]),
              ('Final phase', [report[side]['final_phase'] for side in ('left', 'right')]),
-             ('Source evidence', [source['evidence_class'] for source in metadata['sources']])]
+             ('Source evidence', [source['evidence_class'] for source in metadata['sources']]),
+             ('Full event payloads in supplied source archive', [report[side]['event_stream'] for side in ('left', 'right')])]
     table = '<table><caption>Recorded source identities and conditions</caption><thead><tr><th scope="col">Condition</th><th scope="col">A · solid line, circle start</th><th scope="col">B · dashed line, square start</th></tr></thead><tbody>'
     table += ''.join(f'<tr><th scope="row">{label}</th><td>{cell(values[0])}</td><td>{cell(values[1])}</td></tr>' for label, values in rows) + '</tbody></table>'
     differences = ''.join('<details><summary>' + html.escape(change['field']) + '</summary><h3>A</h3>' + _pre(change['left']) + '<h3>B</h3>' + _pre(change['right']) + '</details>' for change in report['differences'])
@@ -137,7 +142,7 @@ figure{margin:0}svg{display:block;width:100%;height:auto}figcaption{font-size:.9
         + f'<figcaption>A: solid blue with circle start. B: dashed amber with square start. One shared projection: ±{metadata["projection"]["arena"]} recorded world units on each axis; y increases upward. No rescaling, offsets, or route smoothing between conditions. Separate episodes are not joined.</figcaption></figure>'
         + '<p>The overlay shows routes only. World conditions can differ; the final recorded worlds below and the provenance retain those differences. Equal route arrays do not establish equal internal activity or the absence of a memory effect.</p>'
         + '<div class="worlds">' + worlds + '</div><h2>Recorded lineage</h2>' + _pre(report['lineage'])
-        + '<details><summary>Full recorded comparison and export provenance</summary><pre id="comparison-metadata">' + html.escape(_json(metadata))
+        + '<details><summary>Comparison summary and source provenance</summary><pre id="comparison-metadata">' + html.escape(_json(metadata))
         + '</pre></details></main></body></html>').encode('utf-8')
 
 
@@ -155,10 +160,24 @@ def export_comparison(left_path, right_path, output_path, *, storage_budget=None
         report[key]['recorded_eye_masks'] = _masks(item)
     if report['left']['recorded_eye_masks'] != report['right']['recorded_eye_masks']:
         report['differences'].append({'field': 'recorded_eye_masks', 'left': report['left']['recorded_eye_masks'], 'right': report['right']['recorded_eye_masks']})
-    metadata = {'version': 1, 'mode': 'offline recorded comparison', 'comparison': report,
-        'sources': [_sources(item) for item in data], 'projection': views[0]['projection'],
+    # Check complete raw inputs before omitting any event payload from HTML.
+    artifacts._no_secrets(report)
+    sources = [_sources(item) for item in data]
+    for key, item, source in zip(('left', 'right'), data, sources):
+        artifacts._no_secrets(item['manifest'])
+        artifacts._no_secrets(item['events'])
+        events = report[key].pop('events')
+        event_file = next(row for row in source['files'] if row['path'] == 'recording/events.jsonl')
+        report[key]['event_stream'] = {
+            'path': f"runs/{item['manifest']['run_id']}/recording/events.jsonl",
+            'size_bytes': event_file['size_bytes'], 'sha256': event_file['sha256'],
+            'total_event_count': len(item['events']), 'visible_event_count': len(events),
+            'visible_kind_counts': dict(sorted(Counter(event['kind'] for event in events).items())),
+            'payloads_embedded': False}
+    metadata = {'version': 2, 'mode': 'offline recorded comparison', 'comparison': report,
+        'sources': sources, 'projection': views[0]['projection'],
         'route_arrays_equal': report['left']['traces'] == report['right']['traces'],
-        'rendering': {'version': 'recorded-route-comparison-v1', 'A': 'solid blue, circle start', 'B': 'dashed amber, square start',
+        'rendering': {'version': 'recorded-route-comparison-v2', 'A': 'solid blue, circle start', 'B': 'dashed amber, square start',
             'trace_coordinates': 'recorded world coordinates, unmodified', 'geometry_stage': 'last recorded transition per episode'}}
     artifacts._no_secrets(metadata)
     if len(_json(metadata).encode()) > MAX_METADATA_BYTES:

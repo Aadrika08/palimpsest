@@ -1,0 +1,35 @@
+{
+  "argv": [
+    "--repo",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3",
+    "export",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+    "--format",
+    "svg",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/artifacts/borrowed-body.svg",
+    "--storage-max-bytes",
+    "67108864",
+    "--min-free-bytes",
+    "2147483648",
+    "--max-exports",
+    "3",
+    "--log-max-bytes",
+    "1048576"
+  ],
+  "artifact": {
+    "sha256": "ba503844aea46a7bffb41c6eb9b083316b648dc27152e7fcefe7507d650a1bf5",
+    "size_bytes": 8332995
+  },
+  "numpy_version": "2.2.5",
+  "output": "borrowed-body.svg",
+  "process": {
+    "pid": 1174092,
+    "process_group": 1174092,
+    "start_ticks": 8491742
+  },
+  "qualification_claims": [],
+  "returncode": 0,
+  "runtime_imported": [],
+  "status": "passed"
+}
