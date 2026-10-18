@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "run_id": "ee96057692dd468e92c4dc771d92c555",
+  "seconds": 6,
+  "rows": [
+    {
+      "elapsed_s": 5.81,
+      "total_tick": 289,
+      "phase": "running",
+      "previews": [
+        200,
+        200
+      ],
+      "requests": 43,
+      "data_url_requests": 27,
+      "inflight": 2,
+      "failures": 0,
+      "ws_frames": 180,
+      "ws_payload_chars": 2732341,
+      "image_src_chars": 8084,
+      "js_heap_used": 6701208,
+      "dom_nodes": 1373,
+      "documents": 4,
+      "listeners": 4374,
+      "resources": 67
+    },
+    {
+      "elapsed_s": 10.933,
+      "total_tick": 546,
+      "phase": "running",
+      "previews": [
+        200,
+        200
+      ],
+      "requests": 59,
+      "data_url_requests": 27,
+      "inflight": 2,
+      "failures": 0,
+      "ws_frames": 332,
+      "ws_payload_chars": 6714084,
+      "image_src_chars": 8084,
+      "js_heap_used": 8090780,
+      "dom_nodes": 1499,
+      "documents": 4,
+      "listeners": 7581,
+      "resources": 83
+    }
+  ],
+  "fill": [
+    {
+      "dir": "/tmp/lcr",
+      "free_before": 192647168,
+      "free_during": 4427776,
+      "exhausted": [
+        200,
+        200
+      ],
+      "free_after": 189370368,
+      "recovered": [
+        200,
+        200
+      ]
+    }
+  ],
+  "failures": []
+}

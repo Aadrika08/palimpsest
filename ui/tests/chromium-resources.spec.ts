@@ -53,8 +53,32 @@ test('bounded Chromium resource diagnostic for streamed lab samples',async({page
     if(status.phase!=='running')break;
   }
   if(rows.at(-1)?.phase==='running'){await page.getByRole('button',{name:'Pause',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('paused');}
-  const report={schema_version:1,run_id:id,seconds,rows,fill,pins,failures};
+  // Optional continuation through the rest of the v3 workflow after a long run:
+  // paused snapshot, two branches (second with a goal edit), comparison,
+  // recorded playback and SVG export, all through the UI.
+  const workflow:any={};
+  if(process.env.PALIMPSEST_RESOURCE_WORKFLOW==='1'){
+    const fill=async(xy:number[])=>{await page.getByLabel('Edit',{exact:true}).selectOption('move_goal');await page.getByLabel('X (m)',{exact:true}).fill(String(xy[0]));await page.getByLabel('Y (m)',{exact:true}).fill(String(xy[1]));};
+    workflow.source_ticks=(await page.evaluate(async id=>{const token=(await(await fetch('/api/v1/session')).json()).token;return(await(await fetch(`/api/v1/runs/${id}`,{headers:{'X-Palimpsest-Session':token}})).json()).state.total_tick;},id));
+    await page.getByRole('button',{name:'Capture snapshot',exact:true}).click();await expect(page.locator('.notice')).toHaveText('Snapshot captured.');
+    const snapshot=await page.getByLabel('Snapshot',{exact:true}).inputValue();expect(snapshot).not.toBe('');workflow.snapshot=snapshot;
+    await page.getByRole('button',{name:'Close run',exact:true}).click();
+    const branches:string[]=[];
+    for(let i=0;i<2;i++){
+      if(i===1){await fill([5,5]);await page.getByLabel('Include the current world edit',{exact:true}).check();}
+      await page.getByLabel('Snapshot',{exact:true}).selectOption(snapshot);await page.getByRole('button',{name:'Start branch',exact:true}).click();await expect(page.getByRole('button',{name:'Step',exact:true})).toBeEnabled({timeout:90_000});
+      branches.push((await page.locator('.identity').innerText()).replace('Run ',''));
+      for(let tick=0;tick<3;tick++){const before=await page.locator('.run-heading').innerText();await page.getByRole('button',{name:'Step',exact:true}).click();await expect.poll(()=>page.locator('.run-heading').innerText()).not.toBe(before);}
+      await page.getByRole('button',{name:'Close run',exact:true}).click();
+    }
+    workflow.branches=branches;expect(branches[0]).not.toBe(branches[1]);
+    await page.getByLabel('Left run',{exact:true}).selectOption(branches[0]);await page.getByLabel('Right run',{exact:true}).selectOption(branches[1]);await page.getByRole('button',{name:'Compare runs',exact:true}).click();await expect(page.locator('.comparison svg')).toBeVisible();workflow.compared=true;
+    await page.getByLabel('Recorded run',{exact:true}).selectOption(branches[0]);await page.getByRole('button',{name:'Recorded playback',exact:true}).click();await expect(page.locator('.mode')).toHaveText('Recorded playback');workflow.playback=true;
+    const downloading=page.waitForEvent('download');await page.getByRole('button',{name:'Export SVG',exact:true}).click();const artifact=await downloading;expect(await artifact.failure()).toBeNull();workflow.export=artifact.suggestedFilename();
+    await expect(page.locator('.error')).toHaveCount(0);console.log('RESOURCE_WORKFLOW '+JSON.stringify(workflow));
+  }
+  const report={schema_version:1,run_id:id,seconds,rows,fill,pins,workflow,failures};
   await info.attach('chromium-resources.json',{body:JSON.stringify(report,null,2),contentType:'application/json'});const {writeFile}=await import('node:fs/promises');await writeFile(info.outputPath('chromium-resources.json'),JSON.stringify(report,null,2)+'\n');
-  await page.evaluate(async id=>{const token=(await(await fetch('/api/v1/session')).json()).token;await fetch(`/api/v1/runs/${id}/close`,{method:'POST',headers:{'X-Palimpsest-Session':token,'Content-Type':'application/json'},body:'{}'});},id);
+  if(!workflow.export)await page.evaluate(async id=>{const token=(await(await fetch('/api/v1/session')).json()).token;await fetch(`/api/v1/runs/${id}/close`,{method:'POST',headers:{'X-Palimpsest-Session':token,'Content-Type':'application/json'},body:'{}'});},id);
   if(leave)return;expect(failures).toEqual([]);expect(rows.flatMap(row=>row.previews).every((value:unknown)=>typeof value==='number')).toBe(true);
 });

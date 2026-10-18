@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "run_id": "f099e9c2f07a402b87969722616a18e2",
+  "seconds": 9,
+  "rows": [
+    {
+      "elapsed_s": 5.736,
+      "total_tick": 288,
+      "phase": "running",
+      "previews": [
+        200,
+        200
+      ],
+      "requests": 43,
+      "data_url_requests": 27,
+      "inflight": 2,
+      "failures": 0,
+      "ws_frames": 186,
+      "ws_payload_chars": 2784423,
+      "image_src_chars": 8084,
+      "js_heap_used": 6728620,
+      "dom_nodes": 1383,
+      "documents": 4,
+      "listeners": 4494,
+      "resources": 67
+    },
+    {
+      "elapsed_s": 10.851,
+      "total_tick": 546,
+      "phase": "running",
+      "previews": [
+        200,
+        200
+      ],
+      "requests": 59,
+      "data_url_requests": 27,
+      "inflight": 1,
+      "failures": 0,
+      "ws_frames": 340,
+      "ws_payload_chars": 6818213,
+      "image_src_chars": 8084,
+      "js_heap_used": 8499708,
+      "dom_nodes": 1509,
+      "documents": 4,
+      "listeners": 7741,
+      "resources": 83
+    }
+  ],
+  "fill": [
+    {
+      "dir": "/tmp/lcr",
+      "free_before": 65777664,
+      "free_during": 1814528,
+      "exhausted": [
+        200,
+        200
+      ],
+      "free_after": 65777664,
+      "recovered": [
+        200,
+        200
+      ]
+    }
+  ],
+  "pins": {},
+  "workflow": {
+    "source_ticks": 549,
+    "snapshot": "03502eab31294e21ae84ab27b24e2a09",
+    "branches": [
+      "9deb1c67dc8b441da2d04bd83ec290af",
+      "a3165b7fa24b42cd954584248eaa3af2"
+    ],
+    "compared": true,
+    "playback": true,
+    "export": "palimpsest-9deb1c67dc8b441da2d04bd83ec290af.svg"
+  },
+  "failures": []
+}

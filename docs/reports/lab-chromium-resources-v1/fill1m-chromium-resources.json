@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "run_id": "0095854f620347369cc7a5462a18b750",
+  "seconds": 10,
+  "rows": [
+    {
+      "elapsed_s": 5.751,
+      "total_tick": 289,
+      "phase": "running",
+      "previews": [
+        200,
+        200
+      ],
+      "requests": 40,
+      "data_url_requests": 25,
+      "inflight": 2,
+      "failures": 1,
+      "ws_frames": 182,
+      "ws_payload_chars": 2729789,
+      "image_src_chars": 8084,
+      "js_heap_used": 6609376,
+      "dom_nodes": 1373,
+      "documents": 4,
+      "listeners": 4374,
+      "resources": 62
+    },
+    {
+      "elapsed_s": 10.86,
+      "total_tick": 546,
+      "phase": "running",
+      "previews": [
+        200,
+        200
+      ],
+      "requests": 56,
+      "data_url_requests": 25,
+      "inflight": 1,
+      "failures": 1,
+      "ws_frames": 335,
+      "ws_payload_chars": 6744338,
+      "image_src_chars": 8084,
+      "js_heap_used": 7970536,
+      "dom_nodes": 1499,
+      "documents": 4,
+      "listeners": 7621,
+      "resources": 78
+    }
+  ],
+  "fill": [
+    {
+      "dir": "/tmp/lcr",
+      "free_before": 193171456,
+      "free_during": 1282048,
+      "exhausted": [
+        "TypeError: Failed to fetch"
+      ],
+      "free_after": 189894656,
+      "recovered": [
+        200,
+        200
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "t": 1792366913787,
+      "error": "net::ERR_INSUFFICIENT_RESOURCES",
+      "type": "Fetch"
+    }
+  ]
+}

@@ -1,0 +1,652 @@
+{
+ "schema_version": 1,
+ "note": "Diagnostic/fix run, not the formal acceptance session. Runs and exports were written under ~/.cache/lab-chromium-resources-v1 and deleted afterwards; resources-*.jsonl keep two raw probe series.",
+ "attempts": [
+  {
+   "name": "base1",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:31:06.764Z",
+   "end_utc": "2026-10-18T23:31:20.063Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp",
+   "browser_tmpdir_private_tmpfs_size": null,
+   "result": "1 passed (12.7s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 13.262,
+    "peak_totals": {
+     "rss_kib": 1261832,
+     "fds": 366,
+     "sockets": 109,
+     "shm_files": 38,
+     "shm_bytes": 14981232,
+     "shm_alloc_bytes": 15069184
+    },
+    "samples_bytes": 70228
+   }
+  },
+  {
+   "name": "base2",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:31:31.043Z",
+   "end_utc": "2026-10-18T23:31:43.314Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp",
+   "browser_tmpdir_private_tmpfs_size": null,
+   "result": "1 passed (11.7s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 12.241,
+    "peak_totals": {
+     "rss_kib": 1291068,
+     "fds": 365,
+     "sockets": 108,
+     "shm_files": 38,
+     "shm_bytes": 37122160,
+     "shm_alloc_bytes": 37212160,
+     "memfd_files": 0,
+     "memfd_bytes": 0
+    },
+    "samples_bytes": 79703
+   }
+  },
+  {
+   "name": "base3",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:33:02.349Z",
+   "end_utc": "2026-10-18T23:33:14.997Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp",
+   "browser_tmpdir_private_tmpfs_size": null,
+   "result": "1 passed (12.1s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 12.618,
+    "peak_totals": {
+     "unique_shm_regions": 395,
+     "unique_shm_bytes": 123301892,
+     "min_shm_dir_free_bytes": 4703404032,
+     "rss_kib": 1272600,
+     "threads": 128,
+     "fds": 367,
+     "sockets": 109
+    },
+    "samples_bytes": 72390
+   }
+  },
+  {
+   "name": "small64",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:32:26.888Z",
+   "end_utc": "2026-10-18T23:32:30.742Z",
+   "returncode": 1,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "64M",
+   "result": "1 failed",
+   "errors": [
+    "Error: expect(locator).toBeEnabled() failed",
+    "Error: page.evaluate: Target crashed"
+   ],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 1,
+    "elapsed_seconds": 3.819,
+    "peak_totals": {
+     "rss_kib": 1064380,
+     "fds": 338,
+     "sockets": 102,
+     "shm_files": 31,
+     "shm_bytes": 8423536,
+     "shm_alloc_bytes": 8511488,
+     "memfd_files": 0,
+     "memfd_bytes": 0
+    },
+    "samples_bytes": 17483
+   }
+  },
+  {
+   "name": "small80M",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:34:20.284Z",
+   "end_utc": "2026-10-18T23:34:26.325Z",
+   "returncode": 1,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "80M",
+   "result": "1 failed",
+   "errors": [
+    "Error: keyboard.up: Target crashed",
+    "Error: page.evaluate: Target crashed"
+   ],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 1,
+    "elapsed_seconds": 6.005,
+    "peak_totals": {
+     "unique_shm_regions": 311,
+     "unique_shm_bytes": 82169860,
+     "min_shm_dir_free_bytes": 212992,
+     "rss_kib": 1115388,
+     "threads": 120,
+     "fds": 360,
+     "sockets": 104
+    },
+    "samples_bytes": 30883
+   }
+  },
+  {
+   "name": "small88M",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:34:12.874Z",
+   "end_utc": "2026-10-18T23:34:19.445Z",
+   "returncode": 1,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "88M",
+   "result": "1 failed",
+   "errors": [
+    "Error: expect(locator).toBeEnabled() failed",
+    "Error: page.evaluate: Target crashed"
+   ],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 1,
+    "elapsed_seconds": 6.528,
+    "peak_totals": {
+     "unique_shm_regions": 354,
+     "unique_shm_bytes": 90771460,
+     "min_shm_dir_free_bytes": 0,
+     "rss_kib": 1136984,
+     "threads": 120,
+     "fds": 361,
+     "sockets": 106
+    },
+    "samples_bytes": 33990
+   }
+  },
+  {
+   "name": "small96M",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:34:03.063Z",
+   "end_utc": "2026-10-18T23:34:12.013Z",
+   "returncode": 1,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "96M",
+   "result": "1 failed",
+   "errors": [
+    "Error: expect(locator).toBeEnabled() failed",
+    "Error: page.evaluate: Target crashed"
+   ],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 1,
+    "elapsed_seconds": 8.912,
+    "peak_totals": {
+     "unique_shm_regions": 385,
+     "unique_shm_bytes": 99078148,
+     "min_shm_dir_free_bytes": 77824,
+     "rss_kib": 1189608,
+     "threads": 123,
+     "fds": 364,
+     "sockets": 107
+    },
+    "samples_bytes": 46833
+   }
+  },
+  {
+   "name": "small104M",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:33:45.330Z",
+   "end_utc": "2026-10-18T23:33:57.954Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "104M",
+   "result": "1 passed (11.9s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 12.589,
+    "peak_totals": {
+     "unique_shm_regions": 393,
+     "unique_shm_bytes": 101666820,
+     "min_shm_dir_free_bytes": 5877760,
+     "rss_kib": 1215552,
+     "threads": 127,
+     "fds": 364,
+     "sockets": 107
+    },
+    "samples_bytes": 70798
+   }
+  },
+  {
+   "name": "small128M",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:33:32.211Z",
+   "end_utc": "2026-10-18T23:33:44.578Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "128M",
+   "result": "1 passed (11.6s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 12.332,
+    "peak_totals": {
+     "unique_shm_regions": 403,
+     "unique_shm_bytes": 105967620,
+     "min_shm_dir_free_bytes": 26714112,
+     "rss_kib": 1220996,
+     "threads": 128,
+     "fds": 363,
+     "sockets": 105
+    },
+    "samples_bytes": 68982
+   }
+  },
+  {
+   "name": "diag90",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:36:04.752Z",
+   "end_utc": "2026-10-18T23:39:42.652Z",
+   "returncode": 1,
+   "browser_tmpdir": "/tmp",
+   "browser_tmpdir_private_tmpfs_size": null,
+   "result": "1 failed",
+   "errors": [
+    "Error: locator.click: Test timeout of 210000ms exceeded."
+   ],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 1,
+    "elapsed_seconds": 217.868,
+    "peak_totals": {
+     "unique_shm_regions": 310,
+     "unique_shm_bytes": 81170436,
+     "min_shm_dir_free_bytes": 4745490432,
+     "rss_kib": 1184712,
+     "threads": 136,
+     "fds": 362,
+     "sockets": 107
+    },
+    "samples_bytes": 348233
+   }
+  },
+  {
+   "name": "fill1m",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:41:44.582Z",
+   "end_utc": "2026-10-18T23:41:59.994Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "256M",
+   "result": "1 passed (14.9s)",
+   "errors": [
+    "Error: Failed to fetch\"],\"free_after\":189894656,\"recovered\":[200,200]}"
+   ],
+   "resource_lines": [
+    {
+     "dir": "/tmp/lcr",
+     "free_before": 193171456,
+     "free_during": 1282048,
+     "exhausted": [
+      "TypeError: Failed to fetch"
+     ],
+     "free_after": 189894656,
+     "recovered": [
+      200,
+      200
+     ]
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 15.371,
+    "peak_totals": {
+     "unique_shm_regions": 304,
+     "unique_shm_bytes": 78499844,
+     "min_shm_dir_free_bytes": 188633088,
+     "rss_kib": 1138172,
+     "threads": 122,
+     "fds": 360,
+     "sockets": 105
+    },
+    "samples_bytes": 46042
+   }
+  },
+  {
+   "name": "fill2097152",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:42:14.600Z",
+   "end_utc": "2026-10-18T23:42:30.023Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "256M",
+   "result": "1 passed (14.5s)",
+   "errors": [
+    "Error: Failed to fetch\"],\"free_after\":191729664,\"recovered\":[200,200]}"
+   ],
+   "resource_lines": [
+    {
+     "dir": "/tmp/lcr",
+     "free_before": 195006464,
+     "free_during": 3117056,
+     "exhausted": [
+      200,
+      "TypeError: Failed to fetch"
+     ],
+     "free_after": 191729664,
+     "recovered": [
+      200,
+      200
+     ]
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 15.372,
+    "peak_totals": {
+     "unique_shm_regions": 297,
+     "unique_shm_bytes": 76664836,
+     "min_shm_dir_free_bytes": 1019904,
+     "rss_kib": 1135020,
+     "threads": 128,
+     "fds": 361,
+     "sockets": 105
+    },
+    "samples_bytes": 45880
+   }
+  },
+  {
+   "name": "fill4194304",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:42:30.785Z",
+   "end_utc": "2026-10-18T23:42:46.713Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "256M",
+   "result": "1 passed (15.0s)",
+   "errors": [],
+   "resource_lines": [
+    {
+     "dir": "/tmp/lcr",
+     "free_before": 192647168,
+     "free_during": 4427776,
+     "exhausted": [
+      200,
+      200
+     ],
+     "free_after": 189370368,
+     "recovered": [
+      200,
+      200
+     ]
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 15.883,
+    "peak_totals": {
+     "unique_shm_regions": 304,
+     "unique_shm_bytes": 78499844,
+     "min_shm_dir_free_bytes": 188633088,
+     "rss_kib": 1139964,
+     "threads": 123,
+     "fds": 360,
+     "sockets": 105
+    },
+    "samples_bytes": 46664
+   }
+  },
+  {
+   "name": "fill16777216",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:42:47.409Z",
+   "end_utc": "2026-10-18T23:43:03.330Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "256M",
+   "result": "1 passed (15.0s)",
+   "errors": [],
+   "resource_lines": [
+    {
+     "dir": "/tmp/lcr",
+     "free_before": 192647168,
+     "free_during": 17010688,
+     "exhausted": [
+      200,
+      200
+     ],
+     "free_after": 189370368,
+     "recovered": [
+      200,
+      200
+     ]
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 15.885,
+    "peak_totals": {
+     "unique_shm_regions": 304,
+     "unique_shm_bytes": 78499844,
+     "min_shm_dir_free_bytes": 188633088,
+     "rss_kib": 1138936,
+     "threads": 123,
+     "fds": 360,
+     "sockets": 105
+    },
+    "samples_bytes": 46344
+   }
+  },
+  {
+   "name": "pins",
+   "config": "pre-fix (Playwright default --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:43:30.878Z",
+   "end_utc": "2026-10-18T23:43:37.044Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "256M",
+   "result": "1 passed (5.7s)",
+   "errors": [],
+   "resource_lines": [
+    {
+     "baseline": 189935616,
+     "twenty_unread_held": 189935616,
+     "twenty_read": 189935616,
+     "released": 189935616
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 6.133,
+    "peak_totals": {
+     "unique_shm_regions": 302,
+     "unique_shm_bytes": 83480580,
+     "min_shm_dir_free_bytes": 183644160,
+     "rss_kib": 1094028,
+     "threads": 127,
+     "fds": 363,
+     "sockets": 105
+    },
+    "samples_bytes": 16357
+   }
+  },
+  {
+   "name": "fill1m-fixed",
+   "config": "post-fix (ignoreDefaultArgs --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:44:56.780Z",
+   "end_utc": "2026-10-18T23:45:12.193Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "256M",
+   "result": "1 passed (14.9s)",
+   "errors": [],
+   "resource_lines": [
+    {
+     "dir": "/tmp/lcr",
+     "free_before": 267124736,
+     "free_during": 1835008,
+     "exhausted": [
+      200,
+      200
+     ],
+     "free_after": 267124736,
+     "recovered": [
+      200,
+      200
+     ]
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 15.378,
+    "peak_totals": {
+     "unique_shm_regions": 308,
+     "unique_shm_bytes": 79548420,
+     "min_shm_dir_free_bytes": 7903993856,
+     "rss_kib": 1146552,
+     "threads": 122,
+     "fds": 358,
+     "sockets": 102
+    },
+    "samples_bytes": 46077
+   }
+  },
+  {
+   "name": "verify-normal",
+   "config": "post-fix (ignoreDefaultArgs --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:45:23.045Z",
+   "end_utc": "2026-10-18T23:45:35.382Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp",
+   "browser_tmpdir_private_tmpfs_size": null,
+   "result": "1 passed (11.5s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 12.306,
+    "peak_totals": {
+     "unique_shm_regions": 399,
+     "unique_shm_bytes": 101183492,
+     "min_shm_dir_free_bytes": 7883513856,
+     "rss_kib": 1231668,
+     "threads": 129,
+     "fds": 365,
+     "sockets": 108
+    },
+    "samples_bytes": 36695
+   }
+  },
+  {
+   "name": "verify-tmp48m",
+   "config": "post-fix (ignoreDefaultArgs --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:45:36.142Z",
+   "end_utc": "2026-10-18T23:45:49.494Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "48M",
+   "result": "1 passed (12.4s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 13.317,
+    "peak_totals": {
+     "unique_shm_regions": 378,
+     "unique_shm_bytes": 97803555,
+     "min_shm_dir_free_bytes": 7885594624,
+     "rss_kib": 1209636,
+     "threads": 128,
+     "fds": 365,
+     "sockets": 107
+    },
+    "samples_bytes": 37805
+   }
+  },
+  {
+   "name": "verify-long",
+   "config": "post-fix (ignoreDefaultArgs --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:46:40.997Z",
+   "end_utc": "2026-10-18T23:47:03.576Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp/lcr",
+   "browser_tmpdir_private_tmpfs_size": "64M",
+   "result": "1 passed (21.6s)",
+   "errors": [],
+   "resource_lines": [
+    {
+     "dir": "/tmp/lcr",
+     "free_before": 65777664,
+     "free_during": 1814528,
+     "exhausted": [
+      200,
+      200
+     ],
+     "free_after": 65777664,
+     "recovered": [
+      200,
+      200
+     ]
+    },
+    {
+     "source_ticks": 549,
+     "snapshot": "03502eab31294e21ae84ab27b24e2a09",
+     "branches": [
+      "9deb1c67dc8b441da2d04bd83ec290af",
+      "a3165b7fa24b42cd954584248eaa3af2"
+     ],
+     "compared": true,
+     "playback": true,
+     "export": "palimpsest-9deb1c67dc8b441da2d04bd83ec290af.svg"
+    }
+   ],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 22.545,
+    "peak_totals": {
+     "unique_shm_regions": 360,
+     "unique_shm_bytes": 93999108,
+     "min_shm_dir_free_bytes": 7889379328,
+     "rss_kib": 1188264,
+     "threads": 127,
+     "fds": 362,
+     "sockets": 106
+    },
+    "samples_bytes": 67689
+   }
+  },
+  {
+   "name": "perf1",
+   "config": "post-fix (ignoreDefaultArgs --disable-dev-shm-usage)",
+   "start_utc": "2026-10-18T23:47:16.456Z",
+   "end_utc": "2026-10-18T23:47:30.668Z",
+   "returncode": 0,
+   "browser_tmpdir": "/tmp",
+   "browser_tmpdir_private_tmpfs_size": null,
+   "result": "1 passed (13.4s)",
+   "errors": [],
+   "resource_lines": [],
+   "probe_peak": {
+    "returncode": 0,
+    "elapsed_seconds": 14.18,
+    "peak_totals": {
+     "unique_shm_regions": 320,
+     "unique_shm_bytes": 83898372,
+     "min_shm_dir_free_bytes": 7899643904,
+     "rss_kib": 1168548,
+     "threads": 126,
+     "fds": 365,
+     "sockets": 108
+    },
+    "samples_bytes": 21698
+   }
+  }
+ ]
+}

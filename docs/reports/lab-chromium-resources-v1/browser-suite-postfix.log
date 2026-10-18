@@ -1,0 +1,18 @@
+
+Running 12 tests using 1 worker
+
+  -   1 tests/adaptive-lab.spec.ts:11:1 › actual adaptive calibration probes, fitted manual drive, reset and action replay
+  -   2 tests/body-lab.spec.ts:7:1 › actual calibrated body manual controls, snapshot, reset and action replay
+  -   3 tests/chromium-resources.spec.ts:8:1 › bounded Chromium resource diagnostic for streamed lab samples
+  ✓   4 tests/lab.spec.ts:21:1 › actual local manual workflow, snapshots, sequential branches, comparison and export (12.0s)
+  ✓   5 tests/lab.spec.ts:80:1 › actual replay jobs recover without samples and expose controls, reports and authenticated bundle (17.9s)
+  ✓   6 tests/lab.spec.ts:118:1 › actual trajectory overlay isolation and keyboard error recovery (3.1s)
+  ✓   7 tests/lab.spec.ts:131:1 › actual memory inspector, U-only branch and evidence-linked route annotations (8.1s)
+  -   8 tests/lab.spec.ts:201:1 › measured browser responsiveness and actual display cadence
+  ✓   9 tests/lab.spec.ts:219:3 › actual declared task inspection and snapshot continuation: exploration-landmarks (5.5s)
+  ✓  10 tests/lab.spec.ts:219:3 › actual declared task inspection and snapshot continuation: encoder-homing (5.5s)
+  -  11 tests/male-lab.spec.ts:8:1 › actual male profiles, native branch and explicit controller replacement
+  ✓  12 tests/recorded-snapshots.spec.ts:4:1 › closed recorded runs recover snapshots and branch from the selected source (529ms)
+
+  5 skipped
+  7 passed (54.2s)
