@@ -144,6 +144,7 @@ def run_authored_pillow_child(site,target,policy,mode):
     finally:os.close(directory)
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 @pytest.mark.parametrize('leaf',['_imaging.so','_imagingft.so'])
 def test_pillow_directory_origin_maps_target_sibling_helper_and_transitive_leaf(tmp_path,leaf):
     site=tmp_path/'site';images=authored_pillow_images(site,tmp_path/'build')
@@ -163,6 +164,7 @@ def test_pillow_exact_leaf_fd_cannot_find_the_sibling_library_tree(tmp_path,leaf
     assert result=={'missing_sibling':True,'checks':1}
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 @pytest.mark.parametrize('leaf',['_imaging.so','_imagingft.so'])
 @pytest.mark.parametrize('mode',['persistent-swap','missing-target-map'])
 def test_pillow_directory_origin_still_refuses_persistent_target_identity_mismatch(tmp_path,leaf,mode):

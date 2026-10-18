@@ -202,6 +202,7 @@ def test_malformed_profiles_fail_before_dependency_body(tmp_path, defect):
     assert 'profile' in result.stderr.lower() or 'binding' in result.stderr.lower(), result.stderr
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_explicit_origin_policy_works_in_complete_worker_without_changing_v1(tmp_path):
     def mutate(deps,root):
         p=upgrade(deps)
@@ -216,6 +217,7 @@ def test_explicit_origin_policy_works_in_complete_worker_without_changing_v1(tmp
     assert receipt['native_authorized'] is receipt['dependencies_qualified'] is False
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 @pytest.mark.parametrize('phase,success',[('native_create',True),('module_exec',False)])
 def test_native_export_is_bound_before_create_module_guard(tmp_path,phase,success):
     import subprocess,sysconfig

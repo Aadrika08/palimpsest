@@ -1,6 +1,6 @@
 # Running the source tests
 
-Use the canonical runner. It runs every non-integration test file in two passes:
+Use the canonical runner. It runs every non-integration test file in three passes:
 
 ```sh
 scripts/run_tests.sh                       # the whole non-integration suite
@@ -37,7 +37,8 @@ check; it does not reproduce this environment.
   - If a crashed run leaves caches behind, remove them before running again:
     `find src scripts -name __pycache__ -prune -exec rm -rf {} +`.
 - **Two basetemps.**
-  - **Pass 1:** every test not marked `runs_basetemp`, with `--basetemp` outside
+  - **Pass 1:** every test marked neither `runs_basetemp` nor `tmpfs_basetemp`,
+    with `--basetemp` outside
     the repository, on the project disk (`~/.cache/palimpsest-pytest/...`).
     - Allocation tests refuse temporary roots inside the repository: "Allocation
       root overlaps an immutable input".
@@ -47,10 +48,19 @@ check; it does not reproduce this environment.
   - **Pass 2:** the tests marked `runs_basetemp`, with `--basetemp` under the
     repository's ignored `runs/` directory. These five tests assert "Use
     persistent runs/ basetemp".
+  - **Pass 3:** the tests marked `tmpfs_basetemp`, with `--basetemp` on tmpfs
+    (`/tmp/palimpsest-pytest/...`). These 25 test functions hold dependency files
+    whose native identity requires tmpfs ("Native identity requires tmpfs"), or
+    check raw tmpfs inode identity ("V3 owner transaction namespace changed").
+    The pass is small, which keeps `/tmp` headroom.
   - The integration files all assert a `runs/` basetemp, so `--integration` uses
     one.
-  - Tests that need a real tmpfs make their own directories under `/tmp`. They
-    must leave at least 2 GB of `/tmp` free.
+  - Other tests that need a real tmpfs make their own directories under `/tmp`.
+  - Keep at least 2 GB of `/tmp` free. Never use `/tmp` as the basetemp for the
+    whole suite: pytest keeps every test's directory until the run ends, which
+    can fill the tmpfs.
+  - Do not run Python without `-B` in the tree while a run is in progress. Any
+    `__pycache__` it writes fails the inventory tests.
 - **Opt-in heavier checks.** Set `PALIMPSEST_SIMULATION_TESTS=1` for real EGL
   world and scene cases. `PALIMPSEST_MALE_TORCH_CHECKS=1` and
   `PALIMPSEST_MALE_RUNTIME_TESTS=1` cover the MaleCNS runtime windows.

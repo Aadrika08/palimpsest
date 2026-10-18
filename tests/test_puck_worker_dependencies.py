@@ -84,6 +84,7 @@ def test_python_dependency_resources_and_distribution_metadata_are_held(tmp_path
     assert receipt['dependencies_qualified'] is receipt['native_authorized'] is receipt['collection_authorized'] is False
 
 
+@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_native_extension_initializes_from_held_file_and_is_observed(tmp_path):
     result, _ = dependency_fixture(tmp_path,'from fixture_dep import _native\nreturn {"answer":_native.answer()}',native=True)
     assert result.returncode == 0, result.stderr
