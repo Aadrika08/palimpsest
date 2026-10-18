@@ -253,3 +253,18 @@ def test_a_later_key_seen_from_different_producers_declares_both(evidence):
     assert candidate['import_profile']['native_cache'][0]['late_delegates']==[dict(attribute='fused_cython_function',
         producers=[dict(producer='scipy._lib._ccallback_c',phase='module_exec'),dict(producer='scipy._lib._fpumode',phase='module_exec')])]
     with pytest.raises(ValueError):replay_producer(m,raws,'scipy._lib')
+
+
+def test_export_paths_cross_regular_modules_by_name_and_end_at_a_recorded_edge():
+    # Characterization records producer edges only for exceptional cache identities, as torch._C._autograd:
+    # torch.autograd -> torch and torch -> torch._C are ordinary module edges that are never recorded.
+    m=api()
+    rows={name:module(name,SITE+'/'+name.replace('.','/')+'/__init__.py') for name in ('torch','torch.autograd','torch._C')}
+    rows['torch._C._autograd']=dict(name='torch._C._autograd',spec_name=None,file=SITE+'/torch/_C.so',classification='module',
+                                   exports=[dict(producer='torch._C',attribute='_autograd')])
+    export=dict(name='torch._C._autograd',producer='torch.autograd',attributes=['torch','_C','_autograd'])
+    assert m.export_reached(export,rows)
+    assert not m.export_reached(dict(export,attributes=['torch','_C','_other']),rows)
+    assert not m.export_reached(dict(export,attributes=['numpy','_C','_autograd']),rows)
+    rows['torch._C._autograd']['exports']=[dict(producer='torch.fft',attribute='_autograd')]
+    assert not m.export_reached(export,rows)
