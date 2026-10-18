@@ -1,0 +1,117 @@
+{
+  "archive": {
+    "elapsed_seconds": 0.16401751500961836,
+    "outer_timeout": false,
+    "returncode": 0
+  },
+  "audit": {
+    "elapsed_seconds": 0.31419639200612437,
+    "outer_timeout": false,
+    "returncode": 0
+  },
+  "binding_derived": {
+    "candidate": "derived",
+    "import_misses": 1,
+    "pins": {
+      "observation_audit": {
+        "path": "docs/reports/puck-cpu-characterization-04/outcome-audit-04.json",
+        "sha256": "5f946b8fe817b826bb87736e6673d40a25eda230b7b8dd52d6763b4f145d333d",
+        "size_bytes": 2143
+      },
+      "observation_configuration": {
+        "path": "docs/reports/puck-cpu-characterization-04/frozen-configuration.json",
+        "sha256": "7892a3cd642468a19bd300783819410cea7b7f8b0b6ba25581301f8fd7cd131d",
+        "size_bytes": 22037
+      },
+      "observation_index": {
+        "path": "docs/reports/puck-cpu-characterization-04/evidence-index.json",
+        "sha256": "60b5ceb1276b3d70d2da3f313cc9e3671ec3bf5fbc6be686efce33ec766a3ab6",
+        "size_bytes": 5249
+      },
+      "observation_replay_report": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/payload/replay/characterization.json",
+        "sha256": "16c7c2210ade0a3090d95ba6cfb724b8a84b6cf8238699992c45ac6c796def6e",
+        "size_bytes": 32846
+      },
+      "observation_report": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/payload/source/characterization.json",
+        "sha256": "89ce2955d4f07aaffde217440b6f086f99466992ff5336611368be740b2816ef",
+        "size_bytes": 33053
+      },
+      "observation_result": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/result.json",
+        "sha256": "d2a2d89c1438f2b24f4341bb14a34795228b49ea43364b7299a3212b20798b86",
+        "size_bytes": 1598
+      }
+    },
+    "undeclared_import_misses": 0,
+    "validate_episode_observation": "PASS",
+    "validate_observation_links": "PASS"
+  },
+  "binding_synthetic": {
+    "candidate": "synthetic",
+    "import_misses": 1,
+    "pins": {
+      "observation_audit": {
+        "path": "docs/reports/puck-cpu-characterization-04/outcome-audit-04.json",
+        "sha256": "5f946b8fe817b826bb87736e6673d40a25eda230b7b8dd52d6763b4f145d333d",
+        "size_bytes": 2143
+      },
+      "observation_configuration": {
+        "path": "docs/reports/puck-cpu-characterization-04/frozen-configuration.json",
+        "sha256": "7892a3cd642468a19bd300783819410cea7b7f8b0b6ba25581301f8fd7cd131d",
+        "size_bytes": 22037
+      },
+      "observation_index": {
+        "path": "docs/reports/puck-cpu-characterization-04/evidence-index.json",
+        "sha256": "60b5ceb1276b3d70d2da3f313cc9e3671ec3bf5fbc6be686efce33ec766a3ab6",
+        "size_bytes": 5249
+      },
+      "observation_replay_report": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/payload/replay/characterization.json",
+        "sha256": "16c7c2210ade0a3090d95ba6cfb724b8a84b6cf8238699992c45ac6c796def6e",
+        "size_bytes": 32846
+      },
+      "observation_report": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/payload/source/characterization.json",
+        "sha256": "89ce2955d4f07aaffde217440b6f086f99466992ff5336611368be740b2816ef",
+        "size_bytes": 33053
+      },
+      "observation_result": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/result.json",
+        "sha256": "d2a2d89c1438f2b24f4341bb14a34795228b49ea43364b7299a3212b20798b86",
+        "size_bytes": 1598
+      }
+    },
+    "undeclared_import_misses": 0,
+    "validate_episode_observation": "PASS",
+    "validate_observation_links": "PASS"
+  },
+  "candidate_sha256": "05fa7c704cd7c3a9e8110c4a881f9803994d7c572f0ffddd7f39123ce85b0abb",
+  "index": {
+    "file_count": 27,
+    "path": "docs/reports/puck-cpu-characterization-04/evidence-index.json",
+    "sha256": "60b5ceb1276b3d70d2da3f313cc9e3671ec3bf5fbc6be686efce33ec766a3ab6",
+    "size_bytes": 5249
+  },
+  "observation": {
+    "elapsed_seconds": 2.632062541000778,
+    "replay": {
+      "compared_events": 5,
+      "compared_ticks": 48,
+      "first_divergence": null,
+      "status": "passed"
+    },
+    "replay_report_sha256": "16c7c2210ade0a3090d95ba6cfb724b8a84b6cf8238699992c45ac6c796def6e",
+    "result_sha256": "d2a2d89c1438f2b24f4341bb14a34795228b49ea43364b7299a3212b20798b86",
+    "source_report_sha256": "89ce2955d4f07aaffde217440b6f086f99466992ff5336611368be740b2816ef",
+    "ticks_completed": 48,
+    "transport_sha256": "b2cfdc5631210066ba92bc511431d5f90661f2681dc5a66c9b31a2956a9bfc72"
+  },
+  "observer": {
+    "elapsed_seconds": 2.6725395859975833,
+    "outer_timeout": false,
+    "returncode": 0
+  },
+  "untouched_unchanged": true
+}

@@ -1,0 +1,249 @@
+{
+  "completed_four_import_receipt": false,
+  "conclusions": [
+    "Admission previously completed normally; its dated preallocation proof remains distinct from failed runtime outcome.",
+    "Observer and wrapper exited1 normally without their timeout. Worker supervision reports the180s normal-return deadline, SIGTERM(-15), sampled RSS610668544B and no sampled matching survivors. Parent itself raised final normal-return deadline before result publication.",
+    "Exact config/transport/commands/env and audit source bindings match the frozen08 controls. Genericv1 audit FAIL is the intended early transport refusal; it does not establish fullv8 audit or current postfailure payload custody.",
+    "Worker stdout is empty, result and baseline-after absent, and no parent closure receipt exists.08 is consumedFAILED and no retry, episode or release authority follows."
+  ],
+  "controls_commit": "2f74653367f14f0156479a52314f625d7400fc57",
+  "external_layers": {
+    "admission": {
+      "elapsed_seconds": 33.70220578002045,
+      "normal_exit": true,
+      "returncode": 0,
+      "timed_out": false,
+      "tool_chunk": "b49266"
+    },
+    "audit": {
+      "elapsed_seconds": 0.11596581200137734,
+      "normal_exit": true,
+      "returncode": 1,
+      "timed_out": false,
+      "tool_chunk": "01c752"
+    },
+    "observer": {
+      "elapsed_seconds": 180.4638411810156,
+      "normal_exit": true,
+      "returncode": 1,
+      "timed_out": false,
+      "tool_chunk": "53521c"
+    }
+  },
+  "findings": [],
+  "independent_audit": {
+    "auditor_source_sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+    "configuration_sha256": "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+    "error": "Normal external transport exit required",
+    "failure_envelope_version": 1,
+    "normal_cli_returncode": 1,
+    "sha256": "93fb936dcf82bcf46a592026e8744c5900bf5bd9b283465d5e5dfad13d346ba9",
+    "status": "FAIL",
+    "transport_sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4"
+  },
+  "kind": "puck-cpu-held08-independent-outcome-review-v1",
+  "missing_receipts": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08/result.json",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08/baseline-after.json"
+  ],
+  "observer_invocations_recorded": 1,
+  "parent_closure_receipt": false,
+  "parent_transport": {
+    "elapsed_seconds": 180.40697938401718,
+    "returncode": 1,
+    "sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+    "timed_out": false
+  },
+  "pins": [
+    {
+      "path": "/tmp/palimpsest-held08-post-outcome-observation.json",
+      "sha256": "5362651eac2107db8744cf5fafbf3aa580230f0dd1e04d73d487a4e41e8cf9f1",
+      "size_bytes": 2176
+    },
+    {
+      "path": "/tmp/palimpsest-held08-concrete-audit-command.json",
+      "sha256": "ce8f9051184e962e61307962e5c7daf5c3ff68f55e2f566640092e3d6d09eaab",
+      "size_bytes": 1342
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli-transport.json",
+      "sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+      "size_bytes": 951
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08/supervision.json",
+      "sha256": "2363163d5926cf8d8ce68c0ea9290671cd633e369cc10c1f5d3261b91e30cdb4",
+      "size_bytes": 380
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08/logs/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08/logs/stderr.log",
+      "sha256": "12fd091b446124bfd8c40a8ef0b962b81b7e3bbc0c94b716736cc3fddf34ca3f",
+      "size_bytes": 1469
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli.stderr",
+      "sha256": "01884f2f4f723dc398170e3a0280d6f0b3c741816e9028274d9090db30627439",
+      "size_bytes": 798
+    },
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-qualification-08-audit-01.json",
+      "sha256": "93fb936dcf82bcf46a592026e8744c5900bf5bd9b283465d5e5dfad13d346ba9",
+      "size_bytes": 616
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08.json",
+      "sha256": "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08-freeze.json",
+      "sha256": "5b7d2b7814e9a3af61a1915f8b03f566949ae52c8cdc3e3ac912c22040e3d28a",
+      "size_bytes": 184287
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08-execution.json",
+      "sha256": "bf17643df98336b813db33749a8072ecb9daabd86f91b184e37d47a3bc10a8b8",
+      "size_bytes": 3636
+    },
+    {
+      "path": "/tmp/palimpsest-held08-admission-external.stdout",
+      "sha256": "099456da7ad8b2771566f753e5e58c8065061c9201357f789055399875aef4af",
+      "size_bytes": 4471
+    },
+    {
+      "path": "/tmp/palimpsest-held08-admission-external.stderr",
+      "sha256": "7cfe7afecf955961fd82b1dc7d58480f72792916f3d718c2dc777593a9ca659a",
+      "size_bytes": 1458
+    },
+    {
+      "path": "/tmp/palimpsest-held08-admission-external.json",
+      "sha256": "a4d365c91c4bb4009c42ba24ab9c48f573c82e0b3ced464074fe78eff5ba4fc3",
+      "size_bytes": 1115
+    },
+    {
+      "path": "/tmp/palimpsest-held08-admission-tool-terminal.json",
+      "sha256": "7a3d29fe6bbd989254c0a48dd8b06d0ad1667f3cd222c0f7a35f0f3c05dffa0d",
+      "size_bytes": 808
+    },
+    {
+      "path": "/tmp/palimpsest-held08-observer-external.stdout",
+      "sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+      "size_bytes": 951
+    },
+    {
+      "path": "/tmp/palimpsest-held08-observer-external.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/tmp/palimpsest-held08-observer-external.json",
+      "sha256": "e3dcff1660b44d0b9c940ea1b65782a484443032d2f79d9cb2c611b12726b8f6",
+      "size_bytes": 1304
+    },
+    {
+      "path": "/tmp/palimpsest-held08-observer-tool-terminal.json",
+      "sha256": "c129f7c3c8bfb6e43e6fb4158e5b3e7f6b8451c744b88b0803eb970dfc9800f0",
+      "size_bytes": 658
+    },
+    {
+      "path": "/tmp/palimpsest-held08-audit-external.stdout",
+      "sha256": "93fb936dcf82bcf46a592026e8744c5900bf5bd9b283465d5e5dfad13d346ba9",
+      "size_bytes": 616
+    },
+    {
+      "path": "/tmp/palimpsest-held08-audit-external.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/tmp/palimpsest-held08-audit-external.json",
+      "sha256": "fa41490d8f91c2ea865d73ee4e668bd97dbd50ab85318a446680000f5a12595d",
+      "size_bytes": 1606
+    },
+    {
+      "path": "/tmp/palimpsest-held08-audit-tool-terminal.json",
+      "sha256": "723f63dbe3b1ce01fe817e3e3fd9efa8796406063d4c93305b968724a70622c1",
+      "size_bytes": 653
+    }
+  ],
+  "post_failure_full_payload_custody": false,
+  "reviewed_at_utc": "2026-10-16T00:23:38.652189+00:00",
+  "scope": [
+    "Read-only small receipts/raw streams/current small controls and auditor-source hash only; no runtime/control/helper/test/import/profiling/attachment or payload rehash/census was performed.",
+    "Only two result/baseline-after output-absence checks were made. No fresh process or full namespace/payload custody sweep; supervisor survivors/RSS and three PID/start records are sampled observations.",
+    "External normal return is transport completion, not acceptance. One recorded observer invocation is confirmed by exclusive transport/terminal artifacts and root record; no exhaustive independent process history claim."
+  ],
+  "source_commit": "f5523dc69c8d05ee2f3ff1118c633512c4b6a2e0",
+  "status": "CONFIRMED_FAILED_CONSUMED_NO_RUNTIME_ACCEPTANCE",
+  "supervision": {
+    "failure": "normal-return deadline",
+    "finished_monotonic": 497703.016780332,
+    "matching_survivors": [],
+    "pid": 3996069,
+    "process_scope": "descendants",
+    "returncode": -15,
+    "rss_sampling_seconds": 0.05,
+    "sampled_peak_rss_bytes": 610668544,
+    "status": "failed",
+    "tracked_processes": [
+      {
+        "pid": 3996069,
+        "start_ticks": 54384185
+      },
+      {
+        "pid": 3996070,
+        "start_ticks": 54384185
+      },
+      {
+        "pid": 3996071,
+        "start_ticks": 54384186
+      }
+    ]
+  },
+  "trace_boundaries": [
+    "Retained stderr contains11 records matching the nominal fixed source order, including numpy/torch returned and torchvision enter. This describes the stream; it is not an independently authenticated execution transcript or completed import/version/result receipt.",
+    "Trace helper is not independently class-slot-bound; installed/native initializers can write stderr. Best-effort IO/serialization failure can disable future markers, and no final worker receipt binds completeness. Absence of later markers does not prove absence of later work.",
+    "The returned markers precede post-import recheck/version validation. No four-import completion, torchvision outcome, failure location or time contribution follows from the last marker.",
+    "No attribution is made to07 or to Pillow, storage, RAM, vendor initialization or guard costs. Static repeated-work paths are hypotheses for separate work, not measured causal diagnosis."
+  ],
+  "version": 1,
+  "worker": {
+    "diagnostic_order": [
+      "bootstrap.enter",
+      "source.ready",
+      "dependencies.enter",
+      "dependencies.ready",
+      "bootstrap.ready",
+      "entry.enter",
+      "import.numpy.enter",
+      "import.numpy.returned",
+      "import.torch.enter",
+      "import.torch.returned",
+      "import.torchvision.enter"
+    ],
+    "diagnostic_records": 11,
+    "last_diagnostic": {
+      "diagnostic_only": true,
+      "elapsed_seconds": 81.56448395497864,
+      "kind": "puck-worker-phase-v1",
+      "phase": "import.torchvision.enter",
+      "sequence": 11
+    },
+    "nominal_numpy_enter_seconds": 28.67646904900903,
+    "nominal_numpy_returned_seconds": 38.08406089199707,
+    "nominal_torch_enter_seconds": 39.832562963012606,
+    "nominal_torch_returned_seconds": 79.74112977000186,
+    "stderr_bytes": 1469,
+    "stdout_bytes": 0
+  }
+}

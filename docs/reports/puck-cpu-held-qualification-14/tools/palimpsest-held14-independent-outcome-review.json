@@ -1,0 +1,380 @@
+{
+  "byte_bindings": {
+    "admission_review": [
+      11842,
+      "4f1a11a2d61e13902d01c3677ac6f432b58ba409563074717376bf78141ea11f"
+    ],
+    "audit_external": [
+      1606,
+      "582163d205748027f3b414ff22cdcec988e35f3f3aa18dfbd0333b9717caab4c"
+    ],
+    "audit_report": [
+      2379,
+      "cfc3ad7437027ee22169b0c76b8ab5cb5dff847970c8b353f793ab29bd6eb1d4"
+    ],
+    "audit_terminal": [
+      134,
+      "f3af3b6b5bfba027a25d0e4888a69ea274c01588a87d4020024be7a8ff5503ba"
+    ],
+    "auditor_source": [
+      80696,
+      "6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd"
+    ],
+    "bootstrap_source": [
+      55504,
+      "b9aa78aad39c58c7a64f1ef4d278d722f94a21fd0a675eef93261396525aa3b3"
+    ],
+    "cli_stdout": [
+      627,
+      "e9ca0d57695840e624c30ecfa1bc2649aec7af4b6a81a8c4c6c639c4291e8ada"
+    ],
+    "collector": [
+      11509,
+      "8c426c0ebd97ecbc6761daa58f6172e4d9b006075d3c0151a342589c69401559"
+    ],
+    "concrete_audit_command": [
+      753,
+      "ceae018cb94aafc14ae8f250129007546cce6d21242a342b6f37d55b4f6cefe9"
+    ],
+    "configuration": [
+      9048,
+      "32f8aeb553a534b463f2b7a594ca721273fa251ae743256d6fe23efa74f6bed2"
+    ],
+    "dependencies": [
+      4253322,
+      "c82ddc9777f8c26cc68bb8a6a2010b1309085b3567c74d101d67732508be53fc"
+    ],
+    "invocation": [
+      7029,
+      "bf913b2aac084351b0adf9b430f2aa22dd7ef4ef6fa04ad6979b2bf3bd502845"
+    ],
+    "observation": [
+      25746,
+      "053d626f2c8d249ed6e58305bc892e641b8081d54f43ee7f033a6e36d4d5a680"
+    ],
+    "observer_external": [
+      1305,
+      "d75f6289419a95cb10722deb6f96a3492db2a5610da3c5bffb7cd9e59e005c0b"
+    ],
+    "observer_source": [
+      7702,
+      "7c5ce0c97792adbef1c5de76ea9bd36fa595f39f6827d05f2fe9e0a76ab43d85"
+    ],
+    "observer_terminal": [
+      138,
+      "dcee79d851f8f5afab3f84b6cb7be9525c71e81dbe446cb882d96d4042805fcf"
+    ],
+    "pre_observer_guard": [
+      3099,
+      "5937536cf230d152417bd73d06344d64a34b59cc7d07f6db8e973f62c0d33500"
+    ],
+    "qualifier_source": [
+      65842,
+      "3ec11bb040da80b87554f56e74dc4d30d47b67b782c25c1fcebef25439f1f663"
+    ],
+    "resource_admission": [
+      105,
+      "455eb95e6704d5110b2fb04f2c5e7834eb3b89e0f25e46604488904441e19e0f"
+    ],
+    "result": [
+      627,
+      "e9ca0d57695840e624c30ecfa1bc2649aec7af4b6a81a8c4c6c639c4291e8ada"
+    ],
+    "supervision": [
+      353,
+      "9977ff5fa928dc93ba35940daaf261de7420238e03463b7e7268a89a37411a0d"
+    ],
+    "transport": [
+      950,
+      "8315c9356742cb43d783dd64f3824c332fb8e60f07be37e83b5175210e568418"
+    ],
+    "worker_registration": [
+      4954,
+      "a30bde3010fbe6b253c92000b3bc726acf4c3abdcab91287da2fe2a62df99d93"
+    ],
+    "worker_stderr": [
+      14009,
+      "cd4ec5aad84322058baae6613fb7cf2057c44811a14f7aaef97f81de426de2ef"
+    ],
+    "worker_stdout": [
+      333922,
+      "47c8830c5f3abf6307889ee5f0679575c44652fc3c8f6e204b0f5da2ad99539a"
+    ]
+  },
+  "byte_bindings_format": "named checked artifact -> [size_bytes,sha256]; all 51 member paths/digests remain in the bound post-outcome observation",
+  "checked_facts": [
+    "All 51 post-outcome members were opened read-only/no-follow: regular single-link files with stable dev/inode/mode/link/size/mtime/ctime and exact size/SHA256. All 21 runs/puck-cpu-held-qualification-14 files are among them. All 63 recorded missing paths are still absent.",
+    "Clean worktree at control eb34d5c. Qualifier, observer, auditor and bootstrap equal f05bd69 and the control Git objects; the auditor bytes hash to 6292b550.... Instantiated collector, run-observer-once and run-audit-once equal their templates with CONTROL eb34d5c and COUNT 78. bind-audit-command and make-observer-guard equal their Git copies.",
+    "Order: admission review (4f1a11a2...) < pre-observer guard (PASS, binds admission receipt e3413dda..., stage/boot PASS) < observer < concrete audit bind < audit < collect. Exactly one tool command, external receipt and terminal per phase. No admission-02 and no other runs/puck-cpu-held-qualification-1[2-9] allocation, so no retry.",
+    "Observer: stage guard PASS (boot 7f875223..., -03 roots 43194-43197). Tool exit 0 in 202.77s, no outer timeout. External rc 0, normal exit, 202.72s of 440s, no implicit retry, empty stderr, accepted. Observer stdout equals the 950B transport 8315c935....",
+    "Transport: qualify phase, exact isolated qualifier argv on config 32f8aeb5..., observed_returncode 0, not timed out, 202.64s (<400). Parent stdout (627B) equals result.json; parent stderr is empty.",
+    "result.json: kind outcome-v14, version and allocation 14, status imports_completed, held_four_imports_observed true, configuration 32f8aeb5..., elapsed 202.54s (<360), closure FD 5->5 with no children or threads. All authority flags are false and there are no claims. worker_stdout_sha256 47c8830c... equals the 333922B worker stdout.",
+    "Worker receipt: entry_result qualification v5 imports_completed. Exact versions: numpy 2.2.5 (8.7s), torch 2.9.0+cpu (21.5s), torchvision 0.24.0+cpu (103.2s), mujoco 3.3.6 (30.5s); every import <360s. expected_missing_imports equals the 32-name configuration roster; expected_hidden_imports equals the 4 hidden names. denied_imports has 36 unique names, all within 32 absent + 4 hidden, so every declared name was requested and denied. The receipt binds the registration digest, Python 3.11.15, interpreter object, and dependency registration c82ddc97....",
+    "worker-registration.json has deadline_seconds 360, qualification v5, the exact 32 absent and 4 hidden names and the four expected versions. invocation.json binds config 32f8aeb5 and equals an independent current-auditor namespace_command reconstruction for qualify, with the bootstrap and registration digests bound. The stage is mounted only read-only (stage-03/inputs -> /puck/staged/inputs).",
+    "Supervision: completed, returncode 0, failure null, descendants scope, three tracked identities, matching_survivors [], sampled peak RSS 845156352B (<2GiB). Resource admission is above floors. baseline-before = baseline-after = preparation03 baseline. configuration.json equals the frozen config; payload/ and outer/ are empty; the 10 worker-source files match config pins.",
+    "Worker stderr (14009B): 41 JSON rows (18 phase, 23 guard-cost), no non-JSON lines, and no Unregistered, refus, poison, Traceback, Error or exception text. Phases: dependencies ready 19.99s; numpy 25.27->33.13; torch 34.67->55.35; torchvision 56.92->159.36; mujoco 160.91->190.68; entry.returned 192.21; close.ready 197.88.",
+    "Audit: the concrete command binds transport SHA 8315c935..., config and the 14 audit-01 output, and equals the external argv. One run: tool exit 0 in 13.05s; external rc 0 normal, 145s budget, empty stderr; stdout equals the 2379B audit-01. Report: kind independent-audit-v14, PASS, version/allocation 14, qualify, auditor_source_sha256 6292b550... (the auditor own-bytes digest), bound config/transport/result/prep03 shas, observed imports_completed, held_four_imports_observed true, closure FD 4->4, 4 roots / 27255 files / 2076 dirs / 1318494346B, 3 tracked identities, all authority false, 12.91s.",
+    "Collector: AUDIT_PASS_IMPORT_ROUTE_ONLY, completed_four_import_receipt true, runtime_qualified false, observer and auditor invocations 1/1. epoch14_clocks all true (parent <360, transport <400, registration 360, imports <360). Parent result, supervision, audit and transport equal the originals. stage_after PASS; three tracked identities not present. After the run: 228 run records, 41 empty directories and all 2768 freeze pins unchanged; boot unchanged; a single stat of the preparation03 roots shows dev 55, inodes 43194-43197, mode 0700."
+  ],
+  "control_commit": "eb34d5c2a66730c248b00229c17ce84e197b3d68",
+  "findings": [],
+  "kind": "independent_bounded_actual14_passed_outcome_review_v1",
+  "limits": [
+    "Standard-library metadata/source inspection only. No target imports, admission/observer/auditor/qualifier main, helpers, network, repo edits or SITE/staged/native/interpreter payload reads by the reviewer. No retry, replay or audit rerun. Only write: this exclusive /tmp review JSON.",
+    "Import-route evidence only: one held CPU allocation completed four top-level imports with exact versions under policy v5 and the extended 360s epoch-14 clock, and was independently audited PASS. This is not runtime qualification (runtime_qualified false), not numerical, model, physics, renderer, operator, inference, study, collection or release acceptance, and not a reproducibility or timing guarantee for other runs or boots.",
+    "Worker phase and guard-cost rows are optional unauthenticated diagnostics. RSS and process enforcement are sampled; FD/survivor observations are cleanup samples. Invocation counts rely on exclusive-output controls and supplied history.",
+    "The pass depends on the extended clock: guarded imports took about 170s against the original 180s epoch budget, and the parent returned at 202.5s. The original 180s qualification limit remains unmet. All seven release gates remain open."
+  ],
+  "observed": {
+    "absence": "All 63 recorded missing paths are absent: historical receipts, d83dab3 outputs and admission14-02.",
+    "all_seven_release_gates_open": true,
+    "audit": {
+      "auditor_source_sha256": "6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd",
+      "external_normal_exit": true,
+      "external_returncode": 0,
+      "external_seconds": 13.005023302001064,
+      "invocations_reported": 1,
+      "kind": "puck-cpu-held-runtime-independent-audit-v14",
+      "status": "PASS",
+      "tool_exit_code": 0,
+      "tool_outer_timeout": false,
+      "tool_seconds": 13.05075022699748
+    },
+    "completed_four_import_receipt": true,
+    "guard_cost_at_190_6s": {
+      "at": 190.6,
+      "bindings": 49.6,
+      "cache": 1.0,
+      "custody": 81.4,
+      "full": {
+        "completed": 174,
+        "started": 174
+      },
+      "light": {
+        "completed": 5529,
+        "started": 5529
+      },
+      "scope": "optional unauthenticated diagnostic rows; guard about 132s of 190.6s"
+    },
+    "import_denials": {
+      "absent_names_requested": [
+        "OpenGL_accelerate",
+        "accimage",
+        "av",
+        "backports_abc",
+        "colorama",
+        "defusedxml",
+        "dill",
+        "flint",
+        "fx2trt_oss",
+        "gmpy",
+        "gmpy2",
+        "hypothesis",
+        "monkeytype",
+        "numpy._distributor_init_local",
+        "onnx",
+        "onnx_tf",
+        "onnxruntime",
+        "opt_einsum",
+        "org",
+        "pydot",
+        "pynvml",
+        "tabulate",
+        "tensorflow",
+        "tensorrt",
+        "torch._rocm_init",
+        "torch2trt",
+        "torchdistx",
+        "tqdm",
+        "tree",
+        "triton",
+        "tvm",
+        "xarray"
+      ],
+      "absent_not_requested": [],
+      "count": 36,
+      "hidden_names_requested": [
+        "networkx",
+        "pandas",
+        "sklearn",
+        "torch.utils._cxx_pytree"
+      ],
+      "hidden_not_requested": [],
+      "unique": [
+        "OpenGL_accelerate",
+        "accimage",
+        "av",
+        "backports_abc",
+        "colorama",
+        "defusedxml",
+        "dill",
+        "flint",
+        "fx2trt_oss",
+        "gmpy",
+        "gmpy2",
+        "hypothesis",
+        "monkeytype",
+        "networkx",
+        "numpy._distributor_init_local",
+        "onnx",
+        "onnx_tf",
+        "onnxruntime",
+        "opt_einsum",
+        "org",
+        "pandas",
+        "pydot",
+        "pynvml",
+        "sklearn",
+        "tabulate",
+        "tensorflow",
+        "tensorrt",
+        "torch._rocm_init",
+        "torch.utils._cxx_pytree",
+        "torch2trt",
+        "torchdistx",
+        "tqdm",
+        "tree",
+        "triton",
+        "tvm",
+        "xarray"
+      ]
+    },
+    "imports": [
+      {
+        "name": "numpy",
+        "seconds": 8.658158507001644,
+        "version": "2.2.5"
+      },
+      {
+        "name": "torch",
+        "seconds": 21.495215568000276,
+        "version": "2.9.0+cpu"
+      },
+      {
+        "name": "torchvision",
+        "seconds": 103.21865496499959,
+        "version": "0.24.0+cpu"
+      },
+      {
+        "name": "mujoco",
+        "seconds": 30.53501008299645,
+        "version": "3.3.6"
+      }
+    ],
+    "process_observation": "Three supervision PID/start identities are not present; sequential/nonexhaustive/non-atomic.",
+    "qualification_claims": [],
+    "runtime14": {
+      "clock_margins": {
+        "observer_normal_400": 197.36,
+        "parent_normal_360": 157.46,
+        "wrapper_440": 237.28
+      },
+      "external_normal_exit": true,
+      "external_returncode": 0,
+      "external_seconds": 202.72025243299868,
+      "external_timed_out": false,
+      "held_four_imports_observed": true,
+      "observer_invocations_reported": 1,
+      "parent_seconds": 202.5355187269961,
+      "status": "imports_completed",
+      "tool_exit_code": 0,
+      "tool_outer_timeout": false,
+      "tool_seconds": 202.76788810799917,
+      "transport_seconds": 202.6437338780015
+    },
+    "runtime_qualified": false,
+    "stage_custody": "Boot unchanged. preparation03 stage directories and roots keep identity/mode/tmpfs (stage guard before observer and audit, after the run, plus one stat). The qualify namespace mounted only stage/inputs read-only. The audit re-hashed the staged forest (27255 files) and PASSed.",
+    "supervision": {
+      "failure": null,
+      "matching_survivors": [],
+      "returncode": 0,
+      "sampled_peak_rss_bytes": 845156352,
+      "status": "completed"
+    },
+    "worker_phases": [
+      [
+        "bootstrap.enter",
+        0.0
+      ],
+      [
+        "source.ready",
+        0.05
+      ],
+      [
+        "dependencies.enter",
+        0.05
+      ],
+      [
+        "dependencies.ready",
+        19.99
+      ],
+      [
+        "bootstrap.ready",
+        20.73
+      ],
+      [
+        "entry.enter",
+        20.73
+      ],
+      [
+        "import.numpy.enter",
+        25.27
+      ],
+      [
+        "import.numpy.returned",
+        33.13
+      ],
+      [
+        "import.torch.enter",
+        34.67
+      ],
+      [
+        "import.torch.returned",
+        55.35
+      ],
+      [
+        "import.torchvision.enter",
+        56.92
+      ],
+      [
+        "import.torchvision.returned",
+        159.36
+      ],
+      [
+        "import.mujoco.enter",
+        160.91
+      ],
+      [
+        "import.mujoco.returned",
+        190.68
+      ],
+      [
+        "entry.returned",
+        192.21
+      ],
+      [
+        "entry.ready",
+        196.3
+      ],
+      [
+        "close.enter",
+        196.3
+      ],
+      [
+        "close.ready",
+        197.88
+      ]
+    ]
+  },
+  "pinned_roster": {
+    "all_sizes_sha256_match": true,
+    "allocation_files": 21,
+    "bytes_verified": 4845119,
+    "manifest_path": "/tmp/palimpsest-held14-post-outcome-observation.json",
+    "missing_paths_still_absent": 63,
+    "pins_verified": 51
+  },
+  "scope": "Accept the retained PASS outcome record of the sole runtime14 (epoch 14 on preparation03) and its ONE bound independent v14 audit PASS as import-route evidence only; runtime_qualified stays false.",
+  "source_commit": "f05bd699af337e44de54584bb334690ec405f994",
+  "status": "PASS_IMPORT_ROUTE_OUTCOME_RECORD_ONLY"
+}

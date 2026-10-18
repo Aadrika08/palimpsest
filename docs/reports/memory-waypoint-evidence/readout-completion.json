@@ -1,0 +1,98 @@
+{
+  "all_original_indexed_hashes_match": true,
+  "all_recorded_owners_exited": true,
+  "completed_monotonic": 22342.592903472,
+  "conservative_readout_seconds": 123.75224306000018,
+  "conservative_total_seconds": 558.2025760159995,
+  "execution_sha256": "42d1dacec404936c2640676a043f29fd47ef800c5a877d9054ae7c5f07c6abb4",
+  "indexed_files": 128,
+  "output_bytes_after_readout": 644317550,
+  "owners": [
+    {
+      "goal": false,
+      "job_id": "candidate-r14",
+      "packet_memory_commitment_replay_pass": true,
+      "policy_binding_pass": true,
+      "policy_calls": 727,
+      "profile_sha256": "d4c7d0ca49b454d1d2ed94cb12d7939b6afa29a1cc3944f397557ad354a78909",
+      "raw_audit_pass": true,
+      "raw_rows": 727,
+      "replans": 0,
+      "retreat_completed": false,
+      "run_id": "43741cfe0745410fba409640bef5485c",
+      "symbolic_packets": 727,
+      "terminal_failure": null
+    },
+    {
+      "goal": true,
+      "job_id": "south-no-event",
+      "packet_memory_commitment_replay_pass": true,
+      "policy_binding_pass": true,
+      "policy_calls": 923,
+      "profile_sha256": "d4c7d0ca49b454d1d2ed94cb12d7939b6afa29a1cc3944f397557ad354a78909",
+      "raw_audit_pass": true,
+      "raw_rows": 923,
+      "replans": 0,
+      "retreat_completed": false,
+      "run_id": "5022a2806146479ab7ad0519feda3d1e",
+      "symbolic_packets": 923,
+      "terminal_failure": null
+    },
+    {
+      "goal": false,
+      "job_id": "south-change",
+      "packet_memory_commitment_replay_pass": true,
+      "policy_binding_pass": true,
+      "policy_calls": 1193,
+      "profile_sha256": "d4c7d0ca49b454d1d2ed94cb12d7939b6afa29a1cc3944f397557ad354a78909",
+      "raw_audit_pass": true,
+      "raw_rows": 1193,
+      "replans": 1,
+      "retreat_completed": true,
+      "run_id": "355c4c8fabba4e2cb39a881cc844001c",
+      "symbolic_packets": 1194,
+      "terminal_failure": {
+        "abs_fov_excess_degrees": 0.7490325756169369,
+        "exact_exception_reproduced": true,
+        "line_of_sight_scope": "packet reconstructed by audit_run with circular occluders",
+        "pose": [
+          0.6694372892379761,
+          1.2155547142028809,
+          1.1979647193066885
+        ],
+        "range_m": 0.5726784655164123,
+        "relative_bearing_degrees": -90.74903257561694,
+        "sensor_only_terminal_packet": true,
+        "target": "memory-v2-00000190-local_cue-change-0-subject-z-exit",
+        "target_xy": [
+          1.2,
+          1.0
+        ],
+        "tick": 1193
+      }
+    }
+  ],
+  "qualification_claims": [],
+  "readout_deadline_monotonic": 22818.840660412,
+  "schema": "memory-waypoint-retained-readout-v1",
+  "started_monotonic": 22305.7942419,
+  "terminal_failure": {
+    "abs_fov_excess_degrees": 0.7490325756169369,
+    "exact_exception_reproduced": true,
+    "line_of_sight_scope": "packet reconstructed by audit_run with circular occluders",
+    "pose": [
+      0.6694372892379761,
+      1.2155547142028809,
+      1.1979647193066885
+    ],
+    "range_m": 0.5726784655164123,
+    "relative_bearing_degrees": -90.74903257561694,
+    "sensor_only_terminal_packet": true,
+    "target": "memory-v2-00000190-local_cue-change-0-subject-z-exit",
+    "target_xy": [
+      1.2,
+      1.0
+    ],
+    "tick": 1193
+  }
+}

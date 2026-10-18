@@ -1,0 +1,45 @@
+{
+  "acceptance_auditor": {
+    "error": "Normal external transport exit required",
+    "external_elapsed_seconds": 0.05352770403260365,
+    "normal_return": true,
+    "passing_failure_preservation_audit": false,
+    "refused_before_post_stage_byte_checks": true,
+    "returncode": 1,
+    "status": "FAIL",
+    "terminal": "a23d4b"
+  },
+  "kind": "actual-qualification02-terminal-ledger-v1",
+  "negative_import_policy_changed": false,
+  "observer": {
+    "elapsed_seconds": 38.75431559397839,
+    "normal_return": true,
+    "returncode": 1,
+    "terminal": "e24788",
+    "timed_out": false
+  },
+  "parent": {
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 5,
+      "fd_count_before": 5
+    },
+    "elapsed_seconds": 38.6615098589682,
+    "status": "FAIL"
+  },
+  "post_terminal_custody": {
+    "all_three_tracked_identities_absent": true,
+    "at": "2026-10-15T14:42:33.369187+00:00",
+    "terminal": "42f4a9"
+  },
+  "qualification01_unchanged": true,
+  "qualification02_consumed": true,
+  "qualification03_created": false,
+  "scope": "actual failed held four-import qualification; no accepted runtime or post-qualification byte outcome",
+  "static_source_inspection": {
+    "authenticated_source_sha256": "3caf7f40140ede2465bde40b9003af10cbbc8f7bcf436fa1de026471daa1b288",
+    "runtime_imported": false,
+    "terminal": "324779"
+  }
+}

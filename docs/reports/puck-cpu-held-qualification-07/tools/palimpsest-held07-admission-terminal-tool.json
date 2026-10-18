@@ -1,0 +1,19 @@
+{
+  "frozen_commit": "1a1ffa06b325d0a0a60b26cff14f70992ca995ec",
+  "initial": {
+    "chunk_id": "b962c0",
+    "output": "",
+    "session_id": 66218,
+    "wall_time_seconds": 1.001379426
+  },
+  "invocations": 1,
+  "kind": "held07-admission-tool-observation-v1",
+  "observer_invoked": false,
+  "terminal": {
+    "chunk_id": "6912ac",
+    "exit_code": 0,
+    "output": "{\"accepted\": true, \"elapsed_seconds\": 42.60813192703063, \"receipt\": \"/tmp/palimpsest-held07-admission-external.json\", \"returncode\": 0, \"stderr\": {\"path\": \"/tmp/palimpsest-held07-admission-external.stderr\", \"sha256\": \"8b9e2b36a1664182a72ad4013f044f90d482f8403a9ef966d454e23c9def3fbd\", \"size_bytes\": 1456}, \"stdout\": {\"path\": \"/tmp/palimpsest-held07-admission-external.stdout\", \"sha256\": \"fc17a093b1fdb455c480c312abe014a0689a6fed46af3667befe64150d58efdd\", \"size_bytes\": 3677}, \"timed_out\": false}\n",
+    "wall_time_seconds": 4.817721476
+  },
+  "wall_time_scope": "Tool observation chunks only; use pinned wrapper receipt for whole external elapsed."
+}

@@ -1,0 +1,493 @@
+{
+  "boundaries": [
+    "Candidate data only; not acceptance, successful loader execution, four-import qualification, episode admission, native authorization or release evidence.",
+    "All six historical failed allocations remain consumed and unchanged. No07 configuration, execution, retry or namespace/native load was performed in this lane.",
+    "This authoring pass reused retained readelf and selected-hash evidence. It did not repeat the 1 GiB ELF hash scan, inspect current installed package bytes, or establish a complete post06 forest/prefix census."
+  ],
+  "byte_format": "UTF-8 JSON, sort_keys=True, indent=2, one trailing LF; D is C with exactly the two displayed pretty-JSON rows inserted at the start of import_profile.native_origins",
+  "byte_insertion": {
+    "anchor_utf8": "    \"native_origins\": [\n",
+    "delete_inserted_rows_reconstructs_C_exact_bytes": true,
+    "inserted_sha256": "d333724e92db47e040bf2dd8e3eac3d036cd72b3b7594ced6c21afdac4ac74f6",
+    "inserted_size_bytes": 194,
+    "inserted_utf8": "      {\n        \"name\": \"PIL._imaging\",\n        \"policy\": \"held-directory-observed-v1\"\n      },\n      {\n        \"name\": \"PIL._imagingft\",\n        \"policy\": \"held-directory-observed-v1\"\n      },\n"
+  },
+  "candidate_C": {
+    "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+    "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+    "size_bytes": 346230
+  },
+  "candidate_D": {
+    "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+    "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+    "size_bytes": 346424
+  },
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "held_runtime_qualified": false,
+    "native_authorized": false,
+    "native_phase_qualified": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "evidence": {
+    "derived_native_evidence_path": "docs/plans/puck-cpu-pillow-origin-profile-v1/native-evidence.json",
+    "retained_native_review": {
+      "path": "docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
+      "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+      "size_bytes": 165833
+    }
+  },
+  "historical_composition": {
+    "C_to_D": "Exactly the two origin-row additions above.",
+    "H_original_native_origin_count": 11,
+    "H_original_native_origins_equal_C": true,
+    "H_to_C": "Exactly four authenticated publication export replacements retained from the accepted C identity; all other H fields equal C.",
+    "H_to_D_composed_object_equals_D": true,
+    "four_export_replacements": [
+      {
+        "after": {
+          "attributes": [
+            "torch",
+            "_C",
+            "_autograd"
+          ],
+          "class_binding": null,
+          "delegate_attributes": [
+            "CreationMeta",
+            "DeviceType",
+            "ProfilerEvent",
+            "SavedTensor",
+            "TensorGeometry",
+            "_InputMetadata",
+            "_KinetoEvent",
+            "_ProfilerDisableOptions",
+            "_ProfilerResult",
+            "_add_metadata_json",
+            "_clear_callbacks",
+            "_disable_profiler",
+            "_disable_profiler_legacy",
+            "_enable_profiler",
+            "_enable_profiler_legacy",
+            "_enable_record_function",
+            "_get_creation_meta",
+            "_get_current_graph_task_keep_graph",
+            "_get_data_attr",
+            "_get_sequence_nr",
+            "_kineto_step",
+            "_pop_saved_tensors_default_hooks",
+            "_prepare_profiler",
+            "_profiler_enabled",
+            "_profiler_type",
+            "_push_saved_tensors_default_hooks",
+            "_record_function_with_args_enter",
+            "_record_function_with_args_exit",
+            "_saved_tensors_hooks_disable",
+            "_saved_tensors_hooks_enable",
+            "_saved_tensors_hooks_get_disabled_error_message",
+            "_saved_tensors_hooks_is_enabled",
+            "_saved_tensors_hooks_set_tracing",
+            "_set_creation_meta",
+            "_set_empty_test_observer",
+            "_soft_assert_raises",
+            "_supported_activities",
+            "_toggle_collection_dynamic",
+            "_top_saved_tensors_default_hooks",
+            "_unsafe_set_version_counter",
+            "kineto_available"
+          ],
+          "name": "torch._C._autograd",
+          "phase": "module_exec_publish",
+          "producer": "torch.autograd"
+        },
+        "before": {
+          "attributes": [
+            "_autograd"
+          ],
+          "class_binding": null,
+          "name": "torch._C._autograd",
+          "phase": "native_create",
+          "producer": "torch._C"
+        },
+        "name": "torch._C._autograd"
+      },
+      {
+        "after": {
+          "attributes": [
+            "torch",
+            "_C",
+            "_distributed_autograd"
+          ],
+          "class_binding": null,
+          "delegate_attributes": [
+            "DistAutogradContext",
+            "_current_context",
+            "_get_debug_info",
+            "_get_max_id",
+            "_init",
+            "_is_valid_context",
+            "_new_context",
+            "_release_context",
+            "_retrieve_context",
+            "backward",
+            "get_gradients"
+          ],
+          "name": "torch._C._distributed_autograd",
+          "phase": "module_exec_publish",
+          "producer": "torch.distributed.autograd"
+        },
+        "before": {
+          "attributes": [
+            "_distributed_autograd"
+          ],
+          "class_binding": null,
+          "name": "torch._C._distributed_autograd",
+          "phase": "native_create",
+          "producer": "torch._C"
+        },
+        "name": "torch._C._distributed_autograd"
+      },
+      {
+        "after": {
+          "attributes": [
+            "torch",
+            "_C",
+            "_distributed_c10d"
+          ],
+          "class_binding": null,
+          "delegate_attributes": [
+            "AllToAllOptions",
+            "AllgatherOptions",
+            "AllreduceCoalescedOptions",
+            "AllreduceOptions",
+            "Backend",
+            "BarrierOptions",
+            "BroadcastOptions",
+            "BuiltinCommHookType",
+            "DDPLoggingData",
+            "DebugLevel",
+            "ErrorType",
+            "FakeProcessGroup",
+            "FakeWork",
+            "FileStore",
+            "GatherOptions",
+            "GradBucket",
+            "HashStore",
+            "Logger",
+            "OpType",
+            "PrefixStore",
+            "ProcessGroup",
+            "ProcessGroupGloo",
+            "ReduceOp",
+            "ReduceOptions",
+            "ReduceScatterOptions",
+            "Reducer",
+            "ScatterOptions",
+            "Store",
+            "TCPStore",
+            "Work",
+            "WorkInfo",
+            "WorkResult",
+            "_ControlCollectives",
+            "_DMAConnectivity",
+            "_DistributedBackendOptions",
+            "_ProcessGroupWrapper",
+            "_Request",
+            "_Response",
+            "_StoreCollectives",
+            "_SymmetricMemory",
+            "_WorkerServer",
+            "_allow_inflight_collective_as_graph_input",
+            "_broadcast_coalesced",
+            "_compute_bucket_assignment_by_size",
+            "_create_work_from_future",
+            "_current_process_group",
+            "_detect_dma_connectivity",
+            "_dump_fr_trace",
+            "_dump_fr_trace_json",
+            "_get_handler",
+            "_get_handler_names",
+            "_get_work_registry_size",
+            "_make_nccl_premul_sum",
+            "_register_builtin_comm_hook",
+            "_register_comm_hook",
+            "_register_process_group",
+            "_register_work",
+            "_resolve_process_group",
+            "_set_allow_inflight_collective_as_graph_input",
+            "_set_global_rank",
+            "_set_process_group",
+            "_set_thread_isolation_mode",
+            "_test_python_store",
+            "_unregister_all_process_groups",
+            "_unregister_process_group",
+            "_verify_params_across_processes",
+            "get_debug_level",
+            "set_debug_level",
+            "set_debug_level_from_env"
+          ],
+          "name": "torch._C._distributed_c10d",
+          "phase": "module_exec_publish",
+          "producer": "torch.distributed"
+        },
+        "before": {
+          "attributes": [
+            "_distributed_c10d"
+          ],
+          "class_binding": null,
+          "name": "torch._C._distributed_c10d",
+          "phase": "native_create",
+          "producer": "torch._C"
+        },
+        "name": "torch._C._distributed_c10d"
+      },
+      {
+        "after": {
+          "attributes": [
+            "torch",
+            "_C",
+            "_distributed_rpc"
+          ],
+          "class_binding": null,
+          "delegate_attributes": [
+            "PyRRef",
+            "RemoteProfilerManager",
+            "RpcAgent",
+            "RpcBackendOptions",
+            "TensorPipeAgent",
+            "WorkerInfo",
+            "_TensorPipeRpcBackendOptionsBase",
+            "_cleanup_python_rpc_handler",
+            "_delete_all_user_and_unforked_owner_rrefs",
+            "_destroy_rref_context",
+            "_disable_jit_rref_pickle",
+            "_disable_server_process_global_profiler",
+            "_enable_jit_rref_pickle",
+            "_enable_server_process_global_profiler",
+            "_get_current_rpc_agent",
+            "_invoke_remote_builtin",
+            "_invoke_remote_python_udf",
+            "_invoke_remote_torchscript",
+            "_invoke_rpc_builtin",
+            "_invoke_rpc_python_udf",
+            "_invoke_rpc_torchscript",
+            "_is_current_rpc_agent_set",
+            "_reset_current_rpc_agent",
+            "_rref_context_get_debug_info",
+            "_set_and_start_rpc_agent",
+            "_set_profiler_node_id",
+            "_set_rpc_timeout",
+            "enable_gil_profiling",
+            "get_rpc_timeout"
+          ],
+          "name": "torch._C._distributed_rpc",
+          "phase": "module_exec_publish",
+          "producer": "torch.distributed.rpc"
+        },
+        "before": {
+          "attributes": [
+            "_distributed_rpc"
+          ],
+          "class_binding": null,
+          "name": "torch._C._distributed_rpc",
+          "phase": "native_create",
+          "producer": "torch._C"
+        },
+        "name": "torch._C._distributed_rpc"
+      }
+    ]
+  },
+  "historical_prepared_candidate_H": {
+    "path": "docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+    "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+    "size_bytes": 340908
+  },
+  "kind": "puck-cpu-pillow-origin-candidate-projection-v1",
+  "semantic_projection": {
+    "C_row_count": 11,
+    "D_row_count": 13,
+    "added_rows": [
+      {
+        "name": "PIL._imaging",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "PIL._imagingft",
+        "policy": "held-directory-observed-v1"
+      }
+    ],
+    "all_other_fields_identical": true,
+    "canonical_object_without_native_origins_sha256": "a3b5d2c6fd706794128e65ede12f3660f444f4b947a7592716b51eb4ac0237bd",
+    "changed_existing_rows": [],
+    "exports_sha256": "282e5a948394c427f2a743c9f6a7ebcf156fc6d1d2359ddd8c9092fb1090fb6c",
+    "module_changes_sha256": "fd1f8f85c4ed1b04eca1e31981b4b380ef881e53f87fbee99a289e8fa2499e66",
+    "module_paths_count": 1783,
+    "module_paths_sha256": "61b14eb8963d4d611dd5c6c47d493854684dd816e90dcca5db6b1e8579b81adc",
+    "namespace_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "native_cache_sha256": "4658889dafad04942ad762b01b934373ada9978825d3d7e8ad138fbff63e8f09",
+    "only_changed_object_path": "/import_profile/native_origins",
+    "removed_rows": [],
+    "unique_names_and_sorted_lists": true
+  },
+  "status": "SOURCE_DATA_ONLY_EXACT_PROJECTION",
+  "unchanged_external_data": {
+    "current_noncandidate_input_pins": [
+      {
+        "path": "docs/reports/puck-cpu-retained-admission-02/acceptance-audit-03.json",
+        "role": "accepted_audit",
+        "sha256": "130b97c8253f2b824f382dbbbe32d049bfcaacf9d0169307611454d39b02aef3",
+        "size_bytes": 1263
+      },
+      {
+        "path": "docs/plans/puck-cpu-retained-admission-02.json",
+        "role": "accepted_configuration",
+        "sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+        "size_bytes": 30043
+      },
+      {
+        "path": "docs/reports/puck-cpu-retained-admission-02/evidence-index.json",
+        "role": "accepted_index",
+        "sha256": "6ef83ddd81474b7aa94bca7924f03b2fa13410864a2ac21fb17f39dff117b9de",
+        "size_bytes": 5935
+      },
+      {
+        "path": "runs/puck-cpu-retained-admission-02/result.json",
+        "role": "accepted_result",
+        "sha256": "29a9e4a84d16cb9a20ee95749a44d12631aa7d21ba5a9019f091a674ad80d618",
+        "size_bytes": 1154
+      },
+      {
+        "path": "runs/puck-cpu-retained-admission-02/snapshot.json",
+        "role": "accepted_snapshot",
+        "sha256": "db66e69a1a39e950b0bbfe8c7f1e9134cd3c3e3251dceb82db3692e6b407f70b",
+        "size_bytes": 663
+      },
+      {
+        "path": "docs/plans/puck-python-louvain-host-baseline-v1.json",
+        "role": "baseline",
+        "sha256": "b00901ffcf70799682b0092168163d300c264083e615fed16850b9b557e8a207",
+        "size_bytes": 552822
+      },
+      {
+        "path": "docs/reports/puck-cpu-held-preparation-v1/generated/_remote_module_non_scriptable.py",
+        "role": "generated",
+        "sha256": "8205b16956fb264841ecd8644784a0d157f87df79b17c16825dc1163433ce5d8",
+        "size_bytes": 2355
+      },
+      {
+        "path": "runs/puck-cpu-retained-admission-02/inventory.json",
+        "role": "inventory",
+        "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+        "size_bytes": 3996631
+      },
+      {
+        "path": "docs/reports/puck-cpu-install-01/wheel-layout.json",
+        "role": "layout",
+        "sha256": "82076ef08db0cb07c19d26376d6f501dd3a8d072738d0150641dd6691c9fda5b",
+        "size_bytes": 517010
+      },
+      {
+        "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+        "role": "native",
+        "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+        "size_bytes": 1618086
+      },
+      {
+        "path": "docs/reports/puck-cpu-characterization-02/outcome-audit-02.json",
+        "role": "observation_audit",
+        "sha256": "68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3",
+        "size_bytes": 1452
+      },
+      {
+        "path": "docs/reports/puck-cpu-characterization-02/frozen-configuration.json",
+        "role": "observation_configuration",
+        "sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+        "size_bytes": 13940
+      },
+      {
+        "path": "docs/reports/puck-cpu-characterization-02/evidence-index.json",
+        "role": "observation_index",
+        "sha256": "c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da",
+        "size_bytes": 17046
+      },
+      {
+        "path": "docs/reports/puck-cpu-characterization-02/raw/payload/imports.json",
+        "role": "observation_report",
+        "sha256": "f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448",
+        "size_bytes": 534299
+      },
+      {
+        "path": "docs/reports/puck-cpu-characterization-02/raw/result.json",
+        "role": "observation_result",
+        "sha256": "c3959dbb45d760c59e953caf11d05993c97c0d3912a801d957cf6f8dcbcfb3ff",
+        "size_bytes": 837
+      }
+    ],
+    "native_aliases_canonical_sha256": "4418118016d594ea0c49b8d63c6912f5cc8d58b201e46a8737baa4a0cff19ebc",
+    "native_aliases_count": 23,
+    "native_files_canonical_sha256": "f065c575ae07ecc51136b8d58488eba2aed6b93e74fbb46300ca0f7551d74f3b",
+    "native_files_count": 29,
+    "native_metadata_input": {
+      "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    "negative_imports_outside_candidate_unchanged": [
+      "OpenGL_accelerate",
+      "accimage",
+      "av",
+      "colorama",
+      "defusedxml",
+      "dill",
+      "flint",
+      "gmpy",
+      "gmpy2",
+      "monkeytype",
+      "numpy._distributor_init_local",
+      "opt_einsum",
+      "org",
+      "pydot",
+      "pynvml",
+      "torch._rocm_init",
+      "torchdistx",
+      "tqdm",
+      "triton"
+    ],
+    "preparation_acceptance_anchors": {
+      "configuration": {
+        "path": "docs/plans/puck-cpu-held-preparation-01.json",
+        "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+        "size_bytes": 7903
+      },
+      "externally_observed_auditor_cli": {
+        "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+        "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+        "size_bytes": 1680
+      },
+      "independent_audit": {
+        "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+        "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+        "size_bytes": 1563
+      },
+      "result": {
+        "path": "runs/puck-cpu-held-preparation-01/result.json",
+        "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+        "size_bytes": 7330
+      }
+    },
+    "source_configuration": {
+      "path": "docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    }
+  },
+  "validator_recommendation": [
+    "Keep existing epoch05/06 H-to-C exact-four-export validation unchanged. Accept D only in a separately closed prospective epoch, with its own authenticated path/size/SHA256.",
+    "For C-to-D, require authenticated C identity, both PIL origin names absent in C, sorted unique old and new lists, then add only the two fixed name/policy objects and compare the entire canonical expected object to D. Reject changed module rows, metadata/provenance, existing policies, duplicate names, deletion, extra rows, and any false-claim change.",
+    "For H-to-D, independently construct the existing exact four export replacements and then the two fixed origin additions from authenticated H, or validate authenticated H-to-C followed by exact C-to-D; compare the entire resulting object to D. The independent auditor must reconstruct the projection rather than trust a producer-supplied proof or weakened subset comparison.",
+    "Keep all 15 noncandidate input pins, four original preparation anchors, unchanged native file inventory/mounts, exact negative roster and closed limits; only the explicit prospective source/epoch controls may differ. Do not repin or reinterpret epochs01-06."
+  ],
+  "version": 1
+}

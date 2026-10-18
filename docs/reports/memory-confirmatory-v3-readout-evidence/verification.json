@@ -1,0 +1,46 @@
+{
+  "scope": "Synthetic software only; no scientific data or qualification",
+  "focused_passed": 56,
+  "suite_passed": 1188,
+  "suite_skipped": 24,
+  "suite_warnings": 39,
+  "suite_seconds": 354.82,
+  "suite_outer_seconds": 357.3015013940021,
+  "review": {
+    "rounds": 1,
+    "critical": 0,
+    "important": 0,
+    "minor": 0,
+    "independent_new_tests_passed": 20
+  },
+  "sources": {
+    "scripts/memory_confirmatory_v3.py": {
+      "bytes": 10244,
+      "sha256": "9f20e42c85b2c6210f61de0560281b9795ff9736c57564233e3e9876be260c17"
+    },
+    "tests/test_memory_confirmatory_v3.py": {
+      "bytes": 7073,
+      "sha256": "4bb3937bdcde1f5b93d160dac174064068439e60e64d402ca6d09e5e5e82c3ab"
+    }
+  },
+  "retained_logs": {
+    "focused.txt": {
+      "bytes": 6498,
+      "sha256": "7a5b5ca334aff0ee262afc8abb58ede0e583ac149d844133f913b64d1e8faa2b"
+    },
+    "focused-final.txt": {
+      "bytes": 99,
+      "sha256": "5c64d3f6318c944f6a3995675795fa20ab8ab17fa29262ed4d63661b9807bb76"
+    },
+    "full-suite.txt": {
+      "bytes": 6246,
+      "sha256": "1ef5dcfce671841df199d3af7687d1f28802a22dfa035449823175942a0a9b94"
+    },
+    "full-suite.json": {
+      "bytes": 299,
+      "sha256": "1bed174b42b3fed2d095c9bdd241194a87b849e116d8994800e96d68f0d9bb6f"
+    }
+  },
+  "qualification_claims": [],
+  "r2_complete": false
+}

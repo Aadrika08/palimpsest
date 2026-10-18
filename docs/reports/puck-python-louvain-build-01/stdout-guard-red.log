@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_flushed_terminal_output_remains_inside_outer_hard_guard _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7409ffee7f50>
+
+    def test_flushed_terminal_output_remains_inside_outer_hard_guard(monkeypatch):
+        from contextlib import contextmanager
+        value = module(PARENT)
+        active = [False]
+        @contextmanager
+        def guard(*args):
+            active[0] = True
+            try: yield
+            finally: active[0] = False
+        def output(*args, **kwargs):
+            assert active[0], "terminal output escaped the hard guard"
+            assert kwargs.get("flush") is True
+        monkeypatch.setattr(value.os, "getpgrp", value.os.getpid)
+        monkeypatch.setattr(value.sys, "argv", [str(PARENT), "--configuration", "authored.json", "--sha256", "0" * 64])
+        monkeypatch.setattr(value, "parent", lambda *args: {"status": "wheel_verified"})
+        monkeypatch.setattr(value, "hard_guard", guard)
+        monkeypatch.setattr(value, "print", output, raising=False)
+>       assert value.main() == 0
+               ^^^^^^^^^^^^
+
+tests/test_puck_python_louvain_build.py:247: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/build_puck_python_louvain.py:409: in main
+    print(canonical(result).decode().strip(), flush=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('{"status":"wheel_verified"}',), kwargs = {'flush': True}
+@py_assert0 = False
+@py_format2 = 'terminal output escaped the hard guard\n>assert False'
+
+    def output(*args, **kwargs):
+>       assert active[0], "terminal output escaped the hard guard"
+E       AssertionError: terminal output escaped the hard guard
+E       assert False
+
+tests/test_puck_python_louvain_build.py:240: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_python_louvain_build.py::test_flushed_terminal_output_remains_inside_outer_hard_guard
+1 failed in 0.07s

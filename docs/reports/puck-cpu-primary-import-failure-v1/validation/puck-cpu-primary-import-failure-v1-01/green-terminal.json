@@ -1,0 +1,11 @@
+{
+  "exit_code": 1,
+  "failing_test": "tests/test_puck_worker_dependencies.py::test_unregistered_import_has_no_ambient_fallback",
+  "failure": "Collection root or ancestor changed while held",
+  "initial_chunk_id": "909d29",
+  "kind": "exec-terminal-observation-v1",
+  "new_regression_passed": true,
+  "pytest_result": "1 failed, 63 passed in 41.06s",
+  "session_id": 24965,
+  "terminal_chunk_id": "227797"
+}

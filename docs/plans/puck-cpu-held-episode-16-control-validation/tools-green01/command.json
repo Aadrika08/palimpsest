@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-episode-16-control-validation/tools-check.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-episode-16-control-validation/tools-check.py",
+      "sha256": "9d19480446278f5107fc3e3d3424059793a46b3e3139deba8293d5c21f22f81c",
+      "size_bytes": 16543
+    }
+  ],
+  "scope": "template compilation and isolated-fixture pre-observer derivation only; no /tmp tool instantiation, guard, admission or runtime"
+}

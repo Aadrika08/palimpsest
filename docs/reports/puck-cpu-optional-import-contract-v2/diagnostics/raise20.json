@@ -1,0 +1,40 @@
+{
+ "kind": "diagnostic-negative-semantics-probe-v1",
+ "diagnostic_only": true,
+ "mode": "raise",
+ "completed": [
+  "numpy",
+  "torch"
+ ],
+ "error": {
+  "name": "torchvision",
+  "error": "ModuleNotFoundError('Explicit qualification import denial: tqdm')",
+  "frames": [
+   "torch/_dynamo/symbolic_convert.py:59",
+   "torch/_dynamo/trace_rules.py:3843",
+   "torch/_dynamo/trace_rules.py:3664",
+   "/tmp/p.py:18"
+  ]
+ },
+ "denied": [
+  "accimage",
+  "av",
+  "backports_abc",
+  "colorama",
+  "defusedxml",
+  "dill",
+  "flint",
+  "gmpy",
+  "gmpy2",
+  "monkeytype",
+  "numpy._distributor_init_local",
+  "opt_einsum",
+  "org",
+  "pydot",
+  "pynvml",
+  "torch._rocm_init",
+  "torchdistx",
+  "tqdm",
+  "triton"
+ ]
+}

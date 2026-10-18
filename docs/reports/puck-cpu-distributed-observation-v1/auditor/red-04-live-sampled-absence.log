@@ -1,0 +1,58 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_independent_final_close_checks_only_recorded_pid_start_lifetimes[live] __
+
+case = 'live'
+
+    @pytest.mark.parametrize('case', ['live', 'absent', 'reused'])
+    def test_independent_final_close_checks_only_recorded_pid_start_lifetimes(case):
+        module = api()
+        raw = Path('/proc/self/stat').read_bytes(); start = int(raw.rsplit(b') ', 1)[1].split()[19])
+        identity = dict(pid=os.getpid(), start_ticks=start)
+        if case == 'live':
+>           with pytest.raises(ValueError, match='still exists'): module.verify_sampled_absence([identity])
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'distributed_auditor_tests' has no attribute 'verify_sampled_absence'
+
+tests/test_puck_cpu_distributed_observation_audit.py:309: AttributeError
+_ test_independent_final_close_checks_only_recorded_pid_start_lifetimes[absent] _
+
+case = 'absent'
+
+    @pytest.mark.parametrize('case', ['live', 'absent', 'reused'])
+    def test_independent_final_close_checks_only_recorded_pid_start_lifetimes(case):
+        module = api()
+        raw = Path('/proc/self/stat').read_bytes(); start = int(raw.rsplit(b') ', 1)[1].split()[19])
+        identity = dict(pid=os.getpid(), start_ticks=start)
+        if case == 'live':
+            with pytest.raises(ValueError, match='still exists'): module.verify_sampled_absence([identity])
+        elif case == 'absent':
+>           module.verify_sampled_absence([dict(pid=2**31-1, start_ticks=1)])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'distributed_auditor_tests' has no attribute 'verify_sampled_absence'
+
+tests/test_puck_cpu_distributed_observation_audit.py:311: AttributeError
+_ test_independent_final_close_checks_only_recorded_pid_start_lifetimes[reused] _
+
+case = 'reused'
+
+    @pytest.mark.parametrize('case', ['live', 'absent', 'reused'])
+    def test_independent_final_close_checks_only_recorded_pid_start_lifetimes(case):
+        module = api()
+        raw = Path('/proc/self/stat').read_bytes(); start = int(raw.rsplit(b') ', 1)[1].split()[19])
+        identity = dict(pid=os.getpid(), start_ticks=start)
+        if case == 'live':
+            with pytest.raises(ValueError, match='still exists'): module.verify_sampled_absence([identity])
+        elif case == 'absent':
+            module.verify_sampled_absence([dict(pid=2**31-1, start_ticks=1)])
+        else:
+>           module.verify_sampled_absence([dict(identity, start_ticks=start+1)])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'distributed_auditor_tests' has no attribute 'verify_sampled_absence'
+
+tests/test_puck_cpu_distributed_observation_audit.py:313: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_independent_final_close_checks_only_recorded_pid_start_lifetimes[live]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_independent_final_close_checks_only_recorded_pid_start_lifetimes[absent]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_independent_final_close_checks_only_recorded_pid_start_lifetimes[reused]
+3 failed, 96 deselected in 0.12s

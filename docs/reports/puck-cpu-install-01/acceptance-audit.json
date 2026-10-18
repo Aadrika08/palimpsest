@@ -1,0 +1,17 @@
+{
+  "bounds": {
+    "max_directories": 40000,
+    "max_files": 40000,
+    "max_individual_bytes": 1073741824,
+    "max_installed_bytes": 3221225472,
+    "wall_seconds": 180
+  },
+  "elapsed_seconds": 3.69691335700918,
+  "ended_at_utc": "2026-10-15T07:47:31.032385+00:00",
+  "error": "AuditError: forbidden pyc/pth: numpy/distutils/__pycache__/conv_template.cpython-311.pyc",
+  "installer_executed_by_auditor": false,
+  "kind": "puck-cpu-install-independent-audit-v1",
+  "started_at_utc": "2026-10-15T07:47:27.335454+00:00",
+  "status": "FAIL",
+  "target_code_executed": false
+}

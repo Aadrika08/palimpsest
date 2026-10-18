@@ -1,0 +1,16 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_authored_distributed_observation_observer_and_independent_auditor ____
+tests/test_puck_cpu_distributed_observation_integration.py:367: in test_authored_distributed_observation_observer_and_independent_auditor
+    assert process.returncode == 0, (process.returncode, process.stdout, process.stderr)
+E   AssertionError: (1, b'', b'Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E       File "/home/utkarsh/Work/shra...ine 45, in require
+E         raise AuditError(message)
+E     palimpsest_cpu_install_audit_v1.AuditError: unregistered pyc/pth
+E     ')
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['/usr/bin/bwrap', '--unshare-user', '--die-with-parent', '--ro-bind', '/', '/', '--bind', '/hom...ine 45, in require\n    raise AuditError(message)\npalimpsest_cpu_install_audit_v1.AuditError: unregistered pyc/pth\n').returncode
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_integration.py::test_authored_distributed_observation_observer_and_independent_auditor
+1 failed in 2.26s

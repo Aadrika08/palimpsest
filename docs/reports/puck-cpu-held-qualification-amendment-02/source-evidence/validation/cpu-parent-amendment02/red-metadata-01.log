@@ -1,0 +1,156 @@
+.F.....................FF.......                                         [100%]
+=================================== FAILURES ===================================
+____ test_historical_cli_accepts_exact_retained_current_byte_audit_metadata ____
+
+    def test_historical_cli_accepts_exact_retained_current_byte_audit_metadata():
+        m,config,blobs=acceptance_case()
+        retained=m.ROOT/'docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json'
+        recorded=json.loads(retained.read_bytes())
+        cli=json.loads(blobs['externally_observed_auditor_cli'])
+        cli.update({k:recorded[k] for k in ('at','scope')})
+        rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+>       m.validate_preparation_acceptance(config,blobs)
+
+tests/test_puck_cpu_held_amendment.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 2, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+blobs = {'configuration': b'{"allocation_id":1,"claims":{"collection_authorized":false,"executable":false,"native_authorized":...:4,"root_index":2},{"device":1,"inode":5,"root_index":3}],"status":"prepared","study_authorized":false,"version":1}\n'}
+
+    def validate_preparation_acceptance(config,blobs):
+        """Bind historical data acceptance without assigning its old source proof to new bytes."""
+        validate_configuration(config)
+        if config['version']!=2:raise ValueError('CPU amendment02 configuration required')
+        acceptance=config['preparation_acceptance'];values={}
+        for role,row in acceptance.items():
+            raw=blobs[role]
+            if len(raw)!=row['size_bytes'] or digest(raw)!=row['sha256']:raise ValueError('Historical CPU preparation pin differs')
+            value=decode(raw)
+            if type(value) is not dict:raise ValueError('Historical CPU preparation object required')
+            if role in ('configuration','result') and canonical(value)!=raw:raise ValueError('Canonical historical CPU preparation bytes required')
+            values[role]=value
+        prior,prep,audit,cli=(values[k] for k in ('configuration','result','independent_audit','externally_observed_auditor_cli'))
+        validate_configuration(prior)
+        if prior['version']!=1 or prior['phase']!='prepare':raise ValueError('Historical CPU preparation01 required')
+        shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
+        if any(prior[k]!=config[k] for k in shared):raise ValueError('CPU amendment changed prepared data or policy')
+        changed={old['path'] for old,new in zip(prior['sources'],config['sources']) if old!=new}
+        if BOOTSTRAP not in changed or not changed<={BOOTSTRAP,'scripts/qualify_puck_cpu_held_runtime.py'}:
+            raise ValueError('CPU amendment source changes must be bootstrap and optional parent only')
+        false_claims=lambda value:any(value.get(k)!=v or type(value.get(k)) is not type(v) for k,v in CLAIMS.items())
+        def closed(value):
+            row=value.get('closure',{})
+            return (row.get('active_children')==[] and row.get('active_non_main_threads')==[]
+                    and type(row.get('fd_count_before')) is int and row['fd_count_before']>=0
+                    and type(row.get('fd_count_after')) is int and row['fd_count_before']==row['fd_count_after'])
+        def elapsed(value,maximum):
+            return type(value) in (int,float) and math.isfinite(value) and 0<value<maximum
+        if (prep.get('kind')!='puck-cpu-held-runtime-outcome-v1' or type(prep.get('version')) is not int or prep['version']!=1
+                or type(prep.get('allocation_id')) is not int or prep['allocation_id']!=1
+                or prep.get('phase')!='prepare' or prep.get('status')!='prepared' or 'error' in prep
+                or prep.get('held_four_imports_observed') is not False or false_claims(prep)
+                or prep.get('configuration_sha256')!=acceptance['configuration']['sha256']
+                or prep.get('stage_parent')!=prior['stage_parent'] or prep.get('sources')!=prior['sources']
+                or prep.get('inputs')!=prior['inputs'] or not closed(prep) or not elapsed(prep.get('elapsed_seconds'),180)):
+            raise ValueError('Historical CPU preparation receipt differs or failed')
+        dep=pin(prep.get('dependencies'))
+        if dep['path']!='payload/dependencies.json':raise ValueError('Historical CPU dependency path differs')
+        if (audit.get('kind')!='puck-cpu-held-runtime-independent-audit-v1' or type(audit.get('version')) is not int or audit['version']!=1
+                or audit.get('status')!='PASS' or audit.get('phase')!='prepare' or audit.get('observed_status')!='prepared'
+                or audit.get('held_four_imports_observed') is not False or false_claims(audit)
+                or type(audit.get('external_returncode')) is not int or audit['external_returncode']!=0
+                or audit.get('auditor_source_sha256')!=LEGACY_AUDITOR_SHA256
+                or audit.get('configuration_sha256')!=acceptance['configuration']['sha256']
+                or audit.get('result_sha256')!=acceptance['result']['sha256'] or audit.get('dependencies_sha256')!=dep['sha256']
+                or type(audit.get('root_count')) is not int or audit['root_count']!=4
+                or not closed(audit) or not elapsed(audit.get('elapsed_seconds'),120)):
+            raise ValueError('Historical CPU independent audit failed or provenance differs')
+        if (set(cli)!={'kind','command','observed_returncode','elapsed_seconds','published','stdout','stderr'}
+                or cli['kind']!='externally-observed-cpu-auditor-cli-v1'
+                or type(cli['observed_returncode']) is not int or cli['observed_returncode']!=0
+                or not elapsed(cli['elapsed_seconds'],130)):
+>           raise ValueError('Historical CPU auditor CLI did not return normally')
+E           ValueError: Historical CPU auditor CLI did not return normally
+
+scripts/qualify_puck_cpu_held_runtime.py:243: ValueError
+________ test_amendment_rejects_rebound_semantic_tampering[audit-scope] ________
+
+defect = 'audit-scope'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','audit-scope','audit-closure','audit-transport',
+        'cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1),
+                'audit-scope':('evidence_scope','unrelated'),'audit-closure':('closure',dict(active_children=[],active_non_main_threads=[],fd_count_before=0,fd_count_after=0)),
+                'audit-transport':('transport_sha256','not-a-sha')}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment.py:135: Failed
+_______ test_amendment_rejects_rebound_semantic_tampering[audit-closure] _______
+
+defect = 'audit-closure'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','audit-scope','audit-closure','audit-transport',
+        'cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1),
+                'audit-scope':('evidence_scope','unrelated'),'audit-closure':('closure',dict(active_children=[],active_non_main_threads=[],fd_count_before=0,fd_count_after=0)),
+                'audit-transport':('transport_sha256','not-a-sha')}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment.py:135: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_historical_cli_accepts_exact_retained_current_byte_audit_metadata
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-scope]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-closure]
+3 failed, 29 passed, 1 deselected in 0.37s

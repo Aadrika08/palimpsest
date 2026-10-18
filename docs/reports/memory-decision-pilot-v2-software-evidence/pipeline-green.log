@@ -1,0 +1,29 @@
+.....................F............                                       [100%]
+=================================== FAILURES ===================================
+_____ test_thirty_slots_require_independent_close_and_keep_bounded_reports _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-14/test_thirty_slots_require_inde0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d7780d13990>
+
+    def test_thirty_slots_require_independent_close_and_keep_bounded_reports(tmp_path,monkeypatch):
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch,large=True)
+        assert callable(getattr(s,'run',None)) and callable(getattr(s,'audit',None)), 'Selected runner/close missing'
+        assert s.run(path)==0
+        before=p.read_json(root/'execution.json')
+        assert launched==[row['job_id'] for row in reg['owner_slots']]
+        assert before['pilot_complete'] is False and before['mandatory_pass'] is True
+        assert (root/'execution.json').stat().st_size<p.MiB
+        assert s.audit(path)==0
+        close=p.read_json(root/'scientific-close.json')
+>       assert close['pilot_complete'] is True and close['mechanism_observed'] is True
+E       assert (True is True and False is True)
+
+tests/test_memory_selected_pilot.py:326: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+{"status": "pilot-provisional-pass", "mandatory_pass": true, "mechanism_observed": false, "unattempted": []}
+{"status": "pilot-complete", "pilot_complete": true, "mandatory_pass": true, "mechanism_observed": false, "error": null}
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_thirty_slots_require_independent_close_and_keep_bounded_reports
+1 failed, 33 passed in 71.43s (0:01:11)

@@ -1,0 +1,186 @@
+{
+  "claims": {
+    "collection_authorized": false,
+    "control_rerun": false,
+    "four_imports_qualified": false,
+    "independent_payload_rehash": false,
+    "observer_invocation_authorized_by_review": false,
+    "runtime_qualified": false,
+    "study_authorized": false,
+    "target_runtime_executed_by_review": false
+  },
+  "evidence_boundaries": [
+    "This is independent SMALL-receipt/control/stream consistency review only. No control/helper/main/auditor, namespace, target import/native code, tests, installed SITE/staged/prefix census, payload hash or process scan was invoked.",
+    "Full current07/D byte/resource checks are observations of the previously reviewed pinned admission program, supported here by exact normal0 transport, all eight completed phases, final held rehash/close and canonical stdout equality. This is not a second independent payload rehash.",
+    "Current candidateD SHA matches frozen6eba. Reported current dependencyc82ddc97... is a well-formed distinct digest from historicalH25ea, produced by the reviewed exact H-to-D plan guard; this reviewer did not independently reconstruct that full registration from payload metadata.",
+    "DATA_ONLY_ADMITTED is dated data/resource preparation, not successful four imports or preparation reacceptance. Observer/qualification07 had not run at this admission; all six older actual qualifications remain consumedFAIL.",
+    "The qualification06_invoked=true field is historical. Numerical/native/collection/study/executable authority fields remain false and qualification_claims stays empty.",
+    "Three PID/start samples are nonexhaustive, non-atomic retained observations; this reviewer performed no current PID verification.",
+    "The final-poll tool wall_time4.817721476s is not total execution time. Bound wrapper summary measures42.60813192703063s; source receipt measures42.48517970298417s.",
+    "Both RAM samples exceed frozen2GiB floor, as do dated disk/tmpfs/FD samples. These are not continuing guarantees; root must refresh pre-observer gates and retain future terminal/outcome audit evidence.",
+    "No operator, renderer, episode, model, scientific study or release acceptance follows from this receipt review."
+  ],
+  "findings": [],
+  "kind": "puck-cpu-held07-admission-independent-receipt-review-v1",
+  "reviewed_at_utc": "2026-10-15T22:55:07.742079+00:00",
+  "small_artifact_pins": [
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-qualification-07-admission-01.json",
+      "sha256": "fc17a093b1fdb455c480c312abe014a0689a6fed46af3667befe64150d58efdd",
+      "size_bytes": 3677
+    },
+    {
+      "path": "/tmp/palimpsest-held07-admission-external.stdout",
+      "sha256": "fc17a093b1fdb455c480c312abe014a0689a6fed46af3667befe64150d58efdd",
+      "size_bytes": 3677
+    },
+    {
+      "path": "/tmp/palimpsest-held07-admission-external.stderr",
+      "sha256": "8b9e2b36a1664182a72ad4013f044f90d482f8403a9ef966d454e23c9def3fbd",
+      "size_bytes": 1456
+    },
+    {
+      "path": "/tmp/palimpsest-held07-admission-external.json",
+      "sha256": "00c062c7f7e5b9d58433397c82a04cf2a0a8ccce0227c8640e5cba7c4194cb7f",
+      "size_bytes": 1116
+    },
+    {
+      "path": "/tmp/palimpsest-held07-admission-terminal-tool.json",
+      "sha256": "2d794f0d4800c37acf328396a1b09691e25d52906a3265137ff0904dccaf4d8e",
+      "size_bytes": 1054
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07.json",
+      "sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-admission.py",
+      "sha256": "7f9b695f7f01ad7e91c97c1f9caf0d3273b65f80f042f4694fb643b32534b99d",
+      "size_bytes": 19575
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-freeze.json",
+      "sha256": "6230a4072b3606efd41efc694f0da15671d248f2cd39203f4eb2ca39ead22d17",
+      "size_bytes": 124995
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-external.py",
+      "sha256": "3eb0c77ad3d7ba6ea3f7f00fcba650db364262c1a57b81be37f73cd80d2f898a",
+      "size_bytes": 4194
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-execution.json",
+      "sha256": "743c06bf40b4d52343881c1a9996e15741896b80a86bcb87fa97d70da3535c0b",
+      "size_bytes": 3636
+    },
+    {
+      "path": "/tmp/palimpsest-held07-controls-independent-review.json",
+      "sha256": "7deb47f60143eaa6a98d50e94a9f93710c7ed6e22400a9b86d4fdc1980631f21",
+      "size_bytes": 9205
+    }
+  ],
+  "status": "PASS_SCOPED_DATA_ONLY_ADMITTED_RECEIPT_CONSISTENCY",
+  "verified": {
+    "baseline_reported": {
+      "external_file_count": 10,
+      "prefix_manifest_sha256": "4d54b1dac0283b93ac036029c3cb669022b34a748a7f2bda019809930b5c9886",
+      "regular_file_bytes": 90314007,
+      "regular_file_count": 4233,
+      "symlink_count": 1048
+    },
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 4,
+      "fd_count_before": 4
+    },
+    "counts": {
+      "current_inputs": 16,
+      "current_sources": 24,
+      "directory_count": 2076,
+      "file_count": 27255,
+      "historical_capsule_files": 34,
+      "input_bytes": 1318494346,
+      "input_pins": 16,
+      "root_count": 4,
+      "site_bytes": 1304701872,
+      "site_directories": 2074,
+      "site_files": 27225
+    },
+    "current_and_historical_dependency_digests_distinct": true,
+    "current_candidate_sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+    "frozen_controls_commit": "1a1ffa06b325d0a0a60b26cff14f70992ca995ec",
+    "fullrecheck_held_bytes": 1472276438,
+    "fullrecheck_held_files": 32070,
+    "held_files_after_close": 0,
+    "historical_dependencies_sha256": "25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f",
+    "negative_names": [
+      "OpenGL_accelerate",
+      "accimage",
+      "av",
+      "colorama",
+      "defusedxml",
+      "dill",
+      "flint",
+      "gmpy",
+      "gmpy2",
+      "monkeytype",
+      "numpy._distributor_init_local",
+      "opt_einsum",
+      "org",
+      "pydot",
+      "pynvml",
+      "torch._rocm_init",
+      "torchdistx",
+      "tqdm",
+      "triton"
+    ],
+    "observer_invoked_at_admission": false,
+    "outer_terminal_exit": 0,
+    "phase_count": 8,
+    "recorded_process_samples": [
+      {
+        "matching_identity_present": false,
+        "pid": 3569912,
+        "start_ticks": 53431366
+      },
+      {
+        "matching_identity_present": false,
+        "pid": 3569913,
+        "start_ticks": 53431366
+      },
+      {
+        "matching_identity_present": false,
+        "pid": 3569914,
+        "start_ticks": 53431367
+      }
+    ],
+    "reported_current_dependencies_sha256": "c82ddc9777f8c26cc68bb8a6a2010b1309085b3567c74d101d67732508be53fc",
+    "resources_after": {
+      "at_utc": "2026-10-15T22:52:24.751111+00:00",
+      "mem_available_bytes": 3415879680,
+      "nofile_hard": 40000,
+      "nofile_soft": 40000,
+      "project_free_bytes": 76086534144,
+      "tmpfs_free_bytes": 3389517824
+    },
+    "resources_before": {
+      "at_utc": "2026-10-15T22:51:45.706885+00:00",
+      "mem_available_bytes": 4594323456,
+      "nofile_hard": 524288,
+      "nofile_soft": 65536,
+      "project_free_bytes": 76223406080,
+      "tmpfs_free_bytes": 3416944640
+    },
+    "result_stdout_exact": true,
+    "source_epoch": "f0b122db7ccc4fd0117b0f8527b48b3a5d3b1c61",
+    "source_seconds": 42.48517970298417,
+    "stream_hashes_exact": true,
+    "timed_out": false,
+    "wrapper_child_returncode": 0,
+    "wrapper_receipt_seconds": 42.607889881008305,
+    "wrapper_summary_seconds": 42.60813192703063
+  },
+  "version": 1
+}

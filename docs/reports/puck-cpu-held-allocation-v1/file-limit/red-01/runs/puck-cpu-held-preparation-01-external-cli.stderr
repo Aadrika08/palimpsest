@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-file-limit-red-01/test_preparation_can_copy_an_a0/scripts/qualify_puck_cpu_held_runtime.py", line 5, in <module>
+    for i in range(17):stream.write(b"x"*(1024**2))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 27] File too large

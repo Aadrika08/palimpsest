@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-family-allocation-admission-v3/scripts/memory_family_allocation_v3.py", line 866, in <module>
+    main()
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-family-allocation-admission-v3/scripts/memory_family_allocation_v3.py", line 861, in main
+    result = admit(args.registration, args.search_manifest, args.repo, args.assets)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-family-allocation-admission-v3/scripts/memory_family_allocation_v3.py", line 745, in admit
+    early = _blockers(registration, search_manifest_path, repo)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-family-allocation-admission-v3/scripts/memory_family_allocation_v3.py", line 730, in _blockers
+    values[name] = check()
+                   ^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-family-allocation-admission-v3/scripts/memory_family_allocation_v3.py", line 723, in <lambda>
+    ('storage', lambda: _capacity(registration['roots'])),
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-family-allocation-admission-v3/scripts/memory_family_allocation_v3.py", line 369, in _capacity
+    limits = StorageLimits(
+             ^^^^^^^^^^^^^^
+TypeError: StorageLimits.__init__() got an unexpected keyword argument 'max_entries'

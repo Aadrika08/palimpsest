@@ -1,0 +1,118 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "30s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/.codex/worktrees/293b/brain",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-s",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/q4-baseline-red01",
+    "-k",
+    "coordinated",
+    "tests/test_puck_guard_contract_v4.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/293b/brain",
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/tmp"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-guard-v4-prospective.md",
+      "sha256": "020398de1a4737420538f4113d1dad1c837d2ee52d306d80fe96fe4c721e17fe",
+      "size_bytes": 5353
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "ca15c16f07e9131f292f730f43d7a9901f6b8e655ac269a11a3d8f1a6c8fd4b4",
+      "size_bytes": 50261
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "7c2d0dca9edf3bea23f96b224d813f4ab40859b95c10e3103e394e49c7976db5",
+      "size_bytes": 2514
+    },
+    {
+      "path": "tests/test_puck_cpu_runtime_entry.py",
+      "sha256": "4f3c63f3cf3c26419c88e08636bdb5c20c3884e866da783aa12fbfb30abd6b22",
+      "size_bytes": 9292
+    },
+    {
+      "path": "tests/test_puck_guard_contract_v4.py",
+      "sha256": "f4e681abd0d7dbba321c64bcdea5ea5f18a7e7e30dac7251456bd69d831aa9c5",
+      "size_bytes": 21380
+    },
+    {
+      "path": "tests/test_puck_tmpfs_dependencies.py",
+      "sha256": "c80c193206e3aa005a2be770dfdfd105d364f988ba9606f012e3a46c0d3fff0c",
+      "size_bytes": 6108
+    },
+    {
+      "path": "tests/test_puck_worker_bootstrap.py",
+      "sha256": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5",
+      "size_bytes": 13905
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    }
+  ],
+  "scope": "Authored packages and real-worker guard semantics only. No installed runtime, actual10 or qualification authority."
+}

@@ -1,0 +1,39 @@
+F
+=================================== FAILURES ===================================
+____ test_authored10_binds_fifth_source_diagnostics_and_independent_audits _____
+
+tmp_path = PosixPath('/home/utkarsh/.codex/worktrees/293b/brain/runs/q4-epoch10-integration-red03/test_authored10_binds_fifth_so0')
+
+    def test_authored10_binds_fifth_source_diagnostics_and_independent_audits(tmp_path):
+        before=len(os.listdir('/proc/self/fd'))
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_q4epoch10_auditor')
+        with publication05_fixture(tmp_path,pillow_origins=True,phase_trace=True) as case:
+            root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+            historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            qualifier_pin=next(r for r in config['sources'] if r['path']==QUALIFIER)
+            old_sources={r['path']:r for r in case['prepared']['sources']}
+            assert {r['path'] for r in config['sources'] if r!=old_sources[r['path']]}==set(DIAGNOSTIC_SOURCES)
+            assert qualifier_pin['sha256']==digest((ROOT/QUALIFIER).read_bytes())
+            assert qualifier_pin!=old_sources[QUALIFIER]
+            candidate=copy.deepcopy(case['candidate'])
+            candidate['import_profile']['native_origins']=copy.deepcopy(PILLOW_ORIGINS)
+            path=root/'docs/authored/candidate-q4epoch10.json';path.write_bytes(canonical(candidate))
+            config['inputs']['candidate']=file_pin(root,path)
+            config.update(kind='puck-cpu-held-runtime-allocation-v10',version=10,allocation_id=10,
+                negative_imports=list(AUTHORED_ROSTER06))
+            code,stdout,stderr=run_cli(root,api,'qualify10',config)
+            base=root/'runs/puck-cpu-held-qualification-10'
+            raw=(base/'result.json').read_bytes() if (base/'result.json').exists() else b''
+>           assert code==0,(code,stdout,stderr,raw)
+E           AssertionError: (1, b'', b'Traceback (most recent call last):
+E               File "/home/utkarsh/.codex/worktrees/293b/brain/runs/q4-epoch10-integ...rror(\'Exact CPU allocation configuration required\')
+E             ValueError: Exact CPU allocation configuration required
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment10_integration.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment10_integration.py::test_authored10_binds_fifth_source_diagnostics_and_independent_audits
+1 failed in 6.89s

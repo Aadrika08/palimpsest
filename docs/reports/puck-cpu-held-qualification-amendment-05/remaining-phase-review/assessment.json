@@ -1,0 +1,69 @@
+{
+  "actual05_configuration_created": false,
+  "actual05_invoked": false,
+  "independent_review": "all three source-level misattributions confirmed; review finite rosters/build conditions/intermediate publication before changing declarations",
+  "kind": "puck-cpu-remaining-export-phase-preflight-v1",
+  "module_method_registration_lines": [
+    1997,
+    2006
+  ],
+  "remaining_native_create_rows_not_reviewed_here": 32,
+  "rows": [
+    {
+      "callback": "_dist_autograd_init",
+      "cpp_callback_mapping_line": 228,
+      "cpp_creation_line": 30,
+      "cpp_url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/distributed/autograd/init.cpp",
+      "current_phase": "native_create",
+      "current_producer": "torch._C",
+      "dispatch_roster_qualified": false,
+      "installed_python_call_line": 16,
+      "name": "torch._C._distributed_autograd",
+      "prospective_python_creator": "torch.distributed.autograd",
+      "prospective_raw_attributes": [
+        "torch",
+        "_C",
+        "_distributed_autograd"
+      ],
+      "replacement_phase_accepted": false
+    },
+    {
+      "callback": "_c10d_init",
+      "cpp_callback_mapping_line": 4202,
+      "cpp_creation_line": 466,
+      "cpp_url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/distributed/c10d/init.cpp",
+      "current_phase": "native_create",
+      "current_producer": "torch._C",
+      "dispatch_roster_qualified": false,
+      "installed_python_call_line": 29,
+      "name": "torch._C._distributed_c10d",
+      "prospective_python_creator": "torch.distributed",
+      "prospective_raw_attributes": [
+        "torch",
+        "_C",
+        "_distributed_c10d"
+      ],
+      "replacement_phase_accepted": false
+    },
+    {
+      "callback": "_rpc_init",
+      "cpp_callback_mapping_line": 854,
+      "cpp_creation_line": 47,
+      "cpp_url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/distributed/rpc/init.cpp",
+      "current_phase": "native_create",
+      "current_producer": "torch._C",
+      "dispatch_roster_qualified": false,
+      "installed_python_call_line": 28,
+      "name": "torch._C._distributed_rpc",
+      "prospective_python_creator": "torch.distributed.rpc",
+      "prospective_raw_attributes": [
+        "torch",
+        "_C",
+        "_distributed_rpc"
+      ],
+      "replacement_phase_accepted": false
+    }
+  ],
+  "scope": "static exact-commit/installed-source evidence only; not binary/runtime acceptance",
+  "status": "three remaining source phase conflicts; actual05 freeze not ready"
+}

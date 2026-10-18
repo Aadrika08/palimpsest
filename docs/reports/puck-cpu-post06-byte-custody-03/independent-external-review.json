@@ -1,0 +1,147 @@
+{
+  "checked_control_dependency_pins": [
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-03.py",
+      "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+      "size_bytes": 19086
+    },
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-03-source-review.json",
+      "sha256": "82f8be30f3e6885709c6c274b97a2d750be1d63f17ba60251d063a539a0c192d",
+      "size_bytes": 15986
+    },
+    {
+      "path": "/tmp/palimpsest-post06-full-byte-admission-plan.json",
+      "sha256": "6466ebf6ed2b7b33c596620bb8d51c1669611d1d32dbc60676f0237944c45d42",
+      "size_bytes": 11594
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    {
+      "path": "/tmp/palimpsest-held06-external.py",
+      "sha256": "214cb6a7d6195d9f6eb957641ca69ac6b03134da3abb737c81c3e1e5f731889e",
+      "size_bytes": 2083
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-06-freeze.json",
+      "sha256": "54dfca9f7a2bccff7a436e12d232f80944f564fce48a66480dacb77d1693e61c",
+      "size_bytes": 73052
+    },
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-02.py",
+      "sha256": "9551e20451631580d668e9a6dfa9d442576c85f75f06bfbef2826409e3412532",
+      "size_bytes": 16444
+    }
+  ],
+  "claims": {
+    "current_full_byte_custody_pass": false,
+    "current_resource_admission": false,
+    "execution_approved": false,
+    "large_payload_read": false,
+    "new_allocation_authorized": false,
+    "prepared03_executed": false,
+    "runtime_qualified": false,
+    "study_authorized": false,
+    "tests_executed": false,
+    "wrapper_executed": false
+  },
+  "conclusions": [
+    {
+      "lines": [
+        11,
+        28,
+        47,
+        55
+      ],
+      "text": "Fixed original interpreter/path and isolated -I -S -B flags, fixed DATA root/source06 config/freeze, explicit four-key child environment and no LD_PRELOAD/LD_LIBRARY_PATH. No caller path/argument override or07 invocation route."
+    },
+    {
+      "lines": [
+        46,
+        62,
+        64,
+        77,
+        89
+      ],
+      "text": "145s operational budget starts before authentication/reservation. Child wait receives only remaining time. Stream hashing/receipt completion and summary are included in final late-completion refusal; nonzero/signaled/timeout child cannot produce wrapper0."
+    },
+    {
+      "lines": [
+        56,
+        60
+      ],
+      "text": "Success output, both streams, receipt and eight fixed07 paths must be absent. Receipt is exclusively reserved before child launch; exclusive raw streams plus retained partial files prevent reentry overwrite. No implicit retry exists."
+    },
+    {
+      "lines": [
+        37,
+        42,
+        69,
+        88
+      ],
+      "text": "Raw stream SHA256/size is computed from retained bytes with16MiB read ceiling per stream; receipt<=64KiB, printed metadata summary<=4096bytes. Source/config/freeze pins and actual child return/timeout/elapsed are recorded."
+    },
+    {
+      "lines": [
+        65,
+        79,
+        83,
+        89
+      ],
+      "text": "normal_exit means a nonsignaled nonnegative exit and may be true for a nonzero code; acceptance separately requires exactly0, no timeout and a final deadline check. No nonzero acceptance path found."
+    }
+  ],
+  "control": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-control.json",
+    "sha256": "18da6c330c4255f4eda2a839757c9ccba45471177ec71acce7aed7b50a344d75",
+    "size_bytes": 8877
+  },
+  "findings": [],
+  "kind": "held06-post-byte-custody03-external-independent-source-review-v1",
+  "limitations": [
+    "Static source and small frozen metadata reads only. Wrapper/control/prepared03/helper/auditor/tests/census/namespace/vendor/native code was not imported or invoked.",
+    "145s is an operational acceptance deadline, not strict kernel/WCET or whole-process-lifetime proof: file operations/publication/stdout and process creation may block; subprocess timeout kills/waits only the direct child. A finite outer tool observation/termination policy remains required.",
+    "Receipt elapsed is measured through raw-stream hashing; summary elapsed is later, and wrapper exit rechecks the deadline after printing. A pre-final summary accepted=true or a success JSON alone must not override nonzero/late external wrapper termination.",
+    "Authentication is a bounded fixed-file byte hash before launch, not adversarial held-descriptor protection against concurrent source/path replacement. The reviewed ordinary trusted-control assumptions remain necessary.",
+    "This review did not rehash the21MiB interpreter binary or observe fresh resources/absences. The exact interpreter path is fixed; the prepared full-byte check retains baseline/interpreter authentication before any data-only success.",
+    "The control resource/absence observations are preparation metadata. Root must refresh the exact gates and named absences immediately before a separately authorized once-only invocation.",
+    "No actual07 configuration/allocation/import/runtime acceptance, implicit data-check retry, scientific/collection/release authority or current full-byte PASS is granted."
+  ],
+  "limits": {
+    "final_ram_bytes": 2147483648,
+    "initial_ram_bytes": 4294967296,
+    "internal_hard_seconds": 130,
+    "internal_normal_seconds": 120,
+    "operational_external_seconds": 145,
+    "raw_stream_bytes_each": 16777216,
+    "receipt_bytes": 65536,
+    "summary_bytes": 4096
+  },
+  "reviewed_at_utc": "2026-10-15T22:19:20.571775+00:00",
+  "static_checks": {
+    "ast_parse_only": true,
+    "command_original_isolated_no_site_no_bytecode": true,
+    "frozen_outer_environment_exact": true,
+    "no_exec_eval": true,
+    "source_configuration_freeze_hashes_matched": true,
+    "stdlib_import_roster": [
+      "pathlib",
+      "hashlib",
+      "json",
+      "os",
+      "subprocess",
+      "sys",
+      "time"
+    ]
+  },
+  "status": "SOURCE_ONLY_APPROVED_NO_MATERIAL_FINDINGS",
+  "version": 1,
+  "wrapper": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-external.py",
+    "sha256": "ccf23f71abe9b20cccc78109ea9ecc6be7397fffaca13e55dbc67bf7392cb63e",
+    "size_bytes": 5215
+  }
+}

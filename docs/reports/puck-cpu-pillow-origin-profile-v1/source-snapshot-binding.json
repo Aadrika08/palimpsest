@@ -1,0 +1,144 @@
+{
+  "actual_runtime_invoked": false,
+  "assembly_note": "Initial Git attribution refused D at planning-only d3c2663. Candidate/proof now correctly bind to d3bce4e. No input evidence changed.",
+  "independent_review_note": "Review recorded precommit d3c2663; all three script pins match implementation commit.",
+  "kind": "puck-cpu-pillow-origin-source-binding-v1",
+  "planning_Markdown_commit_bytes_checked": true,
+  "planning_commit": "d3c2663d41231f3e2b0c46f6259639fae49b7c89",
+  "planning_commit_scope": "Planning Markdown only",
+  "source_commit": "d3bce4e162200982ac63c18e4aa2366990352634",
+  "source_commit_bytes_checked": true,
+  "source_paths": [
+    {
+      "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    {
+      "path": "docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.md",
+      "sha256": "4564647f080f528c657826aed07392497c859f27c7de30699606fbbd96176e93",
+      "size_bytes": 4825
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
+      "sha256": "16c0b036a6b7ceb9c5d6740e9e62f6672a98d705e9ff2b0e35332c2ceaf6a41b",
+      "size_bytes": 1879
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/evidence-index.json",
+      "sha256": "cb847e4b4a80f536c2247c7607eeacbcab0aedbc13e5c2641c16280bc4db5a7d",
+      "size_bytes": 2718
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/native-evidence.json",
+      "sha256": "d65e59289302aeeaec35c7af47cf0de7121c01eb01cbe33af837eff1f0a41fe3",
+      "size_bytes": 87746
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/projection.json",
+      "sha256": "b8aa91886a1c5b8a71af476ad2c150c1cfd1e1fd018a4bb8c700d0f2451ede55",
+      "size_bytes": 19311
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
+      "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+      "size_bytes": 165833
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+      "size_bytes": 76254
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "e105134d1069e268f39f45797e256b8316212f2c427a6c4c6a7ecb49d196ddb0",
+      "size_bytes": 6553
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "b65f0ff3b49976039f8f07edb3ce610262a10761ec509611cb31b4324e21b63b",
+      "size_bytes": 58724
+    },
+    {
+      "path": "src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "b0dd9260699711385c4b211b7aa03542eaeaa4ce665b42e8e9080dfd9ec63f90",
+      "size_bytes": 17778
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment07.py",
+      "sha256": "22a31385386f562b49307e5650955018a1586b6cda6774cf97d400d84edd366d",
+      "size_bytes": 11888
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment07_integration.py",
+      "sha256": "39de579099b700abdfa74aea0c45f1627d2f103e453d87cff2cea123a03ab9cd",
+      "size_bytes": 10057
+    },
+    {
+      "path": "tests/test_puck_cpu_held_observer.py",
+      "sha256": "27695f8160971eda80de2e6fa5f75fe3b0964955d70b87db8f89aed0c2ec54b5",
+      "size_bytes": 11748
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "cadcfecde4f9eb982d7cce0664b91060717f5cd61f4c129c6ad4fd66a47d8eeb",
+      "size_bytes": 23157
+    },
+    {
+      "path": "tests/test_puck_pillow_native_origins.py",
+      "sha256": "8ff258bd926e858f04f8158fd20ebd56ef1b1b58d0fb4a7b4fcb105788724fd9",
+      "size_bytes": 8645
+    }
+  ],
+  "version": 1
+}

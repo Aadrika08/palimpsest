@@ -1,0 +1,39 @@
+{
+  "absence": {
+    "future_output_paths": [
+      "/tmp/palimpsest-held09-observer-external.json",
+      "/tmp/palimpsest-held09-observer-external.stderr",
+      "/tmp/palimpsest-held09-observer-external.stdout",
+      "/tmp/palimpsest-held09-audit-external.json",
+      "/tmp/palimpsest-held09-audit-external.stderr",
+      "/tmp/palimpsest-held09-audit-external.stdout",
+      "/tmp/palimpsest-puck-cpu-held-qualification-09-audit-01.json",
+      "/tmp/palimpsest-held09-concrete-audit-command.json",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli.stdout",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli.stderr",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli-transport.json"
+    ],
+    "historical_missing_receipts": 14
+  },
+  "admission_main_invoked": true,
+  "admission_receipt_sha256": "ee2c52efc0dcf7ffdb14d826aca4569ccf6050e462088d6373dfaded85777e84",
+  "checked_at_utc": "2026-10-16T02:47:28.180392+00:00",
+  "control_commit": "60e5756d8c670e898320b26b3a2cee267577e53c",
+  "control_files": 39,
+  "historical_records_unchanged": 57,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 81114419,
+  "pins": 1259,
+  "resources": {
+    "at_utc": "2026-10-16T02:47:28.168672+00:00",
+    "mem_available_bytes": 3706679296,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 50744832000,
+    "tmpfs_free_bytes": 3058761728
+  },
+  "runtime_invoked": false,
+  "source_commit": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+  "status": "PASS_PRE_OBSERVER_GUARD_ONLY"
+}

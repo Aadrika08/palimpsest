@@ -1,0 +1,106 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_main_denies_late_success_after_publication_teardown_and_output[publication] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x759798f3dcd0>
+late_boundary = 'publication'
+
+    @pytest.mark.parametrize("late_boundary", ["publication", "guard-teardown", "stdout-flush"])
+    def test_main_denies_late_success_after_publication_teardown_and_output(monkeypatch, late_boundary):
+        from contextlib import contextmanager
+        from types import SimpleNamespace
+        value = module(PARENT)
+        elapsed = [0.0]
+        monkeypatch.setattr(value, "time", SimpleNamespace(monotonic=lambda: elapsed[0]))
+        monkeypatch.setattr(value.os, "getpgrp", value.os.getpid)
+        monkeypatch.setattr(value.sys, "argv", [str(PARENT), "--configuration", "authored.json", "--sha256", "0" * 64])
+        def parent(*args):
+            if late_boundary == "publication": elapsed[0] = 121.0
+            return {"status": "wheel_verified"}
+        @contextmanager
+        def guard(*args):
+            yield
+            if late_boundary == "guard-teardown": elapsed[0] = 121.0
+        def output(*args, **kwargs):
+            if late_boundary == "stdout-flush": elapsed[0] = 121.0
+        def clock(deadline):
+            if elapsed[0] >= deadline: raise TimeoutError("normal deadline exhausted")
+        monkeypatch.setattr(value, "parent", parent)
+        monkeypatch.setattr(value, "hard_guard", guard)
+        monkeypatch.setattr(value, "print", output, raising=False)
+        monkeypatch.setattr(value, "clock", clock)
+>       with pytest.raises(TimeoutError, match="normal deadline"):
+E       Failed: DID NOT RAISE <class 'TimeoutError'>
+
+tests/test_puck_python_louvain_build.py:226: Failed
+_ test_main_denies_late_success_after_publication_teardown_and_output[guard-teardown] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x759798d10f10>
+late_boundary = 'guard-teardown'
+
+    @pytest.mark.parametrize("late_boundary", ["publication", "guard-teardown", "stdout-flush"])
+    def test_main_denies_late_success_after_publication_teardown_and_output(monkeypatch, late_boundary):
+        from contextlib import contextmanager
+        from types import SimpleNamespace
+        value = module(PARENT)
+        elapsed = [0.0]
+        monkeypatch.setattr(value, "time", SimpleNamespace(monotonic=lambda: elapsed[0]))
+        monkeypatch.setattr(value.os, "getpgrp", value.os.getpid)
+        monkeypatch.setattr(value.sys, "argv", [str(PARENT), "--configuration", "authored.json", "--sha256", "0" * 64])
+        def parent(*args):
+            if late_boundary == "publication": elapsed[0] = 121.0
+            return {"status": "wheel_verified"}
+        @contextmanager
+        def guard(*args):
+            yield
+            if late_boundary == "guard-teardown": elapsed[0] = 121.0
+        def output(*args, **kwargs):
+            if late_boundary == "stdout-flush": elapsed[0] = 121.0
+        def clock(deadline):
+            if elapsed[0] >= deadline: raise TimeoutError("normal deadline exhausted")
+        monkeypatch.setattr(value, "parent", parent)
+        monkeypatch.setattr(value, "hard_guard", guard)
+        monkeypatch.setattr(value, "print", output, raising=False)
+        monkeypatch.setattr(value, "clock", clock)
+>       with pytest.raises(TimeoutError, match="normal deadline"):
+E       Failed: DID NOT RAISE <class 'TimeoutError'>
+
+tests/test_puck_python_louvain_build.py:226: Failed
+_ test_main_denies_late_success_after_publication_teardown_and_output[stdout-flush] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x759798d112d0>
+late_boundary = 'stdout-flush'
+
+    @pytest.mark.parametrize("late_boundary", ["publication", "guard-teardown", "stdout-flush"])
+    def test_main_denies_late_success_after_publication_teardown_and_output(monkeypatch, late_boundary):
+        from contextlib import contextmanager
+        from types import SimpleNamespace
+        value = module(PARENT)
+        elapsed = [0.0]
+        monkeypatch.setattr(value, "time", SimpleNamespace(monotonic=lambda: elapsed[0]))
+        monkeypatch.setattr(value.os, "getpgrp", value.os.getpid)
+        monkeypatch.setattr(value.sys, "argv", [str(PARENT), "--configuration", "authored.json", "--sha256", "0" * 64])
+        def parent(*args):
+            if late_boundary == "publication": elapsed[0] = 121.0
+            return {"status": "wheel_verified"}
+        @contextmanager
+        def guard(*args):
+            yield
+            if late_boundary == "guard-teardown": elapsed[0] = 121.0
+        def output(*args, **kwargs):
+            if late_boundary == "stdout-flush": elapsed[0] = 121.0
+        def clock(deadline):
+            if elapsed[0] >= deadline: raise TimeoutError("normal deadline exhausted")
+        monkeypatch.setattr(value, "parent", parent)
+        monkeypatch.setattr(value, "hard_guard", guard)
+        monkeypatch.setattr(value, "print", output, raising=False)
+        monkeypatch.setattr(value, "clock", clock)
+>       with pytest.raises(TimeoutError, match="normal deadline"):
+E       Failed: DID NOT RAISE <class 'TimeoutError'>
+
+tests/test_puck_python_louvain_build.py:226: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_python_louvain_build.py::test_main_denies_late_success_after_publication_teardown_and_output[publication]
+FAILED tests/test_puck_python_louvain_build.py::test_main_denies_late_success_after_publication_teardown_and_output[guard-teardown]
+FAILED tests/test_puck_python_louvain_build.py::test_main_denies_late_success_after_publication_teardown_and_output[stdout-flush]
+3 failed in 0.07s

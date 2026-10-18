@@ -1,0 +1,18 @@
+{
+  "command": [
+    "flock",
+    "/tmp/palimpsest-software-tests.lock",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "--basetemp",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/.superpowers/sdd/software-tmp-memory-prerequisites-v3/full-fixtures"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 232.0914243379957,
+  "native_opt_ins": false,
+  "software_only": true,
+  "temporary_directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v3/.superpowers/sdd/software-tmp-memory-prerequisites-v3"
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_dependency_profile.py",
+    "-k",
+    "resolution_failure or resolution_context",
+    "--basetemp=/tmp/palimpsest-cpu-binding-diagnostics-green-focused-01"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "environment_delta": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope": "authored source checks, no installed CPU runtime or actual allocation"
+}

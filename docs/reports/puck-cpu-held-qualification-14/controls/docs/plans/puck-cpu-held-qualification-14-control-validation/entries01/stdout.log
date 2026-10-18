@@ -1,0 +1,43 @@
+{
+  "attempt14": {
+    "directories": 3273,
+    "entries": 38681,
+    "files": 34337,
+    "limit": 40000,
+    "links": 1071,
+    "manifest_pins": 2768,
+    "margin": 1319,
+    "staged_directories": 2076,
+    "staged_files": 27255
+  },
+  "calibration": {
+    "admission10_02": {
+      "directories": 3113,
+      "entries": 37903,
+      "files": 33719,
+      "limit": 40000,
+      "links": 1071,
+      "manifest_pins": 2150,
+      "margin": 2097,
+      "staged_directories": 2076,
+      "staged_files": 27255
+    },
+    "attempt11b": {
+      "directories": 3187,
+      "entries": 38290,
+      "files": 34032,
+      "limit": 40000,
+      "links": 1071,
+      "manifest_pins": 2463,
+      "margin": 1710,
+      "staged_directories": 2076,
+      "staged_files": 27255
+    },
+    "measured_admission10_02_peak_files": 33719,
+    "measured_admission11b_peak_files": 34032,
+    "reviewer_reported_entries10": 37903
+  },
+  "kind": "held14-entry-ceiling-model-v1",
+  "scope": "read-only model from pins, the plan and metadata; staged paths from the plan; preparation02/03 stages untouched",
+  "stop_threshold": 39500
+}

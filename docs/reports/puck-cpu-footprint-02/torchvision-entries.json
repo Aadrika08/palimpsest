@@ -1,0 +1,1730 @@
+[
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision-0.24.0+cpu.dist-info/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision.libs/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/datasets/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/io/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/models/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/ops/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/transforms/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/tv_tensors/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 448747,
+    "compression": 8,
+    "crc32": 1824208725,
+    "external_attr": 2175008768,
+    "name": "torchvision/_C.so",
+    "size_bytes": 1363776
+  },
+  {
+    "compressed_size": 1364,
+    "compression": 8,
+    "crc32": 3216648342,
+    "external_attr": 2175008768,
+    "name": "torchvision/__init__.py",
+    "size_bytes": 3534
+  },
+  {
+    "compressed_size": 651,
+    "compression": 8,
+    "crc32": 457178673,
+    "external_attr": 2175008768,
+    "name": "torchvision/_internally_replaced_utils.py",
+    "size_bytes": 1407
+  },
+  {
+    "compressed_size": 1331,
+    "compression": 8,
+    "crc32": 1259097951,
+    "external_attr": 2175008768,
+    "name": "torchvision/_meta_registrations.py",
+    "size_bytes": 7208
+  },
+  {
+    "compressed_size": 510,
+    "compression": 8,
+    "crc32": 2451500582,
+    "external_attr": 2175008768,
+    "name": "torchvision/_utils.py",
+    "size_bytes": 955
+  },
+  {
+    "compressed_size": 1190,
+    "compression": 8,
+    "crc32": 2712372085,
+    "external_attr": 2175008768,
+    "name": "torchvision/extension.py",
+    "size_bytes": 3141
+  },
+  {
+    "compressed_size": 140296,
+    "compression": 8,
+    "crc32": 1948447730,
+    "external_attr": 2175008768,
+    "name": "torchvision/image.so",
+    "size_bytes": 545041
+  },
+  {
+    "compressed_size": 9974,
+    "compression": 8,
+    "crc32": 911150779,
+    "external_attr": 2175008768,
+    "name": "torchvision/utils.py",
+    "size_bytes": 34554
+  },
+  {
+    "compressed_size": 132,
+    "compression": 8,
+    "crc32": 2807338593,
+    "external_attr": 2175008768,
+    "name": "torchvision/version.py",
+    "size_bytes": 201
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/datasets/samplers/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1263,
+    "compression": 8,
+    "crc32": 730370304,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/__init__.py",
+    "size_bytes": 3606
+  },
+  {
+    "compressed_size": 4125,
+    "compression": 8,
+    "crc32": 96417185,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/_optical_flow.py",
+    "size_bytes": 21200
+  },
+  {
+    "compressed_size": 7974,
+    "compression": 8,
+    "crc32": 508180770,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/_stereo_matching.py",
+    "size_bytes": 49040
+  },
+  {
+    "compressed_size": 2243,
+    "compression": 8,
+    "crc32": 3062232625,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/caltech.py",
+    "size_bytes": 8929
+  },
+  {
+    "compressed_size": 3091,
+    "compression": 8,
+    "crc32": 4149846084,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/celeba.py",
+    "size_bytes": 8542
+  },
+  {
+    "compressed_size": 2033,
+    "compression": 8,
+    "crc32": 2960572310,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/cifar.py",
+    "size_bytes": 5784
+  },
+  {
+    "compressed_size": 2894,
+    "compression": 8,
+    "crc32": 1425709213,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/cityscapes.py",
+    "size_bytes": 10330
+  },
+  {
+    "compressed_size": 1483,
+    "compression": 8,
+    "crc32": 2030542726,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/clevr.py",
+    "size_bytes": 3855
+  },
+  {
+    "compressed_size": 1332,
+    "compression": 8,
+    "crc32": 2138560769,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/coco.py",
+    "size_bytes": 4345
+  },
+  {
+    "compressed_size": 1197,
+    "compression": 8,
+    "crc32": 1581737872,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/country211.py",
+    "size_bytes": 2889
+  },
+  {
+    "compressed_size": 1627,
+    "compression": 8,
+    "crc32": 581918342,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/dtd.py",
+    "size_bytes": 4420
+  },
+  {
+    "compressed_size": 1101,
+    "compression": 8,
+    "crc32": 2339380692,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/eurosat.py",
+    "size_bytes": 2761
+  },
+  {
+    "compressed_size": 860,
+    "compression": 8,
+    "crc32": 1008283031,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/fakedata.py",
+    "size_bytes": 2440
+  },
+  {
+    "compressed_size": 1869,
+    "compression": 8,
+    "crc32": 3994629176,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/fer2013.py",
+    "size_bytes": 5106
+  },
+  {
+    "compressed_size": 1716,
+    "compression": 8,
+    "crc32": 2607086919,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/fgvc_aircraft.py",
+    "size_bytes": 4968
+  },
+  {
+    "compressed_size": 1453,
+    "compression": 8,
+    "crc32": 368784010,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/flickr.py",
+    "size_bytes": 6170
+  },
+  {
+    "compressed_size": 2671,
+    "compression": 8,
+    "crc32": 518389059,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/flowers102.py",
+    "size_bytes": 7481
+  },
+  {
+    "compressed_size": 3438,
+    "compression": 8,
+    "crc32": 422083761,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/folder.py",
+    "size_bytes": 12985
+  },
+  {
+    "compressed_size": 1603,
+    "compression": 8,
+    "crc32": 1027868388,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/food101.py",
+    "size_bytes": 4145
+  },
+  {
+    "compressed_size": 1331,
+    "compression": 8,
+    "crc32": 748603968,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/gtsrb.py",
+    "size_bytes": 3778
+  },
+  {
+    "compressed_size": 2160,
+    "compression": 8,
+    "crc32": 2716263264,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/hmdb51.py",
+    "size_bytes": 5952
+  },
+  {
+    "compressed_size": 2653,
+    "compression": 8,
+    "crc32": 872719834,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/imagenet.py",
+    "size_bytes": 8922
+  },
+  {
+    "compressed_size": 1752,
+    "compression": 8,
+    "crc32": 1438340859,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/imagenette.py",
+    "size_bytes": 4626
+  },
+  {
+    "compressed_size": 3075,
+    "compression": 8,
+    "crc32": 3847380687,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/inaturalist.py",
+    "size_bytes": 10302
+  },
+  {
+    "compressed_size": 3120,
+    "compression": 8,
+    "crc32": 3722491793,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/kinetics.py",
+    "size_bytes": 9865
+  },
+  {
+    "compressed_size": 1818,
+    "compression": 8,
+    "crc32": 3529274381,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/kitti.py",
+    "size_bytes": 5624
+  },
+  {
+    "compressed_size": 2864,
+    "compression": 8,
+    "crc32": 250907037,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/lfw.py",
+    "size_bytes": 11403
+  },
+  {
+    "compressed_size": 1860,
+    "compression": 8,
+    "crc32": 1303831998,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/lsun.py",
+    "size_bytes": 5730
+  },
+  {
+    "compressed_size": 5555,
+    "compression": 8,
+    "crc32": 1669299513,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/mnist.py",
+    "size_bytes": 21804
+  },
+  {
+    "compressed_size": 1342,
+    "compression": 8,
+    "crc32": 2341953958,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/moving_mnist.py",
+    "size_bytes": 3644
+  },
+  {
+    "compressed_size": 1573,
+    "compression": 8,
+    "crc32": 1168646139,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/omniglot.py",
+    "size_bytes": 4486
+  },
+  {
+    "compressed_size": 1881,
+    "compression": 8,
+    "crc32": 2194630293,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/oxford_iiit_pet.py",
+    "size_bytes": 5696
+  },
+  {
+    "compressed_size": 1920,
+    "compression": 8,
+    "crc32": 1971793866,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/pcam.py",
+    "size_bytes": 5278
+  },
+  {
+    "compressed_size": 2566,
+    "compression": 8,
+    "crc32": 1554990919,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/phototour.py",
+    "size_bytes": 7855
+  },
+  {
+    "compressed_size": 2594,
+    "compression": 8,
+    "crc32": 3643173237,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/places365.py",
+    "size_bytes": 7467
+  },
+  {
+    "compressed_size": 1544,
+    "compression": 8,
+    "crc32": 924327810,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/rendered_sst2.py",
+    "size_bytes": 3957
+  },
+  {
+    "compressed_size": 2121,
+    "compression": 8,
+    "crc32": 3016875938,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/sbd.py",
+    "size_bytes": 5407
+  },
+  {
+    "compressed_size": 1534,
+    "compression": 8,
+    "crc32": 904438045,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/sbu.py",
+    "size_bytes": 4464
+  },
+  {
+    "compressed_size": 1191,
+    "compression": 8,
+    "crc32": 735817401,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/semeion.py",
+    "size_bytes": 3099
+  },
+  {
+    "compressed_size": 1591,
+    "compression": 8,
+    "crc32": 798399254,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/stanford_cars.py",
+    "size_bytes": 4281
+  },
+  {
+    "compressed_size": 2326,
+    "compression": 8,
+    "crc32": 3311987682,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/stl10.py",
+    "size_bytes": 7227
+  },
+  {
+    "compressed_size": 1258,
+    "compression": 8,
+    "crc32": 1285701437,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/sun397.py",
+    "size_bytes": 3176
+  },
+  {
+    "compressed_size": 1783,
+    "compression": 8,
+    "crc32": 4075977927,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/svhn.py",
+    "size_bytes": 4821
+  },
+  {
+    "compressed_size": 2015,
+    "compression": 8,
+    "crc32": 1800260139,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/ucf101.py",
+    "size_bytes": 5514
+  },
+  {
+    "compressed_size": 1371,
+    "compression": 8,
+    "crc32": 376072560,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/usps.py",
+    "size_bytes": 3509
+  },
+  {
+    "compressed_size": 4586,
+    "compression": 8,
+    "crc32": 2770744171,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/utils.py",
+    "size_bytes": 15914
+  },
+  {
+    "compressed_size": 4733,
+    "compression": 8,
+    "crc32": 923607917,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/video_utils.py",
+    "size_bytes": 17194
+  },
+  {
+    "compressed_size": 1299,
+    "compression": 8,
+    "crc32": 2366558428,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/vision.py",
+    "size_bytes": 4236
+  },
+  {
+    "compressed_size": 2354,
+    "compression": 8,
+    "crc32": 3076825986,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/voc.py",
+    "size_bytes": 8816
+  },
+  {
+    "compressed_size": 2581,
+    "compression": 8,
+    "crc32": 482826345,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/widerface.py",
+    "size_bytes": 8241
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 1829779173,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/samplers/__init__.py",
+    "size_bytes": 161
+  },
+  {
+    "compressed_size": 1702,
+    "compression": 8,
+    "crc32": 3348004112,
+    "external_attr": 2175008768,
+    "name": "torchvision/datasets/samplers/clip_sampler.py",
+    "size_bytes": 6265
+  },
+  {
+    "compressed_size": 441,
+    "compression": 8,
+    "crc32": 3022304902,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/__init__.py",
+    "size_bytes": 1583
+  },
+  {
+    "compressed_size": 129,
+    "compression": 8,
+    "crc32": 2349506481,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/_load_gpu_decoder.py",
+    "size_bytes": 178
+  },
+  {
+    "compressed_size": 287,
+    "compression": 8,
+    "crc32": 649637766,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/_video_deprecation_warning.py",
+    "size_bytes": 565
+  },
+  {
+    "compressed_size": 3561,
+    "compression": 8,
+    "crc32": 4105872728,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/_video_opt.py",
+    "size_bytes": 20783
+  },
+  {
+    "compressed_size": 4804,
+    "compression": 8,
+    "crc32": 3678000441,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/image.py",
+    "size_bytes": 21712
+  },
+  {
+    "compressed_size": 5357,
+    "compression": 8,
+    "crc32": 2786769546,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/video.py",
+    "size_bytes": 18338
+  },
+  {
+    "compressed_size": 3704,
+    "compression": 8,
+    "crc32": 262474231,
+    "external_attr": 2175008768,
+    "name": "torchvision/io/video_reader.py",
+    "size_bytes": 11862
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/models/detection/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/models/optical_flow/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/models/quantization/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/models/segmentation/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/models/video/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 385,
+    "compression": 8,
+    "crc32": 371079821,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/__init__.py",
+    "size_bytes": 865
+  },
+  {
+    "compressed_size": 3242,
+    "compression": 8,
+    "crc32": 673704081,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/_api.py",
+    "size_bytes": 9976
+  },
+  {
+    "compressed_size": 9017,
+    "compression": 8,
+    "crc32": 2704654860,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/_meta.py",
+    "size_bytes": 28875
+  },
+  {
+    "compressed_size": 3644,
+    "compression": 8,
+    "crc32": 2951130322,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/_utils.py",
+    "size_bytes": 10880
+  },
+  {
+    "compressed_size": 1679,
+    "compression": 8,
+    "crc32": 2739359975,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/alexnet.py",
+    "size_bytes": 4488
+  },
+  {
+    "compressed_size": 3270,
+    "compression": 8,
+    "crc32": 1747005788,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/convnext.py",
+    "size_bytes": 15347
+  },
+  {
+    "compressed_size": 3803,
+    "compression": 8,
+    "crc32": 1301586566,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/densenet.py",
+    "size_bytes": 16812
+  },
+  {
+    "compressed_size": 5549,
+    "compression": 8,
+    "crc32": 784966741,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/efficientnet.py",
+    "size_bytes": 43098
+  },
+  {
+    "compressed_size": 7909,
+    "compression": 8,
+    "crc32": 3641588856,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/feature_extraction.py",
+    "size_bytes": 27914
+  },
+  {
+    "compressed_size": 3489,
+    "compression": 8,
+    "crc32": 1645147996,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/googlenet.py",
+    "size_bytes": 12793
+  },
+  {
+    "compressed_size": 3946,
+    "compression": 8,
+    "crc32": 4087428103,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/inception.py",
+    "size_bytes": 18838
+  },
+  {
+    "compressed_size": 6972,
+    "compression": 8,
+    "crc32": 1918576665,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/maxvit.py",
+    "size_bytes": 32110
+  },
+  {
+    "compressed_size": 4125,
+    "compression": 8,
+    "crc32": 1784006838,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/mnasnet.py",
+    "size_bytes": 17562
+  },
+  {
+    "compressed_size": 88,
+    "compression": 8,
+    "crc32": 3674780002,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/mobilenet.py",
+    "size_bytes": 211
+  },
+  {
+    "compressed_size": 3107,
+    "compression": 8,
+    "crc32": 1709935269,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/mobilenetv2.py",
+    "size_bytes": 9704
+  },
+  {
+    "compressed_size": 3740,
+    "compression": 8,
+    "crc32": 167296424,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/mobilenetv3.py",
+    "size_bytes": 16300
+  },
+  {
+    "compressed_size": 7204,
+    "compression": 8,
+    "crc32": 141245157,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/regnet.py",
+    "size_bytes": 63534
+  },
+  {
+    "compressed_size": 5209,
+    "compression": 8,
+    "crc32": 874378824,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/resnet.py",
+    "size_bytes": 38920
+  },
+  {
+    "compressed_size": 3110,
+    "compression": 8,
+    "crc32": 1878608094,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/shufflenetv2.py",
+    "size_bytes": 15438
+  },
+  {
+    "compressed_size": 2331,
+    "compression": 8,
+    "crc32": 1324738203,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/squeezenet.py",
+    "size_bytes": 8763
+  },
+  {
+    "compressed_size": 6754,
+    "compression": 8,
+    "crc32": 2377565054,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/swin_transformer.py",
+    "size_bytes": 39331
+  },
+  {
+    "compressed_size": 2967,
+    "compression": 8,
+    "crc32": 4130960968,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/vgg.py",
+    "size_bytes": 19213
+  },
+  {
+    "compressed_size": 6043,
+    "compression": 8,
+    "crc32": 4223832823,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/vision_transformer.py",
+    "size_bytes": 32124
+  },
+  {
+    "compressed_size": 74,
+    "compression": 8,
+    "crc32": 987158727,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/__init__.py",
+    "size_bytes": 168
+  },
+  {
+    "compressed_size": 6006,
+    "compression": 8,
+    "crc32": 2028329051,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/_utils.py",
+    "size_bytes": 22107
+  },
+  {
+    "compressed_size": 3258,
+    "compression": 8,
+    "crc32": 736047471,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/anchor_utils.py",
+    "size_bytes": 11853
+  },
+  {
+    "compressed_size": 3117,
+    "compression": 8,
+    "crc32": 1038812382,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/backbone_utils.py",
+    "size_bytes": 10536
+  },
+  {
+    "compressed_size": 7132,
+    "compression": 8,
+    "crc32": 1546547210,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/faster_rcnn.py",
+    "size_bytes": 36966
+  },
+  {
+    "compressed_size": 8642,
+    "compression": 8,
+    "crc32": 732191679,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/fcos.py",
+    "size_bytes": 34216
+  },
+  {
+    "compressed_size": 1578,
+    "compression": 8,
+    "crc32": 4124448606,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/generalized_rcnn.py",
+    "size_bytes": 4929
+  },
+  {
+    "compressed_size": 348,
+    "compression": 8,
+    "crc32": 3158020555,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/image_list.py",
+    "size_bytes": 751
+  },
+  {
+    "compressed_size": 5647,
+    "compression": 8,
+    "crc32": 2844639958,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/keypoint_rcnn.py",
+    "size_bytes": 21979
+  },
+  {
+    "compressed_size": 6258,
+    "compression": 8,
+    "crc32": 3848852354,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/mask_rcnn.py",
+    "size_bytes": 26713
+  },
+  {
+    "compressed_size": 8385,
+    "compression": 8,
+    "crc32": 955630564,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/retinanet.py",
+    "size_bytes": 37281
+  },
+  {
+    "compressed_size": 7889,
+    "compression": 8,
+    "crc32": 1393756768,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/roi_heads.py",
+    "size_bytes": 33821
+  },
+  {
+    "compressed_size": 4362,
+    "compression": 8,
+    "crc32": 4182510363,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/rpn.py",
+    "size_bytes": 15818
+  },
+  {
+    "compressed_size": 7616,
+    "compression": 8,
+    "crc32": 2042770599,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/ssd.py",
+    "size_bytes": 28960
+  },
+  {
+    "compressed_size": 4008,
+    "compression": 8,
+    "crc32": 3388320789,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/ssdlite.py",
+    "size_bytes": 13207
+  },
+  {
+    "compressed_size": 3342,
+    "compression": 8,
+    "crc32": 3653115107,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/detection/transform.py",
+    "size_bytes": 12170
+  },
+  {
+    "compressed_size": 22,
+    "compression": 8,
+    "crc32": 3390768073,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/optical_flow/__init__.py",
+    "size_bytes": 20
+  },
+  {
+    "compressed_size": 894,
+    "compression": 8,
+    "crc32": 83121683,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/optical_flow/_utils.py",
+    "size_bytes": 2077
+  },
+  {
+    "compressed_size": 8552,
+    "compression": 8,
+    "crc32": 2587284360,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/optical_flow/raft.py",
+    "size_bytes": 39991
+  },
+  {
+    "compressed_size": 63,
+    "compression": 8,
+    "crc32": 826399865,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/__init__.py",
+    "size_bytes": 125
+  },
+  {
+    "compressed_size": 2552,
+    "compression": 8,
+    "crc32": 322819028,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/googlenet.py",
+    "size_bytes": 8112
+  },
+  {
+    "compressed_size": 2756,
+    "compression": 8,
+    "crc32": 1369935496,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/inception.py",
+    "size_bytes": 10841
+  },
+  {
+    "compressed_size": 88,
+    "compression": 8,
+    "crc32": 3674780002,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/mobilenet.py",
+    "size_bytes": 211
+  },
+  {
+    "compressed_size": 2014,
+    "compression": 8,
+    "crc32": 1045288832,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/mobilenetv2.py",
+    "size_bytes": 5915
+  },
+  {
+    "compressed_size": 2851,
+    "compression": 8,
+    "crc32": 2025072407,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/mobilenetv3.py",
+    "size_bytes": 9256
+  },
+  {
+    "compressed_size": 3093,
+    "compression": 8,
+    "crc32": 2136385826,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/resnet.py",
+    "size_bytes": 18055
+  },
+  {
+    "compressed_size": 2982,
+    "compression": 8,
+    "crc32": 2435645394,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/shufflenetv2.py",
+    "size_bytes": 17006
+  },
+  {
+    "compressed_size": 807,
+    "compression": 8,
+    "crc32": 610387348,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/quantization/utils.py",
+    "size_bytes": 2052
+  },
+  {
+    "compressed_size": 42,
+    "compression": 8,
+    "crc32": 760199524,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/segmentation/__init__.py",
+    "size_bytes": 66
+  },
+  {
+    "compressed_size": 458,
+    "compression": 8,
+    "crc32": 2337041600,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/segmentation/_utils.py",
+    "size_bytes": 1191
+  },
+  {
+    "compressed_size": 3116,
+    "compression": 8,
+    "crc32": 4212600569,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/segmentation/deeplabv3.py",
+    "size_bytes": 15042
+  },
+  {
+    "compressed_size": 2240,
+    "compression": 8,
+    "crc32": 3551675122,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/segmentation/fcn.py",
+    "size_bytes": 8973
+  },
+  {
+    "compressed_size": 2525,
+    "compression": 8,
+    "crc32": 1248721494,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/segmentation/lraspp.py",
+    "size_bytes": 7637
+  },
+  {
+    "compressed_size": 53,
+    "compression": 8,
+    "crc32": 4129280998,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/video/__init__.py",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 7029,
+    "compression": 8,
+    "crc32": 67586224,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/video/mvit.py",
+    "size_bytes": 33006
+  },
+  {
+    "compressed_size": 3582,
+    "compression": 8,
+    "crc32": 4266181725,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/video/resnet.py",
+    "size_bytes": 16779
+  },
+  {
+    "compressed_size": 2291,
+    "compression": 8,
+    "crc32": 1916247073,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/video/s3d.py",
+    "size_bytes": 7815
+  },
+  {
+    "compressed_size": 5983,
+    "compression": 8,
+    "crc32": 2291543055,
+    "external_attr": 2175008768,
+    "name": "torchvision/models/video/swin_transformer.py",
+    "size_bytes": 27675
+  },
+  {
+    "compressed_size": 574,
+    "compression": 8,
+    "crc32": 99988956,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/__init__.py",
+    "size_bytes": 1928
+  },
+  {
+    "compressed_size": 1152,
+    "compression": 8,
+    "crc32": 2444302588,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/_box_convert.py",
+    "size_bytes": 6981
+  },
+  {
+    "compressed_size": 1042,
+    "compression": 8,
+    "crc32": 2072560258,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/_register_onnx_ops.py",
+    "size_bytes": 4181
+  },
+  {
+    "compressed_size": 1352,
+    "compression": 8,
+    "crc32": 2439988558,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/_utils.py",
+    "size_bytes": 3617
+  },
+  {
+    "compressed_size": 4657,
+    "compression": 8,
+    "crc32": 3021561701,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/boxes.py",
+    "size_bytes": 20215
+  },
+  {
+    "compressed_size": 1227,
+    "compression": 8,
+    "crc32": 267882102,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/ciou_loss.py",
+    "size_bytes": 2755
+  },
+  {
+    "compressed_size": 2046,
+    "compression": 8,
+    "crc32": 3835712783,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/deform_conv.py",
+    "size_bytes": 6983
+  },
+  {
+    "compressed_size": 1345,
+    "compression": 8,
+    "crc32": 2530857344,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/diou_loss.py",
+    "size_bytes": 3335
+  },
+  {
+    "compressed_size": 1444,
+    "compression": 8,
+    "crc32": 3345734209,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/drop_block.py",
+    "size_bytes": 6087
+  },
+  {
+    "compressed_size": 2608,
+    "compression": 8,
+    "crc32": 1848927607,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/feature_pyramid_network.py",
+    "size_bytes": 8683
+  },
+  {
+    "compressed_size": 1000,
+    "compression": 8,
+    "crc32": 3770242768,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/focal_loss.py",
+    "size_bytes": 2419
+  },
+  {
+    "compressed_size": 1193,
+    "compression": 8,
+    "crc32": 582166584,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/giou_loss.py",
+    "size_bytes": 2695
+  },
+  {
+    "compressed_size": 2849,
+    "compression": 8,
+    "crc32": 1257210614,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/misc.py",
+    "size_bytes": 13586
+  },
+  {
+    "compressed_size": 3694,
+    "compression": 8,
+    "crc32": 2917599794,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/poolers.py",
+    "size_bytes": 11901
+  },
+  {
+    "compressed_size": 1409,
+    "compression": 8,
+    "crc32": 222925145,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/ps_roi_align.py",
+    "size_bytes": 3625
+  },
+  {
+    "compressed_size": 1177,
+    "compression": 8,
+    "crc32": 2689560115,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/ps_roi_pool.py",
+    "size_bytes": 2870
+  },
+  {
+    "compressed_size": 3730,
+    "compression": 8,
+    "crc32": 1151484444,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/roi_align.py",
+    "size_bytes": 11314
+  },
+  {
+    "compressed_size": 1191,
+    "compression": 8,
+    "crc32": 1503573711,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/roi_pool.py",
+    "size_bytes": 2937
+  },
+  {
+    "compressed_size": 944,
+    "compression": 8,
+    "crc32": 2992330549,
+    "external_attr": 2175008768,
+    "name": "torchvision/ops/stochastic_depth.py",
+    "size_bytes": 2236
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/transforms/v2/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 43,
+    "compression": 8,
+    "crc32": 985209003,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/__init__.py",
+    "size_bytes": 53
+  },
+  {
+    "compressed_size": 2594,
+    "compression": 8,
+    "crc32": 4151868225,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/_functional_pil.py",
+    "size_bytes": 12118
+  },
+  {
+    "compressed_size": 8810,
+    "compression": 8,
+    "crc32": 4189152215,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/_functional_tensor.py",
+    "size_bytes": 33926
+  },
+  {
+    "compressed_size": 1134,
+    "compression": 8,
+    "crc32": 3675888199,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/_functional_video.py",
+    "size_bytes": 3857
+  },
+  {
+    "compressed_size": 1701,
+    "compression": 8,
+    "crc32": 1716111536,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/_presets.py",
+    "size_bytes": 8504
+  },
+  {
+    "compressed_size": 1311,
+    "compression": 8,
+    "crc32": 3924305303,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/_transforms_video.py",
+    "size_bytes": 4950
+  },
+  {
+    "compressed_size": 4932,
+    "compression": 8,
+    "crc32": 3650929476,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/autoaugment.py",
+    "size_bytes": 28224
+  },
+  {
+    "compressed_size": 13514,
+    "compression": 8,
+    "crc32": 1776962650,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/functional.py",
+    "size_bytes": 67861
+  },
+  {
+    "compressed_size": 15830,
+    "compression": 8,
+    "crc32": 2255666726,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/transforms.py",
+    "size_bytes": 85557
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "torchvision/transforms/v2/functional/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 657,
+    "compression": 8,
+    "crc32": 3810396132,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/__init__.py",
+    "size_bytes": 1616
+  },
+  {
+    "compressed_size": 4546,
+    "compression": 8,
+    "crc32": 2435405508,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_augment.py",
+    "size_bytes": 16351
+  },
+  {
+    "compressed_size": 5624,
+    "compression": 8,
+    "crc32": 2124640598,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_auto_augment.py",
+    "size_bytes": 32237
+  },
+  {
+    "compressed_size": 3357,
+    "compression": 8,
+    "crc32": 2752852400,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_color.py",
+    "size_bytes": 17001
+  },
+  {
+    "compressed_size": 1545,
+    "compression": 8,
+    "crc32": 3179844441,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_container.py",
+    "size_bytes": 6336
+  },
+  {
+    "compressed_size": 843,
+    "compression": 8,
+    "crc32": 2805479996,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_deprecated.py",
+    "size_bytes": 1940
+  },
+  {
+    "compressed_size": 11681,
+    "compression": 8,
+    "crc32": 3910297305,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_geometry.py",
+    "size_bytes": 67724
+  },
+  {
+    "compressed_size": 934,
+    "compression": 8,
+    "crc32": 3370807511,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_meta.py",
+    "size_bytes": 3165
+  },
+  {
+    "compressed_size": 6096,
+    "compression": 8,
+    "crc32": 1927725885,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_misc.py",
+    "size_bytes": 23537
+  },
+  {
+    "compressed_size": 444,
+    "compression": 8,
+    "crc32": 2661648574,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_temporal.py",
+    "size_bytes": 899
+  },
+  {
+    "compressed_size": 3065,
+    "compression": 8,
+    "crc32": 2178310069,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_transform.py",
+    "size_bytes": 9316
+  },
+  {
+    "compressed_size": 936,
+    "compression": 8,
+    "crc32": 30987017,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_type_conversion.py",
+    "size_bytes": 2850
+  },
+  {
+    "compressed_size": 2747,
+    "compression": 8,
+    "crc32": 187125538,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/_utils.py",
+    "size_bytes": 9299
+  },
+  {
+    "compressed_size": 928,
+    "compression": 8,
+    "crc32": 2401292459,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/__init__.py",
+    "size_bytes": 3885
+  },
+  {
+    "compressed_size": 984,
+    "compression": 8,
+    "crc32": 741578418,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_augment.py",
+    "size_bytes": 3473
+  },
+  {
+    "compressed_size": 7409,
+    "compression": 8,
+    "crc32": 2297978397,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_color.py",
+    "size_bytes": 30377
+  },
+  {
+    "compressed_size": 363,
+    "compression": 8,
+    "crc32": 4037506459,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_deprecated.py",
+    "size_bytes": 795
+  },
+  {
+    "compressed_size": 18575,
+    "compression": 8,
+    "crc32": 3808030189,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_geometry.py",
+    "size_bytes": 111888
+  },
+  {
+    "compressed_size": 6368,
+    "compression": 8,
+    "crc32": 1775175800,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_meta.py",
+    "size_bytes": 28436
+  },
+  {
+    "compressed_size": 5361,
+    "compression": 8,
+    "crc32": 3973023559,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_misc.py",
+    "size_bytes": 21908
+  },
+  {
+    "compressed_size": 453,
+    "compression": 8,
+    "crc32": 3333014186,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_temporal.py",
+    "size_bytes": 1136
+  },
+  {
+    "compressed_size": 408,
+    "compression": 8,
+    "crc32": 1436669298,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_type_conversion.py",
+    "size_bytes": 869
+  },
+  {
+    "compressed_size": 1804,
+    "compression": 8,
+    "crc32": 2725753574,
+    "external_attr": 2175008768,
+    "name": "torchvision/transforms/v2/functional/_utils.py",
+    "size_bytes": 5488
+  },
+  {
+    "compressed_size": 715,
+    "compression": 8,
+    "crc32": 2190363038,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/__init__.py",
+    "size_bytes": 1798
+  },
+  {
+    "compressed_size": 2582,
+    "compression": 8,
+    "crc32": 3701857236,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_bounding_boxes.py",
+    "size_bytes": 7732
+  },
+  {
+    "compressed_size": 6117,
+    "compression": 8,
+    "crc32": 1107976955,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_dataset_wrapper.py",
+    "size_bytes": 24505
+  },
+  {
+    "compressed_size": 837,
+    "compression": 8,
+    "crc32": 17888419,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_image.py",
+    "size_bytes": 1963
+  },
+  {
+    "compressed_size": 1755,
+    "compression": 8,
+    "crc32": 2643264000,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_keypoints.py",
+    "size_bytes": 4584
+  },
+  {
+    "compressed_size": 619,
+    "compression": 8,
+    "crc32": 1754369372,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_mask.py",
+    "size_bytes": 1447
+  },
+  {
+    "compressed_size": 901,
+    "compression": 8,
+    "crc32": 1062047978,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_torch_function_helpers.py",
+    "size_bytes": 2324
+  },
+  {
+    "compressed_size": 2313,
+    "compression": 8,
+    "crc32": 4051824004,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_tv_tensor.py",
+    "size_bytes": 6220
+  },
+  {
+    "compressed_size": 606,
+    "compression": 8,
+    "crc32": 3881348740,
+    "external_attr": 2175008768,
+    "name": "torchvision/tv_tensors/_video.py",
+    "size_bytes": 1385
+  },
+  {
+    "compressed_size": 796,
+    "compression": 8,
+    "crc32": 724668764,
+    "external_attr": 2175008768,
+    "name": "torchvision-0.24.0+cpu.dist-info/LICENSE",
+    "size_bytes": 1517
+  },
+  {
+    "compressed_size": 2241,
+    "compression": 8,
+    "crc32": 1724768120,
+    "external_attr": 2175008768,
+    "name": "torchvision-0.24.0+cpu.dist-info/METADATA",
+    "size_bytes": 5940
+  },
+  {
+    "compressed_size": 109,
+    "compression": 8,
+    "crc32": 2000790671,
+    "external_attr": 2175008768,
+    "name": "torchvision-0.24.0+cpu.dist-info/WHEEL",
+    "size_bytes": 113
+  },
+  {
+    "compressed_size": 14,
+    "compression": 8,
+    "crc32": 198637551,
+    "external_attr": 2175008768,
+    "name": "torchvision-0.24.0+cpu.dist-info/top_level.txt",
+    "size_bytes": 12
+  },
+  {
+    "compressed_size": 9146,
+    "compression": 8,
+    "crc32": 2700283664,
+    "external_attr": 2175008768,
+    "name": "torchvision-0.24.0+cpu.dist-info/RECORD",
+    "size_bytes": 18322
+  },
+  {
+    "compressed_size": 127565,
+    "compression": 8,
+    "crc32": 139813251,
+    "external_attr": 2175008768,
+    "name": "torchvision.libs/libpng16.e328d493.so.16",
+    "size_bytes": 279617
+  },
+  {
+    "compressed_size": 176930,
+    "compression": 8,
+    "crc32": 2751079289,
+    "external_attr": 2175008768,
+    "name": "torchvision.libs/libjpeg.37781fad.so.8",
+    "size_bytes": 664504
+  },
+  {
+    "compressed_size": 335576,
+    "compression": 8,
+    "crc32": 3741644360,
+    "external_attr": 2175008768,
+    "name": "torchvision.libs/libwebp.32d871e4.so.7",
+    "size_bytes": 712281
+  },
+  {
+    "compressed_size": 55487,
+    "compression": 8,
+    "crc32": 2962467624,
+    "external_attr": 2175008768,
+    "name": "torchvision.libs/libz.81d90590.so.1",
+    "size_bytes": 108688
+  },
+  {
+    "compressed_size": 14916,
+    "compression": 8,
+    "crc32": 4191453308,
+    "external_attr": 2175008768,
+    "name": "torchvision.libs/libsharpyuv.0032f495.so.0",
+    "size_bytes": 33632
+  }
+]

@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "profile_id": "flynn-full-vision",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "hf_revision": "507bef22433c83db3581abd1ab393b25c3aa4989",
+  "files": [
+    {
+      "id": "graph_archive",
+      "path": "drosophila adult connectome.7z",
+      "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/drosophila%20adult%20connectome.7z",
+      "sha256": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1",
+      "size_bytes": 45111367,
+      "license": "CC-BY-NC-4.0"
+    },
+    {
+      "id": "checkpoint",
+      "path": "connectome_rnn_dagger_princeton_full_vision.pt",
+      "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/connectome_rnn_dagger_princeton_full_vision.pt",
+      "sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+      "size_bytes": 108220841,
+      "license": "CC-BY-NC-4.0"
+    }
+  ],
+  "graph": {
+    "dataset": "FlyWire FAFB v783 CSV export via philshiu/Drosophila_brain_model, as distributed by FLYNN",
+    "edge_file": "connections_princeton.csv",
+    "node_order": "Ascending numeric union of presynaptic and postsynaptic IDs; upstream core.utils.load_edge_list",
+    "extraction_limit_bytes": 1073741824,
+    "mapping_files": [
+      {
+        "path": "visual_column_L1_L2_L3_rear_view_left.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_left.csv",
+        "sha256": "dc9f28f54efe087180fd6a9c87cfe7943e37200090609943448b21f34fba1348",
+        "size_bytes": 164306,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "8782a663ddf570e046fa3f23131e1e7f26b04acdf58b4fbcb8b2d34fa3cb6c01",
+          "size_bytes": 166515
+        }
+      },
+      {
+        "path": "visual_column_L1_L2_L3_rear_view_right.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_right.csv",
+        "sha256": "aed0fe89bd3bcd175ab88673954276337c30842d993e578367d3848fb69f8332",
+        "size_bytes": 174299,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "03cd06b368f134c4c46e1ce58f9169a740266559d0d283f84e3ac8fc242a1ee3",
+          "size_bytes": 176610
+        }
+      },
+      {
+        "path": "head_bristles_left.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/head_bristles_left.csv",
+        "sha256": "b0c642f80af6c4937a333d3099111890e2f943c87efe3cfcf08489456283ea73",
+        "size_bytes": 8340,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "29059700338e226bbf7586539f5e92149871aafaa64dba7bcc4a5eef85289825",
+          "size_bytes": 8377
+        }
+      },
+      {
+        "path": "head_bristles_right.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/head_bristles_right.csv",
+        "sha256": "531ca4b81fe3244d759c5c31627ade2b3ad0bb5f4f32bddb9c494590bf40aaf7",
+        "size_bytes": 7585,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "9fa26d3c103026ae4f576d13b3cf067c6c7d4ff6f2cefebf1b267ec4be94b439",
+          "size_bytes": 7626
+        }
+      },
+      {
+        "path": "descending_neurons.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/descending_neurons.csv",
+        "sha256": "28d630d66e6bc4766d5d69c3527ff5a75596ac0155b3a565d32c600c415d8935",
+        "size_bytes": 76543,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "af36947c71ca54cf41c8954de3540382684496b3f54bfea809778742a8870b3b",
+          "size_bytes": 77847
+        }
+      },
+      {
+        "path": "consolidated_cell_types.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/consolidated_cell_types.csv",
+        "sha256": "df6e428c824979a72e3fb1e36cf9f00f88b6d59bb526ff8087b894a8fb2bbe32",
+        "size_bytes": 3691688,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "775897e98192015be0a23ae87a4e98c4b5d3f64103b014867274af086b33048c",
+          "size_bytes": 3829366
+        }
+      },
+      {
+        "path": "JO-C_and_JO-E.csv",
+        "source_path": "upstream/fly-gym/connectomes/drosophila adult connectome/JO-C_and_JO-E.csv",
+        "sha256": "93e1ef45d1bd817ee73f949b595b3f1a430ed6055c83158457271ab3d1a9f8df",
+        "size_bytes": 4225,
+        "license": "CC-BY-NC-4.0",
+        "archive_identity": {
+          "sha256": "3c8d81b3c6fc932a541fe3a447a0d950187ef64d021192e517007cd7fea312ce",
+          "size_bytes": 4447
+        }
+      }
+    ],
+    "edge_identity": {
+      "sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+      "size_bytes": 273646145,
+      "archive_member": "drosophila adult connectome/connections_princeton.csv",
+      "derived_from_archive_sha256": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1"
+    },
+    "mapping_preparation": "Preserve archive CSV bytes unchanged. Each archived mapping has an independently pinned raw SHA256/size; converting CRLF to LF must reproduce the pinned upstream Git CSV SHA256/size exactly. Git and archive identities differ only by these line endings."
+  },
+  "provenance_limit": "Pins distributed archive/checkpoint identities and mapping CSVs from the pinned upstream commit. The legacy checkpoint has no embedded source-graph or neuron-order provenance; these identities do not prove its original training graph or mapping pairing.",
+  "citation": "FLYNN: Robust Neural Network for Robot Navigation using Fly Brain Topology, Wang and Chen, arXiv:2607.00025",
+  "license_url": "https://creativecommons.org/licenses/by-nc/4.0/"
+}

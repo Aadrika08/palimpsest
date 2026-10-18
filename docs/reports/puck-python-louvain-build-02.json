@@ -1,0 +1,272 @@
+{
+  "collection_authorized": false,
+  "configuration": {
+    "path": "docs/plans/puck-python-louvain-build-02.json",
+    "sha256": "35ec8db8c8852d6611e284d3830956e1b3343664af3e69d7b3153174bd58bc41",
+    "size_bytes": 3409
+  },
+  "external_observation": {
+    "elapsed_seconds_reported": 3.217929524020292,
+    "exec_session": 69436,
+    "exit_code": 0,
+    "final_chunk": "ea9e95"
+  },
+  "independent_audit": {
+    "checks_passed": 9,
+    "exit_code": 0,
+    "findings": [],
+    "program_sha256": "930cadbda889cf77cc7b8d8a8995d39955dcf4bfc06e3313086dc2e8b10b33f8",
+    "report_sha256": "89c8b35d7ac675238ae941c5238ff4a409dfafa6fc9e2ea22bff387e66886746",
+    "terminal_chunk": "81b538",
+    "wheel_accepted": true
+  },
+  "installed": false,
+  "kind": "puck-python-louvain-build-02-evidence-v1",
+  "previous_invocation": {
+    "path": "docs/reports/puck-python-louvain-build-01.json",
+    "status": "failed_and_consumed"
+  },
+  "qualification_claims": [],
+  "raw": [
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/outcome.json",
+      "sha256": "6fd905105b441ce724bdbf6dea3bf372c1192d3ec5f35f19ba46ac298e9d8306",
+      "size_bytes": 1206
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/configuration.json",
+      "sha256": "35ec8db8c8852d6611e284d3830956e1b3343664af3e69d7b3153174bd58bc41",
+      "size_bytes": 3409
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/namespace-preflight.json",
+      "sha256": "e6f49316a947405b5d067a590dae201f38fb2c8cab6a928d00e9ee32d7bc506b",
+      "size_bytes": 369
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/source-manifest.json",
+      "sha256": "5c608ccabef3cd319d180995919bce713251df4865efc5a2caca0f726acff83a",
+      "size_bytes": 7338
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/backend-manifest.json",
+      "sha256": "39adb5f5be1b5dea2f622fc3d1057c6c5873b9f145844852e9b5e12df50dba72",
+      "size_bytes": 111251
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/fixture-manifest.json",
+      "sha256": "f91373a213cbc123b12d38800ca791ed8a35ae19ef6338384397e5765fd7301e",
+      "size_bytes": 568
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/backend-archive-verification.json",
+      "sha256": "30b84263130089d6abefc87ed8720fed7fa9b1559bcc5aca9956ec548c9f5ca8",
+      "size_bytes": 60709
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/audit.json",
+      "sha256": "89c8b35d7ac675238ae941c5238ff4a409dfafa6fc9e2ea22bff387e66886746",
+      "size_bytes": 78118
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/audit-program.py",
+      "sha256": "930cadbda889cf77cc7b8d8a8995d39955dcf4bfc06e3313086dc2e8b10b33f8",
+      "size_bytes": 53942
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/source-tests.log",
+      "sha256": "e386250e0054ab1d7315a1ab0da5f736d9b13c77d7fac67d521defa283894d66",
+      "size_bytes": 340
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/namespace-red.log",
+      "sha256": "dc7f45c0ebfccc1d6f51f905977f4866b2cf4c8bf5bddbbea4f2fef77b94c885",
+      "size_bytes": 2719
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/namespace-green.log",
+      "sha256": "3dda496087ef21e2a2cf70552e7962179ac5dbb2ea30ff9b654d99231ed1382d",
+      "size_bytes": 98
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/proc-mount-red.log",
+      "sha256": "f0a63724c2200c09c1364d025a38be48307f905c84a9b4a43135b8f389b3ea06",
+      "size_bytes": 3706
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/python_louvain-0.16-py3-none-any.whl",
+      "sha256": "944852939c61accbe9de4a4ad014ca60cd41ca2d255d97b9dd4292ae2a5ff0cc",
+      "size_bytes": 9458
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/outer-invocation.json",
+      "sha256": "c3951171a0e9dba765608bbf1995c0629b0294afa66d612e55a1312ef2492bce",
+      "size_bytes": 1899
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/outer-supervision.json",
+      "sha256": "7b498fca945bd9ed2a699441777e0f7083b5cbd2b2dc9d4ebe2c1be499625f82",
+      "size_bytes": 190
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/outer-stdout.log",
+      "sha256": "e6f49316a947405b5d067a590dae201f38fb2c8cab6a928d00e9ee32d7bc506b",
+      "size_bytes": 369
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/outer-stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/fixture-invocation.json",
+      "sha256": "9378764af234f1891228f9158ae761a28c922757d6f625eede31ae2aaca2d827",
+      "size_bytes": 1884
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/fixture-supervision.json",
+      "sha256": "cf890f8660163f470075dfe52909f9ef0b9e3890a49db04539ac0fd5c85361cb",
+      "size_bytes": 191
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/fixture-stdout.log",
+      "sha256": "da1e8641d562a5137cb2eca846a6e9846c2e393c7b5263767184000cc3526eda",
+      "size_bytes": 2520
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/fixture-stderr.log",
+      "sha256": "fad354dfafd67f32d5695125924dfbee9a49040de0d9c11af86dd41c50c48c93",
+      "size_bytes": 2327
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/build-invocation.json",
+      "sha256": "69c44831de8a8e1a6e4b869adfae25eb4f26d832a8fe1504d46fce6f6325e0c2",
+      "size_bytes": 1874
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/build-supervision.json",
+      "sha256": "86aa0e80b23dab88e9a897d3edcc6f2eacaa72a0a18cd38b9c45f7b0fb5ca300",
+      "size_bytes": 191
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/build-stdout.log",
+      "sha256": "247b5f2a419a0b5ef1c4cd5321b629ad8488b0a236f9acb9956136ddd0820ff0",
+      "size_bytes": 12895
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/build-stderr.log",
+      "sha256": "881addb1b9f4c4a44ea47a56c18a668852a4fc50ad84334e7d3f7f65ddfbd7f9",
+      "size_bytes": 3184
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/fixture-wheel-verification.json",
+      "sha256": "5a503cb70be946909f38c99cb83e96e3f2ce0ea71a01b38d2279f5ed1e8efcd8",
+      "size_bytes": 1636
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/build-wheel-verification.json",
+      "sha256": "50356bba8ba46d79258a37a4a96b8cb721bffddb232adb6bd275ed92342d4613",
+      "size_bytes": 2189
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-env-diagnostic-invocation.json",
+      "sha256": "e688360e6fac61c103ab7e9cd46921be374edfec8ac7fe1c62814e5e0b3cda4a",
+      "size_bytes": 1964
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-env-diagnostic-supervision.json",
+      "sha256": "e6c1e59dc4c15c41d7f52cd8246c2d152aade7171829c999367e73f14f95d539",
+      "size_bytes": 188
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-env-diagnostic-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-env-diagnostic-stderr.log",
+      "sha256": "262fabdae64cff226fe81d2044c5a10e14684e10b22a17eaf23a292a22bbf8d1",
+      "size_bytes": 379
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-proc-diagnostic-invocation.json",
+      "sha256": "e688360e6fac61c103ab7e9cd46921be374edfec8ac7fe1c62814e5e0b3cda4a",
+      "size_bytes": 1964
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-proc-diagnostic-supervision.json",
+      "sha256": "97a2e723cc15f89c70cb7ebb40e1f2809d4a08e0a7e0da043c192ac48a012432",
+      "size_bytes": 188
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-proc-diagnostic-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-02/authored-proc-diagnostic-stderr.log",
+      "sha256": "36d18c560434d8ff6e0b34efb2fb917c5ff3d746e27b27ffe6b0de6c749ef4e8",
+      "size_bytes": 544
+    }
+  ],
+  "runtime_qualified": false,
+  "source_commit": "16b76c58d2f22cb00a50dda026dfcdffeab422db",
+  "source_tests": {
+    "namespace_probe_opt_in": "PALIMPSEST_BUILD_NAMESPACE_TEST=1",
+    "passed": 236,
+    "seconds": 3.8
+  },
+  "status": "wheel_verified_and_independently_accepted",
+  "study_authorized": false,
+  "supervision": {
+    "build": {
+      "failure": null,
+      "finished_monotonic": 436102.312383605,
+      "matching_survivors": [],
+      "pid": 2349853,
+      "returncode": 0,
+      "rss_sampling_seconds": 0.05,
+      "sampled_peak_rss_bytes": 77639680,
+      "status": "completed"
+    },
+    "fixture": {
+      "failure": null,
+      "finished_monotonic": 436101.947794144,
+      "matching_survivors": [],
+      "pid": 2349848,
+      "returncode": 0,
+      "rss_sampling_seconds": 0.05,
+      "sampled_peak_rss_bytes": 77225984,
+      "status": "completed"
+    },
+    "outer": {
+      "failure": null,
+      "finished_monotonic": 436101.62700527,
+      "matching_survivors": [],
+      "pid": 2349843,
+      "returncode": 0,
+      "rss_sampling_seconds": 0.05,
+      "sampled_peak_rss_bytes": 59621376,
+      "status": "completed"
+    }
+  },
+  "version": 1,
+  "wheel": {
+    "filename": "python_louvain-0.16-py3-none-any.whl",
+    "member_count": 9,
+    "metadata_sha256": "f54daa90d48a3c5ec636c04c189210f0d1d79a2f02b81de670d97a16a4e757c7",
+    "sha256": "944852939c61accbe9de4a4ad014ca60cd41ca2d255d97b9dd4292ae2a5ff0cc",
+    "size_bytes": 9458,
+    "uncompressed_bytes": 26131
+  }
+}

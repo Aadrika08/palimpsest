@@ -1,0 +1,94 @@
+{
+  "completed_monotonic": 30149.074027117,
+  "five_ticks": [
+    727,
+    728,
+    729,
+    730,
+    731
+  ],
+  "full_post_state_payload_retained": false,
+  "initial_invariants_preserved": true,
+  "native_owners_launched_by_diagnostic": 0,
+  "non_timing_raw_fields_differ": [],
+  "post_state_digest_matches": false,
+  "post_state_digests": [
+    "ab719cde4a3bf1adf5060399b929b3d99b705157ca72f8e679ee7e7e7e45da0d",
+    "bfa93f15923e04d1f0c7bd98a0ed462003b4aa98eabe67c35ddcfb5f3dd8d7c2"
+  ],
+  "qualification_claims": [],
+  "raw_fields_compared": [
+    "action",
+    "cam_left",
+    "cam_right",
+    "control",
+    "encoded_input",
+    "episode",
+    "eyes",
+    "latency",
+    "next_pose",
+    "population_stats",
+    "pose",
+    "raw_cam_left",
+    "raw_cam_right",
+    "raw_output",
+    "revision",
+    "reward",
+    "sensors",
+    "simulation_time",
+    "step_latency",
+    "tick"
+  ],
+  "readout_deadline_monotonic": 30549.062056236,
+  "retained_final_memory_world_differences": [],
+  "root_cause": "unlocalized: full post-step snapshot/component fingerprints were not retained",
+  "run_ids": [
+    "a183ed72959d4e7886eb1502c1cf4666",
+    "87d8abd02b374877a8d6a3675f78cc66"
+  ],
+  "same_source_snapshot": true,
+  "schema": "memory-travel-restore-boundary-v1",
+  "timing_measurement_differences": [
+    {
+      "field": "latency",
+      "tick": 727
+    },
+    {
+      "field": "step_latency",
+      "tick": 727
+    },
+    {
+      "field": "latency",
+      "tick": 728
+    },
+    {
+      "field": "step_latency",
+      "tick": 728
+    },
+    {
+      "field": "latency",
+      "tick": 729
+    },
+    {
+      "field": "step_latency",
+      "tick": 729
+    },
+    {
+      "field": "latency",
+      "tick": 730
+    },
+    {
+      "field": "step_latency",
+      "tick": 730
+    },
+    {
+      "field": "latency",
+      "tick": 731
+    },
+    {
+      "field": "step_latency",
+      "tick": 731
+    }
+  ],
+  "trace_digest_matches": true
+}

@@ -1,0 +1,29 @@
+{
+  "actual07_created_or_invoked": false,
+  "all_six_failures_preserved": true,
+  "all_source_input_site_stage_native_interpreter_baseline_controls_completed": true,
+  "closure": {
+    "active_children": [],
+    "active_non_main_threads": [],
+    "fd_count_after": 4,
+    "fd_count_before": 4
+  },
+  "frozen_controls_commit": "0dd615d4e06b7141da1dc7a3fc21aa7d3b3780e6",
+  "held_content_bytes_rehashed": 1466493325,
+  "held_files_rehashed": 31867,
+  "kind": "held06-post03-root-result-check-v1",
+  "outer_terminal_exit": 0,
+  "phase_count": 8,
+  "recorded_pid_sample_count": 3,
+  "scopes": [
+    "Reviewed fixed full-byte control executed once; this readback only validates retained small receipts and stream bindings.",
+    "DATA06/C retention at this window only; no candidateD/source07 admission or import/operator/renderer/episode/release pass."
+  ],
+  "source_elapsed_seconds": 26.862688834022265,
+  "status": "PASS_DATA06_C_RETENTION_ONLY",
+  "success_bytes": 2997,
+  "success_sha256": "000829dee6142af39f53a5f88e16b61d5f6e059ea645e250d65303dc3592d498",
+  "timed_out": false,
+  "wrapper_elapsed_seconds": 26.972158915014006,
+  "wrapper_returncode": 0
+}

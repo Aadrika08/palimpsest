@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-15T14:42:05.490696+00:00",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-02.json",
+    "--sha256",
+    "253bf8727fe7890d97e0d2c5af98c2ffe7e7edaf763c0eb0537a57c882f5fd77",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-02-external-cli-transport.json",
+    "--transport-sha256",
+    "2a15c6e8a2c132ab3fc9fcdecfdd36cf4913ebc9e59c75cce424f42e01c9258e",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-02-audit-01.json"
+  ],
+  "elapsed_seconds": 0.05352770403260365,
+  "kind": "externally-observed-cpu-auditor-cli-v1",
+  "observed_returncode": 1,
+  "published": {
+    "path": "/tmp/palimpsest-puck-cpu-held-qualification-02-audit-01.json",
+    "sha256": "884f63d01dbc21b6b579918a41e8feea56758cd80d9cdb862effbdb29eb14354",
+    "size_bytes": 617
+  },
+  "scope": "actual qualification02 acceptance audit; preserves refusal, not a passing failure audit",
+  "stderr": {
+    "path": "/tmp/palimpsest-puck-cpu-held-qualification-02-audit-01.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-puck-cpu-held-qualification-02-audit-01.stdout",
+    "sha256": "884f63d01dbc21b6b579918a41e8feea56758cd80d9cdb862effbdb29eb14354",
+    "size_bytes": 617
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "admission_invoked": false,
+  "controls_frozen": false,
+  "kind": "held09-unfrozen-authoring-setup-failure-v1",
+  "partial_directory": "/tmp/palimpsest-held09-history-red01",
+  "resolution": "Remove the replacement for text absent from the old helper, preflight source bytes and copy the new helper exclusively; preserve this partial setup and use a distinct executed RED label.",
+  "runtime_invoked": false,
+  "steps": [
+    {
+      "error": "AssertionError: fresh08/D (expected replacement text absent)",
+      "exit_code": 1,
+      "tool_chunk": "32e3e1"
+    },
+    {
+      "exit_code": 0,
+      "limitation": "compound copy returned the last copy status; new config/review copied, helper not copied",
+      "stderr": "cp: cannot stat '/tmp/palimpsest-held09-controls/puck-cpu-held-qualification-09-admission.py': No such file or directory",
+      "tool_chunk": "266104"
+    },
+    {
+      "error": "FileNotFoundError snapshotting missing09admission before subprocess launch",
+      "exit_code": 1,
+      "tool_chunk": "8ed6e1"
+    }
+  ],
+  "unittest_invoked": false
+}

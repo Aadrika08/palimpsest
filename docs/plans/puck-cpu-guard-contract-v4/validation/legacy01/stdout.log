@@ -1,0 +1,310 @@
+................................................................................................{"kind": "authored-guard-union-dispatch-v1", "stderr": "SOURCE_UNION_DISPATCH_POISON_AND_CLOSE_CONFIRMED\nTraceback (most recent call last):\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/src/palimpsest/puck_worker_preflight.py\", line 13, in preflight\n    admission._check(full=False)\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 794, in _check\n    name not in {'__main__', '_puck_held_file_bootstrap'}|aliases|self._loaded.keys()|self._loading\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/src/palimpsest/puck_worker_preflight.py\", line 10, in __ror__\n    raise ReflectedFailure('SOURCE_UNION_REFLECTED_FAILURE')\npalimpsest.puck_worker_preflight.preflight.<locals>.ReflectedFailure: SOURCE_UNION_REFLECTED_FAILURE\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 897, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 890, in main\n    receipt = admission.invoke()\n              ^^^^^^^^^^^^^^^^^^\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 870, in invoke\n    raise error from self._first_failure\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 860, in invoke\n    self._phase('entry.returned'); self.recheck()\n                                   ^^^^^^^^^^^^^^\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 672, in recheck\n    return self._check(full=True)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/q4-legacy01/test_source_allowance_reflecte0/source/scripts/puck_worker_bootstrap.py\", line 735, in _check\n    raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure\nRuntimeError: Bootstrap inactive or poisoned\n", "stdout": "", "worker_returncode": 1}
+.......................................................................................................................................................................F...............................................FFF...................................................................................
+=================================== FAILURES ===================================
+_____________________ test_module_import_keeps_ctypes_lazy _____________________
+
+    def test_module_import_keeps_ctypes_lazy():
+        completed = subprocess.run(
+            [sys.executable, '-B', '-c',
+             "import sys; assert 'ctypes' not in sys.modules; "
+             "import palimpsest.puck_native_identity; assert 'ctypes' not in sys.modules"],
+            capture_output=True, text=True, check=False, timeout=15,
+        )
+>       assert completed.returncode == 0, completed.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 1, in <module>
+E         ModuleNotFoundError: No module named 'palimpsest.puck_native_identity'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-B', '-c', "i...:\n  File "<string>", line 1, in <module>\nModuleNotFoundError: No module named \'palimpsest.puck_native_identity\'\n').returncode
+
+tests/test_puck_native_identity.py:160: AssertionError
+_ test_held_directory_origin_loads_authored_sibling_and_observes_exact_target[$ORIGIN] _
+
+tmp_path = PosixPath('/tmp/q4-legacy01/test_held_directory_origin_loa0')
+origin = '$ORIGIN'
+
+    @pytest.mark.parametrize('origin', ['$ORIGIN', '$ORIGIN/../lib'])
+    def test_held_directory_origin_loads_authored_sibling_and_observes_exact_target(tmp_path, origin):
+        package, native = _authored_images(tmp_path, origin)
+>       result, state = _load_in_child(package, native, 'held-directory-observed-v1', '47')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_native_origins.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_native_origins.py:183: in _load_in_child
+    result = subprocess.run([sys.executable, '-c', _CHILD, str(leaf_fd),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 15, check = True
+popenargs = (['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', "\nimport ctypes\nimport json...                  'inode': identity[1], 'checks': provider.checks}))\n", '7', '6', 'held-directory-observed-v1', ...],)
+kwargs = {'env': {'BACKGROUND': '#1e1e2e', 'BAT_THEME': 'ansi', 'BORDER_BACKGROUND': '#1e1e2e', 'BORDER_FOREGROUND': '#89b4fa', ...}, 'pass_fds': (7, 6), 'stderr': -1, 'stdout': -1, ...}
+process = <Popen: returncode: 1 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees/r...>
+stdout = ''
+stderr = 'Traceback (most recent call last):\n  File "<string>", line 7, in <module>\nModuleNotFoundError: No module named \'palimpsest.puck_native_origins\'\n'
+retcode = 1
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', "\nimport ctypes\nimport json\nimport os\nimport sys\nfrom types import SimpleNamespace\nfrom palimpsest.puck_native_origins import native_load_path, require_native_target\n\nfd, parent_fd = map(int, sys.argv[1:3])\npolicy, expected_result = sys.argv[3:5]\nstate = os.fstat(fd)\nidentity = (state.st_dev, state.st_ino)\nrow = {'root_index': 0, 'path': 'package/native.so'}\nholder = SimpleNamespace(_files={'package/native.so': (fd, parent_fd, 'native.so', identity)})\nclass Provider:\n    _holders = [holder]\n    checks = 0\n    def _target_recheck(self, actual_holder, path):\n        assert actual_holder is holder and path == row['path']\n        target = os.stat('native.so', dir_fd=parent_fd, follow_symlinks=False)\n        held = os.fstat(fd)\n        assert (target.st_dev, target.st_ino) == identity\n        assert (held.st_dev, held.st_ino) == identity\n        self.checks += 1\nprovider = Provider()\npath = native_load_path(provider, row, policy)\nexpected_path = ('/proc/self/fd/' + str(fd) if policy == 'exact-file-fd-v1'\n                 else '/proc/self/fd/' + str(parent_fd) + '/native.so')\nassert path == expected_path\ntry:\n    image = ctypes.CDLL(path)\nexcept OSError as error:\n    if expected_result != 'missing-sibling':\n        raise\n    assert 'libpalimpsest_origin_helper.so' in str(error), str(error)\n    print(json.dumps({'missing_sibling': True, 'checks': provider.checks}))\n    sys.exit(0)\nassert expected_result == '47', 'strict leaf descriptor unexpectedly loaded sibling'\nimage.palimpsest_origin_value.restype = ctypes.c_int\nassert image.palimpsest_origin_value() == 47\nobserved = {}\nwith open('/proc/self/maps', 'rb') as stream:\n    for line in stream:\n        fields = line.split(None, 5)\n        if len(fields) < 5 or not int(fields[4]):\n            continue\n        major, minor = (int(value, 16) for value in fields[3].split(b':'))\n        key = (os.makedev(major, minor), int(fields[4]))\n        observed.setdefault(key, set()).add(os.fsdecode(fields[5].strip()) if len(fields) == 6 else '')\nassert identity in observed\nrequire_native_target(provider, row, policy, observed)\nassert provider.checks == 2\nprint(json.dumps({'return_value': 47, 'target_mapped': True, 'device': identity[0],\n                  'inode': identity[1], 'checks': provider.checks}))\n", '7', '6', 'held-directory-observed-v1', '47']' returned non-zero exit status 1.
+
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:571: CalledProcessError
+_ test_held_directory_origin_loads_authored_sibling_and_observes_exact_target[$ORIGIN/../lib] _
+
+tmp_path = PosixPath('/tmp/q4-legacy01/test_held_directory_origin_loa1')
+origin = '$ORIGIN/../lib'
+
+    @pytest.mark.parametrize('origin', ['$ORIGIN', '$ORIGIN/../lib'])
+    def test_held_directory_origin_loads_authored_sibling_and_observes_exact_target(tmp_path, origin):
+        package, native = _authored_images(tmp_path, origin)
+>       result, state = _load_in_child(package, native, 'held-directory-observed-v1', '47')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_native_origins.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_native_origins.py:183: in _load_in_child
+    result = subprocess.run([sys.executable, '-c', _CHILD, str(leaf_fd),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 15, check = True
+popenargs = (['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', "\nimport ctypes\nimport json...                  'inode': identity[1], 'checks': provider.checks}))\n", '7', '6', 'held-directory-observed-v1', ...],)
+kwargs = {'env': {'BACKGROUND': '#1e1e2e', 'BAT_THEME': 'ansi', 'BORDER_BACKGROUND': '#1e1e2e', 'BORDER_FOREGROUND': '#89b4fa', ...}, 'pass_fds': (7, 6), 'stderr': -1, 'stdout': -1, ...}
+process = <Popen: returncode: 1 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees/r...>
+stdout = ''
+stderr = 'Traceback (most recent call last):\n  File "<string>", line 7, in <module>\nModuleNotFoundError: No module named \'palimpsest.puck_native_origins\'\n'
+retcode = 1
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', "\nimport ctypes\nimport json\nimport os\nimport sys\nfrom types import SimpleNamespace\nfrom palimpsest.puck_native_origins import native_load_path, require_native_target\n\nfd, parent_fd = map(int, sys.argv[1:3])\npolicy, expected_result = sys.argv[3:5]\nstate = os.fstat(fd)\nidentity = (state.st_dev, state.st_ino)\nrow = {'root_index': 0, 'path': 'package/native.so'}\nholder = SimpleNamespace(_files={'package/native.so': (fd, parent_fd, 'native.so', identity)})\nclass Provider:\n    _holders = [holder]\n    checks = 0\n    def _target_recheck(self, actual_holder, path):\n        assert actual_holder is holder and path == row['path']\n        target = os.stat('native.so', dir_fd=parent_fd, follow_symlinks=False)\n        held = os.fstat(fd)\n        assert (target.st_dev, target.st_ino) == identity\n        assert (held.st_dev, held.st_ino) == identity\n        self.checks += 1\nprovider = Provider()\npath = native_load_path(provider, row, policy)\nexpected_path = ('/proc/self/fd/' + str(fd) if policy == 'exact-file-fd-v1'\n                 else '/proc/self/fd/' + str(parent_fd) + '/native.so')\nassert path == expected_path\ntry:\n    image = ctypes.CDLL(path)\nexcept OSError as error:\n    if expected_result != 'missing-sibling':\n        raise\n    assert 'libpalimpsest_origin_helper.so' in str(error), str(error)\n    print(json.dumps({'missing_sibling': True, 'checks': provider.checks}))\n    sys.exit(0)\nassert expected_result == '47', 'strict leaf descriptor unexpectedly loaded sibling'\nimage.palimpsest_origin_value.restype = ctypes.c_int\nassert image.palimpsest_origin_value() == 47\nobserved = {}\nwith open('/proc/self/maps', 'rb') as stream:\n    for line in stream:\n        fields = line.split(None, 5)\n        if len(fields) < 5 or not int(fields[4]):\n            continue\n        major, minor = (int(value, 16) for value in fields[3].split(b':'))\n        key = (os.makedev(major, minor), int(fields[4]))\n        observed.setdefault(key, set()).add(os.fsdecode(fields[5].strip()) if len(fields) == 6 else '')\nassert identity in observed\nrequire_native_target(provider, row, policy, observed)\nassert provider.checks == 2\nprint(json.dumps({'return_value': 47, 'target_mapped': True, 'device': identity[0],\n                  'inode': identity[1], 'checks': provider.checks}))\n", '7', '6', 'held-directory-observed-v1', '47']' returned non-zero exit status 1.
+
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:571: CalledProcessError
+______ test_exact_leaf_descriptor_keeps_strict_sibling_dependency_failure ______
+
+tmp_path = PosixPath('/tmp/q4-legacy01/test_exact_leaf_descriptor_kee0')
+
+    def test_exact_leaf_descriptor_keeps_strict_sibling_dependency_failure(tmp_path):
+        package, native = _authored_images(tmp_path, '$ORIGIN')
+>       result, _ = _load_in_child(package, native, 'exact-file-fd-v1', 'missing-sibling')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_native_origins.py:204: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_native_origins.py:183: in _load_in_child
+    result = subprocess.run([sys.executable, '-c', _CHILD, str(leaf_fd),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 15, check = True
+popenargs = (['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', "\nimport ctypes\nimport json...tity[0],\n                  'inode': identity[1], 'checks': provider.checks}))\n", '7', '6', 'exact-file-fd-v1', ...],)
+kwargs = {'env': {'BACKGROUND': '#1e1e2e', 'BAT_THEME': 'ansi', 'BORDER_BACKGROUND': '#1e1e2e', 'BORDER_FOREGROUND': '#89b4fa', ...}, 'pass_fds': (7, 6), 'stderr': -1, 'stdout': -1, ...}
+process = <Popen: returncode: 1 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees/r...>
+stdout = ''
+stderr = 'Traceback (most recent call last):\n  File "<string>", line 7, in <module>\nModuleNotFoundError: No module named \'palimpsest.puck_native_origins\'\n'
+retcode = 1
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', "\nimport ctypes\nimport json\nimport os\nimport sys\nfrom types import SimpleNamespace\nfrom palimpsest.puck_native_origins import native_load_path, require_native_target\n\nfd, parent_fd = map(int, sys.argv[1:3])\npolicy, expected_result = sys.argv[3:5]\nstate = os.fstat(fd)\nidentity = (state.st_dev, state.st_ino)\nrow = {'root_index': 0, 'path': 'package/native.so'}\nholder = SimpleNamespace(_files={'package/native.so': (fd, parent_fd, 'native.so', identity)})\nclass Provider:\n    _holders = [holder]\n    checks = 0\n    def _target_recheck(self, actual_holder, path):\n        assert actual_holder is holder and path == row['path']\n        target = os.stat('native.so', dir_fd=parent_fd, follow_symlinks=False)\n        held = os.fstat(fd)\n        assert (target.st_dev, target.st_ino) == identity\n        assert (held.st_dev, held.st_ino) == identity\n        self.checks += 1\nprovider = Provider()\npath = native_load_path(provider, row, policy)\nexpected_path = ('/proc/self/fd/' + str(fd) if policy == 'exact-file-fd-v1'\n                 else '/proc/self/fd/' + str(parent_fd) + '/native.so')\nassert path == expected_path\ntry:\n    image = ctypes.CDLL(path)\nexcept OSError as error:\n    if expected_result != 'missing-sibling':\n        raise\n    assert 'libpalimpsest_origin_helper.so' in str(error), str(error)\n    print(json.dumps({'missing_sibling': True, 'checks': provider.checks}))\n    sys.exit(0)\nassert expected_result == '47', 'strict leaf descriptor unexpectedly loaded sibling'\nimage.palimpsest_origin_value.restype = ctypes.c_int\nassert image.palimpsest_origin_value() == 47\nobserved = {}\nwith open('/proc/self/maps', 'rb') as stream:\n    for line in stream:\n        fields = line.split(None, 5)\n        if len(fields) < 5 or not int(fields[4]):\n            continue\n        major, minor = (int(value, 16) for value in fields[3].split(b':'))\n        key = (os.makedev(major, minor), int(fields[4]))\n        observed.setdefault(key, set()).add(os.fsdecode(fields[5].strip()) if len(fields) == 6 else '')\nassert identity in observed\nrequire_native_target(provider, row, policy, observed)\nassert provider.checks == 2\nprint(json.dumps({'return_value': 47, 'target_mapped': True, 'device': identity[0],\n                  'inode': identity[1], 'checks': provider.checks}))\n", '7', '6', 'exact-file-fd-v1', 'missing-sibling']' returned non-zero exit status 1.
+
+../../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:571: CalledProcessError
+=========================== short test summary info ============================
+FAILED tests/test_puck_native_identity.py::test_module_import_keeps_ctypes_lazy
+FAILED tests/test_puck_native_origins.py::test_held_directory_origin_loads_authored_sibling_and_observes_exact_target[$ORIGIN]
+FAILED tests/test_puck_native_origins.py::test_held_directory_origin_loads_authored_sibling_and_observes_exact_target[$ORIGIN/../lib]
+FAILED tests/test_puck_native_origins.py::test_exact_leaf_descriptor_keeps_strict_sibling_dependency_failure
+4 failed, 393 passed, 3 deselected in 243.68s (0:04:03)

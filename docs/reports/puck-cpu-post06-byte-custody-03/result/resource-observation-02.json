@@ -1,0 +1,23 @@
+{
+  "actual07_created_or_invoked": false,
+  "all12_named_outputs_absent": true,
+  "all20_control_original_pins_match": true,
+  "at_utc": "2026-10-15T22:22:28.232968+00:00",
+  "check03_invoked": false,
+  "data06_clean_unchanged": true,
+  "elapsed_seconds": 0.13023856200743467,
+  "frozen_commit": "0dd615d4e06b7141da1dc7a3fc21aa7d3b3780e6",
+  "interpreter_bytes_match": true,
+  "kind": "held06-post03-immediate-invocation-guard-v1",
+  "pressure_io": "some avg10=0.55 avg60=3.23 avg300=5.88 total=3003107454\nfull avg10=0.48 avg60=2.48 avg300=4.90 total=2767267040\n",
+  "resources": {
+    "mem_available_bytes": 6139785216,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 79371673600,
+    "tmpfs_executable_writable": true,
+    "tmpfs_free_bytes": 3419103232
+  },
+  "status": "READY",
+  "timeout_binary_bytes_match": true
+}

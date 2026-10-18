@@ -1,0 +1,94 @@
+{
+  "kind": "puck-cpu-distributed-roster-worker-source-report-v1",
+  "status": "worker source verified; parent/observer/auditor/actual controls pending",
+  "source_commit": "f333644484cb4ba0b36ff1556076c7f0e906db24",
+  "evidence_index": {
+    "path": "docs/reports/puck-cpu-distributed-roster-worker-v1/evidence-index.json",
+    "sha256": "083fbb0f60fa6e8af91e117a4d2fed3be5b59052e813edc5edaf2e63a5a8bdf3",
+    "artifacts": 97,
+    "bytes": 692265,
+    "empty_files": 11
+  },
+  "test_batches": {
+    "01-worker-red": {
+      "returncode": 1,
+      "seconds": 1.9215494149830192,
+      "timed_out": false
+    },
+    "02-legacy-baseline": {
+      "returncode": 0,
+      "seconds": 3.922174178995192,
+      "timed_out": false
+    },
+    "03-worker-first-green": {
+      "returncode": 0,
+      "seconds": 8.16181942197727,
+      "timed_out": false
+    },
+    "04-name-hook-red": {
+      "returncode": 1,
+      "seconds": 0.7703983599785715,
+      "timed_out": false
+    },
+    "05-review-hooks-red": {
+      "returncode": 1,
+      "seconds": 0.8205276610096917,
+      "timed_out": false
+    },
+    "06-worker-green": {
+      "returncode": 0,
+      "seconds": 9.719019277021289,
+      "timed_out": false
+    },
+    "07-path-hooks-red": {
+      "returncode": 1,
+      "timed_out": false,
+      "seconds": 1.0205846939934418
+    },
+    "08-isolated-affected": {
+      "returncode": 1,
+      "timed_out": false,
+      "seconds": 10.334987035952508
+    },
+    "09-parent-persistent": {
+      "returncode": 0,
+      "timed_out": false,
+      "seconds": 1.5733253990183584
+    },
+    "10-isolated-persistent-final": {
+      "returncode": 0,
+      "timed_out": false,
+      "seconds": 12.130585918959696
+    },
+    "11-exact-cpu-namespace": {
+      "returncode": 0,
+      "timed_out": false,
+      "seconds": 0.7174547059694305
+    }
+  },
+  "final_checks": {
+    "affected": {
+      "passed": 142,
+      "pytest_seconds": 11.51
+    },
+    "exact_cpu_namespace_authored": {
+      "passed": 2,
+      "pytest_seconds": 0.39
+    }
+  },
+  "independent_review": "No material finding in the new worker projection after intended hook-regression REDs and fixes; no claim about whole legacy cache inspector.",
+  "acceptance": {
+    "worker_source_verified": true,
+    "complete_parent_epoch": false,
+    "observer_implemented": false,
+    "independent_outcome_auditor_implemented": false,
+    "actual_configuration_created": false,
+    "actual_invocation": false,
+    "runtime_qualified": false,
+    "collection_authorized": false,
+    "study_authorized": false,
+    "qualification_claims": []
+  },
+  "full_suite_run": false,
+  "ci_run": false
+}

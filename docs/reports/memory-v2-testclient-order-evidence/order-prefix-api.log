@@ -1,0 +1,45 @@
+Verification cache fixture: owned temporary Path.home; HOME unchanged
+........................................................................ [ 40%]
+........................................................................ [ 81%]
+...............................s.                                        [100%]
+=============================== warnings summary ===============================
+../lab-hardening/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_flynn.py: 17 warnings
+  /home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+  /home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+176 passed, 1 skipped, 33 warnings in 33.27s

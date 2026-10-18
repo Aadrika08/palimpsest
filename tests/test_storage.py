@@ -28,6 +28,28 @@ class _StorageFixture:
 
 
 class StorageTests(_StorageFixture, unittest.TestCase):
+    def test_existing_readonly_user_lease_still_excludes_another_writer(self):
+        import errno
+        home = self.root / 'private-home'
+        private = home / '.cache/palimpsest'
+        private.mkdir(parents=True)
+        lease = private / 'writer.lock'
+        lease.write_bytes(b'')
+        real_open = os.open
+
+        def readonly_user_lease(path, flags, *args, **kwargs):
+            if Path(path) == lease and flags & os.O_RDWR:
+                raise OSError(errno.EROFS, 'read-only filesystem', str(path))
+            return real_open(path, flags, *args, **kwargs)
+
+        with patch('pathlib.Path.home', return_value=home), patch('palimpsest.storage.os.open', side_effect=readonly_user_lease):
+            with self.budget([self.root/'runs']).lock():
+                with self.assertRaisesRegex(StorageLimitError, 'already owned'):
+                    with self.budget([self.root/'other']).lock():
+                        self.fail('A second writer must not acquire the user lease')
+            with self.budget([self.root/'other']).lock():
+                pass
+
     def test_aggregate_recounts_all_files_and_nested_roots_once(self):
         run = self.root / "runs"
         exports = run / "exports"
@@ -74,9 +96,19 @@ class StorageTests(_StorageFixture, unittest.TestCase):
         (managed / "alias").unlink()
         (managed / "one").touch()
         (managed / "two").touch()
-        with patch("palimpsest.storage.MAX_SCAN_ENTRIES", 1):
-            with self.assertRaisesRegex(StorageLimitError, "entry limit"):
-                budget.usage()
+        with self.assertRaisesRegex(StorageLimitError, "entry limit"):
+            self.budget([managed], max_entries=1).usage()
+
+    def test_configured_entry_limit_is_enforced_without_changing_default(self):
+        managed = self.root / "managed"
+        managed.mkdir()
+        (managed / "one").touch()
+        (managed / "two").touch()
+
+        self.assertEqual(StorageLimits().max_entries, 100_000)
+        with self.assertRaisesRegex(StorageLimitError, "entry limit"):
+            self.budget([managed], max_entries=1).usage()
+        self.assertEqual(self.budget([managed], max_entries=2).usage()["files"], 2)
 
     def test_counts_include_initial_snapshot_and_validate_configuration(self):
         budget = self.budget(max_runs=2, max_snapshots=2, max_exports=2)

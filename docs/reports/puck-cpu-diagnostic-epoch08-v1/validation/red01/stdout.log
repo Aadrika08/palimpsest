@@ -1,0 +1,136 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test08_accepts_five_source_changes_with_original_preparation_and_candidate_d _
+
+    def test08_accepts_five_source_changes_with_original_preparation_and_candidate_d():
+        m,config,blobs,old,_,candidate_d=acceptance08_case()
+>       prior,prepared=validate_both(m,config,blobs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment08.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:95: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 8, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4,5,6,7)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:242: ValueError
+___ test08_observer_preserves_failed07_missing_receipts_and_reserves_once[0] ___
+
+tmp_path = PosixPath('/tmp/palimpsest-diagnostic-epoch08-red01/test08_observer_preserves_fail0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b76938b2690>
+code = 0
+
+    @pytest.mark.parametrize('code',[0,7])
+    def test08_observer_preserves_failed07_missing_receipts_and_reserves_once(tmp_path,monkeypatch,code):
+        m,path,_=observer_setup(tmp_path,monkeypatch,
+            'import sys\nprint("AUTHORED diagnostic transport")\nsys.exit('+str(code)+')\n')
+        config=json.loads(path.read_bytes())
+        config.update(kind='puck-cpu-held-runtime-allocation-v8',version=8,allocation_id=8,phase='qualify')
+        raw=m.canonical(config);path.write_bytes(raw)
+        old=tmp_path/'runs/puck-cpu-held-qualification-07';(old/'logs').mkdir(parents=True)
+        for channel in ('stdout','stderr'):(old/('logs/'+channel+'.log')).write_bytes(b'')
+        prior={p:p.read_bytes() for p in old.rglob('*') if p.is_file()}
+>       result=m.observe(path,m.hashlib.sha256(raw).hexdigest())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment08.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+configuration = PosixPath('/tmp/palimpsest-diagnostic-epoch08-red01/test08_observer_preserves_fail0/configuration.json')
+expected_sha256 = 'f66e281d7f358953b3ac71c1d8e60dc364a76ff5e7d299f8a9f013462848c3dc'
+
+    def observe(configuration,expected_sha256):
+        started=time.monotonic();configuration=Path(configuration)
+        if not configuration.is_absolute() or not configuration.is_relative_to(ROOT):
+            raise ValueError('CPU configuration must be inside its exact project root')
+        raw=read(configuration,1024**2)
+        if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
+        config=json.loads(raw)
+        if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+        phase=config.get('phase')
+        version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7}.get(config.get('kind'))
+        amended=version is not None
+        if amended:
+            if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
+                    or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
+                raise ValueError('Exact amended qualification allocation identity required')
+            output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07'}[version]
+        else:
+            if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+>               raise ValueError('Exact CPU parent allocation root and phase required')
+E               ValueError: Exact CPU parent allocation root and phase required
+
+scripts/observe_puck_cpu_held_allocation.py:67: ValueError
+___ test08_observer_preserves_failed07_missing_receipts_and_reserves_once[7] ___
+
+tmp_path = PosixPath('/tmp/palimpsest-diagnostic-epoch08-red01/test08_observer_preserves_fail1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b769362bb90>
+code = 7
+
+    @pytest.mark.parametrize('code',[0,7])
+    def test08_observer_preserves_failed07_missing_receipts_and_reserves_once(tmp_path,monkeypatch,code):
+        m,path,_=observer_setup(tmp_path,monkeypatch,
+            'import sys\nprint("AUTHORED diagnostic transport")\nsys.exit('+str(code)+')\n')
+        config=json.loads(path.read_bytes())
+        config.update(kind='puck-cpu-held-runtime-allocation-v8',version=8,allocation_id=8,phase='qualify')
+        raw=m.canonical(config);path.write_bytes(raw)
+        old=tmp_path/'runs/puck-cpu-held-qualification-07';(old/'logs').mkdir(parents=True)
+        for channel in ('stdout','stderr'):(old/('logs/'+channel+'.log')).write_bytes(b'')
+        prior={p:p.read_bytes() for p in old.rglob('*') if p.is_file()}
+>       result=m.observe(path,m.hashlib.sha256(raw).hexdigest())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment08.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+configuration = PosixPath('/tmp/palimpsest-diagnostic-epoch08-red01/test08_observer_preserves_fail1/configuration.json')
+expected_sha256 = '440f36c44662f0a4841037fd7669a986e3e68d6f0a9a731ce9e328186dabe100'
+
+    def observe(configuration,expected_sha256):
+        started=time.monotonic();configuration=Path(configuration)
+        if not configuration.is_absolute() or not configuration.is_relative_to(ROOT):
+            raise ValueError('CPU configuration must be inside its exact project root')
+        raw=read(configuration,1024**2)
+        if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
+        config=json.loads(raw)
+        if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+        phase=config.get('phase')
+        version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7}.get(config.get('kind'))
+        amended=version is not None
+        if amended:
+            if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
+                    or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
+                raise ValueError('Exact amended qualification allocation identity required')
+            output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07'}[version]
+        else:
+            if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+>               raise ValueError('Exact CPU parent allocation root and phase required')
+E               ValueError: Exact CPU parent allocation root and phase required
+
+scripts/observe_puck_cpu_held_allocation.py:67: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment08.py::test08_accepts_five_source_changes_with_original_preparation_and_candidate_d
+FAILED tests/test_puck_cpu_held_amendment08.py::test08_observer_preserves_failed07_missing_receipts_and_reserves_once[0]
+FAILED tests/test_puck_cpu_held_amendment08.py::test08_observer_preserves_failed07_missing_receipts_and_reserves_once[7]
+3 failed, 38 deselected in 0.80s

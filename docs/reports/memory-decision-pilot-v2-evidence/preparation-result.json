@@ -1,0 +1,13 @@
+{
+  "native_invocations": 1,
+  "native_outer_elapsed_seconds": 2847.9710565549904,
+  "native_outer_returncode": 0,
+  "preparation_outer_elapsed_seconds": 18.088331499006017,
+  "preparation_returncode": 0,
+  "preparation_stderr": "",
+  "preparation_stdout": "[research/memory-decision-pilot-v2 d54a7df] docs(memory): freeze one selected decision pilot allocation\n 1 file changed, 9097 insertions(+)\n create mode 100644 docs/reports/memory-decision-pilot-v2-evidence/registration.json\n{\"registration\": \"/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/docs/reports/memory-decision-pilot-v2-evidence/registration.json\", \"sha256\": \"61b295030e692c580331d5ab282ab380da87e7b7d3718f4e31809238835543a1\", \"preserved_files\": 1151, \"elapsed_seconds\": 17.96068057999946, \"qualification_claims\": []}\n",
+  "qualification_claims": [],
+  "schema": "selected-pilot-preparation-tool-result-v2",
+  "scope": "post-exit tool receipt only; no physics/comparator/regrading",
+  "started_utc": "2026-10-08T02:21:42.675479+00:00"
+}

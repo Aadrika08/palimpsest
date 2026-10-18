@@ -118,6 +118,60 @@ class ArtifactTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "count mismatch"):
             artifacts.playback(run)
 
+    def test_event_identity_rejects_playback_comparison_and_exports(self):
+        for identity in (str(uuid.uuid4()), "not-a-uuid", None, 42):
+            run = self.run_fixture()
+            self.register_snapshot(run)
+            artifacts.playback(run)  # A previously validated cache cannot hide a changed event.
+            path = run / "recording/events.jsonl"
+            events = [json.loads(line) for line in path.read_text().splitlines()]
+            next(event for event in events if event["kind"] == "episode_started")["run_id"] = identity
+            path.write_text("".join(json.dumps(event) + "\n" for event in events))
+            for operation in ("playback", "comparison", "svg", "png", "bundle"):
+                output = self.root / f"{run.name}.{operation}"
+                with self.subTest(identity=identity, operation=operation):
+                    with self.assertRaisesRegex(ValueError, "run identity|UUID"):
+                        if operation == "playback":
+                            artifacts.playback(run)
+                        elif operation == "comparison":
+                            artifacts.compare_runs(run, run)
+                        else:
+                            artifacts.export_run(run, output, operation)
+                    self.assertFalse(output.exists())
+
+    def test_event_identity_accepts_equivalent_uuid_and_unlabelled_events(self):
+        run = self.run_fixture()
+        path = run / "recording/events.jsonl"
+        events = [json.loads(line) for line in path.read_text().splitlines()]
+        next(event for event in events if event["kind"] == "episode_started")["run_id"] = uuid.UUID(run.name).hex
+        path.write_text("".join(json.dumps(event) + "\n" for event in events))
+        self.assertEqual(artifacts.playback(run)["state"]["run_id"], run.name)
+        self.assertTrue(any("run_id" not in event for event in events))
+
+    def test_long_episode_preserves_playback_export_and_comparison(self):
+        run = self.run_fixture(count=601)
+        sample = artifacts.playback(run, tick=600)
+        self.assertEqual(sample["transition"]["tick"], 600)
+        self.assertEqual(sample["state"]["episode_step"], 601)
+        self.assertEqual(len(sample["trace"]), 602)
+        self.assertEqual(sample["trace"][-1], [60.1, 120.2])
+        output = artifacts.export_run(run, self.root / "long.svg", "svg")
+        metadata = json.loads(ET.fromstring(output.read_bytes()).find(
+            "{http://www.w3.org/2000/svg}metadata").text)
+        self.assertEqual(metadata["traces"][0]["points"], sample["trace"])
+        self.assertEqual(artifacts.compare_runs(run, run)["left"]["traces"], metadata["traces"])
+
+    def test_tick_identity_is_independent_of_record_count_limit(self):
+        run = self.run_fixture(start=100_000)
+        sample = artifacts.playback(run, tick=100_001)
+        self.assertEqual(sample["transition"]["tick"], 100_001)
+        self.assertEqual(len(sample["trace"]), 3)
+        artifacts._CACHE.clear()
+        with patch.object(artifacts, "MAX_TICKS", 1):
+            with self.assertRaisesRegex(ValueError, "too many recording ticks"):
+                artifacts.export_run(run, self.root / "over-limit.svg", "svg")
+        self.assertFalse((self.root / "over-limit.svg").exists())
+
     def test_incomplete_missing_geometry_exact_tick_and_symlink_reject(self):
         for run in (self.run_fixture(completed=False), self.run_fixture(world=False)):
             with self.assertRaises(ValueError):
@@ -191,6 +245,14 @@ class ArtifactTests(unittest.TestCase):
         svg = artifacts.export_run(run, self.root / "trace.svg", "svg")
         root = ET.fromstring(svg.read_bytes())
         ns = {"s": "http://www.w3.org/2000/svg"}
+        self.assertEqual(root.get("role"), "img")
+        references = root.get("aria-labelledby", "").split()
+        self.assertEqual(len(references), 2)
+        labels = [root.find(f".//*[@id='{identifier}']") for identifier in references]
+        self.assertEqual([node.tag for node in labels], [f"{{{ns['s']}}}title", f"{{{ns['s']}}}desc"])
+        self.assertTrue(all(node.text.strip() for node in labels))
+        self.assertIn(run.name, labels[1].text)
+        self.assertIn("recorded", labels[1].text.lower())
         metadata = json.loads(root.find("s:metadata", ns).text)
         line = root.find(".//s:polyline", ns)
         self.assertEqual([[float(x) for x in pair.split(",")] for pair in line.attrib["points"].split()], metadata["traces"][0]["points"])

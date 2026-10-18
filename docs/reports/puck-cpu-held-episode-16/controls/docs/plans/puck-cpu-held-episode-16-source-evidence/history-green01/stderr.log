@@ -1,0 +1,44 @@
+test_a_present_retired_stage_or_changed_retirement_is_refused (__main__.HistoryChecks.test_a_present_retired_stage_or_changed_retirement_is_refused) ... ok
+test_absence_names_the_six_episode16_paths (__main__.HistoryChecks.test_absence_names_the_six_episode16_paths) ... ok
+test_admissions_manifest_first_raw_reservations (__main__.HistoryChecks.test_admissions_manifest_first_raw_reservations) ... ok
+test_changed07_transport_is_refused (__main__.HistoryChecks.test_changed07_transport_is_refused) ... ok
+test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused) ... ok
+test_changed09_transport_is_refused (__main__.HistoryChecks.test_changed09_transport_is_refused) ... ok
+test_changed10_transport_is_refused (__main__.HistoryChecks.test_changed10_transport_is_refused) ... ok
+test_changed11_transport_is_refused (__main__.HistoryChecks.test_changed11_transport_is_refused) ... ok
+test_changed_admission11b_and_14_transports_are_refused (__main__.HistoryChecks.test_changed_admission11b_and_14_transports_are_refused) ... ok
+test_changed_characterization04_audit_is_refused (__main__.HistoryChecks.test_changed_characterization04_audit_is_refused) ... ok
+test_changed_runtime14_receipts_are_refused (__main__.HistoryChecks.test_changed_runtime14_receipts_are_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused) ... ok
+test_fabricated09_result_is_refused (__main__.HistoryChecks.test_fabricated09_result_is_refused) ... ok
+test_fabricated10_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated10_baseline_after_is_refused) ... ok
+test_fabricated10_success_result_is_refused (__main__.HistoryChecks.test_fabricated10_success_result_is_refused) ... ok
+test_fabricated11_result_is_refused (__main__.HistoryChecks.test_fabricated11_result_is_refused) ... ok
+test_fabricated_d83dab3_receipt_is_refused (__main__.HistoryChecks.test_fabricated_d83dab3_receipt_is_refused) ... ok
+test_fabricated_episode16_receipt_is_refused (__main__.HistoryChecks.test_fabricated_episode16_receipt_is_refused) ... ok
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine09_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine09_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine10_failure_has_fail_result_but_no_success_receipt (__main__.HistoryChecks.test_genuine10_failure_has_fail_result_but_no_success_receipt) ... ok
+test_genuine11_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine11_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine_admission14_was_consumed_by_sole_runtime14 (__main__.HistoryChecks.test_genuine_admission14_was_consumed_by_sole_runtime14) ... ok
+test_genuine_admissions10_were_consumed (__main__.HistoryChecks.test_genuine_admissions10_were_consumed) ... ok
+test_genuine_characterization04_was_accepted (__main__.HistoryChecks.test_genuine_characterization04_was_accepted) ... ok
+test_genuine_preparation04_binds_allocation16 (__main__.HistoryChecks.test_genuine_preparation04_binds_allocation16) ... ok
+test_genuine_runtime14_accepted_import_route_is_consumed (__main__.HistoryChecks.test_genuine_runtime14_accepted_import_route_is_consumed) ... ok
+test_historical_empty_directories_remain_empty (__main__.HistoryChecks.test_historical_empty_directories_remain_empty) ... ok
+test_inserted_file_in_historical_empty_directory_is_refused (__main__.HistoryChecks.test_inserted_file_in_historical_empty_directory_is_refused) ... ok
+test_manifest_first_reads_preserve_historical07_to_14_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_to_14_stream_bytes) ... ok
+test_preparation01_is_recorded_as_superseded (__main__.HistoryChecks.test_preparation01_is_recorded_as_superseded) ... ok
+test_preparation02_was_accepted_consumed_and_retired (__main__.HistoryChecks.test_preparation02_was_accepted_consumed_and_retired) ... ok
+test_preparation03_was_accepted_consumed_by_runtime14_and_retired (__main__.HistoryChecks.test_preparation03_was_accepted_consumed_by_runtime14_and_retired) ... ok
+test_preparation04_pin_drift_is_refused (__main__.HistoryChecks.test_preparation04_pin_drift_is_refused) ... ok
+test_preparations01_to03_cannot_satisfy_allocation16 (__main__.HistoryChecks.test_preparations01_to03_cannot_satisfy_allocation16) ... ok
+test_process_identities_add_runtime14_to_the_eighteen (__main__.HistoryChecks.test_process_identities_add_runtime14_to_the_eighteen) ... ok
+test_unexecuted_d83dab3_packet_is_recorded_never_invoked (__main__.HistoryChecks.test_unexecuted_d83dab3_packet_is_recorded_never_invoked) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.065s
+
+OK

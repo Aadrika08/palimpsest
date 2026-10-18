@@ -1,0 +1,58 @@
+{
+  "declared_git_version": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+  "entries": [
+    {
+      "command": [
+        "/home/utkarsh/.local/share/mise/installs/gh/2.102.0/gh_2.102.0_linux_amd64/bin/gh",
+        "api",
+        "repos/pytorch/pytorch/contents/torch/csrc/autograd/init.cpp?ref=0fabc3ba44823f257e70ce397d989c8de5e362c1",
+        "--header",
+        "Accept: application/vnd.github.raw+json"
+      ],
+      "path": "torch/csrc/autograd/init.cpp",
+      "sha256": "8648b41b178106a655e2d09d7e3a9f9b3b582a5e98bb5e5dedf1cca03e0aa883",
+      "size_bytes": 54809,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/autograd/init.cpp"
+    },
+    {
+      "command": [
+        "/home/utkarsh/.local/share/mise/installs/gh/2.102.0/gh_2.102.0_linux_amd64/bin/gh",
+        "api",
+        "repos/pytorch/pytorch/contents/torch/autograd/__init__.py?ref=0fabc3ba44823f257e70ce397d989c8de5e362c1",
+        "--header",
+        "Accept: application/vnd.github.raw+json"
+      ],
+      "path": "torch/autograd/__init__.py",
+      "sha256": "0439167a6a8a4c50f73457c9961698611109638a1b146f0a084fa1ee3825273d",
+      "size_bytes": 25424,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/autograd/__init__.py"
+    },
+    {
+      "command": [
+        "/home/utkarsh/.local/share/mise/installs/gh/2.102.0/gh_2.102.0_linux_amd64/bin/gh",
+        "api",
+        "repos/pytorch/pytorch/contents/torch/csrc/Module.cpp?ref=0fabc3ba44823f257e70ce397d989c8de5e362c1",
+        "--header",
+        "Accept: application/vnd.github.raw+json"
+      ],
+      "path": "torch/csrc/Module.cpp",
+      "sha256": "aa61d768ccbb9bbb7e235d688289f79a4f25954472143a46961e11dcf4860da1",
+      "size_bytes": 87615,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/Module.cpp"
+    },
+    {
+      "command": [
+        "/home/utkarsh/.local/share/mise/installs/gh/2.102.0/gh_2.102.0_linux_amd64/bin/gh",
+        "api",
+        "repos/pytorch/pytorch/contents/LICENSE?ref=0fabc3ba44823f257e70ce397d989c8de5e362c1",
+        "--header",
+        "Accept: application/vnd.github.raw+json"
+      ],
+      "path": "LICENSE",
+      "sha256": "a8a2c6b67cf8a597ffaa5c82380a6bd1b82629c0417e00673d8013d662eb500a",
+      "size_bytes": 3464,
+      "url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/LICENSE"
+    }
+  ],
+  "scope": "read-only exact package-declared upstream commit source; not linked-binary build provenance or runtime evidence"
+}

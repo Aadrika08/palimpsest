@@ -1,0 +1,270 @@
+{
+  "byte_bindings": {
+    "admission_review": [
+      11430,
+      "2feb27aa9bd28cb36ea657c9d9541011dc3fe4a4bd00b8061bea5ba90d5c24ba"
+    ],
+    "audit_external": [
+      1610,
+      "06579457e1b947b1880f53618a2db978cd96efce00290a3e4664ecedb79ca573"
+    ],
+    "audit_refusal": [
+      617,
+      "e179f58139004d0a1d7390fefcf25801149dab351acd087ed72e08250e7a6fa5"
+    ],
+    "audit_terminal": [
+      136,
+      "22a760ae24b9307ba25a3d87839f2eb990002f2007b35cc044b04592b99baa85"
+    ],
+    "auditor_source": [
+      79404,
+      "04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b"
+    ],
+    "cli_stderr": [
+      798,
+      "c24351eaf0ec6eacac7d9ea7df44dc78e9f9433ba8870e669226f09576df10c7"
+    ],
+    "collector": [
+      9957,
+      "a33e696feba926741925eeb4da3339c7fe4dd921f8d417ac6d9d7b7dc36474e1"
+    ],
+    "concrete_audit_command": [
+      754,
+      "9109e3e5b5f53cea7b4e6915d0fea5f43e34ef9df53de379932ec05e3c76bdae"
+    ],
+    "configuration": [
+      9048,
+      "4ab0ef1b3eab7a74d2f6dc03ab56293a65dea2d7363680b7e687aeb399d1afb5"
+    ],
+    "invocation": [
+      7029,
+      "f2b72625e055a83fb8671e0154d777fc7afbbc51706d49e3996f638186194188"
+    ],
+    "observation": [
+      22250,
+      "3354980ab529917e3508456b7b089b6fef17a602c6310cb3f9b5f83e2c19a712"
+    ],
+    "observer_external": [
+      1308,
+      "f19ac236294bb07423bf055ff7dcb3a32b39f4c48420c485605ca0f64b9bb909"
+    ],
+    "observer_source": [
+      7086,
+      "03340c89ede99232b96b311dae574434d7cc100c8f0d0fe6603ec222f66fad03"
+    ],
+    "observer_terminal": [
+      138,
+      "27f6afdf9f82535246e32193f169d40f1f286f10cc25d3b7462329fd6a9b1d50"
+    ],
+    "pre_observer_guard": [
+      3075,
+      "09a7d0ef5e08f3cb075ced2be0c7e70ad45026d7a720db3ca9df2baec9658b88"
+    ],
+    "qualifier_source": [
+      63813,
+      "f8faa17db3e2958bbbf25559fc86feb57224e73cddcf2117687957f2bce05b1d"
+    ],
+    "resource_admission": [
+      105,
+      "bc4db91587f065d741656b8ab6d8776a4117b46606dd87cd2ab78fe5b9004db9"
+    ],
+    "supervision": [
+      372,
+      "6fc775288f1b0979b6cbc83dcb937232d42c95d5b4345aee230b5303cbccb5b9"
+    ],
+    "transport": [
+      951,
+      "57a11c1b83827bbcd4f111a17e68dbc0e76e1e091a0d126ef19e16364f36cf93"
+    ],
+    "worker_registration": [
+      4931,
+      "79d368b911095532575749a97405ab0aeb3785d1aa62ee5fd7982722d316a9f7"
+    ],
+    "worker_stderr": [
+      11830,
+      "dda6297902aec658e49bdb8c8fce309880eab14d39da18fdc9176c139be77eae"
+    ]
+  },
+  "byte_bindings_format": "named checked artifact -> [size_bytes,sha256]; all 49 member paths/digests remain in the bound post-outcome observation",
+  "checked_facts": [
+    "All 49 post-outcome members were opened read-only/no-follow. Each is a regular single-link file with stable dev/inode/mode/link/size/mtime/ctime and exact size/SHA256. All 19 runs/puck-cpu-held-qualification-11 files are among them. All 63 recorded missing paths are still absent: 21 historical, 39 d83dab3, admission11b-02, result.json and baseline-after.json.",
+    "Clean worktree; HEAD = origin/-11b = 27780dd. Qualifier, observer and auditor sources equal the 8f3a138 and control Git objects. The instantiated collector, run-observer-once and run-audit-once equal their templates with CONTROL 27780dd and COUNT 86. bind-audit-command and make-observer-guard equal their Git copies.",
+    "Order: admission review (2feb27aa...) < pre-observer guard (PASS, binds admission receipt 8f7115c5..., stage/boot PASS) < observer < concrete audit bind < audit < collect. Exactly one tool-command, external receipt and terminal per phase. No admission-02 and no other runs/puck-cpu-held-qualification-1x allocation, so no retry.",
+    "Observer: the tool command equals the envelope, the stage guard passed, runner SHA matches. Tool exit 1 in 180.34s, no outer timeout. External rc 1, normal_exit, not timed out, 180.30s of 240s, no implicit retry, empty stderr. Observer stdout equals the 951B transport 57a11c1b...",
+    "Transport: qualify phase with the exact isolated qualifier argv on config 4ab0ef1b...; observed_returncode 1; timed_out false; 180.25s. CLI stdout is empty. CLI stderr (798B) is a single traceback ending in TimeoutError(\"CPU allocation normal return deadline\"), raised at qualifier line 841 after supervision.",
+    "Allocation: configuration.json equals the frozen 9048B config. Supervision: status failed, failure \"normal-return deadline\", returncode -15 (worker SIGTERMed at the deadline), matching_survivors [], descendants scope, three tracked identities, sampled peak RSS 844738560B. No result.json or baseline-after.json; payload/ and outer/ are empty.",
+    "Resource admission (8.19GB RAM, 6.30GB tmpfs, 44.3GB disk) is above the frozen floors. baseline-before equals preparation02 baseline-before. control/dependencies.json is c82ddc97..., equal to the admission11b current dependencies. The 10 worker-source files match config pins.",
+    "worker-registration.json 79d368b9... carries qualification v5 with exactly the 32 absent and 4 hidden names. invocation.json binds config 4ab0ef1b and equals an independent current-auditor namespace_command reconstruction for qualify. The stage is mounted only read-only (stage/inputs -> /puck/staged/inputs).",
+    "Worker stderr (11830B): 33 JSON rows (13 phase, 20 guard-cost), no non-JSON lines. Bytes contain no Unregistered, refus, poison, Traceback, Error or exception text. Phases: dependencies ready 16.8s; numpy 22.03->29.81; torch 31.32->51.84; torchvision 53.40->154.67 returned; mujoco entered 156.20 with no return record before the kill.",
+    "Audit: the concrete command binds transport SHA 57a11c1b, config and the 11b audit-01 output, and equals the external argv. One run: tool exit 1 in 0.114s; external rc 1 normal. Refusal: FAIL \"Normal external transport exit required\", auditor 04192a3b, transport/config SHAs bound, all authority flags false. Audit stdout equals the 617B audit-01.",
+    "Collector: status FAILED_CONSUMED, completed_four_import_receipt false, parent_result null. Supervision, audit and transport equal the originals; observer and auditor invocations 1/1. stage_after PASS_STAGE_AND_BOOT. Three tracked identities are not present (exited). 13 phase / 20 cost records, no exception lines.",
+    "After the run: 103 raw run records, 51 preparation02 run files, 35 empty historical directories and all 2463 freeze pins match. Boot id still 7f875223.... A single stat of the four staged roots shows dev 55, inodes 10400-10403, mode 0700. The qualify bwrap mounted the stage read-only."
+  ],
+  "control_commit": "27780dd5cbc096c26fb353faea7edfde878a4f74",
+  "findings": [],
+  "kind": "independent_bounded_actual11b_failed_outcome_review_v1",
+  "limits": [
+    "Standard-library metadata/source inspection only. No target imports, admission/observer/auditor/qualifier main, helpers, network, repo edits or SITE/staged/native/interpreter payload reads. No retry, replay or audit rerun. Only write: this exclusive /tmp review JSON.",
+    "Worker phase and cost rows are optional, unauthenticated diagnostics. They prove no completeness, cause or acceptance. \"No refusal\" means none was recorded before the SIGTERM; mujoco and later steps are unobserved.",
+    "The audit refused at the transport-exit check, before source/input/native/forest checks. There is no post-run payload custody or audit-closure evidence; FD/survivor samples are cleanup observations only. Invocation counts rely on exclusive-output controls and supplied history.",
+    "No runtime/import/renderer/inference/operator/study/protected-data/rover acceptance. All seven release gates remain open. Preparation02 stays usable only while this boot and stage persist."
+  ],
+  "observed": {
+    "absence": "All 63 recorded missing paths are absent, including runtime11 result.json/baseline-after.json, admission11b-02, d83dab3 outputs and historical receipts.",
+    "all_seven_release_gates_open": true,
+    "audit": {
+      "error": "Normal external transport exit required",
+      "external_normal_exit": true,
+      "external_returncode": 1,
+      "external_seconds": 0.06745218299874978,
+      "external_timed_out": false,
+      "invocations_reported": 1,
+      "status": "FAIL",
+      "tool_exit_code": 1,
+      "tool_outer_timeout": false,
+      "tool_seconds": 0.11429933899853495
+    },
+    "completed_four_import_receipt": false,
+    "import_progress": {
+      "mujoco_entered": 156.2,
+      "mujoco_returned": null,
+      "numpy": [
+        22.03,
+        29.81
+      ],
+      "refusal_observed": false,
+      "scope": "optional unauthenticated diagnostic phase rows; no refusal text before the deadline kill. Shows policy v5 carried Torchvision to its return; does not prove mujoco or full v5 coverage.",
+      "torch": [
+        31.32,
+        51.84
+      ],
+      "torchvision": [
+        53.4,
+        154.67
+      ]
+    },
+    "post_failure_full_payload_custody": false,
+    "process_observation": "Three PID/start identities from supervision are not present; sequential/nonexhaustive/non-atomic.",
+    "qualification_claims": [],
+    "runtime11": {
+      "external_normal_exit": true,
+      "external_returncode": 1,
+      "external_seconds": 180.29783340599897,
+      "external_timed_out": false,
+      "failure": "parent normal-return deadline (180s); worker SIGTERM returncode -15",
+      "held_four_imports_observed": false,
+      "observer_invocations_reported": 1,
+      "parent_seconds": 180.25030855099976,
+      "result_json_present": false,
+      "status": "FAILED_CONSUMED",
+      "tool_exit_code": 1,
+      "tool_outer_timeout": false,
+      "tool_seconds": 180.33830350099925
+    },
+    "runtime_qualified": false,
+    "stage_custody": "Boot unchanged. Stage directories, inputs and roots keep identity/mode/tmpfs (stage guard after the run, plus one stat of the roots). The qualify namespace mounted only stage/inputs read-only. Staged bytes were not re-hashed by this review or by the early-refusing audit.",
+    "supervision": {
+      "failure": "normal-return deadline",
+      "matching_survivors": [],
+      "returncode": -15,
+      "sampled_peak_rss_bytes": 844738560,
+      "status": "failed"
+    },
+    "timing_diagnosis": {
+      "estimate_error": "The v2 contract projected 135-145s by linear module-count extrapolation from runtime10. It missed about 40 native-image full checks (~31s) in Torchvision's last 30% and mujoco's image-heavy load (13+ mujoco images in the characterization map).",
+      "guard_totals_at_166_5s": {
+        "bindings": 45.26,
+        "cache": 0.9,
+        "custody": 66.54,
+        "full_checks_completed": 154,
+        "full_checks_started": 155,
+        "images": 0.06,
+        "light_checks": 5330,
+        "share": 0.68,
+        "total": 112.76
+      },
+      "mechanism": "After dependencies.ready, every full custody check pairs 1:1 with a newly mapped native image (85 full checks, 85 image visits). Each costs about 0.77-0.82s; a 93.7-124.8s burst ran 37 full checks for +28.6s custody. Light checks cost about 12ms each in bindings during Torchvision, up from about 4ms in torch, so their cost grows with loaded-module count. Unguarded characterization imported all four in 4.9s (mujoco 0.12s); here mujoco spent 10.3s guarded on 12 image-triggered full checks and had not returned 23.8s after entry.",
+      "per_phase_seconds": [
+        {
+          "full": 69,
+          "guard": 0.9,
+          "seconds": 16.8,
+          "span": "start->dependencies.ready",
+          "unguarded": 15.9
+        },
+        {
+          "custody": 5.2,
+          "full": 7,
+          "guard": 5.2,
+          "seconds": 5.2,
+          "span": "dependencies.ready->numpy.enter"
+        },
+        {
+          "bindings": 0.1,
+          "custody": 6.0,
+          "full": 8,
+          "guard": 6.2,
+          "light": 264,
+          "seconds": 7.8,
+          "span": "numpy",
+          "unguarded": 1.6
+        },
+        {
+          "bindings": 8.8,
+          "custody": 3.4,
+          "full": 4,
+          "guard": 12.3,
+          "light": 2120,
+          "seconds": 20.5,
+          "span": "torch",
+          "unguarded": 8.2
+        },
+        {
+          "bindings": 35.9,
+          "cache": 0.7,
+          "custody": 36.7,
+          "full": 48,
+          "guard": 73.3,
+          "light": 2933,
+          "seconds": 101.3,
+          "span": "torchvision",
+          "unguarded": 28.0
+        },
+        {
+          "bindings": 0.4,
+          "custody": 9.8,
+          "full": 12,
+          "guard": 10.3,
+          "light": 12,
+          "seconds": 10.3,
+          "span": "mujoco (to last sample 166.5s)"
+        },
+        {
+          "custody": 4.5,
+          "full": 6,
+          "guard": 4.6,
+          "seconds": 4.6,
+          "span": "3 inter-import gaps"
+        }
+      ],
+      "scope": "derived from unauthenticated optional cost rows; estimates, not timing proofs",
+      "to_fit_180s": [
+        "Make native-image custody incremental: verify the newly mapped image and held-root identities per load, and keep full forest re-verification at phase boundaries. Estimated saving about 55-60s of the 66.5s custody.",
+        "Make binding checks independent of loaded-module count (indexed lookups). Estimated saving about 25-35s of the 45.3s bindings.",
+        "Optionally shorten the 15.9s unguarded dependency setup.",
+        "Raising normal_seconds instead changes frozen qualifier/auditor limits and needs a new epoch. Without guard changes the required deadline is unmeasured, because mujoco's remaining image count and the post-import closure time are unobserved."
+      ]
+    }
+  },
+  "pinned_roster": {
+    "all_sizes_sha256_match": true,
+    "allocation_files": 19,
+    "bytes_verified": 4498282,
+    "manifest_path": "/tmp/palimpsest-held11b-post-outcome-observation.json",
+    "missing_paths_still_absent": 63,
+    "pins_verified": 49
+  },
+  "scope": "Accept the retained failed-outcome record and its ONE bound audit refusal. Runtime11 (packet 11b on preparation02) remains FAILED_CONSUMED by the normal-return deadline during the mujoco import.",
+  "source_commit": "8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15",
+  "status": "PASS_FAILED_OUTCOME_RECORD_NO_RUNTIME_ACCEPTANCE"
+}

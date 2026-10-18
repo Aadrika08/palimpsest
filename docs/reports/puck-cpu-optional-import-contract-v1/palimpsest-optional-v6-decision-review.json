@@ -1,0 +1,237 @@
+{
+  "candidate_sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "decision_basis": [
+    "The19 names are finite, sorted, unique, nonoverlapping and inside existing qv3 bounds. Static candidate module/namespace/export/native-cache declarations and retained SITE file/directory layout contain no corresponding import targets.",
+    "The16 additions have individual source-backed optional/catch or caught-helper cases in ordinary03-loaded requesters. Numeric helper-call chains establish flint/gmpy/gmpy2/triton beyond simple AST import-statement eager flags.",
+    "Spot-read13 additional caller/helper sources match retained inventory hashes. ImportError handlers accept the existing expected ModuleNotFoundError subclass; colorama/pydot explicitly catch ModuleNotFoundError. The dill find_spec helper catches ImportError.",
+    "Keeping the generic bootstrap/provider unchanged preserves pre-entry and per-request live held absence validation, exact-name semantics, no ambient fallback, first-failure poison for undeclared misses and closed source/dependency custody.",
+    "A declared negative is a globally scoped tolerated absence, not an assertion about one caller, request count, order or every possible runtime path. Required imports not caught by their caller still fail; a later uncaught declared exception does not yield a successful receipt."
+  ],
+  "exact_negative_imports": [
+    "OpenGL_accelerate",
+    "accimage",
+    "av",
+    "colorama",
+    "defusedxml",
+    "dill",
+    "flint",
+    "gmpy",
+    "gmpy2",
+    "monkeytype",
+    "numpy._distributor_init_local",
+    "opt_einsum",
+    "org",
+    "pydot",
+    "pynvml",
+    "torch._rocm_init",
+    "torchdistx",
+    "tqdm",
+    "triton"
+  ],
+  "existing_negatives_preserved": [
+    "numpy._distributor_init_local",
+    "org",
+    "torch._rocm_init"
+  ],
+  "kind": "palimpsest-optional-v6-source-decision-review-v1",
+  "mandatory_implementation_conditions": [
+    "Create only closed parent/observer/independent-auditor kind/version/id/output6 selectors; do not alter1\u20135 configuration semantics, old negative rosters or immutable artifacts.",
+    "Carry every v5 current-candidate/H-to-C four-row publication and historical dependency projection into6. Preserve all16 actual05 input identities, original four preparation acceptance anchors, staged identities, source closure, limits and policy except this reviewed negative roster/version/source epoch.",
+    "Keep producer and independent auditor validation logic independent, including exact19-name roster checks, history/source projection, worker registration/denial receipt, normal transport and full creator/close/dispatch/cleanup checks. Do not reuse producer validation to manufacture auditor agreement.",
+    "Run meaningful authored regressions for CUDA-shaped nested catches followed by a registered import, helper-style caught find_spec, numeric chained fallback and declared-present/undeclared-miss/tamper refusal. Retain existing missing-name tests and historical epoch rejection tests.",
+    "Before any real6 allocation: finish source implementation and independent review, freeze exact source/configuration/observer/auditor/proof pins, commit/push controls, obtain dated finite data-only current-byte/resource/absence admission and record the single concrete observer/audit route. This review does not perform or authorize those execution steps."
+  ],
+  "material_blockers_to_source_only_decision": [],
+  "material_risks_and_boundaries": [
+    "Declared absence raises ModuleNotFoundError; it does not make bare find_spec return None. Deferred torch.cuda._register_triton_kernels and _inductor.utils.get_triton_attrs_descriptor_version remain outside any transparency/compatibility claim. Do not weaken their guards or change vendor code to mask this.",
+    "Full1760-source AST coverage is not executed-path/dynamic/native request completeness. The remaining nonliteral/deferred sites are documented uncertainty rather than automatically allowed names; another undeclared request must remain fatal.",
+    "The larger roster adds live absence-check work per matching request. Unchanged finite180/190/200s limits remain operational gates; no static source review establishes timing headroom or predicts6 success.",
+    "Defusedxml/PyAV/image acceleration/plotting/compiler-related absence does not qualify the corresponding image/XML/video/renderer/compiler/operator functionality. This contract covers only the fixed four-import route.",
+    "Actual05 remains consumed FAIL; source-contract defensibility is neither qualification acceptance nor permission to retry05."
+  ],
+  "new_exact_names": [
+    "OpenGL_accelerate",
+    "accimage",
+    "av",
+    "colorama",
+    "defusedxml",
+    "dill",
+    "flint",
+    "gmpy",
+    "gmpy2",
+    "monkeytype",
+    "opt_einsum",
+    "pydot",
+    "pynvml",
+    "torchdistx",
+    "tqdm",
+    "triton"
+  ],
+  "review_checks": {
+    "claimed_complete_request_coverage": false,
+    "new_allocation": false,
+    "production_changes": false,
+    "source_reads_and_selected_hashes_only": true,
+    "target_imports_or_runtime_probes": false,
+    "v6_implementation_tested": false
+  },
+  "reviewed_at_utc": "2026-10-15T21:15:58.225762+00:00",
+  "source_spot_check_pins": [
+    {
+      "module": "OpenGL.acceleratesupport",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/OpenGL/acceleratesupport.py",
+      "request_or_eager_call_line": 9,
+      "sha256": "e8dbfd88c41b12f8e61952870465a7bc34d12721da0cd15750d1d99d605b7a0f",
+      "size_bytes": 885
+    },
+    {
+      "module": "torchvision.transforms._functional_pil",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/_functional_pil.py",
+      "request_or_eager_call_line": 12,
+      "sha256": "a30262323eefa9351540515b1ff78f218ecff2ce3f6ed957b271948cc8c9a276",
+      "size_bytes": 12118
+    },
+    {
+      "module": "torchvision.io.video",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/io/video.py",
+      "request_or_eager_call_line": 17,
+      "sha256": "42ffa100855523223b6cb445987d37ff27fa953749bdd1a0c8492e3fe763980e",
+      "size_bytes": 18338
+    },
+    {
+      "module": "PIL.Image",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/Image.py",
+      "request_or_eager_call_line": 62,
+      "sha256": "04af3f2db7ffdd61e829fa7aa8f5481d394a0a4129a8fd8aa5b13908928fcd6d",
+      "size_bytes": 153786
+    },
+    {
+      "module": "torchvision.datasets.voc",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/voc.py",
+      "request_or_eager_call_line": 8,
+      "sha256": "45feacb997471470efb5865f29299bc5cf9c849cc2181e76b4ffe5b63acbfae0",
+      "size_bytes": 8816
+    },
+    {
+      "module": "torch.fx.passes.graph_drawer",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/fx/passes/graph_drawer.py",
+      "request_or_eager_call_line": 24,
+      "sha256": "153d5864985b5c8670221332fc6a5ee649ca97c01d195027ef30e09d3f5ffb8c",
+      "size_bytes": 19112
+    },
+    {
+      "module": "torch._inductor.runtime.runtime_utils",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/runtime/runtime_utils.py",
+      "request_or_eager_call_line": 106,
+      "sha256": "5544385b1a4a4273f6a6d1c704d7bad20a133539b648c2a47351d293d631a400",
+      "size_bytes": 4982
+    },
+    {
+      "module": "torch.jit._monkeytype_config",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/jit/_monkeytype_config.py",
+      "request_or_eager_call_line": 16,
+      "sha256": "a3a5a7cbdacda432aff5fae9748c93c36e434af796abc4a416fcd496930dcdae",
+      "size_bytes": 7288
+    },
+    {
+      "module": "torch.backends.opt_einsum",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/backends/opt_einsum/__init__.py",
+      "request_or_eager_call_line": 12,
+      "sha256": "969d5271687e5540861b9e3605eb8fccc0a00eca48570625e12fdd5e40cdd05d",
+      "size_bytes": 3882
+    },
+    {
+      "module": "torch.distributed.fsdp._init_utils",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/fsdp/_init_utils.py",
+      "request_or_eager_call_line": 55,
+      "sha256": "973a4758ed2e945ab18fcf10fb1a8015e9fe322f5113348301f534e3c8427e26",
+      "size_bytes": 46223
+    },
+    {
+      "module": "torch.hub",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/hub.py",
+      "request_or_eager_call_line": 64,
+      "sha256": "6ec2ddf847083ef86f1f5b10a1d7bc9d00b95145a7a08a41beab26ac59901c6e",
+      "size_bytes": 33713
+    },
+    {
+      "module": "torch.utils.data.datapipes.utils.common",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/data/datapipes/utils/common.py",
+      "request_or_eager_call_line": 25,
+      "sha256": "6a1bbcd7a56b522af6cdcfa41671f2cbb708fafea92931d2e881e1bdd994f99a",
+      "size_bytes": 13700
+    },
+    {
+      "module": "torch.utils._import_utils",
+      "ordinary03_cached": true,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/_import_utils.py",
+      "request_or_eager_call_line": 15,
+      "sha256": "c555020b5b4a6d0cc7548ceba08548cfd6ad06275cc0181d0d42283da8c72625",
+      "size_bytes": 1205
+    }
+  ],
+  "supporting_artifact_pins": [
+    {
+      "path": "/tmp/palimpsest-held05-optional-source-survey.json",
+      "sha256": "dfd35a621187ff9a1bb9f64de53aa0833f334a9600d055dd883b2c74cd704067",
+      "size_bytes": 1765809
+    },
+    {
+      "path": "/tmp/palimpsest-held05-optional-source-survey.md",
+      "sha256": "958577cb5759af8182a1d0e9f3a399b91969326db88b0e205d079c8cbbbadb41",
+      "size_bytes": 7289
+    },
+    {
+      "path": "/tmp/palimpsest-optional-numeric-callpaths.json",
+      "sha256": "12d73cc246e0e162fe13d86e636aa4990ce799f261f05cbc48c26c1a441d3f86",
+      "size_bytes": 21226
+    },
+    {
+      "path": "/tmp/palimpsest-optional-import-contract-review.json",
+      "sha256": "fff25d859024d1d318482cdc64300eccec9d5835f004838d138ff88b363d8674",
+      "size_bytes": 19520
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-install-01/wheel-layout.json",
+      "sha256": "82076ef08db0cb07c19d26376d6f501dd3a8d072738d0150641dd6691c9fda5b",
+      "size_bytes": 517010
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    }
+  ],
+  "verdict": "NO_MATERIAL_BLOCKER_TO_FINITE_SOURCE_CONTRACT_IMPLEMENTATION",
+  "version": 1
+}

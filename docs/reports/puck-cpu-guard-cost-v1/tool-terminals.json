@@ -1,0 +1,23 @@
+{
+  "scope": "Terminal tool observations for authored source experiments; no installed qualification.",
+  "terminals": [
+    {
+      "label": "baseline01",
+      "session_id": 2991,
+      "chunk_id": "f3efc5",
+      "exit_code": 0
+    },
+    {
+      "label": "direct-dependency01",
+      "session_id": 29460,
+      "chunk_id": "5932d3",
+      "exit_code": 1
+    },
+    {
+      "label": "hoisted-whitelist01",
+      "session_id": 26265,
+      "chunk_id": "5dd7d4",
+      "exit_code": 1
+    }
+  ]
+}

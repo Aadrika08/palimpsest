@@ -1,0 +1,22 @@
+{
+  "bootstrap_sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_worker_dependencies.py::test_unregistered_import_has_no_ambient_fallback"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-primary-import-failure-v1",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "src"
+  },
+  "kind": "puck-primary-import-source-test-v1",
+  "label": "isolated-existing-failure-followup",
+  "reason": "Earlier affected suite reached ancestor-custody failure instead of intended import denial; no source change since that run",
+  "started_at": "2026-10-15T13:50:29.552353+00:00",
+  "test_sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09"
+}

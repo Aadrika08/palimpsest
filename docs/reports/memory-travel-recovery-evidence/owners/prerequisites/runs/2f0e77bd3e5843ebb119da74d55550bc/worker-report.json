@@ -1,0 +1,1368 @@
+{
+  "acquired": true,
+  "acquisition_ticks": 727,
+  "capped_ticks": 195,
+  "case_id": "north-no-event",
+  "condition": null,
+  "continuation_ticks": 195,
+  "event_tick": 728,
+  "final_memory": {
+    "active": null,
+    "cursor": {
+      "bearing": [
+        0.9199867257005472,
+        0.39194951783971643
+      ],
+      "common_goal_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+      "episode_id": "episode-0",
+      "packet_sha256": "c40ab04a8a7ee7ca5dafa1f06505f72a3b66cac7cf20e7b792cee5a68e0f25fb",
+      "tick": 921
+    },
+    "detector": {
+      "cues": [],
+      "tick": 921
+    },
+    "e": {
+      "episodes": [],
+      "version": 1
+    },
+    "episode_id": "episode-0",
+    "graph": {
+      "acquisition_ids": [
+        "memory-v2-00000190-local_cue-no-event-1-decision",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-6",
+        "memory-v2-00000190-local_cue-no-event-1-decision",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-6",
+        "memory-v2-00000190-local_cue-no-event-1-decision"
+      ],
+      "common_goal_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+      "decision_landmark_id": "memory-v2-00000190-local_cue-no-event-1-decision",
+      "edges": [
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-decision",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-crossing-0",
+          "length_m": 1.4142135623730951,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-crossing-1",
+          "length_m": 0.8,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-crossing"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-crossing",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-crossing-2",
+          "length_m": 0.65,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-detour"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-detour",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-crossing-3",
+          "length_m": 0.65,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-exit"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-exit",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-crossing-4",
+          "length_m": 1.6401219466856725,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-goal"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-0",
+          "length_m": 0.8805095500973507,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-0"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-0",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-1",
+          "length_m": 0.8805095500978195,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-1"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-1",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-2",
+          "length_m": 0.8805095500969474,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-2"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-2",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-3",
+          "length_m": 0.8805095500972578,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-3"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-3",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-4",
+          "length_m": 0.8805095500970388,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-4"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-4",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-5",
+          "length_m": 0.8805095500975056,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-5"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-5",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-6",
+          "length_m": 0.880509550097138,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-6"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-6",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-z-retreat-7",
+          "length_m": 1.058393095813375,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-1-decision"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-decision",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-crossing-0",
+          "length_m": 1.4142135623730951,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-crossing-1",
+          "length_m": 0.8,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-crossing"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-crossing",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-crossing-2",
+          "length_m": 1.2,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-crossing-3",
+          "length_m": 1.6401219466856725,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-goal"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-0",
+          "length_m": 0.8805095500973507,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-0"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-0",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-1",
+          "length_m": 0.8805095500978195,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-1"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-1",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-2",
+          "length_m": 0.8805095500969474,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-2"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-2",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-3",
+          "length_m": 0.8805095500972578,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-3"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-3",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-4",
+          "length_m": 0.8805095500970388,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-4"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-4",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-5",
+          "length_m": 0.8805095500975056,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-5"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-5",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-6",
+          "length_m": 0.880509550097138,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-6"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-6",
+          "id": "memory-v2-00000190-local_cue-no-event-1-route-a-retreat-7",
+          "length_m": 1.058393095813375,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-1-decision"
+        }
+      ],
+      "landmark_ids": [
+        "memory-v2-00000190-local_cue-no-event-1-decision",
+        "memory-v2-00000190-local_cue-no-event-1-goal",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-crossing",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-6",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-crossing",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-detour",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-exit",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-6"
+      ],
+      "profile_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+      "routes": [
+        {
+          "cost": 5.054335509058768,
+          "fact_id": "memory-v2-00000190-local_cue-no-event-1-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+          "retreat_ids": [
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-0",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-1",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-2",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-3",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-4",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-5",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-6",
+            "memory-v2-00000190-local_cue-no-event-1-decision"
+          ],
+          "route_id": "memory-v2-00000190-local_cue-no-event-1-route-a",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "waypoint_ids": [
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-crossing",
+            "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+            "memory-v2-00000190-local_cue-no-event-1-goal"
+          ]
+        },
+        {
+          "cost": 5.154335509058767,
+          "fact_id": "memory-v2-00000190-local_cue-no-event-1-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+          "retreat_ids": [
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-0",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-1",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-2",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-3",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-4",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-5",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-6",
+            "memory-v2-00000190-local_cue-no-event-1-decision"
+          ],
+          "route_id": "memory-v2-00000190-local_cue-no-event-1-route-z",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "waypoint_ids": [
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-crossing",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-detour",
+            "memory-v2-00000190-local_cue-no-event-1-subject-z-exit",
+            "memory-v2-00000190-local_cue-no-event-1-goal"
+          ]
+        }
+      ],
+      "version": 2
+    },
+    "initial_m": {
+      "facts": [
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-1-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a"
+        },
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-1-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z"
+        }
+      ],
+      "version": 1
+    },
+    "last_decisions": [
+      {
+        "bearing": [
+          0.9332763300833641,
+          0.35915914537448107
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 858
+      },
+      {
+        "bearing": [
+          0.9414562060331209,
+          0.33713530239611794
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 859
+      },
+      {
+        "bearing": [
+          0.9488449121330033,
+          0.31574251015552735
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 860
+      },
+      {
+        "bearing": [
+          0.9554761455567771,
+          0.2950683569479528
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 861
+      },
+      {
+        "bearing": [
+          0.9613814860415186,
+          0.2752192549524856
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 862
+      },
+      {
+        "bearing": [
+          0.9665901776590217,
+          0.25632680010701386
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 863
+      },
+      {
+        "bearing": [
+          0.9711229114088147,
+          0.23857973706261684
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 864
+      },
+      {
+        "bearing": [
+          0.9750439547656448,
+          0.2220119057054628
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 865
+      },
+      {
+        "bearing": [
+          0.9783880499335421,
+          0.20677723217811184
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 866
+      },
+      {
+        "bearing": [
+          0.9811940587471347,
+          0.1930238821475841
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 867
+      },
+      {
+        "bearing": [
+          0.983534911323148,
+          0.180718228766684
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 868
+      },
+      {
+        "bearing": [
+          0.9854307402388132,
+          0.1700772065633271
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 869
+      },
+      {
+        "bearing": [
+          0.9868894343880266,
+          0.16139778280162684
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 870
+      },
+      {
+        "bearing": [
+          0.9879677551052771,
+          0.15465999764722374
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 871
+      },
+      {
+        "bearing": [
+          0.9887061680387366,
+          0.14986698529748846
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "phase": "follow_route",
+        "tick": 872
+      },
+      {
+        "bearing": [
+          0.6667345840849718,
+          -0.745295239743982
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 873
+      },
+      {
+        "bearing": [
+          0.6509112567461537,
+          -0.759153828839151
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 874
+      },
+      {
+        "bearing": [
+          0.6360585018155805,
+          -0.7716408376104255
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 875
+      },
+      {
+        "bearing": [
+          0.6229277589507096,
+          -0.782279366421387
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 876
+      },
+      {
+        "bearing": [
+          0.6124951596412567,
+          -0.7904743382400414
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 877
+      },
+      {
+        "bearing": [
+          0.6054756007098439,
+          -0.7958638683500174
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 878
+      },
+      {
+        "bearing": [
+          0.6022829855250839,
+          -0.7982826600565689
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 879
+      },
+      {
+        "bearing": [
+          0.603024606210707,
+          -0.7977225860563444
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 880
+      },
+      {
+        "bearing": [
+          0.6070454476701275,
+          -0.7946671155037023
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 881
+      },
+      {
+        "bearing": [
+          0.6148598418908062,
+          -0.7886364021715031
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 882
+      },
+      {
+        "bearing": [
+          0.6258422195436116,
+          -0.7799496882727281
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 883
+      },
+      {
+        "bearing": [
+          0.6392242147946217,
+          -0.7690204179475337
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 884
+      },
+      {
+        "bearing": [
+          0.6551063472400628,
+          -0.7555366793252214
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 885
+      },
+      {
+        "bearing": [
+          0.6728891243572639,
+          -0.7397433516576642
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 886
+      },
+      {
+        "bearing": [
+          0.6922513925139226,
+          -0.7216564345743305
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 887
+      },
+      {
+        "bearing": [
+          0.7124626344309802,
+          -0.7017100501914358
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 888
+      },
+      {
+        "bearing": [
+          0.7335050473862778,
+          -0.6796840041216613
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 889
+      },
+      {
+        "bearing": [
+          0.7553509042114601,
+          -0.6553205410384522
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 890
+      },
+      {
+        "bearing": [
+          0.777191253284832,
+          -0.6292644561848001
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 891
+      },
+      {
+        "bearing": [
+          0.7995062417692179,
+          -0.6006577805806405
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 892
+      },
+      {
+        "bearing": [
+          0.8215835037746415,
+          -0.5700881917084264
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 893
+      },
+      {
+        "bearing": [
+          0.8430579536610214,
+          -0.537822728014437
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 894
+      },
+      {
+        "bearing": [
+          0.8640539840232627,
+          -0.503399158415593
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 895
+      },
+      {
+        "bearing": [
+          0.884515354303661,
+          -0.46651108025540944
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 896
+      },
+      {
+        "bearing": [
+          0.9040768706573004,
+          -0.4273698772053348
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 897
+      },
+      {
+        "bearing": [
+          0.922436674625312,
+          -0.38614839285719715
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 898
+      },
+      {
+        "bearing": [
+          0.9393072941060104,
+          -0.34307696984677466
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 899
+      },
+      {
+        "bearing": [
+          0.9544305861377516,
+          -0.29843300126619365
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 900
+      },
+      {
+        "bearing": [
+          0.9674799849810077,
+          -0.2529475808564871
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 901
+      },
+      {
+        "bearing": [
+          0.978358161489393,
+          -0.20691860198419768
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 902
+      },
+      {
+        "bearing": [
+          0.9869936132680467,
+          -0.160759470539329
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 903
+      },
+      {
+        "bearing": [
+          0.9933754578352393,
+          -0.11491387979973852
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 904
+      },
+      {
+        "bearing": [
+          0.9975594099873405,
+          -0.0698228010445659
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 905
+      },
+      {
+        "bearing": [
+          0.9996774667098428,
+          -0.0253961129425572
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 906
+      },
+      {
+        "bearing": [
+          0.9998337541601955,
+          0.018233596516588114
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 907
+      },
+      {
+        "bearing": [
+          0.9981659352662832,
+          0.06053730811645176
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 908
+      },
+      {
+        "bearing": [
+          0.9948808406196454,
+          0.10105499971771605
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 909
+      },
+      {
+        "bearing": [
+          0.9902065441326976,
+          0.13961017139442244
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 910
+      },
+      {
+        "bearing": [
+          0.9844290647420579,
+          0.17578229857149183
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 911
+      },
+      {
+        "bearing": [
+          0.9778396643438677,
+          0.20935517866981973
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 912
+      },
+      {
+        "bearing": [
+          0.9707294393456192,
+          0.24017567651146476
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 913
+      },
+      {
+        "bearing": [
+          0.9632625006412643,
+          0.2685616407053294
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 914
+      },
+      {
+        "bearing": [
+          0.9557655416941194,
+          0.2941296131132437
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 915
+      },
+      {
+        "bearing": [
+          0.9484519400172673,
+          0.31692099564005227
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 916
+      },
+      {
+        "bearing": [
+          0.9414558226088844,
+          0.33713637311306055
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 917
+      },
+      {
+        "bearing": [
+          0.9349809323841778,
+          0.35469797867765424
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 918
+      },
+      {
+        "bearing": [
+          0.9291817116246646,
+          0.3696232497858578
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 919
+      },
+      {
+        "bearing": [
+          0.9241688538810944,
+          0.38198420061058075
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 920
+      },
+      {
+        "bearing": [
+          0.9199867257005472,
+          0.39194951783971643
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+        "phase": "follow_route",
+        "tick": 921
+      }
+    ],
+    "m": {
+      "facts": [
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "estimate": "open",
+          "evidence": {
+            "episode_id": "episode-0",
+            "id": "sensor-e9708f4963c47cf5d9055493f1d51ce20856342eddf2cfd67479a90d75ca7689",
+            "tick": 799
+          },
+          "id": "memory-v2-00000190-local_cue-no-event-1-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+          "kind": "passability",
+          "origin": "observed",
+          "revision": 1,
+          "status": "observed",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a"
+        },
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "estimate": "open",
+          "evidence": {
+            "episode_id": "episode-0",
+            "id": "sensor-ed68a2533b6f172ae1fe38a87103c5dbebdf98c68c06dd9a7f73b90eef8200dd",
+            "tick": 99
+          },
+          "id": "memory-v2-00000190-local_cue-no-event-1-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+          "kind": "passability",
+          "origin": "observed",
+          "revision": 1,
+          "status": "observed",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z"
+        }
+      ],
+      "version": 1
+    },
+    "requests": [],
+    "selector": {
+      "condition": "no-U",
+      "limit": 1,
+      "provenance_sha256": "400c57b2c4fe2740d0813373ee6a659eec23872e980bc4f5a22e22849f972c51",
+      "resource": null,
+      "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "version": 1
+    },
+    "supervisor": {
+      "acquired_evidence": {
+        "memory-v2-00000190-local_cue-no-event-1-subject-a": {
+          "episode_id": "episode-0",
+          "id": "sensor-1242f6f5c8c70b5217a7aec06782d597aa111ad61b1ecbdd645fc031a4dbb04e",
+          "passability": "open",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a",
+          "tick": 408
+        },
+        "memory-v2-00000190-local_cue-no-event-1-subject-z": {
+          "episode_id": "episode-0",
+          "id": "sensor-e8d824495ebb1e267a61610cd535e2f1226ec9ff6e00f8809b9f4ad4618571c8",
+          "passability": "open",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z",
+          "tick": 69
+        }
+      },
+      "acquired_subject_ids": [
+        "memory-v2-00000190-local_cue-no-event-1-subject-a",
+        "memory-v2-00000190-local_cue-no-event-1-subject-z"
+      ],
+      "attempts": 1,
+      "commitment_tick": 729,
+      "continuation_start_tick": 727,
+      "costs": {
+        "inspection_ticks": 3,
+        "inspections": 3,
+        "replans": 0,
+        "waypoint_arrivals": 22
+      },
+      "decision_tick": 729,
+      "failure_reason": null,
+      "inspection_authorized": true,
+      "inspection_deadline_tick": null,
+      "inspection_started_tick": null,
+      "inspection_subject_id": null,
+      "phase": "goal",
+      "route_id": "memory-v2-00000190-local_cue-no-event-1-route-a",
+      "waypoint_deadline_tick": 1173,
+      "waypoint_ids": [
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-crossing",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-exit",
+        "memory-v2-00000190-local_cue-no-event-1-goal"
+      ],
+      "waypoint_index": 3,
+      "waypoint_started_tick": 873
+    },
+    "u": {
+      "payload": {
+        "rules": [],
+        "version": 1,
+        "vocabulary": "passage-relations-v1"
+      },
+      "payload_sha256": "098db9255b3afe9fad59dd94030c92f92b31dfd4284477e58b644f91b239d8e6",
+      "provenance": {
+        "history_sha256": null,
+        "method": "empty-v1",
+        "producer_sha256": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+        "protocol_sha256": "5028174ea086da13e9cc245abfc1a9714980c8f21dfe55bdac02236cf6b93965",
+        "support": {
+          "local_cue": {
+            "changed": 0,
+            "observed": 0
+          },
+          "paired_cue": {
+            "changed": 0,
+            "observed": 0
+          }
+        }
+      }
+    },
+    "version": 3
+  },
+  "final_phase": "terminated",
+  "goal": true,
+  "invariant": "ab372bf3d7dd99212aae96bf0cda3239e60826627f5023d360953338925c3097",
+  "invariants_preserved": false,
+  "operation": "full",
+  "outcome": {
+    "episode": 0,
+    "final_distance": 0.7945153117179871,
+    "reason": "goal",
+    "steps": 922
+  },
+  "qualifier": "Exploratory correlated development variants; no inferential independence, R2 benefit, held-out confirmation, biological learning or physical qualification.",
+  "r2_complete": false,
+  "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z/prerequisites/runs/2f0e77bd3e5843ebb119da74d55550bc",
+  "run_id": "2f0e77bd3e5843ebb119da74d55550bc",
+  "snapshot_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z/prerequisites/runs/2f0e77bd3e5843ebb119da74d55550bc/snapshots/initial.snp",
+  "snapshot_sha256": "9d2c6380dc270f39e0693b5d895638a0aa9bd62061d074a7f1bc7207f6cf4ee9",
+  "status": "recorded",
+  "total_ticks": 922,
+  "version": 1,
+  "wall_seconds": 382.28677329100174,
+  "world_state": {
+    "acquired_state_sha256": "d31b28680089acf139f34df20180e69db59720dbf212f05f049aa801a06e6336",
+    "applied": false,
+    "armed_boundary_tick": 727,
+    "case": {
+      "acquisition": true,
+      "acquisition_protocol_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+      "case_id": "memory-v2-00000190-local_cue-no-event-1",
+      "case_sha256": "139f768dcac48948758826f6baa1ca1bc482e4f8ae9d233bdaefa4c4119b4126",
+      "claim": "development-runtime-configuration",
+      "closure_subject_id": null,
+      "common_goal_id": "memory-v2-00000190-local_cue-no-event-1-goal",
+      "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+      "cue_xy": [
+        -1.1,
+        0.0
+      ],
+      "decision_landmark_id": "memory-v2-00000190-local_cue-no-event-1-decision",
+      "event_enabled": false,
+      "facts": [
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-1-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-a"
+        },
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-1-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-1-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-1-subject-z"
+        }
+      ],
+      "goal_xy": [
+        2.5,
+        0.0
+      ],
+      "graph_sha256": "b2dcff03eb2a0cc7d51a921fe3d0ccf0625f9a814d7be123fd5c70e55b02e192",
+      "kind": "no-event",
+      "landmarks": {
+        "memory-v2-00000190-local_cue-no-event-1-decision": [
+          -1.8,
+          0.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-goal": [
+          2.5,
+          0.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-crossing": [
+          0.0,
+          1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-exit": [
+          1.2,
+          1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-inspection": [
+          -0.8,
+          1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-0": [
+          -0.82653819158,
+          1.880109534206
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-1": [
+          -1.373278008525,
+          2.570307071423
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-2": [
+          -2.223951197296,
+          2.797578261234
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-3": [
+          -3.042065702322,
+          2.472023773508
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-4": [
+          -3.504008372133,
+          1.722419853014
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-5": [
+          -3.427053289686,
+          0.845279623006
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-a-retreat-6": [
+          -2.8416407865,
+          0.187564434702
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-crossing": [
+          0.0,
+          -1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-detour": [
+          0.6,
+          -1.25
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-exit": [
+          1.2,
+          -1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-inspection": [
+          -0.8,
+          -1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-0": [
+          -0.82653819158,
+          -1.880109534206
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-1": [
+          -1.373278008525,
+          -2.570307071423
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-2": [
+          -2.223951197296,
+          -2.797578261234
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-3": [
+          -3.042065702322,
+          -2.472023773508
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-4": [
+          -3.504008372133,
+          -1.722419853014
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-5": [
+          -3.427053289686,
+          -0.845279623006
+        ],
+        "memory-v2-00000190-local_cue-no-event-1-subject-z-retreat-6": [
+          -2.8416407865,
+          -0.187564434702
+        ]
+      },
+      "mirrored": true,
+      "profile_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+      "regime": "local_cue",
+      "seed": 400,
+      "start_pose": [
+        -2.5,
+        0.0,
+        0.0
+      ],
+      "subjects_by_side": [
+        "memory-v2-00000190-local_cue-no-event-1-subject-z",
+        "memory-v2-00000190-local_cue-no-event-1-subject-a"
+      ],
+      "version": 2
+    },
+    "cue_state": 0,
+    "decision_tick": 729,
+    "event_tick": null,
+    "gate_result": "not_requested",
+    "last_tick": 921,
+    "profile_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+    "version": 2
+  }
+}

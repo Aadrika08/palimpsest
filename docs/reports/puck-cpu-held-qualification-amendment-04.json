@@ -1,0 +1,60 @@
+{
+  "actual04_configuration_created": false,
+  "actual04_invoked": false,
+  "all_seven_release_gates_open": true,
+  "collection_authorized": false,
+  "current_byte_audit": {
+    "at": "2026-10-15T16:06:25.713223+00:00",
+    "external_seconds": 15.542632211989257,
+    "publication": {
+      "path": "/tmp/palimpsest-puck-cpu-prepared-byte-audit-04-01.json",
+      "sha256": "9f19b42f5db4c0f5980b6e39d2b89cfbdf082046d88898ab0c1613221731a7bd",
+      "size_bytes": 1369
+    },
+    "scope": "dated pre04 data only; not preparation reacceptance, failed01-03 acceptance, held qualification or post04 byte acceptance",
+    "terminal": "92343f"
+  },
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-amendment-04/evidence-index.json",
+    "sha256": "8c9b49b2e37aaeac7d88957d6c7f20cd74ed431e101c744e32111b04b9e295af",
+    "size_bytes": 75297
+  },
+  "executable": false,
+  "kind": "puck-cpu-held-amendment04-source-report-v1",
+  "native_authorized": false,
+  "plan_commit": "c82cc9349d02cc8f6319214f9f5014916e95bb4d",
+  "prior_actual01_02_03_failed_consumed": true,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source_code_commit": "277a634db58220c42bd69dcef0fc20f2fc72f80a",
+  "status": "source verified",
+  "study_authorized": false,
+  "verification": {
+    "affected_passes": 246,
+    "corrected_negative_red": {
+      "expected": "closed04 failed terminal not yet implemented",
+      "failed": 1,
+      "seconds": 7.89,
+      "terminal": "2b5c05"
+    },
+    "external_seconds": 87.05444768100278,
+    "focused_passes": 80,
+    "focused_seconds": 32.57,
+    "focused_terminal": "004c62",
+    "independent_source_review": "no material findings; exact three control hashes reviewed",
+    "pytest_seconds": 86.9,
+    "red01": {
+      "confound": "three authored preparations denied NETLINK_ROUTE by outer sandbox",
+      "failed": 12,
+      "passed": 68,
+      "seconds": 4.74
+    },
+    "red02": {
+      "confound": "one new fixture expected optional import but historical bootstrap retained generic masked binding error",
+      "failed": 12,
+      "passed": 68,
+      "seconds": 16.93
+    },
+    "terminal": "d79f7b"
+  }
+}

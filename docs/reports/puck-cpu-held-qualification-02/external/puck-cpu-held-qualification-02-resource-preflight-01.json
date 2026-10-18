@@ -1,0 +1,33 @@
+{
+  "actual02_invoked": false,
+  "at": "2026-10-15T14:40:07.320126+00:00",
+  "byte_scope": "dated current-byte-audit02 accepted; actual parent must freshly verify full staged bytes before imports",
+  "configuration_sha256": "253bf8727fe7890d97e0d2c5af98c2ffe7e7edaf763c0eb0537a57c882f5fd77",
+  "freeze_sha256": "18180b07ad67da612cebe4ce1b5b39810a91df9ad609fef1fb92e412e520162d",
+  "kind": "puck-cpu-held-qualification02-preflight-v1",
+  "output_paths_absent": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-02",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-02-external-cli.stdout",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-02-external-cli.stderr",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-02-external-cli-transport.json",
+    "/tmp/palimpsest-puck-cpu-held-qualification-02-audit-01.json"
+  ],
+  "qualification01_baseline_after_absent": true,
+  "qualification01_failed_consumed_preserved": true,
+  "required": {
+    "disk_available_bytes": 4294967296,
+    "mem_available_bytes": 2147483648,
+    "tmpfs_available_bytes": 268435456
+  },
+  "resource": {
+    "disk_available_bytes": 99123531776,
+    "mem_available_bytes": 3486789632,
+    "tmpfs_available_bytes": 3621011456
+  },
+  "staged_root_identities_match": true,
+  "status": "ADMITTED",
+  "verified_control_pins": 5,
+  "verified_current_source_input_acceptance_pins": 44,
+  "verified_historical_capsules": 34,
+  "verified_original01_artifacts": 79
+}

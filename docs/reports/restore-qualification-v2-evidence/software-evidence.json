@@ -1,0 +1,32 @@
+{
+  "scope": "Software fixtures only; no fresh native qualification",
+  "focused": "100 passed in 5.56s",
+  "full_suite": "1015 passed, 24 skipped, 39 warnings in 118.56s",
+  "files": [
+    {
+      "path": "driver-red.log",
+      "bytes": 27320,
+      "sha256": "229c1f9dd0f014215d80ee80f9b21df1aa7224e3165d3bc791b9e1424a35c805"
+    },
+    {
+      "path": "review-fix-red.log",
+      "bytes": 26637,
+      "sha256": "a8e47f4acc1160f6b51b47e515183913f44fba843c76343974f857ac97937dc5"
+    },
+    {
+      "path": "watchdog-red.log",
+      "bytes": 6282,
+      "sha256": "3de9395329d182f2f6493c190b8ef42b95ffbd559a7682d17c58e623607a3bd5"
+    },
+    {
+      "path": "focused.log",
+      "bytes": 180,
+      "sha256": "4fb2071e626cc45fdc8d850fc5c0ec74e49808cd9ffb282879795aca7fedb056"
+    },
+    {
+      "path": "full-suite.log",
+      "bytes": 6066,
+      "sha256": "438b495e6537dd3a7f36d45627aca9bbfc4416187c1524eaa641d796cfff85fa"
+    }
+  ]
+}

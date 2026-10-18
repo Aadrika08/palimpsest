@@ -1,0 +1,15 @@
+{"check_id":10,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":4,"fd_count_before":4,"held_close_completed":true,"scope":"current process observations only"},"elapsed_seconds":0.05805213103303686,"error":"Canonical JSON bytes differ: /home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10.json","error_type":"ValueError","kind":"held10-data-admission-failure-v1","status":"FAIL"}
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission.py", line 484, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission.py", line 367, in main
+    frozen,frozenraw=held.json(CONFIGURATION,dict(size_bytes=CONFIGURATION.stat().st_size,sha256=CONFIG_SHA),1024**2,lf=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py", line 160, in json
+    if lf is not None:require(canonical(value,lf)==raw,'Canonical JSON bytes differ: '+str(path))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py", line 39, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Canonical JSON bytes differ: /home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10.json

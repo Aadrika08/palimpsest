@@ -1,0 +1,45 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "160s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-accounting-green03",
+    "tests/test_puck_guard_time_diagnostics.py",
+    "tests/test_puck_cpu_phase_trace.py"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+    "tests/test_puck_guard_time_diagnostics.py": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669"
+  },
+  "scope": "Authored diagnostic/phase regressions after final deadline and reentrant latch fixes."
+}

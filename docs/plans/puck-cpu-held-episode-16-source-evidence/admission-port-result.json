@@ -1,0 +1,27 @@
+{
+  "admission_invoked": false,
+  "counted_edits": 8,
+  "dropped": [
+    "check_preparation03",
+    "attempt-14 main"
+  ],
+  "path": "docs/plans/puck-cpu-held-episode-16-admission.py",
+  "red_missing": [
+    "check_runtime14",
+    "check_consumed_admission14",
+    "check_preparation03_consumed",
+    "check_retired_stage",
+    "check_characterization04",
+    "check_preparation04",
+    "HISTORICAL14_JSON",
+    "ADMISSION14_PINS",
+    "CHARACTERIZATION04_JSON",
+    "PREP03_ACCEPTANCE",
+    "PROCESS_IDENTITIES",
+    "TOTALS",
+    "SOURCE"
+  ],
+  "sha256": "1554245b0f504b2431f29a563fbea0becc90856f2e734342d8cb1bfd22af37fe",
+  "size_bytes": 81255,
+  "source": "eb34d5c2a66730c248b00229c17ce84e197b3d68:docs/plans/puck-cpu-held-qualification-14-admission.py"
+}

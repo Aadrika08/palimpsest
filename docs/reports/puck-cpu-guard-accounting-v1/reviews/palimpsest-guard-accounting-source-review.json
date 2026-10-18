@@ -1,0 +1,70 @@
+{
+  "base_commit": "2a168f934ee8a9f6e5cb0607a5f49c6b1a962b1c",
+  "checks": [
+    "Read complete bootstrap diff, all current accounting tests and plan. Only bootstrap changes production behavior; qualifier remains byte-identical to HEAD.",
+    "AST-only comparison: after removing token bookkeeping and accounting calls from current _check, its full AST matches original _check, including whitelist expression, original guard predicates, branches and order, original final deadline check and error handler.",
+    "guard_end runs before the existing final real clock inside the try; normal successful end clears token, with failure cleanup retained in finally. A late end-emission cannot skip the final deadline.",
+    "Cost busy spans clock, encoding and write. Current own-enabled/shared-IO/active state is checked again before reserving and writing; phase has corresponding prewrite checks and failed-state suppression while preserving legitimate closed close.ready output.",
+    "Clock validation requires exact nonnegative integer nanoseconds and rejects movement backwards against global_last, including across records/checks. Ordinary cost clock/state/encoding failures disable cost accounting; ordinary write failure or short write latches shared IO and both channels off.",
+    "Nested guards increment depth/count but do not receive a second timing token. Their elapsed time stays within the outer current section. Success adds section totals/visits; failed/poisoned guard end does not clock or emit.",
+    "Cost output uses separate32-attempt/32KiB and1024B-row budgets; phase retains24-attempt/16KiB budget. Attempts and bytes are reserved before writes. Periodic scheduling resets10s from a cooperative observation without catch-up bursts.",
+    "Activation remains existing validated CPU qualification-v3 only. q1/q2 accounting and phase channels remain silent; schemas, environment, versions, import rosters, negative policy, source roster, limits and terminal stdout format are unchanged.",
+    "New authored regressions cover final deadline after end write, both prewrite clock/IO directions, encoder reentry, no post-poison cost row, backwards cross-record clock, independent budgets, malformed state, nested timing, cancellation and primary-failure preservation."
+  ],
+  "kind": "puck-cpu-guard-accounting-independent-source-review-v1",
+  "limitations": [
+    "Source-only verdict binds current exact bytes. GREEN03 was running at dispatch and was not polled or read. Root-reported earlier RED/GREEN outcomes are context, not newly verified passing evidence in this review; final completed logs and affected consumer validation remain separate.",
+    "Accounting records completed instrumented sections, not guard acceptance. A completed counter or active-null row can precede final real deadline refusal. Diagnostic work consumes the unchanged deadline and may include its own overhead/nested guard work; no hard or exhaustive timing claim.",
+    "Helper slots and mutable diagnostic state remain within existing trusted-source scope. Records are neither authenticated nor guaranteed complete. Best-effort disabled channels, blocked calls/writes and vendor stderr prevent heartbeat/completeness guarantees.",
+    "No tests, bootstrap/main/helper/runtime imports, installed/native execution, profiling, payload census/hash,09 control creation or protected-input reads were performed. Only this review file was written.",
+    "Unchanged authority and runtime limits do not establish installed compatibility, process/FD lifetime cleanup, runtime qualification or an explanation of07/08 deadlines. All episode/operator/renderer/model/study/release gates remain separate; future installed use needs a separately closed source epoch and fresh admission."
+  ],
+  "material_findings": [],
+  "pins": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+      "size_bytes": 45710
+    },
+    {
+      "path": "tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669",
+      "size_bytes": 16690
+    },
+    {
+      "path": "docs/plans/puck-cpu-guard-accounting-v1.md",
+      "sha256": "528924d0bf52900b23c2215f1866a49915b0307aef3069629b0aea0e7e9dbc04",
+      "size_bytes": 3635
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    }
+  ],
+  "resolved_findings": [
+    {
+      "anchors": [
+        "scripts/puck_worker_bootstrap.py:725",
+        "tests/test_puck_guard_time_diagnostics.py:261"
+      ],
+      "original": "P1 diagnostic end could write after final real deadline check",
+      "resolution": "End accounting moved before original final _clock; late-write refusal regression added."
+    },
+    {
+      "anchors": [
+        "scripts/puck_worker_bootstrap.py:350",
+        "scripts/puck_worker_bootstrap.py:388",
+        "tests/test_puck_guard_time_diagnostics.py:137",
+        "tests/test_puck_guard_time_diagnostics.py:153",
+        "tests/test_puck_guard_time_diagnostics.py:166"
+      ],
+      "original": "P2 prewrite callbacks could disable sharedIO or poison owner before an outer write",
+      "resolution": "Busy spans preparation and cost write, eligibility rechecked before write, phase suppresses failed state; targeted clock/encoding/poison regressions added."
+    }
+  ],
+  "reviewed_at_utc": "2026-10-16T01:24:31.474862+00:00",
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+  "status": "GO_SCOPED_SOURCE_REVIEW_VALIDATION_PENDING",
+  "version": 1
+}

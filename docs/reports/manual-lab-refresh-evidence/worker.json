@@ -1,0 +1,31 @@
+{
+  "build": {
+    "ui/dist/assets/index-DAGRN550.js": {
+      "bytes": 257683,
+      "sha256": "a3c6992604815d801d4ddcdab9c83154d32e031b56e127b55da75b21e284da8d"
+    },
+    "ui/dist/assets/index-YXzjLjgu.css": {
+      "bytes": 7190,
+      "sha256": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87"
+    },
+    "ui/dist/index.html": {
+      "bytes": 418,
+      "sha256": "66ba5a077836337961e62738f60271acf5a580e7c8936501bb5b9b55b07f1f67"
+    }
+  },
+  "build_returncode": 0,
+  "elapsed_seconds": 2.515188413002761,
+  "failure": {
+    "message": "Child exited 1",
+    "type": "RuntimeError"
+  },
+  "owned_survivors_requiring_kill": [],
+  "process": {
+    "pid": 881585,
+    "process_group": 881585,
+    "start_ticks": 7198607
+  },
+  "qualification_claims": [],
+  "server_pid": 881677,
+  "status": "failed"
+}

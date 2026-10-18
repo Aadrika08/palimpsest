@@ -1,0 +1,65 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test05_requires_complete_reviewed_four_row_candidate[parent] _________
+
+provider = 'parent'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    def test05_requires_complete_reviewed_four_row_candidate(provider):
+        m,_,_,old,new=acceptance05_case()
+        validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+>       validator(old,new)
+
+tests/test_puck_cpu_held_amendment05.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prior = {'additional_package_inputs': [{'files': [{'path': 'helper.py', 'sha256': '5555555555555555555555555555555555555555555..., 'configuration_sha256': '2222222222222222222222222222222222222222222222222222222222222222', 'executable': False, ...}
+current = {'additional_package_inputs': [{'files': [{'path': 'helper.py', 'sha256': '5555555555555555555555555555555555555555555..., 'configuration_sha256': '2222222222222222222222222222222222222222222222222222222222222222', 'executable': False, ...}
+
+    def validate_publication_candidate(prior,current):
+        if type(prior) is not dict or type(current) is not dict:
+            raise ValueError('CPU publication candidate objects required')
+        profile=prior.get('import_profile')
+        rows=profile.get('exports') if type(profile) is dict else None
+        if type(rows) is not list or any(type(row) is not dict for row in rows):
+            raise ValueError('Historical CPU export declarations required')
+        targets=[i for i,row in enumerate(rows) if row.get('name')==AUTOGRAD_EXPORT['name']]
+        old=dict(name=AUTOGRAD_EXPORT['name'],producer='torch._C',phase='native_create',attributes=['_autograd'],class_binding=None)
+        if len(targets)!=1 or rows[targets[0]]!=old:
+            raise ValueError('Exact historical autograd export declaration required')
+        expected=copy.deepcopy(prior)
+        expected['import_profile']['exports'][targets[0]]=copy.deepcopy(AUTOGRAD_EXPORT)
+        if canonical(current)!=canonical(expected):
+>           raise ValueError('CPU publication candidate must change only the exact autograd declaration')
+E           ValueError: CPU publication candidate must change only the exact autograd declaration
+
+scripts/qualify_puck_cpu_held_runtime.py:233: ValueError
+______ test05_requires_complete_reviewed_four_row_candidate[independent] _______
+
+provider = 'independent'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    def test05_requires_complete_reviewed_four_row_candidate(provider):
+        m,_,_,old,new=acceptance05_case()
+        validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+>       validator(old,new)
+
+tests/test_puck_cpu_held_amendment05.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_held_runtime.py:247: in publication_candidate
+    require(canonical(current)==canonical(expected),'Only the exact autograd publication declaration may change')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False
+message = 'Only the exact autograd publication declaration may change'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Only the exact autograd publication declaration may change
+
+scripts/audit_puck_cpu_held_runtime.py:56: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_requires_complete_reviewed_four_row_candidate[parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_requires_complete_reviewed_four_row_candidate[independent]
+2 failed in 0.48s

@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_cpu_distributed_exports.py::test_control_dictionary_collisions_never_invoke_key_equality",
+    "tests/test_puck_cpu_distributed_exports.py::test_spec_dictionary_subclass_is_rejected_without_get_override"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "environment_overlay": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

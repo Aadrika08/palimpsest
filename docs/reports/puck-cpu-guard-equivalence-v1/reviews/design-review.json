@@ -1,0 +1,44 @@
+{
+ "kind": "guard-accumulator-equivalence-review-v1",
+ "status": "REJECT_UNCONDITIONAL_INPLACE_REWRITE",
+ "source": {
+  "path": "scripts/puck_worker_bootstrap.py",
+  "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+  "refs": "_check659-731; tests/test_puck_guard_cost.py59,85"
+ },
+ "scope": "Reasoning from already inspected source/tests. No new reads, probes, jobs, tests, imports or production edits. Only this requested artifact is written.",
+ "original_order": [
+  "Each key: name.split('.')[0], then current sys.stdlib_module_names membership; short-circuit stdlib.",
+  "Build fixed literal set; binary | aliases; fetch self._loaded.keys() and binary |; fetch self._loading and binary |.",
+  "Then test self._dependencies. If present: loaded.keys() | loading, then | exported; else set().",
+  "Binary | dependency result into source result; test name membership. Every merge finishes before fetching the next operand."
+ ],
+ "candidate": "Fresh per-key allowed=fixed; allowed|=aliases; allowed|=self._loaded.keys(); allowed|=self._loading; dep=dependencies.loaded.keys(); dep|=dependencies.loading; dep|=exported (or dep=set()); allowed|=dep; membership. Freshness/order alone do not preserve dispatch.",
+ "counterexample": {
+  "state": "Plain fixture name in sys.modules and source _loading only. _loading is a set subclass overriding __ror__(left) to return left | (set(self)-{name}); __contains__ remains ordinary.",
+  "original": "Exact-set | proper-set-subclass gives the overridden reflected __ror__ priority. It removes this allowance: original refuses name, poisons and closes.",
+  "candidate": "Exact-set __ior__ merges the subclass's actual contents without that reflected hook: candidate keeps name and accepts. This changes acceptance/refusal.",
+  "dual": "An empty subclass whose __ror__ injects name reverses the difference: original accepts, candidate refuses.",
+  "evidence": "Python dispatch prediction, not executed. Root's pinned-interpreter real fixture must retain actual traces/outcomes."
+ },
+ "other_cases": [
+  "dict_keys is not a set operand for set's in-place implementation; |= can fall back to binary/reflected dispatch. Replacing it with update() needs a separate proof.",
+  "A dict subclass keys() may return a reflected object producing a set subclass. Subsequent |= may call its __ior__ where original calls __or__. Preserve genuine items/seals while testing.",
+  "Fresh construction after split preserves the known hoisted-snapshot counterexample only; retain that test.",
+  "Exact builtin containers may hold colliding str-subclass keys with mutating __hash__/__eq__. Fewer intermediate copies may change table/probe/callback order. No specific collision-order divergence was demonstrated here: do not invent a measured failure or assume equivalence.",
+  "A content/type pre-scan is not a freeze; it adds observations/mutation windows. Subclass rejection narrows the original contract."
+ ],
+ "minimal_real_fixture": [
+  "Reuse dependency_fixture: source _loading reflected-remove/add. Compare acceptance/refusal, ordered hook calls, first exception identity, holders closed and permanent poison after cleanup.",
+  "Repeat at dependency.loading, whose left operand starts as dict_keys; record actual fallback sequence.",
+  "Use dict-subclass keys() returning an object with __ror__ that yields a set subclass with distinct __or__/__ior__; restore mappings in finally.",
+  "Exact set/dict containers with deliberately colliding str-subclass keys: callbacks log and add/remove allowances or invoke nested guard. Compare traces and outcomes; do not presume an implementation-specific collision order.",
+  "Keep existing lying-true/false contains, split-removal, unknown-cache poison, published/inflight/alias and cleanup cases. No fake loaded seals or vendor execution."
+ ],
+ "stop": [
+  "The reflected-remove case alone rejects the unconditional candidate. Preserve the failure; do not weaken assertions.",
+  "No production change or performance claim before equivalence. An alternative/guarded variant needs fresh dispatch/callback proof.",
+  "Exact-only keys, frozen allowances, forbidden callbacks or deferred mutation are prospective policy changes, not equivalent optimization.",
+  "Retain predicate/order/frequency, custody and limits. No actual10; optional09 counters do not prove complete cause or post-failure payload custody."
+ ]
+}

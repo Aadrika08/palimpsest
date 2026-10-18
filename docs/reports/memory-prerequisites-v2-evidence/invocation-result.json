@@ -1,0 +1,100 @@
+{
+  "cleanup": [
+    {
+      "owner": {
+        "pgid": 1272792,
+        "pid": 1272792,
+        "run_id": "38be036007f64bf7a95969c4678d9ee8",
+        "starttime": 8871123
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1271394,
+        "pid": 1271394,
+        "run_id": "4850f12d2e904bfebaee1f5eec46f539",
+        "starttime": 8854498
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1270186,
+        "pid": 1270186,
+        "run_id": "5f11347a568043479769953d6bd856dd",
+        "starttime": 8840951
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1260705,
+        "pid": 1260705,
+        "run_id": "86af99bae2204c229f78c50e664dba2f",
+        "starttime": 8770795
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1267155,
+        "pid": 1267155,
+        "run_id": "a9df46aa0fc94b3e97e84c13024f31fc",
+        "starttime": 8820597
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1263487,
+        "pid": 1263487,
+        "run_id": "e30feb308d624e89bf654bc28e9cbffb",
+        "starttime": 8784956
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1266004,
+        "pid": 1266004,
+        "run_id": "f702dd51776a496d94912212b3935bd8",
+        "starttime": 8806603
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "owner": {
+        "pgid": 1272549,
+        "pid": 1272549,
+        "run_id": "f8001848d02044698fbcf73335a6c252",
+        "starttime": 8868484
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/owner.json",
+      "status": "already-exited"
+    }
+  ],
+  "failures": [
+    "Scientific pipeline failed: 1; []"
+  ],
+  "native_exit_code": 1,
+  "pipeline_exit_code": 1,
+  "qualification_claims": [],
+  "registration_sha256": "2aaa8a2a853804ccb3eca1a9fe773f662f96c42967c542a622f1bb9c9168379b",
+  "storage": {
+    "files": 287,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 7254898081,
+    "used_bytes": 1335036511
+  },
+  "watchdog_exit_code": 1
+}

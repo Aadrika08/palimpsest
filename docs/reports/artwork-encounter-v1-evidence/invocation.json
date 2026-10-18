@@ -1,0 +1,27 @@
+{
+  "command": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=1s",
+    "119s",
+    "/usr/bin/python",
+    "scripts/prepare_artwork_encounter.py",
+    "--registration",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-encounter-v1/.superpowers/sdd/artwork-encounter-v1/registration.json",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-encounter-v1/runs/artwork-encounter-v1"
+  ],
+  "started_utc": "2026-10-08T05:50:48.308157+00:00",
+  "started_monotonic": 130629.955684578,
+  "closed_monotonic": 130630.42056695,
+  "outer_seconds": 0.46488237199082505,
+  "returncode": 0,
+  "registration_sha256_before": "94ee16b4209fd0f0536d402008de42bdf4bf634ff8230e8aa77718569e7430b7",
+  "registration_sha256_after": "94ee16b4209fd0f0536d402008de42bdf4bf634ff8230e8aa77718569e7430b7",
+  "python_version": "3.14.7 (main, Aug 10 2026, 07:46:56) [GCC 16.1.1 20260728]",
+  "invocations": 1,
+  "retries": 0,
+  "native_owners": 0,
+  "physics_steps": 0,
+  "qualification_claims": []
+}

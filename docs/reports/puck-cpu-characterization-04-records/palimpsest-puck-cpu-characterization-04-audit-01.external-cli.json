@@ -1,0 +1,37 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_episode_characterization.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-04.json",
+    "--sha256",
+    "efa1c03dc18492d5382369f0d9756d252cc90c647fd351dd0d62804594735cdc",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-04-external-cli-transport.json",
+    "--transport-sha256",
+    "1cdaa9a76b2563c560a3725cffcd35282bfd717fa8d90e0f2fa51a5188400d7b",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.json"
+  ],
+  "elapsed_seconds": 2.318919195997296,
+  "kind": "externally-observed-cpu-auditor-cli-v1",
+  "observed_returncode": 0,
+  "published": {
+    "path": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.json",
+    "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+    "size_bytes": 3662
+  },
+  "stderr": {
+    "path": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.stdout",
+    "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+    "size_bytes": 3662
+  }
+}

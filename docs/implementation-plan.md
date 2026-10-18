@@ -27,6 +27,82 @@ M6 remains unchecked for learned puck pushing. The other subgates meet their dec
 | Measured body adaptation | [Held-out opposite-wheel commands](reports/m6-body-turn-transfer.md), existing lifecycle/replay and the [fresh-calibration new actuator case](reports/m6-new-body-response-v2.md) pass. The new standalone case does not inherit restoration/replay qualification. |
 | Learned puck pushing | Open: all three models in both development arms score 0/4 against the unchanged 3/4 gate. Held-out remains locked; the existing stop-fitting decision remains active. |
 
+## Research phase — 4 October 2026
+
+The approved [capability-first phase](plans/research-capability-phase.md) replaces
+further v1 memory collection and reopens puck fitting only for bounded exploration.
+Memory v1 is [retired with an observed structural limitation](reports/m5-v1-structural-null.md);
+its 44/48 matrix and held-out remain incomplete. R2 will require a decision-bearing
+v2 study. Do not execute the historical remaining-07 repeat or v1 held-out outline.
+
+Exploratory work uses retained train/seen development data, train-only preprocessing,
+prospective script decision rules, compact provenance, and an aggregate two-hour
+compute ceiling. It requires no additional root-audit/GO hierarchy and is never
+release evidence. Graph model-class probes are allowed only with matched original/
+rewired interventions. Production bundles and all reserved scene IDs remain locked.
+Confirmatory work retains committed protocols, versioned admission, fresh evaluations
+and explicit rejection rules. The historical failures/nulls remain unchanged.
+
+The puck stop-fitting decision remains historical; conditioning/capacity probes
+are authorized by this phase. No automatic new collection, relabeling, held-out
+opening, model promotion, hardware operation or exhibition acceptance follows.
+
+The [executed exploratory readout](reports/research-capability-phase.md) records
+exact reproduction of all nine historical fits, nine new puck fits and twelve
+navigation probes. None meets its joint rule; both fitting tracks stop with no
+selected model. The [memory-v2 design](plans/m5-v2-decision-scene.md) is complete
+as a specification only. R2, R3 and learned puck capability remain open; no new
+runtime pilot, native evaluation or held-out access is implied.
+
+The subsequent approved [memory-v2 feasibility contract](plans/memory-v2-feasibility.md)
+authorizes the shared decision supervisor, versioned continuation state and a
+single bounded development attempt. It prioritizes memory feasibility; puck and
+navigation receive offline diagnostics only. Its two-hour execution ceiling and
+8 GiB output cap apply independently of the completed fitting phase. Native
+prerequisites must pass before the four-condition, six-case pilot can start.
+Failed geometry or a mandatory prerequisite stops that attempt without rescue.
+R2/R3, learned puck capability, hardware and operator qualification remain open.
+
+The [implemented feasibility readout](reports/memory-v2-feasibility.md) retains
+passing software/geometry checks and a failed first native acquisition: CPU FLYNN
+loses the next retreat marker outside forward visibility at tick 101. Seven later
+prerequisites and the paired pilot remain unattempted under the stopping rule.
+Offline puck/navigation diagnostics complete without new fits or promotion.
+Another scene or native attempt requires a separately reviewed prospective
+amendment; no automatic layout change or rescue follows this evidence.
+
+The approved [memory waypoint amendment](plans/memory-waypoint-amendment.md) is
+[implemented and executed](reports/memory-waypoint-amendment.md). Its first fixed
+1.4 m candidate acquired both real open observations and returned in 727 ticks;
+south/no-event reached the goal. South/change completed blocked inspection,
+retreat and replanning, then failed at the north exit outside ±90° visibility at
+tick 1193. Six remaining prerequisites and both smaller-radius probes are
+unattempted under the stopping rules. No paired pilot, new fits, held-out or
+hardware work followed. Another native attempt needs a prospective route/heading
+amendment; R2/R3 and the original failure records remain open/preserved.
+
+The approved [memory travel-handoff amendment](plans/memory-travel-handoff.md) is
+[implemented and software-verified](reports/memory-travel-handoff.md): 915 tests
+passed. Its single native invocation started the first d=.25 m candidate, then
+stopped before acquisition on filesystem ENOSPC while renaming recording and
+receipt files. There is no selected profile or qualified route result. The recovery
+readout preserves the partial owner, stale receipts and unpublished drafts; the
+other two candidates and all eight prerequisites are unattempted. Source/assets
+remained unchanged and the owner exited. No retry, pilot, fit or merge followed.
+Filesystem atomic recording capacity needs qualification before a new prospective
+native execution contract. Earlier measured acquisition/travel failures remain
+preserved; R2/R3 and physical/operator qualification remain open.
+
+The [storage/Git recovery](reports/memory-storage-recovery.md) now passes a bounded
+2,100-tick synthetic recording, 66 chunk publications, 65 atomic progress replacements
+and exact readback through the actual writer/reader. The research checkout's three
+documentation updates are recovered without altering the interrupted study; main
+is unchanged. This is a current filesystem write check, not native route feasibility.
+Actions is enabled; fresh recovery-head CI jobs still do not execute due to the
+account billing/spending restriction, which requires account-owner resolution.
+A new native invocation requires a separate prospective contract; the frozen plan's
+no-retry rule remains intact.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.

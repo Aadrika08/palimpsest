@@ -1,0 +1,31 @@
+{
+  "actual03_failed_consumed": true,
+  "actual04_created": false,
+  "elapsed_seconds": 1.1039009289816022,
+  "kind": "authored-export-binding-failure-observation-v1",
+  "observer_status": "PASS",
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "authored held Python producer only; no installed CPU stack, actual qualification or scientific allocation",
+  "stderr": {
+    "sha256": "a50e462edd63e3712a07dc729e2bc296cca836008ea0f17a5c643112dca0c229",
+    "size_bytes": 2420
+  },
+  "stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "worker_command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import os,sys,stat,hashlib\np,h=sys.argv[1:3]\ndef identity(s): return (s.st_dev,s.st_ino,s.st_mode,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_nlink)\nf=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)\ntry:\n s=os.fstat(f)\n if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or not 0<s.st_size<=1048576: raise ValueError('Bootstrap file refused')\n with os.fdopen(os.dup(f),'rb') as q: r=q.read(1048577)\n if len(r)!=s.st_size or hashlib.sha256(r).hexdigest()!=h or identity(os.fstat(f))!=identity(s): raise ValueError('Bootstrap bytes differ')\n exec(compile(r,p,'exec'),{'__name__':'__main__','__file__':p,'__bootstrap_raw__':r,'__bootstrap_fd__':f})\nfinally: os.close(f)\n",
+    "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/scripts/puck_worker_bootstrap.py",
+    "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+    "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/registration.json",
+    "211b03678cdea7096f2f0abbbf6177a5310cfd0aee84f7c41e3c67fee79edc9a"
+  ],
+  "worker_returncode": 1
+}

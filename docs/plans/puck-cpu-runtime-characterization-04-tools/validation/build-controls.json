@@ -1,0 +1,29 @@
+{
+  "auditor_sha256": "1608a3d79a2ebb10723023b25c054401bbd598b2e95508422b1e6bfaa2efac46",
+  "configuration": {
+    "path": "docs/plans/puck-cpu-runtime-characterization-04.json",
+    "sha256": "efa1c03dc18492d5382369f0d9756d252cc90c647fd351dd0d62804594735cdc",
+    "size_bytes": 22020
+  },
+  "freeze": {
+    "path": "docs/plans/puck-cpu-runtime-characterization-04-freeze.json",
+    "sha256": "ff042d02c7b88ac1350bf96bd8401d9c7d9752087f1c9ead0750993416b651a8",
+    "size_bytes": 28547
+  },
+  "inputs": 10,
+  "invoked": false,
+  "run_ids": {
+    "replay": "6c04b9ed22c383fda860fa3b4f8bab13",
+    "source": "a6effc7912fec337875d13ae69445e43"
+  },
+  "serializer": "json.dumps(parent.configuration(parent.source_rows()),sort_keys=True,indent=2,allow_nan=False)+'\\n'",
+  "sources": 97,
+  "sources_equal_head": true,
+  "sources_equal_preparation04_sources": true,
+  "stages_touched": false,
+  "validators": {
+    "auditor_validate_configuration": "PASS",
+    "capsule_files": 88,
+    "parent_validate_configuration": "PASS"
+  }
+}

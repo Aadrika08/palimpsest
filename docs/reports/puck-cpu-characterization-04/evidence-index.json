@@ -1,0 +1,157 @@
+{
+  "entries": [
+    {
+      "path": "external/puck-cpu-runtime-characterization-04-external-cli-transport.json",
+      "sha256": "1cdaa9a76b2563c560a3725cffcd35282bfd717fa8d90e0f2fa51a5188400d7b",
+      "size_bytes": 972
+    },
+    {
+      "path": "external/puck-cpu-runtime-characterization-04-external-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "external/puck-cpu-runtime-characterization-04-external-cli.stdout",
+      "sha256": "03f00db7180b0f428ab2440b36760ffd23149ab80df94d5d1bc9283927aff06b",
+      "size_bytes": 2891
+    },
+    {
+      "path": "frozen-configuration.json",
+      "sha256": "efa1c03dc18492d5382369f0d9756d252cc90c647fd351dd0d62804594735cdc",
+      "size_bytes": 22020
+    },
+    {
+      "path": "outcome-audit-04.json",
+      "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+      "size_bytes": 3662
+    },
+    {
+      "path": "raw/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "raw/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "raw/configuration.json",
+      "sha256": "d2f0c6e7847f831dac477bca022e78bd939d2d91e2b2f5620039ccd30503113c",
+      "size_bytes": 17765
+    },
+    {
+      "path": "raw/egl-vendor.json",
+      "sha256": "cd3881df4227c13ca7f9cfe6c78820f21d5f7a00a41b299214f6f827e63be369",
+      "size_bytes": 105
+    },
+    {
+      "path": "raw/namespace.json",
+      "sha256": "6bb596098317b9047f8279e6049bf8a9b54293f6dce3354f9c4cd709434c739f",
+      "size_bytes": 172
+    },
+    {
+      "path": "raw/payload/replay/characterization.json",
+      "sha256": "e86ff1fb2044812b8d91c8b1daa91385054adb3bc35d2f19a1ffdf9a24ab6438",
+      "size_bytes": 383201
+    },
+    {
+      "path": "raw/payload/source/characterization.json",
+      "sha256": "a4e69a333982f7f2b0f47546a8209303c6e26e9b2afae7b28ca4003906978f9c",
+      "size_bytes": 383183
+    },
+    {
+      "path": "raw/probe-invocation.json",
+      "sha256": "a323ad962088090f467795ae2824a9b32761e53cdb889b13726ae0bb3b79be78",
+      "size_bytes": 22761
+    },
+    {
+      "path": "raw/probe-logs/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "raw/probe-logs/stdout.log",
+      "sha256": "fb1141592a09e917fd014e0766ec03d9d9540a47041f434133564d7d3cacf79e",
+      "size_bytes": 183
+    },
+    {
+      "path": "raw/probe-supervision.json",
+      "sha256": "25071a75c849d577b26a59ddfad2232ecc0671fcbab9187881d0cced10eb7636",
+      "size_bytes": 190
+    },
+    {
+      "path": "raw/replay-invocation.json",
+      "sha256": "e36c3f64f8ae77fc04347bc4293f38771ca620be241758b59233d2a0547bab27",
+      "size_bytes": 22029
+    },
+    {
+      "path": "raw/replay-logs/stderr.log",
+      "sha256": "e368cc673b95b76359303b1f63e209dc3eeddb3a978a5c5b1072afbf492d8089",
+      "size_bytes": 917
+    },
+    {
+      "path": "raw/replay-logs/stdout.log",
+      "sha256": "913d0026455e604145b1b021b7fc2658f214c92eab0d92e505f1951211fd8080",
+      "size_bytes": 127
+    },
+    {
+      "path": "raw/replay-supervision.json",
+      "sha256": "a671cf7766a209202f854b5505f332a86aee334ed57b183a6326fe4c1ba07391",
+      "size_bytes": 192
+    },
+    {
+      "path": "raw/request-replay.json",
+      "sha256": "9d435eb27a43f624945006a0be286f235036d114e363a33bdb7c93a3d2f1f150",
+      "size_bytes": 21823
+    },
+    {
+      "path": "raw/request-source.json",
+      "sha256": "0dd699e8b18d0afed9da2a2cacc04746b60b93518b21a16a18afd7722a974575",
+      "size_bytes": 21814
+    },
+    {
+      "path": "raw/result.json",
+      "sha256": "30309af0c74a055d3332ac32b9cad6add3f2e5c4adbb748b8a59d2d7696243c0",
+      "size_bytes": 2760
+    },
+    {
+      "path": "raw/source-invocation.json",
+      "sha256": "7474fc54e6952451f66d74f8a553722387cd5ce6a305f8468a7513ca0c24b66e",
+      "size_bytes": 21897
+    },
+    {
+      "path": "raw/source-logs/stderr.log",
+      "sha256": "e368cc673b95b76359303b1f63e209dc3eeddb3a978a5c5b1072afbf492d8089",
+      "size_bytes": 917
+    },
+    {
+      "path": "raw/source-logs/stdout.log",
+      "sha256": "9975276d3db32f3e8dc3608bd57c23d3b122f60821b92db4e3ce6b2c0531a508",
+      "size_bytes": 127
+    },
+    {
+      "path": "raw/source-supervision.json",
+      "sha256": "43f90fe1efdd303f4a4af2c155e2bfab589d8d605a614f1c8722b22ca6769662",
+      "size_bytes": 192
+    }
+  ],
+  "file_count": 27,
+  "kind": "cpu-episode-characterization-evidence-index-v1",
+  "original_output": "runs/puck-cpu-runtime-characterization-04",
+  "retained_bundles": {
+    "replay": {
+      "path": "replay-bundle.zip",
+      "sha256": "0930d7662e48912d1c962b9511a9094242d8ec9b67c48e79393b23ba6b305d62",
+      "size_bytes": 10092230
+    },
+    "source": {
+      "path": "source-bundle.zip",
+      "sha256": "16fcf2b17a49df0740da98cc585df72dc4f916c9f2d8e084886f93b0ee904277",
+      "size_bytes": 10085155
+    }
+  },
+  "scope": "retained characterization-04 receipts; run directories and bundles stay under runs/",
+  "total_bytes": 930292,
+  "version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held08-history-check.py"
+  ],
+  "green": {
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "tests": 4,
+    "tool_chunk": "26dc9f"
+  },
+  "limitations": "Two RED errors are missing new helper; two failures are fabricated07 receipts accepted before the guards. No installed numerical import, live payload pass or actual08 invocation.",
+  "outer_timeout_seconds": 30,
+  "red": {
+    "errors": 2,
+    "exit_code": 1,
+    "failures": 2,
+    "tests": 4,
+    "tool_chunk": "a6d29b"
+  },
+  "scope": "four small control checks, no admission main/payload census/runtime"
+}

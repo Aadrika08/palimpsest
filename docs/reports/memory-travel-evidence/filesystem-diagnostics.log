@@ -1,0 +1,25 @@
+Sun Oct  4 13:03:43 UTC 2026
+Filesystem          1B-blocks         Used   Available Use% Mounted on
+/dev/mapper/root 509943480320 483967225856 25404944384  96% /home
+tmpfs              8011890688    251580416  7760310272   4% /tmp
+WARNING: cannot read detailed chunk info, per-device usage will not be shown, run as root
+Overall:
+    Device size:		 474.92GiB
+    Device allocated:		 474.92GiB
+    Device unallocated:		   1.00MiB
+    Device missing:		     0.00B
+    Device slack:		     0.00B
+    Used:			 450.23GiB
+    Free (estimated):		  23.66GiB	(min: 23.66GiB)
+    Free (statfs, df):		  23.66GiB
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		 512.00MiB	(used: 0.00B)
+    Multiple profiles:		        no
+
+Data,single: Size:456.91GiB, Used:433.25GiB (94.82%)
+
+Metadata,DUP: Size:9.00GiB, Used:8.49GiB (94.36%)
+
+System,DUP: Size:8.00MiB, Used:80.00KiB (0.98%)
+

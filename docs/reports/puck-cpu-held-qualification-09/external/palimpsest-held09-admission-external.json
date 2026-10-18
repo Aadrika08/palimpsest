@@ -1,0 +1,36 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-admission.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 29.17548476002412,
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "external_deadline_seconds": 145,
+  "implicit_retry": false,
+  "kind": "puck-cpu-held09-external-transport-v1",
+  "normal_exit": true,
+  "phase": "admission",
+  "returncode": 0,
+  "runtime_qualified": false,
+  "stderr": {
+    "path": "/tmp/palimpsest-held09-admission-external.stderr",
+    "sha256": "adef44efebf0482ad0f574544b4035156ee27446c9f56be6b3c8083e9e285675",
+    "size_bytes": 1457
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-held09-admission-external.stdout",
+    "sha256": "ee2c52efc0dcf7ffdb14d826aca4569ccf6050e462088d6373dfaded85777e84",
+    "size_bytes": 5610
+  },
+  "study_authorized": false,
+  "timed_out": false
+}

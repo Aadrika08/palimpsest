@@ -1,0 +1,238 @@
+{
+  "kind": "palimpsest-public-episode-constructor-seam-read-only-map-v1",
+  "status": "SOURCE_PROPOSAL_ONLY_NOT_IMPLEMENTED_OR_EXECUTED",
+  "source_worktree": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "upstream_source_root": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym",
+  "upstream_pin_from_retained_map": "8d964599119b420de67ee259434d273651a1a76d",
+  "prior_map": "/tmp/palimpsest-cpu-episode-next-map.json",
+  "verdict": "The minimum constructor change is private to existing engine.py: use the guarded direct upstream environment class only for controller=manual, with the old runner's exact kwargs. Preserve all nonmanual runner paths. replay_run already reopens through Engine.open and its existing source identity includes engine.py; no production replay/writer/snapshot/export API or schema change is needed for this seam.",
+  "minimum_production_changes": [
+    {
+      "file": "src/palimpsest/engine.py",
+      "locations": [
+        "239-247 Engine.open imports/API",
+        "313-324 RNG setup and current reference/_make_env call",
+        "325-345 unchanged controller-specific load branches",
+        "346-351 unchanged provenance and Engine construction"
+      ],
+      "proposed_change": "Add a private module helper immediately before Engine/open or a small closed manual branch at322-323. Reuse flynn.import_upstream(root,'environment.mujoco_two_cam_env_random_obstacles').MuJoCoTwoCamEnv, never a caller-supplied factory/entrypoint. For manual, instantiate that exact class; for all other controllers retain existing reference=import_upstream(root,'run_connectome_rnn_checkpoint') and reference._make_env(...) unchanged. Keep configure_world(env), Torch/Python/NumPy seeding, thread count, writer/provenance and failure cleanup in their existing order.",
+      "exact_explicit_kwargs": {
+        "width": 128,
+        "height": 128,
+        "max_episode_steps": 600,
+        "n_obstacles": "profile['n_obstacles']",
+        "arena_half_extent": 7,
+        "render_mode": null,
+        "end_on_collision": false,
+        "goal_bonus": 0,
+        "contact_penalty": 0,
+        "time_penalty": 0.01,
+        "prog_scale": 10,
+        "ctrl_penalty": 0.001,
+        "texture_mode": "validated texture"
+      },
+      "profile_sourced_values": "width,height,max_episode_steps and arena can be taken from the already validated profile's width,height,max_steps,arena, which are128,128,600,7 for every ordinary profile at profiles.py42-47. n_obstacles remains scenario-selected, e.g.20 reproduction /5 sparse. A private helper should accept only these validated data, not arbitrary constructor kwargs.",
+      "inherited_defaults_preserved": {
+        "goal_radius": 0.8,
+        "seed": null,
+        "explore_binsize": 0.2,
+        "frame_skip": 10,
+        "stall_threshold": 0.002,
+        "stall_limit": 50
+      },
+      "authority": "One source seam only; not a held episode dispatcher or executable allocation."
+    }
+  ],
+  "parameter_evidence": [
+    {
+      "file": "upstream/fly-gym/run_connectome_rnn_checkpoint.py",
+      "lines": "24-43,49-58,203-218",
+      "supports": "Current runner imports training/agents/utils; _make_env exact kwargs and local reward constants."
+    },
+    {
+      "file": "upstream/fly-gym/train_connectome_rnn_dagger.py",
+      "lines": "26-58",
+      "supports": "Runner environment constants are re-exported from shared_config; do not import training to read them."
+    },
+    {
+      "file": "upstream/fly-gym/shared_config.py",
+      "lines": "53-59",
+      "supports": "128x128,600steps,20obstacles,arena7,renderNone,collisionFalse."
+    },
+    {
+      "file": "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py",
+      "lines": "54-73",
+      "supports": "Class defaults alone are wrong for current route:84x84,arena5,goal_bonus10,contact_penalty.5,time.005,prog5."
+    },
+    {
+      "file": "src/palimpsest/profiles.py",
+      "lines": "26-47,120-133",
+      "supports": "Validation fixes ordinary dimensions/arena/horizon and obstacle count; configure_world masks unused XML placeholders for sparse cases."
+    }
+  ],
+  "semantic_boundaries": {
+    "seed": {
+      "evidence": [
+        "engine.py318-321 Python/NumPy/Torch global seed and Torch2threads",
+        "environment.py129,199 constructor Gym RNG seed=None and first reset(seed=None)",
+        "engine.py148,379-384 later native reset and env.reset(seed=self.seed)"
+      ],
+      "conclusion": "A faithful replacement must omit seed or pass None, then retain Engine's declared-seed reset. Passing the declared seed into the constructor is a new startup/reset semantic change; it must not be silently conflated with removing the runner. Constructor's first reset renders and can fail before Engine's later reset; no binary determinism or numeric parity was measured here."
+    },
+    "cwd": {
+      "evidence": [
+        "flynn.py12-22 resolves repo_root/upstream/fly-gym and guards imported module.__file__ under it",
+        "environment.py12 appends its source parent to sys.path",
+        "environment.py101-106 loads XML adjacent to __file__ and creates renderer"
+      ],
+      "conclusion": "No cwd change is needed. Keep resolved Engine roots and guarded import helper. Direct class preserves the environment's existing sys.path side effect and adjacent XML resolution. Do not chdir into upstream or replace module-name identity with an ad hoc loader."
+    },
+    "replay_identity": {
+      "evidence": [
+        "replay.py18-20 includes engine.py and flynn.py in _RUNTIME",
+        "engine.py346-349 emits upstream/uv.lock/all Palimpsest source hashes",
+        "replay.py138-159 compares relevant source, lock and upstream exactly",
+        "snapshots.py218-235 environment class/model/profile/Torch/renderer/planner identity"
+      ],
+      "conclusion": "Keep the helper in existing engine.py or flynn.py to remain covered by current _RUNTIME. Source and replay from new bytes remain the same revision; old recordings must continue to refuse changed engine.py source before stepping. Direct import preserves environment class module/qualname. Do not drop manual Torch initialization: snapshot identity and RNG currently include loaded Torch."
+    },
+    "other_controllers": "Changing only controller=manual prevents an unrequested teacher/FLYNN/Male construction-order or import-graph change. Their old runner import remains until separately designed and tested."
+  },
+  "existing_complete_chain": [
+    {
+      "call": "Engine.open(...,controller='manual',device='cpu',seed=...,scenario='reproduction',texture='checker',run_id=source_uuid)",
+      "references": [
+        "engine.py239-364",
+        "worker.py355-359"
+      ],
+      "notes": "Writer recording directory is source_uuid/recording; run IDs and destinations stay existing UUID contract. Caller owns watchdog."
+    },
+    {
+      "call": "Existing _episode_preflight then paused initial snapshot before first step",
+      "references": [
+        "worker.py240-284,388-394",
+        "replay.py162-189",
+        "engine.py985-1008"
+      ],
+      "notes": "For one fixed owner, replay._register_initial can register source tick0 directly; it calls capture with application_state (which flushes and hashes durable event prefix), saves initial.snp and index, then writes snapshot_registered. It does not perform storage episode estimate, so separately reuse _episode_preflight if budgeted. No snapshot/writer schema change."
+    },
+    {
+      "call": "Engine.submit/advance over one prospectively fixed finite command schedule, then normal Engine.close()",
+      "references": [
+        "engine.py810-821",
+        "engine.py1239-1272"
+      ],
+      "notes": "Require nonzero contiguous episode0 records and declared terminal/stop; completed manifest alone may describe an empty/unfinished close."
+    },
+    {
+      "call": "replay_run(source_uuid,destination_uuid,mode='actions',repo_root=...,asset_root=...,recording_max_bytes=...,storage_budget=...)",
+      "references": [
+        "replay.py212-238,294-313,406-436",
+        "worker.py346-352"
+      ],
+      "notes": "Fresh owner is supplied by caller; replay already reopens Engine.open, compares provenance, restores source snapshot, registers destination initial snapshot, checks all source ticks/events and final close. No new factory selector or constructor protocol."
+    },
+    {
+      "call": "export_run(source_uuid,source.zip,'bundle'); export_run(destination_uuid,replay.zip,'bundle')",
+      "references": [
+        "artifacts.py552-580,592-652"
+      ],
+      "notes": "Existing whitelist includes recording, registered snapshots, replay-report.json and job-events if present. Existing bundle hashes/byte bounds/exclusive publication/partial cleanup remain. Frozen controls/input evidence require a separate finite wrapper/manifest; do not broaden exporter whitelist."
+    }
+  ],
+  "exact_callers_unchanged": [
+    "src/palimpsest/replay.py294-298 Engine.open",
+    "src/palimpsest/worker.py355-359 Engine.open",
+    "src/palimpsest/evaluate.py245 separate reference._make_env route is deliberately outside this manual Engine seam",
+    "src/palimpsest/records.py51-74 RunWriter",
+    "src/palimpsest/snapshots.py324 onward capture/restore",
+    "src/palimpsest/artifacts.py616 export_run"
+  ],
+  "proposed_finite_tests": [
+    {
+      "file": "tests/test_engine.py (new authored constructor tests, or one narrowly scoped new test file)",
+      "cases": [
+        "Spy guarded import/class: manual requests only environment.mujoco_two_cam_env_random_obstacles, never run_connectome_rnn_checkpoint/train/shared_config/teacher/model helpers.",
+        "Exact explicit kwargs plus inherited defaults/seed=None for reproduction20, sparse5, and texture-variation realistic; bad profile/texture remains rejected before construction.",
+        "Engine.open still seeds Python/NumPy/Torch, sets2threads, configures world and resets with declared seed in original order; dummy authored constructor with distinctive defaults makes omitted kwargs visible.",
+        "Nonmanual teacher/FLYNN/Male still request old reference path; no model load test needs real assets.",
+        "Constructed environment or renderer failure preserves existing writer failed status and renderer/env/writer close without replacing prior outputs."
+      ]
+    },
+    {
+      "file": "tests/test_replay.py",
+      "cases": [
+        "Extend existing ReplayValidation39-59 contract: reopen uses same manual scenario/texture/device/seed/run identity and recording bounds without a new selector.",
+        "Existing _compatible unit fixture with environment events: changed engine.py source refuses while same fresh bytes pass; preserve lock/upstream equality and no relaxed compatibility.",
+        "One authored source owner -> registered tick0 snapshot -> nonzero records -> fresh action replay -> source/replay bundle integration. If authored native snapshot stand-in is used, label it and retain real-native opt-in qualification separately; existing SmallEnv alone cannot satisfy MuJoCo native snapshot API."
+      ]
+    },
+    {
+      "reuse_without_changes": [
+        "tests/test_engine.py93 onward existing command/reset/owner/record failure contracts",
+        "tests/test_profiles.py8-21 profile dimensions/validation;24+ actual opt-in scenarios",
+        "tests/test_replay.py114-129,141-198,210-255 actual opt-in manual replay/tamper/divergence",
+        "tests/test_snapshots.py PhysicsSnapshots uses actual MuJoCo, not an authored-native fixture",
+        "tests/test_artifacts.py210,242,258,282 bundle/snapshot/replay integrity;330 empty bundle is intentionally allowed",
+        "tests/test_export_close.py13-42 deferred output close cleanup"
+      ]
+    },
+    {
+      "acceptance_assertions": [
+        "All nonzero source ticks compared; replay status passed, first_divergence None, exact cameras/integers and float tolerance1e-6.",
+        "Tampered snapshot/event prefix/source hash/record chunk/extra bundle member fails; empty source cannot satisfy episode acceptance even though exporter supports it.",
+        "Closure failure is terminal failure; all old recordings/outputs remain immutable."
+      ]
+    }
+  ],
+  "distinct_actual_admission_still_required": [
+    {
+      "area": "Ordinary diagnostics/source access",
+      "evidence": "engine.py307-312;doctor.py15-18,55-79,101-123",
+      "required": "Engine.open still queries all declared distribution metadata, spawns Git and nvidia-smi, and calls asset verification even for manual. These are not removed/admitted by the constructor patch. A fixed held route needs an explicit compatible admission decision; no silent diagnostics bypass or implicit protected-asset read. Choosing an absent/empty asset root avoids reading present model bytes but is a frozen input decision, not proof that all diagnostics work under held leases."
+    },
+    {
+      "area": "Python/source import closure",
+      "evidence": "environment.py1-13;core/astar.py1-6",
+      "required": "Admit exact environment/core source modules plus gymnasium spaces/seeding, scipy.ndimage and glfw and their actual transitive imports. Existing four-import CPU profile does not include this closure. Direct route removes runner/agent/training/pandas/cv2/matplotlib direct imports but does not prove absence of all transitive optional imports."
+    },
+    {
+      "area": "Public model/scene bytes",
+      "evidence": "environment.py49-52,101-106",
+      "required": "Bind exact checker XML adjacent to the environment module and public scenario/seed/finite schedule; keep source namespaces/class identity. No XML/asset/catalog/model bytes were opened by this review. Realistic texture route needs additional assets and is not the minimal checkpoint-A selection."
+    },
+    {
+      "area": "Physics/array/Torch operators and snapshot native serialization",
+      "evidence": "environment.py102-106,129,133-160,191-199,237-310,313-371;snapshots.py182-188,191-215,324+",
+      "required": "Construction/reset/render and mj_forward/mj_step, NumPy arithmetic/Gym RNG/spaces, Torch manual_seed/thread/RNG profile, snapshot model/data __getstate__/__setstate__, integration state capture/restore and array decoding require distinct actual capability checks. Import PASS and authored tests do not establish them."
+    },
+    {
+      "area": "Renderer/backend/native/device closure",
+      "evidence": "environment.py105-118,514-523;engine.py287-288;snapshots.py228-230",
+      "required": "render_mode=None still creates Renderer and renders two camera images during construction/reset/every observation. Admit concrete EGL/backend version/device/context/native images/resources and exact output frame criteria; no window/human render or broad device mount is implied."
+    },
+    {
+      "area": "Execution/record/replay/export envelope",
+      "required": "Separate fixed worker dispatch/source roster/namespace inputs and finite ownership/deadlines/process/output/scratch/disk/FD bounds, fresh controls and one invocation; source episode and replay in fresh owners, normal cleanup/independent byte audit, finite portable wrapper verification. Existing import qualification cannot dispatch an episode or grant study/capability/rover authority."
+    }
+  ],
+  "exclusions": [
+    "No repository edits, tests, Python/vendor/repository imports, simulator/native/operator/renderer calls, current package/stage/resource census, asset/catalog/model/operator queries, Git or network operations.",
+    "Only source text and prior source-map JSON were read. The upstream pin is reused from retained map; Git state was not refreshed.",
+    "No claim of numerical equivalence, current runtime PASS, physical qualification, hard WCET, model capability or complete project release."
+  ],
+  "inspected_source_sha256": {
+    "src/palimpsest/engine.py": "c0091ecbf44069a5ef58cc8105675182f512dddb46c230c8e907cf84dba8539f",
+    "src/palimpsest/replay.py": "ef59d87b98c6201b7ea140eb9835228435fff46b11e97f64f8c695ccc33bd8fc",
+    "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+    "src/palimpsest/profiles.py": "09fd4be64e25eb28554b129bf9db172c110ec18bed0a782055e70126f72c971d",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/snapshots.py": "22eee5484b49028a1a65839a47d1120883c1ce25b68abd8516b6a7657d1a2592",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+    "upstream/fly-gym/run_connectome_rnn_checkpoint.py": "8708e72aed42b2383d66c7efc5e41a81e21bb9d6dfca48e534a0ef300487cd34",
+    "upstream/fly-gym/shared_config.py": "8eb9a0b3f1f56fe98e056ac3cc7d6b728572e345f1f86df4e3619b2bff6ce001",
+    "upstream/fly-gym/train_connectome_rnn_dagger.py": "b1b0365ba5d85e0b05b18d2124e9948d2f844b31c3aa3b122420b0c917c96807",
+    "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+    "upstream/fly-gym/core/astar.py": "e000e623a9ae7fae6f2f7b6a03d64a7db84720c516b96d8812711025380e30a1"
+  }
+}

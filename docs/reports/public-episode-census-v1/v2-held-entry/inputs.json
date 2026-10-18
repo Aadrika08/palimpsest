@@ -1,0 +1,727 @@
+{
+ "source_files": [
+  {
+   "path": "pyproject.toml",
+   "size_bytes": 1103,
+   "sha256": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800"
+  },
+  {
+   "path": "upstream/fly-gym/.gitignore",
+   "size_bytes": 1683,
+   "sha256": "19567ab0c51e4b945dae80f54dded6daafd71b82f75f9d020785d2ca8a5ce7d6"
+  },
+  {
+   "path": "upstream/fly-gym/LICENSE",
+   "size_bytes": 1069,
+   "sha256": "10764b6b4c73bf08133910416883b42aa70881a2440ddbe54c5c622030ec95f9"
+  },
+  {
+   "path": "upstream/fly-gym/README.md",
+   "size_bytes": 14374,
+   "sha256": "c4c99375f590e254574c9c7216ce54088cb64ed63cbca4621432e761df4c6a42"
+  },
+  {
+   "path": "upstream/fly-gym/agents/__init__.py",
+   "size_bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "upstream/fly-gym/agents/connectome_rnn_agent.py",
+   "size_bytes": 29578,
+   "sha256": "4c1018f21032f9e65155141b10282469f6928e0564027fce2b6d95f1c6f80133"
+  },
+  {
+   "path": "upstream/fly-gym/agents/efficientnet_agent.py",
+   "size_bytes": 9719,
+   "sha256": "ef702b6461b5dad2d7825a028967a06a90ae2ceb14fe305ef11f323e3701ce67"
+  },
+  {
+   "path": "upstream/fly-gym/agents/mobilenet_agent.py",
+   "size_bytes": 10079,
+   "sha256": "6797507c74fb69d8028f2b4ae285b1dd3c0cb549ff206324afff0e5c9e96ca9f"
+  },
+  {
+   "path": "upstream/fly-gym/agents/teacher_analytic_agent.py",
+   "size_bytes": 8488,
+   "sha256": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/JO-C_and_JO-E.csv",
+   "size_bytes": 4225,
+   "sha256": "93e1ef45d1bd817ee73f949b595b3f1a430ed6055c83158457271ab3d1a9f8df"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/consolidated_cell_types.csv",
+   "size_bytes": 3691688,
+   "sha256": "df6e428c824979a72e3fb1e36cf9f00f88b6d59bb526ff8087b894a8fb2bbe32"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/data source.txt",
+   "size_bytes": 1268,
+   "sha256": "6aa19fb24f0304620889075b5e93a93bcb4d5bcb8ae25e4fdcc0908c1b35c75d"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/descending_neurons.csv",
+   "size_bytes": 76543,
+   "sha256": "28d630d66e6bc4766d5d69c3527ff5a75596ac0155b3a565d32c600c415d8935"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/head_bristles_left.csv",
+   "size_bytes": 8340,
+   "sha256": "b0c642f80af6c4937a333d3099111890e2f943c87efe3cfcf08489456283ea73"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/head_bristles_right.csv",
+   "size_bytes": 7585,
+   "sha256": "531ca4b81fe3244d759c5c31627ade2b3ad0bb5f4f32bddb9c494590bf40aaf7"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_left.csv",
+   "size_bytes": 164306,
+   "sha256": "dc9f28f54efe087180fd6a9c87cfe7943e37200090609943448b21f34fba1348"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_right.csv",
+   "size_bytes": 174299,
+   "sha256": "aed0fe89bd3bcd175ab88673954276337c30842d993e578367d3848fb69f8332"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/JO-C_and_JO-E.csv",
+   "size_bytes": 1340,
+   "sha256": "414d15c86fd78bfe34c79ca68ae935cea4e5b8bfee872f24e1447531f5057d41"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/consolidated_cell_types.csv",
+   "size_bytes": 1600520,
+   "sha256": "52c1b2340c7df1311687584e8642b007eae65001315b7a64a0ff109c238e020e"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/descending_neurons.csv",
+   "size_bytes": 8058,
+   "sha256": "7e417c6f86988e3797f1ed03ddaf9d5b9d711fa2f39b59960d6ae4cff829e499"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/generate_ws_network_new.py",
+   "size_bytes": 35909,
+   "sha256": "a22eb4af2ac8b4dcf35e13e6fdd2191e333635a348d9a8b53a1f84bffed46bed"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/head_bristles_left.csv",
+   "size_bytes": 171,
+   "sha256": "cb574a375257cd36b93a6cae412d2a6b1e8e668d360acb63a39c1f823863f7b5"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/head_bristles_right.csv",
+   "size_bytes": 248,
+   "sha256": "e53be521d051baad75df51d0ed63041ed7aeb2fbc4f23a3f1f6d2a677f5b8411"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/visual_column_L1_L2_L3_rear_view_left.csv",
+   "size_bytes": 118351,
+   "sha256": "4a6bd91c7cc4b60263f858d0ff039762cc4e85448d085b62a61691ba576ac1ab"
+  },
+  {
+   "path": "upstream/fly-gym/connectomes/ws_small_world/visual_column_L1_L2_L3_rear_view_right.csv",
+   "size_bytes": 125529,
+   "sha256": "d322b5786d243207834c80130e946c9d9861a0957e564d9e73f9600f7ea2e8dc"
+  },
+  {
+   "path": "upstream/fly-gym/core/__init__.py",
+   "size_bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "upstream/fly-gym/core/astar.py",
+   "size_bytes": 7044,
+   "sha256": "e000e623a9ae7fae6f2f7b6a03d64a7db84720c516b96d8812711025380e30a1"
+  },
+  {
+   "path": "upstream/fly-gym/core/utils.py",
+   "size_bytes": 14789,
+   "sha256": "75089c94aa9c88d9cbbcc2c0a21ee82ea1b7bb158323c017813abb98a451a9c4"
+  },
+  {
+   "path": "upstream/fly-gym/core/vfhplus.py",
+   "size_bytes": 20567,
+   "sha256": "8ceb30f0ee1a78fe916b5ebdc49ae37890991d7d344a756a3da0b9fd7c4f96eb"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/game.json",
+   "size_bytes": 91812,
+   "sha256": "409cd9ce3a69fb858babaae133855edacf0d1fd5835f4db958fae45f15c7d1c5"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/1.bin",
+   "size_bytes": 186408,
+   "sha256": "8ae2d0e47c3e84fcf29dffdf2bc7db7ccea73b0315bffb54c441473f26dae055"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/10.bin",
+   "size_bytes": 127532,
+   "sha256": "7f4b30162ac2547c8a06ef7837d2d759ede36618a70200d99b5403c669ecc8a2"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/11.bin",
+   "size_bytes": 199822,
+   "sha256": "6f0289b819ea9fc9eac79ac6a9bbc2801d911fb67be28896809fc531dd82ea85"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/12.bin",
+   "size_bytes": 214283,
+   "sha256": "c1b4577b6437f278810c1d850f4efa37fb60e7be3dc0657d3ed512d2bd3bf717"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/13.bin",
+   "size_bytes": 118483,
+   "sha256": "b1e1e54dc7c45be5710e89c456016d5a6f92209ed7b291bab4e27ca1d24309cc"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/14.bin",
+   "size_bytes": 209721,
+   "sha256": "3efabf396f7bf29c63a72a05467951b361857402530d50085115e8bc1fa042cb"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/15.bin",
+   "size_bytes": 125605,
+   "sha256": "c382657335a33b3b970168892b4cc4c8109b11650375ff3eb61117b61298f8b1"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/16.bin",
+   "size_bytes": 107112,
+   "sha256": "2995ce5f99d9578a974623169e5d3ea074cca5ffe1cbc582728deda8914b2283"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/17.bin",
+   "size_bytes": 208783,
+   "sha256": "944225816c9a0cd995d138fb62666088c1a3d4c819820ef0633875088bed7847"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/18.bin",
+   "size_bytes": 105352,
+   "sha256": "17d59e46da583e47d2f6c918bc931124951ed15ca354210e67602c2be7fd96d0"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/19.bin",
+   "size_bytes": 134676,
+   "sha256": "b9fbe84ec568d49fed5b64cf5412cf301e4e4a3c5a2032ff570f27528af3a664"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/2.bin",
+   "size_bytes": 139104,
+   "sha256": "b850cde1225f00e1462a446a0274f9a9181c2a102c63483c9a03e9151082ea16"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/20.bin",
+   "size_bytes": 250191,
+   "sha256": "3cfb0cad6818ca05e09755607be3f4709b0fc199fc809cdf0bcd0eda1dccce79"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/21.bin",
+   "size_bytes": 149702,
+   "sha256": "359ff2e2ecbb9aa00427c958e90875f08466cda562c78abe31e216dae51cbea0"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/22.bin",
+   "size_bytes": 239613,
+   "sha256": "ba81029ebbb904460d924e0901b0b1f8a91d2e5ac76e3449e38985ea073b4ed0"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/23.bin",
+   "size_bytes": 395067,
+   "sha256": "650adec6b0217294cbf5ed8585bad94f0ce4838f9298bbc902bd174e1f4c5bcb"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/24.bin",
+   "size_bytes": 123783,
+   "sha256": "51655b444a2f8cff6befd5d0dabb74e74e606c6d56eb7a36d0370cbc99e70c2b"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/25.bin",
+   "size_bytes": 114581,
+   "sha256": "74c0033e9f194b0395b685694420169854b49ce429615293db60cce18a627b0a"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/26.bin",
+   "size_bytes": 246850,
+   "sha256": "1ee198bb771f5918162a7cfaf3ffa0bcd848654d687eb9b167ed3d15db641ce3"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/27.bin",
+   "size_bytes": 254669,
+   "sha256": "07dd19b20aab9547668933fb313c2b2f2068563cfba6ad035379c336752ea6a5"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/28.bin",
+   "size_bytes": 168426,
+   "sha256": "ed06ba433ff43af8e4165a160475bc91c75694863aeaf88e88a3b60ebecaf393"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/29.bin",
+   "size_bytes": 258768,
+   "sha256": "3a958adee9f550f4bd3d4d94da0fd664efb992b394574a999cd5c9e835af9e83"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/3.bin",
+   "size_bytes": 131707,
+   "sha256": "55ab19998a67841f87b1f1cd03be91ac1ad897805b55603e3b5814ce2598f378"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/30.bin",
+   "size_bytes": 115005,
+   "sha256": "f600460e8ce4ca288baa1f728c3567fb6bbc4934fb97237b5a08d20cbdbb9b19"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/31.bin",
+   "size_bytes": 166767,
+   "sha256": "a370825093429179478f0265a599b4b1e671d80bb3492d4dbfef173339c6f7b9"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/32.bin",
+   "size_bytes": 168753,
+   "sha256": "36efa0ddec1ee0f6e1a1a8bf159863962095da121c2aef7fedbec79617d00c06"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/33.bin",
+   "size_bytes": 271150,
+   "sha256": "8a578a3ff019adb4ddfd2b87b087bab99b137267fb2540bfe717831a0be19254"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/34.bin",
+   "size_bytes": 244107,
+   "sha256": "3300d36846999cb6adab1edac5fcb4ce9d3cc526864c2c7b2be29c17491eca44"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/35.bin",
+   "size_bytes": 268557,
+   "sha256": "e3ca42156a2131021648576397518282d7443d17c28a353d50f7f4670dbd3b5e"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/36.bin",
+   "size_bytes": 110457,
+   "sha256": "1c0ddde26ca03f5811cc3e80ab8c112ec261e6e5ac6a5575a0cfe86098c8673b"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/37.bin",
+   "size_bytes": 149110,
+   "sha256": "41dabbd8d5276640f3a8572aa39d64cc0298e2c30007bea3caff855fd6b60e7e"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/38.bin",
+   "size_bytes": 121531,
+   "sha256": "9f8831d22ac66c701a48783b8c125ff653333c1aae5c917eeb3fe7e1ec509abc"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/39.bin",
+   "size_bytes": 199297,
+   "sha256": "830bddb75631b02bb6aae8917428af811029fd3c29a7b5b26dab6ac15e961c6f"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/4.bin",
+   "size_bytes": 218962,
+   "sha256": "df1f17e24e1e0b3ef77caa950dd1263f5e7aa3a24595f03e844a7e40e2501af9"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/40.bin",
+   "size_bytes": 108817,
+   "sha256": "f5a06cf3c284abe3d144cf4922c593fabe69ca8a5e06bad1d05ed68827541bd4"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/41.bin",
+   "size_bytes": 154563,
+   "sha256": "2293c94bc3ee34c30acca4c0e93360d7b8bcf1968a1185bb6988f928204579aa"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/42.bin",
+   "size_bytes": 152747,
+   "sha256": "249dcf69403d9b97dbe86b4b3f7aae330a10b4db88ced7ed4d15488a32c258d9"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/43.bin",
+   "size_bytes": 158582,
+   "sha256": "d401ac1115e4b287dca0dc4612e3d344a7740b4a3af96153b04edea890c04a48"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/44.bin",
+   "size_bytes": 175523,
+   "sha256": "7d9d5ca53f75a0124f82a3bbbede165ea2a57c0fa6abd0bcc5477def5bd05697"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/45.bin",
+   "size_bytes": 184804,
+   "sha256": "ad54ba0d525bfed4536a69dcb78619d3ce64fc7e9d78db134b2ec723bbffc66d"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/46.bin",
+   "size_bytes": 392122,
+   "sha256": "00d1fec0da82db02fc41e5a85aae8a8548bef3eee5e58226525892244bc203a9"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/47.bin",
+   "size_bytes": 494929,
+   "sha256": "24774ce2fa1bb2ace64150115d489212b6da2fc4269519e5b05e4d053738f81c"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/48.bin",
+   "size_bytes": 203879,
+   "sha256": "eafd9a1b05ae7e855069244e799ee5fe72cf2c02651aef9458a11d00b2b4e014"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/49.bin",
+   "size_bytes": 198095,
+   "sha256": "dee502e24332d7b63e5fec26587285439e594d85ab2a5b8a74494c205567835e"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/5.bin",
+   "size_bytes": 169048,
+   "sha256": "41950e7f88bd7b7c128bf161a32d34f1c40d11e9be34d18b8293e4ca29ccdde4"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/50.bin",
+   "size_bytes": 103563,
+   "sha256": "7990ec93074f547c22aac39534648cd0e0005beacc21b965938a903437bcda1b"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/6.bin",
+   "size_bytes": 147323,
+   "sha256": "c308160dee70f711fe74680babf0a704d55171df061b2a6b447470ff33ab39e7"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/7.bin",
+   "size_bytes": 115327,
+   "sha256": "32dbcaf30364b3cfdaefce955746663e33546c0769955e48e7d63617445e4e53"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/8.bin",
+   "size_bytes": 385173,
+   "sha256": "7eb1078b18bb988bab544e0d33b28b95055ab733f09162912b790adb4888054f"
+  },
+  {
+   "path": "upstream/fly-gym/docs/data/runs/9.bin",
+   "size_bytes": 112112,
+   "sha256": "46142af9661a5b412686174e6d8f26e213ab85e8a93f1a3d26d6fd274010c95f"
+  },
+  {
+   "path": "upstream/fly-gym/docs/game.js",
+   "size_bytes": 22169,
+   "sha256": "6b08ce82e61fbf80103716f23f58eaad301b61bbb57493e2fc69ba01187c836f"
+  },
+  {
+   "path": "upstream/fly-gym/docs/index.html",
+   "size_bytes": 7535,
+   "sha256": "0d78ab8ce8f0ab6ab6e9392167ab7e5246dfe12c0d7165877a7c2f8133a7107f"
+  },
+  {
+   "path": "upstream/fly-gym/docs/sim.js",
+   "size_bytes": 15703,
+   "sha256": "b1154527c54fd7eac609f7a2d9dee7d1088771939a1462a4042431e3e8788a7d"
+  },
+  {
+   "path": "upstream/fly-gym/environment/__init__.py",
+   "size_bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "upstream/fly-gym/environment/mujoco_model_random_obstacles.xml",
+   "size_bytes": 16971,
+   "sha256": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+  },
+  {
+   "path": "upstream/fly-gym/environment/mujoco_model_random_obstacles_realistic.xml",
+   "size_bytes": 17075,
+   "sha256": "110941ff620b3a0d537416aea8b3a8ee4edc69a10e22e80818f012fd14c983e1"
+  },
+  {
+   "path": "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py",
+   "size_bytes": 33934,
+   "sha256": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751"
+  },
+  {
+   "path": "upstream/fly-gym/environment/textures/ground.png",
+   "size_bytes": 1083892,
+   "sha256": "47ef6e4045a91ba3c4178d60c2dd7ba3c832cafe4de6b50c5b836cf37bf70588"
+  },
+  {
+   "path": "upstream/fly-gym/environment/textures/obstacle.png",
+   "size_bytes": 933780,
+   "sha256": "9ba9605c05f77a4abd98807c871269f4899dbd10d043c936bb1001094cec339d"
+  },
+  {
+   "path": "upstream/fly-gym/environment/textures/skybox.png",
+   "size_bytes": 590265,
+   "sha256": "0bda7aabb8d943c05a93b0d2fe34568116d0cee52f4c24bb3b70b65178e3b709"
+  },
+  {
+   "path": "upstream/fly-gym/environment/textures/wall.png",
+   "size_bytes": 820338,
+   "sha256": "c0db29e31faeb6f1165a6405e27bf9ba857d47ec019a23c272573c223eda498b"
+  },
+  {
+   "path": "upstream/fly-gym/export_web_game.py",
+   "size_bytes": 16651,
+   "sha256": "f0bfa52bfac2740f08ff6315b55e3aa446a69add0648402c84703cdd8d712a79"
+  },
+  {
+   "path": "upstream/fly-gym/models/__init__.py",
+   "size_bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "upstream/fly-gym/models/connectome_rnn_model.py",
+   "size_bytes": 11055,
+   "sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+  },
+  {
+   "path": "upstream/fly-gym/models/teacher_analytic_model.py",
+   "size_bytes": 2928,
+   "sha256": "1b441217112b913968723d4de761d3b0fd1adabad7c5ce9b754928a40f16e8ab"
+  },
+  {
+   "path": "upstream/fly-gym/play_vs_connectome_rnn.py",
+   "size_bytes": 20982,
+   "sha256": "3314e2980d6df6c6ca8e0803bb6985b2673cbb380a103cecfdd23118d1f31434"
+  },
+  {
+   "path": "upstream/fly-gym/requirements.txt",
+   "size_bytes": 771,
+   "sha256": "835f2ff13f91a4bd85f7742b2537a1d04b75e5b4d6468320dc2b511a0d10fcb8"
+  },
+  {
+   "path": "upstream/fly-gym/results/bar_average_speed.png",
+   "size_bytes": 162109,
+   "sha256": "8c508e70b15645ebfc594cbfb4b58974a9259bc23dadb03ec464bd3092300c1e"
+  },
+  {
+   "path": "upstream/fly-gym/results/bar_average_spl.png",
+   "size_bytes": 132907,
+   "sha256": "4fca1f46b1e8cfc3571611989af74f6c2f4acf59c08dbfb54ec59e1c44ea409f"
+  },
+  {
+   "path": "upstream/fly-gym/results/bar_average_spl_success.png",
+   "size_bytes": 152104,
+   "sha256": "411620cfc2fc65c4a4fdc6f73294c9ae1b7a421d659a2b7a311f31ad2bf867b0"
+  },
+  {
+   "path": "upstream/fly-gym/results/bar_collisions.png",
+   "size_bytes": 154427,
+   "sha256": "6d2c8a464df32e4180a2fa5d3f9203b626f3f1926c4282b62c4fe58ffe853360"
+  },
+  {
+   "path": "upstream/fly-gym/results/bar_success_rate.png",
+   "size_bytes": 133326,
+   "sha256": "c5ce98967449444e4fdccce795f95fbda914bf8922148f86c01b630107238272"
+  },
+  {
+   "path": "upstream/fly-gym/results/bar_time_to_goal.png",
+   "size_bytes": 135115,
+   "sha256": "1cbf25912e601877679fa2271d4b1597ff7cc71de0ea6602c99ccbbf0b3ff219"
+  },
+  {
+   "path": "upstream/fly-gym/results/collision_statistics.csv",
+   "size_bytes": 683,
+   "sha256": "f5e6f00fbec7b3384f35cad648c2926b0f43f58711aeed0e1fda33453f24130f"
+  },
+  {
+   "path": "upstream/fly-gym/results/collision_statistics_checker_texture.csv",
+   "size_bytes": 1894,
+   "sha256": "d9e30e89a744152af0b00d2236575ddea4c1cc4ad6e41ba05584c68b6af595a8"
+  },
+  {
+   "path": "upstream/fly-gym/results/direction_tuning_plot.png",
+   "size_bytes": 65419,
+   "sha256": "7b2c86cc072a397bac6ba2815ca354a0610be0d5f5534268aac16b02aa3e4fa0"
+  },
+  {
+   "path": "upstream/fly-gym/results/spl_accumulated_histograms.png",
+   "size_bytes": 353551,
+   "sha256": "1f223821ddad0f25ac0014d71e92b219583e0efc0595a94d15fccc98028bc0bb"
+  },
+  {
+   "path": "upstream/fly-gym/results/spl_histograms.png",
+   "size_bytes": 358529,
+   "sha256": "011fd914f1142aa41f507ec22f6451318373a41451152805a45993cd4915a622"
+  },
+  {
+   "path": "upstream/fly-gym/results/spl_violin_plots.png",
+   "size_bytes": 87877,
+   "sha256": "adff97879f1696a25afecc7d90623a138451e389cdcc84ef068827980ffaa199"
+  },
+  {
+   "path": "upstream/fly-gym/run_connectome_rnn_checkpoint.py",
+   "size_bytes": 24952,
+   "sha256": "8708e72aed42b2383d66c7efc5e41a81e21bb9d6dfca48e534a0ef300487cd34"
+  },
+  {
+   "path": "upstream/fly-gym/run_vision_agent_checkpoint.py",
+   "size_bytes": 18259,
+   "sha256": "4203eed57e31c940ebfff0df5f63da160044afa03ecedd7a483960149a8cc336"
+  },
+  {
+   "path": "upstream/fly-gym/shared_config.py",
+   "size_bytes": 6044,
+   "sha256": "8eb9a0b3f1f56fe98e056ac3cc7d6b728572e345f1f86df4e3619b2bff6ce001"
+  },
+  {
+   "path": "upstream/fly-gym/tests/debug_rnn_grad.py",
+   "size_bytes": 2655,
+   "sha256": "92fc42c20912db7c98aa6ca8634f747ba31bb69baef5cbd3f817f19615871819"
+  },
+  {
+   "path": "upstream/fly-gym/tests/test_vfhplus.py",
+   "size_bytes": 2722,
+   "sha256": "d77224237bf0b9d2fd55e3a4af160dc9937f82594c617e527d129f2eb3f37bef"
+  },
+  {
+   "path": "upstream/fly-gym/tests/tune_direction_threshold.py",
+   "size_bytes": 8656,
+   "sha256": "a8d2f6ba4e2ba393cf611c839afa09071c22cf5808cfb707fd1aed26ec316fb7"
+  },
+  {
+   "path": "upstream/fly-gym/tools/analysis_pca.py",
+   "size_bytes": 10831,
+   "sha256": "988ede02e6abe9908affb24346bcff0b53a95ff22e1985c599c8b689e49a2f9b"
+  },
+  {
+   "path": "upstream/fly-gym/tools/analysis_pca_statistics.py",
+   "size_bytes": 19717,
+   "sha256": "2f9d858dc37480d60904cee19678b1cadbd8ac3ed2709a57a2345ec99beeb51a"
+  },
+  {
+   "path": "upstream/fly-gym/tools/collision_statistics.py",
+   "size_bytes": 20280,
+   "sha256": "250578753ae183059da7ecac3b554b26b2666a0438b43ab4f8abf7d317319c60"
+  },
+  {
+   "path": "upstream/fly-gym/tools/compare_trajectories.py",
+   "size_bytes": 6412,
+   "sha256": "ebcb2b90c67c7d3af8cd1ab1c3ce76576dc6c05e554fb2cbed8e4b0bff015e17"
+  },
+  {
+   "path": "upstream/fly-gym/tools/count_collisions.py",
+   "size_bytes": 8061,
+   "sha256": "e10fa6ea99b33974837fa5dd7677f518be53663bb99a007afcc4c50b6485e6fc"
+  },
+  {
+   "path": "upstream/fly-gym/tools/visualize_episodes.py",
+   "size_bytes": 5288,
+   "sha256": "60b0c8dde801854f26b8af7dea0a063783230801ef46386aa6c3950e345f0b3d"
+  },
+  {
+   "path": "upstream/fly-gym/train_connectome_rnn_dagger.py",
+   "size_bytes": 44408,
+   "sha256": "b1b0365ba5d85e0b05b18d2124e9948d2f844b31c3aa3b122420b0c917c96807"
+  },
+  {
+   "path": "upstream/fly-gym/train_visionnet_dagger.py",
+   "size_bytes": 42324,
+   "sha256": "962d8beab7c58fb2055f29019cdd2b8d02058a79ded1ed0fc947f5f361b38dbc"
+  },
+  {
+   "path": "uv.lock",
+   "size_bytes": 160034,
+   "sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+  }
+ ],
+ "distributions": [
+  {
+   "name": "glfw",
+   "version": "2.10.0",
+   "root_index": 0,
+   "metadata_path": "glfw-2.10.0.dist-info/METADATA"
+  },
+  {
+   "name": "gymnasium",
+   "version": "1.2.1",
+   "root_index": 0,
+   "metadata_path": "gymnasium-1.2.1.dist-info/METADATA"
+  },
+  {
+   "name": "matplotlib",
+   "version": "3.10.1",
+   "root_index": 0,
+   "metadata_path": "matplotlib-3.10.1.dist-info/METADATA"
+  },
+  {
+   "name": "mujoco",
+   "version": "3.3.6",
+   "root_index": 0,
+   "metadata_path": "mujoco-3.3.6.dist-info/METADATA"
+  },
+  {
+   "name": "networkx",
+   "version": "3.4.2",
+   "root_index": 0,
+   "metadata_path": "networkx-3.4.2.dist-info/METADATA"
+  },
+  {
+   "name": "numpy",
+   "version": "2.2.5",
+   "root_index": 0,
+   "metadata_path": "numpy-2.2.5.dist-info/METADATA"
+  },
+  {
+   "name": "opencv-python",
+   "version": "4.12.0.88",
+   "root_index": 0,
+   "metadata_path": "opencv_python-4.12.0.88.dist-info/METADATA"
+  },
+  {
+   "name": "pandas",
+   "version": "2.2.3",
+   "root_index": 0,
+   "metadata_path": "pandas-2.2.3.dist-info/METADATA"
+  },
+  {
+   "name": "py7zr",
+   "version": "1.1.3",
+   "root_index": 0,
+   "metadata_path": "py7zr-1.1.3.dist-info/METADATA"
+  },
+  {
+   "name": "python-louvain",
+   "version": "0.16",
+   "root_index": 0,
+   "metadata_path": "python_louvain-0.16.dist-info/METADATA"
+  },
+  {
+   "name": "scikit-learn",
+   "version": "1.8.0",
+   "root_index": 0,
+   "metadata_path": "scikit_learn-1.8.0.dist-info/METADATA"
+  },
+  {
+   "name": "scipy",
+   "version": "1.15.2",
+   "root_index": 0,
+   "metadata_path": "scipy-1.15.2.dist-info/METADATA"
+  },
+  {
+   "name": "seaborn",
+   "version": "0.13.2",
+   "root_index": 0,
+   "metadata_path": "seaborn-0.13.2.dist-info/METADATA"
+  },
+  {
+   "name": "torch",
+   "version": "2.9.0+cpu",
+   "root_index": 0,
+   "metadata_path": "torch-2.9.0+cpu.dist-info/METADATA"
+  },
+  {
+   "name": "torchvision",
+   "version": "0.24.0+cpu",
+   "root_index": 0,
+   "metadata_path": "torchvision-0.24.0+cpu.dist-info/METADATA"
+  }
+ ],
+ "runtime": {
+  "root": "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin",
+  "files": [
+   {
+    "path": "python3.11",
+    "size_bytes": 21662864,
+    "sha256": "572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a"
+   }
+  ],
+  "python_version": "3.11.15"
+ }
+}

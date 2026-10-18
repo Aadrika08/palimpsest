@@ -1,0 +1,79 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_condition_task_failure_uses_verified_source_stall_state _________
+
+    def test_condition_task_failure_uses_verified_source_stall_state():
+        snapshot={'application':{'episode_step':727},
+                  'environment':{'values':{'_stall_steps':49,'_prev_xy':[0.,0.]}}}
+        outcome={'reason':'stalled','episode':0,'steps':728}
+        report={'goal':False,'outcome':outcome,'total_ticks':728,'final_phase':'terminated',
+            'final_memory':{'supervisor':{'continuation_start_tick':727}}}
+        data={'rows':[{'tick':727,'pose':[0.,0.,0.],'next_pose':[0.,0.,0.],'action':[.1,0.]}],
+              'events':[{'kind':'episode_finished','outcome':outcome}]}
+>       assert p.audit_travel_task_failure(data,report,source_snapshot=snapshot)=='stalled'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: audit_travel_task_failure() got an unexpected keyword argument 'source_snapshot'
+
+tests/test_memory_selected_pilot.py:129: TypeError
+_____ test_post_acquisition_time_limit_uses_declared_continuation_boundary _____
+
+    def test_post_acquisition_time_limit_uses_declared_continuation_boundary():
+        total=1627;outcome={'reason':'time_limit','episode':0,'steps':total}
+        rows=[{'pose':[0.,0.,0.],'next_pose':[.01,0.,0.],'action':[.5,0.]} for _ in range(total)]
+        data={'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}
+        report={'goal':False,'outcome':outcome,'total_ticks':total,'final_phase':'truncated',
+                'final_memory':{'supervisor':{'continuation_start_tick':727}}}
+>       assert p.audit_travel_task_failure(data,report)=='time_limit'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_travel_study.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_decision_pilot.py:1029: in audit_travel_task_failure
+    return audit_native_prefix_terminal(data,report,expected_cap=min(2100,start+900))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_decision_pilot.py:767: in audit_native_prefix_terminal
+    or [int(r['tick']) for r in data['rows']] != list(range(start_tick,total))
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x729b84c9f280>
+
+>   or [int(r['tick']) for r in data['rows']] != list(range(start_tick,total))
+            ^^^^^^^^^
+    or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
+E   KeyError: 'tick'
+
+scripts/memory_decision_pilot.py:767: KeyError
+_ test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion _
+
+    def test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion():
+        p = study().pilot
+        def fixture(reason,count,movement):
+            outcome = {'reason':reason,'episode':0,'steps':count}
+            rows = [{'pose':[0.,0.,0.],'next_pose':[movement,0.,0.],'action':[.5,0.]} for _ in range(count)]
+            return {'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}, {
+                'outcome':outcome,'total_ticks':count,'final_phase':'truncated' if reason=='time_limit' else 'terminated'}
+        data, report = fixture('time_limit',1200,.01)
+>       assert p.audit_native_prefix_terminal(data,report) == 'time_limit'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_waypoint_study.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_decision_pilot.py:767: in audit_native_prefix_terminal
+    or [int(r['tick']) for r in data['rows']] != list(range(start_tick,total))
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x729b829cc550>
+
+>   or [int(r['tick']) for r in data['rows']] != list(range(start_tick,total))
+            ^^^^^^^^^
+    or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
+E   KeyError: 'tick'
+
+scripts/memory_decision_pilot.py:767: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_condition_task_failure_uses_verified_source_stall_state
+FAILED tests/test_memory_travel_study.py::test_post_acquisition_time_limit_uses_declared_continuation_boundary
+FAILED tests/test_memory_waypoint_study.py::test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion
+3 failed, 46 deselected in 0.26s

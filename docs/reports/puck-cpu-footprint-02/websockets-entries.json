@@ -1,0 +1,562 @@
+[
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1542,
+    "compression": 8,
+    "crc32": 1285242000,
+    "external_attr": 2175008768,
+    "name": "websockets/__init__.py",
+    "size_bytes": 7450
+  },
+  {
+    "compressed_size": 58,
+    "compression": 8,
+    "crc32": 761477862,
+    "external_attr": 2175008768,
+    "name": "websockets/__main__.py",
+    "size_bytes": 62
+  },
+  {
+    "compressed_size": 301,
+    "compression": 8,
+    "crc32": 3847852310,
+    "external_attr": 2175008768,
+    "name": "websockets/auth.py",
+    "size_bytes": 568
+  },
+  {
+    "compressed_size": 2546,
+    "compression": 8,
+    "crc32": 2516912898,
+    "external_attr": 2175008768,
+    "name": "websockets/cli.py",
+    "size_bytes": 6892
+  },
+  {
+    "compressed_size": 4686,
+    "compression": 8,
+    "crc32": 3156589721,
+    "external_attr": 2175008768,
+    "name": "websockets/client.py",
+    "size_bytes": 16140
+  },
+  {
+    "compressed_size": 200,
+    "compression": 8,
+    "crc32": 1231199556,
+    "external_attr": 2175008768,
+    "name": "websockets/connection.py",
+    "size_bytes": 323
+  },
+  {
+    "compressed_size": 2588,
+    "compression": 8,
+    "crc32": 2286483505,
+    "external_attr": 2175008768,
+    "name": "websockets/datastructures.py",
+    "size_bytes": 7238
+  },
+  {
+    "compressed_size": 3224,
+    "compression": 8,
+    "crc32": 2570013491,
+    "external_attr": 2175008768,
+    "name": "websockets/exceptions.py",
+    "size_bytes": 14308
+  },
+  {
+    "compressed_size": 4964,
+    "compression": 8,
+    "crc32": 3874574800,
+    "external_attr": 2175008768,
+    "name": "websockets/frames.py",
+    "size_bytes": 16709
+  },
+  {
+    "compressed_size": 3747,
+    "compression": 8,
+    "crc32": 996978288,
+    "external_attr": 2175008768,
+    "name": "websockets/headers.py",
+    "size_bytes": 16046
+  },
+  {
+    "compressed_size": 4864,
+    "compression": 8,
+    "crc32": 3027749290,
+    "external_attr": 2175008768,
+    "name": "websockets/http11.py",
+    "size_bytes": 18245
+  },
+  {
+    "compressed_size": 946,
+    "compression": 8,
+    "crc32": 1885193823,
+    "external_attr": 2175008768,
+    "name": "websockets/imports.py",
+    "size_bytes": 2795
+  },
+  {
+    "compressed_size": 6585,
+    "compression": 8,
+    "crc32": 2415915505,
+    "external_attr": 2175008768,
+    "name": "websockets/protocol.py",
+    "size_bytes": 27204
+  },
+  {
+    "compressed_size": 1812,
+    "compression": 8,
+    "crc32": 3186125449,
+    "external_attr": 2175008768,
+    "name": "websockets/proxy.py",
+    "size_bytes": 4969
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "websockets/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 6314,
+    "compression": 8,
+    "crc32": 2769800378,
+    "external_attr": 2175008768,
+    "name": "websockets/server.py",
+    "size_bytes": 24679
+  },
+  {
+    "compressed_size": 2164,
+    "compression": 8,
+    "crc32": 2005930667,
+    "external_attr": 2175008768,
+    "name": "websockets/speedups.c",
+    "size_bytes": 5920
+  },
+  {
+    "compressed_size": 11929,
+    "compression": 8,
+    "crc32": 3916728867,
+    "external_attr": 2179792896,
+    "name": "websockets/speedups.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 37664
+  },
+  {
+    "compressed_size": 84,
+    "compression": 8,
+    "crc32": 102929861,
+    "external_attr": 2175008768,
+    "name": "websockets/speedups.pyi",
+    "size_bytes": 102
+  },
+  {
+    "compressed_size": 1134,
+    "compression": 8,
+    "crc32": 1029902147,
+    "external_attr": 2175008768,
+    "name": "websockets/streams.py",
+    "size_bytes": 4610
+  },
+  {
+    "compressed_size": 668,
+    "compression": 8,
+    "crc32": 3126716850,
+    "external_attr": 2175008768,
+    "name": "websockets/typing.py",
+    "size_bytes": 1840
+  },
+  {
+    "compressed_size": 1170,
+    "compression": 8,
+    "crc32": 641652258,
+    "external_attr": 2175008768,
+    "name": "websockets/uri.py",
+    "size_bytes": 3125
+  },
+  {
+    "compressed_size": 874,
+    "compression": 8,
+    "crc32": 84698577,
+    "external_attr": 2175008768,
+    "name": "websockets/utils.py",
+    "size_bytes": 2022
+  },
+  {
+    "compressed_size": 1161,
+    "compression": 8,
+    "crc32": 663177228,
+    "external_attr": 2175008768,
+    "name": "websockets/version.py",
+    "size_bytes": 3202
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets/asyncio/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "websockets/asyncio/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 7890,
+    "compression": 8,
+    "crc32": 4190404565,
+    "external_attr": 2175008768,
+    "name": "websockets/asyncio/client.py",
+    "size_bytes": 30554
+  },
+  {
+    "compressed_size": 11017,
+    "compression": 8,
+    "crc32": 1423446336,
+    "external_attr": 2175008768,
+    "name": "websockets/asyncio/connection.py",
+    "size_bytes": 49740
+  },
+  {
+    "compressed_size": 2890,
+    "compression": 8,
+    "crc32": 2792154148,
+    "external_attr": 2175008768,
+    "name": "websockets/asyncio/messages.py",
+    "size_bytes": 11096
+  },
+  {
+    "compressed_size": 2275,
+    "compression": 8,
+    "crc32": 3047743618,
+    "external_attr": 2175008768,
+    "name": "websockets/asyncio/router.py",
+    "size_bytes": 7783
+  },
+  {
+    "compressed_size": 8673,
+    "compression": 8,
+    "crc32": 2973061568,
+    "external_attr": 2175008768,
+    "name": "websockets/asyncio/server.py",
+    "size_bytes": 34126
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets/extensions/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 75,
+    "compression": 8,
+    "crc32": 2986613632,
+    "external_attr": 2175008768,
+    "name": "websockets/extensions/__init__.py",
+    "size_bytes": 98
+  },
+  {
+    "compressed_size": 707,
+    "compression": 8,
+    "crc32": 1438911270,
+    "external_attr": 2175008768,
+    "name": "websockets/extensions/base.py",
+    "size_bytes": 2903
+  },
+  {
+    "compressed_size": 4406,
+    "compression": 8,
+    "crc32": 3832127275,
+    "external_attr": 2175008768,
+    "name": "websockets/extensions/permessage_deflate.py",
+    "size_bytes": 25840
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets/legacy/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 186,
+    "compression": 8,
+    "crc32": 3254920045,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/__init__.py",
+    "size_bytes": 276
+  },
+  {
+    "compressed_size": 1908,
+    "compression": 8,
+    "crc32": 3421024274,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/auth.py",
+    "size_bytes": 6531
+  },
+  {
+    "compressed_size": 7022,
+    "compression": 8,
+    "crc32": 2293823282,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/client.py",
+    "size_bytes": 27226
+  },
+  {
+    "compressed_size": 707,
+    "compression": 8,
+    "crc32": 2739665933,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/exceptions.py",
+    "size_bytes": 1924
+  },
+  {
+    "compressed_size": 1947,
+    "compression": 8,
+    "crc32": 2847841184,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/framing.py",
+    "size_bytes": 6374
+  },
+  {
+    "compressed_size": 1283,
+    "compression": 8,
+    "crc32": 901794989,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/handshake.py",
+    "size_bytes": 5285
+  },
+  {
+    "compressed_size": 2150,
+    "compression": 8,
+    "crc32": 1234605079,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/http.py",
+    "size_bytes": 7061
+  },
+  {
+    "compressed_size": 15469,
+    "compression": 8,
+    "crc32": 2072846976,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/protocol.py",
+    "size_bytes": 63645
+  },
+  {
+    "compressed_size": 10957,
+    "compression": 8,
+    "crc32": 2310095021,
+    "external_attr": 2175008768,
+    "name": "websockets/legacy/server.py",
+    "size_bytes": 44835
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets/sync/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 9554,
+    "compression": 8,
+    "crc32": 1262936785,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/client.py",
+    "size_bytes": 39916
+  },
+  {
+    "compressed_size": 10898,
+    "compression": 8,
+    "crc32": 979880134,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/connection.py",
+    "size_bytes": 48680
+  },
+  {
+    "compressed_size": 3349,
+    "compression": 8,
+    "crc32": 328974895,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/messages.py",
+    "size_bytes": 12826
+  },
+  {
+    "compressed_size": 2120,
+    "compression": 8,
+    "crc32": 2325167376,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/router.py",
+    "size_bytes": 7212
+  },
+  {
+    "compressed_size": 9074,
+    "compression": 8,
+    "crc32": 1329756787,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/server.py",
+    "size_bytes": 34422
+  },
+  {
+    "compressed_size": 417,
+    "compression": 8,
+    "crc32": 2430831202,
+    "external_attr": 2175008768,
+    "name": "websockets/sync/utils.py",
+    "size_bytes": 1107
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets/trio/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 7969,
+    "compression": 8,
+    "crc32": 1369875105,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/client.py",
+    "size_bytes": 30197
+  },
+  {
+    "compressed_size": 10654,
+    "compression": 8,
+    "crc32": 750520587,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/connection.py",
+    "size_bytes": 49248
+  },
+  {
+    "compressed_size": 2685,
+    "compression": 8,
+    "crc32": 402890203,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/messages.py",
+    "size_bytes": 10476
+  },
+  {
+    "compressed_size": 2222,
+    "compression": 8,
+    "crc32": 1157784790,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/router.py",
+    "size_bytes": 7196
+  },
+  {
+    "compressed_size": 6621,
+    "compression": 8,
+    "crc32": 3131108549,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/server.py",
+    "size_bytes": 25805
+  },
+  {
+    "compressed_size": 453,
+    "compression": 8,
+    "crc32": 1166363472,
+    "external_attr": 2175008768,
+    "name": "websockets/trio/utils.py",
+    "size_bytes": 956
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets-17.1.dist-info/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2529,
+    "compression": 8,
+    "crc32": 2958651903,
+    "external_attr": 2175008768,
+    "name": "websockets-17.1.dist-info/METADATA",
+    "size_bytes": 6340
+  },
+  {
+    "compressed_size": 120,
+    "compression": 8,
+    "crc32": 2053832385,
+    "external_attr": 2175008768,
+    "name": "websockets-17.1.dist-info/WHEEL",
+    "size_bytes": 186
+  },
+  {
+    "compressed_size": 44,
+    "compression": 8,
+    "crc32": 971341965,
+    "external_attr": 2175008768,
+    "name": "websockets-17.1.dist-info/entry_points.txt",
+    "size_bytes": 51
+  },
+  {
+    "compressed_size": 13,
+    "compression": 8,
+    "crc32": 2107704779,
+    "external_attr": 2175008768,
+    "name": "websockets-17.1.dist-info/top_level.txt",
+    "size_bytes": 11
+  },
+  {
+    "compressed_size": 2700,
+    "compression": 8,
+    "crc32": 3117966179,
+    "external_attr": 2176057344,
+    "name": "websockets-17.1.dist-info/RECORD",
+    "size_bytes": 5186
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "websockets-17.1.dist-info/licenses/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 765,
+    "compression": 8,
+    "crc32": 3124574437,
+    "external_attr": 2175008768,
+    "name": "websockets-17.1.dist-info/licenses/LICENSE",
+    "size_bytes": 1514
+  }
+]

@@ -1,0 +1,53 @@
+FFFFFF
+======================================================================
+FAIL: test_audited_task_failure_is_distinct_from_completed_pass (__main__.ReadoutTests.test_audited_task_failure_is_distinct_from_completed_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 14, in setUp
+    self.fail('Independent readout is not implemented')
+AssertionError: Independent readout is not implemented
+
+======================================================================
+FAIL: test_index_detects_payload_changes_and_path_escape (__main__.ReadoutTests.test_index_detects_payload_changes_and_path_escape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 14, in setUp
+    self.fail('Independent readout is not implemented')
+AssertionError: Independent readout is not implemented
+
+======================================================================
+FAIL: test_newer_pending_receipt_survives_stale_canonical (__main__.ReadoutTests.test_newer_pending_receipt_survives_stale_canonical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 14, in setUp
+    self.fail('Independent readout is not implemented')
+AssertionError: Independent readout is not implemented
+
+======================================================================
+FAIL: test_restore_launcher_field_does_not_break_independent_comparison (__main__.ReadoutTests.test_restore_launcher_field_does_not_break_independent_comparison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 14, in setUp
+    self.fail('Independent readout is not implemented')
+AssertionError: Independent readout is not implemented
+
+======================================================================
+FAIL: test_restore_must_match_trace_state_and_exactly_five_ticks (__main__.ReadoutTests.test_restore_must_match_trace_state_and_exactly_five_ticks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 14, in setUp
+    self.fail('Independent readout is not implemented')
+AssertionError: Independent readout is not implemented
+
+======================================================================
+FAIL: test_unscored_started_owner_is_not_unattempted (__main__.ReadoutTests.test_unscored_started_owner_is_not_unattempted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 14, in setUp
+    self.fail('Independent readout is not implemented')
+AssertionError: Independent readout is not implemented
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=6)

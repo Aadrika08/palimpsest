@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "155s",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held10-external.py",
+    "admission"
+  ],
+  "control_commit": "b3d50f5d8efbd36c56337c323d66768831c0f43f",
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "runner_sha256": "d3882ccfe3eaa023194c4478898ed0e1fd9e4b109862e4ab47b51d894ebc7022",
+  "scope": "sole full data-only admission; no runtime qualification"
+}

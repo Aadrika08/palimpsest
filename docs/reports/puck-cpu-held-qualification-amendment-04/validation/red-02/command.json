@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_cpu_held_amendment04.py",
+    "tests/test_puck_cpu_held_amendment04_integration.py",
+    "tests/test_puck_cpu_amendment04_audit.py",
+    "tests/test_puck_cpu_held_observer.py",
+    "--basetemp=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "environment_delta": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope": "authored source checks only; no installed runtime or actual allocation"
+}

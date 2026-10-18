@@ -1,0 +1,27 @@
+--- original-bootstrap
++++ experimental-inplace-whitelist
+@@ -699,10 +699,20 @@
+                     aliases.add('__mp_main__')
+             self._guard_step(token,'cache')
+             for name in sys.modules:
+-                if (name.split('.')[0] not in sys.stdlib_module_names and
+-                        name not in {'__main__', '_puck_held_file_bootstrap'}|aliases|self._loaded.keys()|self._loading
+-                        | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
+-                    raise RuntimeError('Unregistered module cache entry: '+name)
++                if name.split('.')[0] not in sys.stdlib_module_names:
++                    allowed={'__main__', '_puck_held_file_bootstrap'}
++                    allowed |= aliases
++                    allowed |= self._loaded.keys()
++                    allowed |= self._loading
++                    if self._dependencies:
++                        external=self._dependencies.loaded.keys()
++                        external |= self._dependencies.loading
++                        external |= exported
++                    else:
++                        external=set()
++                    allowed |= external
++                    if name not in allowed:
++                        raise RuntimeError('Unregistered module cache entry: '+name)
+             self._guard_step(token,'custody')
+             # Check support dispatch before invoking its guard methods.
+             for child in self._children:

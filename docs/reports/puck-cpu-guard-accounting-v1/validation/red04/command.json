@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "75s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-accounting-red04",
+    "tests/test_puck_guard_time_diagnostics.py::test_guard_end_diagnostic_cannot_bypass_final_deadline"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "691222948e90892a8d602a4ba9fbd9692598344a9cdec63961df0d2c17be6b5c",
+    "tests/test_puck_guard_time_diagnostics.py": "9eae9228eede06d0870c95fb36f56d9e0221dc9912e0751b31a5e84a53e72349"
+  },
+  "scope": "Authored deadline-edge RED after initial17-caseGREEN."
+}

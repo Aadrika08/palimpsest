@@ -1,0 +1,169 @@
+{
+  "admission_check_id": 1,
+  "admission_output": "/tmp/palimpsest-puck-cpu-held-episode-16-admission-01.json",
+  "admission_required_before_observer": true,
+  "auditor_output": "/tmp/palimpsest-puck-cpu-held-episode-16-audit-01.json",
+  "collection_authorized": false,
+  "commands": {
+    "admission": [
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "155s",
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/tmp/palimpsest-held16-external.py",
+      "admission"
+    ],
+    "audit": [
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "340s",
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/tmp/palimpsest-held16-external.py",
+      "audit"
+    ],
+    "observer": [
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "1310s",
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/tmp/palimpsest-held16-external.py",
+      "observer"
+    ]
+  },
+  "concrete_audit_command_path": "/tmp/palimpsest-held16-concrete-audit-command.json",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "episode16_clocks": {
+    "admission_outer_term": 155,
+    "admission_tool_bound": 170,
+    "admission_wrapper": 145,
+    "audit_outer_term": 340,
+    "audit_tool_bound": 360,
+    "audit_wrapper": 330,
+    "auditor_alarm": 310,
+    "auditor_deadline": 300,
+    "observer_cleanup": 5,
+    "observer_hard": 1275,
+    "observer_normal": 1260,
+    "observer_outer_term": 1310,
+    "observer_tool_bound": 1330,
+    "observer_wrapper": 1300,
+    "parent_child_hard": 1215,
+    "parent_hard": 1230,
+    "parent_normal": 1200,
+    "worker_seconds": 600
+  },
+  "evidence_commits": {
+    "candidate02": "e5551ee",
+    "characterization04": "5dc2010d9c429d860d80f505585a012d8cf92493",
+    "control14": "eb34d5c2a66730c248b00229c17ce84e197b3d68",
+    "merge": "75df4dba55e435eee84d8a0f34b33967b0ac86bf",
+    "preparation04": "4b22f2be5ceeaa61632aa72cf18e75d3eef43cc7",
+    "runtime14_outcome": "4fd4f68de5f0350c22ac7d5e5c2432b28525bc64"
+  },
+  "freeze": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-episode-16-freeze.json",
+    "sha256": "a40c0d1483486a59531149a63eaaaf968fc8d09ca1547480e1b8d71eddf67d35",
+    "size_bytes": 542502
+  },
+  "implicit_retry": false,
+  "kind": "puck-cpu-held-episode16-fixed-execution-envelope-v1",
+  "normal_external_caps_seconds": {
+    "admission": 145,
+    "audit": 330,
+    "observer": 1300
+  },
+  "normal_external_zero_required": true,
+  "observer_invocations": 1,
+  "outer_kill_grace_seconds": 5,
+  "outer_term_seconds": {
+    "admission": 155,
+    "audit": 340,
+    "observer": 1310
+  },
+  "phase_outputs": {
+    "admission": {
+      "json": "/tmp/palimpsest-held16-admission-external.json",
+      "stderr": "/tmp/palimpsest-held16-admission-external.stderr",
+      "stdout": "/tmp/palimpsest-held16-admission-external.stdout"
+    },
+    "audit": {
+      "json": "/tmp/palimpsest-held16-audit-external.json",
+      "stderr": "/tmp/palimpsest-held16-audit-external.stderr",
+      "stdout": "/tmp/palimpsest-held16-audit-external.stdout"
+    },
+    "observer": {
+      "json": "/tmp/palimpsest-held16-observer-external.json",
+      "stderr": "/tmp/palimpsest-held16-observer-external.stderr",
+      "stdout": "/tmp/palimpsest-held16-observer-external.stdout"
+    }
+  },
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "runtime_invoked": false,
+  "scope": "one distinct admission16-01 before the sole allocation-16 held episode on preparation04; no implicit retry or operator/collection/study",
+  "source_commit": "cbda0d992c12320e2c9bd8a188f89d2c73d9f77e",
+  "stage_guard": {
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "filesystem": "tmpfs",
+    "mode": "0700",
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-04/result.json",
+      "sha256": "a76b61487a1e5c053032167f1602260a1184b6262fa86e0e62842f0a05e6ebc3",
+      "size_bytes": 17706
+    },
+    "stage_parent": "/tmp/palimpsest-puck-cpu-held-04",
+    "staged_roots": [
+      {
+        "device": 55,
+        "inode": 317249,
+        "root_index": 0
+      },
+      {
+        "device": 55,
+        "inode": 317250,
+        "root_index": 1
+      },
+      {
+        "device": 55,
+        "inode": 317251,
+        "root_index": 2
+      },
+      {
+        "device": 55,
+        "inode": 317252,
+        "root_index": 3
+      }
+    ]
+  },
+  "status": "PREPARED_NOT_INVOKED",
+  "study_authorized": false,
+  "timeout_binary": {
+    "observed_version": "GNU coreutils9.11",
+    "path": "/usr/bin/timeout",
+    "sha256": "c7ad4153c8fa4cfe78794062789182e39d48f85cc114ba9dc4fa54296ad2a407",
+    "size_bytes": 51936
+  },
+  "version": 1,
+  "wrapper": {
+    "path": "/tmp/palimpsest-held16-external.py",
+    "sha256": "e6d571603e059fe8d1f01e44ad45e9a65aa6fa80faaf96de8e79060650cc3890",
+    "size_bytes": 4244,
+    "tracked_copy": "docs/plans/puck-cpu-held-episode-16-external.py"
+  }
+}

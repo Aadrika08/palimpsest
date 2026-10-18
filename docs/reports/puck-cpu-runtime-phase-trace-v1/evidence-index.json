@@ -1,0 +1,241 @@
+{
+  "actual08_controls_created": false,
+  "all_seven_release_gates_open": true,
+  "artifact_count": 36,
+  "artifacts": [
+    {
+      "archived_path": "archive_evidence.py",
+      "original_path": "/tmp/palimpsest-phase-trace-archive.py",
+      "sha256": "0bd4ac37763949ac728c3e75c40d9e75e575eff9dd3e1ec7e28fa33818c4d779",
+      "size_bytes": 7350
+    },
+    {
+      "archived_path": "pre-fix-reentrant/pins.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-reentrant-red-01/source/pins.json",
+      "sha256": "cf9ccf3dc9f58d616cff5d415d27fb9e4d0ce2ef0834c504ad5c12c9763a9e4b",
+      "size_bytes": 698
+    },
+    {
+      "archived_path": "pre-fix-reentrant/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-reentrant-red-01/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "05c22bbfb898983c64153d282bbb118e26f0b2aa2bb4275aaed127261d329aca",
+      "size_bytes": 39934
+    },
+    {
+      "archived_path": "pre-fix-reentrant/src/palimpsest/puck_runtime_qualification.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-reentrant-red-01/source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "b81e59a3c2b29d8edd67418d81bcc8bf7b1f241c3b1d5e859f6f7db78ef31cb2",
+      "size_bytes": 2309
+    },
+    {
+      "archived_path": "pre-fix-reentrant/tests/test_puck_cpu_phase_trace.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-reentrant-red-01/source/tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    },
+    {
+      "archived_path": "reviews/palimpsest-phase-trace-final-source-review-02.json",
+      "original_path": "/tmp/palimpsest-phase-trace-final-source-review-02.json",
+      "sha256": "ebabea4bfb9e2a8d1e322168fdea20d1b6b0a743e26605bc72b3040ef3df0b6f",
+      "size_bytes": 7688
+    },
+    {
+      "archived_path": "reviews/palimpsest-phase-trace-final-source-review.json",
+      "original_path": "/tmp/palimpsest-phase-trace-final-source-review.json",
+      "sha256": "7a3ef757b053116b75e41b32dc8b754d14d42ddbc195b738d437dfb66d7f440a",
+      "size_bytes": 7298
+    },
+    {
+      "archived_path": "reviews/palimpsest-phase-trace-final-validation-review.json",
+      "original_path": "/tmp/palimpsest-phase-trace-final-validation-review.json",
+      "sha256": "4083a69befdd91213ae0848a7ecb95b54ae562b1b63e5d0ee4306fa350a1f912",
+      "size_bytes": 5789
+    },
+    {
+      "archived_path": "reviews/palimpsest-phase-trace-publication-terminal.json",
+      "original_path": "/tmp/palimpsest-phase-trace-publication-terminal.json",
+      "sha256": "14283e15c6c3e9e1a5bf125c345ac64829f2d46973450fa9dc093466bfdb0aa6",
+      "size_bytes": 365
+    },
+    {
+      "archived_path": "source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_runtime_qualification.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_phase_trace.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    },
+    {
+      "archived_path": "validation-record.json",
+      "original_path": "/tmp/palimpsest-phase-trace-validation-record.json",
+      "sha256": "03d6b9610848a931935af7a8a7d9cc98491e6d241b35d4829acb5a6c53cf6d9d",
+      "size_bytes": 17374
+    },
+    {
+      "archived_path": "validation/phase-trace-baseline-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-baseline-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-baseline-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-baseline-01/stdout.log",
+      "sha256": "57c1f3c3ebfacacde2762039106810cc1724ed90f84eac5f38f1d07427221ab2",
+      "size_bytes": 100
+    },
+    {
+      "archived_path": "validation/phase-trace-cancel-red-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-cancel-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-cancel-red-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-cancel-red-01/stdout.log",
+      "sha256": "7592fec0b7411b7248923f860c592d420daa04d78e96cec5559a4e33ac49555b",
+      "size_bytes": 1612
+    },
+    {
+      "archived_path": "validation/phase-trace-consumers-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-consumers-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/stdout.log",
+      "sha256": "60acfce3a33725302cfc6212aec72ae3673d84c6ef692f188a2222275135ba9e",
+      "size_bytes": 25969
+    },
+    {
+      "archived_path": "validation/phase-trace-green-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-green-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-01/stdout.log",
+      "sha256": "51b37868a328552fcf1a9dd99076cb0cc5f013bd4981bd9dfb60510fc72a70d9",
+      "size_bytes": 5905
+    },
+    {
+      "archived_path": "validation/phase-trace-green-02/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-green-02/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-02/stdout.log",
+      "sha256": "4a7e4352f388a4d00299f501ad36bebb34f351e96e3a5255f68b1e1326659c9c",
+      "size_bytes": 190
+    },
+    {
+      "archived_path": "validation/phase-trace-green-03/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-03/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-green-03/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-green-03/stdout.log",
+      "sha256": "6abaa59b127e39f951230458ba45f5fb686e6c958e3e22707978403d161c0598",
+      "size_bytes": 190
+    },
+    {
+      "archived_path": "validation/phase-trace-private-consumers-02/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-private-consumers-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-private-consumers-02/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-private-consumers-02/stdout.log",
+      "sha256": "4e48a2912c721a976aea89ed7bd44931c7b223400a3ed68289d2eac243744cfb",
+      "size_bytes": 272
+    },
+    {
+      "archived_path": "validation/phase-trace-private-root-diagnostic-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-private-root-diagnostic-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-private-root-diagnostic-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-private-root-diagnostic-01/stdout.log",
+      "sha256": "91d5f5fccbc8cc2fd0ddf4c865dc82c10b7db76dd9bcf89233855254e3424227",
+      "size_bytes": 99
+    },
+    {
+      "archived_path": "validation/phase-trace-publication-integrations-02/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-publication-integrations-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-publication-integrations-02/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-publication-integrations-02/stdout.log",
+      "sha256": "6adb1abb936d4f076d8bf49014f45cb8145aea10729709fcb85f164d57ba768b",
+      "size_bytes": 99
+    },
+    {
+      "archived_path": "validation/phase-trace-red-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-red-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-red-01/stdout.log",
+      "sha256": "388c8a5fe96bfd6cd8f7355d3f1f4cf0001794dbe30c31cfb77d0affddcd4ccd",
+      "size_bytes": 18830
+    },
+    {
+      "archived_path": "validation/phase-trace-reentrant-red-01/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-reentrant-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/phase-trace-reentrant-red-01/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-reentrant-red-01/stdout.log",
+      "sha256": "557627c4bc54419555c362b2d69ac191e074622fe4648753463c0de57605dd3c",
+      "size_bytes": 5440
+    },
+    {
+      "archived_path": "verify_evidence.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/docs/reports/puck-cpu-held-qualification-07/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    }
+  ],
+  "collection_authorized": false,
+  "created_at": "2026-10-15T23:36:32.385834+00:00",
+  "empty_files": 11,
+  "final_disjoint_authored_passes": 217,
+  "kind": "cpu-phase-trace-source-evidence-index-v1",
+  "native_authorized": false,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source_commit": "5ccde54d8f41d1f83ec858b2cdb8eb12755c795e",
+  "source_paths": [
+    "scripts/puck_worker_bootstrap.py",
+    "src/palimpsest/puck_runtime_qualification.py",
+    "tests/test_puck_cpu_phase_trace.py"
+  ],
+  "source_review": "GO",
+  "study_authorized": false,
+  "total_bytes": 217571,
+  "version": 1
+}

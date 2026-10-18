@@ -1,0 +1,271 @@
+{
+  "installed_site_staged": false,
+  "kind": "puck-authored-namespace-topology-probe-v1",
+  "max_processes": 3,
+  "namespace_source_sha256": "3a87e73871f5906cb6e79530b112efb74573d1777111f5f044cd97a8c5d3e692",
+  "original_interpreter": "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+  "probe_sleep_seconds": 0.8,
+  "results": [
+    {
+      "host_tree": [
+        {
+          "nspid": [
+            2443817
+          ],
+          "pgid": 2443817,
+          "pid": 2443817,
+          "pid_namespace": "pid:[4026531836]",
+          "ppid": 2443808,
+          "rss_bytes": 2318336,
+          "sid": 2443817,
+          "start_tick": 49961574
+        },
+        {
+          "nspid": [
+            2443818,
+            1
+          ],
+          "pgid": 2443817,
+          "pid": 2443818,
+          "pid_namespace": "pid:[4026533186]",
+          "ppid": 2443817,
+          "rss_bytes": 15196160,
+          "sid": 2443817,
+          "start_tick": 49961574
+        }
+      ],
+      "inside": {
+        "network_isolated": true,
+        "network_namespace": "net:[4026533188]",
+        "parent": {
+          "errno": 2,
+          "error": "FileNotFoundError",
+          "pid": 0
+        },
+        "pgid": 0,
+        "pid": 1,
+        "pid_namespace": "pid:[4026533186]",
+        "ppid": 0,
+        "project_hidden": true,
+        "self_stat": {
+          "pgid": 0,
+          "pid": 1,
+          "ppid": 0,
+          "sid": 0,
+          "start_tick": 49961574
+        },
+        "sid": 0
+      },
+      "mode": "as-pid-1",
+      "no_owned_descendant_survivors": true,
+      "outer_owned_group_members": [
+        2443817,
+        2443818
+      ],
+      "outer_popen_pid": 2443817,
+      "peak_descendant_processes": 2,
+      "peak_descendant_rss_bytes": 17514496,
+      "returncode": 0,
+      "worker_host": {
+        "nspid": [
+          2443818,
+          1
+        ],
+        "pgid": 2443817,
+        "pid": 2443818,
+        "pid_namespace": "pid:[4026533186]",
+        "ppid": 2443817,
+        "rss_bytes": 15196160,
+        "sid": 2443817,
+        "start_tick": 49961574
+      },
+      "worker_identity_contract": false,
+      "worker_in_outer_owned_group": true
+    },
+    {
+      "host_tree": [
+        {
+          "nspid": [
+            2443819
+          ],
+          "pgid": 2443819,
+          "pid": 2443819,
+          "pid_namespace": "pid:[4026531836]",
+          "ppid": 2443808,
+          "rss_bytes": 2322432,
+          "sid": 2443819,
+          "start_tick": 49961657
+        },
+        {
+          "nspid": [
+            2443820,
+            1
+          ],
+          "pgid": 2443819,
+          "pid": 2443820,
+          "pid_namespace": "pid:[4026533201]",
+          "ppid": 2443819,
+          "rss_bytes": 1400832,
+          "sid": 2443819,
+          "start_tick": 49961658
+        },
+        {
+          "nspid": [
+            2443821,
+            2
+          ],
+          "pgid": 2443819,
+          "pid": 2443821,
+          "pid_namespace": "pid:[4026533201]",
+          "ppid": 2443820,
+          "rss_bytes": 15372288,
+          "sid": 2443819,
+          "start_tick": 49961658
+        }
+      ],
+      "inside": {
+        "network_isolated": true,
+        "network_namespace": "net:[4026533203]",
+        "parent": {
+          "pgid": 0,
+          "pid": 1,
+          "ppid": 0,
+          "sid": 0,
+          "start_tick": 49961658
+        },
+        "pgid": 0,
+        "pid": 2,
+        "pid_namespace": "pid:[4026533201]",
+        "ppid": 1,
+        "project_hidden": true,
+        "self_stat": {
+          "pgid": 0,
+          "pid": 2,
+          "ppid": 1,
+          "sid": 0,
+          "start_tick": 49961658
+        },
+        "sid": 0
+      },
+      "mode": "default-init",
+      "no_owned_descendant_survivors": true,
+      "outer_owned_group_members": [
+        2443819,
+        2443820,
+        2443821
+      ],
+      "outer_popen_pid": 2443819,
+      "peak_descendant_processes": 3,
+      "peak_descendant_rss_bytes": 19095552,
+      "returncode": 0,
+      "worker_host": {
+        "nspid": [
+          2443821,
+          2
+        ],
+        "pgid": 2443819,
+        "pid": 2443821,
+        "pid_namespace": "pid:[4026533201]",
+        "ppid": 2443820,
+        "rss_bytes": 15372288,
+        "sid": 2443819,
+        "start_tick": 49961658
+      },
+      "worker_identity_contract": false,
+      "worker_in_outer_owned_group": true
+    },
+    {
+      "host_tree": [
+        {
+          "nspid": [
+            2443824
+          ],
+          "pgid": 2443824,
+          "pid": 2443824,
+          "pid_namespace": "pid:[4026531836]",
+          "ppid": 2443808,
+          "rss_bytes": 2322432,
+          "sid": 2443824,
+          "start_tick": 49961741
+        },
+        {
+          "nspid": [
+            2443825,
+            1
+          ],
+          "pgid": 2443825,
+          "pid": 2443825,
+          "pid_namespace": "pid:[4026533189]",
+          "ppid": 2443824,
+          "rss_bytes": 1400832,
+          "sid": 2443825,
+          "start_tick": 49961741
+        },
+        {
+          "nspid": [
+            2443826,
+            2
+          ],
+          "pgid": 2443825,
+          "pid": 2443826,
+          "pid_namespace": "pid:[4026533189]",
+          "ppid": 2443825,
+          "rss_bytes": 15106048,
+          "sid": 2443825,
+          "start_tick": 49961742
+        }
+      ],
+      "inside": {
+        "network_isolated": true,
+        "network_namespace": "net:[4026533191]",
+        "parent": {
+          "pgid": 1,
+          "pid": 1,
+          "ppid": 0,
+          "sid": 1,
+          "start_tick": 49961741
+        },
+        "pgid": 1,
+        "pid": 2,
+        "pid_namespace": "pid:[4026533189]",
+        "ppid": 1,
+        "project_hidden": true,
+        "self_stat": {
+          "pgid": 1,
+          "pid": 2,
+          "ppid": 1,
+          "sid": 1,
+          "start_tick": 49961742
+        },
+        "sid": 1
+      },
+      "mode": "default-init-new-session",
+      "no_owned_descendant_survivors": true,
+      "outer_owned_group_members": [
+        2443824
+      ],
+      "outer_popen_pid": 2443824,
+      "peak_descendant_processes": 3,
+      "peak_descendant_rss_bytes": 18829312,
+      "returncode": 0,
+      "worker_host": {
+        "nspid": [
+          2443826,
+          2
+        ],
+        "pgid": 2443825,
+        "pid": 2443826,
+        "pid_namespace": "pid:[4026533189]",
+        "ppid": 2443825,
+        "rss_bytes": 15106048,
+        "sid": 2443825,
+        "start_tick": 49961742
+      },
+      "worker_identity_contract": false,
+      "worker_in_outer_owned_group": false
+    }
+  ],
+  "runtime_qualified": false,
+  "source_sha256": "7f7bc5f59dc3e8022e7709969471c6bbbd408241585074f8a7e3372c6f18dce3",
+  "vendor_imports": false
+}

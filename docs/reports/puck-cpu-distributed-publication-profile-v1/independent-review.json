@@ -1,0 +1,85 @@
+{
+  "base": "5408f55fd9cc704edea9bd3b73dfcb4914e82987",
+  "branch": "research/puck-cpu-distributed-publication-profile-v1",
+  "findings": [],
+  "head": "adc87ef3561705d55cd7e1464e27358911939e45",
+  "inspected_evidence": [
+    "Full code/test diff against base; production delta is only three fixed independent literal rows and exact four-row semantic replacement enforcement in both consumers.",
+    "Both parent and independent auditor retain their separate implementations, full-candidate canonical equality, v1-v4 routing, 24/10 source rosters, 16 roles, 15 unchanged noncandidate pins and exact four-source preparation delta.",
+    "Parsed exact H-to-A and A-to-C candidate relations; 38 exports retained, with 32 native_create, 2 module_exec and 4 module_exec_publish; all other candidate fields unchanged.",
+    "Read-only parsing and hashing matched all 53 repeated proof/attribution pin entries; attribution input pins equal proof evidence pins.",
+    "All 109 sorted distinct distributed delegates equal accepted observation03 and candidate literals, with all 110 quoted literal registration references present in the pinned retained C++ files.",
+    "AST data inspection confirmed parent/auditor independently declared literals are equal and all four literal export rows match the reviewed candidate.",
+    "Traced retained Python callbacks, raw torch/_C/child paths, C++ publication and return references, and existing innermost-creator publication/dispatch-close guards.",
+    "Reviewed all four authored creators publishing before distinct fresh registered nested helper imports and filling dispatch before close; exact four-row worker receipts, independent API/CLI audit, per-row fully rebound proof/candidate rejection, stage/history preservation and reentry/cleanup assertions."
+  ],
+  "kind": "palimpsest-distributed-publication-independent-final-source-review-v1",
+  "repo_status": [
+    " M scripts/audit_puck_cpu_held_runtime.py",
+    " M scripts/qualify_puck_cpu_held_runtime.py",
+    " M tests/test_puck_cpu_held_amendment05.py",
+    " M tests/test_puck_cpu_held_amendment05_integration.py",
+    " M tests/test_puck_cpu_held_parent_integration.py"
+  ],
+  "review_mode": "Read-only complete scoped branch diff and connected source/data inspection; no tests, auditor, target imports, census, runtime allocation, Git/auth mutation or repository edits.",
+  "reviewed_files": [
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "c179bf7333409a19c02cf194d4b83a847053868561b08610b2fd755e5f0599cc",
+      "size_bytes": 56930
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "5962e16b568633abff8916f6c1ee6c350087bc59f6bf1b5ff17d2983fbf3d229",
+      "size_bytes": 74689
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05.py",
+      "sha256": "e3f38f8f97b147cc9191b16a7e7eb1a4d7d555f9cc1719859655e97afcf17bf3",
+      "size_bytes": 22284
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "def5c54b43f075c81df6b5aa25a8cfaf981f41c15ecca65121e570442a351c04",
+      "size_bytes": 21812
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "00d7c29526c1a155ff0971d305ce2369e7b5d8b6192fa9b5a560ae7910f39366",
+      "size_bytes": 17641
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.md",
+      "sha256": "6b45d791153bee8c0a1b32d6f86df0dfb87159b7b6425d26d793893d6e11e510",
+      "size_bytes": 2966
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/source-proof.json",
+      "sha256": "af7c78508b05ce56017bb814a408a8781219b2c198f9f31751ecaf47f62dc959",
+      "size_bytes": 10106
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/attribution.json",
+      "sha256": "51376c707e68b72c7bf275ba7cc410adaa6acdf51b9ee957840c325c1eb8f91b",
+      "size_bytes": 73151
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/admission-review.md",
+      "sha256": "1d7a51a03e27c7ea426d1b05a33d101a753e82c47174713e363af4a8a6937f68",
+      "size_bytes": 18252
+    }
+  ],
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "test_evidence_status": "No tests rerun by this reviewer. Root-reported prior 221 unit and 1 authored integration PASS are not independently rerun evidence. The root 17-file affected run was still active and had three failure marks at the latest message; no all-checks-PASS conclusion.",
+  "unjudged_limits": [
+    "No actual05 execution, frozen-control admission, live source/resource/stage inventory, installed Torch import, binary/build equivalence, operator/renderer behavior, real CPU episode, CI or physical rover qualification was performed or inferred.",
+    "Observation03 establishes terminal name/identity correspondence only; intermediate publication, creator-close timing and real dispatch custody remain runtime qualification work.",
+    "This review reports no material issue in the bounded source correction; it does not certify the pending affected test run or readiness to execute actual05."
+  ],
+  "verdict": "NO_MATERIAL_FINDINGS"
+}

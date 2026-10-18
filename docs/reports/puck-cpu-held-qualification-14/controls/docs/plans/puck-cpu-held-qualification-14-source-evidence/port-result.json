@@ -1,0 +1,26 @@
+{
+  "admission_or_runtime_invoked": false,
+  "configuration": {
+    "sha256": "32f8aeb553a534b463f2b7a594ca721273fa251ae743256d6fe23efa74f6bed2",
+    "size_bytes": 9048
+  },
+  "configuration_delta_vs_11b": [
+    "kind",
+    "version",
+    "allocation_id",
+    "limits (QUALIFY14 360/375/390)",
+    "stage_parent",
+    "sources (bootstrap, qualifier, puck_dependency_files)",
+    "preparation_acceptance"
+  ],
+  "current_auditor_sha256": "6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd",
+  "history_cases": 41,
+  "offline_acceptance": {
+    "auditor_configuration": "PASS",
+    "auditor_historical_acceptance": "PASS",
+    "auditor_preparation_epoch": "PASS",
+    "parent_validate_configuration": "PASS",
+    "parent_validate_preparation_acceptance": "PASS"
+  },
+  "stages_touched": false
+}

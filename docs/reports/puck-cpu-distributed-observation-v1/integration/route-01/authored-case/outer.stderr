@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/tests/test_puck_cpu_distributed_observation_integration.py", line 294, in inside
+    verified = auditor.audit(str(configuration), config_sha, str(transport), sha(transport.read_bytes()))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-integration/route-01/pytest/test_authored_distributed_obse0/authored-project/scripts/audit_puck_cpu_runtime_characterization.py", line 574, in audit
+    site = ROOT/SITE; actual, directories, stamps = r.census(site)
+                                                    ^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-integration/route-01/pytest/test_authored_distributed_obse0/authored-project/docs/reports/puck-cpu-characterization-02/audit-helper-admission-v3.py", line 83, in census
+    a.require(not relative.endswith('.pth') and (not relative.endswith('.pyc') or relative == PYC), 'unregistered pyc/pth')
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-integration/route-01/pytest/test_authored_distributed_obse0/authored-project/docs/reports/puck-cpu-characterization-02/audit-helper-install-v1.py", line 45, in require
+    raise AuditError(message)
+palimpsest_cpu_install_audit_v1.AuditError: unregistered pyc/pth

@@ -1,0 +1,596 @@
+{
+  "alloc16_checks": {
+    "auditor_internal": {
+      "detail": {
+        "compared_events": 100,
+        "compared_ticks": 48,
+        "first_divergence": null,
+        "recorded_ticks": {
+          "replay": 48,
+          "source": 48
+        }
+      },
+      "status": "passed"
+    },
+    "parent_receipts": {
+      "detail": {
+        "bundles": {
+          "replay": {
+            "path": "replay-bundle.zip",
+            "sha256": "341ed89137940d00957690931eced99b800fa91911feeb15168cc22a4c9dffa6",
+            "size_bytes": 10092230
+          },
+          "source": {
+            "path": "source-bundle.zip",
+            "sha256": "75ccdf68d5c345278cac4f203c2806232f894a224ed9c796be7f509d8bc43499",
+            "size_bytes": 10085155
+          }
+        },
+        "replay": {
+          "compared_events": 100,
+          "compared_ticks": 48,
+          "first_divergence": null,
+          "status": "passed"
+        }
+      },
+      "status": "passed"
+    }
+  },
+  "allocation": false,
+  "candidate": {
+    "exports": 38,
+    "import_misses": [
+      "OpenGL_accelerate",
+      "backports_abc",
+      "cffi",
+      "charset_normalizer",
+      "cython",
+      "dill",
+      "glfw_preview",
+      "monkeytype",
+      "numpy._distributor_init_local",
+      "opt_einsum",
+      "org",
+      "pydot",
+      "pynvml",
+      "scikits",
+      "scipy._distributor_init_local",
+      "scipy.linalg._cblas",
+      "scipy.linalg._clapack",
+      "scipy.linalg._fblas_64",
+      "scipy.linalg._flapack_64",
+      "torch._rocm_init",
+      "tqdm"
+    ],
+    "module_aliases": [
+      {
+        "name": "_csparsetools",
+        "target": "scipy.sparse._csparsetools"
+      },
+      {
+        "name": "_ni_label",
+        "target": "scipy.ndimage._ni_label"
+      }
+    ],
+    "module_paths": 1147,
+    "namespaces": 2,
+    "native_cache": [
+      {
+        "delegate_attributes": [
+          "cython_function_or_method",
+          "generator"
+        ],
+        "late_delegates": [
+          {
+            "attribute": "fused_cython_function",
+            "producers": [
+              {
+                "phase": "module_exec",
+                "producer": "scipy.linalg._cythonized_array_utils"
+              }
+            ]
+          }
+        ],
+        "name": "_cython_3_0_12",
+        "phase": "module_exec",
+        "producer": "numpy.random.bit_generator"
+      },
+      {
+        "delegate_attributes": [],
+        "name": "cython_runtime",
+        "phase": "module_exec",
+        "producer": "numpy.random.bit_generator"
+      }
+    ],
+    "sha256": "f92ef7f8d96ed45d527497ac07c3eb62b71bb9045e9c9cbeca82ef45a287e817"
+  },
+  "collection_authorized": false,
+  "diagnostic_only": true,
+  "held_entries": {
+    "bytes": 1590197452,
+    "files": 27286,
+    "modules": 1147,
+    "namespaces": 2
+  },
+  "kind": "puck-held-episode-guarded-rehearsal-v1",
+  "phases": {
+    "char04_replay": {
+      "cache_entries": 1500,
+      "error": null,
+      "import_misses": [
+        "OpenGL_accelerate",
+        "_winapi",
+        "backports_abc",
+        "cffi",
+        "charset_normalizer",
+        "cython",
+        "dill",
+        "glfw_preview",
+        "monkeytype",
+        "msvcrt",
+        "numpy._distributor_init_local",
+        "opt_einsum",
+        "org",
+        "pydot",
+        "pynvml",
+        "scikits",
+        "scipy._distributor_init_local",
+        "scipy.linalg._cblas",
+        "scipy.linalg._clapack",
+        "scipy.linalg._fblas_64",
+        "scipy.linalg._flapack_64",
+        "torch._rocm_init",
+        "tqdm"
+      ],
+      "native_cache_dispatch": {
+        "errors": [],
+        "events": [
+          {
+            "added": [],
+            "cache": "cython_runtime",
+            "closed": false,
+            "first": true,
+            "phase": "module_exec",
+            "producer": "numpy.random.bit_generator"
+          },
+          {
+            "added": [
+              "cython_function_or_method"
+            ],
+            "cache": "_cython_3_0_12",
+            "closed": false,
+            "first": true,
+            "phase": "module_exec",
+            "producer": "numpy.random.bit_generator"
+          },
+          {
+            "added": [
+              "generator"
+            ],
+            "cache": "_cython_3_0_12",
+            "closed": false,
+            "first": false,
+            "phase": "module_exec",
+            "producer": "numpy.random._common"
+          },
+          {
+            "added": [
+              "fused_cython_function"
+            ],
+            "cache": "_cython_3_0_12",
+            "closed": true,
+            "first": false,
+            "phase": "module_exec",
+            "producer": "scipy.linalg._cythonized_array_utils"
+          }
+        ],
+        "unattributed": []
+      },
+      "process_creation_attempts": {
+        "count": 0,
+        "events": []
+      },
+      "renderer": null,
+      "replay": {
+        "compared_events": 100,
+        "compared_ticks": 48,
+        "first_divergence": null,
+        "status": "passed"
+      },
+      "returncode": 0,
+      "seconds": 9.634412925006473,
+      "status": "observed",
+      "stderr_tail": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)\n  return _C._get_float32_matmul_precision()\n/puck/source/scripts/characterize_puck_runtime_imports.py:98: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead\n  if isinstance(value, types.ModuleType) and id(value) in exceptional:\n"
+    },
+    "char04_source": {
+      "cache_entries": 1499,
+      "error": null,
+      "import_misses": [
+        "OpenGL_accelerate",
+        "_winapi",
+        "backports_abc",
+        "cffi",
+        "charset_normalizer",
+        "cython",
+        "dill",
+        "glfw_preview",
+        "monkeytype",
+        "msvcrt",
+        "numpy._distributor_init_local",
+        "opt_einsum",
+        "org",
+        "pydot",
+        "pynvml",
+        "scikits",
+        "scipy._distributor_init_local",
+        "scipy.linalg._cblas",
+        "scipy.linalg._clapack",
+        "scipy.linalg._fblas_64",
+        "scipy.linalg._flapack_64",
+        "torch._rocm_init",
+        "tqdm"
+      ],
+      "native_cache_dispatch": {
+        "errors": [],
+        "events": [
+          {
+            "added": [],
+            "cache": "cython_runtime",
+            "closed": false,
+            "first": true,
+            "phase": "module_exec",
+            "producer": "numpy.random.bit_generator"
+          },
+          {
+            "added": [
+              "cython_function_or_method"
+            ],
+            "cache": "_cython_3_0_12",
+            "closed": false,
+            "first": true,
+            "phase": "module_exec",
+            "producer": "numpy.random.bit_generator"
+          },
+          {
+            "added": [
+              "generator"
+            ],
+            "cache": "_cython_3_0_12",
+            "closed": false,
+            "first": false,
+            "phase": "module_exec",
+            "producer": "numpy.random._common"
+          },
+          {
+            "added": [
+              "fused_cython_function"
+            ],
+            "cache": "_cython_3_0_12",
+            "closed": true,
+            "first": false,
+            "phase": "module_exec",
+            "producer": "scipy.linalg._cythonized_array_utils"
+          }
+        ],
+        "unattributed": []
+      },
+      "process_creation_attempts": {
+        "count": 0,
+        "events": []
+      },
+      "renderer": {
+        "backend": "egl",
+        "egl_vendor": "Mesa Project",
+        "egl_version": "1.5",
+        "renderer": "llvmpipe (LLVM 22.1.8, 256 bits)",
+        "vendor": "Mesa",
+        "version": "4.6 (Compatibility Profile) Mesa 26.2.2-arch1.1"
+      },
+      "replay": null,
+      "returncode": 0,
+      "seconds": 10.536404393991688,
+      "status": "observed",
+      "stderr_tail": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)\n  return _C._get_float32_matmul_precision()\n/puck/source/scripts/characterize_puck_runtime_imports.py:98: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead\n  if isinstance(value, types.ModuleType) and id(value) in exceptional:\n"
+    },
+    "episode_replay": {
+      "bootstrap_phases": [
+        [
+          "bootstrap.enter",
+          0.0
+        ],
+        [
+          "source.ready",
+          0.057
+        ],
+        [
+          "dependencies.enter",
+          0.057
+        ],
+        [
+          "dependencies.ready",
+          21.483
+        ],
+        [
+          "bootstrap.ready",
+          22.277
+        ],
+        [
+          "entry.enter",
+          22.277
+        ],
+        [
+          "entry.returned",
+          371.981
+        ],
+        [
+          "entry.ready",
+          376.35
+        ],
+        [
+          "close.enter",
+          376.35
+        ],
+        [
+          "close.ready",
+          378.1
+        ]
+      ],
+      "bundle": {
+        "member_bytes": 10045071,
+        "members": 6,
+        "sha256": "341ed89137940d00957690931eced99b800fa91911feeb15168cc22a4c9dffa6",
+        "size_bytes": 10092230
+      },
+      "denied_imports": [
+        "OpenGL_accelerate",
+        "backports_abc",
+        "cffi",
+        "charset_normalizer",
+        "cython",
+        "dill",
+        "glfw_preview",
+        "monkeytype",
+        "numpy._distributor_init_local",
+        "opt_einsum",
+        "org",
+        "pydot",
+        "pynvml",
+        "scikits",
+        "scipy._distributor_init_local",
+        "scipy.linalg._cblas",
+        "scipy.linalg._clapack",
+        "scipy.linalg._fblas_64",
+        "scipy.linalg._flapack_64",
+        "torch._rocm_init",
+        "tqdm"
+      ],
+      "dependencies": 27286,
+      "entry_result": {
+        "bundle": {
+          "path": "replay-bundle.zip",
+          "sha256": "341ed89137940d00957690931eced99b800fa91911feeb15168cc22a4c9dffa6",
+          "size_bytes": 10092230
+        },
+        "collection_authorized": false,
+        "executable": false,
+        "kind": "puck-held-public-episode-result-v1",
+        "native_authorized": false,
+        "phase": "replay",
+        "provenance_sha256": "cadb65f6a824baa46c369d6b591f1d5fc397891c5b65c623220a993dde4552eb",
+        "qualification_claims": [],
+        "replay": {
+          "compared_events": 100,
+          "compared_ticks": 48,
+          "first_divergence": null,
+          "status": "passed"
+        },
+        "run_id": "6f2a1d3b0c9e48f7b4d3c2e1f0a9b8c7",
+        "runtime_qualified": false,
+        "source_run_id": "5e1f0c2a9b8d47e6a3c2b1d0e9f8a7b6",
+        "ticks_requested": 48,
+        "version": 1,
+        "versions": {
+          "gymnasium": "1.2.1",
+          "mujoco": "3.3.6",
+          "numpy": "2.2.5",
+          "torch": "2.9.0+cpu"
+        }
+      },
+      "output_bytes": 20137696,
+      "process_creation_attempts": {
+        "count": 0,
+        "events": []
+      },
+      "seconds": 378.7989757900068,
+      "stderr_tail": "\":323},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3448,\"started\":3448},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":24912704779,\"visits\":7472},\"cache\":{\"nanoseconds\":485459034,\"visits\":3771},\"custody\":{\"nanoseconds\":243283997784,\"visits\":7472},\"images\":{\"nanoseconds\":256882094,\"visits\":253}},\"sequence\":29,\"trigger\":\"periodic\"}\n{\"active\":{\"full\":true,\"section\":\"bindings\"},\"context\":\"\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":326575101268,\"full\":{\"completed\":327,\"started\":328},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3451,\"started\":3451},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":25033449423,\"visits\":7488},\"cache\":{\"nanoseconds\":487326704,\"visits\":3779},\"custody\":{\"nanoseconds\":255606228518,\"visits\":7488},\"images\":{\"nanoseconds\":265720552,\"visits\":258}},\"sequence\":30,\"trigger\":\"periodic\"}\n{\"active\":{\"full\":true,\"section\":\"bindings\"},\"context\":\"\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":338708747703,\"full\":{\"completed\":332,\"started\":333},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3456,\"started\":3456},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":25183002483,\"visits\":7508},\"cache\":{\"nanoseconds\":489675168,\"visits\":3789},\"custody\":{\"nanoseconds\":267561169553,\"visits\":7508},\"images\":{\"nanoseconds\":274412574,\"visits\":263}},\"sequence\":31,\"trigger\":\"periodic\"}\n{\"active\":{\"full\":true,\"section\":\"bindings\"},\"context\":\"\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":348809190150,\"full\":{\"completed\":336,\"started\":337},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3544,\"started\":3544},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":26307979489,\"visits\":7692},\"cache\":{\"nanoseconds\":511454013,\"visits\":3881},\"custody\":{\"nanoseconds\":276317246227,\"visits\":7692},\"images\":{\"nanoseconds\":281786842,\"visits\":267}},\"sequence\":32,\"trigger\":\"periodic\"}\n/puck/staged/inputs/root-0000/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)\n  return _C._get_float32_matmul_precision()\n{\"diagnostic_only\":true,\"elapsed_seconds\":371.9806274839939,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"entry.returned\",\"sequence\":7}\n{\"diagnostic_only\":true,\"elapsed_seconds\":376.35008127600304,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"entry.ready\",\"sequence\":8}\n{\"diagnostic_only\":true,\"elapsed_seconds\":376.35012019900023,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"close.enter\",\"sequence\":9}\n{\"diagnostic_only\":true,\"elapsed_seconds\":378.0997705790069,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"close.ready\",\"sequence\":10}\n",
+      "supervision": {
+        "failure": null,
+        "finished_monotonic": 123544.696745957,
+        "matching_survivors": [],
+        "pid": 2905441,
+        "process_scope": "descendants",
+        "returncode": 0,
+        "rss_sampling_seconds": 0.05,
+        "sampled_peak_rss_bytes": 954384384,
+        "status": "completed",
+        "tracked_processes": [
+          {
+            "pid": 2905441,
+            "start_ticks": 14782192
+          },
+          {
+            "pid": 2905442,
+            "start_ticks": 14782193
+          },
+          {
+            "pid": 2905443,
+            "start_ticks": 14782199
+          }
+        ]
+      }
+    },
+    "episode_source": {
+      "bootstrap_phases": [
+        [
+          "bootstrap.enter",
+          0.0
+        ],
+        [
+          "source.ready",
+          0.058
+        ],
+        [
+          "dependencies.enter",
+          0.058
+        ],
+        [
+          "dependencies.ready",
+          18.954
+        ],
+        [
+          "bootstrap.ready",
+          19.763
+        ],
+        [
+          "entry.enter",
+          19.763
+        ],
+        [
+          "entry.returned",
+          326.382
+        ],
+        [
+          "entry.ready",
+          330.714
+        ],
+        [
+          "close.enter",
+          330.714
+        ],
+        [
+          "close.ready",
+          332.436
+        ]
+      ],
+      "bundle": {
+        "member_bytes": 10039937,
+        "members": 5,
+        "sha256": "75ccdf68d5c345278cac4f203c2806232f894a224ed9c796be7f509d8bc43499",
+        "size_bytes": 10085155
+      },
+      "denied_imports": [
+        "OpenGL_accelerate",
+        "backports_abc",
+        "cffi",
+        "charset_normalizer",
+        "cython",
+        "dill",
+        "glfw_preview",
+        "monkeytype",
+        "numpy._distributor_init_local",
+        "opt_einsum",
+        "org",
+        "pydot",
+        "pynvml",
+        "scikits",
+        "scipy._distributor_init_local",
+        "scipy.linalg._cblas",
+        "scipy.linalg._clapack",
+        "scipy.linalg._fblas_64",
+        "scipy.linalg._flapack_64",
+        "torch._rocm_init",
+        "tqdm"
+      ],
+      "dependencies": 27286,
+      "entry_result": {
+        "bundle": {
+          "path": "source-bundle.zip",
+          "sha256": "75ccdf68d5c345278cac4f203c2806232f894a224ed9c796be7f509d8bc43499",
+          "size_bytes": 10085155
+        },
+        "collection_authorized": false,
+        "executable": false,
+        "final_phase": "paused",
+        "initial_snapshot_id": "5ee596e233b248f88b96ec713534372b",
+        "kind": "puck-held-public-episode-result-v1",
+        "native_authorized": false,
+        "phase": "source",
+        "provenance_sha256": "cadb65f6a824baa46c369d6b591f1d5fc397891c5b65c623220a993dde4552eb",
+        "qualification_claims": [],
+        "renderer": {
+          "backend": "egl",
+          "egl_vendor": "Mesa Project",
+          "egl_version": "1.5",
+          "renderer": "llvmpipe (LLVM 22.1.8, 256 bits)",
+          "vendor": "Mesa",
+          "version": "4.6 (Compatibility Profile) Mesa 26.2.2-arch1.1"
+        },
+        "run_id": "5e1f0c2a9b8d47e6a3c2b1d0e9f8a7b6",
+        "runtime_qualified": false,
+        "source_run_id": "5e1f0c2a9b8d47e6a3c2b1d0e9f8a7b6",
+        "ticks_completed": 48,
+        "ticks_requested": 48,
+        "version": 1,
+        "versions": {
+          "gymnasium": "1.2.1",
+          "mujoco": "3.3.6",
+          "numpy": "2.2.5",
+          "torch": "2.9.0+cpu"
+        }
+      },
+      "output_bytes": 20125487,
+      "process_creation_attempts": {
+        "count": 0,
+        "events": []
+      },
+      "seconds": 333.07057716800773,
+      "stderr_tail": "\":331},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3454,\"started\":3454},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":24691759270,\"visits\":7500},\"cache\":{\"nanoseconds\":480544929,\"visits\":3785},\"custody\":{\"nanoseconds\":230077140044,\"visits\":7500},\"images\":{\"nanoseconds\":263635799,\"visits\":261}},\"sequence\":28,\"trigger\":\"periodic\"}\n{\"active\":{\"full\":true,\"section\":\"bindings\"},\"context\":\"\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":307473881549,\"full\":{\"completed\":339,\"started\":340},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3574,\"started\":3574},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":26278837229,\"visits\":7758},\"cache\":{\"nanoseconds\":510247989,\"visits\":3914},\"custody\":{\"nanoseconds\":238201911123,\"visits\":7758},\"images\":{\"nanoseconds\":280090606,\"visits\":270}},\"sequence\":29,\"trigger\":\"periodic\"}\n/puck/staged/inputs/root-0000/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)\n  return _C._get_float32_matmul_precision()\n{\"active\":{\"full\":true,\"section\":\"bindings\"},\"context\":\"\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":317947628611,\"full\":{\"completed\":350,\"started\":351},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3619,\"started\":3619},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":26994805959,\"visits\":7870},\"cache\":{\"nanoseconds\":523313505,\"visits\":3970},\"custody\":{\"nanoseconds\":247250988052,\"visits\":7870},\"images\":{\"nanoseconds\":300617898,\"visits\":281}},\"sequence\":30,\"trigger\":\"periodic\"}\n{\"diagnostic_only\":true,\"elapsed_seconds\":326.38175387300726,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"entry.returned\",\"sequence\":7}\n{\"active\":{\"full\":true,\"section\":\"bindings\"},\"context\":\"\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":327956648899,\"full\":{\"completed\":358,\"started\":359},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":3620,\"started\":3620},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":27130603852,\"visits\":7888},\"cache\":{\"nanoseconds\":525553540,\"visits\":3979},\"custody\":{\"nanoseconds\":253693911063,\"visits\":7888},\"images\":{\"nanoseconds\":315505609,\"visits\":289}},\"sequence\":31,\"trigger\":\"periodic\"}\n{\"diagnostic_only\":true,\"elapsed_seconds\":330.71363780100364,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"entry.ready\",\"sequence\":8}\n{\"diagnostic_only\":true,\"elapsed_seconds\":330.7136782470043,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"close.enter\",\"sequence\":9}\n{\"diagnostic_only\":true,\"elapsed_seconds\":332.4362808570004,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"close.ready\",\"sequence\":10}\n",
+      "supervision": {
+        "failure": null,
+        "finished_monotonic": 123165.852079017,
+        "matching_survivors": [],
+        "pid": 2904326,
+        "process_scope": "descendants",
+        "returncode": 0,
+        "rss_sampling_seconds": 0.05,
+        "sampled_peak_rss_bytes": 903553024,
+        "status": "completed",
+        "tracked_processes": [
+          {
+            "pid": 2904326,
+            "start_ticks": 14748881
+          },
+          {
+            "pid": 2904327,
+            "start_ticks": 14748881
+          },
+          {
+            "pid": 2904328,
+            "start_ticks": 14748887
+          }
+        ]
+      }
+    },
+    "host_checks": {
+      "native_files": 60,
+      "seconds": 0.628490678005619
+    },
+    "prepare": {
+      "seconds": 28.51752861800196,
+      "stderr_tail": "",
+      "supervision": {
+        "failure": null,
+        "finished_monotonic": 122832.743754667,
+        "matching_survivors": [],
+        "pid": 2904200,
+        "returncode": 0,
+        "rss_sampling_seconds": 0.05,
+        "sampled_peak_rss_bytes": 271966208,
+        "status": "completed"
+      }
+    }
+  },
+  "runtime_qualified": false,
+  "seconds": 763.3120520840021,
+  "study_authorized": false
+}

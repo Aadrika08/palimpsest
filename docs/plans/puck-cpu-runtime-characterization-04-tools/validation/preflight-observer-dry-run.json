@@ -1,0 +1,93 @@
+{
+  "absent": 22,
+  "at_utc": "2026-10-18T10:29:28.765579+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "capsule_files": 88,
+  "dry_run": true,
+  "git": {
+    "branch": "research/puck-cpu-characterization-04",
+    "clean": false,
+    "controls_git_bound": 10,
+    "head": "0c6cdd2e9cdcd1b84e0c453aac08fb0eaf0dcff3",
+    "origin": null,
+    "upstream": {
+      "clean": true,
+      "gitlink": "8d964599119b420de67ee259434d273651a1a76d",
+      "head": "8d964599119b420de67ee259434d273651a1a76d"
+    }
+  },
+  "host": {
+    "baseline": {
+      "external_file_count": 10,
+      "prefix_manifest_sha256": "4d54b1dac0283b93ac036029c3cb669022b34a748a7f2bda019809930b5c9886",
+      "regular_file_bytes": 90314007,
+      "regular_file_count": 4233,
+      "symlink_count": 1048
+    },
+    "dynamic_leaves": 34,
+    "egl_vendor": {
+      "path": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+      "sha256": "cd3881df4227c13ca7f9cfe6c78820f21d5f7a00a41b299214f6f827e63be369",
+      "size_bytes": 105
+    },
+    "native_aliases": 49,
+    "native_files": 60,
+    "site_file_count": 27225
+  },
+  "kind": "palimpsest-char04-preflight-v1",
+  "phase": "observer",
+  "pins_checked": 117,
+  "resources": {
+    "bwrap": true,
+    "disk_available_bytes": 13901766656,
+    "floors_met": true,
+    "mem_available_bytes": 7039229952,
+    "nofile": [
+      524288,
+      524288
+    ]
+  },
+  "status": "PASS_PREFLIGHT_OBSERVER",
+  "untouched": [
+    {
+      "ctime_ns": 1792202510972139931,
+      "device": 55,
+      "directory": true,
+      "exists": true,
+      "inode": 10398,
+      "mode": 16832,
+      "mtime_ns": 1792202510972139931,
+      "path": "/tmp/palimpsest-puck-cpu-held-02"
+    },
+    {
+      "ctime_ns": 1792222014167700783,
+      "device": 55,
+      "directory": true,
+      "exists": true,
+      "inode": 43108,
+      "mode": 16832,
+      "mtime_ns": 1792222014167700783,
+      "path": "/tmp/palimpsest-puck-cpu-held-03"
+    },
+    {
+      "ctime_ns": 1792202523976335562,
+      "device": 56,
+      "directory": true,
+      "exists": true,
+      "inode": 27531034,
+      "mode": 16832,
+      "mtime_ns": 1792202523976335562,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-02"
+    },
+    {
+      "ctime_ns": 1792222029962860011,
+      "device": 56,
+      "directory": true,
+      "exists": true,
+      "inode": 27580920,
+      "mode": 16832,
+      "mtime_ns": 1792222029962860011,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-03"
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+[
+  {
+    "compressed_size": 990,
+    "compression": 8,
+    "crc32": 128916862,
+    "external_attr": 2175008768,
+    "name": "httpcore/__init__.py",
+    "size_bytes": 3445
+  },
+  {
+    "compressed_size": 821,
+    "compression": 8,
+    "crc32": 1527455882,
+    "external_attr": 2175008768,
+    "name": "httpcore/_api.py",
+    "size_bytes": 3146
+  },
+  {
+    "compressed_size": 376,
+    "compression": 8,
+    "crc32": 858440038,
+    "external_attr": 2175008768,
+    "name": "httpcore/_exceptions.py",
+    "size_bytes": 1184
+  },
+  {
+    "compressed_size": 4373,
+    "compression": 8,
+    "crc32": 310563922,
+    "external_attr": 2175008768,
+    "name": "httpcore/_models.py",
+    "size_bytes": 17623
+  },
+  {
+    "compressed_size": 126,
+    "compression": 8,
+    "crc32": 3609944427,
+    "external_attr": 2175008768,
+    "name": "httpcore/_ssl.py",
+    "size_bytes": 187
+  },
+  {
+    "compressed_size": 1694,
+    "compression": 8,
+    "crc32": 37663053,
+    "external_attr": 2175008768,
+    "name": "httpcore/_synchronization.py",
+    "size_bytes": 9434
+  },
+  {
+    "compressed_size": 898,
+    "compression": 8,
+    "crc32": 266465407,
+    "external_attr": 2175008768,
+    "name": "httpcore/_trace.py",
+    "size_bytes": 3952
+  },
+  {
+    "compressed_size": 798,
+    "compression": 8,
+    "crc32": 4166022632,
+    "external_attr": 2175008768,
+    "name": "httpcore/_utils.py",
+    "size_bytes": 1537
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "httpcore/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 375,
+    "compression": 8,
+    "crc32": 669680850,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/__init__.py",
+    "size_bytes": 1221
+  },
+  {
+    "compressed_size": 2173,
+    "compression": 8,
+    "crc32": 2001885524,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/connection.py",
+    "size_bytes": 8449
+  },
+  {
+    "compressed_size": 4010,
+    "compression": 8,
+    "crc32": 2910429214,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/connection_pool.py",
+    "size_bytes": 17307
+  },
+  {
+    "compressed_size": 3679,
+    "compression": 8,
+    "crc32": 795477339,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/http11.py",
+    "size_bytes": 13880
+  },
+  {
+    "compressed_size": 5817,
+    "compression": 8,
+    "crc32": 1239947874,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/http2.py",
+    "size_bytes": 23936
+  },
+  {
+    "compressed_size": 3308,
+    "compression": 8,
+    "crc32": 311760846,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/http_proxy.py",
+    "size_bytes": 14701
+  },
+  {
+    "compressed_size": 1142,
+    "compression": 8,
+    "crc32": 732832998,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/interfaces.py",
+    "size_bytes": 4455
+  },
+  {
+    "compressed_size": 3381,
+    "compression": 8,
+    "crc32": 1167513450,
+    "external_attr": 2175008768,
+    "name": "httpcore/_async/socks_proxy.py",
+    "size_bytes": 13841
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1157,
+    "compression": 8,
+    "crc32": 2400208976,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/anyio.py",
+    "size_bytes": 5252
+  },
+  {
+    "compressed_size": 488,
+    "compression": 8,
+    "crc32": 531296438,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/auto.py",
+    "size_bytes": 1662
+  },
+  {
+    "compressed_size": 532,
+    "compression": 8,
+    "crc32": 1439275060,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/base.py",
+    "size_bytes": 3042
+  },
+  {
+    "compressed_size": 763,
+    "compression": 8,
+    "crc32": 116419243,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/mock.py",
+    "size_bytes": 4077
+  },
+  {
+    "compressed_size": 1842,
+    "compression": 8,
+    "crc32": 3030239342,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/sync.py",
+    "size_bytes": 7977
+  },
+  {
+    "compressed_size": 1374,
+    "compression": 8,
+    "crc32": 797033075,
+    "external_attr": 2175008768,
+    "name": "httpcore/_backends/trio.py",
+    "size_bytes": 5996
+  },
+  {
+    "compressed_size": 371,
+    "compression": 8,
+    "crc32": 3400695625,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/__init__.py",
+    "size_bytes": 1141
+  },
+  {
+    "compressed_size": 2140,
+    "compression": 8,
+    "crc32": 4011184236,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/connection.py",
+    "size_bytes": 8238
+  },
+  {
+    "compressed_size": 3957,
+    "compression": 8,
+    "crc32": 3896876553,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/connection_pool.py",
+    "size_bytes": 16955
+  },
+  {
+    "compressed_size": 3628,
+    "compression": 8,
+    "crc32": 1896672071,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/http11.py",
+    "size_bytes": 13476
+  },
+  {
+    "compressed_size": 5757,
+    "compression": 8,
+    "crc32": 2766285870,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/http2.py",
+    "size_bytes": 23400
+  },
+  {
+    "compressed_size": 3272,
+    "compression": 8,
+    "crc32": 2428257106,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/http_proxy.py",
+    "size_bytes": 14463
+  },
+  {
+    "compressed_size": 1113,
+    "compression": 8,
+    "crc32": 3101779643,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/interfaces.py",
+    "size_bytes": 4344
+  },
+  {
+    "compressed_size": 3343,
+    "compression": 8,
+    "crc32": 2678318533,
+    "external_attr": 2175008768,
+    "name": "httpcore/_sync/socks_proxy.py",
+    "size_bytes": 13614
+  },
+  {
+    "compressed_size": 7941,
+    "compression": 8,
+    "crc32": 4094654052,
+    "external_attr": 27525120,
+    "name": "httpcore-1.0.9.dist-info/METADATA",
+    "size_bytes": 21529
+  },
+  {
+    "compressed_size": 86,
+    "compression": 8,
+    "crc32": 548383298,
+    "external_attr": 27525120,
+    "name": "httpcore-1.0.9.dist-info/WHEEL",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 804,
+    "compression": 8,
+    "crc32": 281228961,
+    "external_attr": 27525120,
+    "name": "httpcore-1.0.9.dist-info/licenses/LICENSE.md",
+    "size_bytes": 1518
+  },
+  {
+    "compressed_size": 1601,
+    "compression": 8,
+    "crc32": 510791334,
+    "external_attr": 27525120,
+    "name": "httpcore-1.0.9.dist-info/RECORD",
+    "size_bytes": 2947
+  }
+]

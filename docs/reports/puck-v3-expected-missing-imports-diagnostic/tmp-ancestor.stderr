@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/scripts/puck_worker_bootstrap.py", line 643, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/scripts/puck_worker_bootstrap.py", line 634, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/scripts/puck_worker_bootstrap.py", line 444, in __enter__
+    from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/scripts/puck_worker_bootstrap.py", line 285, in find_spec
+    self.owner._import_recheck()
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/scripts/puck_worker_bootstrap.py", line 518, in _import_recheck
+    return self._check(full=self._dependencies is None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/scripts/puck_worker_bootstrap.py", line 566, in _check
+    if full: child.recheck()
+             ^^^^^^^^^^^^^^^
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/src/palimpsest/puck_execution_files.py", line 277, in recheck
+    self._check_dirs()
+  File "/tmp/puck-ancestor-diagnostic-kijojofj/probe-10/source/src/palimpsest/puck_execution_files.py", line 158, in _check_dirs
+    raise RuntimeError('Collection root or ancestor changed while held: ' + repr(
+RuntimeError: Collection root or ancestor changed while held: {'parts': ('tmp',), 'expected': (55, 1, 17407, 10840, 1792035719158135178, 1792035719158135178, 333), 'fd': (55, 1, 17407, 10840, 1792035731371245388, 1792035731371245388, 333), 'named': (55, 1, 17407, 10840, 1792035731371245388, 1792035731371245388, 333)}
+Bootstrap holder close: Collection root or ancestor changed while held: {'parts': ('tmp',), 'expected': (55, 1, 17407, 10840, 1792035719158135178, 1792035719158135178, 333), 'fd': (55, 1, 17407, 10840, 1792035731371245388, 1792035731371245388, 333), 'named': (55, 1, 17407, 10840, 1792035731371245388, 1792035731371245388, 333)}

@@ -1,0 +1,47 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "75s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-accounting-red05",
+    "tests/test_puck_guard_time_diagnostics.py::test_reentrant_clock_io_failure_prevents_outer_write",
+    "tests/test_puck_guard_time_diagnostics.py::test_cost_encoder_reentry_is_suppressed_before_reserving_another_row",
+    "tests/test_puck_guard_time_diagnostics.py::test_cost_clock_callback_cannot_emit_after_caught_real_refusal",
+    "tests/test_puck_guard_time_diagnostics.py::test_accounting_clock_cannot_move_backwards_between_records"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "6a1099b4b5f30243569e93194f0a298c58b28a167c52e3a759f256480c4435c0",
+    "tests/test_puck_guard_time_diagnostics.py": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669"
+  },
+  "scope": "Authored RED for independently reviewed prewrite latch/poison gaps and clock monotonicity."
+}

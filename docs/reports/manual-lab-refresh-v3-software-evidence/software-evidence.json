@@ -1,0 +1,17 @@
+{
+  "full_suite": {
+    "passed": 973,
+    "skipped": 24,
+    "warnings": 40,
+    "seconds": 110.1,
+    "native_opt_in": false
+  },
+  "independent_review": {
+    "critical": 0,
+    "important": 0,
+    "deferred_minors": [
+      "write_json repeats the two-second grace bound already supplied by exit_grace; no behavior change."
+    ]
+  },
+  "actual_attempt": "not_started"
+}

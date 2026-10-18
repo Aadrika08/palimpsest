@@ -1,0 +1,80 @@
+{
+  "at": "2026-10-15T14:43:11.087116+00:00",
+  "dependency_sha256": "25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f",
+  "inspection_path_correction": "initial host read used namespace /puck path and returned FileNotFoundError before any publication; corrected to stage_parent/inputs/root-0000, same authenticated leaf",
+  "kind": "qualification02-primary-denial-static-inspection-v1",
+  "lines": [
+    {
+      "line": 145,
+      "text": "# If PyTorch was built against the ROCm runtime wheels, then there will be"
+    },
+    {
+      "line": 146,
+      "text": "# a _rocm_init module and it will define an initialize() function which can"
+    },
+    {
+      "line": 147,
+      "text": "# prepare ROCm for use. See general documentation on ROCm runtime wheels:"
+    },
+    {
+      "line": 148,
+      "text": "# https://github.com/ROCm/TheRock/blob/main/docs/packaging/python_packaging.md"
+    },
+    {
+      "line": 149,
+      "text": "# Since this module is only ever added to the wheel if built for such a"
+    },
+    {
+      "line": 150,
+      "text": "# deployment, it is always safe to attempt."
+    },
+    {
+      "line": 151,
+      "text": "try:"
+    },
+    {
+      "line": 152,
+      "text": "    from . import _rocm_init  # type: ignore[attr-defined]"
+    },
+    {
+      "line": 153,
+      "text": "except ImportError:"
+    },
+    {
+      "line": 154,
+      "text": "    pass"
+    },
+    {
+      "line": 155,
+      "text": "else:"
+    },
+    {
+      "line": 156,
+      "text": "    _rocm_init.initialize()"
+    },
+    {
+      "line": 157,
+      "text": "    del _rocm_init"
+    },
+    {
+      "line": 158,
+      "text": ""
+    },
+    {
+      "line": 159,
+      "text": ""
+    }
+  ],
+  "policy_changed": false,
+  "qualification01_primary_error": "not exposed in original retained trace",
+  "qualification02_primary_denial": "Unregistered local or external dependency import: torch._rocm_init",
+  "qualification03_created": false,
+  "rocm_init_registered_files": [],
+  "scope": "byte-authenticated source and retained registration metadata only; no import or retry",
+  "source": {
+    "namespace_path": "/puck/staged/inputs/root-0000/torch/__init__.py",
+    "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/__init__.py",
+    "sha256": "3caf7f40140ede2465bde40b9003af10cbbc8f7bcf436fa1de026471daa1b288",
+    "size_bytes": 102969
+  }
+}

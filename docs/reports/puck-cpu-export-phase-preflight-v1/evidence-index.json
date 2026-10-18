@@ -1,0 +1,395 @@
+{
+  "kind": "puck-cpu-export-phase-preflight-evidence-v1",
+  "artifacts": [
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+      "archived_path": "candidate-unchanged.json",
+      "size_bytes": 342451,
+      "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src/palimpsest/puck_dependency_bindings.py",
+      "archived_path": "control-source/puck_dependency_bindings.py",
+      "size_bytes": 28299,
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/__init__.py",
+      "archived_path": "installed-source/torch/distributed/__init__.py",
+      "size_bytes": 5407,
+      "sha256": "0e1ba0d76a5135e0109d213157e709b35f1a234afb9306c00bf6adf4f5c3d7d7"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/autograd/__init__.py",
+      "archived_path": "installed-source/torch/distributed/autograd/__init__.py",
+      "size_bytes": 1931,
+      "sha256": "a356307e34629fc35f6240a3cdc7400454f46c6446022b989922c4c266e6789e"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/rpc/__init__.py",
+      "archived_path": "installed-source/torch/distributed/rpc/__init__.py",
+      "size_bytes": 9945,
+      "sha256": "8474ae8306a9e4c48e6311457784bfb819987c4e1070e72ec8e2541342c3b823"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/include/pybind11/chrono.h",
+      "archived_path": "installed-source/torch/include/pybind11/chrono.h",
+      "size_bytes": 8613,
+      "sha256": "b00be9f25145323936d54477cfac6ac07963c0b84b866c9e44a01580280e9ae2"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/share/cmake/Caffe2/Caffe2Config.cmake",
+      "archived_path": "installed-source/torch/share/cmake/Caffe2/Caffe2Config.cmake",
+      "size_bytes": 5344,
+      "sha256": "1751b5ae590844e9ddf3fb72aebc6e26ecab6def33b0d2ce88d419eac99c71d5"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/share/cmake/Caffe2/Caffe2Targets.cmake",
+      "archived_path": "installed-source/torch/share/cmake/Caffe2/Caffe2Targets.cmake",
+      "size_bytes": 6857,
+      "sha256": "69cca1ead63094fbbb67ee97c763345e870c19798a7647846e70f1b26abc7997"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/version.py",
+      "archived_path": "installed-source/torch/version.py",
+      "size_bytes": 277,
+      "sha256": "ff8ea659d7cbeaf99c9a3fb1307fcc6ec324ce9b9f752464dd7934f32a1e73c8"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/agent-core-map.json",
+      "archived_path": "notes/agent-core-map.json",
+      "size_bytes": 44233,
+      "sha256": "e783f1750fd5f79a92ddc720f7068f02a6c549d9910e5dfbdc770736ad3c357d"
+    },
+    {
+      "original_path": "/tmp/palimpsest-distributed-export-rosters-01/derive.txt",
+      "archived_path": "notes/distributed-rosters/derive.txt",
+      "size_bytes": 4573,
+      "sha256": "a1d1000e9fa410f015a324ba20c5a52c2a9f515c5901189dfebabecf7edfffa9"
+    },
+    {
+      "original_path": "/tmp/palimpsest-distributed-export-rosters-01/literal-rosters.json",
+      "archived_path": "notes/distributed-rosters/literal-rosters.json",
+      "size_bytes": 25252,
+      "sha256": "b3ae33519cc74698aa0eef4d17a85beb2d0a3f7a412caf14341bf0d88cb7f787"
+    },
+    {
+      "original_path": "/tmp/palimpsest-distributed-export-rosters-01/review.json",
+      "archived_path": "notes/distributed-rosters/review.json",
+      "size_bytes": 11683,
+      "sha256": "de1aa2a7c7a0832b59f72cc07ffee5965a37657618ef8f70ea8f08238a815e04"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/fetch-plan.json",
+      "archived_path": "notes/fetch-plan.json",
+      "size_bytes": 5007,
+      "sha256": "e6fa1854f37af976b0136444a4254890aca7ba0af22683f76dc81ca45b5ce612"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/retrieval-cmake-02.stderr",
+      "archived_path": "notes/retrieval-cmake-02.stderr",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/retrieval-failure-01.json",
+      "archived_path": "notes/retrieval-failure-01.json",
+      "size_bytes": 354,
+      "sha256": "e730c5fbfe8c641ec5ff92a31ec1885ecd2f04a2d73a413afd1289b1e99c84e6"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/root-standard-map.json",
+      "archived_path": "notes/root-standard-map.json",
+      "size_bytes": 38534,
+      "sha256": "c81e6ae7561614ca88017692f89850a29ada1f1d2b0b68e9d6d1bdb488b80569"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream-index.json",
+      "archived_path": "notes/upstream-index.json",
+      "size_bytes": 19864,
+      "sha256": "9444682410e191e5f0d531fb94072d26bc3dde58b30dfea6a2ca6af53e2f817a"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/verify-map-before-unconditional-fix.py",
+      "archived_path": "notes/verify-map-before-unconditional-fix.py",
+      "size_bytes": 4771,
+      "sha256": "4f08edc5461adcead3cda66301fdcf502db0e50e10ca84e392d3d78037ecd3c9"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md",
+      "archived_path": "prospective-observation.md",
+      "size_bytes": 6801,
+      "sha256": "d7104f2d2a9c8375bc193e7d998f321c754f88165152e81351ee3b19cae6df43"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-export-phase-preflight-v1/source-index.json",
+      "archived_path": "source-index.json",
+      "size_bytes": 21140,
+      "sha256": "4f8de786bcbb4000ebce28df4adcf417ab2485210349d8e01891af0d8ed62379"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/source-map.json",
+      "archived_path": "source-map.json",
+      "size_bytes": 100580,
+      "sha256": "b299317cb8124186f84512d63315491f88b4103ef7a3e0fec76b9617eab44688"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-autograd-publication-profile-v1/upstream/LICENSE",
+      "archived_path": "upstream/LICENSE",
+      "size_bytes": 3464,
+      "sha256": "a8a2c6b67cf8a597ffaa5c82380a6bd1b82629c0417e00673d8013d662eb500a"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/gen_python_functions.py",
+      "archived_path": "upstream/tools/autograd/gen_python_functions.py",
+      "size_bytes": 46384,
+      "sha256": "ad7dee5cd40d77d93fdde4964674aeee5af071fcae773431c71e4b9c97e1162a"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_fft_functions.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_fft_functions.cpp",
+      "size_bytes": 1951,
+      "sha256": "83c51be6387f62181ea2eac25e3076ce51f5e4b9bfa06c0b6b7ec88e26cca047"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_linalg_functions.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_linalg_functions.cpp",
+      "size_bytes": 1614,
+      "sha256": "dcdc8ad6d30e63002c9f1c9bd64d3844f88df4c424ae26e56371a73d53ab7d26"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_nested_functions.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_nested_functions.cpp",
+      "size_bytes": 2029,
+      "sha256": "db08af45f20163ca6453d9aa1d541faa7b087dfe8ad4097e053272445b94780c"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_nn_functions.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_nn_functions.cpp",
+      "size_bytes": 3501,
+      "sha256": "f00c88a331d5336d4a11a56e38f813fb33df3c68fa86934c0b94a2c2a522c56d"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_return_types.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_return_types.cpp",
+      "size_bytes": 1219,
+      "sha256": "181ef93a24fee57deb9a05d995cdf4301ebba8c96faa4ce1ac321f223d66669e"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_sparse_functions.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_sparse_functions.cpp",
+      "size_bytes": 1551,
+      "sha256": "356fcbda617b66b47616f5ed0c4ee235fc3404cfb04f253305afc2d41e5167b0"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/tools/autograd/templates/python_special_functions.cpp",
+      "archived_path": "upstream/tools/autograd/templates/python_special_functions.cpp",
+      "size_bytes": 1972,
+      "sha256": "26a70013150f0a76f352e8d8d8f2032f919aa7e64a965b4a8999834e578effcb"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/CMakeLists.txt",
+      "archived_path": "upstream/torch/CMakeLists.txt",
+      "size_bytes": 16781,
+      "sha256": "73b2ecbad772e5439272ff3711d2f0ff81f809b14d2a0e83d4d950c7e932781f"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/Module.cpp",
+      "archived_path": "upstream/torch/csrc/Module.cpp",
+      "size_bytes": 87615,
+      "sha256": "aa61d768ccbb9bbb7e235d688289f79a4f25954472143a46961e11dcf4860da1"
+    },
+    {
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/include/torch/csrc/api/include/torch/python.h",
+      "archived_path": "upstream/torch/csrc/api/include/torch/python.h",
+      "size_bytes": 9920,
+      "sha256": "af7a192be649fed844279e17f0e7f32dd6e0bcb3b5ab0ee6060b42c2a1a217ea"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/api/src/python/init.cpp",
+      "archived_path": "upstream/torch/csrc/api/src/python/init.cpp",
+      "size_bytes": 3078,
+      "sha256": "a23b024db925eb6d6fa496690771418615e6bbc84a38fbd733ddc6b589b73c26"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/cpu/Module.cpp",
+      "archived_path": "upstream/torch/csrc/cpu/Module.cpp",
+      "size_bytes": 867,
+      "sha256": "0f325697cb2c9b2ff05410a0a44cd6dcf7d94582af483e2f34563acf3c7c432e"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/upstream/torch/csrc/distributed/autograd/init.cpp",
+      "archived_path": "upstream/torch/csrc/distributed/autograd/init.cpp",
+      "size_bytes": 8435,
+      "sha256": "086d39e23700fba3ef98506ceaf9f608112e9c48cb5a61801afb54157ecd5b5e"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/upstream/torch/csrc/distributed/c10d/init.cpp",
+      "archived_path": "upstream/torch/csrc/distributed/c10d/init.cpp",
+      "size_bytes": 172574,
+      "sha256": "9e0e0a3c4f09fa12bbcff6dec059087bf7ccb3c94274d3e4646edfe5d401e3b8"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/upstream/torch/csrc/distributed/rpc/init.cpp",
+      "archived_path": "upstream/torch/csrc/distributed/rpc/init.cpp",
+      "size_bytes": 36555,
+      "sha256": "cda572b256fd02105c5bd7f56cfe15177d9482130a87927907774bece78b2358"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/dynamo/compiled_autograd.cpp",
+      "archived_path": "upstream/torch/csrc/dynamo/compiled_autograd.cpp",
+      "size_bytes": 930,
+      "sha256": "a2483c8cbaec5bbf47235a63eed83da1be1f1094d6171c5a6009e2faa6059f56"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/dynamo/eval_frame.c",
+      "archived_path": "upstream/torch/csrc/dynamo/eval_frame.c",
+      "size_bytes": 25238,
+      "sha256": "5add02916b38524ac4c0558a6a1326a7bc8228381fa82d2ceffa79c72a3b8195"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/dynamo/guards.cpp",
+      "archived_path": "upstream/torch/csrc/dynamo/guards.cpp",
+      "size_bytes": 261193,
+      "sha256": "931e0bb5d4dfd5faed9cfb4cddce51cd6cebc583fdb50ef12d2e0b5e813148a4"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/dynamo/init.cpp",
+      "archived_path": "upstream/torch/csrc/dynamo/init.cpp",
+      "size_bytes": 8376,
+      "sha256": "87a180f32274a7c1455c1cb04ac17101ec0c0b9c4accf1b81df5f66fdbd608d4"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/dynamo/python_compiled_autograd.cpp",
+      "archived_path": "upstream/torch/csrc/dynamo/python_compiled_autograd.cpp",
+      "size_bytes": 45727,
+      "sha256": "fb99924050e881baf3655de339ae2ab3fa51a399fd36b878ef3f7897bbd468ce"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/dynamo/utils.cpp",
+      "archived_path": "upstream/torch/csrc/dynamo/utils.cpp",
+      "size_bytes": 818,
+      "sha256": "c9a52ead80611f55b378ff429ac0c3f13e184709bc7f543d55ac5dfc8f9b2fd6"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/export/pt2_archive_constants.h",
+      "archived_path": "upstream/torch/csrc/export/pt2_archive_constants.h",
+      "size_bytes": 4511,
+      "sha256": "891a6594cb75815dabeff71086796e6583cc06d99e15f6cb3e78d0dfabd768b8"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/export/pybind.cpp",
+      "archived_path": "upstream/torch/csrc/export/pybind.cpp",
+      "size_bytes": 2093,
+      "sha256": "1a6374eca88888e87b3a613dfe796dc6c739912c3a176ef2b4aa7bd0c371428b"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/functionalization/Module.cpp",
+      "archived_path": "upstream/torch/csrc/functionalization/Module.cpp",
+      "size_bytes": 2770,
+      "sha256": "64e77589771d6cafccd1d932d6af1e106460fe3d0f277fbffbabdb16afdd96c4"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/functorch/init.cpp",
+      "archived_path": "upstream/torch/csrc/functorch/init.cpp",
+      "size_bytes": 21015,
+      "sha256": "66e8aae1d29eb40407ec12d048b39e4b392396089a18239fdfb3c2e9ed205252"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/inductor/aoti_package/pybind.cpp",
+      "archived_path": "upstream/torch/csrc/inductor/aoti_package/pybind.cpp",
+      "size_bytes": 3199,
+      "sha256": "aa35f184770ead53b0c497e46d26bc16394241c405a4f684dad741cc465a68d6"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/inductor/aoti_runner/pybind.cpp",
+      "archived_path": "upstream/torch/csrc/inductor/aoti_runner/pybind.cpp",
+      "size_bytes": 7874,
+      "sha256": "d42a613a1b904196e0edd4ee8c6b08b81047d49274f8e61e3d3810302c5c11e7"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/instruction_counter/Module.cpp",
+      "archived_path": "upstream/torch/csrc/instruction_counter/Module.cpp",
+      "size_bytes": 2347,
+      "sha256": "d33b04bf99736cf9c54f2619704d09b5734fd1cefcdff5286d5f25afdd4fa2da"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/itt.cpp",
+      "archived_path": "upstream/torch/csrc/itt.cpp",
+      "size_bytes": 430,
+      "sha256": "d29215c653f44790b8c1cc63239084f39ccda444ae239f988066f43ac0e7eea3"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/jit/python/init.cpp",
+      "archived_path": "upstream/torch/csrc/jit/python/init.cpp",
+      "size_bytes": 93369,
+      "sha256": "5b8adec0f49396b8b33933c119a4699c2e404ffab0105ccdf9df767108192b50"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/jit/python/python_tree_views.cpp",
+      "archived_path": "upstream/torch/csrc/jit/python/python_tree_views.cpp",
+      "size_bytes": 15746,
+      "sha256": "327f2c418b96fc01236e663698d13d83e24bb20c8edd339ec25110ef05412eaa"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/jit/python/script_init.cpp",
+      "archived_path": "upstream/torch/csrc/jit/python/script_init.cpp",
+      "size_bytes": 96072,
+      "sha256": "132c45eca8aff672bb354b5b821f192b4ce4a462ec81a4f330bb7b4dc9499962"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/jit/tensorexpr/tensorexpr_init.cpp",
+      "archived_path": "upstream/torch/csrc/jit/tensorexpr/tensorexpr_init.cpp",
+      "size_bytes": 36683,
+      "sha256": "2653197c5b75cefe669c10c2b37c4c5556dffaca23e3407e4eb80f9f98cde221"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/lazy/python/init.cpp",
+      "archived_path": "upstream/torch/csrc/lazy/python/init.cpp",
+      "size_bytes": 13121,
+      "sha256": "20fa5e56e452d0422bfa7a7d6a16c6f7073f56e84e22eb446af8888425261170"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/monitor/python_init.cpp",
+      "archived_path": "upstream/torch/csrc/monitor/python_init.cpp",
+      "size_bytes": 10931,
+      "sha256": "cbb17db65800002d3794cc0a32f4109cf77602450d08df682e74e3e14d98ffcd"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/onnx/init.cpp",
+      "archived_path": "upstream/torch/csrc/onnx/init.cpp",
+      "size_bytes": 12969,
+      "sha256": "68f24082394d02e67bbcb5c24ee36f6b152ae0eb501ba50aa6a142d26e696934"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/profiler/python/init.cpp",
+      "archived_path": "upstream/torch/csrc/profiler/python/init.cpp",
+      "size_bytes": 27682,
+      "sha256": "861bcea4cba717abb5b93e361e876ca445bc964331393238f134ed4ff41a9e5f"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/csrc/utils/verbose.cpp",
+      "archived_path": "upstream/torch/csrc/utils/verbose.cpp",
+      "size_bytes": 467,
+      "sha256": "b57de42a8269fe9c55eb377fbc48426132e378a6f4503c4652868d36b276c469"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/nativert/python/Bindings.cpp",
+      "archived_path": "upstream/torch/nativert/python/Bindings.cpp",
+      "size_bytes": 2883,
+      "sha256": "c4890f8ed978333f47cc5a5617527b5c8fd507d1e0f5191807c1ba3706993881"
+    },
+    {
+      "original_path": "/tmp/palimpsest-export-phase-preflight-01/upstream/torch/nativert/python/Bindings.h",
+      "archived_path": "upstream/torch/nativert/python/Bindings.h",
+      "size_bytes": 213,
+      "sha256": "45b93ccdc12662032988039abea1c237b9b56b51c02c8c78c95d56e315a4d249"
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-export-phase-preflight-v1/verify_map.py",
+      "archived_path": "verify_map.py",
+      "size_bytes": 4809,
+      "sha256": "ee1663851d97d3c788463bd1f52916af5a54330ed7aac193a5c46a9634dd6ecf"
+    }
+  ]
+}

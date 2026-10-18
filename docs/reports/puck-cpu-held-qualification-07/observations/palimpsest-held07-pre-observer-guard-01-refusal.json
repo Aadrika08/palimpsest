@@ -1,0 +1,9 @@
+{
+  "kind": "held07-pre-observer-guard-refusal-v1",
+  "tool_chunk_id": "b49fb7",
+  "exit_code": 1,
+  "failed_at": "wrapper readpin metadata equality",
+  "reason": "Whole stat_result comparison includes read-induced atime; compare identity/size/mtime/ctime without atime instead.",
+  "observer_invoked": false,
+  "control_invoked": false
+}

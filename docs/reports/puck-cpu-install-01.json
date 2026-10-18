@@ -1,0 +1,57 @@
+{
+  "acceptance_audit": {
+    "error": "Authenticated NumPy archive contains one pyc rejected by blanket census policy",
+    "status": "FAIL",
+    "terminal_exit_code": 1
+  },
+  "accepted_installation": false,
+  "actual_elapsed_seconds": 29.518958525033668,
+  "actual_status": "FAIL",
+  "actual_terminal_exit_code": 1,
+  "all_seven_release_gates_open": true,
+  "claims": {
+    "collection_authorized": false,
+    "installed": false,
+    "numerical_imports_executed": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "configuration_sha256": "edc9f98bb546212f9f8e07722f04ca4be0a3cbf63d68a38033b50ae3d44709b4",
+  "independent_failure_audit": {
+    "elapsed_seconds": 8.913721060031094,
+    "report_sha256": "8761fee111396ae46c071a60b25da932f75b7ee6d8ce34924ec3284296000b12",
+    "status": "PRESERVED_FAILURE_VERIFIED",
+    "terminal_exit_code": 0
+  },
+  "kind": "puck-cpu-install-01-evidence-v1",
+  "observed_namespace": {
+    "directories_excluding_root": 2074,
+    "distributions": 71,
+    "licence_bytes": 1576818,
+    "licence_files": 96,
+    "regular_file_bytes": 1304701872,
+    "regular_files": 27225
+  },
+  "runtime_qualified": false,
+  "scientific_allocation_invoked": false,
+  "source_checks": {
+    "full_suite_run": false,
+    "passed": 124,
+    "seconds": 3.68
+  },
+  "source_commit": "161eb2839182168da5ff78e52ebeae25f2f52c04",
+  "supervisor": {
+    "failure": "native log drain/final sync timed out",
+    "finished_monotonic": 438029.843993793,
+    "matching_survivors": [],
+    "mutable_failures": [],
+    "mutable_sampling_seconds": 0.1,
+    "pid": 2370341,
+    "returncode": 0,
+    "rss_sampling_seconds": 0.05,
+    "sampled_mutable_peak_bytes": 2444216286,
+    "sampled_peak_rss_bytes": 232443904,
+    "status": "failed"
+  }
+}

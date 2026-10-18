@@ -1,0 +1,77 @@
+........................................................................ [ 11%]
+........................................................................ [ 23%]
+........................................................................ [ 34%]
+........................................................................ [ 46%]
+........................................................................ [ 57%]
+........................................................................ [ 69%]
+.......................................................................F [ 80%]
+....................................F................................... [ 92%]
+................................................                         [100%]
+=================================== FAILURES ===================================
+_ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+
+tmp_path = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored03_completes_afte0')
+
+    def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment03.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored03_completes_afte0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored03_completes_afte0').is_relative_to
+E        +      where PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored03_completes_afte0') = resolve()
+E        +        where resolve = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored03_completes_afte0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored02_uses_fresh_cap0')
+
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored02_uses_fresh_cap0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+>       assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+E       AssertionError: Use persistent runs/ basetemp
+E       assert False
+E        +  where False = is_relative_to(PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1/runs'))
+E        +    where is_relative_to = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored02_uses_fresh_cap0').is_relative_to
+E        +      where PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored02_uses_fresh_cap0') = resolve()
+E        +        where resolve = PosixPath('/tmp/palimpsest-diagnostic-epoch08-metadata01/test_authored02_uses_fresh_cap0').resolve
+E        +    and   PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1/runs') = resolve()
+E        +      where resolve = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1') / 'runs').resolve
+
+tests/test_puck_cpu_held_amendment.py:162: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+2 failed, 622 passed in 25.97s

@@ -1,0 +1,33 @@
+........................................................................ [ 50%]
+...........................................F..........................   [100%]
+=================================== FAILURES ===================================
+__________ test_real_namespace_probe_and_four_authored_source_imports __________
+
+tmp_path = PosixPath('/tmp/distributed-worker-check/test_real_namespace_probe_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76462ba062d0>
+
+    def test_real_namespace_probe_and_four_authored_source_imports(tmp_path,monkeypatch):
+        m=api();baseline=json.loads((ROOT/'docs/plans/puck-python-louvain-host-baseline-v1.json').read_bytes())
+        site=tmp_path/'site';site.mkdir();payload=tmp_path/'payload';payload.mkdir()
+        for name,version in m.VERSIONS.items():
+            p=site/name;p.mkdir();(p/'__init__.py').write_text('__version__='+repr(version)+'\n')
+        scripts=tmp_path/'scripts';scripts.mkdir()
+        (scripts/'characterize_puck_runtime_imports.py').write_bytes((ROOT/m.WORKER).read_bytes())
+        (tmp_path/'docs').mkdir()
+        request=dict(kind='puck-runtime-import-characterization-v2',version=2,site_root=str(site),
+            output_root='/output',environment=m.ENVIRONMENT,expected_versions=m.VERSIONS,pycache_prefix='/scratch/pycache')
+        p=tmp_path/'request.json';p.write_text(json.dumps(request,sort_keys=True,separators=(',',':'))+'\n')
+        monkeypatch.setattr(m,'ROOT',tmp_path);monkeypatch.setattr(m,'SITE','site')
+        native=dict(native_files=[],aliases=[])
+        for probe in (True,False):
+            result=subprocess.run(m.sandbox_command(baseline,native,payload,p,probe=probe),capture_output=True,text=True,timeout=20)
+>           assert result.returncode==0,result.stderr
+E           AssertionError: bwrap: Can't make symlink at /tmp: destination exists and is not a symlink
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/usr/bin/bwrap', '--unshare-all', '--unshare-user', '--as-pid-1', '--disable-userns', '--die-w...docs'], returncode=1, stdout='', stderr="bwrap: Can't make symlink at /tmp: destination exists and is not a symlink\n").returncode
+
+tests/test_puck_cpu_characterization_parent.py:81: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_characterization_parent.py::test_real_namespace_probe_and_four_authored_source_imports
+1 failed, 141 passed in 9.50s

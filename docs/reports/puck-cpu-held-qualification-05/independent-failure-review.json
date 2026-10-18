@@ -1,0 +1,272 @@
+{
+  "actual05_consumed": true,
+  "automatic06_authorized": false,
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "control_freeze_commit": "fb258cd0c004d1cc69dade8d3c9062285afd918a",
+  "evidence_pins": [
+    {
+      "path": "runs/puck-cpu-held-qualification-05/result.json",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/configuration.json",
+      "sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+      "size_bytes": 8833
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/supervision.json",
+      "sha256": "ca663d925aa6f163843a4315d0a789a6081ab06a7add3b17fc074621a6175de7",
+      "size_bytes": 357
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/logs/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/logs/stderr.log",
+      "sha256": "2b3774acb8b5946ebce7d9ee993d3ab4b48b576c3f8e1a73ac411fae4d24c048",
+      "size_bytes": 2509
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli.stdout",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli-transport.json",
+      "sha256": "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+      "size_bytes": 950
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/control/worker-registration.json",
+      "sha256": "cfddb0c68d6b63d2dd3e871951a0c77ae9708cdb8b49cb5889106d6029abb5e3",
+      "size_bytes": 4552
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/control/dependencies.json",
+      "sha256": "c3cf3b8579f476ff957e44bd47b57bc52fff4dd32674523baa0ce696851b420e",
+      "size_bytes": 4253196
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/worker-source/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/worker-source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/worker-source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-05-freeze.json",
+      "sha256": "9219d49273b3ff6837d99238035909cc4f150c882b4c9eda46f03ea762880f96",
+      "size_bytes": 7421
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/source/scripts/characterize_puck_runtime_imports.py",
+      "sha256": "cd3a1936dafa0dd94cfa4744a9cbb5b651f61eca8ea29819f4fb0d1291ebe992",
+      "size_bytes": 21443
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/raw/payload/imports.json",
+      "sha256": "f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448",
+      "size_bytes": 534299
+    },
+    {
+      "path": "scripts/characterize_puck_runtime_imports.py",
+      "sha256": "ef16972ee5a7657c2a5d2144473610913be2b97278e71644af1f768d4e05bd8d",
+      "size_bytes": 29023
+    },
+    {
+      "path": "runs/puck-cpu-runtime-characterization-03/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    },
+    {
+      "path": "/tmp/palimpsest-held05-admission-external-tool.json",
+      "sha256": "9135fb90c68e20ca8eac2910463a0c7d3415f9299c57c82514f3746794a46a03",
+      "size_bytes": 3852
+    },
+    {
+      "path": "/tmp/palimpsest-held05-observer-external-tool.json",
+      "sha256": "60d30cc46136b1d3d5e545db250620aea0d4aa232a1bfb0d4f796405f0a608f9",
+      "size_bytes": 2336
+    },
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-qualification-05-admission-01.json",
+      "sha256": "603dd746c5f06e76f58bbc7c1b4db0d7a8d4e3f1468b4d2ed80770c50cb50369",
+      "size_bytes": 2741
+    },
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-qualification-05-audit-01.json",
+      "sha256": "cf0b4a4f2bcebe97c1e33695b864516ef029b8bd52f461de10ecc8d7a903b2cf",
+      "size_bytes": 617
+    }
+  ],
+  "findings": [
+    {
+      "classification": "confirmed",
+      "finding": "The first fatal bootstrap violation is the unexpected non-stdlib import pynvml from held Torch CUDA initializer line63. It is neither registered nor in the frozen three-name negative-import roster. find_spec raises ImportError and calls _fail; _first_failure retains this first exception.",
+      "id": "first-fatal-guard",
+      "source_refs": [
+        "runs/puck-cpu-held-qualification-05/logs/stderr.log:2",
+        "scripts/puck_worker_bootstrap.py:282",
+        "scripts/puck_worker_bootstrap.py:309",
+        "scripts/puck_worker_bootstrap.py:360"
+      ]
+    },
+    {
+      "classification": "confirmed source and traceback sequence",
+      "finding": "Torch treats this as optional: ModuleNotFoundError is swallowed by the inner handler and generic ImportError by the outer handler. Before that handler resumes, _fail closes holders, restores prior sys.meta_path and marks the bootstrap failed. Catching the exception does not restore valid admission.",
+      "id": "caught-failure-poisons",
+      "source_refs": [
+        "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/cuda/__init__.py:63",
+        "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/cuda/__init__.py:113",
+        "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/cuda/__init__.py:117",
+        "scripts/puck_worker_bootstrap.py:343",
+        "scripts/puck_worker_bootstrap.py:358"
+      ]
+    },
+    {
+      "classification": "confirmed file presence and mapping; source-supported causal inference",
+      "finding": "The later torch.cuda.memory ModuleNotFoundError occurs after poison teardown; it is not evidence that its file is absent. The candidate and actual dependency registration both map it to root0 torch/cuda/memory.py. Original and staged64667B CUDA initializer and46306B memory source match accepted inventory hashes. The held Python package loader sets __path__=[]; restoring the ordinary dispatcher after poison explains the unresolved relative import. invoke chains the later exception from retained first_failure.",
+      "id": "later-memory-symptom",
+      "source_refs": [
+        "runs/puck-cpu-held-qualification-05/logs/stderr.log:40",
+        "src/palimpsest/puck_dependency_imports.py:149",
+        "scripts/puck_worker_bootstrap.py:625"
+      ]
+    },
+    {
+      "classification": "confirmed",
+      "finding": "Ordinary observation02 and03 record four completed top-level imports, terminal sys.modules/module-export cache state, and mapped images. They do not instrument attempted missing imports. Both completed_imports reports omit pynvml. A successful terminal cache is insufficient to specify negative import attempts swallowed inside package code.",
+      "id": "observation-coverage-gap",
+      "source_refs": [
+        "docs/reports/puck-cpu-characterization-02/source/scripts/characterize_puck_runtime_imports.py:360",
+        "docs/reports/puck-cpu-characterization-02/source/scripts/characterize_puck_runtime_imports.py:366",
+        "docs/reports/puck-cpu-characterization-02/source/scripts/characterize_puck_runtime_imports.py:399",
+        "scripts/characterize_puck_runtime_imports.py:495",
+        "scripts/characterize_puck_runtime_imports.py:535"
+      ]
+    },
+    {
+      "classification": "confirmed outcome; architectural implication",
+      "finding": "The poison contract prevents a successful receipt and preserves first-cause chaining. It does not synchronously stop the already executing vendor frame: caught ImportError permits additional initializer code until a later failure/boundary. These records establish refusal and the stated parent closure, not absence of all post-poison execution or exhaustive process cleanup.",
+      "id": "lifecycle-evidence-boundary",
+      "source_refs": [
+        "scripts/puck_worker_bootstrap.py:343",
+        "scripts/puck_worker_bootstrap.py:360",
+        "scripts/puck_worker_bootstrap.py:625"
+      ]
+    }
+  ],
+  "frozen_negative_imports": [
+    "numpy._distributor_init_local",
+    "org",
+    "torch._rocm_init"
+  ],
+  "kind": "palimpsest-held05-independent-failure-review-v1",
+  "limitations": [
+    "No runtime/package/import/entrypoint invocation, production edit, Git/network mutation, catalogue/model read, or additional allocation was performed.",
+    "Root owns the full post-byte/cleanup census and external independent-auditor terminal; this review reads its published FAIL only."
+  ],
+  "measured_records": {
+    "baseline_after_absent": true,
+    "data_only_admission_external_returncode": 0,
+    "data_only_admission_seconds": 26.53738016204443,
+    "data_only_admission_status": "DATA_ONLY_ADMITTED",
+    "external_parent_stderr_empty": true,
+    "independent_audit_error": "Normal external transport exit required",
+    "independent_audit_status": "FAIL",
+    "observer_external_chunk": "b3c368",
+    "observer_external_returncode": 1,
+    "observer_seconds": 45.85860303998925,
+    "observer_timed_out": false,
+    "parent_closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 5,
+      "fd_count_before": 5
+    },
+    "parent_result_equals_external_parent_stdout": true,
+    "parent_seconds": 45.755890075990465,
+    "parent_status": "FAIL",
+    "payload_empty": true
+  },
+  "not_established": [
+    "All four held imports completed",
+    "Four corrected export rows satisfy creator-close/dispatch closure in a full real import",
+    "Runtime or renderer/episode/replay/export qualification",
+    "Hardware capability or scientific/collection authority"
+  ],
+  "retry_authorized": false,
+  "reviewed_at_utc": "2026-10-15T20:51:26.222409+00:00",
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "smallest_next_decision": {
+    "execution_separation": "Any new observation or allocation requires its own separately numbered/reviewed freeze; this review authorizes no06 or additional runtime execution.",
+    "existing_mechanism": "For an individually reviewed expected-absence name, reuse declared negative imports plus require_absent_imports against live held custody; preserve unexpected-import poison and every frozen historical allocation.",
+    "recommendation": "Close and archive05 as consumed FAIL. Before proposing a new numbered allocation, complete a finite source-backed optional/missing-import contract and authored compatibility tests for this exact four-import route; review the observation-coverage gap explicitly.",
+    "required_design_proof": "Show expected optional misses remain ordinary catchable ModuleNotFoundError without poisoning, undeclared misses still poison, a pre-existing registered or host package cannot be silently used, and first fatal cause is explicit in failure evidence. Successful-cache observations alone cannot prove attempted-import coverage.",
+    "unsupported_remedies": [
+      "Install CUDA or pynvml based on this traceback",
+      "Treat torch.cuda.memory as an absent payload",
+      "Broadly permit arbitrary missing imports",
+      "Weaken poison or retry05"
+    ]
+  },
+  "torch_cuda_memory_registration": {
+    "is_package": false,
+    "kind": "python",
+    "name": "torch.cuda.memory",
+    "path": "torch/cuda/memory.py",
+    "root_index": 0
+  },
+  "verdict": "CONSUMED_FAILURE_CAUSE_IDENTIFIED_NO_RETRY",
+  "verified_original_and_staged_leaves": [
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/cuda/__init__.py",
+      "sha256": "9ba786aee9b5aac710f49c3beade1722610a0d6d8ec406fad9a9793df1316e99",
+      "size_bytes": 64667
+    },
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/cuda/__init__.py",
+      "sha256": "9ba786aee9b5aac710f49c3beade1722610a0d6d8ec406fad9a9793df1316e99",
+      "size_bytes": 64667
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/cuda/memory.py",
+      "sha256": "38f5d4bcb7ae3f8a912dd6cfe4870dfcc6ddd64736f8986284d119c429338bf9",
+      "size_bytes": 46306
+    },
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/cuda/memory.py",
+      "sha256": "38f5d4bcb7ae3f8a912dd6cfe4870dfcc6ddd64736f8986284d119c429338bf9",
+      "size_bytes": 46306
+    }
+  ],
+  "version": 1
+}

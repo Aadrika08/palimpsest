@@ -1,0 +1,42 @@
+{
+  "actual_invocations": 1,
+  "analysis_source": {
+    "commit": "2f0a425b7c541b9d972b7a5d8263b2a85f072340",
+    "sha256": "ce0f9e0126ce31a0c356678386f44097cebe0115332e1967e87d4053737e92c9"
+  },
+  "camera_or_snapshot_payload_decoded": false,
+  "command": [
+    "timeout",
+    "--signal=TERM",
+    "305s",
+    "../lab-hardening/.venv/bin/python",
+    "scripts/diagnose_male_navigation_v2.py",
+    "--producer-root",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-development-v2",
+    "--index",
+    "docs/reports/m7-navigation-development-v2.json",
+    "--output",
+    "runs/m7-navigation-v2-failure-diagnosis-v1-2f0a425"
+  ],
+  "development_index_sha256": "850c6337e1fa4e2916751a8f02c20dae4a9ba347eb88eb3f17d17cedb065dc71",
+  "exit_code": 1,
+  "failure": {
+    "bytes": 293,
+    "path": "docs/reports/m7-navigation-v2-failure-diagnosis-v1.json",
+    "sha256": "850b64c7e5b2200b921a7d20e5f173b4db53796956528cec8f99f060b7cfc474"
+  },
+  "held_out_accessed": false,
+  "model_or_simulator_executed": false,
+  "outer_wall_seconds": 2.337815377,
+  "protocol": {
+    "bytes": 6964,
+    "path": "docs/plans/m7-navigation-v2-failure-diagnosis-v1.json",
+    "sha256": "242fad46433241697bb7d7731e692cd1b42918b3788a8f816c6c8a9e9271b5e3"
+  },
+  "qualification_claims": [],
+  "report_present": false,
+  "r3_complete": false,
+  "schema": "m7-navigation-v2-failure-diagnosis-execution-v1",
+  "status": "failed-diagnostic",
+  "trajectory_diagnostic_completed": false
+}

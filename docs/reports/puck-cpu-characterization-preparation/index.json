@@ -1,0 +1,33 @@
+{
+  "actual_cpu_characterization_invoked": false,
+  "earlier_helper_source": "metadata01-03 used inline stdlib/readelf derivations; no standalone helper source files existed",
+  "entries": [
+    {
+      "path": "metadata-01.json",
+      "sha256": "83f871f64a2fdb6d9419000b434d00fa0b9487a22c1dccd5f7bb791a302d261c",
+      "size_bytes": 360970
+    },
+    {
+      "path": "metadata-02.json",
+      "sha256": "d98c67b98b8c4cc8effee0ff4b7f9c0f99637a116ccf8bfa1cba8d1af6c6af57",
+      "size_bytes": 332568
+    },
+    {
+      "path": "metadata-03.json",
+      "sha256": "79f100aa7622cd4ce53f3463d4ed5fe5e006f01d332a12b825a609e87eb1ef96",
+      "size_bytes": 930688
+    },
+    {
+      "path": "native-metadata-04.py",
+      "sha256": "6bc8c65ded4873676cb1cbd7d7ed82770813933ecc6995edcf2734f0bc588f12",
+      "size_bytes": 15821
+    }
+  ],
+  "kind": "cpu-characterization-preparation-index-v1",
+  "native_metadata_04": {
+    "path": "../../plans/puck-cpu-characterization-native-metadata-04.json",
+    "sha256": "451e6af507c6e7d181f253430145053f9eaa9404496f8b97cb27d33ec6e88066",
+    "size_bytes": 960767
+  },
+  "scope": "static data and source preparation only; no target imports"
+}

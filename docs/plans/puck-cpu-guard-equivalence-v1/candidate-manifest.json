@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "deselected": 3,
+    "exit_code": 0,
+    "passed": 7,
+    "pytest_seconds": 10.01,
+    "tests": 7,
+    "tool_chunk": "2afe64"
+  },
+  "candidate_sha256": "df8a2b6cb688e36de2a3ba7dac6c6d309b98f069c5e7085172873e542abb3d86",
+  "candidate_size_bytes": 46230,
+  "kind": "authored-guard-equivalence-candidate-v1",
+  "one_candidate": true,
+  "original_sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+  "production_changed": false,
+  "scope": "Experimental source only, retains per-key ordering but in-place dispatch is unproved; reject on any semantic mismatch.",
+  "timing_workload_authorized_only_after_semantics": true
+}

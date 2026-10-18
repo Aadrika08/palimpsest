@@ -1,0 +1,14 @@
+# Each diagnostic ran once, offline, against the retained held site, read-only.
+bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp \
+  --ro-bind <script> /tmp/p.py --bind <out> /tmp/out --unshare-all --die-with-parent --clearenv \
+  --setenv PYTHONDONTWRITEBYTECODE 1 --setenv LC_ALL C.UTF-8 --setenv LANG C.UTF-8 \
+  --setenv HOME /tmp/home --setenv TMPDIR /tmp/tmp --setenv PATH /nonexistent --setenv TZ UTC \
+  --setenv CUDA_VISIBLE_DEVICES '' --setenv MUJOCO_GL egl --setenv PYOPENGL_PLATFORM egl \
+  --setenv MPLBACKEND Agg --setenv OMP_NUM_THREADS 1 --setenv MKL_NUM_THREADS 1 \
+  --setenv OPENBLAS_NUM_THREADS 1 --setenv OPENBLAS_MAIN_FREE 1 --setenv GOTOBLAS_MAIN_FREE 1 \
+  --setenv TORCH_DEVICE_BACKEND_AUTOLOAD 0 --chdir /tmp \
+  /usr/bin/sh -c "mkdir -p /tmp/home /tmp/tmp && exec <cpython-3.11.15> -I -S -B /tmp/p.py <args>"
+# site     = /home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site
+# registry = docs/reports/puck-cpu-held-qualification-10/raw/control/dependencies.json
+# Environment values copy ENVIRONMENT in scripts/qualify_puck_cpu_held_runtime.py,
+# except HOME/TMPDIR/PWD, which moved under the sandbox tmpfs.

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held06-post-byte-custody-01.py"
+  ],
+  "published_receipt_created": false,
+  "reason": "Exact pinned interpreter precondition failed: host python was used instead of the frozen3.11.15 executable.",
+  "returncode": 1,
+  "runtime_qualification_retried": false,
+  "status": "REFUSED_BEFORE_DATA_CHECKS",
+  "tool_chunk": "ec1c99"
+}

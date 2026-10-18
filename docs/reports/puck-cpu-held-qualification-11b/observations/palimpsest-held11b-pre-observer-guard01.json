@@ -1,0 +1,88 @@
+{
+  "absence": {
+    "future_output_paths": [
+      "/tmp/palimpsest-held11b-observer-external.json",
+      "/tmp/palimpsest-held11b-observer-external.stderr",
+      "/tmp/palimpsest-held11b-observer-external.stdout",
+      "/tmp/palimpsest-held11b-audit-external.json",
+      "/tmp/palimpsest-held11b-audit-external.stderr",
+      "/tmp/palimpsest-held11b-audit-external.stdout",
+      "/tmp/palimpsest-puck-cpu-held-qualification-11b-audit-01.json",
+      "/tmp/palimpsest-held11b-concrete-audit-command.json",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-11",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-11-external-cli.stdout",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-11-external-cli.stderr",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-11-external-cli-transport.json"
+    ],
+    "historical_missing_receipts": 17
+  },
+  "admission_main_invoked": true,
+  "admission_receipt_sha256": "8f7115c5ccd0a93a17931ce10d3368b6b76020083afd4aedbca6dd3df7b64c8d",
+  "attempt11_d83dab3": "NEVER_INVOKED",
+  "checked_at_utc": "2026-10-17T02:36:45.269449+00:00",
+  "control_commit": "27780dd5cbc096c26fb353faea7edfde878a4f74",
+  "control_files": 86,
+  "historical_empty_directories": 35,
+  "historical_records_unchanged": 103,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 121576773,
+  "pins": 2463,
+  "preparation02_run_files": 51,
+  "resources": {
+    "at_utc": "2026-10-17T02:36:45.060342+00:00",
+    "mem_available_bytes": 8208879616,
+    "nofile_hard": 524288,
+    "nofile_soft": 524288,
+    "project_free_bytes": 44344279040,
+    "tmpfs_free_bytes": 6295113728
+  },
+  "runtime_invoked": false,
+  "source_commit": "8f3a13810d0444099c1bf3d2a7c3cb4a482b7b15",
+  "stage_guard": {
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "directories": {
+      "inputs": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 10399,
+        "mode": "0700"
+      },
+      "root-0000": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 10400,
+        "mode": "0700"
+      },
+      "root-0001": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 10401,
+        "mode": "0700"
+      },
+      "root-0002": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 10402,
+        "mode": "0700"
+      },
+      "root-0003": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 10403,
+        "mode": "0700"
+      },
+      "stage_parent": {
+        "device": 55,
+        "filesystem": "tmpfs",
+        "inode": 10398,
+        "mode": "0700"
+      }
+    },
+    "kind": "held11b-stage-boot-guard-v1",
+    "result_sha256": "4ef13965e6f312a0bcdef9c49e57190f6a9526988f20f1959357bcc31400e0d4",
+    "scope": "metadata of five directories only; staged bytes are re-hashed by admission/runtime/audit",
+    "stage_parent": "/tmp/palimpsest-puck-cpu-held-02",
+    "status": "PASS_STAGE_AND_BOOT"
+  },
+  "status": "PASS_PRE_OBSERVER_GUARD_ONLY"
+}

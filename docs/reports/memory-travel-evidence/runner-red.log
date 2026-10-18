@@ -1,0 +1,252 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_travel_jobs_bind_full_changed_probe_and_reject_other_protocols ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_travel_jobs_bind_full_cha0')
+
+    def test_travel_jobs_bind_full_changed_probe_and_reject_other_protocols(tmp_path):
+>       spec=p.travel_specs('travel-development')[0]
+             ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'travel_specs'
+
+tests/test_memory_travel_study.py:23: AttributeError
+_ test_travel_selection_advances_audited_failures_before_or_after_acquisition[failure0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_travel_selection_advances0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d83000fa510>
+failure = {'acquired': False, 'goal': False, 'raw_audit_pass': True, 'retained_task_failure': True, ...}
+
+    @pytest.mark.parametrize('failure',[
+        dict(status='failed',raw_audit_pass=True,retained_task_failure=True,acquired=False,goal=False),
+        dict(status='recorded',raw_audit_pass=True,retained_task_failure=True,acquired=True,goal=False),
+    ])
+    def test_travel_selection_advances_audited_failures_before_or_after_acquisition(tmp_path,monkeypatch,failure):
+        outcomes=[failure,success()]
+        def launch(stage,spec,plan,storage,deadline,**kw):
+            assert stage=='travel-development' and spec['operation']=='full'
+            return outcomes.pop(0)
+        monkeypatch.setattr(p,'launch_owner',launch)
+>       result=study.run_development(plan(tmp_path),None,None)
+                                     ^^^^^^^^^^^^^^
+
+tests/test_memory_travel_study.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_travel_selection_advances0')
+
+    def plan(tmp_path):
+        repo=Path(p.__file__).resolve().parents[1]
+        return {'repo':str(repo),'assets':str(tmp_path/'assets'),'history_root':str(tmp_path/'history'),
+                'output':str(tmp_path/'phase'/'development'),'phase_root':str(tmp_path/'phase'),
+>               'source_identity':{},'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,'geometry_valid':True}
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'TRAVEL_PROTOCOL_SHA256'
+
+tests/test_memory_travel_study.py:14: AttributeError
+_ test_travel_selection_advances_audited_failures_before_or_after_acquisition[failure1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_travel_selection_advances1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d82fffbf690>
+failure = {'acquired': True, 'goal': False, 'raw_audit_pass': True, 'retained_task_failure': True, ...}
+
+    @pytest.mark.parametrize('failure',[
+        dict(status='failed',raw_audit_pass=True,retained_task_failure=True,acquired=False,goal=False),
+        dict(status='recorded',raw_audit_pass=True,retained_task_failure=True,acquired=True,goal=False),
+    ])
+    def test_travel_selection_advances_audited_failures_before_or_after_acquisition(tmp_path,monkeypatch,failure):
+        outcomes=[failure,success()]
+        def launch(stage,spec,plan,storage,deadline,**kw):
+            assert stage=='travel-development' and spec['operation']=='full'
+            return outcomes.pop(0)
+        monkeypatch.setattr(p,'launch_owner',launch)
+>       result=study.run_development(plan(tmp_path),None,None)
+                                     ^^^^^^^^^^^^^^
+
+tests/test_memory_travel_study.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_travel_selection_advances1')
+
+    def plan(tmp_path):
+        repo=Path(p.__file__).resolve().parents[1]
+        return {'repo':str(repo),'assets':str(tmp_path/'assets'),'history_root':str(tmp_path/'history'),
+                'output':str(tmp_path/'phase'/'development'),'phase_root':str(tmp_path/'phase'),
+>               'source_identity':{},'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,'geometry_valid':True}
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'TRAVEL_PROTOCOL_SHA256'
+
+tests/test_memory_travel_study.py:14: AttributeError
+_____ test_partial_or_unproved_travel_result_stops_without_selection[bad0] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_partial_or_unproved_trave0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d83000e9f10>
+bad = {'acquired': True, 'goal': False, 'raw_audit_pass': True, 'status': 'recorded'}
+
+    @pytest.mark.parametrize('bad',[
+        dict(status='recorded',raw_audit_pass=True,acquired=True,goal=False),
+        dict(status='recorded',raw_audit_pass=False,retained_task_failure=True,acquired=True,goal=False),
+        dict(status='recorded',raw_audit_pass=True,acquired=True,goal=True,retreat_completed=False,replans=0),
+    ])
+    def test_partial_or_unproved_travel_result_stops_without_selection(tmp_path,monkeypatch,bad):
+        monkeypatch.setattr(p,'launch_owner',lambda *a,**kw:bad)
+>       result=study.run_development(plan(tmp_path),None,None)
+                                     ^^^^^^^^^^^^^^
+
+tests/test_memory_travel_study.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_partial_or_unproved_trave0')
+
+    def plan(tmp_path):
+        repo=Path(p.__file__).resolve().parents[1]
+        return {'repo':str(repo),'assets':str(tmp_path/'assets'),'history_root':str(tmp_path/'history'),
+                'output':str(tmp_path/'phase'/'development'),'phase_root':str(tmp_path/'phase'),
+>               'source_identity':{},'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,'geometry_valid':True}
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'TRAVEL_PROTOCOL_SHA256'
+
+tests/test_memory_travel_study.py:14: AttributeError
+_____ test_partial_or_unproved_travel_result_stops_without_selection[bad1] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_partial_or_unproved_trave1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d82fff89e90>
+bad = {'acquired': True, 'goal': False, 'raw_audit_pass': False, 'retained_task_failure': True, ...}
+
+    @pytest.mark.parametrize('bad',[
+        dict(status='recorded',raw_audit_pass=True,acquired=True,goal=False),
+        dict(status='recorded',raw_audit_pass=False,retained_task_failure=True,acquired=True,goal=False),
+        dict(status='recorded',raw_audit_pass=True,acquired=True,goal=True,retreat_completed=False,replans=0),
+    ])
+    def test_partial_or_unproved_travel_result_stops_without_selection(tmp_path,monkeypatch,bad):
+        monkeypatch.setattr(p,'launch_owner',lambda *a,**kw:bad)
+>       result=study.run_development(plan(tmp_path),None,None)
+                                     ^^^^^^^^^^^^^^
+
+tests/test_memory_travel_study.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_partial_or_unproved_trave1')
+
+    def plan(tmp_path):
+        repo=Path(p.__file__).resolve().parents[1]
+        return {'repo':str(repo),'assets':str(tmp_path/'assets'),'history_root':str(tmp_path/'history'),
+                'output':str(tmp_path/'phase'/'development'),'phase_root':str(tmp_path/'phase'),
+>               'source_identity':{},'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,'geometry_valid':True}
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'TRAVEL_PROTOCOL_SHA256'
+
+tests/test_memory_travel_study.py:14: AttributeError
+_____ test_partial_or_unproved_travel_result_stops_without_selection[bad2] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_partial_or_unproved_trave2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d82ffd87c50>
+bad = {'acquired': True, 'goal': True, 'raw_audit_pass': True, 'replans': 0, ...}
+
+    @pytest.mark.parametrize('bad',[
+        dict(status='recorded',raw_audit_pass=True,acquired=True,goal=False),
+        dict(status='recorded',raw_audit_pass=False,retained_task_failure=True,acquired=True,goal=False),
+        dict(status='recorded',raw_audit_pass=True,acquired=True,goal=True,retreat_completed=False,replans=0),
+    ])
+    def test_partial_or_unproved_travel_result_stops_without_selection(tmp_path,monkeypatch,bad):
+        monkeypatch.setattr(p,'launch_owner',lambda *a,**kw:bad)
+>       result=study.run_development(plan(tmp_path),None,None)
+                                     ^^^^^^^^^^^^^^
+
+tests/test_memory_travel_study.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_partial_or_unproved_trave2')
+
+    def plan(tmp_path):
+        repo=Path(p.__file__).resolve().parents[1]
+        return {'repo':str(repo),'assets':str(tmp_path/'assets'),'history_root':str(tmp_path/'history'),
+                'output':str(tmp_path/'phase'/'development'),'phase_root':str(tmp_path/'phase'),
+>               'source_identity':{},'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256,'geometry_valid':True}
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'TRAVEL_PROTOCOL_SHA256'
+
+tests/test_memory_travel_study.py:14: AttributeError
+_ test_full_task_failure_requires_actual_terminal_packet_event_and_no_later_policy _
+
+    def test_full_task_failure_requires_actual_terminal_packet_event_and_no_later_policy():
+        message='selected_waypoint_unavailable: exit'
+        outcome={'reason':'runtime_failure','type':'CueUnavailable','message':message,'steps':10}
+        report={'goal':False,'total_ticks':10,'final_phase':'failed','outcome':outcome,
+                'final_memory':{'supervisor':{'phase':'follow_route','continuation_start_tick':5}}}
+        data={'events':[{'kind':'memory_sensed','episode_step':10,'packet':{'tick':10}},
+                        {'kind':'runtime_failure','episode_step':10,'error':outcome}]}
+>       assert p.audit_travel_task_failure(data,report)=='CueUnavailable'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'audit_travel_task_failure'
+
+tests/test_memory_travel_study.py:71: AttributeError
+_____ test_post_acquisition_time_limit_uses_declared_continuation_boundary _____
+
+    def test_post_acquisition_time_limit_uses_declared_continuation_boundary():
+        total=1627;outcome={'reason':'time_limit','episode':0,'steps':total}
+        rows=[{'pose':[0.,0.,0.],'next_pose':[.01,0.,0.],'action':[.5,0.]} for _ in range(total)]
+        data={'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}
+        report={'goal':False,'outcome':outcome,'total_ticks':total,'final_phase':'truncated',
+                'final_memory':{'supervisor':{'continuation_start_tick':727}}}
+>       assert p.audit_travel_task_failure(data,report)=='time_limit'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'audit_travel_task_failure'
+
+tests/test_memory_travel_study.py:84: AttributeError
+_ test_actual_travel_cli_preserves_immutable_candidates_and_stops_at_qualification_failure _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-28/test_actual_travel_cli_preserv0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d82ffc48410>
+
+    def test_actual_travel_cli_preserves_immutable_candidates_and_stops_at_qualification_failure(tmp_path,monkeypatch):
+        identity={'synthetic-software-fixture':True};repo=Path(p.__file__).resolve().parents[1]
+        def preflight(repo,assets,history,output,phase,deadline):
+            return {'repo':str(repo),'assets':str(assets),'history_root':str(history),'output':str(output),
+                    'phase_root':str(phase),'source_identity':identity,'geometry_valid':True}
+        monkeypatch.setattr(p,'preflight',preflight);monkeypatch.setattr(p,'source_identity',lambda *a:identity)
+        def launch(stage,spec,plan,storage,deadline,**kw):
+            if stage=='travel-development':return success()
+            assert stage=='travel-feasibility' and spec['id']=='south-no-event'
+            return dict(status='recorded',acquired=True,goal=False,raw_audit_pass=True)
+        monkeypatch.setattr(p,'launch_owner',launch)
+        out=tmp_path/'output'
+>       assert study.main(['--amendment','travel-handoff','--repo',str(repo),'--assets',str(tmp_path/'assets'),
+            '--history-root',str(tmp_path/'history'),'--output',str(out)])==0
+
+tests/test_memory_travel_study.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_waypoint_study.py:128: in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:1877: in parse_args
+    self.error(msg % ' '.join(argv))
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2640: in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ArgumentParser(prog='__main__.py', usage=None, description='One opt-in bounded waypoint-development and prerequisite s...mandatory failure stops.\n', formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+status = 2
+message = '__main__.py: error: unrecognized arguments: --amendment travel-handoff\n'
+
+    def exit(self, status=0, message=None):
+        if message:
+            self._print_message(message, _sys.stderr)
+>       _sys.exit(status)
+E       SystemExit: 2
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2627: SystemExit
+----------------------------- Captured stderr call -----------------------------
+usage: __main__.py [-h] --repo REPO --assets ASSETS --history-root
+                   HISTORY_ROOT --output OUTPUT
+__main__.py: error: unrecognized arguments: --amendment travel-handoff
+=========================== short test summary info ============================
+FAILED tests/test_memory_travel_study.py::test_travel_jobs_bind_full_changed_probe_and_reject_other_protocols
+FAILED tests/test_memory_travel_study.py::test_travel_selection_advances_audited_failures_before_or_after_acquisition[failure0]
+FAILED tests/test_memory_travel_study.py::test_travel_selection_advances_audited_failures_before_or_after_acquisition[failure1]
+FAILED tests/test_memory_travel_study.py::test_partial_or_unproved_travel_result_stops_without_selection[bad0]
+FAILED tests/test_memory_travel_study.py::test_partial_or_unproved_travel_result_stops_without_selection[bad1]
+FAILED tests/test_memory_travel_study.py::test_partial_or_unproved_travel_result_stops_without_selection[bad2]
+FAILED tests/test_memory_travel_study.py::test_full_task_failure_requires_actual_terminal_packet_event_and_no_later_policy
+FAILED tests/test_memory_travel_study.py::test_post_acquisition_time_limit_uses_declared_continuation_boundary
+FAILED tests/test_memory_travel_study.py::test_actual_travel_cli_preserves_immutable_candidates_and_stops_at_qualification_failure
+9 failed in 0.19s

@@ -1,0 +1,58 @@
+{
+  "cleanup": {
+    "passed": true,
+    "process_group_absent": true,
+    "same_process_alive": false
+  },
+  "elapsed_before_receipt_seconds": 4.623026010012836,
+  "error": "ValueError: export/cleanup failed",
+  "finalization_errors": [],
+  "qualification_claims": [],
+  "status": "failed",
+  "supervisor": {
+    "elapsed_seconds": 0.6235695060022408,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/supervisor",
+    "returncode": 1,
+    "schema_version": 1,
+    "started_utc": "2026-10-07T11:42:40.507219+00:00",
+    "status": "failed",
+    "timeout_seconds": 120
+  },
+  "worker": {
+    "error": "ValueError: export failed: borrowed-body.svg",
+    "numpy_version": "2.2.5",
+    "process": {
+      "pid": 808174,
+      "process_group": 808174,
+      "start_ticks": 6762178
+    },
+    "qualification_claims": [],
+    "rows": [
+      {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack",
+          "export",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "--format",
+          "svg",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/artifacts/borrowed-body.svg",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "output": "borrowed-body.svg",
+        "returncode": 1
+      }
+    ],
+    "runtime_imported": [],
+    "status": "failed"
+  },
+  "writer_lease_released": true
+}

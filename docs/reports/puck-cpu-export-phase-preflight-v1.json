@@ -1,0 +1,52 @@
+{
+  "kind": "puck-cpu-export-phase-preflight-report-v1",
+  "status": "source sweep complete; exact distributed dispatch data and corrected profile remain open",
+  "classification_scope": "Creation/attachment and visible closure from package-declared source only. No linked-binary equivalence, full transitive-import absence, exact private build flags, terminal runtime roster or future mutation proof.",
+  "classification_counts": {
+    "source-supported": 32,
+    "correction required": 3,
+    "unresolved": 0
+  },
+  "rows_reviewed": 35,
+  "remaining_unresolved_groups": [
+    {
+      "id": "distributed-terminal-dispatch",
+      "names": [
+        "torch._C._distributed_autograd",
+        "torch._C._distributed_c10d",
+        "torch._C._distributed_rpc"
+      ],
+      "gap": "Exact direct dispatch rosters are conditional on private build flags not fully proved by exported CMake metadata. Creation-phase correction is proved at source scope; executable replacement is not ready.",
+      "next_proposal": "docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md",
+      "stop": "The35-row source sweep is closed. Do not repeat it or guess a roster. Review and implement one bounded ordinary metadata observation; freeze and independently review actual controls before one invocation."
+    }
+  ],
+  "source_map": {
+    "path": "docs/reports/puck-cpu-export-phase-preflight-v1/source-map.json",
+    "sha256": "b299317cb8124186f84512d63315491f88b4103ef7a3e0fec76b9617eab44688"
+  },
+  "evidence_index": {
+    "path": "docs/reports/puck-cpu-export-phase-preflight-v1/evidence-index.json",
+    "sha256": "0c987df4c08ac46c51610ed03ea6b94f03847ca32003d1fbd8d42bb4c3f97889",
+    "artifacts": 65,
+    "bytes": 1792892,
+    "empty_files": 1
+  },
+  "acceptance": {
+    "source_sweep_complete": true,
+    "installed_runtime_qualified": false,
+    "replacement_profile_accepted": false,
+    "actual_configuration_created": false,
+    "actual_invocation": false,
+    "episode_ran": false,
+    "collection_authorized": false,
+    "study_authorized": false,
+    "qualification_claims": []
+  },
+  "previous_qualifications": "01\u201304 remain failed and consumed",
+  "source_or_candidate_changed": false,
+  "production_tests_run": false,
+  "ci_run": false,
+  "review": "Root reviewed the14-row core lane; agent independently reviewed the18-row standard lane and prospective observation proposal. No material finding in the stated source scope.",
+  "verification_limits": "Artifact hashes/Git blobs/selected inventory membership/row coverage/ranges do not independently prove the source analysis or qualify the binary."
+}

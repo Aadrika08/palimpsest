@@ -1,0 +1,97 @@
+.F.........F...........................                                  [100%]
+=================================== FAILURES ===================================
+_ test_only_pinned_independent_prerequisite_and_explicit_worker_derivation_admit _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-4/test_only_pinned_independent_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75e02af52d50>
+
+    def test_only_pinned_independent_prerequisite_and_explicit_worker_derivation_admit(tmp_path,monkeypatch):
+        s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+>       result=s.admit_prerequisites(path,new)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-...utkarsh/pytest-4/test_only_pinned_independent_p0/repo/docs/reports/memory-prerequisites-v3-evidence/registration.json')
+repo = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-4/test_only_pinned_independent_p0/new')
+deadline = None
+
+    def admit_prerequisites(path, repo, deadline=None):
+        """Consume the pinned old close as bytes/metadata, never regrade old physics."""
+        path, repo = p.checked_path(path), p.checked_path(repo)
+        check_file(path, PREREQUISITE_REGISTRATION_SHA256, deadline=deadline)
+        reg = p.read_json(path); m.validate_registration(reg)
+        root, pub, control = (p.checked_path(reg[k]) for k in ('output','publication_root','control_root'))
+        if reg['mode'] != 'prerequisites-v3' or path != pub/'registration.json':
+            raise ValueError('Only the pinned original v3 prerequisite is admitted')
+        close_path = root/'scientific-close.json'
+        check_file(close_path, PREREQUISITE_CLOSE_SHA256, deadline=deadline)
+        close, execution = p.read_json(close_path), p.read_json(root/'execution.json')
+        check_file(root/'execution.json', close['driver_execution_sha256'], deadline=deadline)
+        required = {'native_prerequisites_passed':True,'candidate_restore_pair_matches':True,
+                    'trace_equal':True,'immutable_inputs_and_raw_evidence_unchanged':True,
+                    'restore_pair_matches':False,'r2_complete':False,'held_out_used':False}
+        if (close.get('schema') != 'memory-prerequisites-scientific-close-v3'
+                or close.get('status') != 'native-prerequisites-passed'
+                or any(close.get(k) is not v for k,v in required.items())
+                or close.get('qualification_claims') != []
+                or close.get('paired_pilot') != 'unattempted-by-scope'
+                or close.get('registration_sha256') != PREREQUISITE_REGISTRATION_SHA256
+                or close.get('state_contract') != d.STATE_CONTRACT
+                or execution.get('status') != 'prerequisites-provisional-pass'
+                or execution.get('native_prerequisites_passed') is not False
+                or execution.get('unattempted')):
+            raise ValueError('Pinned prerequisite authority or scope differs')
+        candidate = close['candidate_comparison']; intervals = candidate['timer_duration_intervals']
+        if (candidate.get('equal') is not True or candidate.get('contract_id') != d.STATE_CONTRACT
+                or candidate.get('excluded_native_bytes_per_side') != 120 or len(intervals) != 15
+                or any(type(a) is not int or type(b) is not int or b-a != 8 for a,b in intervals)
+                or any(b > c for (_,b),(c,_) in zip(intervals,intervals[1:]))
+                or candidate.get('differences') != [] or close['comparison'].get('equal') is not False):
+            raise ValueError('Frozen candidate/legacy comparison differs')
+        attempts = execution['attempted']; owners = close['owners']; cleanup = execution['cleanup']
+        ids = [a['run_id'] for a in attempts]
+        if (len(attempts) != 8 or len(set(ids)) != 8 or
+                [a['job_id'] for a in attempts] != [s['id'] for s in reg['expected_specs']]
+                or len(owners) != 8 or {r['run_id'] for r in owners} != set(ids)
+                or len(cleanup) != 8 or {r['owner']['run_id'] for r in cleanup} != set(ids)
+                or any(r.get('raw_audit_pass') is not True or r.get('matching_owner_exited') is not True
+                       or r.get('disposition') != 'audited-recording' for r in owners)
+                or any(not m.cell_pass(spec,a) for spec,a in zip(reg['expected_specs'],attempts))):
+>           raise ValueError('Complete eight-cell prerequisite binding is required')
+E           ValueError: Complete eight-cell prerequisite binding is required
+
+scripts/memory_selected_pilot.py:64: ValueError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+____ test_pilot_pairs_use_all_six_selected_specs_and_keep_natural_failures _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75e028526790>
+
+    def test_pilot_pairs_use_all_six_selected_specs_and_keep_natural_failures(monkeypatch):
+        selected()
+        calls=[]
+        def launch(stage,spec,plan,storage,deadline,*,operation,condition=None,source=None):
+            assert stage=='pilot-v2' and spec['profile_sha256']==d.PROFILE
+            calls.append(spec['id']+('/'+condition if condition else ''))
+            return {'job_id':calls[-1],'run_id':str(len(calls)),'status':'recorded',
+                'raw_audit_pass':True,'acquired':True,'invariant':'same','goal':condition!='swapped',
+                'continuation_ticks':37,'path_length':4.,'trace_digest':'same',
+                'route_commits':[{'route_id':'route-a','tick':12}], 'post_event_samples':[],
+                'event_tick':10,'commitment_inputs':[[{'estimate':'open'}]],
+                'first_commitment_blocked':False,'retreat_completed':False}
+        monkeypatch.setattr(p,'launch_owner',launch)
+        plan={'output':'unused','phase_root':'unused','source_identity':{},'geometry_valid':True,
+              'protocol_sha256':p.SELECTED_PILOT_PROTOCOL_SHA256}
+        result=p.execute_stage('pilot-v2',plan,None,None)
+>       assert len(calls)==30 and result['mandatory_pass'] is True
+E       AssertionError: assert (5 == 30)
+E        +  where 5 = len(['local_cue-south', 'local_cue-south/own', 'local_cue-south/swapped', 'local_cue-south/no-U', 'local_cue-south/sham'])
+
+tests/test_memory_selected_pilot.py:151: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_only_pinned_independent_prerequisite_and_explicit_worker_derivation_admit
+FAILED tests/test_memory_selected_pilot.py::test_pilot_pairs_use_all_six_selected_specs_and_keep_natural_failures
+2 failed, 37 passed in 8.28s

@@ -1,0 +1,110 @@
+{
+  "actual_admission_performed": false,
+  "all_os_and_path_operations_faked": true,
+  "auditor_or_other_helpers_imported_or_executed": false,
+  "census_performed": false,
+  "checks": [
+    {
+      "name": "source_pin_and_only_three_helpers_two_zero_assignments",
+      "status": "PASS"
+    },
+    {
+      "name": "phase_exact_fields_count_and_byte_counters",
+      "status": "PASS"
+    },
+    {
+      "name": "initial_failure_omits_closure_and_all_queries",
+      "status": "PASS"
+    },
+    {
+      "name": "normal_close_without_before_omits_closure_and_queries",
+      "status": "PASS"
+    },
+    {
+      "name": "before_without_normal_close_omits_closure_and_queries",
+      "status": "PASS"
+    },
+    {
+      "name": "normal_close_then_unequal_fds_children_threads_are_observations_not_pass",
+      "status": "PASS"
+    },
+    {
+      "name": "closure_fd_query_failure_omits_whole_closure",
+      "status": "PASS"
+    },
+    {
+      "name": "closure_children_query_failure_omits_whole_closure",
+      "status": "PASS"
+    },
+    {
+      "name": "closure_threads_query_failure_omits_whole_closure",
+      "status": "PASS"
+    },
+    {
+      "name": "error_text_cap_is_1024_characters",
+      "status": "PASS"
+    },
+    {
+      "name": "oversized_closure_is_omitted_before_record",
+      "status": "PASS"
+    },
+    {
+      "name": "twelfth_record_allowed_thirteenth_refused_before_write",
+      "status": "PASS"
+    },
+    {
+      "name": "exact_64KiB_aggregate_boundary_allowed",
+      "status": "PASS"
+    },
+    {
+      "name": "aggregate_64KiB_excess_refused_before_write",
+      "status": "PASS"
+    },
+    {
+      "name": "exact_8192B_record_boundary_allowed",
+      "status": "PASS"
+    },
+    {
+      "name": "single_record_8192B_excess_refused_before_write",
+      "status": "PASS"
+    },
+    {
+      "name": "partial_stderr_write_propagates_phase_failure_without_counter_increment",
+      "status": "PASS"
+    },
+    {
+      "name": "raise_stderr_write_propagates_phase_failure_without_counter_increment",
+      "status": "PASS"
+    },
+    {
+      "name": "partial_failure_telemetry_error_suppressed_preserving_caller_exception",
+      "status": "PASS"
+    },
+    {
+      "name": "raise_failure_telemetry_error_suppressed_preserving_caller_exception",
+      "status": "PASS"
+    }
+  ],
+  "extracted_assignments": [
+    "_MARKER_BYTES",
+    "_MARKER_COUNT"
+  ],
+  "extracted_functions": [
+    "_failure",
+    "_phase",
+    "_stderr_record"
+  ],
+  "extracted_node_count": 5,
+  "full03_module_imported_or_executed": false,
+  "kind": "held06-post03-telemetry-isolated-unit-check-v1",
+  "main_invoked": false,
+  "meaningful_check_count": 20,
+  "scope": "Unit helper tests with authored observations only; no03 admission or real resource/closure inference.",
+  "source": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03.py",
+    "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+    "size_bytes": 19086
+  },
+  "status": "PASS",
+  "target_runtime_invoked": false
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "flock",
+    "-x",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/qualification-amendment02-test.lock",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_cpu_amendment_audit.py",
+    "-k",
+    "reauthenticated and audit-error",
+    "--basetemp=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-error-red-01/tmp",
+    "--tb=short"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02"
+}

@@ -1,0 +1,880 @@
+{
+  "acquisition": {
+    "archive_count": 71,
+    "collection_authorized": false,
+    "configuration_sha256": "91d1dcaabb34f4177650c3c72d2295233bd42814dcd433b369be3e0f8b1c5402",
+    "downloaded_bytes": 385328518,
+    "elapsed_seconds": 55.276314081973396,
+    "executable": false,
+    "expected_archive_count": 71,
+    "installed": false,
+    "kind": "puck-cpu-payload-acquisition-result-v1",
+    "licence_contents_audited": false,
+    "numerical_imports_executed": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "source_build_executed": false,
+    "started_unix": 1792044197.733717,
+    "status": "payloads_verified",
+    "study_authorized": false,
+    "supervision": {
+      "failure": null,
+      "finished_monotonic": 431974.704341638,
+      "matching_survivors": [],
+      "pid": 2331707,
+      "returncode": 0,
+      "rss_sampling_seconds": 0.05,
+      "sampled_peak_rss_bytes": 92393472,
+      "status": "completed"
+    },
+    "version": 1,
+    "wheel_count": 70,
+    "worker_result_sha256": "ba425ae91985ed924ec1ac487e58f74dab1d0284e381d077e8c50a141608c8fb"
+  },
+  "archive_payload_hashes_verified": true,
+  "authored_tests": {
+    "default_pytest_collection_errors": 10,
+    "default_pytest_seconds": 1.85,
+    "legacy_passed": 70,
+    "legacy_seconds": 8.07,
+    "payload_acquisition_supervisor_passed": 135,
+    "payload_seconds": 3.15
+  },
+  "collection_authorized": false,
+  "committed_evidence": [
+    {
+      "path": "docs/reports/puck-cpu-payload-acquisition-01/audit-program.py",
+      "sha256": "690dcbc398b55e9e88d94250512dcc9645eacc7940834552dd33ef96a3d24ef0",
+      "size_bytes": 27118
+    },
+    {
+      "path": "docs/reports/puck-cpu-payload-acquisition-01/audit.json",
+      "sha256": "01370462725a051d3bc8e25dc117a01d5ae7411ab47d03ff1a2616fdca7deaeb",
+      "size_bytes": 24815
+    },
+    {
+      "path": "docs/reports/puck-cpu-payload-acquisition-01/outcome.json",
+      "sha256": "77a284b88873680aba9a5b7c6a86e43cce165c77efaaeb7edaf23d592eb77434",
+      "size_bytes": 881
+    },
+    {
+      "path": "docs/reports/puck-cpu-payload-acquisition-01/worker-result.json",
+      "sha256": "ba425ae91985ed924ec1ac487e58f74dab1d0284e381d077e8c50a141608c8fb",
+      "size_bytes": 44983
+    }
+  ],
+  "configuration_sha256": "91d1dcaabb34f4177650c3c72d2295233bd42814dcd433b369be3e0f8b1c5402",
+  "counts": {
+    "archive_bytes": 385328518,
+    "archives": 71,
+    "decoded_wheel_bytes": 1304650469,
+    "licence_candidates_inventoried": 95,
+    "output_directories": 3,
+    "output_files": 147,
+    "record_verified_wheels": 70,
+    "regular_wheel_members": 26913,
+    "retained_output_bytes": 390202259,
+    "source_archives": 1,
+    "verified_manifests": 71,
+    "wheel_members": 28237,
+    "wheels": 70
+  },
+  "executable": false,
+  "external_process_observation": {
+    "exit_code": 0,
+    "final_chunk_id": "8e93d1",
+    "session_id": 21273,
+    "tool": "exec_command"
+  },
+  "independent_audit": {
+    "path": "docs/reports/puck-cpu-payload-acquisition-01/audit.json",
+    "sha256": "01370462725a051d3bc8e25dc117a01d5ae7411ab47d03ff1a2616fdca7deaeb",
+    "size_bytes": 24815
+  },
+  "installed": false,
+  "installed_size_verified": false,
+  "kind": "puck-cpu-package-payload-evidence-v1",
+  "licence_contents_audited": false,
+  "next_action": "Freeze exact python-louvain build backend/configuration; then build and verify its wheel before installing the CPU runtime",
+  "numerical_imports_executed": false,
+  "qualification_claims": [],
+  "raw_retained_files": [
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/absl_py-2.5.0-py3-none-any.whl",
+      "sha256": "0f17b89f2a4eaaedc4f28c622998aa690564b3012a396a4ffad0821007fe03ba",
+      "size_bytes": 137410
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/annotated_doc-0.0.5-py3-none-any.whl",
+      "sha256": "117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101",
+      "size_bytes": 5302
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/annotated_types-0.8.0-py3-none-any.whl",
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "size_bytes": 13427
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/anyio-4.15.1-py3-none-any.whl",
+      "sha256": "6152fdbbf9a77fdec97731721bebf7c4c44f7c29b424b0065826173efc7ed101",
+      "size_bytes": 132079
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/backports_zstd-1.7.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "b2e505d8923e1e9224cf249b99c92cf728e9eb91fbd1e07a9c2816013621fad3",
+      "size_bytes": 493145
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/brotli-1.2.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "40d918bce2b427a0c4ba189df7a006ac0c7277c180aee4617d99e9ccaaf59e6a",
+      "size_bytes": 1426014
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/certifi-2026.7.22-py3-none-any.whl",
+      "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+      "size_bytes": 136983
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/click-8.5.0-py3-none-any.whl",
+      "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360",
+      "size_bytes": 125251
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/cloudpickle-3.1.2-py3-none-any.whl",
+      "sha256": "9acb47f6afd73f60dc1df93bb801b472f05ff42fa6c84167d25cb206be1fbf4a",
+      "size_bytes": 22228
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/contourpy-1.3.3-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "51e79c1f7470158e838808d4a996fa9bac72c498e93d8ebe5119bc1e6becb0db",
+      "size_bytes": 355238
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/cycler-0.12.1-py3-none-any.whl",
+      "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+      "size_bytes": 8321
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/etils-1.14.0-py3-none-any.whl",
+      "sha256": "b5df7341f54dbe1405a4450b2741207b4a8c279780402b45f87202b94dfc52b4",
+      "size_bytes": 172934
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/farama_notifications-0.0.6-py3-none-any.whl",
+      "sha256": "f84839188efa1ce5bb361c2a84881b2dc2c0d0d7fb661ff00421820170930935",
+      "size_bytes": 2897
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/fastapi-0.142.2-py3-none-any.whl",
+      "sha256": "bd5f4d81f1e93a88bcd77caf4dfe3c2dbffc3805407a0007e9a114c18b3a670b",
+      "size_bytes": 144409
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/filelock-4.0.9-py3-none-any.whl",
+      "sha256": "9287fd61b99a806e5202be29a83034c0808a1b9830e820537c2f5773981f7eeb",
+      "size_bytes": 110368
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/fonttools-4.66.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "72299346b96b9244dabcc051b24e4653da4edfda6105544cfb10ce856a1afaac",
+      "size_bytes": 5447695
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/fsspec-2026.9.0-py3-none-any.whl",
+      "sha256": "8dd6e646e99ea382bd85f97a45e6b526a442d79423a7dc673f1e2756d05fcb5f",
+      "size_bytes": 221738
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/glfw-2.10.0-py2.py3-none-manylinux2014_x86_64.whl",
+      "sha256": "68cf3752bdadb6f4bc0a876247c28c88c7251ac39f8af076ed938fdfd71e72dd",
+      "size_bytes": 241944
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/gymnasium-1.2.1-py3-none-any.whl",
+      "sha256": "85cd1c16351db0b89f73be54e952ddfece97b56d1e5400d2dcd59f58b7707963",
+      "size_bytes": 951141
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/h11-0.16.0-py3-none-any.whl",
+      "sha256": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+      "size_bytes": 37515
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/httpcore-1.0.9-py3-none-any.whl",
+      "sha256": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+      "size_bytes": 78784
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/httpx-0.28.1-py3-none-any.whl",
+      "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+      "size_bytes": 73517
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/idna-3.20-py3-none-any.whl",
+      "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+      "size_bytes": 69583
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/inflate64-1.0.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "ec40c0383cbd84d845dcb785a48ae76eef43246c923f84fda380fdd5ea653d3c",
+      "size_bytes": 99549
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/iniconfig-2.3.0-py3-none-any.whl",
+      "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+      "size_bytes": 7484
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/jinja2-3.1.6-py3-none-any.whl",
+      "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67",
+      "size_bytes": 134899
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/joblib-1.6.0-py3-none-any.whl",
+      "sha256": "3dbbf9f6e4b592a2357b854608e980fe6390d131d7a82f011a377ef2ebef7aba",
+      "size_bytes": 306115
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/kiwisolver-1.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "95a02752aa032eef4aed01cda6d9b687c669bd0396bf4519eef8bba22a286720",
+      "size_bytes": 1438206
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "0bf2a864d67e76e5c9a34dc26ec616a66b9888e25e7b9460e1c76d3293bd9dbf",
+      "size_bytes": 22940
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/matplotlib-3.10.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "0f69dc9713e4ad2fb21a1c30e37bd445d496524257dfda40ff4a8efb3604ab5c",
+      "size_bytes": 8602258
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/mpmath-1.3.0-py3-none-any.whl",
+      "sha256": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c",
+      "size_bytes": 536198
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/mujoco-3.3.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "0f0e2512c88db100e6f272e5301ed5c845fc0b676293bd490f20dfcab00a96d4",
+      "size_bytes": 6689007
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/multivolumefile-0.2.3-py3-none-any.whl",
+      "sha256": "237f4353b60af1703087cf7725755a1f6fcaeeea48421e1896940cd1c920d678",
+      "size_bytes": 17037
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/networkx-3.4.2-py3-none-any.whl",
+      "sha256": "df5d4365b724cf81b8c6a7312509d0c22386097011ad1abe274afd5e9d3bbc5f",
+      "size_bytes": 1723263
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "262d23f383170f99cd9191a7c85b9a50970fe9069b2f8ab5d786eca8a675d60b",
+      "size_bytes": 16430306
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "092c16da4c5a163a818f120c22c5e4a2f96e0db4f24e659c701f1fe629a690f9",
+      "size_bytes": 67041680
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/opentelemetry_api-1.45.0-py3-none-any.whl",
+      "sha256": "80e068aba7cd56c8b58512d6a36f8d25cb1dfaa0c0a4cc1c938ccf9f362d9cb3",
+      "size_bytes": 60020
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "size_bytes": 129956
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "c124333816c3a9b03fbeef3a9f230ba9a737e9e5bb4060aa2107a86cc0a497fc",
+      "size_bytes": 13058505
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pillow-12.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "23d27a3e0307ec2244cc51e7287b919aa68d097504ebe19df4e76a98a3eea5bd",
+      "size_bytes": 6934408
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pluggy-1.6.0-py3-none-any.whl",
+      "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+      "size_bytes": 20538
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "076a2d2f923fd4821644f5ba89f059523da90dc9014e85f8e45a5774ca5bc6f9",
+      "size_bytes": 155560
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/py7zr-1.1.3-py3-none-any.whl",
+      "sha256": "17934a35089e026dec6c72ee275d9b841e646881ef822d618e805c3006661d9a",
+      "size_bytes": 72242
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pybcj-1.0.8-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "0de1f6c90178f5947e4b578821aa2f1f87a78a761ae603aa33a8ad3d8b9b9cac",
+      "size_bytes": 51414
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pycryptodomex-3.23.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "f489c4765093fb60e2edafdf223397bc716491b2b69fe74367b70d6999257a5c",
+      "size_bytes": 2272578
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pydantic-2.13.5-py3-none-any.whl",
+      "sha256": "346a034f080da3755d8e9cb5e00e8b07de1d39e4f6e2c87d8ab7cafa0b269a73",
+      "size_bytes": 472589
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pydantic_core-2.46.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "49776eab08766a08dfff7012f8b422dcd7e25e43b316eedf0477c24fcfa84b7c",
+      "size_bytes": 2062091
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pygments-2.21.0-py3-none-any.whl",
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+      "size_bytes": 1250147
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pyopengl-3.1.10-py3-none-any.whl",
+      "sha256": "794a943daced39300879e4e47bd94525280685f42dbb5a998d336cfff151d74f",
+      "size_bytes": 3194996
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pyparsing-3.3.3-py3-none-any.whl",
+      "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4",
+      "size_bytes": 126420
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pyppmd-1.3.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "89730cf026416ae2546c92738966ecf117c8176d52c229ad621a61c34643818b",
+      "size_bytes": 143643
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pytest-8.4.2-py3-none-any.whl",
+      "sha256": "872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79",
+      "size_bytes": 365750
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/python-louvain-0.16.tar.gz",
+      "sha256": "b7ba2df5002fd28d3ee789a49532baad11fe648e4f2117cf0798e7520a1da56b",
+      "size_bytes": 204641
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+      "size_bytes": 229892
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/pytz-2026.4-py2.py3-none-any.whl",
+      "sha256": "9d514388fbc89ca0833203464272ac485b8828568ab73532f5020f17e892a0ff",
+      "size_bytes": 506747
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/scikit_learn-1.8.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "ada8121bcb4dac28d930febc791a69f7cb1673c8495e5eee274190b73a4559c1",
+      "size_bytes": 9103788
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/scipy-1.15.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "28a0d2c2075946346e4408b211240764759e0fabaeb08d871639b5f3b1aca8a0",
+      "size_bytes": 37634077
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/seaborn-0.13.2-py3-none-any.whl",
+      "sha256": "636f8336facf092165e27924f223d3c62ca560b1f2bb5dff7ab7fad265361987",
+      "size_bytes": 294914
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "size_bytes": 11050
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/starlette-1.7.0-py3-none-any.whl",
+      "sha256": "67f8e99895493dd2911a03f11314af6ceebeae4e704bb9f43dfc6a9db151c93e",
+      "size_bytes": 78980
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/sympy-1.14.0-py3-none-any.whl",
+      "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5",
+      "size_bytes": 6299353
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/texttable-1.7.0-py2.py3-none-any.whl",
+      "sha256": "72227d592c82b3d7f672731ae73e4d1f88cd8e2ef5b075a7a7f01a23a3743917",
+      "size_bytes": 10768
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/threadpoolctl-3.7.0-py3-none-any.whl",
+      "sha256": "cd8b60b5641b45c67bbf73c64c843235fc2d8a480c87389f52f5dbee893b86be",
+      "size_bytes": 26362
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/torch-2.9.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+      "sha256": "add3e93ecc1eeaa6853f6a973ce60ffb3cb14ed2e80f5055e139b09385dce0a7",
+      "size_bytes": 184462550
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/torchvision-0.24.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+      "sha256": "51fe8d72ddcc88a50ff27c50dd4987d82fba8b0dfd591898ee1f60e2902d18d1",
+      "size_bytes": 1907916
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/typing_extensions-4.16.0-py3-none-any.whl",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "size_bytes": 45571
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/typing_inspection-0.4.4-py3-none-any.whl",
+      "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+      "size_bytes": 14750
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/tzdata-2026.4-py2.py3-none-any.whl",
+      "sha256": "c2169a8b0a7a5e9674da5a135ccdfb2b3e671b333ed9fed17b41f73c34476e81",
+      "size_bytes": 347494
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/uvicorn-0.54.0-py3-none-any.whl",
+      "sha256": "505bdb0f318731d45f1f712071fc781a8981f6847a31c902c9f5e652d4f67faf",
+      "size_bytes": 87427
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/websockets-17.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+      "sha256": "0c84bdef916556cbe1d5a43b423398be4dd3cba6522b463e53d848578b920695",
+      "size_bytes": 224278
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/archives/zipp-4.1.0-py3-none-any.whl",
+      "sha256": "25ad4e16390cd314347dd8f1de67a2ac538ae658ed4ab9db16029c07c188e97f",
+      "size_bytes": 10238
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/configuration.json",
+      "sha256": "91d1dcaabb34f4177650c3c72d2295233bd42814dcd433b369be3e0f8b1c5402",
+      "size_bytes": 2642
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/absl_py-2.5.0-py3-none-any.whl.json",
+      "sha256": "51c66149cf4bf7a210379d6e7928192e347ea53dee80613b36de925bf5306ae1",
+      "size_bytes": 5275
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/annotated_doc-0.0.5-py3-none-any.whl.json",
+      "sha256": "f6d5f563becb30a6afee6f18a42d52189b4cb9004bf028a1b1bdb9e736f1cb7a",
+      "size_bytes": 1995
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/annotated_types-0.8.0-py3-none-any.whl.json",
+      "sha256": "68f0e1403ef2faee08ad747128ea8207e08ae518a6c2c9a3077bf051776c0b57",
+      "size_bytes": 1858
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/anyio-4.15.1-py3-none-any.whl.json",
+      "sha256": "c37e16029b9a2063124e58c2ddb86ba59537fa60cf90dec33d235e2175d540a0",
+      "size_bytes": 8504
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/backports_zstd-1.7.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "bedabe150677dc1b120df51c16fdc492048b397f85f993e1aeca0c82f5cb7fee",
+      "size_bytes": 6896
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/brotli-1.2.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.json",
+      "sha256": "9f676be1095407154a89e7f2e4130601e6ef9136a133ddd2eb74d6b89998d0df",
+      "size_bytes": 2193
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/certifi-2026.7.22-py3-none-any.whl.json",
+      "sha256": "271b6a0e320e64c5f6ec45a2272dc6fd8f6ee177d1e8c82c68a905387ff60ab3",
+      "size_bytes": 2528
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/click-8.5.0-py3-none-any.whl.json",
+      "sha256": "9053c47141a20cccc443a025d4ee4df0dedaf67e4bb7aaa52e2f2d926f74077d",
+      "size_bytes": 3834
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/cloudpickle-3.1.2-py3-none-any.whl.json",
+      "sha256": "e140b7964e696ff950d6da80193518882753c0a8c412cb94e8717f2af3c4bb35",
+      "size_bytes": 1845
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/contourpy-1.3.3-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "0b40d2544c8d0e7d649cbf4bd2ae89d82da1a4849594b8d1e418d38dfb2bf060",
+      "size_bytes": 7171
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/cycler-0.12.1-py3-none-any.whl.json",
+      "sha256": "ede190ccba599bcb3c7e8a94c35ef8188a0c858366065175c282d74743002a25",
+      "size_bytes": 3657
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/etils-1.14.0-py3-none-any.whl.json",
+      "sha256": "25a169d90bb8b9f62ad24ac24e45872f7243914ffc886c9a15ec1dc9bce2f0b6",
+      "size_bytes": 17920
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/farama_notifications-0.0.6-py3-none-any.whl.json",
+      "sha256": "9b98ee8f69407845828154e456f9c84f08dec80fbc77b135e339128d12f66383",
+      "size_bytes": 1786
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/fastapi-0.142.2-py3-none-any.whl.json",
+      "sha256": "1a0818daa1ad4e11a54f5bfebb734c54a9d579ea4d09ea152f2989d3da7d878a",
+      "size_bytes": 12432
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/filelock-4.0.9-py3-none-any.whl.json",
+      "sha256": "b53bf5dfd80e96a9dac5243607f6b5a126cd624011110395591eeee1b7cb864f",
+      "size_bytes": 4750
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/fonttools-4.66.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.json",
+      "sha256": "dbea43cf02f40505134177eb26fa79508324256785ce4052618f15fff3c86e40",
+      "size_bytes": 62069
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/fsspec-2026.9.0-py3-none-any.whl.json",
+      "sha256": "ef3fff38693196ba78ea74e6e1d65682cea7f1fcbdbb3022ca60c142817eeef0",
+      "size_bytes": 13260
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/glfw-2.10.0-py2.py3-none-manylinux2014_x86_64.whl.json",
+      "sha256": "5a9c9222ec8816de4b328c6d0c17f2cbbc9cd8bd3d3ff2b72e8e42068e226a43",
+      "size_bytes": 2293
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/gymnasium-1.2.1-py3-none-any.whl.json",
+      "sha256": "9dc47dacef06cf2c7d59cb074e2d4260785cbe70076f3ea968f42ad4e5c882bc",
+      "size_bytes": 37808
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/h11-0.16.0-py3-none-any.whl.json",
+      "sha256": "3284b165939b5e5f251f8083905246b61a878be1bdf5cac7370c0ccaffb6c5df",
+      "size_bytes": 3114
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/httpcore-1.0.9-py3-none-any.whl.json",
+      "sha256": "83fd4ba1d669f627fbd808a6054f522b7074d365a2776e38adb93ed7a47d8f21",
+      "size_bytes": 6166
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/httpx-0.28.1-py3-none-any.whl.json",
+      "sha256": "b9899c2233766326dc9230cfa151acf4ff6103a2bc077bc34c4551df6ba7592f",
+      "size_bytes": 5219
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/idna-3.20-py3-none-any.whl.json",
+      "sha256": "0635068a6e810daf467b389553d0dfbeb06dd3e7d19cef1642307a2558ecfd1e",
+      "size_bytes": 3205
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/inflate64-1.0.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "bc1841a89ab7205931c28dc5e23f23ec12b45f0fb7b406f5016b3fec92e359a4",
+      "size_bytes": 3062
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/iniconfig-2.3.0-py3-none-any.whl.json",
+      "sha256": "1741d3fac488237a411d7a2554370ea347a1b2bb404801950a7f1885feda5e78",
+      "size_bytes": 2232
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/jinja2-3.1.6-py3-none-any.whl.json",
+      "sha256": "02191a98d66032009e7c9ad55ff39b845fa7dec6eb30afe5f225fa49359579ed",
+      "size_bytes": 5136
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/joblib-1.6.0-py3-none-any.whl.json",
+      "sha256": "5995d5b06a461cd01dc06fd6d38e815d1bbb5a3f79e2f9ee257584ccee36397b",
+      "size_bytes": 24380
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/kiwisolver-1.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.json",
+      "sha256": "d1de6da77f9897d7f26326f312d35ca7c03f5f9cac2490ae2d0aaddbaa272a17",
+      "size_bytes": 6589
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "f74ec9701b94a6c024748e76a1cbe499854ec0e1e11091f53c95b9f4d44daae2",
+      "size_bytes": 3021
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/matplotlib-3.10.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.json",
+      "sha256": "8cba60453659ce6bf35960026afd09ae04f120635d92306288898f3919f0e2ab",
+      "size_bytes": 104090
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/mpmath-1.3.0-py3-none-any.whl.json",
+      "sha256": "2f19ff2ba689579171be742860670b0fb54ec985e7f9db31b67f9dc023fac895",
+      "size_bytes": 14504
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/mujoco-3.3.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "c42631492ebec97e3d47504e7f1fd2024fb1aac15792e6228a880e9d218f8195",
+      "size_bytes": 18324
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/multivolumefile-0.2.3-py3-none-any.whl.json",
+      "sha256": "8373c001b76115fd2d3d65fe6ffab58e145ebbba11002b5511287cf9125a232b",
+      "size_bytes": 2641
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/networkx-3.4.2-py3-none-any.whl.json",
+      "sha256": "85e66172b9ddafd17e82b6d6d5150c9303049a6cb6147ed0e7e0cb8e4063d226",
+      "size_bytes": 96044
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/numpy-2.2.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.json",
+      "sha256": "533d3f7155b0c6baca2221aea590b7925a8f9cfbeaebbd00baa5399c4f62061f",
+      "size_bytes": 225524
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.json",
+      "sha256": "98d8413f1069a78c431f1364cf1d139396fded97f544d5c6af403fddb7c1f0d0",
+      "size_bytes": 28862
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/opentelemetry_api-1.45.0-py3-none-any.whl.json",
+      "sha256": "ce2136c1726918e46da2b44b20b05a7c3ac83a71f4b22fedd58ae37806ff8d4d",
+      "size_bytes": 8074
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/packaging-26.3-py3-none-any.whl.json",
+      "sha256": "76817d06cab7f0ab6258fa0c11c5d0daa081ab9c04776ca81ea3d73789493a48",
+      "size_bytes": 5347
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pandas-2.2.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.json",
+      "sha256": "7863704987182b7c456e55996ed26b91f92383d52eae2bc8d3fdc7b733cf5e0b",
+      "size_bytes": 336184
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pillow-12.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "91d16ec1a86375b6d2ea73cde532d37cedfd442df941d4db189434abb0ccd7c4",
+      "size_bytes": 22509
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pluggy-1.6.0-py3-none-any.whl.json",
+      "sha256": "387adcdd980c4057c50fe7f92073c86540d99037ee79586511fea4dbdec7921e",
+      "size_bytes": 2897
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "fc37d18d95b4d8101813eda2cf7a90cde106f4cef71aac7fc93177fb1bdfa2ee",
+      "size_bytes": 4943
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/py7zr-1.1.3-py3-none-any.whl.json",
+      "sha256": "874568122ec63fa4c1f23a7309baea74340d7339872b27b0500b84a15662adeb",
+      "size_bytes": 5168
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pybcj-1.0.8-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "0bf5290377237d5fd8b5f8e33b0ff2ea7ab503d5aedb80f48fab61ec8c5057c1",
+      "size_bytes": 3449
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pycryptodomex-3.23.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.json",
+      "sha256": "3fc1fd53306ab78b3d6c0576e8abf1cc8ecccd3d7a55c6115b3dd817bf691d1d",
+      "size_bytes": 57196
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pydantic-2.13.5-py3-none-any.whl.json",
+      "sha256": "86f575861302e35391b160fe0c338c5db75f4f4627752dd36dcc1a5cbc940685",
+      "size_bytes": 17281
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pydantic_core-2.46.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.json",
+      "sha256": "18bf42a79df01dec9a9794b8fc62c86c466bc544620046971411669694620b29",
+      "size_bytes": 2507
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pygments-2.21.0-py3-none-any.whl.json",
+      "sha256": "0616fbd8ac379d1811b36ae337398aca757eecfa410da65f7ba66cf7e64bc39a",
+      "size_bytes": 51593
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pyopengl-3.1.10-py3-none-any.whl.json",
+      "sha256": "e182ac659bab64b3f15ebd2a82c8ddcbb090e60f45ca93e053fd781018baacd8",
+      "size_bytes": 448942
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pyparsing-3.3.3-py3-none-any.whl.json",
+      "sha256": "6e000c47b9ca93d52dafa6b95cb50fd4453c05dfa8835c977bf8eb97a36885e3",
+      "size_bytes": 4198
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pyppmd-1.3.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "069ef369da9bcd0e143afe125f83c25298227401823e8a5701a621f992f72ee1",
+      "size_bytes": 3649
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pytest-8.4.2-py3-none-any.whl.json",
+      "sha256": "4e45cb0324e50f858cb600ce3a8e3043af4149d7450f35041b77b9f76d4ab458",
+      "size_bytes": 12787
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/python-louvain-0.16.tar.gz.json",
+      "sha256": "72f3365e051afcf791b0d2992903e9a61ac710ade80a1ef77c745faccf386c0f",
+      "size_bytes": 274
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/python_dateutil-2.9.0.post0-py2.py3-none-any.whl.json",
+      "sha256": "c451bf4f0e3b7af5b1b98fcbad0f9784993518ecbbf887cc9ecd398fdc125833",
+      "size_bytes": 4537
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/pytz-2026.4-py2.py3-none-any.whl.json",
+      "sha256": "22415c163f816bfad5ed033a6d76546693b3c3c4ad75004b70b8431af8b368fe",
+      "size_bytes": 91071
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/scikit_learn-1.8.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.json",
+      "sha256": "39fa33b886860d66bcbc0daabb99661884aae0b34dfc7eedf82efce053f9fe90",
+      "size_bytes": 176356
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/scipy-1.15.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.json",
+      "sha256": "c17ec9e20503bf2016f69d472dabfa28dffc43293f8520ce70eb9f788c0189a7",
+      "size_bytes": 296858
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/seaborn-0.13.2-py3-none-any.whl.json",
+      "sha256": "1bc8e89c0eeb78d8bdbbb7f64753f8e8b94f6134757f51898a76ff9af4a82705",
+      "size_bytes": 9704
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/six-1.17.0-py2.py3-none-any.whl.json",
+      "sha256": "7c5cc6de57bd7940455b7718ef4939955bd7378a4408c1ce1e2a4639bceb4776",
+      "size_bytes": 1622
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/starlette-1.7.0-py3-none-any.whl.json",
+      "sha256": "fa5a884b79905dde4d04b8b7e060cca7289dff2f0f3e73e29b091a1efc094ce1",
+      "size_bytes": 7069
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/sympy-1.14.0-py3-none-any.whl.json",
+      "sha256": "ee4e72d94919757e45155327af10f5a3b4bc2b0b813ee69f019d2dfd6852b498",
+      "size_bytes": 243955
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/texttable-1.7.0-py2.py3-none-any.whl.json",
+      "sha256": "6fb668a35697f08ecd3ea40690ff0eef0ff823409acd7f8b173df7555415d3d6",
+      "size_bytes": 1674
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/threadpoolctl-3.7.0-py3-none-any.whl.json",
+      "sha256": "2523507978d5e91b91d0d3ff0d56a33999d5e41cddd18765011ba90183e03aa1",
+      "size_bytes": 1562
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/torch-2.9.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl.json",
+      "sha256": "581280dbba66497f68234bc5f216f77b7da683bde0e5f5dc756bea2c218a59f2",
+      "size_bytes": 2052820
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/torchvision-0.24.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl.json",
+      "sha256": "3617bfb027efd34699347ea807ee17568edae9f1319e87372b7d8919d24f9ebe",
+      "size_bytes": 34065
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/typing_extensions-4.16.0-py3-none-any.whl.json",
+      "sha256": "ed7098562e9787ad0cdc3f8bb5eec5064b06292ff551101c05f8ff54d62c3b3c",
+      "size_bytes": 1604
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/typing_inspection-0.4.4-py3-none-any.whl.json",
+      "sha256": "88411d07443555c2a9bf247a645033a5f786c4ded9d2cf1b1c6ff9aae4165a81",
+      "size_bytes": 2216
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/tzdata-2026.4-py2.py3-none-any.whl.json",
+      "sha256": "52b65746e02be95c0787e66ee0091afdc8032fbb7306156cabe3fff8adecac92",
+      "size_bytes": 94995
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/uvicorn-0.54.0-py3-none-any.whl.json",
+      "sha256": "2b0cf51b7c6c118fdf3add0ded5a7483d027f0b8939b77c2baf99c128cf2585a",
+      "size_bytes": 8720
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/websockets-17.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.json",
+      "sha256": "5c7a243dae369dd4d5c8c7edb597853d673d630fdafcb8839b450675fa5f8e69",
+      "size_bytes": 11046
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/manifests/zipp-4.1.0-py3-none-any.whl.json",
+      "sha256": "ae48b89061e3cbed01a6ec4a6930d1d1e0e7d51f568bff3594d70b15a60f8270",
+      "size_bytes": 3193
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/outcome.json",
+      "sha256": "77a284b88873680aba9a5b7c6a86e43cce165c77efaaeb7edaf23d592eb77434",
+      "size_bytes": 881
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/outer/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/outer/stdout.log",
+      "sha256": "ba425ae91985ed924ec1ac487e58f74dab1d0284e381d077e8c50a141608c8fb",
+      "size_bytes": 44983
+    },
+    {
+      "path": "runs/puck-cpu-payload-acquisition-01/worker-result.json",
+      "sha256": "ba425ae91985ed924ec1ac487e58f74dab1d0284e381d077e8c50a141608c8fb",
+      "size_bytes": 44983
+    }
+  ],
+  "runtime_qualified": false,
+  "simulation_release_gates_closed": 0,
+  "source_build_executed": false,
+  "source_commit": "eeb82bf03d41fb819a29e639bf341b6b2cb59206",
+  "source_inspection": {
+    "archive_sha256": "b7ba2df5002fd28d3ee789a49532baad11fe648e4f2117cf0798e7520a1da56b",
+    "backend_built_or_installed": false,
+    "entries": 64,
+    "expanded_bytes": 745075,
+    "extracted": false,
+    "selected_files": {
+      "LICENSE": {
+        "sha256": "dc5a43190fcd68c010cac97222402ea7df2f8a34c2340bb6edddcffc3ad8b1d0",
+        "size_bytes": 1520
+      },
+      "PKG-INFO": {
+        "sha256": "cd5d77cac4a40bce28a2b00cec43dc4de1709f35ac71bf455cb29edf77401ba7",
+        "size_bytes": 502
+      },
+      "README.rst": {
+        "sha256": "1fd3feafea942f48b305ddcd04108dcaa724c1869cb9259de604dbfc46689cd9",
+        "size_bytes": 2355
+      },
+      "setup.cfg": {
+        "sha256": "1c473cbaee8da5fc46e7f0158794af5cea4414c34a3cf3f180c2001f5e38bd3e",
+        "size_bytes": 38
+      },
+      "setup.py": {
+        "sha256": "f21829ac7e1966d2552664824aabc53352534f777fa8a57c591245b04cb6ce22",
+        "size_bytes": 666
+      }
+    },
+    "source_executed": false
+  },
+  "source_review": {
+    "outcome": "GO",
+    "publication_races_reproduced_and_fixed": 2,
+    "scope": "exact source/config before package-only invocation"
+  },
+  "status": "payload_verification_passed",
+  "study_authorized": false,
+  "version": 1
+}

@@ -1,0 +1,59 @@
+{
+  "actual03_invoked": false,
+  "affected_tests": {
+    "external_seconds": 53.7823226939654,
+    "passed": 185,
+    "pytest_seconds": 53.58,
+    "returncode": 0,
+    "terminal": "b6e1b4"
+  },
+  "all_seven_release_gates_open": true,
+  "collection_authorized": false,
+  "data_only_audit": {
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 4,
+      "fd_count_before": 4
+    },
+    "directories": 2076,
+    "external_returncode": 0,
+    "external_seconds": 13.446514741051942,
+    "files": 27255,
+    "input_bytes": 1318494346,
+    "published_bytes": 1358,
+    "published_sha256": "373215b8fbd7137982451ca602701802c233778b53f3754cd1ccc80749ff51b9",
+    "scope": "current prepared bytes only; does not accept failed01/02 or qualification03",
+    "status": "PASS",
+    "terminal": "e26c9d"
+  },
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-amendment-03/source-evidence-index.json",
+    "sha256": "5c839e71174a8d31a8894954993872be7879aadf93e7b7c4af6ef718381efabd",
+    "size_bytes": 22027
+  },
+  "executable": false,
+  "kind": "puck-cpu-held-qualification-amendment03-source-report-v1",
+  "native_authorized": false,
+  "policy_delta": {
+    "current": [
+      "numpy._distributor_init_local",
+      "org",
+      "torch._rocm_init"
+    ],
+    "historical": [
+      "numpy._distributor_init_local",
+      "org"
+    ]
+  },
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "authored source checks and separate read-only prepared-data census; no actual03 qualification",
+  "source_commit": "5f2978851c24ca84fbde948a977285b9ba647354",
+  "source_review": {
+    "material_findings": [],
+    "status": "GO source only"
+  },
+  "status": "SOURCE_VERIFIED_ACTUAL_PENDING",
+  "study_authorized": false
+}

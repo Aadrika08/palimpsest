@@ -1,0 +1,34 @@
+{
+  "argv": [
+    "--repo",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3",
+    "compare",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/c0ac36d0bcf54c9e90f948fe28454e0f",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/artifacts/one-map-many-lives.html",
+    "--storage-max-bytes",
+    "67108864",
+    "--min-free-bytes",
+    "2147483648",
+    "--max-exports",
+    "3",
+    "--log-max-bytes",
+    "1048576"
+  ],
+  "artifact": {
+    "sha256": "641d77eaef606d5f6a0b822a57ec89e4c2377410bac9807863f6e50163cf5a45",
+    "size_bytes": 377890
+  },
+  "numpy_version": "2.2.5",
+  "output": "one-map-many-lives.html",
+  "process": {
+    "pid": 1174215,
+    "process_group": 1174215,
+    "start_ticks": 8492224
+  },
+  "qualification_claims": [],
+  "returncode": 0,
+  "runtime_imported": [],
+  "status": "passed"
+}

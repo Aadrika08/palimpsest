@@ -1,0 +1,101 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____ test_readout_validates_completed_output_without_admitting_worker_retry ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-58/test_readout_validates_complet0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79e36218f350>
+
+    def test_readout_validates_completed_output_without_admitting_worker_retry(tmp_path, monkeypatch):
+        stage, job = completed_job(tmp_path)
+        with pytest.raises(ValueError, match='Output must be absent'):
+            p.validate_job(job)
+        # The readout uses real job validation; only the exited owner and raw payload
+        # are fixtures. No owner is started and no retained native state is decoded.
+        monkeypatch.setattr(d, 'owner_exited', lambda owner: True)
+        monkeypatch.setattr(p, 'audit_run', lambda *args: {'fixture':True})
+        monkeypatch.setattr(p, 'read_raw', lambda *args: {'rows':[{}]})
+>       rows = d.audit_owners(stage,{},None)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_restore_study_v2.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_restore_diagnostic.py:188: in audit_owners
+    job = p.validate_job(p.read_json(path)); run = p.checked_path(job['output'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_decision_pilot.py:452: in validate_job
+    safe_output(job['output'], source_paths(job['repo'], job['assets'], job['history_root']))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = '/tmp/pytest-of-utkarsh/pytest-58/test_readout_validates_complet0/stage/runs/5b44b9b509bf49d487f961f7059c7cc0'
+sources = [PosixPath('/tmp/pytest-of-utkarsh/pytest-58/test_readout_validates_complet0/assets'), PosixPath('/tmp/pytest-of-utkar...search-phase/model_manifests'), PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/upstream'), ...]
+
+    def safe_output(path, sources):
+        result = checked_path(path)
+        if result.exists():
+>           raise ValueError('Output must be absent; existing evidence is immutable')
+E           ValueError: Output must be absent; existing evidence is immutable
+
+scripts/memory_decision_pilot.py:209: ValueError
+___ test_readout_existing_output_cannot_bypass_job_contract[source-overlap] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-58/test_readout_existing_output_c0')
+change = 'source-overlap'
+
+    @pytest.mark.parametrize('change', ['source-overlap','case','output'])
+    def test_readout_existing_output_cannot_bypass_job_contract(tmp_path, change):
+        stage, job = completed_job(tmp_path)
+        if change == 'source-overlap':
+            job['assets'] = str(stage)
+        elif change == 'case':
+            job['case']['seed'] += 1
+        else:
+            job['output'] = str(tmp_path/'elsewhere')
+        with pytest.raises(ValueError):
+>           p.validate_job(job,read_only=True)
+E           TypeError: validate_job() got an unexpected keyword argument 'read_only'
+
+tests/test_memory_restore_study_v2.py:137: TypeError
+________ test_readout_existing_output_cannot_bypass_job_contract[case] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-58/test_readout_existing_output_c1')
+change = 'case'
+
+    @pytest.mark.parametrize('change', ['source-overlap','case','output'])
+    def test_readout_existing_output_cannot_bypass_job_contract(tmp_path, change):
+        stage, job = completed_job(tmp_path)
+        if change == 'source-overlap':
+            job['assets'] = str(stage)
+        elif change == 'case':
+            job['case']['seed'] += 1
+        else:
+            job['output'] = str(tmp_path/'elsewhere')
+        with pytest.raises(ValueError):
+>           p.validate_job(job,read_only=True)
+E           TypeError: validate_job() got an unexpected keyword argument 'read_only'
+
+tests/test_memory_restore_study_v2.py:137: TypeError
+_______ test_readout_existing_output_cannot_bypass_job_contract[output] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-58/test_readout_existing_output_c2')
+change = 'output'
+
+    @pytest.mark.parametrize('change', ['source-overlap','case','output'])
+    def test_readout_existing_output_cannot_bypass_job_contract(tmp_path, change):
+        stage, job = completed_job(tmp_path)
+        if change == 'source-overlap':
+            job['assets'] = str(stage)
+        elif change == 'case':
+            job['case']['seed'] += 1
+        else:
+            job['output'] = str(tmp_path/'elsewhere')
+        with pytest.raises(ValueError):
+>           p.validate_job(job,read_only=True)
+E           TypeError: validate_job() got an unexpected keyword argument 'read_only'
+
+tests/test_memory_restore_study_v2.py:137: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_study_v2.py::test_readout_validates_completed_output_without_admitting_worker_retry
+FAILED tests/test_memory_restore_study_v2.py::test_readout_existing_output_cannot_bypass_job_contract[source-overlap]
+FAILED tests/test_memory_restore_study_v2.py::test_readout_existing_output_cannot_bypass_job_contract[case]
+FAILED tests/test_memory_restore_study_v2.py::test_readout_existing_output_cannot_bypass_job_contract[output]
+4 failed, 2 deselected in 0.11s

@@ -1,0 +1,2268 @@
+{
+  "kind": "puck-cpu-export-phase-preflight-v1",
+  "status": "source sweep complete; exact distributed dispatch data and corrected profile remain open",
+  "upstream_commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+  "candidate": {
+    "path": "docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+    "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648",
+    "size_bytes": 342451,
+    "changed": false
+  },
+  "classification_scope": "Creation/attachment and visible closure from package-declared source only. No linked-binary equivalence, full transitive-import absence, exact private build flags, terminal runtime roster or future mutation proof.",
+  "classification_counts": {
+    "source-supported": 32,
+    "correction required": 3,
+    "unresolved": 0
+  },
+  "acceptance": {
+    "source_sweep_complete": true,
+    "installed_runtime_qualified": false,
+    "replacement_profile_accepted": false,
+    "actual_configuration_created": false,
+    "actual_invocation": false,
+    "episode_ran": false,
+    "collection_authorized": false,
+    "study_authorized": false,
+    "qualification_claims": []
+  },
+  "unresolved_groups": [
+    {
+      "id": "distributed-terminal-dispatch",
+      "names": [
+        "torch._C._distributed_autograd",
+        "torch._C._distributed_c10d",
+        "torch._C._distributed_rpc"
+      ],
+      "gap": "Exact direct dispatch rosters are conditional on private build flags not fully proved by exported CMake metadata. Creation-phase correction is proved at source scope; executable replacement is not ready.",
+      "next_proposal": "docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md",
+      "stop": "The35-row source sweep is closed. Do not repeat it or guess a roster. Review and implement one bounded ordinary metadata observation; freeze and independently review actual controls before one invocation."
+    }
+  ],
+  "rows": [
+    {
+      "name": "torch._C._aoti",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_aoti"
+        ],
+        "class_binding": null,
+        "name": "torch._C._aoti",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_aoti"
+      ],
+      "creation": "initAOTIRunnerBindings creates _aoti at21; initAOTIPackageBindings at Module.cpp2058 reopens the same submodule and adds AOTIModelPackageLoader before native return.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2057,
+          "line_end": 2057,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/inductor/aoti_runner/pybind.cpp",
+          "line_start": 19,
+          "line_end": 200,
+          "claim": "initAOTIRunnerBindings creates _aoti at21; initAOTIPackageBindings at Module.cpp2058 reopens the same submodule and adds AOTIModelPackageLoader before native return."
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2058,
+          "line_end": 2058,
+          "claim": "The package initializer also runs during the same native creation phase."
+        },
+        {
+          "path": "torch/csrc/inductor/aoti_package/pybind.cpp",
+          "line_start": 52,
+          "line_end": 90,
+          "claim": "Reopens _aoti and adds its package-loader class before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "CPU runner is unconditional; CUDA/XPU/MPS branches add dispatch classes, without moving child creation.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._cpu",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_cpu"
+        ],
+        "class_binding": null,
+        "name": "torch._C._cpu",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_cpu"
+      ],
+      "creation": "initModule creates _cpu at10 and binds nine CPU helper functions before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2075,
+          "line_end": 2075,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/cpu/Module.cpp",
+          "line_start": 7,
+          "line_end": 20,
+          "claim": "initModule creates _cpu at10 and binds nine CPU helper functions before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "No source conditional around child creation in the inspected initializer.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._distributed_autograd",
+      "classification": "correction required",
+      "current_declaration": {
+        "attributes": [
+          "_distributed_autograd"
+        ],
+        "class_binding": null,
+        "name": "torch._C._distributed_autograd",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch.distributed.autograd",
+      "source_phase": "module_exec (publication contract proposal remains unaccepted)",
+      "raw_attributes": [
+        "torch",
+        "_C",
+        "_distributed_autograd"
+      ],
+      "creation": "Native initModule registers an initializer callback but does not create this child. The physical Python creator invokes the callback later.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 1997,
+          "line_end": 2006,
+          "claim": "Register distributed callback method definitions, without invoking them."
+        },
+        {
+          "path": "torch/csrc/distributed/autograd/init.cpp",
+          "line_start": 17,
+          "line_end": 31,
+          "claim": "Callback imports native root and creates the child via def_submodule."
+        },
+        {
+          "path": "installed-source/torch/distributed/autograd/__init__.py",
+          "line_start": 16,
+          "line_end": 16,
+          "claim": "Physical Python initializer invokes the callback."
+        }
+      ],
+      "build_dispatch_assumptions": {
+        "configured_cuda": 0,
+        "configured_xpu": "OFF",
+        "interface_declared_true": [
+          "USE_DISTRIBUTED",
+          "USE_C10D_GLOO",
+          "USE_RPC",
+          "USE_TENSORPIPE"
+        ],
+        "interface_source_line": 73,
+        "limits": "Exported torch_cpu downstream interface definitions do not prove the complete private torch_python init.cpp compilation flag set. Header presence alone is not enabled-feature evidence.",
+        "smallest_missing": "Pinned package build configuration establishing the private torch_python init.cpp feature definitions, or separately authorized empirical roster evidence. This review did not execute _show_config or import vendors.",
+        "unresolved_private_flags": [
+          "USE_C10D_NCCL",
+          "USE_C10D_MPI",
+          "USE_C10D_XCCL",
+          "USE_C10D_UCC",
+          "USE_NVSHMEM"
+        ]
+      },
+      "dispatch_proposal": {
+        "attributes": [
+          "torch",
+          "_C",
+          "_distributed_autograd"
+        ],
+        "class_binding": null,
+        "delegate_attributes": [
+          "DistAutogradContext",
+          "_current_context",
+          "_get_debug_info",
+          "_get_max_id",
+          "_init",
+          "_is_valid_context",
+          "_new_context",
+          "_release_context",
+          "_retrieve_context",
+          "backward",
+          "get_gradients"
+        ],
+        "name": "torch._C._distributed_autograd",
+        "phase": "module_exec_publish",
+        "producer": "torch.distributed.autograd"
+      },
+      "proposal_count": 11,
+      "dispatch_contract": "Finite proposed roster is not observed or admitted. Private build flags remain unresolved; obtain separately reviewed bounded terminal roster evidence before revising the prospective candidate.",
+      "closure_scope": "C10d and RPC publish before fresh nested Python imports; explicit publication handling is required. Autograd has no explicit after-publication fresh import in the visible eager Python source; publication is a conservative proposal, not an accepted runtime phase.",
+      "lifecycle_notes": {
+        "cpp_callback_return_line": 223,
+        "cpp_first_dispatch_line": 36,
+        "cpp_prepublication_imports": [
+          19,
+          24
+        ],
+        "cpp_publication_line": 30,
+        "ordinary_module_exec": "plausible from visible eager source: no explicit fresh import after publication; no runtime claim",
+        "publication_choice": "conservative explicit finite11 declaration; source proposal only",
+        "python_afterpublication_cached_import_line": 20,
+        "python_afterpublication_fresh_imports": [],
+        "python_callback_line": 16,
+        "python_remaining_execution": "class context definition lines37-66; method bodies deferred"
+      },
+      "limitations": [
+        "No installed-runtime roster, creator-close timing, private-build equivalence or held qualification is established by this static map."
+      ]
+    },
+    {
+      "name": "torch._C._distributed_c10d",
+      "classification": "correction required",
+      "current_declaration": {
+        "attributes": [
+          "_distributed_c10d"
+        ],
+        "class_binding": null,
+        "name": "torch._C._distributed_c10d",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch.distributed",
+      "source_phase": "module_exec (publication contract proposal remains unaccepted)",
+      "raw_attributes": [
+        "torch",
+        "_C",
+        "_distributed_c10d"
+      ],
+      "creation": "Native initModule registers an initializer callback but does not create this child. The physical Python creator invokes the callback later.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 1997,
+          "line_end": 2006,
+          "claim": "Register distributed callback method definitions, without invoking them."
+        },
+        {
+          "path": "torch/csrc/distributed/c10d/init.cpp",
+          "line_start": 451,
+          "line_end": 466,
+          "claim": "Callback imports native root and creates the child via def_submodule."
+        },
+        {
+          "path": "installed-source/torch/distributed/__init__.py",
+          "line_start": 29,
+          "line_end": 29,
+          "claim": "Physical Python initializer invokes the callback."
+        }
+      ],
+      "build_dispatch_assumptions": {
+        "configured_cuda": 0,
+        "configured_xpu": "OFF",
+        "interface_declared_true": [
+          "USE_DISTRIBUTED",
+          "USE_C10D_GLOO",
+          "USE_RPC",
+          "USE_TENSORPIPE"
+        ],
+        "interface_source_line": 73,
+        "limits": "Exported torch_cpu downstream interface definitions do not prove the complete private torch_python init.cpp compilation flag set. Header presence alone is not enabled-feature evidence.",
+        "smallest_missing": "Pinned package build configuration establishing the private torch_python init.cpp feature definitions, or separately authorized empirical roster evidence. This review did not execute _show_config or import vendors.",
+        "unresolved_private_flags": [
+          "USE_C10D_NCCL",
+          "USE_C10D_MPI",
+          "USE_C10D_XCCL",
+          "USE_C10D_UCC",
+          "USE_NVSHMEM"
+        ]
+      },
+      "dispatch_proposal": {
+        "attributes": [
+          "torch",
+          "_C",
+          "_distributed_c10d"
+        ],
+        "class_binding": null,
+        "delegate_attributes": [
+          "AllToAllOptions",
+          "AllgatherOptions",
+          "AllreduceCoalescedOptions",
+          "AllreduceOptions",
+          "Backend",
+          "BarrierOptions",
+          "BroadcastOptions",
+          "BuiltinCommHookType",
+          "DDPLoggingData",
+          "DebugLevel",
+          "ErrorType",
+          "FakeProcessGroup",
+          "FakeWork",
+          "FileStore",
+          "GatherOptions",
+          "GradBucket",
+          "HashStore",
+          "Logger",
+          "OpType",
+          "PrefixStore",
+          "ProcessGroup",
+          "ProcessGroupGloo",
+          "ReduceOp",
+          "ReduceOptions",
+          "ReduceScatterOptions",
+          "Reducer",
+          "ScatterOptions",
+          "Store",
+          "TCPStore",
+          "Work",
+          "WorkInfo",
+          "WorkResult",
+          "_ControlCollectives",
+          "_DMAConnectivity",
+          "_DistributedBackendOptions",
+          "_ProcessGroupWrapper",
+          "_Request",
+          "_Response",
+          "_StoreCollectives",
+          "_SymmetricMemory",
+          "_WorkerServer",
+          "_allow_inflight_collective_as_graph_input",
+          "_broadcast_coalesced",
+          "_compute_bucket_assignment_by_size",
+          "_create_work_from_future",
+          "_current_process_group",
+          "_detect_dma_connectivity",
+          "_dump_fr_trace",
+          "_dump_fr_trace_json",
+          "_get_handler",
+          "_get_handler_names",
+          "_get_work_registry_size",
+          "_make_nccl_premul_sum",
+          "_register_builtin_comm_hook",
+          "_register_comm_hook",
+          "_register_process_group",
+          "_register_work",
+          "_resolve_process_group",
+          "_set_allow_inflight_collective_as_graph_input",
+          "_set_global_rank",
+          "_set_process_group",
+          "_set_thread_isolation_mode",
+          "_test_python_store",
+          "_unregister_all_process_groups",
+          "_unregister_process_group",
+          "_verify_params_across_processes",
+          "get_debug_level",
+          "set_debug_level",
+          "set_debug_level_from_env"
+        ],
+        "name": "torch._C._distributed_c10d",
+        "phase": "module_exec_publish",
+        "producer": "torch.distributed"
+      },
+      "proposal_count": 69,
+      "dispatch_contract": "Finite proposed roster is not observed or admitted. Private build flags remain unresolved; obtain separately reviewed bounded terminal roster evidence before revising the prospective candidate.",
+      "closure_scope": "C10d and RPC publish before fresh nested Python imports; explicit publication handling is required. Autograd has no explicit after-publication fresh import in the visible eager Python source; publication is a conservative proposal, not an accepted runtime phase.",
+      "lifecycle_notes": {
+        "cpp_callback_return_line": 4193,
+        "cpp_first_dispatch_line": 471,
+        "cpp_prepublication_imports": [
+          454,
+          459
+        ],
+        "cpp_publication_line": 466,
+        "publication_choice": "required to admit native child before fresh nested physical imports while Python creator remains open",
+        "python_afterpublication_cached_import_lines": [
+          40,
+          129
+        ],
+        "python_afterpublication_fresh_imports": [
+          {
+            "line": 131,
+            "modules": [
+              "torch.distributed.device_mesh"
+            ]
+          },
+          {
+            "line": 136,
+            "modules": [
+              "torch.distributed.distributed_c10d"
+            ]
+          },
+          {
+            "line": 148,
+            "modules": [
+              "torch.distributed.remote_device"
+            ]
+          },
+          {
+            "line": 149,
+            "modules": [
+              "torch.distributed.rendezvous"
+            ]
+          }
+        ],
+        "python_callback_line": 29
+      },
+      "limitations": [
+        "No installed-runtime roster, creator-close timing, private-build equivalence or held qualification is established by this static map."
+      ]
+    },
+    {
+      "name": "torch._C._distributed_rpc",
+      "classification": "correction required",
+      "current_declaration": {
+        "attributes": [
+          "_distributed_rpc"
+        ],
+        "class_binding": null,
+        "name": "torch._C._distributed_rpc",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch.distributed.rpc",
+      "source_phase": "module_exec (publication contract proposal remains unaccepted)",
+      "raw_attributes": [
+        "torch",
+        "_C",
+        "_distributed_rpc"
+      ],
+      "creation": "Native initModule registers an initializer callback but does not create this child. The physical Python creator invokes the callback later.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 1997,
+          "line_end": 2006,
+          "claim": "Register distributed callback method definitions, without invoking them."
+        },
+        {
+          "path": "torch/csrc/distributed/rpc/init.cpp",
+          "line_start": 32,
+          "line_end": 47,
+          "claim": "Callback imports native root and creates the child via def_submodule."
+        },
+        {
+          "path": "installed-source/torch/distributed/rpc/__init__.py",
+          "line_start": 28,
+          "line_end": 28,
+          "claim": "Physical Python initializer invokes the callback."
+        }
+      ],
+      "build_dispatch_assumptions": {
+        "configured_cuda": 0,
+        "configured_xpu": "OFF",
+        "interface_declared_true": [
+          "USE_DISTRIBUTED",
+          "USE_C10D_GLOO",
+          "USE_RPC",
+          "USE_TENSORPIPE"
+        ],
+        "interface_source_line": 73,
+        "limits": "Exported torch_cpu downstream interface definitions do not prove the complete private torch_python init.cpp compilation flag set. Header presence alone is not enabled-feature evidence.",
+        "smallest_missing": "Pinned package build configuration establishing the private torch_python init.cpp feature definitions, or separately authorized empirical roster evidence. This review did not execute _show_config or import vendors.",
+        "unresolved_private_flags": [
+          "USE_C10D_NCCL",
+          "USE_C10D_MPI",
+          "USE_C10D_XCCL",
+          "USE_C10D_UCC",
+          "USE_NVSHMEM"
+        ]
+      },
+      "dispatch_proposal": {
+        "attributes": [
+          "torch",
+          "_C",
+          "_distributed_rpc"
+        ],
+        "class_binding": null,
+        "delegate_attributes": [
+          "PyRRef",
+          "RemoteProfilerManager",
+          "RpcAgent",
+          "RpcBackendOptions",
+          "TensorPipeAgent",
+          "WorkerInfo",
+          "_TensorPipeRpcBackendOptionsBase",
+          "_cleanup_python_rpc_handler",
+          "_delete_all_user_and_unforked_owner_rrefs",
+          "_destroy_rref_context",
+          "_disable_jit_rref_pickle",
+          "_disable_server_process_global_profiler",
+          "_enable_jit_rref_pickle",
+          "_enable_server_process_global_profiler",
+          "_get_current_rpc_agent",
+          "_invoke_remote_builtin",
+          "_invoke_remote_python_udf",
+          "_invoke_remote_torchscript",
+          "_invoke_rpc_builtin",
+          "_invoke_rpc_python_udf",
+          "_invoke_rpc_torchscript",
+          "_is_current_rpc_agent_set",
+          "_reset_current_rpc_agent",
+          "_rref_context_get_debug_info",
+          "_set_and_start_rpc_agent",
+          "_set_profiler_node_id",
+          "_set_rpc_timeout",
+          "enable_gil_profiling",
+          "get_rpc_timeout"
+        ],
+        "name": "torch._C._distributed_rpc",
+        "phase": "module_exec_publish",
+        "producer": "torch.distributed.rpc"
+      },
+      "proposal_count": 29,
+      "dispatch_contract": "Finite proposed roster is not observed or admitted. Private build flags remain unresolved; obtain separately reviewed bounded terminal roster evidence before revising the prospective candidate.",
+      "closure_scope": "C10d and RPC publish before fresh nested Python imports; explicit publication handling is required. Autograd has no explicit after-publication fresh import in the visible eager Python source; publication is a conservative proposal, not an accepted runtime phase.",
+      "lifecycle_notes": {
+        "chrono_caster_note": "retained pybind11/chrono.h77-99 lazily initializes datetime API then returns timedelta instance; possible earlier import inside native callback; no imported module assigned to child",
+        "cpp_callback_return_line": 847,
+        "cpp_eager_chrono_cast_lines": [
+          79,
+          80
+        ],
+        "cpp_first_dispatch_line": 52,
+        "cpp_prepublication_imports": [
+          35,
+          40
+        ],
+        "cpp_publication_line": 47,
+        "publication_choice": "required to admit native child before nested imports while Python creator remains open",
+        "python_afterpublication_fresh_imports": [
+          {
+            "line": 37,
+            "modules": [
+              "numbers"
+            ]
+          },
+          {
+            "line": 39,
+            "modules": [
+              "torch.distributed.autograd"
+            ]
+          },
+          {
+            "line": 81,
+            "modules": [
+              "torch.distributed.rpc.api",
+              "torch.distributed.rpc.backend_registry",
+              "torch.distributed.rpc.functions"
+            ]
+          },
+          {
+            "line": 84,
+            "modules": [
+              "torch.distributed.rpc.options"
+            ]
+          },
+          {
+            "line": 85,
+            "modules": [
+              "torch.distributed.rpc.server_process_global_profiler"
+            ]
+          }
+        ],
+        "python_callback_line": 28
+      },
+      "limitations": [
+        "No installed-runtime roster, creator-close timing, private-build equivalence or held qualification is established by this static map."
+      ]
+    },
+    {
+      "name": "torch._C._dynamo",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_dynamo"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_dynamo"
+      ],
+      "creation": "Adds eval_frame/utils/guards/compiled_autograd child references198-227 and functions via _register_functions179-194/269 before root capture; no later mutation visible.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2042,
+          "line_end": 2042,
+          "claim": "torch::dynamo::initDynamoBindings(module)"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 16,
+          "line_end": 17,
+          "claim": "ModuleDef names torch._C._dynamo"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 198,
+          "line_end": 227,
+          "claim": "Create and attach _dynamo, then synchronously create/attach four child modules"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 262,
+          "line_end": 270,
+          "claim": "Final registrations to _dynamo then return; helper calls are completed"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "Python3.11.15 selects version-specific eval-frame code; Py_GIL_DISABLED only changes GIL metadata, not these child creation calls."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Adds eval_frame/utils/guards/compiled_autograd child references198-227 and functions via _register_functions179-194/269 before root capture; no later mutation visible.",
+      "eager_imports": [],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._dynamo.autograd_compiler",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_dynamo",
+          "compiled_autograd"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.autograd_compiler",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_dynamo",
+        "compiled_autograd"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2042,
+          "line_end": 2042,
+          "claim": "torch::dynamo::initDynamoBindings(module)"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 223,
+          "line_end": 227,
+          "claim": "Initializer result attaches at raw attribute compiled_autograd"
+        },
+        {
+          "path": "torch/csrc/dynamo/python_compiled_autograd.cpp",
+          "line_start": 683,
+          "line_end": 688,
+          "claim": "ModuleDef canonical name is torch._C._dynamo.autograd_compiler, intentionally different from raw attribute compiled_autograd"
+        },
+        {
+          "path": "torch/csrc/dynamo/python_compiled_autograd.cpp",
+          "line_start": 1288,
+          "line_end": 1298,
+          "claim": "Creates method-table module and returns synchronously"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "Py_GIL_DISABLED metadata branch1294-1296; creation unaffected."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._dynamo.eval_frame",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_dynamo",
+          "eval_frame"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.eval_frame",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_dynamo",
+        "eval_frame"
+      ],
+      "creation": "Important closure detail: eval_frame helper returns757, but additional _CacheEntry/_PrecompileEntry/_ExtraState/_FrameAction/_FrameExecStrategy and helpers are registered by parent init229-268 before torch._C native-create capture.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2042,
+          "line_end": 2042,
+          "claim": "torch::dynamo::initDynamoBindings(module)"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 207,
+          "line_end": 211,
+          "claim": "Create eval_frame helper and attach to _dynamo"
+        },
+        {
+          "path": "torch/csrc/dynamo/eval_frame.c",
+          "line_start": 711,
+          "line_end": 757,
+          "claim": "ModuleDef canonical name, thread/callback setup, create module, ready/add interpreter-frame type, return"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 229,
+          "line_end": 270,
+          "claim": "Parent initializer adds further classes/functions after helper returns and before parent returns"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "Python3.11.15 selects version-specific eval-frame code; Py_GIL_DISABLED only changes GIL metadata, not these child creation calls."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Important closure detail: eval_frame helper returns757, but additional _CacheEntry/_PrecompileEntry/_ExtraState/_FrameAction/_FrameExecStrategy and helpers are registered by parent init229-268 before torch._C native-create capture.",
+      "eager_imports": [],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._dynamo.guards",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_dynamo",
+          "guards"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.guards",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_dynamo",
+        "guards"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2042,
+          "line_end": 2042,
+          "claim": "torch::dynamo::initDynamoBindings(module)"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 218,
+          "line_end": 221,
+          "claim": "Create guards helper and attach to _dynamo"
+        },
+        {
+          "path": "torch/csrc/dynamo/guards.cpp",
+          "line_start": 6529,
+          "line_end": 6599,
+          "claim": "Ready C types, create module, add types and begin pybind registrations"
+        },
+        {
+          "path": "torch/csrc/dynamo/guards.cpp",
+          "line_start": 7679,
+          "line_end": 7718,
+          "claim": "Final functions, optional watcher setup, return module"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "Python3.12+ watcher installation7701-7715 is not selected for retained Python3.11.15.",
+        "CUDA/XPU/MTIA and pybind-version branches affect deferred guard operations; no conditional around child creation."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 1199,
+              "note": "config/torch.nn imports occur in helper functions",
+              "path": "torch/csrc/dynamo/guards.cpp",
+              "start_line": 1170
+            },
+            {
+              "end_line": 1978,
+              "note": "device module import is in DEFAULT_DEVICE constructor",
+              "path": "torch/csrc/dynamo/guards.cpp",
+              "start_line": 1969
+            },
+            {
+              "end_line": 2652,
+              "note": "weakref/config imports occur in GuardManager constructor",
+              "path": "torch/csrc/dynamo/guards.cpp",
+              "start_line": 2635
+            },
+            {
+              "end_line": 4136,
+              "note": "GuardManagerType import occurs when make_guard_manager is invoked",
+              "path": "torch/csrc/dynamo/guards.cpp",
+              "start_line": 4107
+            }
+          ],
+          "status": "deferred, not eager at registration"
+        }
+      ],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._dynamo.utils",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_dynamo",
+          "utils"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.utils",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_dynamo",
+        "utils"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2042,
+          "line_end": 2042,
+          "claim": "torch::dynamo::initDynamoBindings(module)"
+        },
+        {
+          "path": "torch/csrc/dynamo/init.cpp",
+          "line_start": 213,
+          "line_end": 216,
+          "claim": "Create utils helper and attach to _dynamo"
+        },
+        {
+          "path": "torch/csrc/dynamo/utils.cpp",
+          "line_start": 16,
+          "line_end": 36,
+          "claim": "Create named module, bind is_instancemethod, return"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "Py_GIL_DISABLED metadata branch28-30; creation unaffected."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._export",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_export"
+        ],
+        "class_binding": null,
+        "name": "torch._C._export",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_export"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2056,
+          "line_end": 2056,
+          "claim": "torch::_export::initExportBindings(module)"
+        },
+        {
+          "path": "torch/csrc/export/pybind.cpp",
+          "line_start": 10,
+          "line_end": 15,
+          "claim": "Synchronously create _export and nested pt2_archive_constants"
+        },
+        {
+          "path": "torch/csrc/export/pybind.cpp",
+          "line_start": 17,
+          "line_end": 54,
+          "claim": "Register classes/functions; populate all archive constants then return"
+        },
+        {
+          "path": "torch/csrc/export/pt2_archive_constants.h",
+          "line_start": 6,
+          "line_end": 67,
+          "claim": "Header declares finite constant table used by loop; data attributes, not generated Python code"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 31,
+              "note": "torch._export.serde.schema import is inside deserialize_exported_program lambda, not called by binding registration",
+              "path": "torch/csrc/export/pybind.cpp",
+              "start_line": 18
+            }
+          ],
+          "status": "deferred"
+        }
+      ],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._export.pt2_archive_constants",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_export",
+          "pt2_archive_constants"
+        ],
+        "class_binding": null,
+        "name": "torch._C._export.pt2_archive_constants",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_export",
+        "pt2_archive_constants"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2056,
+          "line_end": 2056,
+          "claim": "torch::_export::initExportBindings(module)"
+        },
+        {
+          "path": "torch/csrc/export/pybind.cpp",
+          "line_start": 10,
+          "line_end": 15,
+          "claim": "Synchronously create _export and nested pt2_archive_constants"
+        },
+        {
+          "path": "torch/csrc/export/pybind.cpp",
+          "line_start": 17,
+          "line_end": 54,
+          "claim": "Register classes/functions; populate all archive constants then return"
+        },
+        {
+          "path": "torch/csrc/export/pt2_archive_constants.h",
+          "line_start": 6,
+          "line_end": 67,
+          "claim": "Header declares finite constant table used by loop; data attributes, not generated Python code"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 31,
+              "note": "torch._export.serde.schema import is inside deserialize_exported_program lambda, not called by binding registration",
+              "path": "torch/csrc/export/pybind.cpp",
+              "start_line": 18
+            }
+          ],
+          "status": "deferred"
+        }
+      ],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._fft",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_fft"
+        ],
+        "class_binding": null,
+        "name": "torch._C._fft",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_fft"
+      ],
+      "creation": "Template initializer creates _fft with PyModule_Create at66, then attaches it to the native module before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2047,
+          "line_end": 2047,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_fft_functions.cpp",
+          "line_start": 58,
+          "line_end": 75,
+          "claim": "Template initializer creates _fft with PyModule_Create at66, then attaches it to the native module before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 304,
+          "line_end": 363,
+          "claim": "Generator selects and fills these per-namespace templates."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated method tables and manual entries can affect finite dispatch contents. Template/include conditionals do not move the visible child creation; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._functionalization",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_functionalization"
+        ],
+        "class_binding": null,
+        "name": "torch._C._functionalization",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_functionalization"
+      ],
+      "creation": "initModule creates _functionalization at15\u201316, binds manual classes/functions and calls initGenerated at68 before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2080,
+          "line_end": 2080,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/functionalization/Module.cpp",
+          "line_start": 11,
+          "line_end": 69,
+          "claim": "initModule creates _functionalization at15\u201316, binds manual classes/functions and calls initGenerated at68 before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated ViewMeta members are not statically enumerated here; child creation is unconditional and runtime dispatch capture stays required.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._functorch",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_functorch"
+        ],
+        "class_binding": null,
+        "name": "torch._C._functorch",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_functorch"
+      ],
+      "creation": "initFuncTorchBindings creates _functorch at452; direct function/class bindings complete within the initializer.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2043,
+          "line_end": 2043,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/functorch/init.cpp",
+          "line_start": 450,
+          "line_end": 606,
+          "claim": "initFuncTorchBindings creates _functorch at452; direct function/class bindings complete within the initializer."
+        }
+      ],
+      "build_dispatch_assumptions": "No source conditional around child creation in the inspected initializer.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._instruction_counter",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_instruction_counter"
+        ],
+        "class_binding": null,
+        "name": "torch._C._instruction_counter",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_instruction_counter"
+      ],
+      "creation": "initModule creates _instruction_counter at85\u201386 and binds start/end before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2077,
+          "line_end": 2077,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/instruction_counter/Module.cpp",
+          "line_start": 83,
+          "line_end": 90,
+          "claim": "initModule creates _instruction_counter at85\u201386 and binds start/end before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "__linux__ branches affect start/end function bodies, not child creation or the two binding names.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._itt",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_itt"
+        ],
+        "class_binding": null,
+        "name": "torch._C._itt",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_itt"
+      ],
+      "creation": "initIttBindings creates _itt at8 and binds is_available/rangePush/rangePop/mark before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2060,
+          "line_end": 2060,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/itt.cpp",
+          "line_start": 5,
+          "line_end": 13,
+          "claim": "initIttBindings creates _itt at8 and binds is_available/rangePush/rangePop/mark before returning."
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2059,
+          "line_end": 2061,
+          "claim": "USE_ITT guards the initializer call."
+        },
+        {
+          "path": "torch/CMakeLists.txt",
+          "line_start": 122,
+          "line_end": 127,
+          "claim": "USE_ITT controls torch_python source and compile definition."
+        }
+      ],
+      "build_dispatch_assumptions": "Module.cpp2059\u20132061 gates the call with USE_ITT; torch/CMakeLists.txt122\u2013127 includes the source/definition under the same flag. Conditional source support is not private-build-flag proof.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._jit",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_jit"
+        ],
+        "class_binding": null,
+        "name": "torch._C._jit",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_jit"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2039,
+          "line_end": 2039,
+          "claim": "torch::jit::initJITBindings(module)"
+        },
+        {
+          "path": "torch/csrc/jit/python/init.cpp",
+          "line_start": 171,
+          "line_end": 179,
+          "claim": "Create _jit unconditionally in native binding initializer"
+        },
+        {
+          "path": "torch/csrc/jit/python/init.cpp",
+          "line_start": 2352,
+          "line_end": 2377,
+          "claim": "Synchronously initialize related binding groups; register callbacks, then return"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "BUILDING_TESTS/USE_ROCM, BUILD_ONEDNN_GRAPH, TORCH_ENABLE_LLVM, fatal-signal feature flags change other registered functionality, not the unconditional _jit creation."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 2376,
+              "note": "Import atexit and register print-handler reset callable before initJITBindings returns",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 2372
+            }
+          ],
+          "status": "eager while torch._C native creator remains open"
+        },
+        {
+          "source_refs": [
+            {
+              "end_line": 2370,
+              "note": "sys.stdout import is inside registered print-handler callback",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 2362
+            },
+            {
+              "end_line": 1434,
+              "note": "os.SEEK_CUR import inside stream writer callback",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 1413
+            },
+            {
+              "end_line": 1544,
+              "note": "os.SEEK_END import inside BufferAdapter constructor",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 1534
+            }
+          ],
+          "status": "deferred"
+        }
+      ],
+      "limitations": [
+        "JIT sibling helper bodies receiving torch._C are not all expanded in this bounded lane; this is creation/attachment support, not a complete transitive native import trace.",
+        "Existing native_create capture still requires actual guarded qualification; no inferred giant roster."
+      ]
+    },
+    {
+      "name": "torch._C._jit_tree_views",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_jit_tree_views"
+        ],
+        "class_binding": null,
+        "name": "torch._C._jit_tree_views",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_jit_tree_views"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2039,
+          "line_end": 2039,
+          "claim": "torch::jit::initJITBindings(module)"
+        },
+        {
+          "path": "torch/csrc/jit/python/init.cpp",
+          "line_start": 2352,
+          "line_end": 2359,
+          "claim": "Direct synchronous call to initTreeViewBindings2355"
+        },
+        {
+          "path": "torch/csrc/jit/python/python_tree_views.cpp",
+          "line_start": 75,
+          "line_end": 92,
+          "claim": "Create _jit_tree_views, begin class registrations"
+        },
+        {
+          "path": "torch/csrc/jit/python/python_tree_views.cpp",
+          "line_start": 400,
+          "line_end": 407,
+          "claim": "Final class registrations then return"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 2376,
+              "note": "Import atexit and register print-handler reset callable before initJITBindings returns",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 2372
+            }
+          ],
+          "status": "eager while torch._C native creator remains open"
+        },
+        {
+          "source_refs": [
+            {
+              "end_line": 2370,
+              "note": "sys.stdout import is inside registered print-handler callback",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 2362
+            },
+            {
+              "end_line": 1434,
+              "note": "os.SEEK_CUR import inside stream writer callback",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 1413
+            },
+            {
+              "end_line": 1544,
+              "note": "os.SEEK_END import inside BufferAdapter constructor",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 1534
+            }
+          ],
+          "status": "deferred"
+        }
+      ],
+      "limitations": [
+        "JIT sibling helper bodies receiving torch._C are not all expanded in this bounded lane; this is creation/attachment support, not a complete transitive native import trace.",
+        "Existing native_create capture still requires actual guarded qualification; no inferred giant roster."
+      ]
+    },
+    {
+      "name": "torch._C._lazy",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_lazy"
+        ],
+        "class_binding": null,
+        "name": "torch._C._lazy",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_lazy"
+      ],
+      "creation": "Functions are registered before creator returns. Later _init/backend execution affects runtime backend state; no direct child module namespace mutation is visible in this initializer source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2055,
+          "line_end": 2055,
+          "claim": "torch::lazy::initLazyBindings(module)"
+        },
+        {
+          "path": "torch/csrc/lazy/python/init.cpp",
+          "line_start": 99,
+          "line_end": 104,
+          "claim": "Create both native modules synchronously; relevant def_submodule line101"
+        },
+        {
+          "path": "torch/csrc/lazy/python/init.cpp",
+          "line_start": 212,
+          "line_end": 218,
+          "claim": "TorchScript backend _init is registered as lambda, not executed by registration"
+        },
+        {
+          "path": "torch/csrc/lazy/python/init.cpp",
+          "line_start": 328,
+          "line_end": 337,
+          "claim": "Install Python-frame getter pointer then return"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "FBCODE_CAFFE2/OVRSOURCE branches change bodies of registered backend operations, not unconditional module creation."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Functions are registered before creator returns. Later _init/backend execution affects runtime backend state; no direct child module namespace mutation is visible in this initializer source.",
+      "eager_imports": [],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._lazy_ts_backend",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_lazy_ts_backend"
+        ],
+        "class_binding": null,
+        "name": "torch._C._lazy_ts_backend",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_lazy_ts_backend"
+      ],
+      "creation": "Functions are registered before creator returns. Later _init/backend execution affects runtime backend state; no direct child module namespace mutation is visible in this initializer source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2055,
+          "line_end": 2055,
+          "claim": "torch::lazy::initLazyBindings(module)"
+        },
+        {
+          "path": "torch/csrc/lazy/python/init.cpp",
+          "line_start": 99,
+          "line_end": 104,
+          "claim": "Create both native modules synchronously; relevant def_submodule line102"
+        },
+        {
+          "path": "torch/csrc/lazy/python/init.cpp",
+          "line_start": 212,
+          "line_end": 218,
+          "claim": "TorchScript backend _init is registered as lambda, not executed by registration"
+        },
+        {
+          "path": "torch/csrc/lazy/python/init.cpp",
+          "line_start": 328,
+          "line_end": 337,
+          "claim": "Install Python-frame getter pointer then return"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "FBCODE_CAFFE2/OVRSOURCE branches change bodies of registered backend operations, not unconditional module creation."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Functions are registered before creator returns. Later _init/backend execution affects runtime backend state; no direct child module namespace mutation is visible in this initializer source.",
+      "eager_imports": [],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C._linalg",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_linalg"
+        ],
+        "class_binding": null,
+        "name": "torch._C._linalg",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_linalg"
+      ],
+      "creation": "Template initializer creates _linalg with PyModule_Create at53, then attaches it to the native module before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2048,
+          "line_end": 2048,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_linalg_functions.cpp",
+          "line_start": 45,
+          "line_end": 62,
+          "claim": "Template initializer creates _linalg with PyModule_Create at53, then attaches it to the native module before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 304,
+          "line_end": 363,
+          "claim": "Generator selects and fills these per-namespace templates."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated method tables and manual entries can affect finite dispatch contents. Template/include conditionals do not move the visible child creation; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._monitor",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_monitor"
+        ],
+        "class_binding": null,
+        "name": "torch._C._monitor",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_monitor"
+      ],
+      "creation": "initMonitorBindings creates _monitor at86 and installs enums, classes and functions before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2040,
+          "line_end": 2040,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/monitor/python_init.cpp",
+          "line_start": 83,
+          "line_end": 340,
+          "claim": "initMonitorBindings creates _monitor at86 and installs enums, classes and functions before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "No source conditional around child creation in the inspected initializer.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._nativert",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_nativert"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nativert",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_nativert"
+      ],
+      "creation": "Module.cpp2765 creates _nativert directly, then2766 calls initModelRunnerPybind before native return.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2765,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/nativert/python/Bindings.cpp",
+          "line_start": 18,
+          "line_end": 77,
+          "claim": "Module.cpp2765 creates _nativert directly, then2766 calls initModelRunnerPybind before native return."
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2767,
+          "claim": "Child creation, binding initializer and native return are adjacent."
+        }
+      ],
+      "build_dispatch_assumptions": "OVRSOURCE controls PyModelRunner class registration, not _nativert child creation.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._nested",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_nested"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nested",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_nested"
+      ],
+      "creation": "Template initializer creates _nested with PyModule_Create at66, then attaches it to the native module before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2049,
+          "line_end": 2049,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_nested_functions.cpp",
+          "line_start": 57,
+          "line_end": 75,
+          "claim": "Template initializer creates _nested with PyModule_Create at66, then attaches it to the native module before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 304,
+          "line_end": 363,
+          "claim": "Generator selects and fills these per-namespace templates."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated method tables and manual entries can affect finite dispatch contents. Template/include conditionals do not move the visible child creation; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._nn",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_nn"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nn",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_nn"
+      ],
+      "creation": "Template initializer creates _nn with PyModule_Create at98, then attaches it to the native module before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2046,
+          "line_end": 2046,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_nn_functions.cpp",
+          "line_start": 90,
+          "line_end": 107,
+          "claim": "Template initializer creates _nn with PyModule_Create at98, then attaches it to the native module before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 304,
+          "line_end": 363,
+          "claim": "Generator selects and fills these per-namespace templates."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated method tables and manual entries can affect finite dispatch contents. Template/include conditionals do not move the visible child creation; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._onnx",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_onnx"
+        ],
+        "class_binding": null,
+        "name": "torch._C._onnx",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_onnx"
+      ],
+      "creation": "initONNXBindings creates _onnx at256 and fills enums plus version data before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2037,
+          "line_end": 2037,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/onnx/init.cpp",
+          "line_start": 36,
+          "line_end": 294,
+          "claim": "initONNXBindings creates _onnx at256 and fills enums plus version data before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "No source conditional around child creation in the inspected initializer.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._profiler",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_profiler"
+        ],
+        "class_binding": null,
+        "name": "torch._C._profiler",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_profiler"
+      ],
+      "creation": "initPythonBindings creates _profiler at287, fills bindings and installs _RecordFunctionFast before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2053,
+          "line_end": 2053,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/profiler/python/init.cpp",
+          "line_start": 285,
+          "line_end": 708,
+          "claim": "initPythonBindings creates _profiler at287, fills bindings and installs _RecordFunctionFast before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "Direct member names are captured at native completion; helpers installCapturedTracebackPython and pybind type construction are not asserted transitively import-free.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup runs before native return. Helpers/type preparation may have Python effects; no no-import or exhaustive future-mutation claim is made."
+    },
+    {
+      "name": "torch._C._return_types",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_return_types"
+        ],
+        "class_binding": null,
+        "name": "torch._C._return_types",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_return_types"
+      ],
+      "creation": "initReturnTypes creates the child at38, adds generated type registrations, then attaches _return_types at46 before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2045,
+          "line_end": 2045,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_return_types.cpp",
+          "line_start": 35,
+          "line_end": 50,
+          "claim": "initReturnTypes creates the child at38, adds generated type registrations, then attaches _return_types at46 before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 365,
+          "line_end": 374,
+          "claim": "Generator emits the return-type implementation and header from the template."
+        }
+      ],
+      "build_dispatch_assumptions": "The generated registration list determines dispatch types. The template establishes creation order; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._sparse",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_sparse"
+        ],
+        "class_binding": null,
+        "name": "torch._C._sparse",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_sparse"
+      ],
+      "creation": "Template initializer creates _sparse with PyModule_Create at52, then attaches it to the native module before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2050,
+          "line_end": 2050,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_sparse_functions.cpp",
+          "line_start": 44,
+          "line_end": 61,
+          "claim": "Template initializer creates _sparse with PyModule_Create at52, then attaches it to the native module before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 304,
+          "line_end": 363,
+          "claim": "Generator selects and fills these per-namespace templates."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated method tables and manual entries can affect finite dispatch contents. Template/include conditionals do not move the visible child creation; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._special",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_special"
+        ],
+        "class_binding": null,
+        "name": "torch._C._special",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_special"
+      ],
+      "creation": "Template initializer creates _special with PyModule_Create at64, then attaches it to the native module before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2051,
+          "line_end": 2051,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "tools/autograd/templates/python_special_functions.cpp",
+          "line_start": 56,
+          "line_end": 73,
+          "claim": "Template initializer creates _special with PyModule_Create at64, then attaches it to the native module before returning."
+        },
+        {
+          "path": "tools/autograd/gen_python_functions.py",
+          "line_start": 304,
+          "line_end": 363,
+          "claim": "Generator selects and fills these per-namespace templates."
+        }
+      ],
+      "build_dispatch_assumptions": "Generated method tables and manual entries can affect finite dispatch contents. Template/include conditionals do not move the visible child creation; generated linked output is not independently reproduced here.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C._te",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_te"
+        ],
+        "class_binding": null,
+        "name": "torch._C._te",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_te"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2039,
+          "line_end": 2039,
+          "claim": "torch::jit::initJITBindings(module)"
+        },
+        {
+          "path": "torch/csrc/jit/python/init.cpp",
+          "line_start": 2355,
+          "line_end": 2359,
+          "claim": "Direct synchronous call to initTensorExprBindings2359"
+        },
+        {
+          "path": "torch/csrc/jit/tensorexpr/tensorexpr_init.cpp",
+          "line_start": 66,
+          "line_end": 79,
+          "claim": "Create _te and begin class registration"
+        },
+        {
+          "path": "torch/csrc/jit/tensorexpr/tensorexpr_init.cpp",
+          "line_start": 949,
+          "line_end": 973,
+          "claim": "Final functions, optional LLVM-only functions, return"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [
+        "TORCH_ENABLE_LLVM adds LLVMCodeGen910-912 and target setters959-972; no conditional around _te creation.",
+        "USE_CUDA and byte-order branches alter deferred codegen/buffer functions; they do not defer child creation."
+      ],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 2376,
+              "note": "Import atexit and register print-handler reset callable before initJITBindings returns",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 2372
+            }
+          ],
+          "status": "eager while torch._C native creator remains open"
+        },
+        {
+          "source_refs": [
+            {
+              "end_line": 2370,
+              "note": "sys.stdout import is inside registered print-handler callback",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 2362
+            },
+            {
+              "end_line": 1434,
+              "note": "os.SEEK_CUR import inside stream writer callback",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 1413
+            },
+            {
+              "end_line": 1544,
+              "note": "os.SEEK_END import inside BufferAdapter constructor",
+              "path": "torch/csrc/jit/python/init.cpp",
+              "start_line": 1534
+            }
+          ],
+          "status": "deferred"
+        }
+      ],
+      "limitations": [
+        "JIT sibling helper bodies receiving torch._C are not all expanded in this bounded lane; this is creation/attachment support, not a complete transitive native import trace.",
+        "Existing native_create capture still requires actual guarded qualification; no inferred giant roster."
+      ]
+    },
+    {
+      "name": "torch._C._verbose",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "_verbose"
+        ],
+        "class_binding": null,
+        "name": "torch._C._verbose",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "_verbose"
+      ],
+      "creation": "initVerboseBindings creates _verbose at10 and binds mkl_set_verbose/mkldnn_set_verbose before returning.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2078,
+          "line_end": 2078,
+          "claim": "Native initModule invokes the initializer before its return at line2767."
+        },
+        {
+          "path": "torch/csrc/utils/verbose.cpp",
+          "line_start": 7,
+          "line_end": 13,
+          "claim": "initVerboseBindings creates _verbose at10 and binds mkl_set_verbose/mkldnn_set_verbose before returning."
+        }
+      ],
+      "build_dispatch_assumptions": "No source conditional around child creation in the inspected initializer.",
+      "dispatch_contract": "Preserve the current native-create declaration. Existing ModuleSeal captures the actual direct module/class/function/builtin-function references at completion (ceiling4096); no hand-written static dispatch roster or published-phase exception is proposed.",
+      "closure_scope": "Source supports child creation and visible initialization before the enclosing native initModule returns. Existing runtime seal/recheck remains required. This map does not prove absence of every deferred/transitive later mutation or linked-binary equivalence.",
+      "lifecycle_notes": "Visible child setup is synchronous in this initializer; bound callable bodies are deferred until invocation."
+    },
+    {
+      "name": "torch._C.cpp",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "cpp"
+        ],
+        "class_binding": null,
+        "name": "torch._C.cpp",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "cpp"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2054,
+          "line_end": 2054,
+          "claim": "torch::python::init_bindings(module)"
+        },
+        {
+          "path": "torch/csrc/api/src/python/init.cpp",
+          "line_start": 40,
+          "line_end": 60,
+          "claim": "bind_ordered_dict registers classes/methods without invoking iterator bodies"
+        },
+        {
+          "path": "torch/csrc/api/src/python/init.cpp",
+          "line_start": 64,
+          "line_end": 74,
+          "claim": "Create cpp, register two ordered-dict classes, create nn, bind Module class synchronously"
+        },
+        {
+          "path": "torch/csrc/api/include/torch/python.h",
+          "line_start": 106,
+          "line_end": 190,
+          "claim": "add_module_bindings adds methods to the Module class; no eager Python import"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 55,
+              "note": "torch.nn.cpp import belongs to separate bind_cpp_module_wrapper helper, not add_module_bindings",
+              "path": "torch/csrc/api/include/torch/python.h",
+              "start_line": 44
+            }
+          ],
+          "status": "not part of init_bindings call chain"
+        }
+      ],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    },
+    {
+      "name": "torch._C.cpp.nn",
+      "classification": "source-supported",
+      "current_declaration": {
+        "attributes": [
+          "cpp",
+          "nn"
+        ],
+        "class_binding": null,
+        "name": "torch._C.cpp.nn",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      "source_creator": "torch._C",
+      "source_phase": "native_create",
+      "raw_attributes": [
+        "cpp",
+        "nn"
+      ],
+      "creation": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "evidence": [
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2054,
+          "line_end": 2054,
+          "claim": "torch::python::init_bindings(module)"
+        },
+        {
+          "path": "torch/csrc/api/src/python/init.cpp",
+          "line_start": 40,
+          "line_end": 60,
+          "claim": "bind_ordered_dict registers classes/methods without invoking iterator bodies"
+        },
+        {
+          "path": "torch/csrc/api/src/python/init.cpp",
+          "line_start": 64,
+          "line_end": 74,
+          "claim": "Create cpp, register two ordered-dict classes, create nn, bind Module class synchronously"
+        },
+        {
+          "path": "torch/csrc/api/include/torch/python.h",
+          "line_start": 106,
+          "line_end": 190,
+          "claim": "add_module_bindings adds methods to the Module class; no eager Python import"
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "line_start": 2765,
+          "line_end": 2768,
+          "claim": "Root initializer returns module only after all synchronous binding initializers; native-create capture occurs after this return."
+        }
+      ],
+      "build_dispatch_assumptions": [],
+      "dispatch_contract": "Keep the existing native-create declaration and actual bounded dispatch capture; no new static roster or exemption.",
+      "closure_scope": "exact-source creation/attachment before torch._C native initializer returns; no binary or complete transitive-import qualification",
+      "lifecycle_notes": "Named child populated synchronously before root initializer return; no post-return direct child namespace mutation visible in the inspected source.",
+      "eager_imports": [
+        {
+          "source_refs": [
+            {
+              "end_line": 55,
+              "note": "torch.nn.cpp import belongs to separate bind_cpp_module_wrapper helper, not add_module_bindings",
+              "path": "torch/csrc/api/include/torch/python.h",
+              "start_line": 44
+            }
+          ],
+          "status": "not part of init_bindings call chain"
+        }
+      ],
+      "limitations": [
+        "Captured actual dispatch under existing native_create policy remains to be qualified; source registration names are not an observed runtime roster."
+      ]
+    }
+  ]
+}

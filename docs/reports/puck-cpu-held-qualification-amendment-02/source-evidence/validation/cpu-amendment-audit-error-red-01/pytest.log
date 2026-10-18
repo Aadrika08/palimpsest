@@ -1,0 +1,9 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_reauthenticated_historical_receipt_tampering_still_refuses[audit-error] _
+tests/test_puck_cpu_amendment_audit.py:132: in test_reauthenticated_historical_receipt_tampering_still_refuses
+    with pytest.raises(ValueError):m.historical_acceptance(held,current,True)
+E   Failed: DID NOT RAISE <class 'ValueError'>
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_amendment_audit.py::test_reauthenticated_historical_receipt_tampering_still_refuses[audit-error]
+1 failed, 32 deselected in 0.08s

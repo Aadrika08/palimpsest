@@ -1,0 +1,10 @@
+{
+  "actual_stack_retried": false,
+  "elapsed_seconds": 1.3457695340039209,
+  "initial_import_attempted": "fixture_missing_optional",
+  "kind": "authored-caught-import-source-diagnostic-v1",
+  "returncode": 1,
+  "scope": "tiny authored Python package/C extension only; no actual Torch invocation",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/scripts/puck_worker_bootstrap.py\", line 647, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/scripts/puck_worker_bootstrap.py\", line 640, in main\n    receipt = admission.invoke()\n              ^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/scripts/puck_worker_bootstrap.py\", line 617, in invoke\n    self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()\n                                                                        ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/src/palimpsest/puck_worker_preflight.py\", line 2, in preflight\n    import fixture_dep\n  File \"/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/src/palimpsest/puck_dependency_imports.py\", line 155, in exec_module\n    exec(code,module_dict(module))\n  File \"/tmp/palimpsest-authored-poisoned-import-v6jimqq9/dependency/fixture_dep/__init__.py\", line 6, in <module>\n    from fixture_dep._native import answer\nModuleNotFoundError: No module named 'fixture_dep._native'\n",
+  "stdout": ""
+}

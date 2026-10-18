@@ -1,0 +1,5 @@
+* -text
+source-diff.patch whitespace=-blank-at-eol
+root-checks/unchanged_base_persistent_positive_02.log whitespace=-blank-at-eol
+validation/puck-cpu-primary-import-failure-v1-01/red.log whitespace=-blank-at-eol
+validation/puck-cpu-primary-import-failure-v1-02/pytest.log whitespace=-blank-at-eol

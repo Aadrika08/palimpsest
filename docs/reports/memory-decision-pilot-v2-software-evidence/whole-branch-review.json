@@ -1,0 +1,26 @@
+{
+  "schema": "selected-pilot-whole-branch-review-v2",
+  "base": "5326278f029981c5b432ee68ff634961e67cf70f",
+  "reviewer": "pilot_v2_whole_branch_review",
+  "reviews": 1,
+  "mode": "read-only-source",
+  "critical": 0,
+  "important": [
+    {
+      "finding": "Same-version runtime could differ from the prerequisite executable, host or platform",
+      "resolution": "Exact baseline runtime/python equality at build and recheck; three negative cases"
+    },
+    {
+      "finding": "Current prerequisite and inventory helper bytes were not pinned",
+      "resolution": "Both helper paths/hashes registered, rechecked and required equal to baseline pins; two negative cases"
+    },
+    {
+      "finding": "Float32 action threshold was promoted to Python float in restored stall audit",
+      "resolution": "Opt-in native float32 action comparison; stationary .05 boundary check; legacy unchanged"
+    }
+  ],
+  "test_red": "review-red.log: 6 failed, 38 deselected, 7.18s; 49.04s includes waiting for shared test lease",
+  "resolution_validation": "full-suite-final.log:1146passed24skipped287.41s exit0;292.186s outer command",
+  "native_registration_or_study_performed": false,
+  "unresolved_important": 0
+}

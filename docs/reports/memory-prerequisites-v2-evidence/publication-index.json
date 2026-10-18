@@ -1,0 +1,2024 @@
+{
+  "excluded": "189 raw NPZ chunks and zero-byte storage locks remain at original local paths; this ZIP is not a self-contained raw replay bundle",
+  "files": [
+    {
+      "bytes": 0,
+      "included": false,
+      "member": "output/.palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/.palimpsest-storage.lock"
+    },
+    {
+      "bytes": 501076,
+      "included": true,
+      "member": "output/execution.json",
+      "sha256": "aa9c02bada545a2added6a58e3e5d0f5c61aa70cfc2697736d236f4473d5fb2b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/execution.json"
+    },
+    {
+      "bytes": 13487,
+      "included": true,
+      "member": "output/fresh-source.json",
+      "sha256": "c679ca406dd3aba10735659a50791f61795444e62b77b5b0f2e07d780792b028",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/fresh-source.json"
+    },
+    {
+      "bytes": 266091,
+      "included": true,
+      "member": "output/registration.json",
+      "sha256": "2aaa8a2a853804ccb3eca1a9fe773f662f96c42967c542a622f1bb9c9168379b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/registration.json"
+    },
+    {
+      "bytes": 667,
+      "included": true,
+      "member": "output/scientific-close.json",
+      "sha256": "75805c9b48d99603915783a1c78a38c5478a243bbcae9e101c5307c46b0769af",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/scientific-close.json"
+    },
+    {
+      "bytes": 27801,
+      "included": true,
+      "member": "output/stage/jobs/38be036007f64bf7a95969c4678d9ee8.json",
+      "sha256": "0e587af5ea2ee6ede9cc5528811bdb161874daacdf6dc2d4e7962238bdcd1076",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/38be036007f64bf7a95969c4678d9ee8.json"
+    },
+    {
+      "bytes": 27470,
+      "included": true,
+      "member": "output/stage/jobs/4850f12d2e904bfebaee1f5eec46f539.json",
+      "sha256": "6e915c6f40ea1f83903a30c3f8812fcf79bd233bab97d39cf4330ca6c2e527f9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/4850f12d2e904bfebaee1f5eec46f539.json"
+    },
+    {
+      "bytes": 27471,
+      "included": true,
+      "member": "output/stage/jobs/5f11347a568043479769953d6bd856dd.json",
+      "sha256": "861596733e96e80ed4ae6a56dd44be5298ef56608965fd177834d926f29ec523",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/5f11347a568043479769953d6bd856dd.json"
+    },
+    {
+      "bytes": 27507,
+      "included": true,
+      "member": "output/stage/jobs/86af99bae2204c229f78c50e664dba2f.json",
+      "sha256": "aad7aa7fdd8a7526a0dd495e7f06a09189d2f71bff4baa5e376d47822bfb3e80",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/86af99bae2204c229f78c50e664dba2f.json"
+    },
+    {
+      "bytes": 27467,
+      "included": true,
+      "member": "output/stage/jobs/a9df46aa0fc94b3e97e84c13024f31fc.json",
+      "sha256": "e7da27714bd1bc451c14b6042f099006ba9428177bca9d6e337ad8a2141e42f8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/a9df46aa0fc94b3e97e84c13024f31fc.json"
+    },
+    {
+      "bytes": 27468,
+      "included": true,
+      "member": "output/stage/jobs/e30feb308d624e89bf654bc28e9cbffb.json",
+      "sha256": "0f6746f4f43d2bd07645e16db9162b5022465965a556b259980ba729b640e6cd",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/e30feb308d624e89bf654bc28e9cbffb.json"
+    },
+    {
+      "bytes": 27506,
+      "included": true,
+      "member": "output/stage/jobs/f702dd51776a496d94912212b3935bd8.json",
+      "sha256": "0a4ae92850a4bfa719dfd2bdd5a9af82d81726d4518f542a56cad6ef11e65da5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/f702dd51776a496d94912212b3935bd8.json"
+    },
+    {
+      "bytes": 27801,
+      "included": true,
+      "member": "output/stage/jobs/f8001848d02044698fbcf73335a6c252.json",
+      "sha256": "e2dfcbdb034b6ac54a04093ca2c1f26bb2be8ff8b9514bd1a274fde1e4f6161e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/jobs/f8001848d02044698fbcf73335a6c252.json"
+    },
+    {
+      "bytes": 101730,
+      "included": true,
+      "member": "output/stage/preflight.json",
+      "sha256": "496288d2b672a1a693ffa94c71c12cb22ad2331bfc09c282ee10a463a9fe8de8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/preflight.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/owner.json",
+      "sha256": "628f8fb329dad83c7448ebcab932303a8104cab6f6a59415c88ce04f53b82bd5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/owner.json"
+    },
+    {
+      "bytes": 1085000,
+      "included": false,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/recording/chunks/000000.npz",
+      "sha256": "b9205a1bb6967ea53a1fb2f07ec4a732a14acb8f3014527eb7bb7d18adb4f731",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 59998,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/recording/events.jsonl",
+      "sha256": "034ab914b2e22fb8d42df3c67993c66bd90379580ebc269de8d61c85326a65d9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/recording/events.jsonl"
+    },
+    {
+      "bytes": 33250,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/recording/manifest.json",
+      "sha256": "349f05a65856604ca97cc1644a9f641142b4ea6adbb066203b5ccfe8a9b835d9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/snapshots/index.json",
+      "sha256": "78ed749ae1f2037b14b5b5c0de95d833a70606ef18c53ccaad50f6e25c3dde6a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/snapshots/index.json"
+    },
+    {
+      "bytes": 1559943,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/snapshots/initial.snp",
+      "sha256": "e5bc5d3c6c04bcc5498272fe17c88928a739c88655803a1d98f89cf6ca74d100",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/snapshots/initial.snp"
+    },
+    {
+      "bytes": 1563729,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/snapshots/post-repeat.snp",
+      "sha256": "73ef498b0963198a6fc6c8e42e6ed9cbdc61dc3a6f244b684fbb1f562a4853fa",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/snapshots/post-repeat.snp"
+    },
+    {
+      "bytes": 62853,
+      "included": true,
+      "member": "output/stage/runs/38be036007f64bf7a95969c4678d9ee8/worker-report.json",
+      "sha256": "f10ca098b643b9f2810a5d82c900cc9b21fe531f40c6d094edf4dd4ac5279cc4",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/38be036007f64bf7a95969c4678d9ee8/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/owner.json",
+      "sha256": "4a523d719da00abb6800542f676bb8eacdfc365916066c905d3bc0cfe9ebc23a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/owner.json"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000000.npz",
+      "sha256": "bd2a118c0002802a6359f33edf85d247cd6f75d3b24ca75cd3b3effc9e1f83df",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000001.npz",
+      "sha256": "f1257e05463c7c387c6bd3ff98afb6331c61a341b741c0e8d81125e48509cdbc",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000001.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000002.npz",
+      "sha256": "9cb9a886c1e612d574c3dae1451876426a3c2947659a4a1a6d04e123a437f8db",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000002.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000003.npz",
+      "sha256": "3fe9cbfaac94f43d7251a0765ea30f7dac8b25c2a293f49f0a14869b173396b2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000003.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000004.npz",
+      "sha256": "89490610acef1aead9856b76427f28de2a41386c808b8a68566839c5d0b03713",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000004.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000005.npz",
+      "sha256": "4413b192b087a6c7be34fb85a9dfc8c8e8c643a15d266e05788de785f23dcb43",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000005.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000006.npz",
+      "sha256": "0ddfb804e101211c44920b367cea7cde973d91000a5247fa5fc64154fca87d63",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000006.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000007.npz",
+      "sha256": "e39509d0bae901bd5b04fa4d2a0be13f510f3de0b4fedd2a6cbc8955c3e1fbe9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000007.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000008.npz",
+      "sha256": "3f06897f080c12db0e4e7c916014ea672368b8891d613acc1920cec593aaa191",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000008.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000009.npz",
+      "sha256": "40b44e7fe557f62167264179d9424d0db8fda283ba70313729e8b7f32155abdb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000009.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000010.npz",
+      "sha256": "07df70f8a211e1b5754239352894e145b7bfe799d0dedec84b91f698b832b3f7",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000010.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000011.npz",
+      "sha256": "0b9d9b515e3ab1d8192e5202272cc62ba91558a405932d483ddccb6d7511d531",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000011.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000012.npz",
+      "sha256": "b4c4713319b5aec16a1c3c1b9f0ac695ce6962b5e0908c000431887fcf9b1a15",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000012.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000013.npz",
+      "sha256": "5c4c937733d9732e801749e3572e792c0ec2de86c9b4dac8b93c48e696cefaac",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000013.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000014.npz",
+      "sha256": "ebe53ae58bd1b9f02a3ea4c0fecda15b40e6814c0e73873a524a0b513b369c74",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000014.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000015.npz",
+      "sha256": "dd7a0a126cefa7e3f431c2f93e43a7170650373a9db668a28b773935ce71cf7a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000015.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000016.npz",
+      "sha256": "96976733c22b09b01f919f261d642def0bd14eed6bbefecc073110bc17bc4e88",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000016.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000017.npz",
+      "sha256": "aa19a0132f27fef3990e24574df9e0952cab26e8b0e9c626a7684fba29b68788",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000017.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000018.npz",
+      "sha256": "7b8562080e7f4dd1e69e6bb11615cad35b29bf47464b4a169e49d15f3ef4a46f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000018.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000019.npz",
+      "sha256": "d1823ac370881a332b56872195ff4bb8a46ac25215f30d5c9845f2e2b9d46227",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000019.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000020.npz",
+      "sha256": "abc86ca9306deab0eb46b74a731c20baef42e98b75a0ccb6df580eace2d57864",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000020.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000021.npz",
+      "sha256": "e0013f04c9d57dfef8825193caef35906543ccee8bbeb4ac8c9fbb2cb9cd9c1f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000021.npz"
+    },
+    {
+      "bytes": 4974692,
+      "included": false,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000022.npz",
+      "sha256": "b27b9ca08003924906f8a78546191d36591b3548e5828d3d288be8e2644ee91f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/chunks/000022.npz"
+    },
+    {
+      "bytes": 6074558,
+      "included": true,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/events.jsonl",
+      "sha256": "70c1fca360e991e76fdae0e9533042835df98cae505cb6d94d569dd5ed35c7ed",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/events.jsonl"
+    },
+    {
+      "bytes": 32089,
+      "included": true,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/manifest.json",
+      "sha256": "0345d2109644d861af4620f78abc574008218a5cbeb7f6ad568d8430572e9ab8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/snapshots/index.json",
+      "sha256": "bad299627a2d4e5cf7b573f680e34692e097479f327b0ef85502436b531f8faf",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/snapshots/index.json"
+    },
+    {
+      "bytes": 1559948,
+      "included": true,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/snapshots/initial.snp",
+      "sha256": "3a2d6d9d92b3a615776bacb8cf00a7031ff77197c295dde26c724d732745270f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/snapshots/initial.snp"
+    },
+    {
+      "bytes": 46723,
+      "included": true,
+      "member": "output/stage/runs/4850f12d2e904bfebaee1f5eec46f539/worker-report.json",
+      "sha256": "aee2093beab473328f37d860adab63c0507030560cba01294e82c66bb4c977ae",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/4850f12d2e904bfebaee1f5eec46f539/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/owner.json",
+      "sha256": "40f5c87ad96247b8e1866cf15bf6f774f1b040d2c3acf559c2c830dfe7de653a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/owner.json"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000000.npz",
+      "sha256": "01ee0e5fe55e27c90a32dfc8df20f946a3854c2ccc1514919c4256b5a9d44173",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000001.npz",
+      "sha256": "5081dc4b6d811b4cb689ed544103767b7a759f903c91415532d416fcefbe205c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000001.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000002.npz",
+      "sha256": "afac739b42b2e0648898c0ed90cf1937aa79c9cf3204e99824bccfbff58a5ade",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000002.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000003.npz",
+      "sha256": "b20d0b5046fae830772475d4ed681a9e295f3c637d62bb1ff5cbd12f54352df6",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000003.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000004.npz",
+      "sha256": "0c3aff24af8a5f84adf447e887aec8ace8fc04e7f2b37fb5e792b20e76900770",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000004.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000005.npz",
+      "sha256": "2c7026dd7e4d185d8fd1d18f98d09dd2be208bd02105f8a1dc5889924cd6afbd",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000005.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000006.npz",
+      "sha256": "18e198d83745e80bfdccd9bf7648b0d08d9a097fd5e3a1184f6c3d196c6ccec1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000006.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000007.npz",
+      "sha256": "c50329fcbe2fa1efcc25b9a62858918d7a8a2406b21dd37bc5128d3d531a4ac6",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000007.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000008.npz",
+      "sha256": "d1bd3d0d3db55576526e67e271f6cc953f777402533db089f9af71dd7b583b1e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000008.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000009.npz",
+      "sha256": "352749e0bfd73c338848417b690d578e7d7ef55e6dac0b332a7e3e5eaadcede0",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000009.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000010.npz",
+      "sha256": "f0f770872e5a8baa57ddcdfb039bbfd1ee05fee856b346c98f5d54b8fdb3cce9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000010.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000011.npz",
+      "sha256": "47ceaf0d91cee5091f5358b0b22658dad3055b4599a6f04b59df276b7a86e6a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000011.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000012.npz",
+      "sha256": "2900e41b45a66351b4ff0395ad931a3320fdde818155c2ad2f49695b1cdb1451",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000012.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000013.npz",
+      "sha256": "76704a4c3e6752c53e43ba8160d61217b5e7cf5dd99fcba5c14e6900a0466d22",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000013.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000014.npz",
+      "sha256": "0fbdcd17846c6a45be00296de7d2ffaf80e09e9befa8f1945f3a402d19a5361b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000014.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000015.npz",
+      "sha256": "84c0cad50be535e2f6436b7536078c6879daa33c7127960a91219bf6c8d309f9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000015.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000016.npz",
+      "sha256": "a5f89057e95002f8e4912e908b8b3f88f7c30821ed672e8607367329ca439b36",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000016.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000017.npz",
+      "sha256": "c0c0b8cb96ff1d61fdee3763cfca77538a92ffa68cad8e11792ede43adbe2cf1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000017.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000018.npz",
+      "sha256": "b4b6aefedd29fa1a88f8b7e4ab7a6a32b735ea02d88e2e90443e3870ff25a2e2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000018.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000019.npz",
+      "sha256": "75b6ac050ad260562f91228f1ef773fc00f1b075017b6cf78d840a2f6d826217",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000019.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000020.npz",
+      "sha256": "3b6dff3f2e9c6c62304421b65209e67124d2b7de91c808b8e94ecb95be40732d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000020.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000021.npz",
+      "sha256": "040defeaf56e9998a6f3aa911a36bd6c19ddbba9a27134b68c7293594aac847c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000021.npz"
+    },
+    {
+      "bytes": 4974692,
+      "included": false,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000022.npz",
+      "sha256": "162a3e25c3726c0be68a692f72c904eeefc46ff7ba7adfd3014cbeed92124229",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/chunks/000022.npz"
+    },
+    {
+      "bytes": 6072528,
+      "included": true,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/events.jsonl",
+      "sha256": "e453c2b732c09583ad36af6a527fd825914f27e5db2dae29c0ecef54b74713ca",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/events.jsonl"
+    },
+    {
+      "bytes": 32090,
+      "included": true,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/recording/manifest.json",
+      "sha256": "cb104e6fe5f72174faf7441eb071622bd51137d5e8eaa2962e4f8185a21940cc",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/snapshots/index.json",
+      "sha256": "b6fe85e531f1e6ca5869a1834fbbb90b31d059d086375ab4cd8a5fce840de0a0",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/snapshots/index.json"
+    },
+    {
+      "bytes": 1559948,
+      "included": true,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/snapshots/initial.snp",
+      "sha256": "cecf38f27d83eb373b4deba62bb3edf8646a6ef61e506c594d0da458401c7f8f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/snapshots/initial.snp"
+    },
+    {
+      "bytes": 46723,
+      "included": true,
+      "member": "output/stage/runs/5f11347a568043479769953d6bd856dd/worker-report.json",
+      "sha256": "ca946dc779bcdb8d4bda601623cecd575d424ee6cc0d9ada7cb168348f10092b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/5f11347a568043479769953d6bd856dd/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/owner.json",
+      "sha256": "f3863cd3e436cbc54f1fe7d30aa99509e7f16b8f4793cdf22b971b70b010776f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/owner.json"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000000.npz",
+      "sha256": "ab39cea63170496c7093b1333d889b046967869280a1c658ab2976ca268fecaa",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000001.npz",
+      "sha256": "cf45b64a13122cc30de76f84e5ebe433cb47732bcf21d0513071169f4abd642a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000001.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000002.npz",
+      "sha256": "6b6e53415fdf91aee89666e73515a1bb999e925bb24219802226d77c1cfc6097",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000002.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000003.npz",
+      "sha256": "4af60442e70b309e88f2a69c80317723b3c61d498adb7f58060cb9d62ee6aa52",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000003.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000004.npz",
+      "sha256": "c212198adcb6dc428c42bea1456a9a226b7136d150e3c4a601438f34db678650",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000004.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000005.npz",
+      "sha256": "958db692887c6611e2f222c6b5dad4422d63ae48d59b0308732a29f0056d2a67",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000005.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000006.npz",
+      "sha256": "598b5989ff4ad264d90f6dae2c340c05f088d37698882a6625a1a0dcec54e756",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000006.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000007.npz",
+      "sha256": "ae1a6794f68c66aca28fe8dcf4c792036c0c459b8edc7ec2c043473329151a19",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000007.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000008.npz",
+      "sha256": "8ad545e8a730630a9b303a850a65b6bd54cfc41a516bacc7e3509b7bb0292053",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000008.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000009.npz",
+      "sha256": "4854e9a9363111436b4f88d805185305b72e9e187237159b63ba5fb379bb9ebf",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000009.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000010.npz",
+      "sha256": "250c08cb0e8373625aaf57a4b2204bf700ef1903e583cb3f6d3ca6f8af72d803",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000010.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000011.npz",
+      "sha256": "abf7ae101c6b8da37431d9ca29d41525b624314abe6a65419c3df9d266449184",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000011.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000012.npz",
+      "sha256": "77eb81089231e7447355ff3078f4bcfc32165b5dc0d06b02ce63963711b17fe3",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000012.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000013.npz",
+      "sha256": "b847ae376838dc915e2373e52a4ac79e7aace0873f158db9f827e87c92822ff5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000013.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000014.npz",
+      "sha256": "dd76575c7b271b3bdc09fb112628992520bedfce3e67f232f8d5c277422535c6",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000014.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000015.npz",
+      "sha256": "f2e1a9dd8f3df8e0e2fb79ff23b748e727f077c15be1a4037728ef0a42057b2a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000015.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000016.npz",
+      "sha256": "552a5b6c5e1bded60b1e9aedb89e1f39230d32bc0767bb0e6af7456f4ce45ff1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000016.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000017.npz",
+      "sha256": "81d4139df3456f04ccbc6576bc32dcb96b9e6be3f7557cf23ce96e8169b7b4e5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000017.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000018.npz",
+      "sha256": "ed35b556d554a69722acecf983f5d18d0384c8318020ff31b989a72c54aa6c93",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000018.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000019.npz",
+      "sha256": "85a5dc02f5a8c79f6e52ef31d74ae713f266a586783c1a990a9dc63512ffb04c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000019.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000020.npz",
+      "sha256": "2b1c27ae6a292781355c596fa3b6e47649a53ea0393a8d84c81398ed558e166e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000020.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000021.npz",
+      "sha256": "4fe52cb426073bea2fb4b41e09d2ecbaac2332ae41b62186fdd503cc73c1ffa6",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000021.npz"
+    },
+    {
+      "bytes": 4974692,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000022.npz",
+      "sha256": "3e9cb56890be7615ebb85a8dc56ca0cad74d337f538ae37680e9cb1c23a37a8a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000022.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000023.npz",
+      "sha256": "ef53c97de9c82c753edbc635425a15f18e2305dce983cab010aced4830da65cc",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000023.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000024.npz",
+      "sha256": "2ccb6af043c07cd1671af0c3fd78de64a36336806f8a9de7cb2c0d95194bcd04",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000024.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000025.npz",
+      "sha256": "5c31be439a448b23e6184b1b98aa5630b68c15601d9da9d3a64b4e5e9de9fd69",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000025.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000026.npz",
+      "sha256": "28b018f1a8572ae656b41efefe893cd0f84de43a3b39b96b62a51dcfb1a12405",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000026.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000027.npz",
+      "sha256": "93662acc0b0f67abaf6fc7d1a1aa3a28500c38c145e44ae9df9e617abf19c374",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000027.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000028.npz",
+      "sha256": "36082e71925e40cd69d6ae2831312bf80699637a223abb7de74a23daf6f0740c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000028.npz"
+    },
+    {
+      "bytes": 868906,
+      "included": false,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000029.npz",
+      "sha256": "4bc960fa0ad9ebd780fece887ba4b7b273765403cc14df8993fa16c3b22a4148",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/chunks/000029.npz"
+    },
+    {
+      "bytes": 7628531,
+      "included": true,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/events.jsonl",
+      "sha256": "ab0efcfeb0d23f2e0d1f22f49113cd63dcb24f99f120d04a0eb389ecaca1a431",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/events.jsonl"
+    },
+    {
+      "bytes": 32786,
+      "included": true,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/manifest.json",
+      "sha256": "88c86691fa58334ca4e932e784010a7e94822df9f9b8b6e45a9b9f2364abee8c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/snapshots/index.json",
+      "sha256": "21ea92d1d90748a25a07d96cf774b8b1397538cafa8c647a8992fb8339a426db",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/snapshots/index.json"
+    },
+    {
+      "bytes": 1560516,
+      "included": true,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/snapshots/initial.snp",
+      "sha256": "be579160b2fa9da2885a158b12ef80c2f94630c7ebb4f136258b2e4a95c6a604",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/snapshots/initial.snp"
+    },
+    {
+      "bytes": 47509,
+      "included": true,
+      "member": "output/stage/runs/86af99bae2204c229f78c50e664dba2f/worker-report.json",
+      "sha256": "79afa73730727ada26e2adf500650b297257648a8337996b141899afaea84ccb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/86af99bae2204c229f78c50e664dba2f/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/owner.json",
+      "sha256": "5f49caa9fb35971b026da66546ec734738c3328b695ba35ef7af058dcbda53ba",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/owner.json"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000000.npz",
+      "sha256": "5aaef5200d40118ccbfde585a9afca5a43c4a19a62b1df11de74520c85886d3b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000001.npz",
+      "sha256": "d709d9039d8ed515f3f1ac5acbee7fbc4c6ca7f268cd6830befa3ab54ad98541",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000001.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000002.npz",
+      "sha256": "1deaaa1c9f3a1b6245849244ef2e05a918bd51125b50786a922578de643c4ce7",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000002.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000003.npz",
+      "sha256": "65cb55ae549bfda6674ed8600682a9ff87fd5da982199916ba8e33d1a0e84a25",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000003.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000004.npz",
+      "sha256": "1c55efe3cd8f867b62cba17bdfe8d95b7c2d81ef9873a994e1daa4591a09a2db",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000004.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000005.npz",
+      "sha256": "a27b4d79b6386dc5f383e4a9556fef660bce88978dca63980f2405c652055cf5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000005.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000006.npz",
+      "sha256": "eb3f79931d390c9af945f76eacaad5935ce784cde25920ace1254d182b21a5bb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000006.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000007.npz",
+      "sha256": "a311da8d366d8c01a39604ab837378d5f35f28da4f03befada57fc32c9fb709a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000007.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000008.npz",
+      "sha256": "14049f637019f16d5a8a2364075ab2dd5e489d8c1443015d672d57dfb9943a29",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000008.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000009.npz",
+      "sha256": "86eb19346dd7c7fecc90549eb1ef3ef7b40b26130576477e9d36ef5a61744950",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000009.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000010.npz",
+      "sha256": "130ebfd53a8d3a65b70274ec5d33959df912dabd75885fedb331429280c95d04",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000010.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000011.npz",
+      "sha256": "bf1ab244bee2659aa5af71b2311d237a7f949de63a5c00875eb08824015e3477",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000011.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000012.npz",
+      "sha256": "dba056c407a9ebfdef12eea90f3f38390ddf2654ccfbda12e1013bfa2f4a2736",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000012.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000013.npz",
+      "sha256": "1bb38f5d223d49e6540abc158c1792d24340fef4f72f892c14537cfdd222c917",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000013.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000014.npz",
+      "sha256": "f38484b819536d40fd6249c28c08592378f5ca2d6fe393af83355e51b8625b7a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000014.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000015.npz",
+      "sha256": "f18696cc187af2f5a62b62f924662c68fc9ed4e3be01886fc9f1d348dbe7bb8f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000015.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000016.npz",
+      "sha256": "15b764ee33419119c3a0989772060287e7d7478c79f5620f2077693d9fa3346c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000016.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000017.npz",
+      "sha256": "496a632d2df27539723f39a017aef4343478bddf38b8117db96890fc0b50fe35",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000017.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000018.npz",
+      "sha256": "9e9bfcae26b41182dfa275b53e241a62a06869b7bbd8f3673c9a6130e3420942",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000018.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000019.npz",
+      "sha256": "407cf7a7b7f89927968f900edd3c94364a66c515578149bb6054a87443c12e3b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000019.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000020.npz",
+      "sha256": "9605875f70676156e1b5e181c3f4ef5a26e4b40392ee5f69082aa30df670709e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000020.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000021.npz",
+      "sha256": "637201ab62479bb55606625490bc82c6ae80da4348eb3e6f4d0fb784acc74161",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000021.npz"
+    },
+    {
+      "bytes": 4974692,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000022.npz",
+      "sha256": "4ea0a5ce03377af4135eb7c6ef55b6987b3ec3891258defa57573cae543f2e18",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000022.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000023.npz",
+      "sha256": "5d9dd3c0162b261df4eaa03a71191cd4592a5a22768cb38377894e22e62e4d50",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000023.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000024.npz",
+      "sha256": "1a2f9eda3719aa9b8a91b1766f2f01e590f0765e0e84e9b2d9aa7ad929845872",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000024.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000025.npz",
+      "sha256": "da7f284826f2f5231ef3296d5698c0c7f8fef3059264f96084f323a5fcc52f92",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000025.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000026.npz",
+      "sha256": "741af57a162585c2ca824d80cc707ddcebb12c74277239b8abef3e5a385b2915",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000026.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000027.npz",
+      "sha256": "6b82934f21781549f7bd2740e4e33a8f601955c1912577e1daf5e11f0e5d3ec2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000027.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000028.npz",
+      "sha256": "17c3bc8bdcedfe201ede128387a4591e5cb040c8557724dc7efe94533f5a5a9e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000028.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000029.npz",
+      "sha256": "0b037f15c62a9109c057ec6c28364bdb4649de8279613020b249cd79d6812273",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000029.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000030.npz",
+      "sha256": "5ad3e4125f58debd863cdc8c9a96fe57b41032e73c67b8cce16bb31e2acd5f63",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000030.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000031.npz",
+      "sha256": "7c0de879aefbc1e40f34796b79a8e6e2f1aa1c170abd00935d040bdceda4662a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000031.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000032.npz",
+      "sha256": "897dd853e3aab49cfd9eaad7f00ac23845e9a30072a8a1e171171704cd4c0e71",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000032.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000033.npz",
+      "sha256": "2c909ca253448b914894e596e830d017e0e87d8c2245ef88fa482f394bbf1e93",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000033.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000034.npz",
+      "sha256": "bcdbe6ab84fd54bcf2a89226ab77f09dcb6ef19a24461ad68498aee6dd4f6b87",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000034.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000035.npz",
+      "sha256": "489e2681501faed18f352160955679d912646ed8bdab6f461069e1b81d49d8e7",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000035.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000036.npz",
+      "sha256": "4f442f314d49d65499c03e346123c01a37aa2cc7d293a45656b8d594da8eae72",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000036.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000037.npz",
+      "sha256": "8f1583f0f794d67f7cff4868eb205762611bd545acfd1cf1f711eef678440d1e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000037.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000038.npz",
+      "sha256": "f0f315866ea677307229d71f5fd24cbef929b98d76e988de6fe2a120722f6d95",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000038.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000039.npz",
+      "sha256": "d041c54957448263cc90b1ae7223387c8a94d9ffe48d77a492c8e67a5651482c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000039.npz"
+    },
+    {
+      "bytes": 4542504,
+      "included": false,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000040.npz",
+      "sha256": "46184cb4bfbc5887af13e1914d3e5d411c5234080da93b0ec29fac52bbd32bc2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/chunks/000040.npz"
+    },
+    {
+      "bytes": 10464611,
+      "included": true,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/events.jsonl",
+      "sha256": "3566f4e9aa118941cd3955609477f0f4860a571737747092172c142f647156a9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/events.jsonl"
+    },
+    {
+      "bytes": 32715,
+      "included": true,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/manifest.json",
+      "sha256": "bca05215ece907abc5f3a93a75f192d55b3df368ceb818ef4fabf2ae6ae01cee",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/snapshots/index.json",
+      "sha256": "f7b1163ad3734fb872c1095b13ff72abebd7235bc3c077990f79578728775940",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/snapshots/index.json"
+    },
+    {
+      "bytes": 1559948,
+      "included": true,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/snapshots/initial.snp",
+      "sha256": "045f22ea1775562f5525d6d6c8506d0994e103558195924149d6a4d6cde65d80",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/snapshots/initial.snp"
+    },
+    {
+      "bytes": 47144,
+      "included": true,
+      "member": "output/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/worker-report.json",
+      "sha256": "38e37d73d45044b887982734381ebeec3b486a4553e4ff276e17b5f3f1464779",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/a9df46aa0fc94b3e97e84c13024f31fc/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/owner.json",
+      "sha256": "47b7cf64f5c9bc7f475b8fbef8ee08a154a8c64e82b7c5c0b664dc69c7a56636",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/owner.json"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000000.npz",
+      "sha256": "3626e7ade6c9e807a7f76f8d84d75c6d578fc31d2ddc35b62a67b5ac63a15b99",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000001.npz",
+      "sha256": "898fb13634892a0227507a9f3aa824e4a7ad5a9c83276d050e949504d90fbfd8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000001.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000002.npz",
+      "sha256": "6e76c876b57caa4a6b193af0b3bd3bb79c9fea7e6a945da9dc71a9cc3b69b5ab",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000002.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000003.npz",
+      "sha256": "bef3f737bf0d7dfb005b60ca271506911477259a36d0c0ca2c2b83a586288852",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000003.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000004.npz",
+      "sha256": "3ff917cb69de0b57cee12e245aab584300746a5abc0369b0d104c27db7ef99e1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000004.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000005.npz",
+      "sha256": "fe2fad524633fd99e95f435cc80442034861f0823799fcea874d84a4a2724870",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000005.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000006.npz",
+      "sha256": "5374694860fb65cb1eb2e8c186f788a870f23e7de6e955e0bc21d97f328a79c9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000006.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000007.npz",
+      "sha256": "4bc7a8993471d067ed888e698bb969482a3b42fb6b0810a99c04d3d1657de8d9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000007.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000008.npz",
+      "sha256": "b7126d8dc9084e25c281753edf3053867b29e0e0df0a9443cec51c8551798864",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000008.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000009.npz",
+      "sha256": "aee4de8493c75f0f85bfe5cf8b137b245dedb0b698997bed56dd48404cc6da6f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000009.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000010.npz",
+      "sha256": "5f20fc1c0e82fa31cc497416ce4330cf1d15928ecc9f9953b4b26aefcb833c93",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000010.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000011.npz",
+      "sha256": "9b1e0573ffc900137cb5db4a37268d5097beb53213a2a5071563b2fdee289a93",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000011.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000012.npz",
+      "sha256": "147d4b0b8da98dde314c82e0ecc9de1005f0519bc4a7b214e786445c72de9f01",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000012.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000013.npz",
+      "sha256": "56315a82720226d852ee78672a4c8545733b66e3de667f05dac17911a1f2e6e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000013.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000014.npz",
+      "sha256": "695f4e86c75f63c94d748a83a719bb3559a6f63512f819896a538482fad8d516",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000014.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000015.npz",
+      "sha256": "014da3cca9f931430bd6bc75b3a151413476f0e3238b694f5a7e0f13a4cc91d2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000015.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000016.npz",
+      "sha256": "09d10ce00e3c29cc3197bd8814870f51437f56a5440614b5a7931c997955eeba",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000016.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000017.npz",
+      "sha256": "e93861ebc4d24ba6cd90260df2518d71509c322885d83fef6a0bbfbd188ff714",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000017.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000018.npz",
+      "sha256": "0d8a10ab7c6a97b9d855c47ebd1ab9bef3ee39feb93c5d3ebd6bd6d7e0904d72",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000018.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000019.npz",
+      "sha256": "f917fb1959555a262d6fd28256e1cfde7ecca0281d830e02d1865d06f4b8cfc6",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000019.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000020.npz",
+      "sha256": "f70a496487cc363c37fdd4e380e21485f0a0a679ee1fa10e0a9a8d4ac07bf23f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000020.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000021.npz",
+      "sha256": "3824c2a851e2100331233459594f8b5f6fa5316b30deac3e90edb8abca65917d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000021.npz"
+    },
+    {
+      "bytes": 4974692,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000022.npz",
+      "sha256": "e52b3b7a987750885553079c725e3c8831a72518d3d32f3360c0282e442f6582",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000022.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000023.npz",
+      "sha256": "ac564a8d486147e6234922b19580583ceceb4e4592c745c93056e5ec3d95d5a3",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000023.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000024.npz",
+      "sha256": "b4268e71a1918ba492649d3c68efc7e3cee4d4e398fe113f4a55e145bef0b2cb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000024.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000025.npz",
+      "sha256": "24aa83d2c07d6c53d0a59c26d50beb57219ef20c34ac28333970a4e1869fcdaa",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000025.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000026.npz",
+      "sha256": "394fb6a8a424e3757dbdd200349e01df84a6869226eb9700e101886b0ef6daae",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000026.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000027.npz",
+      "sha256": "a91e7de8892f3183726fa5ec22f825e310558ea3ea0b95bc96e859708601e8ee",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000027.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000028.npz",
+      "sha256": "0193529ca8e0508c07bc1356d9de513641655dc8cfda204553ea9b8ffedc9e83",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000028.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000029.npz",
+      "sha256": "771d6d7e889f10a7dcc15e345a7cd57dab98e1fa3e6f179d672c11b82e7a30cb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000029.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000030.npz",
+      "sha256": "cee02b89e15b160ff64f26f0ddd84475371a09de1d14d08b303f39bf01533cdb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000030.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000031.npz",
+      "sha256": "369c6c63c56ae197deda41bdda6ad447c04f11861ff10d0be9778f6ede2adb14",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000031.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000032.npz",
+      "sha256": "c9b8c8f60745889c0c0e70a5946cdf3e86c3119a8f23fcae273fba944308fe9d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000032.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000033.npz",
+      "sha256": "9f20db8629a29ae08609726f81a56f9238e534023b19e14a5f5f7f87b107f319",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000033.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000034.npz",
+      "sha256": "9039872a106b875db52db9a2a94c83cb9f60e3c7f060a34a2ef4318e0a32aacb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000034.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000035.npz",
+      "sha256": "9a619908ff2f55407b42c8ef7eea641c5b5fe4de078454dbd61ff56f20b2cbab",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000035.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000036.npz",
+      "sha256": "765ab7d283fdb92d5a7ea246900b59d5012597a7e92b2d734b740d03f4e29088",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000036.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000037.npz",
+      "sha256": "c26ad2291c01b1e4f7ec8d8b479f7e008573f3e1798a6547edf95d391647be52",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000037.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000038.npz",
+      "sha256": "61ba0a72c78df3d18d44b0fcd57703ee95ce0c355d474790970b1db30ddcf20a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000038.npz"
+    },
+    {
+      "bytes": 6271256,
+      "included": false,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000039.npz",
+      "sha256": "02c46669246281fd0814c854aee97d495d5bf9f5218d941a1ae321eeaf42ceaa",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/chunks/000039.npz"
+    },
+    {
+      "bytes": 10264244,
+      "included": true,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/events.jsonl",
+      "sha256": "7bc85bc6d2ca409a1bdd70d9c1b65f654bcbce732072755a4546a23187031496",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/events.jsonl"
+    },
+    {
+      "bytes": 32716,
+      "included": true,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/manifest.json",
+      "sha256": "2c949dde95864b7224d65605ad6aeb8f4329afcb49bcf3192672979f276a9686",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/snapshots/index.json",
+      "sha256": "4b613120cf2f98dacd6e2b85d9570e9d5da1f7f8171b829092107e3974544dc9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/snapshots/index.json"
+    },
+    {
+      "bytes": 1559948,
+      "included": true,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/snapshots/initial.snp",
+      "sha256": "850f442a63a5484ad825dc09c7b2a5d3b12fd052c952400c3237d1e4d417c058",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/snapshots/initial.snp"
+    },
+    {
+      "bytes": 47178,
+      "included": true,
+      "member": "output/stage/runs/e30feb308d624e89bf654bc28e9cbffb/worker-report.json",
+      "sha256": "92db41d038a041943cb07611565f59d9638dac32004ebbc2022fa6264849a6e7",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/e30feb308d624e89bf654bc28e9cbffb/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/owner.json",
+      "sha256": "92afd470e1349cd4ddce6b2b6320a87233523bff7ff8fbc4884ac936e64ad5d1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/owner.json"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000000.npz",
+      "sha256": "2ffad126c387b6155cd7eb962d48e09479db406a644376586e16a528a7cf41a7",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000001.npz",
+      "sha256": "d42a72eb609a05ee93bc240a2c2285382be2349ad16bb14689759606579296a9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000001.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000002.npz",
+      "sha256": "664c97e793fd818ae14e3fc6cc14ebc19c18d2956e72c21b03962ddce607b5e5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000002.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000003.npz",
+      "sha256": "8ee28b52de1605b5261660529c39cce70d3d4e1f455ad8f7be75fa8c825e6c4d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000003.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000004.npz",
+      "sha256": "1bbe2ef31c3f6483905180dd2ef3e202f2ade13668a7bce3af37d914f2fa1f6a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000004.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000005.npz",
+      "sha256": "aaf438bf009bc38aaa22666d245f04da0435a42d2b68dfcba3fd66f3a73e3d8e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000005.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000006.npz",
+      "sha256": "d4740587b627f132d27816737bd782d6a6c9a5ab5c98b33706a87415c26b8df9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000006.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000007.npz",
+      "sha256": "ea4353220c8bd1ed175cee78b6cb46c142b335571e4e64665396f6e6dcd63d58",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000007.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000008.npz",
+      "sha256": "a830db0b7c54ebdb9e0b8ef328f60e6762ba4931132ced0febb35e38aadb1b63",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000008.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000009.npz",
+      "sha256": "eeda0ad3e7a0e8f7dee43b19c4ab7132f7ce17c024941a5ab2a58c0b6938c18f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000009.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000010.npz",
+      "sha256": "b97ddaa638c2aaa145d4cea5d7b50089b21f9143610449b4ae433271ae573a77",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000010.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000011.npz",
+      "sha256": "101be18310c657365f9100aab2bc0fa4b0c25a3f1ca0bda3545a92fc637df9d3",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000011.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000012.npz",
+      "sha256": "b7697a13c6d6eda4e7d1cb89bd071c3c24902999977d1e3a195528c8edddd355",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000012.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000013.npz",
+      "sha256": "d72d20e4b83f11b4f5ea56e4fae65635e5bf148723bd8f597887c8dab7964650",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000013.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000014.npz",
+      "sha256": "841be783bc2c513eecf84121d88de3d8976b32667c2ca88a175c0b4a97651df5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000014.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000015.npz",
+      "sha256": "f7f2a46e61df9b8f853408536165d73d9d550bceca8bb2061f07883cdfb0d7a8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000015.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000016.npz",
+      "sha256": "5abb4ac991db3036c897a91f02987d297ca20432f99b0c32fba6b03853d26eeb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000016.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000017.npz",
+      "sha256": "305df6daa2453de2634953600b8f48e14b4a08a13b120b63737df65da0824203",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000017.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000018.npz",
+      "sha256": "a1581e42aaff601f23b694bb205665dac672d95ec69f50205de57cb4a70ad14e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000018.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000019.npz",
+      "sha256": "1771a54d64b655808a64f2cd79caddf046a1670bba7a2834eb26eb2f101483b1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000019.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000020.npz",
+      "sha256": "c6138fc420ce235ab8ad508e822031fd8b65c421248570ded9df69d36962a825",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000020.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000021.npz",
+      "sha256": "1b73f9466f0cadfd132ecbaf849222851ebbfe3733b6f0856eca2f4237d42be3",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000021.npz"
+    },
+    {
+      "bytes": 4974692,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000022.npz",
+      "sha256": "fa4803e8aa350a85491a19b4643f72f4cac02a54fc3858b76dc27fffb117443f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000022.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000023.npz",
+      "sha256": "f0f51b24ccb1ef04a77ef573882e4ab5289f56e7dad0dab8b843258dfec39a0e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000023.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000024.npz",
+      "sha256": "0ef256f00420b6da5cb909f08686d8e90235ecb6b51af5e476bc2fd599dcdc00",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000024.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000025.npz",
+      "sha256": "96a5cbb012da93a0ebafc861cdbf551d5b116ef7b74295ded3289d35b650739d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000025.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000026.npz",
+      "sha256": "65fdf5c31e4fb31ebe53334696e14212a567d68481483c3c9172c95c81f99ef5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000026.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000027.npz",
+      "sha256": "b88fe98b97c9b1640f39ad32f29aca3539db10e76342cc2f2d103e95e6fbe62f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000027.npz"
+    },
+    {
+      "bytes": 6919538,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000028.npz",
+      "sha256": "50380d6c729d649973b546f6224b0f0e5aeb4ed7af34aa9d67a0d70b0314ccd2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000028.npz"
+    },
+    {
+      "bytes": 652812,
+      "included": false,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000029.npz",
+      "sha256": "2d255744199afbff698f642708d2d7cc92600fe99c5ca3318056686be542a540",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/chunks/000029.npz"
+    },
+    {
+      "bytes": 7617001,
+      "included": true,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/events.jsonl",
+      "sha256": "16a10ed47adfa6921596d6eb089a6535ccfc398fc1583e52fcff9fb971ee4598",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/events.jsonl"
+    },
+    {
+      "bytes": 32784,
+      "included": true,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/recording/manifest.json",
+      "sha256": "43371c3a8f0f7cda9c6210cdbfda41ff6ccfb4595aa39dae1a714c8ef9b4b006",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/snapshots/index.json",
+      "sha256": "19627ceeb7fc06105e0e44f654e001359d74a999676fdfff5b66b71b7f8f0a2d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/snapshots/index.json"
+    },
+    {
+      "bytes": 1560516,
+      "included": true,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/snapshots/initial.snp",
+      "sha256": "68b4a7d250e88c42b432bd44b300e9de4b614f803161079bcb4083e56aecfb7d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/snapshots/initial.snp"
+    },
+    {
+      "bytes": 47557,
+      "included": true,
+      "member": "output/stage/runs/f702dd51776a496d94912212b3935bd8/worker-report.json",
+      "sha256": "01b2e9156f7dfffe926843db72ef3275e67af6e122f5dbcd258ec8017ebb3ff2",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f702dd51776a496d94912212b3935bd8/worker-report.json"
+    },
+    {
+      "bytes": 112,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/owner.json",
+      "sha256": "c63918ce4e03d72630606f44f5a72912121c42ed2cbad85de7502ae720906c18",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/owner.json"
+    },
+    {
+      "bytes": 1085000,
+      "included": false,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/recording/chunks/000000.npz",
+      "sha256": "1513d558441704a6f1809691e104d6f47df08f02affe5a3a2b3265bf302dbf3c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/recording/chunks/000000.npz"
+    },
+    {
+      "bytes": 59998,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/recording/events.jsonl",
+      "sha256": "de36908655a3d60860ad1b4345adc08e0fb38a06bed2283f1ed8101482fd2bed",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/recording/events.jsonl"
+    },
+    {
+      "bytes": 33250,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/recording/manifest.json",
+      "sha256": "dd6200ec9ff22542c92b6946b8bd23f2220cf83e80e0c2aec6a5b1bf687fec6b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/recording/manifest.json"
+    },
+    {
+      "bytes": 406,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/snapshots/index.json",
+      "sha256": "c82606a4049a241a7f717133d5521998a61413345c361adf69cce7784b995876",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/snapshots/index.json"
+    },
+    {
+      "bytes": 1559943,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/snapshots/initial.snp",
+      "sha256": "3716047c550da1315308829d70af83eab0c578e7fba830f86a44d8231dd25002",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/snapshots/initial.snp"
+    },
+    {
+      "bytes": 1563729,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/snapshots/post-repeat.snp",
+      "sha256": "a08a72a00dfc777a5417647b1888ed52b21a101a86967e9ef1c898f0530256a9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/snapshots/post-repeat.snp"
+    },
+    {
+      "bytes": 62854,
+      "included": true,
+      "member": "output/stage/runs/f8001848d02044698fbcf73335a6c252/worker-report.json",
+      "sha256": "8e5337105731784924bb2dfd2c5dcae16b9cd6a22ac6c6de3ebfa6232057f82d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/runs/f8001848d02044698fbcf73335a6c252/worker-report.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/38be036007f64bf7a95969c4678d9ee8/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/38be036007f64bf7a95969c4678d9ee8/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/38be036007f64bf7a95969c4678d9ee8/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/38be036007f64bf7a95969c4678d9ee8/stdout.log"
+    },
+    {
+      "bytes": 371,
+      "included": true,
+      "member": "output/stage/supervision/38be036007f64bf7a95969c4678d9ee8/supervisor.json",
+      "sha256": "7a9ef3ed88db43bdde68747508304610a0d823428ce00e27371765585f366a14",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/38be036007f64bf7a95969c4678d9ee8/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/4850f12d2e904bfebaee1f5eec46f539/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/4850f12d2e904bfebaee1f5eec46f539/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/4850f12d2e904bfebaee1f5eec46f539/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/4850f12d2e904bfebaee1f5eec46f539/stdout.log"
+    },
+    {
+      "bytes": 371,
+      "included": true,
+      "member": "output/stage/supervision/4850f12d2e904bfebaee1f5eec46f539/supervisor.json",
+      "sha256": "7b38d064a5c948d9fcc3ee110b7b880554e2b148fc69fa55237b7b709343f17b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/4850f12d2e904bfebaee1f5eec46f539/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/5f11347a568043479769953d6bd856dd/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/5f11347a568043479769953d6bd856dd/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/5f11347a568043479769953d6bd856dd/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/5f11347a568043479769953d6bd856dd/stdout.log"
+    },
+    {
+      "bytes": 371,
+      "included": true,
+      "member": "output/stage/supervision/5f11347a568043479769953d6bd856dd/supervisor.json",
+      "sha256": "a028828b1dc6850149a816fa0165d3f2cf7bc83f5dc3284da46dc9de26ac9a27",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/5f11347a568043479769953d6bd856dd/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/86af99bae2204c229f78c50e664dba2f/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/86af99bae2204c229f78c50e664dba2f/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/86af99bae2204c229f78c50e664dba2f/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/86af99bae2204c229f78c50e664dba2f/stdout.log"
+    },
+    {
+      "bytes": 371,
+      "included": true,
+      "member": "output/stage/supervision/86af99bae2204c229f78c50e664dba2f/supervisor.json",
+      "sha256": "44cefc67803229e075e577d52abe10bafdc64d12e94f730276f499e69b38faee",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/86af99bae2204c229f78c50e664dba2f/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/a9df46aa0fc94b3e97e84c13024f31fc/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/a9df46aa0fc94b3e97e84c13024f31fc/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/a9df46aa0fc94b3e97e84c13024f31fc/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/a9df46aa0fc94b3e97e84c13024f31fc/stdout.log"
+    },
+    {
+      "bytes": 371,
+      "included": true,
+      "member": "output/stage/supervision/a9df46aa0fc94b3e97e84c13024f31fc/supervisor.json",
+      "sha256": "4cdfe139f588fe85243ab9e11af6111ba08ceb5ba0da4587970a5595d89327ff",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/a9df46aa0fc94b3e97e84c13024f31fc/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/e30feb308d624e89bf654bc28e9cbffb/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/e30feb308d624e89bf654bc28e9cbffb/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/e30feb308d624e89bf654bc28e9cbffb/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/e30feb308d624e89bf654bc28e9cbffb/stdout.log"
+    },
+    {
+      "bytes": 370,
+      "included": true,
+      "member": "output/stage/supervision/e30feb308d624e89bf654bc28e9cbffb/supervisor.json",
+      "sha256": "d6d70e5d78fc49364c078b5af6e86852d00f79baa44c568e422335ae118917db",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/e30feb308d624e89bf654bc28e9cbffb/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/f702dd51776a496d94912212b3935bd8/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/f702dd51776a496d94912212b3935bd8/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/f702dd51776a496d94912212b3935bd8/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/f702dd51776a496d94912212b3935bd8/stdout.log"
+    },
+    {
+      "bytes": 370,
+      "included": true,
+      "member": "output/stage/supervision/f702dd51776a496d94912212b3935bd8/supervisor.json",
+      "sha256": "a221ad2d993c82203e0b773610040f4792fe280ce1df233ef98d0106673f3eee",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/f702dd51776a496d94912212b3935bd8/supervisor.json"
+    },
+    {
+      "bytes": 1486,
+      "included": true,
+      "member": "output/stage/supervision/f8001848d02044698fbcf73335a6c252/stderr.log",
+      "sha256": "435de210bd711cbaab45577a8c2666aaf6570959871128cc451773171b80f5a1",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/f8001848d02044698fbcf73335a6c252/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "included": true,
+      "member": "output/stage/supervision/f8001848d02044698fbcf73335a6c252/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/f8001848d02044698fbcf73335a6c252/stdout.log"
+    },
+    {
+      "bytes": 371,
+      "included": true,
+      "member": "output/stage/supervision/f8001848d02044698fbcf73335a6c252/supervisor.json",
+      "sha256": "b70387a49a3a12fe604ab0d56f3eb9a9cee36126368236b950517dd08fe6a09e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/runs/memory-prerequisites-v2-20261007T171411Z/stage/supervision/f8001848d02044698fbcf73335a6c252/supervisor.json"
+    },
+    {
+      "bytes": 0,
+      "included": false,
+      "member": "control/.palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/.superpowers/sdd/memory-prerequisites-v2/.palimpsest-storage.lock"
+    },
+    {
+      "bytes": 970,
+      "included": true,
+      "member": "control/launched.json",
+      "sha256": "2640281089410c6cb2f1f55f3fc2de7847e84d574be24edff775f30ba1420562",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/.superpowers/sdd/memory-prerequisites-v2/launched.json"
+    },
+    {
+      "bytes": 0,
+      "included": true,
+      "member": "control/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/.superpowers/sdd/memory-prerequisites-v2/stderr.log"
+    },
+    {
+      "bytes": 325,
+      "included": true,
+      "member": "control/stdout.log",
+      "sha256": "cd49d29df5668b2f976290d99d3d8755339169555f3a65db0c920a142cadb138",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/.superpowers/sdd/memory-prerequisites-v2/stdout.log"
+    },
+    {
+      "bytes": 4928,
+      "included": true,
+      "member": "publication/register.py",
+      "sha256": "d39d85be3a6437b7f4e1b6b758d32f0a1b565b196405f42fed19e83363315026",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/register.py"
+    },
+    {
+      "bytes": 2213,
+      "included": true,
+      "member": "publication/execute-campaign.py",
+      "sha256": "55716e6df0d9db9c61448525bd8c986442600218bcfe44565f01d29f54af04c9",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py"
+    },
+    {
+      "bytes": 266091,
+      "included": true,
+      "member": "publication/registration.json",
+      "sha256": "2aaa8a2a853804ccb3eca1a9fe773f662f96c42967c542a622f1bb9c9168379b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/registration.json"
+    },
+    {
+      "bytes": 3610,
+      "included": true,
+      "member": "publication/invocation-result.json",
+      "sha256": "97d3bd95f676cfc62e87ef40205858dc7276fa898c79da31816b6343fd349c6c",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/invocation-result.json"
+    },
+    {
+      "bytes": 325,
+      "included": true,
+      "member": "publication/native-stdout.log",
+      "sha256": "cd49d29df5668b2f976290d99d3d8755339169555f3a65db0c920a142cadb138",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/native-stdout.log"
+    },
+    {
+      "bytes": 0,
+      "included": true,
+      "member": "publication/native-stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/native-stderr.log"
+    },
+    {
+      "bytes": 415,
+      "included": true,
+      "member": "publication/preparation-receipt.json",
+      "sha256": "879c8dda5ea992429c4ae851a8501daa3a22259a67435125a1fbd1c24fd0924d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/preparation-receipt.json"
+    }
+  ],
+  "meaning": "post-close byte-preserving retention only; no scientific readout, decoded state comparison, runtime qualification or late rescue",
+  "observed_utc": "2026-10-07T17:39:35.614239+00:00",
+  "schema": "closed-memory-evidence-byte-index-v2"
+}

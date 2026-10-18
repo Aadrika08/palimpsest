@@ -1,0 +1,49 @@
+{
+  "schema": "memory-family-v3-verification-v1",
+  "date": "2026-10-08",
+  "base_commit": "599141edbe3f45dea98979dbd904c29bff19ca7b",
+  "implementation_commit": "f00982b8cbb23c72f4a1907bf6e5010a3d967842",
+  "claim": "software-candidate-only",
+  "native_owners": 0,
+  "physics_steps": 0,
+  "model_runs": 0,
+  "scientific_observations_read": 0,
+  "held_out_blocks_selected": 0,
+  "study_allocation_granted": false,
+  "counts": {
+    "families_per_block": 48,
+    "cases_per_block": 144,
+    "condition_slots_per_block": 1296,
+    "geometry_catalog_combinations_checked": 243
+  },
+  "legacy_case_set_sha256": "6ecaf341c9270bf422a133a31c3782ae6f208263dad5968be9ea0240ca8faec8",
+  "tests": {
+    "focused_family": {"passed": 60, "skipped": 0, "seconds": 14.10},
+    "affected_regression": {"passed": 94, "skipped": 1, "seconds": 18.89},
+    "collection": 1272,
+    "sandbox_remainder": {"passed": 1220, "skipped": 21, "socket_permission_failures": 2, "seconds": 289.45},
+    "loopback_verifier_rerun": {"passed": 2, "skipped": 0, "seconds": 0.11},
+    "loopback_testclient_files": {"passed": 26, "skipped": 3, "seconds": 18.77},
+    "final_accounting": {"passed": 1248, "skipped": 24, "code_failures": 0},
+    "monolithic_green_run": false,
+    "ci_run": false
+  },
+  "review": {
+    "initial_important_findings": 1,
+    "initial_finding": "public factor aliases reconstructed the future closure",
+    "resolved": true,
+    "follow_up_critical": 0,
+    "follow_up_important": 0,
+    "follow_up_minor": 0
+  },
+  "source_sha256": {
+    "src/palimpsest/memory_decision_world.py": "d518e0cdaa6ac2352c7ed681ca85d7722708b50feb106ad0f9cb8c3f6fa75991",
+    "src/palimpsest/memory_decision.py": "f22e72166fbd8a7cf7c1d01a9535f202e7f6b99246c298bc970274a04c863982",
+    "src/palimpsest/profiles.py": "9a947c62f200640f973786e14e5bffaa365a1ea1f09617c984ebf16cea1aa2a3",
+    "scripts/memory_family_v3.py": "78e9e488b1b301007f7fa995e407cfd8ac883ddef7e731a1a760308e6818766e",
+    "tests/test_memory_family_world.py": "f7c0cae16e85ea126326e74cd2d1ace28f8a3f7e1e1e4ca79a1fdb6c30a31614",
+    "tests/test_memory_family_runtime.py": "7e1639f0aeb750651ab7f734e62799da23c5d74dae9107b968179f3fac16c2a2",
+    "tests/test_memory_family_slots.py": "60716f164cf89830378e1da893251f7b25a7864f00bab2e65a41028fab3489fb",
+    "docs/plans/memory-family-v3.md": "5fc74f4efe4d902d73a5c402d72e2aea7abb60d0e05703e64fb0fddc80569ee4"
+  }
+}

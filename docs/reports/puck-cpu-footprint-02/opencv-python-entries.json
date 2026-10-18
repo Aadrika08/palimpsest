@@ -1,0 +1,1490 @@
+[
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 39140,
+    "compression": 8,
+    "crc32": 3741778565,
+    "external_attr": 2175008768,
+    "name": "cv2/LICENSE-3RD-PARTY.txt",
+    "size_bytes": 174432
+  },
+  {
+    "compressed_size": 627,
+    "compression": 8,
+    "crc32": 3830172049,
+    "external_attr": 2175008768,
+    "name": "cv2/LICENSE.txt",
+    "size_bytes": 1070
+  },
+  {
+    "compressed_size": 2081,
+    "compression": 8,
+    "crc32": 2577362459,
+    "external_attr": 2175008768,
+    "name": "cv2/__init__.py",
+    "size_bytes": 6612
+  },
+  {
+    "compressed_size": 41040,
+    "compression": 8,
+    "crc32": 82769315,
+    "external_attr": 2175008768,
+    "name": "cv2/__init__.pyi",
+    "size_bytes": 309059
+  },
+  {
+    "compressed_size": 354,
+    "compression": 8,
+    "crc32": 1488396879,
+    "external_attr": 2175008768,
+    "name": "cv2/config-3.py",
+    "size_bytes": 724
+  },
+  {
+    "compressed_size": 86,
+    "compression": 8,
+    "crc32": 1564514838,
+    "external_attr": 2175008768,
+    "name": "cv2/config.py",
+    "size_bytes": 111
+  },
+  {
+    "compressed_size": 27813602,
+    "compression": 8,
+    "crc32": 533315419,
+    "external_attr": 2179792896,
+    "name": "cv2/cv2.abi3.so",
+    "size_bytes": 66822601
+  },
+  {
+    "compressed_size": 110,
+    "compression": 8,
+    "crc32": 3660244227,
+    "external_attr": 2175008768,
+    "name": "cv2/load_config_py2.py",
+    "size_bytes": 151
+  },
+  {
+    "compressed_size": 168,
+    "compression": 8,
+    "crc32": 1816990269,
+    "external_attr": 2175008768,
+    "name": "cv2/load_config_py3.py",
+    "size_bytes": 262
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "cv2/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 78,
+    "compression": 8,
+    "crc32": 433009210,
+    "external_attr": 2175008768,
+    "name": "cv2/version.py",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/Error/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1309,
+    "compression": 8,
+    "crc32": 3735831410,
+    "external_attr": 2175008768,
+    "name": "cv2/Error/__init__.pyi",
+    "size_bytes": 4076
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/aruco/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2368,
+    "compression": 8,
+    "crc32": 2914526380,
+    "external_attr": 2175008768,
+    "name": "cv2/aruco/__init__.pyi",
+    "size_bytes": 15149
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/barcode/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 381,
+    "compression": 8,
+    "crc32": 134019823,
+    "external_attr": 2175008768,
+    "name": "cv2/barcode/__init__.pyi",
+    "size_bytes": 1441
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/cuda/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2510,
+    "compression": 8,
+    "crc32": 2390078660,
+    "external_attr": 2175008768,
+    "name": "cv2/cuda/__init__.pyi",
+    "size_bytes": 16205
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/data/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 64,
+    "compression": 8,
+    "crc32": 1823521717,
+    "external_attr": 2175008768,
+    "name": "cv2/data/__init__.py",
+    "size_bytes": 70
+  },
+  {
+    "compressed_size": 52503,
+    "compression": 8,
+    "crc32": 2233003040,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_eye.xml",
+    "size_bytes": 341406
+  },
+  {
+    "compressed_size": 104187,
+    "compression": 8,
+    "crc32": 707555307,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_eye_tree_eyeglasses.xml",
+    "size_bytes": 601661
+  },
+  {
+    "compressed_size": 61296,
+    "compression": 8,
+    "crc32": 2136899242,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_frontalcatface.xml",
+    "size_bytes": 411388
+  },
+  {
+    "compressed_size": 57683,
+    "compression": 8,
+    "crc32": 896721456,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_frontalcatface_extended.xml",
+    "size_bytes": 382918
+  },
+  {
+    "compressed_size": 98649,
+    "compression": 8,
+    "crc32": 4121349483,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_frontalface_alt.xml",
+    "size_bytes": 676709
+  },
+  {
+    "compressed_size": 87288,
+    "compression": 8,
+    "crc32": 1310773474,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_frontalface_alt2.xml",
+    "size_bytes": 540616
+  },
+  {
+    "compressed_size": 393291,
+    "compression": 8,
+    "crc32": 1236059248,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_frontalface_alt_tree.xml",
+    "size_bytes": 2689040
+  },
+  {
+    "compressed_size": 135531,
+    "compression": 8,
+    "crc32": 298269558,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_frontalface_default.xml",
+    "size_bytes": 930127
+  },
+  {
+    "compressed_size": 72754,
+    "compression": 8,
+    "crc32": 2095161572,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_fullbody.xml",
+    "size_bytes": 476827
+  },
+  {
+    "compressed_size": 32896,
+    "compression": 8,
+    "crc32": 1590946707,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_lefteye_2splits.xml",
+    "size_bytes": 195369
+  },
+  {
+    "compressed_size": 5541,
+    "compression": 8,
+    "crc32": 4212493129,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_license_plate_rus_16stages.xml",
+    "size_bytes": 47775
+  },
+  {
+    "compressed_size": 61307,
+    "compression": 8,
+    "crc32": 831614932,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_lowerbody.xml",
+    "size_bytes": 395322
+  },
+  {
+    "compressed_size": 124167,
+    "compression": 8,
+    "crc32": 907733077,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_profileface.xml",
+    "size_bytes": 828514
+  },
+  {
+    "compressed_size": 32873,
+    "compression": 8,
+    "crc32": 3130845928,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_righteye_2splits.xml",
+    "size_bytes": 196170
+  },
+  {
+    "compressed_size": 11636,
+    "compression": 8,
+    "crc32": 486851855,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_russian_plate_number.xml",
+    "size_bytes": 75482
+  },
+  {
+    "compressed_size": 30037,
+    "compression": 8,
+    "crc32": 1271664559,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_smile.xml",
+    "size_bytes": 188506
+  },
+  {
+    "compressed_size": 117966,
+    "compression": 8,
+    "crc32": 339465456,
+    "external_attr": 2175008768,
+    "name": "cv2/data/haarcascade_upperbody.xml",
+    "size_bytes": 785819
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/detail/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3334,
+    "compression": 8,
+    "crc32": 1430043945,
+    "external_attr": 2175008768,
+    "name": "cv2/detail/__init__.pyi",
+    "size_bytes": 22374
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/dnn/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3358,
+    "compression": 8,
+    "crc32": 3135584312,
+    "external_attr": 2175008768,
+    "name": "cv2/dnn/__init__.pyi",
+    "size_bytes": 23111
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/fisheye/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1096,
+    "compression": 8,
+    "crc32": 1324718604,
+    "external_attr": 2175008768,
+    "name": "cv2/fisheye/__init__.pyi",
+    "size_bytes": 9931
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/flann/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 564,
+    "compression": 8,
+    "crc32": 44632147,
+    "external_attr": 2175008768,
+    "name": "cv2/flann/__init__.pyi",
+    "size_bytes": 2677
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1883,
+    "compression": 8,
+    "crc32": 3631188875,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/__init__.py",
+    "size_bytes": 10298
+  },
+  {
+    "compressed_size": 2365,
+    "compression": 8,
+    "crc32": 1711357007,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/__init__.pyi",
+    "size_bytes": 14636
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/core/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 83,
+    "compression": 8,
+    "crc32": 2939018457,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/core/__init__.pyi",
+    "size_bytes": 142
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/core/cpu/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 89,
+    "compression": 8,
+    "crc32": 3116187267,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/core/cpu/__init__.pyi",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/core/fluid/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 89,
+    "compression": 8,
+    "crc32": 3116187267,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/core/fluid/__init__.pyi",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/core/ocl/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 89,
+    "compression": 8,
+    "crc32": 3116187267,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/core/ocl/__init__.pyi",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/ie/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 412,
+    "compression": 8,
+    "crc32": 3332310678,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/ie/__init__.pyi",
+    "size_bytes": 1117
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/ie/detail/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 136,
+    "compression": 8,
+    "crc32": 2368313504,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/ie/detail/__init__.pyi",
+    "size_bytes": 269
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/imgproc/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 68,
+    "compression": 8,
+    "crc32": 2423987967,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/imgproc/__init__.pyi",
+    "size_bytes": 71
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/imgproc/fluid/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 89,
+    "compression": 8,
+    "crc32": 3116187267,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/imgproc/fluid/__init__.pyi",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/oak/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 374,
+    "compression": 8,
+    "crc32": 2346584781,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/oak/__init__.pyi",
+    "size_bytes": 1734
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/onnx/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 459,
+    "compression": 8,
+    "crc32": 3888734920,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/onnx/__init__.pyi",
+    "size_bytes": 1497
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/onnx/ep/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 349,
+    "compression": 8,
+    "crc32": 572837528,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/onnx/ep/__init__.pyi",
+    "size_bytes": 1357
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/ot/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 313,
+    "compression": 8,
+    "crc32": 3510517904,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/ot/__init__.pyi",
+    "size_bytes": 720
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/ot/cpu/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 89,
+    "compression": 8,
+    "crc32": 3116187267,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/ot/cpu/__init__.pyi",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/ov/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 467,
+    "compression": 8,
+    "crc32": 512872982,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/ov/__init__.pyi",
+    "size_bytes": 2647
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/own/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 65,
+    "compression": 8,
+    "crc32": 517664692,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/own/__init__.pyi",
+    "size_bytes": 69
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/own/detail/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 135275603,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/own/detail/__init__.pyi",
+    "size_bytes": 140
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/render/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 65,
+    "compression": 8,
+    "crc32": 3542320013,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/render/__init__.pyi",
+    "size_bytes": 66
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/render/ocv/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 89,
+    "compression": 8,
+    "crc32": 3116187267,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/render/ocv/__init__.pyi",
+    "size_bytes": 93
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/streaming/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 320,
+    "compression": 8,
+    "crc32": 1869116085,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/streaming/__init__.pyi",
+    "size_bytes": 813
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/video/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 116,
+    "compression": 8,
+    "crc32": 1339947725,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/video/__init__.pyi",
+    "size_bytes": 150
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/wip/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 378,
+    "compression": 8,
+    "crc32": 1692033829,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/wip/__init__.pyi",
+    "size_bytes": 1086
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/wip/draw/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 590,
+    "compression": 8,
+    "crc32": 664419583,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/wip/draw/__init__.pyi",
+    "size_bytes": 3162
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/wip/gst/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 205,
+    "compression": 8,
+    "crc32": 428345838,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/wip/gst/__init__.pyi",
+    "size_bytes": 467
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/gapi/wip/onevpl/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 160,
+    "compression": 8,
+    "crc32": 2041790950,
+    "external_attr": 2175008768,
+    "name": "cv2/gapi/wip/onevpl/__init__.pyi",
+    "size_bytes": 397
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/ipp/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 124,
+    "compression": 8,
+    "crc32": 1729123529,
+    "external_attr": 2175008768,
+    "name": "cv2/ipp/__init__.pyi",
+    "size_bytes": 223
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/mat_wrapper/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 572,
+    "compression": 8,
+    "crc32": 1056770773,
+    "external_attr": 2175008768,
+    "name": "cv2/mat_wrapper/__init__.py",
+    "size_bytes": 1124
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/misc/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 34,
+    "compression": 8,
+    "crc32": 1020123920,
+    "external_attr": 2175008768,
+    "name": "cv2/misc/__init__.py",
+    "size_bytes": 37
+  },
+  {
+    "compressed_size": 78,
+    "compression": 8,
+    "crc32": 2409256528,
+    "external_attr": 2175008768,
+    "name": "cv2/misc/version.py",
+    "size_bytes": 90
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/ml/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3430,
+    "compression": 8,
+    "crc32": 3965002151,
+    "external_attr": 2175008768,
+    "name": "cv2/ml/__init__.pyi",
+    "size_bytes": 22803
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/ocl/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1227,
+    "compression": 8,
+    "crc32": 4015501681,
+    "external_attr": 2175008768,
+    "name": "cv2/ocl/__init__.pyi",
+    "size_bytes": 5527
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/ogl/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 404,
+    "compression": 8,
+    "crc32": 4272080167,
+    "external_attr": 2175008768,
+    "name": "cv2/ogl/__init__.pyi",
+    "size_bytes": 1472
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/parallel/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 117,
+    "compression": 8,
+    "crc32": 2570484617,
+    "external_attr": 2175008768,
+    "name": "cv2/parallel/__init__.pyi",
+    "size_bytes": 129
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/qt/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/qt/fonts/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 333386,
+    "compression": 8,
+    "crc32": 577833690,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSans-Bold.ttf",
+    "size_bytes": 672300
+  },
+  {
+    "compressed_size": 311752,
+    "compression": 8,
+    "crc32": 2302524714,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSans-BoldOblique.ttf",
+    "size_bytes": 611212
+  },
+  {
+    "compressed_size": 164352,
+    "compression": 8,
+    "crc32": 4000581771,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSans-ExtraLight.ttf",
+    "size_bytes": 345204
+  },
+  {
+    "compressed_size": 311964,
+    "compression": 8,
+    "crc32": 4220892492,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSans-Oblique.ttf",
+    "size_bytes": 611556
+  },
+  {
+    "compressed_size": 361229,
+    "compression": 8,
+    "crc32": 277279989,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSans.ttf",
+    "size_bytes": 720012
+  },
+  {
+    "compressed_size": 310825,
+    "compression": 8,
+    "crc32": 3542688594,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSansCondensed-Bold.ttf",
+    "size_bytes": 631992
+  },
+  {
+    "compressed_size": 298572,
+    "compression": 8,
+    "crc32": 1121864734,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSansCondensed-BoldOblique.ttf",
+    "size_bytes": 580168
+  },
+  {
+    "compressed_size": 295438,
+    "compression": 8,
+    "crc32": 1493323283,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSansCondensed-Oblique.ttf",
+    "size_bytes": 576004
+  },
+  {
+    "compressed_size": 314527,
+    "compression": 8,
+    "crc32": 4055501905,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/fonts/DejaVuSansCondensed.ttf",
+    "size_bytes": 643852
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/qt/plugins/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/qt/plugins/platforms/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 4278,
+    "compression": 8,
+    "crc32": 134459514,
+    "external_attr": 2175008768,
+    "name": "cv2/qt/plugins/platforms/libqxcb.so",
+    "size_bytes": 29313
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/samples/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 170,
+    "compression": 8,
+    "crc32": 1984562600,
+    "external_attr": 2175008768,
+    "name": "cv2/samples/__init__.pyi",
+    "size_bytes": 324
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/segmentation/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 473,
+    "compression": 8,
+    "crc32": 3570282748,
+    "external_attr": 2175008768,
+    "name": "cv2/segmentation/__init__.pyi",
+    "size_bytes": 1739
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/typing/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1171,
+    "compression": 8,
+    "crc32": 3010334636,
+    "external_attr": 2175008768,
+    "name": "cv2/typing/__init__.py",
+    "size_bytes": 5365
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/utils/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 157,
+    "compression": 8,
+    "crc32": 3088833866,
+    "external_attr": 2175008768,
+    "name": "cv2/utils/__init__.py",
+    "size_bytes": 330
+  },
+  {
+    "compressed_size": 806,
+    "compression": 8,
+    "crc32": 816747941,
+    "external_attr": 2175008768,
+    "name": "cv2/utils/__init__.pyi",
+    "size_bytes": 3592
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/utils/fs/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 87,
+    "compression": 8,
+    "crc32": 2494484543,
+    "external_attr": 2175008768,
+    "name": "cv2/utils/fs/__init__.pyi",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/utils/nested/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 265,
+    "compression": 8,
+    "crc32": 2397775506,
+    "external_attr": 2175008768,
+    "name": "cv2/utils/nested/__init__.pyi",
+    "size_bytes": 573
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "cv2/videoio_registry/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 229,
+    "compression": 8,
+    "crc32": 824033425,
+    "external_attr": 2175008768,
+    "name": "cv2/videoio_registry/__init__.pyi",
+    "size_bytes": 962
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "opencv_python.libs/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3135586,
+    "compression": 8,
+    "crc32": 747635474,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libQt5Core-e7f476e2.so.5.15.16",
+    "size_bytes": 7424289
+  },
+  {
+    "compressed_size": 3225119,
+    "compression": 8,
+    "crc32": 2745831538,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libQt5Gui-3e966859.so.5.15.16",
+    "size_bytes": 9565337
+  },
+  {
+    "compressed_size": 130343,
+    "compression": 8,
+    "crc32": 2892702627,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libQt5Test-9ac3ed15.so.5.15.16",
+    "size_bytes": 424057
+  },
+  {
+    "compressed_size": 2824455,
+    "compression": 8,
+    "crc32": 1393910850,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libQt5Widgets-cd430389.so.5.15.16",
+    "size_bytes": 8926585
+  },
+  {
+    "compressed_size": 652783,
+    "compression": 8,
+    "crc32": 2665108009,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libQt5XcbQpa-3cfa6167.so.5.15.16",
+    "size_bytes": 1854273
+  },
+  {
+    "compressed_size": 2469,
+    "compression": 8,
+    "crc32": 4290136508,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libX11-xcb-0e257303.so.1.0.0",
+    "size_bytes": 8873
+  },
+  {
+    "compressed_size": 5863,
+    "compression": 8,
+    "crc32": 2444926271,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libXau-00ec42fe.so.6.0.0",
+    "size_bytes": 17049
+  },
+  {
+    "compressed_size": 2869225,
+    "compression": 8,
+    "crc32": 3496061166,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libaom-49d00b71.so.3.12.1",
+    "size_bytes": 7506401
+  },
+  {
+    "compressed_size": 5991379,
+    "compression": 8,
+    "crc32": 3443302648,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libavcodec-e0dd92b8.so.59.37.100",
+    "size_bytes": 13452617
+  },
+  {
+    "compressed_size": 1180513,
+    "compression": 8,
+    "crc32": 2903815055,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libavformat-d296e685.so.59.27.100",
+    "size_bytes": 2571489
+  },
+  {
+    "compressed_size": 272862,
+    "compression": 8,
+    "crc32": 3275915473,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libavif-850e7649.so.16.3.0",
+    "size_bytes": 1074561
+  },
+  {
+    "compressed_size": 318691,
+    "compression": 8,
+    "crc32": 2926233298,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libavutil-734d06dd.so.57.28.100",
+    "size_bytes": 844673
+  },
+  {
+    "compressed_size": 1452214,
+    "compression": 8,
+    "crc32": 352872179,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libcrypto-01067bc0.so.1.1",
+    "size_bytes": 3481345
+  },
+  {
+    "compressed_size": 349791,
+    "compression": 8,
+    "crc32": 3625647494,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libgfortran-91cc3cb1.so.3.0.0",
+    "size_bytes": 1259665
+  },
+  {
+    "compressed_size": 9841037,
+    "compression": 8,
+    "crc32": 3330123376,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libopenblas-r0-f650aae0.3.3.so",
+    "size_bytes": 37325001
+  },
+  {
+    "compressed_size": 395476,
+    "compression": 8,
+    "crc32": 2108059840,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libpng16-04239421.so.16.48.0",
+    "size_bytes": 1093105
+  },
+  {
+    "compressed_size": 138150,
+    "compression": 8,
+    "crc32": 2333071793,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libquadmath-96973f99.so.0.0.0",
+    "size_bytes": 247609
+  },
+  {
+    "compressed_size": 265498,
+    "compression": 8,
+    "crc32": 1690002647,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libssl-28bef1ac.so.1.1",
+    "size_bytes": 736177
+  },
+  {
+    "compressed_size": 47706,
+    "compression": 8,
+    "crc32": 2393473561,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libswresample-3e7db482.so.4.7.100",
+    "size_bytes": 132417
+  },
+  {
+    "compressed_size": 182272,
+    "compression": 8,
+    "crc32": 1956139804,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libswscale-95ddd674.so.6.7.100",
+    "size_bytes": 619945
+  },
+  {
+    "compressed_size": 1300106,
+    "compression": 8,
+    "crc32": 1550934135,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libvpx-127417df.so.11.0.0",
+    "size_bytes": 3524625
+  },
+  {
+    "compressed_size": 6983,
+    "compression": 8,
+    "crc32": 2327530913,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-icccm-413c9f41.so.4.0.0",
+    "size_bytes": 24377
+  },
+  {
+    "compressed_size": 8694,
+    "compression": 8,
+    "crc32": 3896344428,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-image-e82a276d.so.0.0.0",
+    "size_bytes": 25601
+  },
+  {
+    "compressed_size": 4685,
+    "compression": 8,
+    "crc32": 1007480610,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-keysyms-21015570.so.1.0.0",
+    "size_bytes": 13209
+  },
+  {
+    "compressed_size": 17892,
+    "compression": 8,
+    "crc32": 3465973860,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-randr-a96a5a87.so.0.1.0",
+    "size_bytes": 93921
+  },
+  {
+    "compressed_size": 15727,
+    "compression": 8,
+    "crc32": 3846702303,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-render-637b984a.so.0.0.0",
+    "size_bytes": 78105
+  },
+  {
+    "compressed_size": 6270,
+    "compression": 8,
+    "crc32": 3983526807,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-render-util-43ce00f5.so.0.0.0",
+    "size_bytes": 22161
+  },
+  {
+    "compressed_size": 4799,
+    "compression": 8,
+    "crc32": 2507517551,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-shape-25c2b258.so.0.0.0",
+    "size_bytes": 21769
+  },
+  {
+    "compressed_size": 4446,
+    "compression": 8,
+    "crc32": 3869205754,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-shm-7a199f70.so.0.0.0",
+    "size_bytes": 21377
+  },
+  {
+    "compressed_size": 8298,
+    "compression": 8,
+    "crc32": 2754860798,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-sync-89374f40.so.1.0.0",
+    "size_bytes": 35673
+  },
+  {
+    "compressed_size": 8474,
+    "compression": 8,
+    "crc32": 3673531465,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-util-4d666913.so.1.0.0",
+    "size_bytes": 26281
+  },
+  {
+    "compressed_size": 8697,
+    "compression": 8,
+    "crc32": 1107342810,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-xfixes-9be3ba6f.so.0.0.0",
+    "size_bytes": 45337
+  },
+  {
+    "compressed_size": 3924,
+    "compression": 8,
+    "crc32": 1434793402,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-xinerama-ae147f87.so.0.0.0",
+    "size_bytes": 17529
+  },
+  {
+    "compressed_size": 32934,
+    "compression": 8,
+    "crc32": 1747056947,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxcb-xkb-9ba31ab3.so.1.0.0",
+    "size_bytes": 157921
+  },
+  {
+    "compressed_size": 119238,
+    "compression": 8,
+    "crc32": 1528230255,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxkbcommon-71ae2972.so.0.0.0",
+    "size_bytes": 269865
+  },
+  {
+    "compressed_size": 14147,
+    "compression": 8,
+    "crc32": 899016420,
+    "external_attr": 2179792896,
+    "name": "opencv_python.libs/libxkbcommon-x11-c65ed502.so.0.0.0",
+    "size_bytes": 48097
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "opencv_python-4.12.0.88.dist-info/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 39140,
+    "compression": 8,
+    "crc32": 3741778565,
+    "external_attr": 2175008768,
+    "name": "opencv_python-4.12.0.88.dist-info/LICENSE-3RD-PARTY.txt",
+    "size_bytes": 174432
+  },
+  {
+    "compressed_size": 627,
+    "compression": 8,
+    "crc32": 3830172049,
+    "external_attr": 2175008768,
+    "name": "opencv_python-4.12.0.88.dist-info/LICENSE.txt",
+    "size_bytes": 1070
+  },
+  {
+    "compressed_size": 7117,
+    "compression": 8,
+    "crc32": 1514985487,
+    "external_attr": 2175008768,
+    "name": "opencv_python-4.12.0.88.dist-info/METADATA",
+    "size_bytes": 19699
+  },
+  {
+    "compressed_size": 114,
+    "compression": 8,
+    "crc32": 3955139251,
+    "external_attr": 2175008768,
+    "name": "opencv_python-4.12.0.88.dist-info/WHEEL",
+    "size_bytes": 142
+  },
+  {
+    "compressed_size": 6,
+    "compression": 8,
+    "crc32": 1426992764,
+    "external_attr": 2175008768,
+    "name": "opencv_python-4.12.0.88.dist-info/top_level.txt",
+    "size_bytes": 4
+  },
+  {
+    "compressed_size": 6134,
+    "compression": 8,
+    "crc32": 3960550717,
+    "external_attr": 2176057344,
+    "name": "opencv_python-4.12.0.88.dist-info/RECORD",
+    "size_bytes": 12179
+  }
+]

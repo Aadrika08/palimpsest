@@ -1,0 +1,76 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state[False] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72c82d83c210>
+unrelated_difference = False
+
+    @pytest.mark.parametrize('unrelated_difference',[False,True])
+    def test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state(monkeypatch,unrelated_difference):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        left=mujoco.MjData(model); right=mujoco.MjData(model)
+        right.timer.duration[:]=np.arange(len(right.timer.duration))*.001
+        if unrelated_difference:right.qpos[0]=.2
+        originals=[data.__getstate__() for data in (left,right)]
+>       result=offline().attribute_native_pair(*({'native_data':value} for value in originals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'attribute_native_pair'
+
+tests/test_memory_restore_offline_readout.py:130: AttributeError
+_ test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state[True] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72c82d4d1b90>
+unrelated_difference = True
+
+    @pytest.mark.parametrize('unrelated_difference',[False,True])
+    def test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state(monkeypatch,unrelated_difference):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        left=mujoco.MjData(model); right=mujoco.MjData(model)
+        right.timer.duration[:]=np.arange(len(right.timer.duration))*.001
+        if unrelated_difference:right.qpos[0]=.2
+        originals=[data.__getstate__() for data in (left,right)]
+>       result=offline().attribute_native_pair(*({'native_data':value} for value in originals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'attribute_native_pair'
+
+tests/test_memory_restore_offline_readout.py:130: AttributeError
+_ test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive[memory-native-byte-attribution] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-1/test_offline_launcher_keeps_re1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72c82af1ad50>
+study = 'memory-native-byte-attribution'
+
+    @pytest.mark.parametrize('study',['memory-restore-offline-readout','memory-native-byte-attribution'])
+    def test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive(tmp_path,monkeypatch,study):
+        actual_repo=Path(__file__).resolve().parents[1]
+        source=actual_repo/'docs/reports'/f'{study}-evidence/execute-readout.py'
+        spec=importlib.util.spec_from_file_location('offline_launcher',source)
+>       launcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(launcher)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen importlib._bootstrap_external>:936: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1073: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x72c82af96690>
+path = '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-native-byte-attribution-evidence/execute-readout.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-native-byte-attribution-evidence/execute-readout.py'
+
+<frozen importlib._bootstrap_external>:1130: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_offline_readout.py::test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state[False]
+FAILED tests/test_memory_restore_offline_readout.py::test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state[True]
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive[memory-native-byte-attribution]
+3 failed, 1 passed, 10 deselected in 0.39s

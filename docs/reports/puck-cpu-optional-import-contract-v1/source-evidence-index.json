@@ -1,0 +1,336 @@
+{
+  "collection_authorized": false,
+  "files": [
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-held05-optional-source-survey.json",
+      "sha256": "dfd35a621187ff9a1bb9f64de53aa0833f334a9600d055dd883b2c74cd704067",
+      "size_bytes": 1765809
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-held05-optional-source-survey.md",
+      "sha256": "958577cb5759af8182a1d0e9f3a399b91969326db88b0e205d079c8cbbbadb41",
+      "size_bytes": 7289
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-import-contract-review.json",
+      "sha256": "fff25d859024d1d318482cdc64300eccec9d5835f004838d138ff88b363d8674",
+      "size_bytes": 19520
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-numeric-callpaths.json",
+      "sha256": "12d73cc246e0e162fe13d86e636aa4990ce799f261f05cbc48c26c1a441d3f86",
+      "size_bytes": 21226
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-source-current-byte-check.json",
+      "sha256": "ab91f7bca797c7f8d68629663af58f40d3e976c6e73774b697a9323a57d8d49c",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-v6-decision-review.json",
+      "sha256": "10c435f70d2d3aa952f08ef9d6105bdb73338d8a868be81cb4853dd8363634fd",
+      "size_bytes": 12025
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-v6-implementation-review.json",
+      "sha256": "f44c32bdc8f679e77c582801caf2babb163ac632be91b165e7db1732bb776391",
+      "size_bytes": 8668
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/driver.py",
+      "sha256": "d8f454a7f6a6e5a466c223beb53150c4e92b1d82612239922563dd8ab098edee",
+      "size_bytes": 1941
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/command.json",
+      "sha256": "05b117ea56e39b6abb896322455e1dfc0d292ce050fdd920870fefc0e5ca1145",
+      "size_bytes": 813
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/result.json",
+      "sha256": "0a48d19c962d901390218ca1b8477f42e170a1013dc186f687f055205f81c35d",
+      "size_bytes": 75
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/stdout.log",
+      "sha256": "c9c2679a4b2c8450f7c10cccb3aca0fe26d06a7210cee93e81b49244ab60ab7c",
+      "size_bytes": 98
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/command.json",
+      "sha256": "c9c3a49c185be478c9f7e121b304353051fa1a39ce8e3e932ead86874a4cca39",
+      "size_bytes": 908
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/result.json",
+      "sha256": "6bb1f6a9bd45f28176d514a53b1f5847d264ea6546224de588910696ad58d8b5",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/stdout.log",
+      "sha256": "2552c536cc382a32475131880b2c831bf2690233eca063a6deca10975e38fdf7",
+      "size_bytes": 100
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/command.json",
+      "sha256": "68b91299bae0fa71aaab302b17f78ac83d177aa62c3d35584dc065fee7493e8d",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/result.json",
+      "sha256": "382b770b0272c156d83b9f1ac37ea092e4ae636b6966f15df09cbe015c6f5ed6",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/stdout.log",
+      "sha256": "af4a418bb13c78ce405933a1d870275c008e205f3bd71ee90642748e6f3f744d",
+      "size_bytes": 2971
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/command.json",
+      "sha256": "68b91299bae0fa71aaab302b17f78ac83d177aa62c3d35584dc065fee7493e8d",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/result.json",
+      "sha256": "804df08a72bbe637b6137280e660a1f9f2da30666db1069a4b639290b4272199",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/stdout.log",
+      "sha256": "c2c9801964b86a6efd69bca39c8588149399399cc1beb96828e33f941e3c8943",
+      "size_bytes": 179
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/command.json",
+      "sha256": "68b91299bae0fa71aaab302b17f78ac83d177aa62c3d35584dc065fee7493e8d",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/result.json",
+      "sha256": "b13b53893ffe157b508745ddca5fdc0089b7dcfe06aeea1d2514e1feeaa31f5d",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/stdout.log",
+      "sha256": "f8efedbf9d15d528faa9232c2d4a72153fbf5ed13c890d0def65d1b5663c84c6",
+      "size_bytes": 203002
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/command.json",
+      "sha256": "6afc05d67041dbc68e3eebee008b2269332ce36e3624e57c9b604d9d5268265f",
+      "size_bytes": 965
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/result.json",
+      "sha256": "2ad852b2299bf69d74963f7ed93e010cdfb12ef8f7b9eb1b67e2d105e5854cf5",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/stdout.log",
+      "sha256": "020d424a5cc06c9961ed10bd41118d2a8f9fc548c15afbe4e5ae2fa85d656423",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/command.json",
+      "sha256": "ac15240d25e8e86d3069e3ab1b2668f8c523f8956cb3c3f3d603346e0aa242f7",
+      "size_bytes": 802
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/result.json",
+      "sha256": "b0c8b199bc3d51a4e9b7027a0c1226b40cadc97fe75b3b686b1f9fa06bec1076",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/stdout.log",
+      "sha256": "20f0fe45e2c39782006d22b5e93a43e2efeb985d6a69ddcce818c9f13e8956f5",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/command.json",
+      "sha256": "ac170e7385e7a9637103a2fc3748a3286267309efdaa726cdaf46119da78aae1",
+      "size_bytes": 841
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/result.json",
+      "sha256": "68a9b3abeb80add6e77bab6329ed8d5d9d18acb21f65192ad069c103c744fe95",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/stdout.log",
+      "sha256": "82f135a8cf3c19b706508cc1e6a220d6b503cf35b6fca83c3674c191a78d93a0",
+      "size_bytes": 7472
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/command.json",
+      "sha256": "6d2dd13d83dfa34ea56441477f2fd3acf54be6d5bb742d9db6aefa30400127e8",
+      "size_bytes": 1175
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/result.json",
+      "sha256": "2a6012cf2124d47083c133e10b20e3b63e7b5397c67532d084f756a0ff624e16",
+      "size_bytes": 78
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/stderr.log",
+      "sha256": "31405de7f90721864beab6eda07b29564fd1eb9765d8bde57cc047a9cab38ca8",
+      "size_bytes": 73
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/stdout.log",
+      "sha256": "a6fc53a5cef0fe8278c459c532a5e372bbe2dd65e4c365a7d7757a210299799f",
+      "size_bytes": 23
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/command.json",
+      "sha256": "968a27ef697d4b0161cf2af738c369e2301e8f94bad34d24c0ffb3240634c762",
+      "size_bytes": 1414
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/result.json",
+      "sha256": "0d350cd3996e9dd9ded292bc158e9bfc5402f1c77b7d6b07fd933826281e8df6",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/stdout.log",
+      "sha256": "1569d8677e615fb76a75cd689fe05f12b25c2ac5af7be8757e95ff75fa528953",
+      "size_bytes": 672
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/command.json",
+      "sha256": "c9c3a49c185be478c9f7e121b304353051fa1a39ce8e3e932ead86874a4cca39",
+      "size_bytes": 908
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/result.json",
+      "sha256": "821c62276582fe8890b228b3c37fb942a2f9507400f1eb98ff2451cd62bcae72",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/stdout.log",
+      "sha256": "077740314798b3938c0d4c2d5203c96a0cdf1180df42204b93e3e015147de2a3",
+      "size_bytes": 100
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/command.json",
+      "sha256": "05b117ea56e39b6abb896322455e1dfc0d292ce050fdd920870fefc0e5ca1145",
+      "size_bytes": 813
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/result.json",
+      "sha256": "f7115495e3fc64c1ca1f28c0948cbb97f4043d868c457ef874e1e1dc087c90a8",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/stdout.log",
+      "sha256": "94e7dcc97cfc68d83f46bedc86ffcc41e534648ed3bd6b99198588e647523226",
+      "size_bytes": 1800
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/command.json",
+      "sha256": "05b117ea56e39b6abb896322455e1dfc0d292ce050fdd920870fefc0e5ca1145",
+      "size_bytes": 813
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/result.json",
+      "sha256": "ee22235a1391d114aa229e61b5c90f5bc59cb033c0894e44862e7dbe132e4b2d",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/stdout.log",
+      "sha256": "1a4fc8a1c014e61992a205b559d170c7a45b8e466318d2e4535901ea7e1c57b3",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/command.json",
+      "sha256": "7c0f03d15de968b765c8a05cea55ebb74707aeca966ad6044b71bf41b6df7eee",
+      "size_bytes": 970
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/result.json",
+      "sha256": "0c62331b18623e286591d49bdd0688dc7fc8d03b959aa6c844a8668881bd59b3",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/stdout.log",
+      "sha256": "8aa27e05078753ad3e37db9944206c66cad0cc4c39376439a5f54d3d04f280ed",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification-summary.json",
+      "sha256": "7dd2df6019e1a53cc92bdff1237b108635a2bbb9a761aeabd261f6dd21ab37e3",
+      "size_bytes": 2957
+    }
+  ],
+  "kind": "puck-cpu-optional-source-evidence-index-v1",
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "Authored source-only verification; no real06 allocation or installed vendor invocation",
+  "study_authorized": false,
+  "version": 1
+}

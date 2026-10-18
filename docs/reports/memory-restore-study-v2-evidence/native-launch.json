@@ -1,0 +1,16 @@
+{
+  "command": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5",
+    "890s",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-m",
+    "scripts.memory_restore_diagnostic",
+    "--registration",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-restore-study-v2-evidence/registration.json"
+  ],
+  "started_monotonic": 35527.795884895,
+  "registration_sha256": "4b9e451ee0a6a49c620086bf931353fb0df730359af20ab7d888ac89ca712b90",
+  "implementation_head": "10190ec96095e57a7223a7520b25e87d975af232"
+}

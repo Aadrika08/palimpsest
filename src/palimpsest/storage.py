@@ -1,6 +1,7 @@
 """Storage bounds for one admitted writer; no persisted accounting ledger."""
 from contextlib import contextmanager
 from dataclasses import dataclass
+import errno
 import fcntl
 import os
 from pathlib import Path
@@ -24,9 +25,10 @@ class StorageLimits:
     max_runs: int = 1024
     max_snapshots: int = 64  # Per run, including its initial snapshot.
     max_exports: int = 1024
+    max_entries: int = MAX_SCAN_ENTRIES
 
     def __post_init__(self):
-        for name in ("max_bytes", "max_runs", "max_snapshots", "max_exports"):
+        for name in ("max_bytes", "max_runs", "max_snapshots", "max_exports", "max_entries"):
             if type(getattr(self, name)) is not int or getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be a positive integer")
         if type(self.min_free_bytes) is not int or self.min_free_bytes < 0:
@@ -85,7 +87,7 @@ class StorageBudget:
             for _, directories, names, descriptor in os.fwalk(root, follow_symlinks=False, onerror=scan_error):
                 for name in directories + names:
                     entries += 1
-                    if entries > MAX_SCAN_ENTRIES:
+                    if entries > self.limits.max_entries:
                         raise StorageLimitError("Storage inventory exceeds entry limit")
                     try:
                         info = os.stat(name, dir_fd=descriptor, follow_symlinks=False)
@@ -152,12 +154,22 @@ class StorageBudget:
             for path in paths:
                 path = _safe_path(path)
                 flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0)
-                descriptor = os.open(path, flags, 0o600)
+                writable = True
+                try:
+                    descriptor = os.open(path, flags, 0o600)
+                except OSError as error:
+                    if path != paths[0] or error.errno != errno.EROFS:
+                        raise
+                    # flock needs no file writes. Reuse an existing user lease
+                    # on a read-only mount while preserving ownership and the
+                    # same exclusive lock; never create an alternative lease.
+                    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+                    writable = False
                 try:
                     info = os.fstat(descriptor)
                     if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid():
                         raise StorageLimitError("Writer lease must be a regular file owned by the current user")
-                    stream = os.fdopen(descriptor, "r+b")
+                    stream = os.fdopen(descriptor, "r+b" if writable else "rb")
                 except BaseException:
                     os.close(descriptor)
                     raise

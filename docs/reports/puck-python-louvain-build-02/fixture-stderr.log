@@ -1,0 +1,45 @@
+running build
+running build_py
+creating /work/build/lib/fixture_package
+copying fixture_package/__init__.py -> /work/build/lib/fixture_package
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_scripts
+creating /work/build/scripts-3.11
+copying and adjusting bin/fixture -> /work/build/scripts-3.11
+changing mode of /work/build/scripts-3.11/fixture from 644 to 755
+running egg_info
+creating /work/egg/palimpsest_build_fixture.egg-info
+writing /work/egg/palimpsest_build_fixture.egg-info/PKG-INFO
+writing dependency_links to /work/egg/palimpsest_build_fixture.egg-info/dependency_links.txt
+writing requirements to /work/egg/palimpsest_build_fixture.egg-info/requires.txt
+writing top-level names to /work/egg/palimpsest_build_fixture.egg-info/top_level.txt
+writing manifest file '/work/egg/palimpsest_build_fixture.egg-info/SOURCES.txt'
+reading manifest file '/work/egg/palimpsest_build_fixture.egg-info/SOURCES.txt'
+writing manifest file '/work/egg/palimpsest_build_fixture.egg-info/SOURCES.txt'
+running bdist_wheel
+installing to /work/bdist
+running install
+running install_lib
+creating /work/bdist
+creating /work/bdist/fixture_package
+copying /work/build/lib/fixture_package/__init__.py -> /work/bdist/./fixture_package
+warning: install_lib: byte-compiling is disabled, skipping.
+
+running install_egg_info
+Copying /work/egg/palimpsest_build_fixture.egg-info to /work/bdist/./palimpsest_build_fixture-0.0-py3.11.egg-info
+running install_scripts
+running build_scripts
+copying and adjusting bin/fixture -> /work/build/scripts-3.11
+creating /work/bdist/palimpsest_build_fixture-0.0.data/scripts
+copying /work/build/scripts-3.11/fixture -> /work/bdist/palimpsest_build_fixture-0.0.data/scripts
+changing mode of /work/bdist/palimpsest_build_fixture-0.0.data/scripts/fixture to 755
+creating /work/bdist/palimpsest_build_fixture-0.0.dist-info/WHEEL
+creating '/work/wheel-output/.tmp-2fsbts_p/palimpsest_build_fixture-0.0-py3-none-any.whl' and adding '/work/bdist' to it
+adding 'fixture_package/__init__.py'
+adding 'palimpsest_build_fixture-0.0.data/scripts/fixture'
+adding 'palimpsest_build_fixture-0.0.dist-info/METADATA'
+adding 'palimpsest_build_fixture-0.0.dist-info/WHEEL'
+adding 'palimpsest_build_fixture-0.0.dist-info/top_level.txt'
+adding 'palimpsest_build_fixture-0.0.dist-info/RECORD'
+removing /work/bdist

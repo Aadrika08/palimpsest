@@ -1,0 +1,15 @@
+{
+  "auditor_previously_invoked": false,
+  "cause": "Overbroad stat_result equality check after reading transport refused; it included access-time fields. Exact failing pre-read fields were not retained.",
+  "controls_changed": false,
+  "correction": "Use the existing seven-field device/inode/mode/link/size/mtime/ctime identity contract plus exact byte comparison.",
+  "kind": "observation03-audit-preparation-error-v1",
+  "observer_rerun": false,
+  "tool_result": {
+    "chunk_id": "d36767",
+    "exit_code": 1,
+    "original_token_count": 23,
+    "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 12, in <module>\nAssertionError\n",
+    "wall_time_seconds": 1.2754e-05
+  }
+}

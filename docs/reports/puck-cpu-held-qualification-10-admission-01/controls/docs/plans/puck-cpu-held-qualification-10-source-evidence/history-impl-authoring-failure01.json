@@ -1,0 +1,9 @@
+{
+  "admission_or_runtime_invoked": false,
+  "admission_source_written": false,
+  "error": "JSONDecodeError: trailing comma in a Python dict literal parsed as JSON",
+  "history_green_invoked": false,
+  "kind": "control-authoring-failure-v1",
+  "location": "line28 before path.write_text",
+  "source_sha256": "c165509f402a87a92f6c5b0f84f9a912b4b90697ea40140437c8a4d65e7a5d36"
+}

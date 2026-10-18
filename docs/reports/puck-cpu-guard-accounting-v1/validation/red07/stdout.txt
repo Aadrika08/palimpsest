@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_guard_end_diagnostic_cannot_bypass_final_deadline ____________
+
+    def test_guard_end_diagnostic_cannot_bypass_final_deadline():
+        result = run_cpu(code=('import sys,os\nowner = sys.meta_path[0].owner\noriginal = os.write\n'
+            'def write(fd,payload):\n result = original(fd,payload)\n'
+            ' if b\'"kind":"puck-worker-guard-cost-v1"\' in payload:\n'
+            '  if b\'"active":null\' in payload: owner._deadline = 0\n'
+            '  else: owner._guard_next = 0\n return result\n'
+            'owner._guard_next = 0\nos.write = write\n'
+            'try:\n owner._import_recheck()\n'
+            'except TimeoutError as error:\n'
+            ' assert owner._first_failure is error and not owner._children and not owner._early_runtime_fds\n'
+            'else:\n raise AssertionError("GUARD_END_BYPASSED_DEADLINE")\n'
+            'finally:\n os.write = original\n'
+            'os.write(2,b"GUARD_END_DEADLINE_CLOSED\\n")\n'))
+        assert result.returncode != 0 and result.stdout == ''
+        assert 'GUARD_END_DEADLINE_CLOSED' in result.stderr, result.stderr
+        assert 'TimeoutError: Fresh worker deadline exhausted' in result.stderr
+        assert 'GUARD_END_BYPASSED_DEADLINE' not in result.stderr
+        pending = [row for _, row in costs(result.stderr)
+                   if row['trigger'] == 'periodic' and row['active'] is None]
+>       assert pending and pending[-1]['light']['started'] == pending[-1]['light']['completed']+1
+E       AssertionError: assert ([{'active': None, 'context': 'import.torchvision.enter', 'diagnostic_only': True, 'elapsed_nanoseconds': 1436115985, ...}] and 19 == (19 + 1))
+
+tests/test_puck_guard_time_diagnostics.py:282: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_time_diagnostics.py::test_guard_end_diagnostic_cannot_bypass_final_deadline
+1 failed in 1.79s

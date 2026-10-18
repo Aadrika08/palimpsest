@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-15T14:11:55.277125+00:00",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-preparation-01.json",
+    "--sha256",
+    "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-01-external-cli-transport.json",
+    "--transport-sha256",
+    "05fe489c2ea05a953a85cb3bfb2f1516c60074f87d7e4fc202c088a78a10187e",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json"
+  ],
+  "elapsed_seconds": 13.745720409031492,
+  "kind": "externally-observed-cpu-auditor-cli-v1",
+  "observed_returncode": 0,
+  "published": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+    "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+    "size_bytes": 1563
+  },
+  "scope": "fresh read-only current-byte audit of prepared data; no preparation or qualification allocation invoked",
+  "stderr": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.stdout",
+    "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+    "size_bytes": 1563
+  }
+}

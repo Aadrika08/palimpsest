@@ -1,0 +1,224 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_authored05_corrects_only_publication_profile_and_audits_both_epochs ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment05/isolated-persistent-green-integration-01/tmp/test_authored05_corrects_only_0')
+
+    def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp_path):
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_publication05_auditor')
+        before_fds=len(os.listdir('/proc/self/fd'))
+        with publication05_fixture(tmp_path) as case:
+            root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
+            code,stdout,stderr=run_cli(root,api,'qualify05',config)
+            base=root/'runs/puck-cpu-held-qualification-05';result_path=base/'result.json'
+            result_raw=result_path.read_bytes() if result_path.exists() else b''
+            assert code==0,(code,stdout,stderr,result_raw)
+            result=json.loads(result_raw)
+            assert stdout==result_raw and result['status']=='imports_completed'
+            assert (result['version'],result['allocation_id'])==(5,5)
+            current_dep=(base/'control/dependencies.json').read_bytes()
+            assert current_dep!=historical_dep
+            expected=dict(name=TARGET,producer='torch.autograd',phase='module_exec_publish',
+                attributes=['torch','_C','_autograd'],delegate_attributes=list(DELEGATES))
+            worker_path=base/'logs/stdout.log';worker=json.loads(worker_path.read_bytes())
+            assert worker['dependencies']['published_export_modules']==[expected]
+            assert [(r['name'],r['version']) for r in worker['entry_result']['imports']]==list(api.VERSIONS.items())
+            registration=json.loads((base/'control/worker-registration.json').read_bytes())
+            assert registration['source_files']==[r for r in config['sources'] if r['path'] in api.WORKER_SOURCES]
+            assert registration['dependencies']['sha256']==digest(current_dep)
+            for row in registration['source_files']:
+                raw=(base/'worker-source'/row['path']).read_bytes()
+                assert len(raw)==row['size_bytes'] and digest(raw)==row['sha256']
+            assert json.loads(current_dep)['roots']==json.loads(historical_dep)['roots']
+            assert json.loads(current_dep)['distributions']==json.loads(historical_dep)['distributions']
+            configuration=root/'authored-qualify05-configuration.json'
+            transport=root/'authored-qualify05-transport.json'
+    
+            def audit():
+                count=len(os.listdir('/proc/self/fd'))
+                try:
+                    return auditor.audit(configuration,digest(configuration.read_bytes()),transport,
+                        digest(transport.read_bytes()),deadline=time.monotonic()+30)
+                finally:assert len(os.listdir('/proc/self/fd'))==count
+    
+            report=audit()
+            assert report['status']=='PASS' and report['version']==5
+            assert report['historical_dependencies_sha256']==digest(historical_dep)
+            assert report['current_dependencies_sha256']==report['dependencies_sha256']==digest(current_dep)
+            assert report['historical_candidate_sha256']==case['prepared']['inputs']['candidate']['sha256']
+            assert report['current_candidate_sha256']==config['inputs']['candidate']['sha256']
+            (root/'authored-publication05-api-audit.json').write_bytes(canonical(report))
+            published=root/'authored-publication05-cli-audit.json'
+            command=[api.PYTHON,'-I','-S','-B',str(auditor_path),'--configuration',str(configuration),
+                '--sha256',digest(configuration.read_bytes()),'--transport',str(transport),
+                '--transport-sha256',digest(transport.read_bytes()),'--output',str(published)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,capture_output=True,timeout=30,
+                env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+            for channel,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                (root/('authored-publication05-cli-audit.'+channel)).write_bytes(raw)
+            assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+            assert process.stdout==published.read_bytes() and process.stderr==b''
+            cli_report=json.loads(process.stdout)
+            assert cli_report['status']=='PASS' and cli_report['auditor_source_sha256']==digest(auditor_path.read_bytes())
+            (root/'authored-publication05-cli-audit-transport.json').write_bytes(canonical(dict(
+                kind='authored-cpu-held-auditor-cli-transport-v1',authored_scope=AUTHORED,
+                command=command,observed_returncode=process.returncode,elapsed_seconds=time.monotonic()-started)))
+    
+            stdout_path=root/'authored-qualify05-cli.stdout'
+            originals={p:p.read_bytes() for p in (worker_path,result_path,stdout_path,transport)}
+            try:
+                changed=json.loads(originals[worker_path])
+                changed['dependencies']['published_export_modules'][0]['delegate_attributes'].pop()
+                changed_worker=canonical(changed);worker_path.write_bytes(changed_worker)
+                changed_result=json.loads(result_raw);changed_result['worker_stdout_sha256']=digest(changed_worker)
+                changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
+                changed_transport=json.loads(originals[transport]);changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw))
+                transport.write_bytes(canonical(changed_transport))
+                with pytest.raises(ValueError,match='(?i)publish'):audit()
+            finally:
+                for path,raw in originals.items():path.write_bytes(raw)
+    
+            candidate_path=root/config['inputs']['candidate']['path']
+            invocation=base/'invocation.json';retained_config=base/'configuration.json'
+            originals={p:p.read_bytes() for p in (candidate_path,configuration,retained_config,invocation,result_path,stdout_path,transport)}
+            try:
+                changed_candidate=json.loads(originals[candidate_path])
+                changed_candidate['import_profile']['exports'][0]['attributes']=['foreign']
+                changed_candidate_raw=canonical(changed_candidate);candidate_path.write_bytes(changed_candidate_raw)
+                changed_config=json.loads(originals[configuration]);changed_config['inputs']['candidate']=file_pin(root,candidate_path)
+                changed_config_raw=canonical(changed_config);configuration.write_bytes(changed_config_raw);retained_config.write_bytes(changed_config_raw)
+                changed_result=json.loads(originals[result_path]);changed_result['configuration_sha256']=digest(changed_config_raw)
+                changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
+                changed_transport=json.loads(originals[transport]);changed_transport['configuration_sha256']=digest(changed_config_raw)
+                changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw));transport.write_bytes(canonical(changed_transport))
+                changed_invocation=json.loads(originals[invocation]);changed_invocation['configuration_sha256']=digest(changed_config_raw);invocation.write_bytes(canonical(changed_invocation))
+>               with pytest.raises(ValueError,match='(?i)(autograd|publication)'):audit()
+                                                                                  ^^^^^^^
+
+tests/test_puck_cpu_held_amendment05_integration.py:223: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05_integration.py:167: in audit
+    return auditor.audit(configuration,digest(configuration.read_bytes()),transport,
+scripts/audit_puck_cpu_held_runtime.py:561: in audit
+    command=[PYTHON,'-I','-S','-B',str(root/PARENT),'--configuration',str(config_path),'--sha256',expected_sha256];require(transport.get('command')==command,'Exact isolated parent transport command required')
+                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Exact isolated parent transport command required'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Exact isolated parent transport command required
+
+scripts/audit_puck_cpu_held_runtime.py:56: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment05/isolated-persistent-green-integration-01/tmp/test_authored05_corrects_only_0')
+
+    def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp_path):
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_publication05_auditor')
+        before_fds=len(os.listdir('/proc/self/fd'))
+        with publication05_fixture(tmp_path) as case:
+            root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
+            code,stdout,stderr=run_cli(root,api,'qualify05',config)
+            base=root/'runs/puck-cpu-held-qualification-05';result_path=base/'result.json'
+            result_raw=result_path.read_bytes() if result_path.exists() else b''
+            assert code==0,(code,stdout,stderr,result_raw)
+            result=json.loads(result_raw)
+            assert stdout==result_raw and result['status']=='imports_completed'
+            assert (result['version'],result['allocation_id'])==(5,5)
+            current_dep=(base/'control/dependencies.json').read_bytes()
+            assert current_dep!=historical_dep
+            expected=dict(name=TARGET,producer='torch.autograd',phase='module_exec_publish',
+                attributes=['torch','_C','_autograd'],delegate_attributes=list(DELEGATES))
+            worker_path=base/'logs/stdout.log';worker=json.loads(worker_path.read_bytes())
+            assert worker['dependencies']['published_export_modules']==[expected]
+            assert [(r['name'],r['version']) for r in worker['entry_result']['imports']]==list(api.VERSIONS.items())
+            registration=json.loads((base/'control/worker-registration.json').read_bytes())
+            assert registration['source_files']==[r for r in config['sources'] if r['path'] in api.WORKER_SOURCES]
+            assert registration['dependencies']['sha256']==digest(current_dep)
+            for row in registration['source_files']:
+                raw=(base/'worker-source'/row['path']).read_bytes()
+                assert len(raw)==row['size_bytes'] and digest(raw)==row['sha256']
+            assert json.loads(current_dep)['roots']==json.loads(historical_dep)['roots']
+            assert json.loads(current_dep)['distributions']==json.loads(historical_dep)['distributions']
+            configuration=root/'authored-qualify05-configuration.json'
+            transport=root/'authored-qualify05-transport.json'
+    
+            def audit():
+                count=len(os.listdir('/proc/self/fd'))
+                try:
+                    return auditor.audit(configuration,digest(configuration.read_bytes()),transport,
+                        digest(transport.read_bytes()),deadline=time.monotonic()+30)
+                finally:assert len(os.listdir('/proc/self/fd'))==count
+    
+            report=audit()
+            assert report['status']=='PASS' and report['version']==5
+            assert report['historical_dependencies_sha256']==digest(historical_dep)
+            assert report['current_dependencies_sha256']==report['dependencies_sha256']==digest(current_dep)
+            assert report['historical_candidate_sha256']==case['prepared']['inputs']['candidate']['sha256']
+            assert report['current_candidate_sha256']==config['inputs']['candidate']['sha256']
+            (root/'authored-publication05-api-audit.json').write_bytes(canonical(report))
+            published=root/'authored-publication05-cli-audit.json'
+            command=[api.PYTHON,'-I','-S','-B',str(auditor_path),'--configuration',str(configuration),
+                '--sha256',digest(configuration.read_bytes()),'--transport',str(transport),
+                '--transport-sha256',digest(transport.read_bytes()),'--output',str(published)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,capture_output=True,timeout=30,
+                env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+            for channel,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                (root/('authored-publication05-cli-audit.'+channel)).write_bytes(raw)
+            assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+            assert process.stdout==published.read_bytes() and process.stderr==b''
+            cli_report=json.loads(process.stdout)
+            assert cli_report['status']=='PASS' and cli_report['auditor_source_sha256']==digest(auditor_path.read_bytes())
+            (root/'authored-publication05-cli-audit-transport.json').write_bytes(canonical(dict(
+                kind='authored-cpu-held-auditor-cli-transport-v1',authored_scope=AUTHORED,
+                command=command,observed_returncode=process.returncode,elapsed_seconds=time.monotonic()-started)))
+    
+            stdout_path=root/'authored-qualify05-cli.stdout'
+            originals={p:p.read_bytes() for p in (worker_path,result_path,stdout_path,transport)}
+            try:
+                changed=json.loads(originals[worker_path])
+                changed['dependencies']['published_export_modules'][0]['delegate_attributes'].pop()
+                changed_worker=canonical(changed);worker_path.write_bytes(changed_worker)
+                changed_result=json.loads(result_raw);changed_result['worker_stdout_sha256']=digest(changed_worker)
+                changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
+                changed_transport=json.loads(originals[transport]);changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw))
+                transport.write_bytes(canonical(changed_transport))
+                with pytest.raises(ValueError,match='(?i)publish'):audit()
+            finally:
+                for path,raw in originals.items():path.write_bytes(raw)
+    
+            candidate_path=root/config['inputs']['candidate']['path']
+            invocation=base/'invocation.json';retained_config=base/'configuration.json'
+            originals={p:p.read_bytes() for p in (candidate_path,configuration,retained_config,invocation,result_path,stdout_path,transport)}
+            try:
+                changed_candidate=json.loads(originals[candidate_path])
+                changed_candidate['import_profile']['exports'][0]['attributes']=['foreign']
+                changed_candidate_raw=canonical(changed_candidate);candidate_path.write_bytes(changed_candidate_raw)
+                changed_config=json.loads(originals[configuration]);changed_config['inputs']['candidate']=file_pin(root,candidate_path)
+                changed_config_raw=canonical(changed_config);configuration.write_bytes(changed_config_raw);retained_config.write_bytes(changed_config_raw)
+                changed_result=json.loads(originals[result_path]);changed_result['configuration_sha256']=digest(changed_config_raw)
+                changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
+                changed_transport=json.loads(originals[transport]);changed_transport['configuration_sha256']=digest(changed_config_raw)
+                changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw));transport.write_bytes(canonical(changed_transport))
+                changed_invocation=json.loads(originals[invocation]);changed_invocation['configuration_sha256']=digest(changed_config_raw);invocation.write_bytes(canonical(changed_invocation))
+>               with pytest.raises(ValueError,match='(?i)(autograd|publication)'):audit()
+E               AssertionError: Regex pattern did not match.
+E                Regex: re.compile('(?i)(autograd|publication)', re.IGNORECASE)
+E                Input: 'Exact isolated parent transport command required'
+
+tests/test_puck_cpu_held_amendment05_integration.py:223: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment05_integration.py::test_authored05_corrects_only_publication_profile_and_audits_both_epochs
+1 failed in 10.47s

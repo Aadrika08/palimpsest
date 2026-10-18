@@ -1,0 +1,45 @@
+{
+  "actual_exit_code": 1,
+  "closure": {
+    "active_children": [],
+    "active_non_main_threads": [],
+    "fd_count_after": 5,
+    "fd_count_before": 5
+  },
+  "collection_authorized": false,
+  "configuration_sha256": "b11daf4719daf3a838ece18cf6c0604875d3fcba65b0ab0b5354b9428be6b8ca",
+  "diagnosis": {
+    "causal_status": "likely cause; underlying chain was not observed",
+    "observed": "first NumPy import failed with a generic chained wrapper ImportError; underlying exception not retained",
+    "static_defect": "libz.so.1 resolved to a globally indexed torchvision private provider outside NumPy loader paths; host libz was not mounted"
+  },
+  "elapsed_seconds": 8.909677214978728,
+  "evidence_index": {
+    "file_count": 64,
+    "path": "puck-cpu-characterization-01/evidence-index.json",
+    "sha256": "b097485ac645f14d143ac4c29edb32cabc3fa82ad432d59db87685f4dc41bdbe",
+    "total_bytes": 6804246
+  },
+  "first_failed_import": "numpy",
+  "freeze_commit": "9b41aa0ab3bd205800ca85e0311b06decf89a504",
+  "independent_preservation_audit": {
+    "elapsed_seconds": 5.887243352015503,
+    "exit_code": 0,
+    "sha256": "26dd167d4d06ce4a8d45598a06dcd5c0e5a6c1b171550cfa11c0b039b655fbf9",
+    "size_bytes": 1509,
+    "status": "PRESERVED_FAILURE_VERIFIED"
+  },
+  "kind": "cpu-characterization-failure-report-v1",
+  "namespace_probe_exit_code": 0,
+  "native_authorized": false,
+  "next_action": "prepare bounded CPU-only cause/context diagnostics and exact host-zlib metadata05; freeze/review a distinct characterization02 before any invocation",
+  "qualification_claims": [],
+  "release_gates_closed": 0,
+  "runtime_qualified": false,
+  "sampled_parent_peak_rss_bytes": 79261696,
+  "sampled_parent_worker_peak_rss_bytes": 104083456,
+  "status": "FAIL",
+  "study_authorized": false,
+  "successful_package_versions": {},
+  "worker_exit_code": 1
+}

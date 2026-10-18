@@ -1,0 +1,36 @@
+{
+  "acquired_subjects": [
+    "memory-v2-00000190-local_cue-no-event-0-subject-a"
+  ],
+  "actual_policy_bindings_verified": true,
+  "all_packets_reconstructed": true,
+  "case_id": "south-no-event",
+  "failure": {
+    "message": "selected_waypoint_unavailable: memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+    "pose": [
+      -0.8503412008285522,
+      -1.120007872581482,
+      -0.6957413055440772
+    ],
+    "tick": 101
+  },
+  "final_memory_exact": true,
+  "forward_half_fov_degrees": 90,
+  "memory_decisions_replayed": true,
+  "native_prerequisite_pass": false,
+  "packet_count": 102,
+  "policy_calls": 101,
+  "qualification_claims": [],
+  "raw_checksums_verified": true,
+  "raw_rows": 101,
+  "requested_target": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2",
+  "run_id": "f1bc7d409fcd4f34bc8c0e3eb6a1a83a",
+  "schema": "memory-v2-retained-failure-audit-v1",
+  "target_bearing_degrees": -133.68591426388207,
+  "target_range_m": 1.1569845753955095,
+  "target_xy": [
+    -2.0,
+    -1.25
+  ],
+  "worker_source_identity_unchanged": true
+}

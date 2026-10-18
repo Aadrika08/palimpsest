@@ -1,0 +1,17 @@
+test_bind_and_archive_use_the_episode_parent_auditor_and_packet (__main__.ToolChecks.test_bind_and_archive_use_the_episode_parent_auditor_and_packet) ... ok
+test_collect_passes_only_a_complete_audited_episode (__main__.ToolChecks.test_collect_passes_only_a_complete_audited_episode) ... ok
+test_collect_records_admission_refusal_without_allocation (__main__.ToolChecks.test_collect_records_admission_refusal_without_allocation) ... ok
+test_collect_records_observer_timeout_without_audit (__main__.ToolChecks.test_collect_records_observer_timeout_without_audit) ... ok
+test_collect_refuses_a_bundle_the_audit_did_not_validate (__main__.ToolChecks.test_collect_refuses_a_bundle_the_audit_did_not_validate) ... ok
+test_collect_refuses_a_different_configuration_sha (__main__.ToolChecks.test_collect_refuses_a_different_configuration_sha) ... ok
+test_collect_refuses_a_registration_without_the_600s_clock (__main__.ToolChecks.test_collect_refuses_a_registration_without_the_600s_clock) ... ok
+test_envelope_and_wrapper_outlast_every_child_alarm (__main__.ToolChecks.test_envelope_and_wrapper_outlast_every_child_alarm) ... ok
+test_every_one_shot_guard_checks_stage_and_boot_before_acting (__main__.ToolChecks.test_every_one_shot_guard_checks_stage_and_boot_before_acting) ... ok
+test_make_observer_guard_derives_pre_observer_guard_on_fixture (__main__.ToolChecks.test_make_observer_guard_derives_pre_observer_guard_on_fixture) ... ok
+test_stage_guard_on_tmpfs_fixture (__main__.ToolChecks.test_stage_guard_on_tmpfs_fixture) ... ok
+test_templates_compile_without_unknown_placeholders (__main__.ToolChecks.test_templates_compile_without_unknown_placeholders) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.081s
+
+OK

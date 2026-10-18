@@ -1,0 +1,162 @@
+F
+=================================== FAILURES ===================================
+_ test_native_sized_reports_publish_complete_bounded_driver_and_independent_close _
+
+path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size/.superpowers/sdd/software-tmp-mem...size/red-fixture/test_native_sized_reports_publ0/repo/docs/reports/memory-prerequisites-v2-evidence/registration.json')
+
+    def run(path):
+        path = p.checked_path(path); reg = p.read_json(path); validate_registration(reg)
+        started = launcher_origin(reg,path); owner_deadline = started+4300; global_deadline = started+4900
+        repo = p.checked_path(reg['repo'])
+        if repo != Path(__file__).resolve().parents[1] or path != Path(reg['publication_root'])/'registration.json':
+            raise ValueError('Campaign checkout or registration path differs')
+        if subprocess.check_output(['git','status','--porcelain'], cwd=repo):
+            raise ValueError('Native admission requires a clean committed checkout')
+        head = subprocess.check_output(['git','rev-parse','HEAD'], cwd=repo, text=True).strip()
+        if subprocess.check_output(['git','diff',reg['implementation_commit'],head,'--name-only','--',
+                'src','scripts','tests','model_manifests','uv.lock','upstream'], cwd=repo):
+            raise ValueError('Registered campaign implementation differs')
+        root = p.safe_output(reg['output'], p.source_paths(repo,reg['assets'],reg['history_root'])+
+            reg['protected_roots']+[reg['control_root'],reg['publication_root']])
+        recheck_inputs(reg, owner_deadline)
+        plan = p.preflight(repo, Path(reg['assets']), Path(reg['history_root']), root/'stage', root,
+                           owner_deadline, profile_sha256=d.PROFILE)
+        plan.update(protocol=p.TRAVEL_PROTOCOL, protocol_sha256=p.TRAVEL_PROTOCOL_SHA256,
+                    selected_profile_sha256=d.PROFILE)
+        storage = budget(reg)
+        receipt = {'schema':'memory-prerequisites-execution-v2', 'mode':'prerequisites-v2',
+            'implementation_head':head, 'registration_sha256':p.file_hash(path),
+            'launcher_marker_sha256':p.file_hash(Path(reg['control_root'])/'launched.json'),
+            'source_identity':reg['source_identity'], 'state_contract':reg['state_contract'],
+            'process_namespace':os.readlink('/proc/self/ns/pid'), 'output':str(root),
+            'started_utc':datetime.now(timezone.utc).isoformat(), 'started_monotonic':started,
+            'owner_deadline_monotonic':owner_deadline, 'global_deadline_monotonic':global_deadline,
+            'seconds_caps':[4300,600], 'status':'running', 'attempted':[], 'unattempted':[],
+            'native_prerequisites_passed':False, 'qualification_claims':[], 'r2_complete':False,
+            'paired_pilot':'unattempted-by-scope', 'held_out_used':False, 'retries':0}
+        def interrupted(signum, frame):
+            raise RuntimeError('Campaign interrupted: '+str(signum))
+        previous = signal.signal(signal.SIGTERM, interrupted)
+        root.mkdir(parents=True, exist_ok=False)
+        try:
+            with storage.lock():
+                (root/'stage').mkdir()
+                p.write_control(root/'registration.json', reg, storage)
+                p.write_control(root/'stage/preflight.json', plan, storage)
+                d.replace_control(root/'execution.json', receipt, storage)
+                source = None
+                try:
+                    if not plan.get('geometry_valid'):
+                        raise ValueError('Frozen profile geometry invalid')
+                    for spec in reg['expected_specs']:
+                        recheck_inputs(reg, owner_deadline)
+                        if spec['operation'] == 'repeat':
+                            if source is None or fresh_source(reg, receipt['attempted'][4], owner_deadline) != source:
+                                raise ValueError('Fresh source changed before repeat admission')
+                        storage.check(512*p.MiB+2*16*p.MiB+4*p.MiB, path=root/'stage/runs')
+                        result = p.launch_owner('travel-feasibility', spec, plan, storage, owner_deadline,
+                            source=source if spec['operation']=='repeat' else None,
+                            retain_repeat_state=spec['operation']=='repeat')
+                        receipt['attempted'].append(result)
+                        d.replace_control(root/'execution.json', receipt, storage)
+                        if spec['operation'] == 'repeat':
+                            if (result.get('status') != 'recorded' or result.get('raw_audit_pass') is not True or
+                                    result.get('invariants_preserved') is not True or result.get('continuation_ticks') != 5):
+                                raise ValueError('Restore owner failed; later launch prohibited')
+                            d.audit_post_state(Path(result['run']), result)
+                        elif not cell_pass(spec, result):
+                            raise ValueError('Mandatory fresh prerequisite failed: '+spec['id'])
+                        if spec['id'] == 'south-prefix':
+                            source = fresh_source(reg, result, owner_deadline)
+                            p.write_control(root/'fresh-source.json', source, storage)
+                    p.deadline_check(owner_deadline)
+                    receipt['status'] = 'recorded-bounded-attempt'
+                except BaseException as error:
+                    receipt.update(status='owner-or-admission-stop', error={'type':type(error).__name__,'message':str(error)})
+                finally:
+                    readout_started = time.monotonic(); deadline = min(global_deadline, readout_started+600)
+                    receipt.update(readout_started_monotonic=readout_started, readout_deadline_monotonic=deadline)
+                    analysis = {}
+                    try:
+                        receipt['cleanup'] = d.cleanup_owners(root)
+                        read_evidence(reg, receipt, deadline, analysis)
+                        if receipt['status'] != 'recorded-bounded-attempt':
+                            raise ValueError('Owner phase did not complete')
+                        recheck_inputs(reg, deadline)
+                        receipt['source_and_prior_evidence_unchanged'] = True
+                        receipt['status'] = 'prerequisites-provisional-pass'
+                    except BaseException as error:
+                        receipt.update(status='prerequisites-failure', readout_error={'type':type(error).__name__,'message':str(error)})
+                    receipt.update(analysis)
+                    attempted_ids = {row['job_id'] for row in receipt['attempted']}
+                    receipt['unattempted'] = [spec['id'] for spec in reg['expected_specs'] if spec['id'] not in attempted_ids]
+                    receipt.update(total_seconds=time.monotonic()-started, readout_seconds=time.monotonic()-readout_started)
+                    try:
+                        receipt['artifact_index'] = [row for row in p.hash_ledger(root, deadline) if row['path'] != 'execution.json']
+>                       p.deadline_check(deadline); d.replace_control(root/'execution.json', receipt, storage)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/memory_prerequisites_v2.py:324: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_waypoint_study.py:44: in replace_control
+    pilot.write_control(pending,value,storage)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size/.superpowers/sdd/software-tmp-mem...ipt-size/red-fixture/test_native_sized_reports_publ0/repo/runs/memory-prerequisites-v2-fixture/execution.json.pending')
+value = {'allocated_jobs': [{'bytes': 5839, 'path': '072b7dab0e3d46178c093be99cc2abbe.json', 'sha256': 'db2446c2084fff63ed941f... 'neural-1': {...}, 'neural-10': {...}, 'neural-100': {...}, ...}}}, 'first_commitment_blocked': True, ...}, ...], ...}
+storage = <palimpsest.storage.StorageBudget object at 0x75e80ff3a210>
+
+    def write_control(path, value, storage):
+        payload = json.dumps(value, indent=2, sort_keys=True, allow_nan=False).encode()+b'\n'
+        if len(payload) > MiB:
+>           raise ValueError('Control envelope exceeds 1 MiB')
+E           ValueError: Control envelope exceeds 1 MiB
+
+scripts/memory_decision_pilot.py:242: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size/.superpowers/sdd/software-tmp-memory-campaign-receipt-size/red-fixture/test_native_sized_reports_publ0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75e810d8f9d0>
+
+    def test_native_sized_reports_publish_complete_bounded_driver_and_independent_close(tmp_path,monkeypatch):
+        # Synthetic source identities and nested reports reproduce the eight-owner
+        # envelope pressure without reading retained evidence or launching physics.
+        receipts = {'neural-'+str(i):{'received_run_id':'source','applied_tick':i} for i in range(727)}
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch,source_receipts=receipts)
+        memory = {'u':{'cache':{'neural-'+str(i):{'packet':{'tick':i,
+            'subject_id':'south-aperture','status':'observed'}} for i in range(280)}},
+            'selector':{}, 'm':{'facts':[]}, 'supervisor':{'phase':'await_decision'}}
+        launch = p.launch_owner
+        def large_report(*args,**kwargs):
+            report = launch(*args,**kwargs)
+            report['final_memory'] = copy.deepcopy(memory)
+            Path(report['run'],'worker-report.json').write_text(json.dumps(report))
+            return report
+        monkeypatch.setattr(p,'launch_owner',large_report)
+    
+>       assert m.run(path) == 0
+               ^^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_prerequisites_v2.py:328: in run
+    d.replace_control(root/'execution.json', receipt, storage)
+scripts/memory_waypoint_study.py:44: in replace_control
+    pilot.write_control(pending,value,storage)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size/.superpowers/sdd/software-tmp-mem...ipt-size/red-fixture/test_native_sized_reports_publ0/repo/runs/memory-prerequisites-v2-fixture/execution.json.pending')
+value = {'allocated_jobs': [{'bytes': 5839, 'path': '072b7dab0e3d46178c093be99cc2abbe.json', 'sha256': 'db2446c2084fff63ed941f... 'neural-1': {...}, 'neural-10': {...}, 'neural-100': {...}, ...}}}, 'first_commitment_blocked': True, ...}, ...], ...}
+storage = <palimpsest.storage.StorageBudget object at 0x75e80ff3a210>
+
+    def write_control(path, value, storage):
+        payload = json.dumps(value, indent=2, sort_keys=True, allow_nan=False).encode()+b'\n'
+        if len(payload) > MiB:
+>           raise ValueError('Control envelope exceeds 1 MiB')
+E           ValueError: Control envelope exceeds 1 MiB
+
+scripts/memory_decision_pilot.py:242: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2.py::test_native_sized_reports_publish_complete_bounded_driver_and_independent_close
+1 failed in 2.74s

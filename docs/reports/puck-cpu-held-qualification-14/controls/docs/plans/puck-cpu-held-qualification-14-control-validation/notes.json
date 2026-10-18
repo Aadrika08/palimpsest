@@ -1,0 +1,17 @@
+{
+  "admission_invoked": false,
+  "authoring_corrections": [
+    "postfreeze.py first stopped at its envelope stale-name check because evidence_commits names control11b; the two wrapper copies it had already written (tracked and /tmp) were deleted and the check excludes evidence_commits; no freeze byte changed",
+    "an unretained trial of tools-check.py found collect-outcome reading transport['elapsed_seconds'] unguarded; derive-tools.py now uses .get and all derived tools were regenerated before the retained tools-green01 run"
+  ],
+  "canonical": "canonical-green01: 9,048B compact epoch-14 configuration; changes vs 11b only allocation_id, kind, limits (QUALIFY14 360/375/390), preparation_acceptance, sources (bootstrap, qualifier, puck_dependency_files), stage_parent and version; parent validate_configuration/validate_preparation_acceptance and auditor configuration/preparation_epoch/historical_acceptance PASS before the freeze",
+  "entries": "entries01: the read-only model reproduces admission10-02's 33,719 held files and 37,903 entries and admission11b's measured 34,032 held files; attempt 14 projects 34,337 files + 3,273 directories + 1,071 links = 38,681 of 40,000 (margin 1,319; below the 39,500 stop threshold)",
+  "freeze": "2,768 pins / 133,828,234B / 698,687B manifest 7cecde69...; all 2,463 11b pins retained (5 live sources archived via the 11b packet source/), plus the 11b outcome packet and runs/ originals, 86 11b controls Git-bound at 27780dd, 28 preparation03 controls/evidence Git-bound at 44e9712 and the attempt-14 source evidence",
+  "guard": "guard-green01: corrected history read on the 14 template",
+  "history": "history-red01: 41 cases, 9 errors/6 failures/26 passes; history-green01: all 41 pass",
+  "kind": "actual14-control-validation-notes-v1",
+  "limits": "No admission main, guard, run-once tool, SITE/staged/native census, observer, auditor or runtime invoked; neither preparation stage was opened by these checks (stage-guard proofs use tmpfs fixtures). /tmp writes: wrapper copy, self-check JSON and scratch.",
+  "runtime_invoked": false,
+  "selfcheck01": "PASS_AUTHENTICATED_CONTROL_METADATA_ONLY in 8.58s; full 2,768-pin warm roster; consumed 07-11, admission10 01/02 and admission11b; preparation02 accepted and consumed (stage not inspected); preparation03 accepted with matching registration, stage receipt and invocation; d83dab3 never invoked; 41 empty directories; 32-name planned absence; epoch-14 limits 360/375/390 and v5 worker registration with deadline_seconds 360 (180 and 361 refused); envelope observer 440/450s; FD 4->4",
+  "tools": "tools-green01: 10 cases PASS - templates compile; every one-shot guard loads the Git-bound preparation03 stage guard before acting; stage guard on tmpfs fixtures; pre-observer derivation; collect-outcome I1/M1 cases; epoch-14 PASS only within clocks (transport 401s, parent 360s or a 361s import -> FAILED_CONSUMED); a non-360 registration clock is refused; envelope and wrapper extend only the observer"
+}

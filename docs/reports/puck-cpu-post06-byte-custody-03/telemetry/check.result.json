@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held06-post-byte-custody-03-telemetry-check.py"
+  ],
+  "elapsed_seconds": 0.2301142949727364,
+  "full03_invoked": false,
+  "kind": "held06-post03-telemetry-unit-check-external-result-v1",
+  "returncode": 0,
+  "scope": "Isolated AST-extracted telemetry unit tests only",
+  "script": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-telemetry-check.py",
+    "sha256": "5197a585635b1ccd297151c717504ee03cf85e4318b482b7c507e4ff4fc163d8",
+    "size_bytes": 10185
+  },
+  "stderr": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-telemetry-check.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-telemetry-check.stdout",
+    "sha256": "f7d45ec519d5215d3572335ce1c466c4338a409adaa75d628456283bf79acd79",
+    "size_bytes": 3012
+  },
+  "timed_out": false
+}

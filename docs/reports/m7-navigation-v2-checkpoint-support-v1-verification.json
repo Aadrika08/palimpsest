@@ -1,0 +1,503 @@
+{
+  "bindings": {
+    "attempt_sha256": "b2da02564ff6dc659c1da29a872b8052de75f46ace1fea15f1e9b9b9c3898aad",
+    "compact_arrays_sha256": "f4a7babad062bd7118aef2281f883b5a3aba49350bfbd38247f145d3e8c590ab",
+    "execution_manifest_sha256": "b6e94ebb800b4a0049bed264157ddf495e9e53d61426c50077de684f14065db0",
+    "execution_sha256": "4387ab3fd0512a9608ee06107f3ed85ee4d56457ed16a26c3e4c9ae6c798b477",
+    "protocol_sha256": "ef1d2e1b86028d1bd360e0bb149610043287ecd3f6e735ce6d2d90c5f3ac2f0b",
+    "report_sha256": "847cd6832d083e02071e649492f3a02125671fb4f2b5501f93d661a61a64c791",
+    "script_sha256": "1c69308d706def16e3c0bfd78b32df6704d08d5032e72f514c3fde68368ea02e",
+    "test_sha256": "8d65d59681ff449928a431b60181ac0ed35b8ef05c593a0083cef686e2d373a5"
+  },
+  "checks": {
+    "arrays_hash_matches_report_and_execution": true,
+    "attempt_consumed_no_retry": true,
+    "attempt_hash_matches_report_and_execution": true,
+    "behavior_sources_before_after_equal": true,
+    "committed_arrays_byte_identical": true,
+    "committed_attempt_byte_identical": true,
+    "committed_execution_byte_identical": true,
+    "committed_report_byte_identical": true,
+    "compact_arrays_safe_finite_float32": true,
+    "compact_metrics_independently_recomputed": true,
+    "fresh_scene_generated_false": true,
+    "held_out_accessed_false": true,
+    "input_before_after_equal": true,
+    "models_exact": true,
+    "no_failure_receipt": true,
+    "outer_supervisor_bound": true,
+    "pairs_exact": true,
+    "protocol_hash_matches_output": true,
+    "qualification_claims_empty": true,
+    "r3_complete_false": true,
+    "raw_analysis_repeated": false,
+    "report_hash_matches_execution": true,
+    "rows_exact": true,
+    "simulator_executed_false": true,
+    "sole_invocation_completed": true,
+    "training_executed_false": true,
+    "windows_exact": true
+  },
+  "claims": {
+    "causal_claim": false,
+    "fresh_scene_capability_claim": false,
+    "qualification_claims": [],
+    "r3_complete": false,
+    "topology_claim": false
+  },
+  "counts": {
+    "arrays": 52,
+    "models": 6,
+    "pairs": 3,
+    "rows": 7368,
+    "windows": 234
+  },
+  "descriptive_summary": {
+    "budget_accounting": {
+      "full_fit": {
+        "augmented": {
+          "epochs": 20,
+          "optimizer_updates": 4720,
+          "row_presentations": 143940,
+          "rows_per_epoch": 7197,
+          "windows_per_epoch": 236
+        },
+        "old_corpus": {
+          "epochs": 20,
+          "optimizer_updates": 1440,
+          "row_presentations": 42340,
+          "rows_per_epoch": 2117,
+          "windows_per_epoch": 72
+        }
+      },
+      "interpretation": "The v2 treatment changed corpus composition, row exposure, optimizer updates, source order, and selected effective budget jointly. This audit must not assign causality.",
+      "selected_checkpoints": [
+        {
+          "augmented": {
+            "epoch": 1,
+            "optimizer_updates": 236,
+            "row_presentations": 7197
+          },
+          "old_corpus": {
+            "epoch": 20,
+            "optimizer_updates": 1440,
+            "row_presentations": 42340
+          },
+          "training_seed": 10
+        },
+        {
+          "augmented": {
+            "epoch": 1,
+            "optimizer_updates": 236,
+            "row_presentations": 7197
+          },
+          "old_corpus": {
+            "epoch": 16,
+            "optimizer_updates": 1152,
+            "row_presentations": 33872
+          },
+          "training_seed": 11
+        },
+        {
+          "augmented": {
+            "epoch": 7,
+            "optimizer_updates": 1652,
+            "row_presentations": 50379
+          },
+          "old_corpus": {
+            "epoch": 17,
+            "optimizer_updates": 1224,
+            "row_presentations": 35989
+          },
+          "training_seed": 12
+        }
+      ]
+    },
+    "models": [
+      {
+        "arm": "old-corpus",
+        "heading": {
+          "range": [
+            -0.06566658616065979,
+            1.4361693859100342
+          ],
+          "sign_counts": {
+            "deadband": 307,
+            "negative": 11,
+            "positive": 910
+          },
+          "support": "checkpoint_switches",
+          "within_source_sign_changes": 2
+        },
+        "metrics": {
+          "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+          "loss": 0.025643583981726767,
+          "ticks": 1228,
+          "velocity_mae": 0.0924240241027422,
+          "wrapped_heading_mae_radians": 0.19284638874111423
+        },
+        "raw_heading_range": [
+          -0.02090536803007126,
+          0.4936984181404114
+        ],
+        "raw_velocity_range": [
+          0.1498228758573532,
+          0.29918867349624634
+        ],
+        "reverse_command_ticks": 0,
+        "selected_epoch": 20,
+        "stopped_command_ticks": 0,
+        "training_seed": 10,
+        "velocity": {
+          "range": [
+            0.4461354911327362,
+            0.8717098832130432
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "target_support_absent",
+          "within_source_sign_changes": 0
+        }
+      },
+      {
+        "arm": "augmented",
+        "heading": {
+          "range": [
+            0.1959267109632492,
+            0.25180646777153015
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "checkpoint_sign_missing",
+          "within_source_sign_changes": 0
+        },
+        "metrics": {
+          "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+          "loss": 0.05646156711376451,
+          "ticks": 1228,
+          "velocity_mae": 0.3092642649765512,
+          "wrapped_heading_mae_radians": 0.3422568976296664
+        },
+        "raw_heading_range": [
+          0.06244644895195961,
+          0.08032479137182236
+        ],
+        "raw_velocity_range": [
+          0.12685422599315643,
+          0.13418060541152954
+        ],
+        "reverse_command_ticks": 0,
+        "selected_epoch": 1,
+        "stopped_command_ticks": 0,
+        "training_seed": 10,
+        "velocity": {
+          "range": [
+            0.37853437662124634,
+            0.40014326572418213
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "target_support_absent",
+          "within_source_sign_changes": 0
+        }
+      },
+      {
+        "arm": "old-corpus",
+        "heading": {
+          "range": [
+            -0.1036139503121376,
+            0.7862920165061951
+          ],
+          "sign_counts": {
+            "deadband": 947,
+            "negative": 150,
+            "positive": 131
+          },
+          "support": "checkpoint_switches",
+          "within_source_sign_changes": 5
+        },
+        "metrics": {
+          "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+          "loss": 0.02962370051817319,
+          "ticks": 1228,
+          "velocity_mae": 0.040360304256992156,
+          "wrapped_heading_mae_radians": 0.14042418251111374
+        },
+        "raw_heading_range": [
+          -0.03299330919981003,
+          0.25571632385253906
+        ],
+        "raw_velocity_range": [
+          0.11597879976034164,
+          0.234524667263031
+        ],
+        "reverse_command_ticks": 0,
+        "selected_epoch": 16,
+        "stopped_command_ticks": 0,
+        "training_seed": 11,
+        "velocity": {
+          "range": [
+            0.3463847041130066,
+            0.6909523010253906
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "target_support_absent",
+          "within_source_sign_changes": 0
+        }
+      },
+      {
+        "arm": "augmented",
+        "heading": {
+          "range": [
+            -0.08193009346723557,
+            -0.07713019102811813
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 1228,
+            "positive": 0
+          },
+          "support": "checkpoint_sign_missing",
+          "within_source_sign_changes": 0
+        },
+        "metrics": {
+          "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+          "loss": 0.0604871156646685,
+          "ticks": 1228,
+          "velocity_mae": 0.48690450618632064,
+          "wrapped_heading_mae_radians": 0.22257974297293623
+        },
+        "raw_heading_range": [
+          -0.02608507126569748,
+          -0.02455623634159565
+        ],
+        "raw_velocity_range": [
+          0.06427706032991409,
+          0.0712844654917717
+        ],
+        "reverse_command_ticks": 0,
+        "selected_epoch": 1,
+        "stopped_command_ticks": 0,
+        "training_seed": 11,
+        "velocity": {
+          "range": [
+            0.19256606698036194,
+            0.21349190175533295
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "target_support_absent",
+          "within_source_sign_changes": 0
+        }
+      },
+      {
+        "arm": "old-corpus",
+        "heading": {
+          "range": [
+            -0.07783166319131851,
+            1.424344539642334
+          ],
+          "sign_counts": {
+            "deadband": 452,
+            "negative": 23,
+            "positive": 753
+          },
+          "support": "checkpoint_switches",
+          "within_source_sign_changes": 2
+        },
+        "metrics": {
+          "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+          "loss": 0.023544041700782527,
+          "ticks": 1228,
+          "velocity_mae": 0.057253033311048626,
+          "wrapped_heading_mae_radians": 0.17155102482641946
+        },
+        "raw_heading_range": [
+          -0.024779656901955605,
+          0.48895034193992615
+        ],
+        "raw_velocity_range": [
+          0.036038417369127274,
+          0.2979062497615814
+        ],
+        "reverse_command_ticks": 0,
+        "selected_epoch": 17,
+        "stopped_command_ticks": 0,
+        "training_seed": 12,
+        "velocity": {
+          "range": [
+            0.10806846618652344,
+            0.8681861758232117
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "target_support_absent",
+          "within_source_sign_changes": 0
+        }
+      },
+      {
+        "arm": "augmented",
+        "heading": {
+          "range": [
+            -0.12468695640563965,
+            -0.11662463843822479
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 1228,
+            "positive": 0
+          },
+          "support": "checkpoint_sign_missing",
+          "within_source_sign_changes": 0
+        },
+        "metrics": {
+          "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+          "loss": 0.05394940920392543,
+          "ticks": 1228,
+          "velocity_mae": 0.25623947207236525,
+          "wrapped_heading_mae_radians": 0.2594340692125625
+        },
+        "raw_heading_range": [
+          -0.039709948003292084,
+          -0.03713984042406082
+        ],
+        "raw_velocity_range": [
+          0.1483413279056549,
+          0.14962592720985413
+        ],
+        "reverse_command_ticks": 0,
+        "selected_epoch": 7,
+        "stopped_command_ticks": 0,
+        "training_seed": 12,
+        "velocity": {
+          "range": [
+            0.4417881965637207,
+            0.44555771350860596
+          ],
+          "sign_counts": {
+            "deadband": 0,
+            "negative": 0,
+            "positive": 1228
+          },
+          "support": "target_support_absent",
+          "within_source_sign_changes": 0
+        }
+      }
+    ],
+    "pairs": [
+      {
+        "first_differing_recorded_development_row": 0,
+        "maximum_absolute_action_difference": 1.194311484694481,
+        "mean_absolute_action_difference": 0.3033028809377593,
+        "training_seed": 10
+      },
+      {
+        "first_differing_recorded_development_row": 0,
+        "maximum_absolute_action_difference": 0.8634222075343132,
+        "mean_absolute_action_difference": 0.27500884523128893,
+        "training_seed": 11
+      },
+      {
+        "first_differing_recorded_development_row": 0,
+        "maximum_absolute_action_difference": 1.5441526547074318,
+        "mean_absolute_action_difference": 0.2491603844190433,
+        "training_seed": 12
+      }
+    ],
+    "targets": {
+      "heading": {
+        "maximum": 3.131744384765625,
+        "mean": 0.13288018249219175,
+        "minimum": -0.3058435320854187,
+        "quantiles": [
+          -0.3058435320854187,
+          -0.24026757538318635,
+          -0.10521502122282982,
+          -0.019450936932116747,
+          3.132809615635779e-05,
+          0.029232264030724764,
+          1.2900114834308518,
+          2.863724324703217,
+          3.131744384765625
+        ],
+        "sign_counts": {
+          "deadband": 799,
+          "negative": 179,
+          "positive": 250
+        },
+        "standard_deviation": 0.5215762832940686,
+        "within_source_sign_changes": 8
+      },
+      "velocity": {
+        "maximum": 0.699999988079071,
+        "mean": 0.699999988079071,
+        "minimum": 0.699999988079071,
+        "quantiles": [
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071,
+          0.699999988079071
+        ],
+        "sign_counts": {
+          "deadband": 0,
+          "negative": 0,
+          "positive": 1228
+        },
+        "standard_deviation": 0.0,
+        "within_source_sign_changes": 0
+      }
+    }
+  },
+  "elapsed_seconds": 3.218623959022807,
+  "independent_compact_review": "pending",
+  "output_inventory": {
+    "attempt.json": {
+      "bytes": 446,
+      "sha256": "b2da02564ff6dc659c1da29a872b8052de75f46ace1fea15f1e9b9b9c3898aad"
+    },
+    "execution.json": {
+      "bytes": 881,
+      "sha256": "4387ab3fd0512a9608ee06107f3ed85ee4d56457ed16a26c3e4c9ae6c798b477"
+    },
+    "outputs.npz": {
+      "bytes": 143254,
+      "sha256": "f4a7babad062bd7118aef2281f883b5a3aba49350bfbd38247f145d3e8c590ab"
+    },
+    "protocol.json": {
+      "bytes": 17160,
+      "sha256": "ef1d2e1b86028d1bd360e0bb149610043287ecd3f6e735ce6d2d90c5f3ac2f0b"
+    },
+    "report.json": {
+      "bytes": 24209,
+      "sha256": "847cd6832d083e02071e649492f3a02125671fb4f2b5501f93d661a61a64c791"
+    }
+  },
+  "schema": "m7-navigation-v2-checkpoint-support-verification-v1",
+  "source": "The five compact checkpoint-support output files and byte-identical documentation copies; no checkpoint, transfer, training/data manifest, development trajectory, simulator, or held-out input was reopened.",
+  "status": "verified-compact-output",
+  "total_output_bytes": 185950
+}

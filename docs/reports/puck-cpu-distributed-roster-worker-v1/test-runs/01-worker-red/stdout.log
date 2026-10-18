@@ -1,0 +1,2263 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF...                      [100%]
+=================================== FAILURES ===================================
+____ test_capture_retains_exact_three_raw_dispatch_rosters_and_comparisons _____
+
+    def test_capture_retains_exact_three_raw_dispatch_rosters_and_comparisons():
+        module = api()
+        cache, expected = authored_cache()
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+__ test_comparison_retains_complete_missing_and_extra_sets_without_acceptance __
+
+    def test_comparison_retains_complete_missing_and_extra_sets_without_acceptance():
+        module = api()
+        cache, expected = authored_cache()
+        expected[NAMES[0]] = ['Class', 'missing']
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'missing'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+________ test_reader_never_calls_object_class_property_or_loader_hooks _________
+
+    def test_reader_never_calls_object_class_property_or_loader_hooks():
+        module = api()
+        cache, expected = authored_cache()
+    
+        class DataTrap:
+            @property
+            def __class__(self):
+                raise AssertionError('data __class__ hook invoked')
+    
+        class LoaderMeta(type):
+            def __getattribute__(cls, name):
+                raise AssertionError('loader metaclass hook invoked: ' + name)
+    
+        class Loader(metaclass=LoaderMeta):
+            def __getattribute__(self, name):
+                raise AssertionError('loader instance hook invoked: ' + name)
+    
+            def __eq__(self, other):
+                raise AssertionError('loader equality invoked')
+    
+        cache[NAMES[0]].data = DataTrap()
+        cache[NAMES[0]].__loader__ = Loader()
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <[AssertionError('loade... in repr()] module object at 0x7ab8a0303ec0>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+___ test_capture_refuses_incomplete_or_unbounded_raw_metadata[missing-child] ___
+
+defect = 'missing-child'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, 'torch._C._distributed_rpc': <module 'torch._C._distributed_rpc'>}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_capture_refuses_incomplete_or_unbounded_raw_metadata[missing-raw-child] _
+
+defect = 'missing-raw-child'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_capture_refuses_incomplete_or_unbounded_raw_metadata[cache-raw-mismatch] _
+
+defect = 'cache-raw-mismatch'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_capture_refuses_incomplete_or_unbounded_raw_metadata[root-cache-mismatch] _
+
+defect = 'root-cache-mismatch'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+__ test_capture_refuses_incomplete_or_unbounded_raw_metadata[nonmodule-child] __
+
+defect = 'nonmodule-child'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <object object at 0x7ab8a16f5a50>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+__ test_capture_refuses_incomplete_or_unbounded_raw_metadata[module-subclass] __
+
+defect = 'module-subclass'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <[AssertionError('proxy...d in repr()] Proxy object at 0x7ab8a0452b10>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[wrong-name] _____
+
+defect = 'wrong-name'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'authored.foreign'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[custom-spec] ____
+
+defect = 'custom-spec'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <[AttributeError("'obje... in repr()] module object at 0x7ab8a046a070>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+___ test_capture_refuses_incomplete_or_unbounded_raw_metadata[metadata-text] ___
+
+defect = 'metadata-text'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._dist...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[bad-package] ____
+
+defect = 'bad-package'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+______ test_capture_refuses_incomplete_or_unbounded_raw_metadata[bad-key] ______
+
+defect = 'bad-key'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[long-key] ______
+
+defect = 'long-key'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[dict-limit] _____
+
+defect = 'dict-limit'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[bad-path] ______
+
+defect = 'bad-path'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_capture_refuses_incomplete_or_unbounded_raw_metadata[path-limit] _____
+
+defect = 'path-limit'
+
+    @pytest.mark.parametrize('defect', [
+        'missing-child', 'missing-raw-child', 'cache-raw-mismatch', 'root-cache-mismatch',
+        'nonmodule-child', 'module-subclass', 'wrong-name', 'custom-spec', 'metadata-text',
+        'bad-package', 'bad-key', 'long-key', 'dict-limit', 'bad-path', 'path-limit',
+    ])
+    def test_capture_refuses_incomplete_or_unbounded_raw_metadata(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        if defect == 'missing-child':
+            del cache[NAMES[0]]
+        elif defect == 'missing-raw-child':
+            del cache['torch._C']._distributed_autograd
+        elif defect == 'cache-raw-mismatch':
+            cache[NAMES[0]] = types.ModuleType(NAMES[0])
+        elif defect == 'root-cache-mismatch':
+            cache['torch']._C = types.ModuleType('torch._C')
+        elif defect == 'nonmodule-child':
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = object()
+        elif defect == 'module-subclass':
+            class Proxy(types.ModuleType):
+                def __getattribute__(self, key):
+                    raise AssertionError('proxy hook called')
+            cache[NAMES[0]] = cache['torch._C']._distributed_autograd = Proxy(NAMES[0])
+        elif defect == 'wrong-name':
+            child.__name__ = 'authored.foreign'
+        elif defect == 'custom-spec':
+            child.__spec__ = object()
+        elif defect == 'metadata-text':
+            child.__file__ = 'x' * 4097
+        elif defect == 'bad-package':
+            child.__package__ = object()
+        elif defect == 'bad-key':
+            vars(child)[17] = object()
+        elif defect == 'long-key':
+            vars(child)['x' * 513] = object()
+        elif defect == 'dict-limit':
+            vars(child).update({f'data{i}': i for i in range(4097)})
+        elif defect == 'bad-path':
+            child.__path__ = object()
+        else:
+            child.__path__ = ['x'] * 129
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_expected_sets_are_exact_bounded_controls_before_capture[missing] _____
+
+defect = 'missing'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_____ test_expected_sets_are_exact_bounded_controls_before_capture[extra] ______
+
+defect = 'extra'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'authored.foreign': ['member'], 'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch....': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_expected_sets_are_exact_bounded_controls_before_capture[not-dict] ____
+
+defect = 'not-dict'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = []
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_____ test_expected_sets_are_exact_bounded_controls_before_capture[tuple] ______
+
+defect = 'tuple'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ('member',), 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_____ test_expected_sets_are_exact_bounded_controls_before_capture[empty] ______
+
+defect = 'empty'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': [], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+___ test_expected_sets_are_exact_bounded_controls_before_capture[duplicate] ____
+
+defect = 'duplicate'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['member', 'member'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_expected_sets_are_exact_bounded_controls_before_capture[unsorted] ____
+
+defect = 'unsorted'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['z', 'a'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_expected_sets_are_exact_bounded_controls_before_capture[nontext] _____
+
+defect = 'nontext'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': [17], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_expected_sets_are_exact_bounded_controls_before_capture[subclass] ____
+
+defect = 'subclass'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['member'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+______ test_expected_sets_are_exact_bounded_controls_before_capture[nul] _______
+
+defect = 'nul'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['x\x00y'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+______ test_expected_sets_are_exact_bounded_controls_before_capture[long] ______
+
+defect = 'long'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+____ test_expected_sets_are_exact_bounded_controls_before_capture[too-many] ____
+
+defect = 'too-many'
+
+    @pytest.mark.parametrize('defect', [
+        'missing', 'extra', 'not-dict', 'tuple', 'empty', 'duplicate', 'unsorted',
+        'nontext', 'subclass', 'nul', 'long', 'too-many',
+    ])
+    def test_expected_sets_are_exact_bounded_controls_before_capture(defect):
+        module = api()
+        cache, expected = authored_cache()
+        if defect == 'missing':
+            del expected[NAMES[0]]
+        elif defect == 'extra':
+            expected['authored.foreign'] = ['member']
+        elif defect == 'not-dict':
+            expected = []
+        elif defect == 'tuple':
+            expected[NAMES[0]] = ('member',)
+        elif defect == 'empty':
+            expected[NAMES[0]] = []
+        elif defect == 'duplicate':
+            expected[NAMES[0]] = ['member', 'member']
+        elif defect == 'unsorted':
+            expected[NAMES[0]] = ['z', 'a']
+        elif defect == 'nontext':
+            expected[NAMES[0]] = [17]
+        elif defect == 'subclass':
+            class Text(str):
+                pass
+            expected[NAMES[0]] = [Text('member')]
+        elif defect == 'nul':
+            expected[NAMES[0]] = ['x\0y']
+        elif defect == 'long':
+            expected[NAMES[0]] = ['x' * 513]
+        else:
+            expected[NAMES[0]] = sorted(f'm{i}' for i in range(4097))
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd'>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['m0', 'm1', 'm10', 'm100', 'm1000', 'm1001', ...], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[cache-rebind] _
+
+defect = 'cache-rebind'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[native-rebind] _
+
+defect = 'native-rebind'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[delegate-rebind] _
+
+defect = 'delegate-rebind'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[delegate-add] _
+
+defect = 'delegate-add'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[delegate-remove] _
+
+defect = 'delegate-remove'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[metadata-file] _
+
+defect = 'metadata-file'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[metadata-loader] _
+
+defect = 'metadata-loader'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[metadata-spec] _
+
+defect = 'metadata-spec'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-name] _
+
+defect = 'spec-name'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-loader] _
+
+defect = 'spec-loader'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-origin] _
+
+defect = 'spec-origin'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-search-path] _
+
+defect = 'spec-search-path'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_ test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[module-path] _
+
+defect = 'module-path'
+
+    @pytest.mark.parametrize('defect', [
+        'cache-rebind', 'native-rebind', 'delegate-rebind', 'delegate-add', 'delegate-remove',
+        'metadata-file', 'metadata-loader', 'metadata-spec', 'spec-name', 'spec-loader',
+        'spec-origin', 'spec-search-path', 'module-path',
+    ])
+    def test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes(defect):
+        module = api()
+        cache, expected = authored_cache()
+        child = cache[NAMES[0]]
+        spec = importlib.util.spec_from_loader(NAMES[0], None, origin='/authored/original')
+        child.__spec__ = spec
+>       projection, seal = capture(module, cache, expected)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_exports.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+module = <module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>
+cache = {'torch': <module 'torch'>, 'torch._C': <module 'torch._C'>, 'torch._C._distributed_autograd': <module 'torch._C._distributed_autograd' (/authored/original)>, 'torch._C._distributed_c10d': <module 'torch._C._distributed_c10d'>, ...}
+expected = {'torch._C._distributed_autograd': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_c10d': ['Class', 'builtin', 'function', 'module'], 'torch._C._distributed_rpc': ['Class', 'builtin', 'function', 'module']}
+
+    def capture(module, cache, expected):
+        function = vars(module).get('describe_distributed_exports')
+>       assert callable(function), 'Fixed distributed terminal metadata projection is missing'
+E       AssertionError: Fixed distributed terminal metadata projection is missing
+E       assert False
+E        +  where False = callable(None)
+
+tests/test_puck_cpu_distributed_exports.py:30: AssertionError
+_________ test_projection_byte_ceiling_refuses_before_partial_success __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ab8a02a8850>
+
+    def test_projection_byte_ceiling_refuses_before_partial_success(monkeypatch):
+        module = api()
+        cache, expected = authored_cache()
+>       assert hasattr(module, 'DISTRIBUTED_REPORT_BYTES'), 'Projection byte budget is missing'
+E       AssertionError: Projection byte budget is missing
+E       assert False
+E        +  where False = hasattr(<module 'distributed_worker_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/characterize_puck_runtime_imports.py'>, 'DISTRIBUTED_REPORT_BYTES')
+
+tests/test_puck_cpu_distributed_exports.py:238: AssertionError
+_ test_new_isolated_worker_captures_only_after_four_imports_without_authority[None] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/01-worker-red/tmp/test_new_isolated_worker_captu0')
+defect = None
+
+    @pytest.mark.parametrize('defect', [None, 'comparison'])
+    def test_new_isolated_worker_captures_only_after_four_imports_without_authority(tmp_path, defect):
+        result, report, marker = launch(tmp_path, defect)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: ValueError: Request schema/canonical bytes mismatch
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...adaf70c0077838f90d45f151db0'], returncode=1, stdout='', stderr='ValueError: Request schema/canonical bytes mismatch\n').returncode
+
+tests/test_puck_cpu_distributed_exports.py:300: AssertionError
+_ test_new_isolated_worker_captures_only_after_four_imports_without_authority[comparison] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/01-worker-red/tmp/test_new_isolated_worker_captu1')
+defect = 'comparison'
+
+    @pytest.mark.parametrize('defect', [None, 'comparison'])
+    def test_new_isolated_worker_captures_only_after_four_imports_without_authority(tmp_path, defect):
+        result, report, marker = launch(tmp_path, defect)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: ValueError: Request schema/canonical bytes mismatch
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...894b5572a62c05fee152ce7b896'], returncode=1, stdout='', stderr='ValueError: Request schema/canonical bytes mismatch\n').returncode
+
+tests/test_puck_cpu_distributed_exports.py:300: AssertionError
+_ test_new_worker_preserves_import_or_metadata_failure_without_retry[missing-child] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/01-worker-red/tmp/test_new_worker_preserves_impo0')
+defect = 'missing-child'
+
+    @pytest.mark.parametrize('defect', ['missing-child', 'version'])
+    def test_new_worker_preserves_import_or_metadata_failure_without_retry(tmp_path, defect):
+        result, report, marker = launch(tmp_path, defect)
+        assert result.returncode == 1
+>       assert marker.is_file() and report['status'] == 'failed'
+E       AssertionError: assert (False)
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/01-worker-red/tmp/test_new_worker_preserves_impo0/imports-started').is_file
+
+tests/test_puck_cpu_distributed_exports.py:317: AssertionError
+_ test_new_worker_preserves_import_or_metadata_failure_without_retry[version] __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/01-worker-red/tmp/test_new_worker_preserves_impo1')
+defect = 'version'
+
+    @pytest.mark.parametrize('defect', ['missing-child', 'version'])
+    def test_new_worker_preserves_import_or_metadata_failure_without_retry(tmp_path, defect):
+        result, report, marker = launch(tmp_path, defect)
+        assert result.returncode == 1
+>       assert marker.is_file() and report['status'] == 'failed'
+E       AssertionError: assert (False)
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/01-worker-red/tmp/test_new_worker_preserves_impo1/imports-started').is_file
+
+tests/test_puck_cpu_distributed_exports.py:317: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_retains_exact_three_raw_dispatch_rosters_and_comparisons
+FAILED tests/test_puck_cpu_distributed_exports.py::test_comparison_retains_complete_missing_and_extra_sets_without_acceptance
+FAILED tests/test_puck_cpu_distributed_exports.py::test_reader_never_calls_object_class_property_or_loader_hooks
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[missing-child]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[missing-raw-child]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[cache-raw-mismatch]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[root-cache-mismatch]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[nonmodule-child]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[module-subclass]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[wrong-name]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[custom-spec]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[metadata-text]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[bad-package]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[bad-key]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[long-key]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[dict-limit]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[bad-path]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_capture_refuses_incomplete_or_unbounded_raw_metadata[path-limit]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[missing]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[extra]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[not-dict]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[tuple]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[empty]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[duplicate]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[unsorted]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[nontext]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[subclass]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[nul]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[long]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_expected_sets_are_exact_bounded_controls_before_capture[too-many]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[cache-rebind]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[native-rebind]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[delegate-rebind]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[delegate-add]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[delegate-remove]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[metadata-file]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[metadata-loader]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[metadata-spec]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-name]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-loader]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-origin]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[spec-search-path]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_terminal_recheck_refuses_identity_metadata_or_dispatch_changes[module-path]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_projection_byte_ceiling_refuses_before_partial_success
+FAILED tests/test_puck_cpu_distributed_exports.py::test_new_isolated_worker_captures_only_after_four_imports_without_authority[None]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_new_isolated_worker_captures_only_after_four_imports_without_authority[comparison]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_new_worker_preserves_import_or_metadata_failure_without_retry[missing-child]
+FAILED tests/test_puck_cpu_distributed_exports.py::test_new_worker_preserves_import_or_metadata_failure_without_retry[version]
+48 failed, 3 passed in 1.44s

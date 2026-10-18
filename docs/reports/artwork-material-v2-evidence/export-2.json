@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "--repo",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2",
+    "compare",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/c0ac36d0bcf54c9e90f948fe28454e0f",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/artifacts/one-map-many-lives.html",
+    "--storage-max-bytes",
+    "67108864",
+    "--min-free-bytes",
+    "2147483648",
+    "--max-exports",
+    "3",
+    "--log-max-bytes",
+    "1048576"
+  ],
+  "error": "ValueError: export failed",
+  "numpy_version": "2.2.5",
+  "output": "one-map-many-lives.html",
+  "process": {
+    "pid": 1115195,
+    "process_group": 1115195,
+    "start_ticks": 8181128
+  },
+  "qualification_claims": [],
+  "returncode": 1,
+  "runtime_imported": [],
+  "status": "failed"
+}

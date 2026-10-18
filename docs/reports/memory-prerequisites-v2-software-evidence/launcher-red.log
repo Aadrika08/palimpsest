@@ -1,0 +1,170 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_________ test_campaign_pipeline_requires_all_three_results[0-0-True] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_campaign_pipeline_require0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6b3e9d0>
+driver_code = 0, audit_code = 0, passed = True
+
+    @pytest.mark.parametrize('driver_code,audit_code,passed', [(0,0,True),(0,0,False),(1,0,True),(0,1,True)])
+    def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed):
+>       module = launcher(); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+_________ test_campaign_pipeline_requires_all_three_results[0-0-False] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_campaign_pipeline_require1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6b3ef90>
+driver_code = 0, audit_code = 0, passed = False
+
+    @pytest.mark.parametrize('driver_code,audit_code,passed', [(0,0,True),(0,0,False),(1,0,True),(0,1,True)])
+    def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed):
+>       module = launcher(); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+_________ test_campaign_pipeline_requires_all_three_results[1-0-True] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_campaign_pipeline_require2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6b10550>
+driver_code = 1, audit_code = 0, passed = True
+
+    @pytest.mark.parametrize('driver_code,audit_code,passed', [(0,0,True),(0,0,False),(1,0,True),(0,1,True)])
+    def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed):
+>       module = launcher(); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+_________ test_campaign_pipeline_requires_all_three_results[0-1-True] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_campaign_pipeline_require3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6b236d0>
+driver_code = 0, audit_code = 1, passed = True
+
+    @pytest.mark.parametrize('driver_code,audit_code,passed', [(0,0,True),(0,0,False),(1,0,True),(0,1,True)])
+    def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed):
+>       module = launcher(); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+___________ test_whole_campaign_watchdog_invalidates_failed_close[0] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_whole_campaign_watchdog_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6aef8d0>
+code = 0
+
+    @pytest.mark.parametrize('code', [0, 124])
+    def test_whole_campaign_watchdog_invalidates_failed_close(tmp_path, monkeypatch, code):
+>       module = launcher(); runner = module.runner
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+__________ test_whole_campaign_watchdog_invalidates_failed_close[124] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_whole_campaign_watchdog_i1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6b13d90>
+code = 124
+
+    @pytest.mark.parametrize('code', [0, 124])
+    def test_whole_campaign_watchdog_invalidates_failed_close(tmp_path, monkeypatch, code):
+>       module = launcher(); runner = module.runner
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+____ test_failed_invalidation_preserves_bytes_without_authoritative_success ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-36/test_failed_invalidation_prese0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b4ba6adffd0>
+
+    def test_failed_invalidation_preserves_bytes_without_authoritative_success(tmp_path, monkeypatch):
+>       module = launcher(); root = tmp_path / 'root'; root.mkdir()
+                 ^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def launcher():
+        source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+>       assert source.exists(), 'Fresh campaign launcher is not implemented'
+E       AssertionError: Fresh campaign launcher is not implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py').exists
+
+tests/test_memory_prerequisites_v2_launcher.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_campaign_pipeline_requires_all_three_results[0-0-True]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_campaign_pipeline_requires_all_three_results[0-0-False]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_campaign_pipeline_requires_all_three_results[1-0-True]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_campaign_pipeline_requires_all_three_results[0-1-True]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_whole_campaign_watchdog_invalidates_failed_close[0]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_whole_campaign_watchdog_invalidates_failed_close[124]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_failed_invalidation_preserves_bytes_without_authoritative_success
+7 failed in 0.08s

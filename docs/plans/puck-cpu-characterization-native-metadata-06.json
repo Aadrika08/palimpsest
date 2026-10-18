@@ -1,0 +1,646 @@
+{
+ "aliases": [
+  [
+   "/lib",
+   "usr/lib"
+  ],
+  [
+   "/lib64",
+   "usr/lib"
+  ],
+  [
+   "/sbin",
+   "usr/bin"
+  ],
+  [
+   "/usr/lib/libEGL.so.1",
+   "libEGL.so.1.1.0"
+  ],
+  [
+   "/usr/lib/libEGL_mesa.so.0",
+   "libEGL_mesa.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libGL.so.1",
+   "libGL.so.1.7.0"
+  ],
+  [
+   "/usr/lib/libGLX.so.0",
+   "libGLX.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libGLdispatch.so.0",
+   "libGLdispatch.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libICE.so.6",
+   "libICE.so.6.3.0"
+  ],
+  [
+   "/usr/lib/libOpenGL.so.0",
+   "libOpenGL.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libSM.so.6",
+   "libSM.so.6.0.1"
+  ],
+  [
+   "/usr/lib/libX11-xcb.so.1",
+   "libX11-xcb.so.1.0.0"
+  ],
+  [
+   "/usr/lib/libX11.so.6",
+   "libX11.so.6.4.0"
+  ],
+  [
+   "/usr/lib/libXau.so.6",
+   "libXau.so.6.0.0"
+  ],
+  [
+   "/usr/lib/libXdmcp.so.6",
+   "libXdmcp.so.6.0.0"
+  ],
+  [
+   "/usr/lib/libXext.so.6",
+   "libXext.so.6.4.0"
+  ],
+  [
+   "/usr/lib/libcap.so.2",
+   "libcap.so.2.78"
+  ],
+  [
+   "/usr/lib/libdrm.so.2",
+   "libdrm.so.2.134.0"
+  ],
+  [
+   "/usr/lib/libdrm_amdgpu.so.1",
+   "libdrm_amdgpu.so.1.134.0"
+  ],
+  [
+   "/usr/lib/libdrm_intel.so.1",
+   "libdrm_intel.so.1.134.0"
+  ],
+  [
+   "/usr/lib/libedit.so.0",
+   "libedit.so.0.0.78"
+  ],
+  [
+   "/usr/lib/libelf.so.1",
+   "libelf-0.196.so"
+  ],
+  [
+   "/usr/lib/libexpat.so.1",
+   "libexpat.so.1.12.4"
+  ],
+  [
+   "/usr/lib/libffi.so.8",
+   "libffi.so.8.5.0"
+  ],
+  [
+   "/usr/lib/libgbm.so.1",
+   "libgbm.so.1.0.0"
+  ],
+  [
+   "/usr/lib/libglib-2.0.so.0",
+   "libglib-2.0.so.0.8800.3"
+  ],
+  [
+   "/usr/lib/libgthread-2.0.so.0",
+   "libgthread-2.0.so.0.8800.3"
+  ],
+  [
+   "/usr/lib/libicudata.so.78",
+   "libicudata.so.78.3"
+  ],
+  [
+   "/usr/lib/libicuuc.so.78",
+   "libicuuc.so.78.3"
+  ],
+  [
+   "/usr/lib/libncursesw.so.6",
+   "libncursesw.so.6.6"
+  ],
+  [
+   "/usr/lib/libpciaccess.so.0",
+   "libpciaccess.so.0.11.1"
+  ],
+  [
+   "/usr/lib/libpcre2-8.so.0",
+   "libpcre2-8.so.0.16.0"
+  ],
+  [
+   "/usr/lib/libsensors.so.5",
+   "libsensors.so.5.0.0"
+  ],
+  [
+   "/usr/lib/libstdc++.so.6",
+   "libstdc++.so.6.0.36"
+  ],
+  [
+   "/usr/lib/libuuid.so.1",
+   "libuuid.so.1.3.0"
+  ],
+  [
+   "/usr/lib/libwayland-client.so.0",
+   "libwayland-client.so.0.26.0"
+  ],
+  [
+   "/usr/lib/libxcb-dri3.so.0",
+   "libxcb-dri3.so.0.1.0"
+  ],
+  [
+   "/usr/lib/libxcb-present.so.0",
+   "libxcb-present.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libxcb-randr.so.0",
+   "libxcb-randr.so.0.1.0"
+  ],
+  [
+   "/usr/lib/libxcb-shm.so.0",
+   "libxcb-shm.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libxcb-sync.so.1",
+   "libxcb-sync.so.1.0.0"
+  ],
+  [
+   "/usr/lib/libxcb-xfixes.so.0",
+   "libxcb-xfixes.so.0.0.0"
+  ],
+  [
+   "/usr/lib/libxcb.so.1",
+   "libxcb.so.1.1.0"
+  ],
+  [
+   "/usr/lib/libxml2.so.16",
+   "libxml2.so.16.1.4"
+  ],
+  [
+   "/usr/lib/libxshmfence.so.1",
+   "libxshmfence.so.1.0.0"
+  ],
+  [
+   "/usr/lib/libz.so.1",
+   "libz.so.1.3.2"
+  ],
+  [
+   "/usr/lib/libzstd.so.1",
+   "libzstd.so.1.5.7"
+  ],
+  [
+   "/usr/lib64",
+   "lib"
+  ],
+  [
+   "/usr/sbin",
+   "bin"
+  ]
+ ],
+ "dynamic_leaves": [
+  "/usr/lib/gconv/gconv-modules.cache",
+  "/usr/lib/libEGL.so.1.1.0",
+  "/usr/lib/libEGL_mesa.so.0.0.0",
+  "/usr/lib/libGLdispatch.so.0.0.0",
+  "/usr/lib/libLLVM.so.22.1",
+  "/usr/lib/libOpenGL.so.0.0.0",
+  "/usr/lib/libSPIRV-Tools.so",
+  "/usr/lib/libX11-xcb.so.1.0.0",
+  "/usr/lib/libdrm.so.2.134.0",
+  "/usr/lib/libdrm_amdgpu.so.1.134.0",
+  "/usr/lib/libdrm_intel.so.1.134.0",
+  "/usr/lib/libedit.so.0.0.78",
+  "/usr/lib/libelf-0.196.so",
+  "/usr/lib/libexpat.so.1.12.4",
+  "/usr/lib/libffi.so.8.5.0",
+  "/usr/lib/libgallium-26.2.2-arch1.1.so",
+  "/usr/lib/libgbm.so.1.0.0",
+  "/usr/lib/libicudata.so.78.3",
+  "/usr/lib/libicuuc.so.78.3",
+  "/usr/lib/libncursesw.so.6.6",
+  "/usr/lib/libpciaccess.so.0.11.1",
+  "/usr/lib/libsensors.so.5.0.0",
+  "/usr/lib/libwayland-client.so.0.26.0",
+  "/usr/lib/libxcb-dri3.so.0.1.0",
+  "/usr/lib/libxcb-present.so.0.0.0",
+  "/usr/lib/libxcb-randr.so.0.1.0",
+  "/usr/lib/libxcb-shm.so.0.0.0",
+  "/usr/lib/libxcb-sync.so.1.0.0",
+  "/usr/lib/libxcb-xfixes.so.0.0.0",
+  "/usr/lib/libxml2.so.16.1.4",
+  "/usr/lib/libxshmfence.so.1.0.0",
+  "/usr/lib/libzstd.so.1.5.7",
+  "/usr/lib/locale/C.utf8/LC_CTYPE",
+  "/usr/lib/locale/locale-archive"
+ ],
+ "egl_vendor": {
+  "library_path": "libEGL_mesa.so.0",
+  "path": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+  "sha256": "cd3881df4227c13ca7f9cfe6c78820f21d5f7a00a41b299214f6f827e63be369",
+  "size_bytes": 105
+ },
+ "errors": [],
+ "kind": "puck-cpu-characterization-native-metadata-v6",
+ "limitations": [
+  "Dynamic leaves come from one unguarded diagnostic census observation; held characterization-04 must re-observe them.",
+  "The v5 ELF dependency closure is carried forward unchanged; no ELF closure is recomputed here.",
+  "Only direct host SONAME symlinks are added as aliases; other link names are not bound.",
+  "This metadata grants no renderer, runtime, native or collection authority."
+ ],
+ "native_files": [
+  {
+   "path": "/etc/ld.so.cache",
+   "sha256": "e8db11a9dc9717980438413880a1a03a93e3727cf25ff8f3e389604ba943e42d",
+   "size_bytes": 234519
+  },
+  {
+   "path": "/usr/bin/ldconfig",
+   "sha256": "03bedeb8386848497c46bc91cb769252a7435ec0f58c8ce328c0d6a0b3e08d85",
+   "size_bytes": 1243208
+  },
+  {
+   "path": "/usr/lib/gconv/gconv-modules.cache",
+   "sha256": "0fde9bfd93c2ac83b23f0ab2e89f438be92f3c368247410eff58ccc847d7a783",
+   "size_bytes": 27010
+  },
+  {
+   "path": "/usr/lib/ld-linux-x86-64.so.2",
+   "sha256": "d011113b7054c641c8ca064f58bcc23804fd2654a3dff2444dad06ddeda61bfb",
+   "size_bytes": 263152
+  },
+  {
+   "path": "/usr/lib/libEGL.so.1.1.0",
+   "sha256": "89d5d0f68f7e42397544db26347c24a893be2e08b81406e8e8714803c29db03b",
+   "size_bytes": 67536
+  },
+  {
+   "path": "/usr/lib/libEGL_mesa.so.0.0.0",
+   "sha256": "15c06ccfe5054c95059f2526a284b8fb2d10c9000bbec20c531eb9d6815abc6d",
+   "size_bytes": 396424
+  },
+  {
+   "path": "/usr/lib/libGL.so.1.7.0",
+   "sha256": "185fa8c5a729e2e30d01a3015d53b1aaa953dffca41e59bf1c025ed5d0d5737f",
+   "size_bytes": 460816
+  },
+  {
+   "path": "/usr/lib/libGLX.so.0.0.0",
+   "sha256": "4eca76728c640b67b1ed656a22b53d3734c100ba4f992aecd705d2e70bfe743a",
+   "size_bytes": 133064
+  },
+  {
+   "path": "/usr/lib/libGLdispatch.so.0.0.0",
+   "sha256": "b6d068112d4fd36750b6fedcddea0df7719b707495611cbe6fd92f6887eda467",
+   "size_bytes": 460896
+  },
+  {
+   "path": "/usr/lib/libICE.so.6.3.0",
+   "sha256": "71c71c05e3cbd25d19460ef5bdf3b3a4538c95a86473a4e4222bf85c2c419a9c",
+   "size_bytes": 105304
+  },
+  {
+   "path": "/usr/lib/libLLVM.so.22.1",
+   "sha256": "06662e11c1faa7b4cb199e03c9ef681b74655ad4274473273b41dfc754a6f16f",
+   "size_bytes": 171426848
+  },
+  {
+   "path": "/usr/lib/libOpenGL.so.0.0.0",
+   "sha256": "5ec13550cb78002495db99017a034c810e0a61facc9c289091420ba1edbd441e",
+   "size_bytes": 145432
+  },
+  {
+   "path": "/usr/lib/libSM.so.6.0.1",
+   "sha256": "1366597b21814c4290eda5f83d8bd63144273f99ab15197f49fc26037459d4c3",
+   "size_bytes": 38792
+  },
+  {
+   "path": "/usr/lib/libSPIRV-Tools.so",
+   "sha256": "e12f83159f86b969b6fc5c3668a670f15038d3182b510ac04fce68e833b7be2a",
+   "size_bytes": 1948368
+  },
+  {
+   "path": "/usr/lib/libX11-xcb.so.1.0.0",
+   "sha256": "3913178fdde804e000803ff435b79eac731b121f13f719ac1bf2390c86a474be",
+   "size_bytes": 13976
+  },
+  {
+   "path": "/usr/lib/libX11.so.6.4.0",
+   "sha256": "97736fa2855baf2022d80a8881ffc79cdbecca11c96935e4ca3cfeb47eae1ea4",
+   "size_bytes": 1313184
+  },
+  {
+   "path": "/usr/lib/libXau.so.6.0.0",
+   "sha256": "3e229dba702d7b56f1c58ac0e004ae691ae2ad5ede7b50968e1cd7d8b2ccdecc",
+   "size_bytes": 14232
+  },
+  {
+   "path": "/usr/lib/libXdmcp.so.6.0.0",
+   "sha256": "0c572ba75de0f967c9c4d088161d3e435ea721bd99c169aae707aba6870a71b1",
+   "size_bytes": 26488
+  },
+  {
+   "path": "/usr/lib/libXext.so.6.4.0",
+   "sha256": "e131bd58bb319d99a19ea280232e4bd982abc70775bb1a7a832c64e5c69f739f",
+   "size_bytes": 76928
+  },
+  {
+   "path": "/usr/lib/libc.so.6",
+   "sha256": "e221b10fee9ee4776d8f0f1701253bc06817f7a4dbe6c5292487277d0bf8ffff",
+   "size_bytes": 2215072
+  },
+  {
+   "path": "/usr/lib/libcap.so.2.78",
+   "sha256": "5a9cb7758c22aee29eb8d5ee5ca1e887bceb3fb399272ffb9fbbfd44dc36c6a1",
+   "size_bytes": 43064
+  },
+  {
+   "path": "/usr/lib/libdl.so.2",
+   "sha256": "9b3812e7f6b766e2d0a1d9eeca1a58c1272392859e8b04f708b2f86b2256d03c",
+   "size_bytes": 14352
+  },
+  {
+   "path": "/usr/lib/libdrm.so.2.134.0",
+   "sha256": "8b97afc5e15a07442768b302660cf844b0962623f8dcecbaebccadf288c611b1",
+   "size_bytes": 92104
+  },
+  {
+   "path": "/usr/lib/libdrm_amdgpu.so.1.134.0",
+   "sha256": "02bd5087b5f98d63fba8dad0a14185652e777ec1955883c6f7b7dc0a0854bc5a",
+   "size_bytes": 46976
+  },
+  {
+   "path": "/usr/lib/libdrm_intel.so.1.134.0",
+   "sha256": "9ad14db649075dae53261e809c687c17403667a339127dda95c201c94516658f",
+   "size_bytes": 150864
+  },
+  {
+   "path": "/usr/lib/libedit.so.0.0.78",
+   "sha256": "0bb14cee691695fd88a63c3cea14030ba4973c725239e15c1cd637c39d6a2007",
+   "size_bytes": 227440
+  },
+  {
+   "path": "/usr/lib/libelf-0.196.so",
+   "sha256": "13d3e3cb54d6120d87a0569ac67be05c029f8cd2e4bf44e75936b2721c8e08af",
+   "size_bytes": 116824
+  },
+  {
+   "path": "/usr/lib/libexpat.so.1.12.4",
+   "sha256": "516a880ec607ee15f664d92eeb587deeb609f6ef6d05c947e9bfeb781a9debaf",
+   "size_bytes": 182216
+  },
+  {
+   "path": "/usr/lib/libffi.so.8.5.0",
+   "sha256": "b38bb3a55ba04dfbb5be68e881a72385d6c30010afffb1cf1dfc373b72c2278c",
+   "size_bytes": 51432
+  },
+  {
+   "path": "/usr/lib/libgallium-26.2.2-arch1.1.so",
+   "sha256": "d7d313070226982467fd8984d943d84c7adeaf290b1705de7bf227fca3b392da",
+   "size_bytes": 55220440
+  },
+  {
+   "path": "/usr/lib/libgbm.so.1.0.0",
+   "sha256": "9ff0105801e62ed4335e036eee25c4d42421668b4887d77ee35c400db389d8f6",
+   "size_bytes": 18416
+  },
+  {
+   "path": "/usr/lib/libgcc_s.so.1",
+   "sha256": "e618cb9c90c2eb3a1dad1cfea5b6c1eebcf2e799ad805976f4ae47bdd61c716a",
+   "size_bytes": 182512
+  },
+  {
+   "path": "/usr/lib/libglib-2.0.so.0.8800.3",
+   "sha256": "a09a06c2e7d70361dff4b7516b18c8493b7eb1e6b2f301cf82072148f143ad92",
+   "size_bytes": 1449352
+  },
+  {
+   "path": "/usr/lib/libgthread-2.0.so.0.8800.3",
+   "sha256": "ec4bcbf2243a117b6b2cee7ad0c19ba3397f7ca9148b3dfc13785ce8713bf7e5",
+   "size_bytes": 14056
+  },
+  {
+   "path": "/usr/lib/libicudata.so.78.3",
+   "sha256": "d72003b08760852bee4c80cff32c1e6248ae6b1fda5bd313482733a4d5e70dc9",
+   "size_bytes": 33112920
+  },
+  {
+   "path": "/usr/lib/libicuuc.so.78.3",
+   "sha256": "c99f0dd0c797c07f9ab64413d36c595393cdded6fa04cc4edd6f6a521fd155ca",
+   "size_bytes": 2144304
+  },
+  {
+   "path": "/usr/lib/libm.so.6",
+   "sha256": "965106704753eefe8c31ae7da6daba3ead3d18c52b19b5fcc41178bcc4aa999d",
+   "size_bytes": 1268336
+  },
+  {
+   "path": "/usr/lib/libncursesw.so.6.6",
+   "sha256": "7498a0b0f75deb5417e109d1853679f1a6b201e52e03b247c914fec0a36e3a5b",
+   "size_bytes": 457936
+  },
+  {
+   "path": "/usr/lib/libpciaccess.so.0.11.1",
+   "sha256": "b9ae870769c7e8bb2acc75157ddb37e48c6f2a11b25116eaea1c9a9e3bd16bb6",
+   "size_bytes": 38864
+  },
+  {
+   "path": "/usr/lib/libpcre2-8.so.0.16.0",
+   "sha256": "cb615af32644bbb8f13a582b45dd52a73b0b94fe365f149f94b577c711fb534c",
+   "size_bytes": 727336
+  },
+  {
+   "path": "/usr/lib/libpthread.so.0",
+   "sha256": "839b91403f89fa4c6888d50deb2b59cd0612f8cfe3d57dd9d6314832b4cb31ab",
+   "size_bytes": 14360
+  },
+  {
+   "path": "/usr/lib/librt.so.1",
+   "sha256": "e06e12b8a78494908d08376838c380fb3817bfd7d54f6a86ef050016f7ade5f8",
+   "size_bytes": 14424
+  },
+  {
+   "path": "/usr/lib/libsensors.so.5.0.0",
+   "sha256": "68b821c4548aacbeae67ea4825662c1dbde62d2d55933cd7af03c1885ef565f9",
+   "size_bytes": 63480
+  },
+  {
+   "path": "/usr/lib/libstdc++.so.6.0.36",
+   "sha256": "f5fc7380f2ae46fa4053a64be04e7b98109f1066a4bbfff3c37042488aa0be0e",
+   "size_bytes": 2939928
+  },
+  {
+   "path": "/usr/lib/libutil.so.1",
+   "sha256": "8c2cbf01f52acb42478b9ab10506af9878b7e8d47aefacc8896bb5b37384c222",
+   "size_bytes": 14352
+  },
+  {
+   "path": "/usr/lib/libuuid.so.1.3.0",
+   "sha256": "7881e0279d5ce79b0d8ace923e94df9b543bc8dd8152df0894358b862e1725be",
+   "size_bytes": 34976
+  },
+  {
+   "path": "/usr/lib/libwayland-client.so.0.26.0",
+   "sha256": "39c83ae7b73d22f18b4f81da14749c4535c304b7e62910a2f1aae682f279cc9d",
+   "size_bytes": 60168
+  },
+  {
+   "path": "/usr/lib/libxcb-dri3.so.0.1.0",
+   "sha256": "116d544940cb64e6b218dfe547434c309e1e99a5c208853c953cd6bb66b78717",
+   "size_bytes": 22496
+  },
+  {
+   "path": "/usr/lib/libxcb-present.so.0.0.0",
+   "sha256": "d9f47da0e4925c706e83c1ea7572b2660c74a22b01c0f2b95723cc96a258f7c7",
+   "size_bytes": 14312
+  },
+  {
+   "path": "/usr/lib/libxcb-randr.so.0.1.0",
+   "sha256": "5db40f22bfc3a142d653d69669f509b971dc8cd36215e90f977158d109b3dbf5",
+   "size_bytes": 71648
+  },
+  {
+   "path": "/usr/lib/libxcb-shm.so.0.0.0",
+   "sha256": "e04329f8117411113e6094e3dc354ed50b8b3b10e6cf5f8a21a6b7bec4786eec",
+   "size_bytes": 14304
+  },
+  {
+   "path": "/usr/lib/libxcb-sync.so.1.0.0",
+   "sha256": "e5e6f35089a65d0d34761fdfb6ea9c74a86b9c7e57ab6fc56e1282491ad6bbd0",
+   "size_bytes": 34784
+  },
+  {
+   "path": "/usr/lib/libxcb-xfixes.so.0.0.0",
+   "sha256": "dad274e042c86866ac9b624a47c2f46648a291dbc1e11f8c906cd355ce60e38f",
+   "size_bytes": 34792
+  },
+  {
+   "path": "/usr/lib/libxcb.so.1.1.0",
+   "sha256": "40df5eff95408b67d969e559f2689b3e50e6151251b1f4e03608ce5cd9c9a133",
+   "size_bytes": 169984
+  },
+  {
+   "path": "/usr/lib/libxml2.so.16.1.4",
+   "sha256": "5ff12cee1e6992555ba638190cce88a0aab40acad51d5c826f6487888a0160ab",
+   "size_bytes": 1326024
+  },
+  {
+   "path": "/usr/lib/libxshmfence.so.1.0.0",
+   "sha256": "ac614957c4966511f815774fdafbd33dfad0d6142b1c52669343b160066e04d9",
+   "size_bytes": 14208
+  },
+  {
+   "path": "/usr/lib/libz.so.1.3.2",
+   "sha256": "9ba92a0b85dc9b659e8f5e596a69452cec801def6ece0883a8a2c1f032e52397",
+   "size_bytes": 104464
+  },
+  {
+   "path": "/usr/lib/libzstd.so.1.5.7",
+   "sha256": "f023d49e85fb22057bfdd21857263d2638b73356c06f3b342f678a75212379f8",
+   "size_bytes": 939976
+  },
+  {
+   "path": "/usr/lib/locale/C.utf8/LC_CTYPE",
+   "sha256": "40680545df4f92443c15e7c6f51a7fdc9154ebedd9eff1ed5c48437039add365",
+   "size_bytes": 369120
+  },
+  {
+   "path": "/usr/lib/locale/locale-archive",
+   "sha256": "7bf2da63b17127e5976936957419603a8b057f606dcf56de1e81e9256ad06a32",
+   "size_bytes": 3064432
+  }
+ ],
+ "oversized_native_files": [],
+ "provenance": {
+  "helper": {
+   "path": "scripts/build_puck_native_metadata_v6.py",
+   "sha256": "de150776cfd362f01a090d3f00fa62eac30bd37f30050ade1a020ef82f7c2248",
+   "size_bytes": 11899
+  },
+  "host_rehash": "every native leaf equals its input pin on the host",
+  "inputs": [
+   {
+    "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+    "role": "metadata05",
+    "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+    "size_bytes": 1618086
+   },
+   {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/public-episode-census-v1/docs/reports/public-episode-census-v1/v2-held-entry/out/h1/native-libraries.json",
+    "role": "observed_native_maps",
+    "sha256": "bf5824d049229e736a6373dd91843938303d4683278fa7bbc88be02a3aa465ca",
+    "size_bytes": 25766
+   },
+   {
+    "path": "/usr/share/glvnd/egl_vendor.d/50_mesa.json",
+    "role": "egl_vendor",
+    "sha256": "cd3881df4227c13ca7f9cfe6c78820f21d5f7a00a41b299214f6f827e63be369",
+    "size_bytes": 105
+   }
+  ],
+  "kind": "puck-native-metadata-v6-derivation-v1",
+  "observed_only_leaves": [
+   "/usr/lib/gconv/gconv-modules.cache",
+   "/usr/lib/libEGL_mesa.so.0.0.0",
+   "/usr/lib/libLLVM.so.22.1",
+   "/usr/lib/libSPIRV-Tools.so",
+   "/usr/lib/libX11-xcb.so.1.0.0",
+   "/usr/lib/libdrm.so.2.134.0",
+   "/usr/lib/libdrm_amdgpu.so.1.134.0",
+   "/usr/lib/libdrm_intel.so.1.134.0",
+   "/usr/lib/libedit.so.0.0.78",
+   "/usr/lib/libelf-0.196.so",
+   "/usr/lib/libexpat.so.1.12.4",
+   "/usr/lib/libffi.so.8.5.0",
+   "/usr/lib/libgallium-26.2.2-arch1.1.so",
+   "/usr/lib/libgbm.so.1.0.0",
+   "/usr/lib/libicudata.so.78.3",
+   "/usr/lib/libicuuc.so.78.3",
+   "/usr/lib/libncursesw.so.6.6",
+   "/usr/lib/libpciaccess.so.0.11.1",
+   "/usr/lib/libsensors.so.5.0.0",
+   "/usr/lib/libwayland-client.so.0.26.0",
+   "/usr/lib/libxcb-dri3.so.0.1.0",
+   "/usr/lib/libxcb-present.so.0.0.0",
+   "/usr/lib/libxcb-randr.so.0.1.0",
+   "/usr/lib/libxcb-shm.so.0.0.0",
+   "/usr/lib/libxcb-sync.so.1.0.0",
+   "/usr/lib/libxcb-xfixes.so.0.0.0",
+   "/usr/lib/libxml2.so.16.1.4",
+   "/usr/lib/libxshmfence.so.1.0.0",
+   "/usr/lib/libzstd.so.1.5.7",
+   "/usr/lib/locale/C.utf8/LC_CTYPE",
+   "/usr/lib/locale/locale-archive"
+  ],
+  "soname_aliases_added": [
+   "libEGL_mesa.so.0",
+   "libX11-xcb.so.1",
+   "libcap.so.2",
+   "libdrm.so.2",
+   "libdrm_amdgpu.so.1",
+   "libdrm_intel.so.1",
+   "libedit.so.0",
+   "libelf.so.1",
+   "libexpat.so.1",
+   "libffi.so.8",
+   "libgbm.so.1",
+   "libicudata.so.78",
+   "libicuuc.so.78",
+   "libncursesw.so.6",
+   "libpciaccess.so.0",
+   "libsensors.so.5",
+   "libwayland-client.so.0",
+   "libxcb-dri3.so.0",
+   "libxcb-present.so.0",
+   "libxcb-randr.so.0",
+   "libxcb-shm.so.0",
+   "libxcb-sync.so.1",
+   "libxcb-xfixes.so.0",
+   "libxml2.so.16",
+   "libxshmfence.so.1",
+   "libzstd.so.1"
+  ]
+ },
+ "required_missing_names": [],
+ "root_scope": "installed_shared_objects_interpreter_and_declared_dynamic_leaves",
+ "status": "COMPLETE"
+}

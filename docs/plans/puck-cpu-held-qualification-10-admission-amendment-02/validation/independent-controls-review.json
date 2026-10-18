@@ -1,0 +1,49 @@
+{
+  "commits": {
+    "base": "58bef84897b07b7a6d3111608f484721084251b8",
+    "head": "3095ab2c9e7a3dc4ec4ca1f64237da1feeeb201e",
+    "immutable_admission01_controls": "b3d50f5d8efbd36c56337c323d66768831c0f43f",
+    "implementation": "cbe48b339f4839ec4d2b5ef153d0dc0820be712e",
+    "source": "e723db037ed1f790c2618798d59f56913054754f"
+  },
+  "critical": [],
+  "decision": "NO_GO",
+  "exact_checks": [
+    "Initial worktree clean at HEAD; BASE..HEAD changes confined to amendment02 directory; no CodeGraph index present.",
+    "Configuration 8988 bytes SHA256 4cc0cf9ab118eba0cdb8522014ee9990c33502f44e3e32f9366c65ff4bd40170; independently recomputed compact sorted UTF-8 JSON+LF and parsed equality with immutable original.",
+    "Freeze 519552 bytes SHA256 5ece09386a27e458534c4ccd46298f2bdd79dec7b85b5245b5aa99635b384265; independently recomputed sorted indent2+LF; unique sorted2150 pins,109838923 bytes,all1998 original pins unchanged; paths relative without traversal; <=1MiB.",
+    "Independently hashed all152 added metadata/source pins, all47 original control paths against b3d50f5 Git blobs, and all89 failure archive members against index and new freeze; archive membership exact.",
+    "All24 configuration source files byte-identical to both source e723 and implementation cbe Git objects. Canonical config changes no values:16 inputs,preparation anchors,candidateD,19 negatives,environment and180s/2GiB limits preserved.",
+    "Runner matches original exactly after only stated config/output/freeze/checkid/receipt substitutions and removal of the added six-pin check_consumed_admission01 block, raw reservation update, call and result labels. Existing07-09 checks,full SITE/native/forest twice/recheck/deadline/publication/closure and12 PID samples preserved.",
+    "Authenticated Held source reviewed: json(lf=True) requires compact canonical+LF; json(lf=None) allows separate pretty freeze assertion; repeat raw reads fail unless first warmed raw. Six admission01 roles are pinned and reserved raw before checks; prior pretty config is historical raw JSON, not new configuration.",
+    "New external wrapper4281 bytes SHA256 ab6cb2b5f408338a3c5b332aa35ea500022e260da38dd03d83b62c18b2c1434b; exact forward/inverse of old wrapper for six specified substitutions. Preserves phase allowlist,145/240s budgets,16MiB stream ceiling,exclusive paths,fsync and late refusal; envelope retains155/250s outer caps+5s grace.",
+    "Acyclic bindings verified: freeze excludes itself/new wrapper/envelope; wrapper pins freeze; envelope pins freeze+wrapper. Admission,observer,auditor commands bind new config/SHA and distinct admission02/external/concrete-audit paths; actual10 ROOT/runs and audit01 remain fixed.",
+    "Retained history GREEN snapshot hashes match final runner/checker; RED runner equals pre-guard derived original. Logs report4 missing-guard errors+13 pass then17 pass. Selfcheck snapshot/command hash authenticates retained normal0 output with FD4->4,no child/thread and full2150 warm roster. Canonical retained RED/GREEN inspected,not rerun.",
+    "New external triples,admission02 output,audit01 output,concrete-audit command and actual10 run root absent at review check. Historical snapshot declares79 raw files and20 absences; fresh guard remains required."
+  ],
+  "important": [
+    {
+      "id": "I1",
+      "impact": "The promised fresh guard cannot pass; exact reviewed HEAD must not proceed to admission02.",
+      "line": 35,
+      "path": "docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/pre-admission-guard.py.in",
+      "problem": "before=json.loads(ROOT/(BASE+'/historical-before-admission.json').read_bytes()) binds .read_bytes() to the concatenated string, not the joined Path. After placeholder substitution the guard raises AttributeError before checking79 historical files/20 absences or publishing its receipt.",
+      "required_fix": "Preserve frozen original bytes; separately Git-bind corrected post-freeze guard with json.loads((ROOT/(BASE+'/historical-before-admission.json')).read_bytes()), prove the path expression with a small isolated fixture, and independently review the resulting exact control commit."
+    }
+  ],
+  "limitations": [
+    "Read-only review except this /tmp JSON. No project modules,helpers,tests,selfcheck,main,jobs or wrapper executed; no network; no SITE/staged/native/interpreter/protected payloads opened.",
+    "Reviewed source/JSON/Git metadata using standard-library-only inline review checks. Original1998 pins compared as roster,not independently rehashed; fresh full custody and79-file/20-absence guards not performed here.",
+    "Retained validation logs are authenticated snapshots and reported outcomes,not independently repeated execution. Parent plans corrected separate guard after this review; no later revision covered."
+  ],
+  "minor": [],
+  "required_gates": [
+    "Resolve I1; retain this reviewed HEAD/finding and original frozen template. Review and push exact final controls before any admission.",
+    "Instantiate CONTROL/COUNT/PINS only for final reviewed commit; verify clean HEAD and matching origin head, complete ls-tree amendment subtree, all2150 pin bytes, wrapper/timeout/interpreter identities, fresh resources and all new+historical absences.",
+    "Invoke the one separately named full data-only admission02 only after those guards. Require normal external0, intact transport/streams,DATA_ONLY_ADMITTED and independent exact receipt review; failure consumes admission02 without implicit retry.",
+    "Before sole actual10 observer, repeat fresh resource/absence/byte guards; after terminal bind genuine transport SHA into exact audit command and require normal external0/PASS independent audit.",
+    "All7 release gates remain open; controls review and retained metadata proofs establish no runtime qualification,operator,renderer,inference,study,protected-data or rover acceptance."
+  ],
+  "review_kind": "independent_exact_controls_only",
+  "scope": "docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/; data-only admission02 controls, no runtime acceptance"
+}

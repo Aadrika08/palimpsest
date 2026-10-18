@@ -1,0 +1,92 @@
+{
+  "kind": "puck-q4-epoch10-whole-branch-source-review-v1",
+  "worktree": "/home/utkarsh/.codex/worktrees/293b/brain",
+  "reviewed_base": "54d37a2cbe41630ad59497bf753ddbb98d7bad47",
+  "reviewed_commit": "cbe48b339f4839ec4d2b5ef153d0dc0820be712e",
+  "decision": "APPROVE_SOURCE_ONLY",
+  "summary": "No critical or important findings. Exact validated allocation10 selects nested q4 independently in parent/auditor; legacy1-9/default helpers remain q3. Approval covers this source/evidence unit only. All seven release gates remain open.",
+  "exact_checks": [
+    {
+      "check": "Reviewed BASE..HEAD diff for all three production scripts, both new tests and plan; traced all worker_registration/validate_worker_result callers across scripts/src/tests. Read report and both preimplementation source maps.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:229-351,423-481,647-824",
+        "scripts/audit_puck_cpu_held_runtime.py:262-340,545-580,620-710",
+        "scripts/observe_puck_cpu_held_allocation.py:49-101",
+        "tests/test_puck_cpu_held_amendment10.py",
+        "tests/test_puck_cpu_held_amendment10_integration.py",
+        "tests/test_puck_runtime_entry_v4.py:100-109"
+      ]
+    },
+    {
+      "check": "Verified closed kind/version/id10 and qualification-only validation; helpers accept exact integer3/4 and default3; execute selects4 iff validated version10; independent auditor reconstructs registration and result tags from its own config without parent validator import or child-selected policy.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:238-245,423-425,452-454,754-756,784-786",
+        "scripts/audit_puck_cpu_held_runtime.py:266,554-561"
+      ]
+    },
+    {
+      "check": "Verified exact-five preparation projection, original four prep acceptance anchors, candidateD four-publication/two-Pillow projection,15 noncandidate inputs,19 production negative names, schemas/environment/limits/false authority remain enforced. Observer only adds fixed10 identity/output and preserves exclusive creation.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:255-268,284-351,727-743",
+        "scripts/audit_puck_cpu_held_runtime.py:269-283,313-340,664-680",
+        "scripts/observe_puck_cpu_held_allocation.py:58-99"
+      ]
+    },
+    {
+      "check": "Inspected five retained commands/terminals, stdout summaries and RED failure listings. red01:46 failed/5 passed; integration-red02 and red03:1 failed each. green01:51 passed/12.22s. regression01:732 passed/122.64s, exit0/no outer timeout/empty stderr;51 overlap732. Fixture setup/identity mistakes are retained/disclosed; no reviewer rerun.",
+      "refs": [
+        "docs/plans/puck-cpu-q4-qualification-epoch10/validation/{red01,integration-red02,integration-red03,green01,regression01}/",
+        "docs/plans/puck-cpu-q4-qualification-epoch10/validation-notes.json"
+      ]
+    },
+    {
+      "check": "Read/hash-only stdlib script checked all136 retained validation source copies against command size/SHA256 pins; all38 regression snapshots also match current source bytes. All40 manifest authored files total255291 bytes and match size/SHA256. Zero mismatches.",
+      "refs": [
+        "docs/plans/puck-cpu-q4-qualification-epoch10/outcome.json",
+        "docs/plans/puck-cpu-q4-qualification-epoch10/validation/*/command.json"
+      ]
+    },
+    {
+      "check": "Parsed retained authored config/registration/worker/result and three API/CLI/no-cost audits: nested descriptor4/result4, parent imports_completed, three audit-v10 PASS, matching worker/result/CLI hashes/bytes, equal baseline snapshots, false authority and FD/child/thread closure. Authored config24 sources/16 roles/five changed paths/15 unchanged inputs/18 negatives/128MiB floor; rerun stderr refuses already-reserved allocation.",
+      "refs": [
+        "docs/plans/puck-cpu-q4-qualification-epoch10/authored/",
+        "tests/test_puck_cpu_held_amendment10_integration.py:34-133"
+      ]
+    },
+    {
+      "check": "git diff --exit-code confirms bootstrap/fixed entry unchanged BASE..HEAD and all six scoped source/test/plan files match HEAD. Report read-time SHA256:00372b60b2cd83ea7a64c7f1c12403b6a5a64a8212dcc07df8f4214e8c470fb5.",
+      "refs": [
+        "scripts/puck_worker_bootstrap.py",
+        "src/palimpsest/puck_runtime_qualification.py",
+        "docs/reports/puck-cpu-q4-qualification-epoch10.md"
+      ]
+    }
+  ],
+  "findings": {
+    "critical": [],
+    "important": [],
+    "minor": [
+      {
+        "id": "M1",
+        "title": "Epoch10 diagnostic labels contain an extra zero",
+        "refs": [
+          "scripts/qualify_puck_cpu_held_runtime.py:268",
+          "scripts/qualify_puck_cpu_held_runtime.py:343",
+          "scripts/audit_puck_cpu_held_runtime.py:334"
+        ],
+        "case": "Wrong epoch10 negative roster or source projection prints qualification010/diagnostic010/Diagnostic010 because existing prefix0 concatenation reaches two-digit10.",
+        "impact": "Cosmetic only; identity/output10/rejection behavior are correct. Already disclosed; nonblocking.",
+        "smallest_fix": "Use two-digit formatting in a future permitted message cleanup. No repair performed."
+      }
+    ]
+  },
+  "limitations": [
+    "No pytest, fixture/runtime imports or execution, network, vendor/protected payload access, actual controls/admission/allocation, or repository edits. Only this JSON written.",
+    "Retained receipts and snapshots support the reported results; reviewer did not independently rerun tests or recreate their environment.",
+    "Mixed-version independent negatives directly use Held/worker and assert specific gate messages; they are not full rebound outer-negative allocations. Report explicitly states that boundary.",
+    "The40 retained authored files are selected witnesses, not a complete portable rerunnable fixture/staging tree.",
+    "Authored18-name/128MiB success does not establish production19-name/2GiB/180s installed vendor success, performance, hostile-code isolation, physical/scientific qualification or release readiness.",
+    "Future distinct10 controls, full byte/custody/resource admission and review, and a sole observed invocation/audit remain separate work. Operator/renderer qualification and a real public episode bundle remain outstanding.",
+    "Report may receive whitespace edits after the recorded hash; reviewed production HEAD and regression snapshots were stable."
+  ]
+}

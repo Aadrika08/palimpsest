@@ -1,0 +1,31 @@
+{
+  "collection_authorized": false,
+  "elapsed_seconds": 4.676837279985193,
+  "kind": "cpu-retained-installation-independent-audit-v3",
+  "numerical_imports_executed": false,
+  "package_preparation_accepted": true,
+  "runtime_qualified": false,
+  "status": "PASS",
+  "study_authorized": false,
+  "target_code_executed_by_auditor": false,
+  "verified": {
+    "baseline_summary_scope": "source-frozen parent pre/post checks; auditor checks summary identity",
+    "configuration_sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+    "data_only_pyc": {
+      "path": "numpy/distutils/__pycache__/conv_template.cpython-311.pyc",
+      "sha256": "6bfa3ef61560b422e0ef918673b642803b958f21edcd27c882ba4857e63d5177",
+      "size_bytes": 14203
+    },
+    "directory_count": 2074,
+    "directory_identity_policy": "selected-tree-full-metadata-ancestor-path-edges-v1",
+    "durability_scope": "source-frozen parent fsync/closure receipt and referenced snapshot bytes",
+    "file_count": 27225,
+    "licence_count": 96,
+    "original_allocation_status": "FAIL",
+    "original_closure_completed": false,
+    "pinned_receipt_count": 132,
+    "prior_admission_status": "FAIL",
+    "source_and_input_pin_count": 124,
+    "total_bytes": 1304701872
+  }
+}

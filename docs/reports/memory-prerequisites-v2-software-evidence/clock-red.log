@@ -1,0 +1,226 @@
+....FF.FFFFF                                                             [100%]
+=================================== FAILURES ===================================
+___________ test_whole_campaign_watchdog_invalidates_failed_close[0] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-46/test_whole_campaign_watchdog_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c52a450>
+code = 0
+
+    @pytest.mark.parametrize('code', [0, 124])
+    def test_whole_campaign_watchdog_invalidates_failed_close(tmp_path, monkeypatch, code):
+        module = launcher(); runner = module.runner
+        evidence = tmp_path / 'docs/reports/memory-prerequisites-v2-evidence'
+        evidence.mkdir(parents=True)
+        source = evidence / 'execute-campaign.py'
+        root = tmp_path / 'runs/memory-prerequisites-v2-fixture'; root.mkdir(parents=True)
+        (root / 'scientific-close.json').write_text(json.dumps({'native_prerequisites_passed': True}))
+        reg = {'repo': str(tmp_path), 'output': str(root), 'python': sys.executable,
+               'control_root': str(tmp_path / 'control'), 'publication_root': str(evidence)}
+        (evidence / 'registration.json').write_text(json.dumps(reg))
+        monkeypatch.setattr(runner, '__file__', str(source))
+        monkeypatch.setattr(runner, 'admission', lambda *args, **kw: reg)
+        monkeypatch.setattr(runner.d, 'restore_v2_budget', lambda value: StorageBudget(
+            (root, evidence, tmp_path/'control'), StorageLimits(max_bytes=1024**2, min_free_bytes=0)))
+        monkeypatch.setattr(runner.d, 'recheck_v2_inputs', lambda *args: None)
+        monkeypatch.setattr(runner.subprocess, 'check_output', lambda *args, **kw: 'a'*40)
+        calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:4] == ['timeout', '--signal=TERM', '--kill-after=5', '4890s']
+            assert command[-3:] == [sys.executable, str(source), '--supervised']
+            return SimpleNamespace(pid=999999999, wait=lambda **kw: code, poll=lambda: code)
+        monkeypatch.setattr(runner.subprocess, 'Popen', child)
+>       assert module.main(['--bounded']) == (0 if code == 0 else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py:41: in main
+    return runner.main(argv)
+           ^^^^^^^^^^^^^^^^^
+docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py:183: in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:1877: in parse_args
+    self.error(msg % ' '.join(argv))
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2640: in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ArgumentParser(prog='__main__.py', usage=None, description='One restore-v2 invocation: driver, independent auditor, and timely close.', formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+status = 2, message = '__main__.py: error: unrecognized arguments: --bounded\n'
+
+    def exit(self, status=0, message=None):
+        if message:
+            self._print_message(message, _sys.stderr)
+>       _sys.exit(status)
+E       SystemExit: 2
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2627: SystemExit
+----------------------------- Captured stderr call -----------------------------
+usage: __main__.py [-h] [--pipeline PIPELINE] [--supervised]
+__main__.py: error: unrecognized arguments: --bounded
+__________ test_whole_campaign_watchdog_invalidates_failed_close[124] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-46/test_whole_campaign_watchdog_i1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c5d7850>
+code = 124
+
+    @pytest.mark.parametrize('code', [0, 124])
+    def test_whole_campaign_watchdog_invalidates_failed_close(tmp_path, monkeypatch, code):
+        module = launcher(); runner = module.runner
+        evidence = tmp_path / 'docs/reports/memory-prerequisites-v2-evidence'
+        evidence.mkdir(parents=True)
+        source = evidence / 'execute-campaign.py'
+        root = tmp_path / 'runs/memory-prerequisites-v2-fixture'; root.mkdir(parents=True)
+        (root / 'scientific-close.json').write_text(json.dumps({'native_prerequisites_passed': True}))
+        reg = {'repo': str(tmp_path), 'output': str(root), 'python': sys.executable,
+               'control_root': str(tmp_path / 'control'), 'publication_root': str(evidence)}
+        (evidence / 'registration.json').write_text(json.dumps(reg))
+        monkeypatch.setattr(runner, '__file__', str(source))
+        monkeypatch.setattr(runner, 'admission', lambda *args, **kw: reg)
+        monkeypatch.setattr(runner.d, 'restore_v2_budget', lambda value: StorageBudget(
+            (root, evidence, tmp_path/'control'), StorageLimits(max_bytes=1024**2, min_free_bytes=0)))
+        monkeypatch.setattr(runner.d, 'recheck_v2_inputs', lambda *args: None)
+        monkeypatch.setattr(runner.subprocess, 'check_output', lambda *args, **kw: 'a'*40)
+        calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:4] == ['timeout', '--signal=TERM', '--kill-after=5', '4890s']
+            assert command[-3:] == [sys.executable, str(source), '--supervised']
+            return SimpleNamespace(pid=999999999, wait=lambda **kw: code, poll=lambda: code)
+        monkeypatch.setattr(runner.subprocess, 'Popen', child)
+>       assert module.main(['--bounded']) == (0 if code == 0 else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_prerequisites_v2_launcher.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py:41: in main
+    return runner.main(argv)
+           ^^^^^^^^^^^^^^^^^
+docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py:183: in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:1877: in parse_args
+    self.error(msg % ' '.join(argv))
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2640: in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ArgumentParser(prog='__main__.py', usage=None, description='One restore-v2 invocation: driver, independent auditor, and timely close.', formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+status = 2, message = '__main__.py: error: unrecognized arguments: --bounded\n'
+
+    def exit(self, status=0, message=None):
+        if message:
+            self._print_message(message, _sys.stderr)
+>       _sys.exit(status)
+E       SystemExit: 2
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2627: SystemExit
+----------------------------- Captured stderr call -----------------------------
+usage: __main__.py [-h] [--pipeline PIPELINE] [--supervised]
+__main__.py: error: unrecognized arguments: --bounded
+___________ test_absolute_watchdog_covers_parent_failure_recovery[0] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c5bfe50>
+code = 0
+
+    @pytest.mark.parametrize('code', [0, 124])
+    def test_absolute_watchdog_covers_parent_failure_recovery(monkeypatch, code):
+        module = launcher(); calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:3] == ['timeout','--signal=KILL','4900s']
+            assert command[-3:] == [sys.executable, str(Path(module.__file__).resolve()), '--bounded']
+            return SimpleNamespace(returncode=code)
+>       monkeypatch.setattr(module.subprocess,'run',child)
+                            ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'campaign_launcher_fixture' has no attribute 'subprocess'
+
+tests/test_memory_prerequisites_v2_launcher.py:96: AttributeError
+__________ test_absolute_watchdog_covers_parent_failure_recovery[124] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c7f2210>
+code = 124
+
+    @pytest.mark.parametrize('code', [0, 124])
+    def test_absolute_watchdog_covers_parent_failure_recovery(monkeypatch, code):
+        module = launcher(); calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:3] == ['timeout','--signal=KILL','4900s']
+            assert command[-3:] == [sys.executable, str(Path(module.__file__).resolve()), '--bounded']
+            return SimpleNamespace(returncode=code)
+>       monkeypatch.setattr(module.subprocess,'run',child)
+                            ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'campaign_launcher_fixture' has no attribute 'subprocess'
+
+tests/test_memory_prerequisites_v2_launcher.py:96: AttributeError
+_______________ test_campaign_clock_includes_launcher_admission ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-46/test_campaign_clock_includes_l0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c795c90>
+
+    def test_campaign_clock_includes_launcher_admission(tmp_path,monkeypatch):
+        from test_memory_prerequisites_v2 import setup_campaign
+        module,path,root,reg,launched,_ = setup_campaign(tmp_path,monkeypatch)
+        marker = Path(reg['control_root'])/'launched.json'
+        value = json.loads(marker.read_text()); original = time.monotonic()-60
+        value['started_monotonic'] = original; marker.write_text(json.dumps(value))
+        assert module.run(path) == 0
+        receipt = json.loads((root/'execution.json').read_text())
+>       assert receipt['started_monotonic'] == original
+E       assert 85887.199190171 == 85827.199157489
+
+tests/test_memory_prerequisites_v2_launcher.py:109: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+____________ test_auditor_refuses_self_consistent_rebased_deadlines ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-46/test_auditor_refuses_self_cons0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c52bf10>
+
+    def test_auditor_refuses_self_consistent_rebased_deadlines(tmp_path,monkeypatch):
+        from test_memory_prerequisites_v2 import setup_campaign
+        module,path,root,reg,launched,_ = setup_campaign(tmp_path,monkeypatch)
+        assert module.run(path) == 0
+        receipt = json.loads((root/'execution.json').read_text())
+        for key in ('started_monotonic','owner_deadline_monotonic','global_deadline_monotonic',
+                    'readout_started_monotonic','readout_deadline_monotonic'):
+            receipt[key] -= 1
+        (root/'execution.json').write_text(json.dumps(receipt))
+>       assert module.audit(path) == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <function audit at 0x7ed19c7bd300>(PosixPath('/tmp/pytest-of-utkarsh/pytest-46/test_auditor_refuses_self_cons0/repo/docs/reports/memory-prerequisites-v2-evidence/registration.json'))
+E        +    where <function audit at 0x7ed19c7bd300> = <module 'scripts.memory_prerequisites_v2' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/scripts/memory_prerequisites_v2.py'>.audit
+
+tests/test_memory_prerequisites_v2_launcher.py:123: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+___________ test_changed_launcher_registration_refuses_before_owners ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-46/test_changed_launcher_registra0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ed19c4c37d0>
+
+    def test_changed_launcher_registration_refuses_before_owners(tmp_path,monkeypatch):
+        from test_memory_prerequisites_v2 import setup_campaign
+        module,path,root,reg,launched,_ = setup_campaign(tmp_path,monkeypatch)
+        marker = Path(reg['control_root'])/'launched.json'
+        value = json.loads(marker.read_text()); value['registration_sha256'] = 'f'*64
+        marker.write_text(json.dumps(value))
+>       with pytest.raises(ValueError): module.run(path)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_prerequisites_v2_launcher.py:133: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_whole_campaign_watchdog_invalidates_failed_close[0]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_whole_campaign_watchdog_invalidates_failed_close[124]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_absolute_watchdog_covers_parent_failure_recovery[0]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_absolute_watchdog_covers_parent_failure_recovery[124]
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_campaign_clock_includes_launcher_admission
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_auditor_refuses_self_consistent_rebased_deadlines
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_changed_launcher_registration_refuses_before_owners
+7 failed, 5 passed in 1.64s

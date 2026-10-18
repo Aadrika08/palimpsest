@@ -1,0 +1,190 @@
+test_admission01_manifest_first_raw_reservations (__main__.HistoryChecks.test_admission01_manifest_first_raw_reservations) ... ok
+test_admission02_manifest_first_raw_reservations (__main__.HistoryChecks.test_admission02_manifest_first_raw_reservations) ... ok
+test_admission11b_manifest_first_raw_reservations (__main__.HistoryChecks.test_admission11b_manifest_first_raw_reservations) ... ERROR
+test_changed07_transport_is_refused (__main__.HistoryChecks.test_changed07_transport_is_refused) ... ok
+test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused) ... ok
+test_changed09_transport_is_refused (__main__.HistoryChecks.test_changed09_transport_is_refused) ... ok
+test_changed10_transport_is_refused (__main__.HistoryChecks.test_changed10_transport_is_refused) ... ok
+test_changed11_transport_is_refused (__main__.HistoryChecks.test_changed11_transport_is_refused) ... ERROR
+test_changed_admission01_transport_is_refused (__main__.HistoryChecks.test_changed_admission01_transport_is_refused) ... ok
+test_changed_admission02_transport_is_refused (__main__.HistoryChecks.test_changed_admission02_transport_is_refused) ... ok
+test_changed_admission11b_transport_is_refused (__main__.HistoryChecks.test_changed_admission11b_transport_is_refused) ... ERROR
+test_fabricated07_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated07_baseline_after_is_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused) ... ok
+test_fabricated08_result_is_refused (__main__.HistoryChecks.test_fabricated08_result_is_refused) ... ok
+test_fabricated09_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated09_baseline_after_is_refused) ... ok
+test_fabricated09_result_is_refused (__main__.HistoryChecks.test_fabricated09_result_is_refused) ... ok
+test_fabricated10_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated10_baseline_after_is_refused) ... ok
+test_fabricated10_success_result_is_refused (__main__.HistoryChecks.test_fabricated10_success_result_is_refused) ... ok
+test_fabricated11_admission_receipt_is_refused (__main__.HistoryChecks.test_fabricated11_admission_receipt_is_refused) ... ok
+test_fabricated11_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated11_baseline_after_is_refused) ... FAIL
+test_fabricated11_result_is_refused (__main__.HistoryChecks.test_fabricated11_result_is_refused) ... FAIL
+test_fabricated_d83dab3_receipt_is_refused (__main__.HistoryChecks.test_fabricated_d83dab3_receipt_is_refused) ... ok
+test_fabricated_prior_admission_result_is_refused (__main__.HistoryChecks.test_fabricated_prior_admission_result_is_refused) ... ok
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt) ... FAIL
+test_genuine09_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine09_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine10_failure_has_fail_result_but_no_success_receipt (__main__.HistoryChecks.test_genuine10_failure_has_fail_result_but_no_success_receipt) ... FAIL
+test_genuine11_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine11_failure_has_no_success_or_closure_receipt) ... ERROR
+test_genuine_admission01_failure_is_consumed_without_runtime (__main__.HistoryChecks.test_genuine_admission01_failure_is_consumed_without_runtime) ... ok
+test_genuine_admission02_was_consumed_by_sole_runtime10 (__main__.HistoryChecks.test_genuine_admission02_was_consumed_by_sole_runtime10) ... ok
+test_genuine_admission11b_was_consumed_by_sole_runtime11 (__main__.HistoryChecks.test_genuine_admission11b_was_consumed_by_sole_runtime11) ... ERROR
+test_genuine_preparation03_binds_epoch14 (__main__.HistoryChecks.test_genuine_preparation03_binds_epoch14) ... ERROR
+test_historical_empty_directories_remain_empty (__main__.HistoryChecks.test_historical_empty_directories_remain_empty) ... FAIL
+test_inserted_file_in_historical_empty_directory_is_refused (__main__.HistoryChecks.test_inserted_file_in_historical_empty_directory_is_refused) ... FAIL
+test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes) ... ERROR
+test_preparation01_is_recorded_but_cannot_satisfy_epoch14 (__main__.HistoryChecks.test_preparation01_is_recorded_but_cannot_satisfy_epoch14) ... ok
+test_preparation02_cannot_satisfy_epoch14 (__main__.HistoryChecks.test_preparation02_cannot_satisfy_epoch14) ... ok
+test_preparation02_was_accepted_and_consumed_by_runtime11 (__main__.HistoryChecks.test_preparation02_was_accepted_and_consumed_by_runtime11) ... ERROR
+test_preparation03_pin_drift_is_refused (__main__.HistoryChecks.test_preparation03_pin_drift_is_refused) ... ERROR
+test_unexecuted_d83dab3_packet_is_recorded_never_invoked (__main__.HistoryChecks.test_unexecuted_d83dab3_packet_is_recorded_never_invoked) ... ok
+
+======================================================================
+ERROR: test_admission11b_manifest_first_raw_reservations (__main__.HistoryChecks.test_admission11b_manifest_first_raw_reservations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 315, in test_admission11b_manifest_first_raw_reservations
+    rows=[dict(path=name,**row) for name,row in control.ADMISSION11B_PINS.items()]
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'ADMISSION11B_PINS'
+
+======================================================================
+ERROR: test_changed11_transport_is_refused (__main__.HistoryChecks.test_changed11_transport_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 300, in test_changed11_transport_is_refused
+    def test_changed11_transport_is_refused(self):self.changed_transport('11')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 88, in changed_transport
+    with self.assertRaises(AssertionError):getattr(control,'check_consumed'+epoch)(ChangedTransport())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_consumed11'
+
+======================================================================
+ERROR: test_changed_admission11b_transport_is_refused (__main__.HistoryChecks.test_changed_admission11b_transport_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 328, in test_changed_admission11b_transport_is_refused
+    with self.assertRaises(AssertionError):control.check_consumed_admission11b(Changed(),self.admitted11())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_consumed_admission11b'
+
+======================================================================
+ERROR: test_genuine11_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine11_failure_has_no_success_or_closure_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 299, in test_genuine11_failure_has_no_success_or_closure_receipt
+    def test_genuine11_failure_has_no_success_or_closure_receipt(self):self.genuine('11')
+                                                                       ^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 36, in genuine
+    value=getattr(control,'check_consumed'+epoch)(held)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_consumed11'
+
+======================================================================
+ERROR: test_genuine_admission11b_was_consumed_by_sole_runtime11 (__main__.HistoryChecks.test_genuine_admission11b_was_consumed_by_sole_runtime11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 306, in test_genuine_admission11b_was_consumed_by_sole_runtime11
+    value=control.check_consumed_admission11b(held,self.admitted11())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_consumed_admission11b'
+
+======================================================================
+ERROR: test_genuine_preparation03_binds_epoch14 (__main__.HistoryChecks.test_genuine_preparation03_binds_epoch14)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 240, in test_genuine_preparation03_binds_epoch14
+    value=control.check_preparation03(held,auditor,self.current(held),self.frozen())[-1]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_preparation03'
+
+======================================================================
+ERROR: test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 57, in test_manifest_first_reads_preserve_historical07_and08_stream_bytes
+    selected=set(control.HISTORICAL07_JSON)|set(control.HISTORICAL08_JSON)|set(control.HISTORICAL09_JSON)|set(control.HISTORICAL10_JSON)|set(control.HISTORICAL11_JSON)
+                                                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'HISTORICAL11_JSON'
+
+======================================================================
+ERROR: test_preparation02_was_accepted_and_consumed_by_runtime11 (__main__.HistoryChecks.test_preparation02_was_accepted_and_consumed_by_runtime11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 333, in test_preparation02_was_accepted_and_consumed_by_runtime11
+    value=control.check_preparation02_consumed(held)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_preparation02_consumed'
+
+======================================================================
+ERROR: test_preparation03_pin_drift_is_refused (__main__.HistoryChecks.test_preparation03_pin_drift_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 251, in test_preparation03_pin_drift_is_refused
+    with self.assertRaises(AssertionError):control.check_preparation03(held,auditor,self.current(held),self.frozen())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held14_history_control' has no attribute 'check_preparation03'
+
+======================================================================
+FAIL: test_fabricated11_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated11_baseline_after_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 301, in test_fabricated11_baseline_after_is_refused
+    def test_fabricated11_baseline_after_is_refused(self):self.check_missing('11','baseline-after.json')
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 100, in check_missing
+    with self.assertRaises(AssertionError):control.absent()
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fabricated11_result_is_refused (__main__.HistoryChecks.test_fabricated11_result_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 182, in test_fabricated11_result_is_refused
+    def test_fabricated11_result_is_refused(self):self.check_missing('11','result.json')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 100, in check_missing
+    with self.assertRaises(AssertionError):control.absent()
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 52, in test_genuine08_failure_has_no_success_or_closure_receipt
+    def test_genuine08_failure_has_no_success_or_closure_receipt(self):self.genuine('08')
+                                                                       ^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 44, in genuine
+    self.assertEqual(control.absent()['historical_missing_receipts'],19)
+AssertionError: 17 != 19
+
+======================================================================
+FAIL: test_genuine10_failure_has_fail_result_but_no_success_receipt (__main__.HistoryChecks.test_genuine10_failure_has_fail_result_but_no_success_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 176, in test_genuine10_failure_has_fail_result_but_no_success_receipt
+    self.assertEqual(control.absent()['historical_missing_receipts'],19)
+AssertionError: 17 != 19
+
+======================================================================
+FAIL: test_historical_empty_directories_remain_empty (__main__.HistoryChecks.test_historical_empty_directories_remain_empty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 280, in test_historical_empty_directories_remain_empty
+    self.assertEqual(control.check_empty_directories()['directories'],41)
+AssertionError: 35 != 41
+
+======================================================================
+FAIL: test_inserted_file_in_historical_empty_directory_is_refused (__main__.HistoryChecks.test_inserted_file_in_historical_empty_directory_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-14-source-evidence/history-check.py", line 288, in test_inserted_file_in_historical_empty_directory_is_refused
+    self.assertEqual(control.check_empty_directories()['directories'],41)
+AssertionError: 35 != 41
+
+----------------------------------------------------------------------
+Ran 41 tests in 0.064s
+
+FAILED (failures=6, errors=9)
