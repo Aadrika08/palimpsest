@@ -741,7 +741,7 @@ class HeldWorkerBootstrap:
                     deadline=self._deadline, registration_path=dep['path'], deadline_seconds=self._deadline_seconds))
                 self._dependencies = DependencyImports(provider, self._import_recheck, self.recheck, self._fail,
                     self._modules.keys() | self._namespaces.keys(),
-                    [self._reg['source_root'], self._reg['runtime']['root']])
+                    [self._reg['source_root'], self._reg['runtime']['root']], package_search_path=self._reg['version']==4)
                 self._dependency_dispatch=(self._dependencies,DependencyImports)
                 if (self._missing_policy_version in (3,4,5) and
                         provider.snapshot().get('native_identity')!='tmpfs-raw-dev-inode-v1'):

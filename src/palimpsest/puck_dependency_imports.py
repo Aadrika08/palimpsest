@@ -146,7 +146,8 @@ class _Loader(importlib.abc.Loader):
             elif self.row.get('kind') == 'python':
                 payload = owner.provider.read(self.row['root_index'], self.row['path'])
                 module.__file__ = self.get_filename(name)
-                if self.row['is_package']: module.__path__ = []
+                if self.row['is_package']:
+                    module.__path__ = ['/dev/null/held-package/'+name.replace('.','/')] if owner.package_search_path else []
                 code=compile(payload, module.__file__, 'exec', dont_inherit=True)
                 ExportBindings.begin(owner.bindings,name,module,code)
                 # A nested Python initializer masks the outer native creator's
@@ -183,8 +184,11 @@ class _Loader(importlib.abc.Loader):
 
 
 class DependencyImports:
-    def __init__(self, provider, guard, full_guard, fail, local_names, local_roots):
+    def __init__(self, provider, guard, full_guard, fail, local_names, local_roots, *, package_search_path=False):
         self.provider, self.guard, self.full_guard, self.fail = provider, guard, full_guard, fail
+        # v4 only: a package's __path__ is one string below /dev/null (never a directory, so no
+        # path hook can open it); v1-v3 keep __path__ == [].
+        self.package_search_path = package_search_path is True
         self.modules = {r['name']:r for r in provider.module_records()}
         self.namespaces = {r['name']:r for r in provider.namespace_records()}
         self.distributions = provider.distribution_records()
