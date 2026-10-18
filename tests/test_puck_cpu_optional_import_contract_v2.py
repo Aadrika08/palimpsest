@@ -375,7 +375,7 @@ def test_v5_worker_clock_defaults_to_the_original_180_seconds():
     '''))
 
 
-@pytest.mark.parametrize('version,seconds', [(5, 180), (5, 361), (5, True), (5, 360.0), (5, '360'), (4, 360)])
+@pytest.mark.parametrize('version,seconds', [(5, 180), (5, 361), (5, True), (5, 360.0), (5, '360'), (4, 360), (5, 600)])
 def test_extended_worker_clock_is_exact_and_policy_v5_only(version, seconds):
     refused_before_initializers(run(version=version, defect='before-init',
         registration_change=lambda reg: reg.update(deadline_seconds=seconds)),

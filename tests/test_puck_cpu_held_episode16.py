@@ -17,7 +17,8 @@ SCRIPT=ROOT/'scripts/run_puck_cpu_held_episode.py'
 KIND16='puck-cpu-held-episode-allocation-v16'
 OUTPUT16='runs/puck-cpu-held-episode-16'
 STAGE04='/tmp/palimpsest-puck-cpu-held-04'
-CLOCKS=dict(normal_seconds=720,child_hard_seconds=735,hard_seconds=750)
+# By user decision after rehearsal-6 (guarded source 337.65 s, replay over 360 s): 600 s per worker.
+CLOCKS=dict(normal_seconds=1200,child_hard_seconds=1215,hard_seconds=1230)
 CENSUS_ABSENT={'cffi','charset_normalizer','cython','glfw_preview','scikits','scipy._distributor_init_local',
                'scipy.linalg._cblas','scipy.linalg._clapack','scipy.linalg._fblas_64','scipy.linalg._flapack_64'}
 
@@ -56,7 +57,9 @@ def config(m,q):
 def test_allocation16_identity_clocks_environment_and_rosters():
     m=api();q=qualifier()
     assert (m.KIND,m.VERSION,m.OUTPUT)==(KIND16,16,OUTPUT16)
-    assert {k:m.LIMITS[k] for k in CLOCKS}==CLOCKS and m.WORKER_SECONDS==360
+    assert {k:m.LIMITS[k] for k in CLOCKS}==CLOCKS and m.WORKER_SECONDS==600
+    audit=load(ROOT/'scripts/audit_puck_cpu_held_episode.py','episode16_clock_auditor')
+    assert audit.LIMITS==m.LIMITS and audit.WORKER_SECONDS==600 and audit.TRANSPORT_SECONDS==1260
     assert m.LIMITS['file_bytes']==16*1024**2 and m.LIMITS['output_bytes']==64*1024**2
     assert m.ENVIRONMENT['PYGLFW_LIBRARY']=='/puck/staged/inputs/root-0000/glfw/x11/libglfw.so'
     assert m.ENVIRONMENT['__EGL_VENDOR_LIBRARY_FILENAMES']=='/puck/control/egl-vendor.json'
@@ -107,7 +110,7 @@ def test_v4_registration_is_accepted_by_the_frozen_bootstrap(phase):
     registration,raw,command=m.registration(value,phase,files,dependency,bootstrap,q)
     api_=types.ModuleType('frozen_bootstrap');exec(compile(bootstrap,str(ROOT/m.BOOTSTRAP),'exec'),api_.__dict__)
     parsed,modules,_=api_._parse(raw,hashlib.sha256(raw).hexdigest())
-    assert parsed['version']==4 and parsed['deadline_seconds']==360 and 'palimpsest.puck_held_episode' in modules
+    assert parsed['version']==4 and parsed['deadline_seconds']==600 and 'palimpsest.puck_held_episode' in modules
     episode=parsed['episode']
     assert episode['phase']==phase and episode['negative_imports']==m.NEGATIVE_IMPORTS and episode['hidden_imports']==m.HIDDEN_IMPORTS
     assert episode['paths']==dict(output_root='/output',asset_root='/scratch/assets',
@@ -178,7 +181,7 @@ def test_observer_runs_the_episode_parent_once_with_clocks_beyond_750(tmp_path,m
     assert result['observed_returncode']==code and result['timed_out'] is False and result['phase']=='episode'
     assert result['command'][4]==str(tmp_path/'scripts/run_puck_cpu_held_episode.py')
     assert result['stdout']['path']==OUTPUT16+'-external-cli.stdout'
-    assert 750<waits[0]<=780 and m.EPISODE_SECONDS==(780,795) and m.EXTENDED_SECONDS=={14:(400,415)}
+    assert 1230<waits[0]<=1260 and m.EPISODE_SECONDS==(1260,1275) and m.EXTENDED_SECONDS=={14:(400,415)}
     assert m.signal.getitimer(m.signal.ITIMER_REAL)[0]==0
     with pytest.raises(FileExistsError):m.observe(path,hashlib.sha256(raw).hexdigest())
 

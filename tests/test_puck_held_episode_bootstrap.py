@@ -3,7 +3,7 @@
 Real isolated bootstrap children with tiny authored dependency forests. No
 mujoco, EGL, upstream, model or episode runs: the fixed entry module here is
 authored, so these cases specify dispatch, the closed descriptor, policy-v5
-rosters, the 360 s clock, the single stdlib-name exception and the
+rosters, the 600 s clock (user decision after rehearsal 6), the single stdlib-name exception and the
 process-creation refusal. Registration v1-v3 keep their behavior.
 """
 import copy
@@ -58,7 +58,7 @@ def run_v4(body='return {"kind": "authored-episode"}',*,phase='source',change=No
         reg['source_files'].append(descriptor(path,ENTRY))
         reg['source_files'].sort(key=lambda row:row['path'])
         reg['modules'].append({'name':'palimpsest.puck_held_episode','path':ENTRY})
-        reg.update(kind='puck-worker-source-bootstrap-v4',version=4,deadline_seconds=360,
+        reg.update(kind='puck-worker-source-bootstrap-v4',version=4,deadline_seconds=600,
                    episode=episode(reg['runtime']['root'],phase))
         if change:change(reg)
     with authored() as base:
@@ -86,10 +86,11 @@ def refused(result,reason,*,entry_ran=False):
 
 
 @pytest.mark.parametrize('phase',['source','replay'])
-def test_v4_runs_only_the_fixed_episode_entry_on_a_360s_clock(phase):
+def test_v4_runs_only_the_fixed_episode_entry_on_a_600s_clock(phase):
     receipt=succeeded(run_v4('''
         remaining = owner._deadline - time.monotonic()
-        assert 300 < remaining <= 360, remaining
+        assert 540 < remaining <= 600, remaining
+        assert owner._dependencies.provider._deadline == owner._deadline
         assert owner._missing_policy_version == 5 and owner._stdlib_names is sys.stdlib_module_names
         return {"kind": "authored-episode", "phase": owner._reg["episode"]["phase"]}
     ''',phase=phase))
@@ -129,6 +130,7 @@ def test_v4_runs_only_the_fixed_episode_entry_on_a_360s_clock(phase):
     ('exception-sha','Exact lowercase SHA256 required'),
     ('no-deadline','Exact source-only bootstrap registration required'),
     ('deadline-180','Exact extended worker deadline'),
+    ('deadline-360','Exact extended worker deadline required for the held episode'),
     ('qualification-key','Exact source-only bootstrap registration required'),
     ('no-entry','Complete Python module mapping required'),
 ])
@@ -162,6 +164,7 @@ def test_v4_descriptor_is_closed_before_any_initializer(defect,reason):
         elif defect=='exception-sha':e['stdlib_exception']['sha256']='A'*64
         elif defect=='no-deadline':del reg['deadline_seconds']
         elif defect=='deadline-180':reg['deadline_seconds']=180
+        elif defect=='deadline-360':reg['deadline_seconds']=360
         elif defect=='qualification-key':reg['qualification']={}
         else:
             reg['modules']=[row for row in reg['modules'] if row['name']!='palimpsest.puck_held_episode']
@@ -281,3 +284,18 @@ def test_v1_preflight_keeps_process_creation_and_its_original_entry(tmp_path):
     assert result.returncode==0,result.stderr
     receipt=json.loads(result.stdout)
     assert receipt['entry_result']=={'answer':42} and 'process_creation_attempts' not in receipt
+
+
+def test_only_the_v4_episode_worker_may_hold_dependencies_for_600_seconds():
+    import time
+    from palimpsest.puck_dependency_files import HeldDependencyNamespace
+    with pytest.raises(ValueError,match='at most 600 seconds'):
+        HeldDependencyNamespace(b'{}',expected_sha256='0'*64,deadline=time.monotonic()+500,registration_path='/authored/r.json',
+                                deadline_seconds=600)
+    with pytest.raises(ValueError) as error:
+        HeldDependencyNamespace(b'{}',expected_sha256='0'*64,deadline=time.monotonic()+500,registration_path='/authored/r.json',
+                                deadline_seconds=600,episode=True)
+    assert 'deadline' not in str(error.value)
+    with pytest.raises(ValueError,match='at most 360 seconds'):
+        HeldDependencyNamespace(b'{}',expected_sha256='0'*64,deadline=time.monotonic()+361,registration_path='/authored/r.json',
+                                deadline_seconds=360,episode=True)

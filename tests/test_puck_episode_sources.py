@@ -69,7 +69,7 @@ def test_the_v4_bootstrap_accepts_the_closure_naming_and_its_package_parents():
         runtime=dict(root=root,files=[dict(b.RUNTIME_PIN)],python_version='3.11.15'),
         environment=dict(PATH='/nonexistent'),cwd='/puck/source',argv_prefix=['/authored'],
         dependencies=dict(path='/puck/control/dependencies.json',size_bytes=2,sha256='b'*64),
-        deadline_seconds=360,qualification_claims=[],executable=False)
+        deadline_seconds=600,qualification_claims=[],executable=False)
     reg['episode']=episode(root)
     raw=json.dumps(reg,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
     parsed,modules,namespaces=b._parse(raw,sha(raw))

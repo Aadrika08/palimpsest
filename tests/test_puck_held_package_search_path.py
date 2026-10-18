@@ -30,7 +30,7 @@ def run(body,*,version=4):
         path=source/ENTRY;path.write_text(ENTRY_PRELUDE+textwrap.indent(textwrap.dedent(body),'    ')+'\n')
         reg['source_files'].append(descriptor(path,ENTRY));reg['source_files'].sort(key=lambda row:row['path'])
         reg['modules'].append({'name':'palimpsest.puck_held_episode','path':ENTRY})
-        reg.update(kind='puck-worker-source-bootstrap-v4',version=4,deadline_seconds=360,episode=episode(reg['runtime']['root']))
+        reg.update(kind='puck-worker-source-bootstrap-v4',version=4,deadline_seconds=600,episode=episode(reg['runtime']['root']))
         reg['episode']['hidden_imports']=sorted(reg['episode']['hidden_imports']+['fixture_dep.hidden_child'])
     with authored() as base:
         result,_=dependency_fixture(base,textwrap.dedent(body) if version!=4 else 'raise AssertionError("PREFLIGHT_RAN")',
