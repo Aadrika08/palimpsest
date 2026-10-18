@@ -1,0 +1,122 @@
+{
+  "at_utc": "2026-10-18T10:33:52.780973+00:00",
+  "binding": {
+    "candidate": "synthetic",
+    "import_misses": 21,
+    "pins": {
+      "observation_audit": {
+        "path": "docs/reports/puck-cpu-characterization-04/outcome-audit-04.json",
+        "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+        "size_bytes": 3662
+      },
+      "observation_configuration": {
+        "path": "docs/reports/puck-cpu-characterization-04/frozen-configuration.json",
+        "sha256": "efa1c03dc18492d5382369f0d9756d252cc90c647fd351dd0d62804594735cdc",
+        "size_bytes": 22020
+      },
+      "observation_index": {
+        "path": "docs/reports/puck-cpu-characterization-04/evidence-index.json",
+        "sha256": "76f0ad511a520cc73056f6d17a229f6229661be94f580890f31d2aa0c67b7f51",
+        "size_bytes": 5256
+      },
+      "observation_replay_report": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/payload/replay/characterization.json",
+        "sha256": "e86ff1fb2044812b8d91c8b1daa91385054adb3bc35d2f19a1ffdf9a24ab6438",
+        "size_bytes": 383201
+      },
+      "observation_report": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/payload/source/characterization.json",
+        "sha256": "a4e69a333982f7f2b0f47546a8209303c6e26e9b2afae7b28ca4003906978f9c",
+        "size_bytes": 383183
+      },
+      "observation_result": {
+        "path": "docs/reports/puck-cpu-characterization-04/raw/result.json",
+        "sha256": "30309af0c74a055d3332ac32b9cad6add3f2e5c4adbb748b8a59d2d7696243c0",
+        "size_bytes": 2760
+      }
+    },
+    "undeclared_import_misses": 0,
+    "validate_episode_observation": "PASS",
+    "validate_observation_links": "PASS"
+  },
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "copies": [
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-puck-cpu-characterization-04-audit-01.json",
+      "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+      "size_bytes": 3662,
+      "source": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-puck-cpu-characterization-04-audit-01.stdout",
+      "sha256": "5a8aec54286008f74fed87a4846b1309c95266b41132d4527d5a52195c2476c6",
+      "size_bytes": 3662,
+      "source": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-puck-cpu-characterization-04-audit-01.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.stderr"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-puck-cpu-characterization-04-audit-01.external-cli.json",
+      "sha256": "ad98b22857ba3cba1a99ef355aa328bd28c253a85af482a91a422e9d3308226d",
+      "size_bytes": 1493,
+      "source": "/tmp/palimpsest-puck-cpu-characterization-04-audit-01.external-cli.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-observer-terminal.json",
+      "sha256": "430ed0155e46c0ff9ebd6317461913b284c217adde0a8588db0cfaff13099d7a",
+      "size_bytes": 8685,
+      "source": "/tmp/palimpsest-char04-observer-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-audit-terminal.json",
+      "sha256": "d7e050de3bd9ada20b4d6081bfd31424a040a5b7fc979f3580de21336f07937e",
+      "size_bytes": 9113,
+      "source": "/tmp/palimpsest-char04-audit-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-observer.stdout",
+      "sha256": "1cdaa9a76b2563c560a3725cffcd35282bfd717fa8d90e0f2fa51a5188400d7b",
+      "size_bytes": 972,
+      "source": "/tmp/palimpsest-char04-observer.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-observer.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-char04-observer.stderr"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-archive-terminal.json",
+      "sha256": "2e9d4d4a554f0a4d745ecdb432e40c89d00b6bceb9c10911bbc3d5380a41fef3",
+      "size_bytes": 10156,
+      "source": "/tmp/palimpsest-char04-archive-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-archive.stdout",
+      "sha256": "94b83b0dbb32d67664c2e62a05f15f26790036b6266f120bd012ffcbb824a3ba",
+      "size_bytes": 232,
+      "source": "/tmp/palimpsest-char04-archive.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-04-records/palimpsest-char04-archive.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-char04-archive.stderr"
+    }
+  ],
+  "error": null,
+  "head": "7479078a6517c62bf7a2482bfa5820301d03ea2e",
+  "index": {
+    "file_count": 27,
+    "path": "docs/reports/puck-cpu-characterization-04/evidence-index.json",
+    "sha256": "76f0ad511a520cc73056f6d17a229f6229661be94f580890f31d2aa0c67b7f51",
+    "size_bytes": 5256
+  },
+  "kind": "palimpsest-char04-archive-record-v1",
+  "scope": "byte-identical records of the characterization-04 one-shot controls; observation evidence only, not runtime qualification",
+  "status": "PASS_ARCHIVED_AND_BOUND"
+}
