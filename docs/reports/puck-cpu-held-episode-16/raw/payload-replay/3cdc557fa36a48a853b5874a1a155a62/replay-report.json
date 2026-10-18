@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "source_run_id": "6bdba8da892e005edde56e7fb1f958a6",
+  "run_id": "3cdc557fa36a48a853b5874a1a155a62",
+  "mode": "actions",
+  "status": "passed",
+  "compared_ticks": 48,
+  "compared_events": 100,
+  "first_divergence": null,
+  "comparison": {
+    "float_atol": 1e-06,
+    "float_rtol": 1e-06,
+    "integer_and_camera_exact": true,
+    "excluded": [
+      "encoded_input",
+      "latency",
+      "population_stats",
+      "raw_output",
+      "step_latency"
+    ],
+    "fields": [
+      "action",
+      "cam_left",
+      "cam_right",
+      "control",
+      "eyes",
+      "next_pose",
+      "pose",
+      "raw_cam_left",
+      "raw_cam_right",
+      "revision",
+      "reward",
+      "sensors",
+      "simulation_time"
+    ],
+    "runtime_source_keys": [
+      "src/palimpsest/engine.py",
+      "src/palimpsest/profiles.py",
+      "src/palimpsest/interventions.py",
+      "src/palimpsest/flynn.py",
+      "src/palimpsest/snapshots.py",
+      "src/palimpsest/records.py",
+      "src/palimpsest/evaluate.py",
+      "src/palimpsest/assets.py",
+      "src/palimpsest/doctor.py",
+      "src/palimpsest/memory.py",
+      "src/palimpsest/memory_task.py",
+      "src/palimpsest/memory_world.py",
+      "src/palimpsest/task_mechanics.py",
+      "src/palimpsest/task_profiles.py"
+    ],
+    "upstream_and_lock_exact": true,
+    "snapshot_identity_exact": true
+  },
+  "controller_reexecuted": false,
+  "inference_executed": false,
+  "errors": [],
+  "source_snapshot_id": "cabd4bef6ce84ac3be0f7dcd207aa523",
+  "source_snapshot_sha256": "c1cba413e1b6aab4ca9471ca4cfbca5f78d911107b59f392eceffe3486d0aed0",
+  "storage_preflight": {
+    "source_ticks": 48,
+    "recording_bytes_estimate": 10565468,
+    "scope": "source recording bytes plus overhead and actual initial snapshot"
+  },
+  "initial_snapshot_id": "92e57e9bbcdc487cbb65f56add46e5c5"
+}

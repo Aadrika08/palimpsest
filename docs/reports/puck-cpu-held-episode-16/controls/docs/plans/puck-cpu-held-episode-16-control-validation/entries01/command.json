@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-episode-16-control-validation/entry-model.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-episode-16-control-validation/entry-model.py",
+      "sha256": "ff22f63bde3da3c85abf9606a145878acef493b25c52f1cab70e81d894e919d5",
+      "size_bytes": 10123
+    }
+  ],
+  "scope": "read-only held-entry model from pins, plans and metadata; no admission, census of SITE or staged trees; stage untouched"
+}

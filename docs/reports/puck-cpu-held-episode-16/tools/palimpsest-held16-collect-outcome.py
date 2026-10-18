@@ -1,0 +1,157 @@
+"""Retain terminal metadata only; never execute/import/re-hash runtime payloads."""
+from pathlib import Path
+import datetime,hashlib,json,os,stat,subprocess,time
+root=Path('/home/utkarsh/.codex/worktrees/0071/brain')
+base=root/'docs/plans/puck-cpu-held-episode-16-control-validation'
+control='e7c5a3e55dcbac8715a68025069e4ed6e5860fb1'
+source='cbda0d992c12320e2c9bd8a188f89d2c73d9f77e'
+# M1: every present receipt must name exactly the frozen epoch-11 configuration.
+config_sha='01a669fc24d02e0681c6d82303ff543d315c20c80bbd5a4a00e6ca309fcece43'
+allocation=root/'runs/puck-cpu-held-episode-16'
+end=time.monotonic()+120
+
+def read(path):
+    assert time.monotonic()<end
+    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK|os.O_CLOEXEC)
+    def stamp(s):return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+    try:
+        before=os.fstat(fd);assert stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size<=16*1024**2
+        with os.fdopen(fd,'rb',closefd=False) as stream:raw=stream.read(16*1024**2+1)
+        assert len(raw)==before.st_size and stamp(before)==stamp(os.fstat(fd))==stamp(Path(path).lstat())
+        return raw
+    finally:os.close(fd)
+
+def optional(path):
+    # Outcome-neutral: an absent receipt is recorded as missing, never fabricated.
+    return json.loads(read(path)) if os.path.lexists(path) else None
+
+paths=[]
+# I1: a refusal during resource admission leaves no allocation directory; record it as missing.
+allocation_present=os.path.lexists(allocation)
+if allocation_present:
+    assert allocation.is_dir() and not allocation.is_symlink()
+    for directory,dirs,files in os.walk(allocation,followlinks=False):
+        assert all(stat.S_ISDIR((Path(directory)/name).lstat().st_mode) for name in dirs)
+        paths.extend(Path(directory)/name for name in files)
+assert len(paths)<=256
+paths += [root/('runs/puck-cpu-held-episode-16-external-cli'+suffix) for suffix in ('.stdout','.stderr','-transport.json')]
+terminals={}
+for phase in ('admission','observer','audit'):
+    stem=Path('/tmp/palimpsest-held16-'+phase)
+    paths.extend(Path(str(stem)+'-external'+suffix) for suffix in ('.json','.stdout','.stderr'))
+    paths.extend(Path(str(stem)+'-tool'+suffix) for suffix in ('-command.json','-terminal.json','.stdout','.stderr'))
+    # I1: an observer timeout or refusal can leave no later terminal; record it as missing.
+    terminal=optional(Path(str(stem)+'-tool-terminal.json'))
+    assert terminal is None or (terminal['phase']==phase and type(terminal['outer_timeout']) is bool)
+    terminals[phase]=terminal
+assert terminals['admission'] is not None and terminals['admission']['exit_code']==0 and terminals['admission']['outer_timeout'] is False
+assert terminals['observer'] is not None or terminals['audit'] is None
+paths += [Path('/tmp/palimpsest-puck-cpu-held-episode-16-'+phase+'-'+number+'.json') for phase,number in (('admission','01'),('audit','01'))]
+paths += [Path('/tmp/palimpsest-held16-'+name+'.json') for name in ('pre-admission-guard01','pre-observer-guard01','independent-admission-review','concrete-audit-command')]
+assert len(paths)==len(set(paths))
+pins=[];total=0;absent_evidence=[]
+for path in sorted(paths):
+    if not os.path.lexists(path):absent_evidence.append(str(path));continue
+    raw=read(path);total+=len(raw);assert total<=96*1024**2
+    pins.append(dict(path=str(path),size_bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()))
+transport_path=root/'runs/puck-cpu-held-episode-16-external-cli-transport.json'
+transport_raw=read(transport_path) if os.path.lexists(transport_path) else None
+transport=None if transport_raw is None else json.loads(transport_raw)
+result=optional(allocation/'result.json');supervision={phase:optional(allocation/(phase+'-supervision.json')) for phase in ('source','replay')}
+audit_path=Path('/tmp/palimpsest-puck-cpu-held-episode-16-audit-01.json')
+audit_raw=read(audit_path) if os.path.lexists(audit_path) else None
+audit=None if audit_raw is None else json.loads(audit_raw)
+admission=json.loads(read(Path('/tmp/palimpsest-puck-cpu-held-episode-16-admission-01.json')))
+for name,value in (('admission',admission),('transport',transport),('result',result),('audit',audit)):
+    assert value is None or value.get('configuration_sha256')==config_sha,'Configuration SHA differs in '+name
+observer_stdout=Path('/tmp/palimpsest-held16-observer-external.stdout')
+if transport_raw is not None and os.path.lexists(observer_stdout):assert read(observer_stdout)==transport_raw
+if audit_raw is not None:
+    assert read(Path('/tmp/palimpsest-held16-audit-external.stdout'))==audit_raw
+    assert transport_raw is not None and audit['transport_sha256']==hashlib.sha256(transport_raw).hexdigest()
+def normal(phase):
+    terminal=terminals[phase];return terminal is not None and terminal['exit_code']==0 and terminal['outer_timeout'] is False
+# Allocation 16: PASS needs the accepted parent result (process attempts 0, 48 ticks, replay passed over 48 ticks without
+# divergence, frozen renderer), the pinned episode auditor's PASS over exactly these bytes, and both validated bundles.
+EPISODE_AUDITOR_SHA='4d8ac17f0577938ded9fa3845f0e26c1b52be8db11fa5327953c9446b156ba36'
+verified=(audit or {}).get('verified') if isinstance((audit or {}).get('verified'),dict) else {}
+runs=(result or {}).get('runs') if isinstance((result or {}).get('runs'),dict) else {}
+replay=(result or {}).get('replay') if isinstance((result or {}).get('replay'),dict) else {}
+renderer=(result or {}).get('renderer') if isinstance((result or {}).get('renderer'),dict) else {}
+passed=(normal('observer') and normal('audit')
+    and transport is not None and transport['observed_returncode']==0 and transport['timed_out'] is False and transport.get('phase')=='episode'
+    and result is not None and result.get('status')=='episode_completed' and result.get('held_episode_observed') is True
+    and not {'error','error_type'}&set(result) and result.get('process_creation_attempts')==0 and result.get('ticks_completed')==48
+    and replay.get('status')=='passed' and replay.get('compared_ticks')==48 and replay.get('first_divergence') is None
+    and renderer.get('vendor')=='Mesa' and 'llvmpipe' in str(renderer.get('renderer')) and renderer.get('backend')=='egl'
+    and audit is not None and audit.get('status')=='PASS' and audit.get('kind')=='puck-cpu-held-episode-independent-audit-v1'
+    and audit.get('auditor_source_sha256')==EPISODE_AUDITOR_SHA and verified.get('result_sha256')==hashlib.sha256(read(allocation/'result.json')).hexdigest()
+    and verified.get('transport_sha256')==(None if transport_raw is None else hashlib.sha256(transport_raw).hexdigest())
+    and verified.get('compared_ticks')==48 and verified.get('frames_checked')==384
+    and all(verified.get(p+'_bundle_sha256')==(runs.get(p) or {}).get('bundle',{}).get('sha256') is not None for p in ('source','replay')))
+# Each worker registration must carry the user-decided 600 s clock; a different clock is refused, not recorded.
+registrations={p:optional(allocation/('control/worker-registration-'+p+'.json')) for p in ('source','replay')}
+assert all(r is None or r.get('deadline_seconds')==600 for r in registrations.values()),'Allocation-16 worker registrations must carry deadline_seconds 600'
+clocks=dict(parent_elapsed_below_1200=result is not None and type(result.get('elapsed_seconds')) in (int,float) and 0<result['elapsed_seconds']<1200,
+    transport_elapsed_below_1260=transport is not None and type(transport.get('elapsed_seconds')) in (int,float) and 0<transport['elapsed_seconds']<1260,
+    registration_deadline_seconds={p:None if r is None else r.get('deadline_seconds') for p,r in registrations.items()},
+    supervision_status={p:None if s is None else s.get('status') for p,s in supervision.items()})
+passed=(passed and clocks['parent_elapsed_below_1200'] and clocks['transport_elapsed_below_1260']
+    and clocks['registration_deadline_seconds']==dict(source=600,replay=600) and clocks['supervision_status']==dict(source='completed',replay='completed'))
+status='AUDIT_PASS_HELD_EPISODE_ONLY' if passed else 'FAILED_CONSUMED'
+before=json.loads(read(base/'historical-before-admission.json'))
+for row in before['raw_run_files']+before['preparation04_run_files']+before['preparation03_run_files']+before['preparation02_run_files']+before['characterization04_run_files']:
+    raw=read(root/row['path']);assert len(raw)==row['size_bytes'] and hashlib.sha256(raw).hexdigest()==row['sha256']
+for name in before['historical_empty_directories']:
+    path=root/name;assert path.is_dir() and not path.is_symlink() and not any(path.iterdir()),name
+missing=[str(root/p) for p in before['historical_absent_paths']]+before['attempt11_d83dab3_absent_outputs']+['/tmp/palimpsest-puck-cpu-held-episode-16-admission-02.json']
+assert len(missing)==len(set(missing)) and all(not os.path.lexists(p) for p in missing)
+assert all(not os.path.lexists(p) for p in before['retired_stage_paths'])
+if not allocation_present:missing.append(str(allocation))
+for leaf in ('result.json','baseline-after.json','source-supervision.json','replay-supervision.json'):
+    if not os.path.lexists(allocation/leaf):missing.append(str(allocation/leaf))
+for phase,terminal in terminals.items():
+    if terminal is None:missing.append('/tmp/palimpsest-held16-'+phase+'-tool-terminal.json')
+missing += [p for p in absent_evidence if p not in missing]
+stage_after=None
+try:
+    stage_rel='docs/plans/puck-cpu-held-episode-16-control-validation/tools/stage_guard.py'
+    stage_raw=(root/stage_rel).read_bytes()
+    assert stage_raw==subprocess.check_output(['git','show',control+':'+stage_rel],cwd=root)
+    stage_namespace={'__name__':'held16_stage_guard'};exec(compile(stage_raw,str(root/stage_rel),'exec'),stage_namespace)
+    stage_after=stage_namespace['check'](root)
+except Exception as error:stage_after=dict(status='STAGE_OR_BOOT_CHANGED',error=type(error).__name__+': '+str(error)[:512])
+samples=[]
+for row in [r for s in supervision.values() for r in (s or {}).get('tracked_processes',[])]:
+    p=Path('/proc')/str(row['pid'])/'stat'
+    try:
+        text=p.read_text();fields=text[text.rfind(')')+2:].split();matching=int(fields[19])==row['start_ticks']
+    except FileNotFoundError:matching=False
+    samples.append(dict(**row,matching_identity_present=matching))
+raw=b''.join(read(allocation/name/'stderr.log') for name in ('logs-source','logs-replay') if os.path.lexists(allocation/name/'stderr.log'));diagnostics=[];other=[]
+for line in raw.splitlines():
+    try:
+        row=json.loads(line)
+        if isinstance(row,dict):diagnostics.append(row)
+        else:other.append(line)
+    except (ValueError,UnicodeError):other.append(line)
+phases=[r for r in diagnostics if r.get('kind')=='puck-worker-phase-v1']
+costs=[r for r in diagnostics if r.get('kind')=='puck-worker-guard-cost-v1']
+errors=[line.decode('utf-8','replace')[:1024] for line in other if b'Error' in line.split(b':',1)[0]]
+value=dict(kind='root-terminal-episode16-metadata-v1',status=status,at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    source_commit=source,control_commit=control,configuration_sha256=config_sha,
+    observer_invocations=1,independent_auditor_invocations=0 if terminals['audit'] is None else 1,admission16_status=admission['status'],terminals=terminals,
+    allocation_present=allocation_present,transport=transport,transport_sha256=None if transport_raw is None else hashlib.sha256(transport_raw).hexdigest(),
+    parent_result=result,supervision=supervision,independent_audit=audit,
+    independent_audit_sha256=None if audit_raw is None else hashlib.sha256(audit_raw).hexdigest(),
+    pins=pins,total_pinned_bytes=total,missing_original_paths=missing,historical_records_unchanged=len(before['raw_run_files']),
+    preparation04_run_files_unchanged=len(before['preparation04_run_files']),characterization04_run_files_unchanged=len(before['characterization04_run_files']),preparation03_run_files_unchanged=len(before['preparation03_run_files']),preparation02_run_files_unchanged=len(before['preparation02_run_files']),stage_after=stage_after,episode16_clocks=clocks,
+    process_identity_samples=samples,process_scope='sequential recorded PID/start identity samples only; nonexhaustive non-atomic observation',
+    worker_stderr_bytes=len(raw),phase_records=len(phases),cost_records=len(costs),non_json_lines=len(other),
+    last_phase=phases[-1] if phases else None,last_cost=costs[-1] if costs else None,exception_lines=errors[:8],
+    completed_episode_receipt=passed,runtime_qualified=False,qualification_claims=[],all_seven_release_gates_open=True,
+    limits='Terminal metadata only; no target import or installed/staged/native payload read; run files are hashed, never executed; no model/study/physical acceptance. A passing audit is held-episode evidence only, not runtime/operator/collection/study acceptance.')
+path=Path('/tmp/palimpsest-held16-post-outcome-observation.json')
+with path.open('x') as out:out.write(json.dumps(value,indent=2,sort_keys=True)+'\n')
+print(json.dumps(dict(path=str(path),status=status,pins=len(pins),bytes=total,missing=len(missing),phase_records=len(phases),
+    cost_records=len(costs),parent_status=None if result is None else result['status'],matching_process_samples=samples)))

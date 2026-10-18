@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-episode-16-control-validation/guard-path-check.py",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-episode-16-control-validation/pre-admission-guard.py.in"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-episode-16-control-validation/guard-path-check.py",
+      "sha256": "6e40f8be69287a68fda16e78416a75f1f78c9f6d4938a613ea140dbc72c5f02e",
+      "size_bytes": 1575
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-episode-16-control-validation/pre-admission-guard.py.in",
+      "sha256": "4bff066b75005778a1fc294807dbae46b51f30daebe868b377c6c98006674edb",
+      "size_bytes": 4827
+    }
+  ],
+  "scope": "single real history-read AST node on isolated fixture; entire guard compiled only; no admission/resource/payload/runtime execution"
+}

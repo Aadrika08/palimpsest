@@ -1,0 +1,211 @@
+{
+  "byte_bindings": {
+    "audit_external": [
+      1588,
+      "0702de9572bdbde6fe193d2f64f65a47d05af8c972c12bb849a9f0e558e5cfff"
+    ],
+    "audit_report": [
+      1889,
+      "73e6ee8c79fbd0fddcbbf2afdea27726c5c44a53689492f91a965a4ea1a04188"
+    ],
+    "bundle_validator": [
+      11519,
+      "2bc07bf534bbb72e4c1899ca8f8c6c322bef856360f098f24607ecbce8e0cbe0"
+    ],
+    "collector": [
+      13294,
+      "7a6814b144adc9ff5d15a8cde88895ef1d9d947275a9131ab9b1ede215feb26e"
+    ],
+    "configuration": [
+      20132,
+      "01a669fc24d02e0681c6d82303ff543d315c20c80bbd5a4a00e6ca309fcece43"
+    ],
+    "episode_auditor_source": [
+      43891,
+      "4d8ac17f0577938ded9fa3845f0e26c1b52be8db11fa5327953c9446b156ba36"
+    ],
+    "episode_parent_source": [
+      34594,
+      "bd08543a0a8ad590f3fd7edbf20be2eeaf9e94dbf1dac5a5b9965d368002fd6c"
+    ],
+    "observation": [
+      33780,
+      "b93a03ee88033b9df59fe1fd753fe71867144879ba187e46d380a4eae1a85f37"
+    ],
+    "observer_external": [
+      1299,
+      "e5e10b802ba8cc26f758af1b048c1e25313d214308d4290375f69833ebef82e2"
+    ],
+    "replay_bundle": [
+      10092230,
+      "c4c7d634e3f60bd259e7bd38abd64dd148dba3cdd9b89542613042e89a94ff88"
+    ],
+    "replay_invocation": [
+      28886,
+      "bf2af140cf2eadd927162eb5089ff6d2b3bac5c517b17d5d86558c63100aa285"
+    ],
+    "replay_registration": [
+      22579,
+      "72078a45ed9abd6376c26cffce131b10303a8e782d04740e176c049e9ff86c8b"
+    ],
+    "replay_report": [
+      1851,
+      "589ae505db7db0ec4e83b9a72c525ee35fecb98859c52d0d6829238a0a173e87"
+    ],
+    "replay_supervision": [
+      362,
+      "b9f278b5e8f64324f3a3da12da56385d2fa33c72b9188a8eedc45b46dd271198"
+    ],
+    "replay_worker_stderr": [
+      17831,
+      "80eca66e3040327b37dd41d0b6abbb458a08831d0ad155c979cca3f7a906986e"
+    ],
+    "replay_worker_stdout": [
+      227212,
+      "6716fa3049d86be62e0cf0fea2a1e3c0a3a71d2dc80f5def7c62659a4c766579"
+    ],
+    "result": [
+      3874,
+      "38bee218eaeeb6868aac5ab727c47f881a5229bd932f88caacdd0cb77b0b6e3e"
+    ],
+    "source_bundle": [
+      10085155,
+      "6443edaa430e9f949021ca375b7fdfa07f245d8b77cf59dbb7f992fca11fe1f7"
+    ],
+    "source_invocation": [
+      28766,
+      "0aef83b2a6ebfb17f80dbd83fb89db825fcf0582516d077f286c7bd2c6bf5101"
+    ],
+    "source_registration": [
+      22570,
+      "a981d88e60a73e9e99b92c562184bbd7f00966fa327f0edb9f5be34d5c2d327b"
+    ],
+    "source_supervision": [
+      361,
+      "2e4e1f7ff89a4400726fbb4f0ccf111fd9bea3de37aad1ad4c217d11d99d72e3"
+    ],
+    "source_worker_stderr": [
+      16831,
+      "4576a067820b5afb649eac4de76bd3dd723f9bc7e2d7b1137568c1f8f7ec8123"
+    ],
+    "source_worker_stdout": [
+      227266,
+      "f3486ee66c887b20f136e4b29327db193a9d0865a76916dc285fc52e9742c18a"
+    ],
+    "transport": [
+      929,
+      "1eeb912b90a0e6753c0d29dd53355dd56615e86e28b3eca7645bd11c94edc4c6"
+    ]
+  },
+  "byte_bindings_format": "named checked artifact -> [size_bytes,sha256]; all 62 member paths/digests remain in the bound post-outcome observation",
+  "checked_facts": [
+    "All 62 post-outcome members re-read no-follow, stable and byte-exact, covering all 32 allocation files; 63 recorded missing paths still absent. Clean worktree at control e7c5a3e. Episode parent, observer, episode auditor (4d8ac17f), bundle validator (2bc07bf5) and bootstrap equal cbda0d9 and the control blobs. Instantiated collector/run-observer/run-audit equal their templates (CONTROL, 105); bind and maker equal their Git copies.",
+    "Order: admission review c19f8e8e < pre-observer guard (PASS, binds admission e0cdaea0, stage/boot PASS) < observer < concrete audit bind < audit < collect. One tool command, external receipt and terminal per phase; no admission-02; no other runs/puck-cpu-held-episode-1x allocation, so no retry.",
+    "Observer: stage guard PASS; tool exit 0 in 695.65s (<1330s), no outer timeout; external rc 0, normal exit, 695.59s of 1300s, no retry, empty stderr. Observer stdout equals the 929B transport 1eeb912b...: phase episode, exact episode-parent argv on config 01a669fc, rc 0, not timed out, 695.52s (<1260s). Parent stdout (3874B) equals result.json; parent stderr empty.",
+    "result.json: outcome-v16, episode_completed, held_episode_observed, 695.41s (<1200s), ticks_completed 48, process_creation_attempts 0. Replay passed: 48 ticks, 100 events, no divergence. Versions numpy 2.2.5, torch 2.9.0+cpu, mujoco 3.3.6, gymnasium 1.2.1. Renderer Mesa llvmpipe (LLVM 22.1.8) EGL 1.5, Mesa 26.2.2. Provenance cadb65f6. Closure FD 5->5, no children or threads. All authority false; no claims; run ids as frozen.",
+    "Both worker receipts: stdout digests and registration digests equal the result. Registrations carry deadline_seconds 600 and equal independent episode-auditor reconstructions. Python 3.11.15, interpreter bound, process_creation_attempts {count 0}. expected_missing/hidden equal the 42+4 rosters. denied_imports are exactly the 21 characterized misses in each phase, a subset of 42+4. Late delegate fused_cython_function (scipy.linalg._cythonized_array_utils) recorded on _cython_3_0_12; module aliases _csparsetools and _ni_label accepted. Authority false.",
+    "Both supervisions completed: rc 0, failure null, no survivors, 3 tracked identities; peak RSS 975MB (source) and 1031MB (replay). Both invocations equal independent episode-auditor namespace reconstructions, with stage -04 inputs mounted read-only. Worker stderr: phase and guard-cost JSON plus one benign torch TF32 UserWarning per phase; no Unregistered, refusal, poison, Traceback, Error or exception text. close.ready at 323.7s (source) and 366.5s (replay), both under 600s.",
+    "Run directories: the file manifests (6 source, 7 replay files) and both bundle pins equal result.runs. The reviewer ran validate_palimpsest_bundle.py on both bundles with --run against their run directories: rc 0, source 6443edaa (5 members), replay c4c7d634 (6 members). Replay report: passed, 48 ticks, mode actions, source/run ids bound, sha equal to result.",
+    "Audit: the concrete command binds transport 1eeb912b, config and the -16 audit-01 output. One run: exit 0 in 1.02s tool, 0.90s auditor, empty stderr; stdout equals audit-01. Report: PASS from 4d8ac17f, target_code_executed_by_auditor false; verified config/transport/result/both bundles/provenance/validator/preparation04 audit, compared_ticks 48, frames_checked 384, baseline. 0.90s is plausible: the reviewer re-ran the auditor own recording() and compare() on both run directories (chunk SHA, npz decode, per-frame non-constant checks on 4 cameras x 48 ticks x 2 phases, exact camera and 1e-6 float comparison) in 0.29s, PASS.",
+    "Post-outcome: AUDIT_PASS_HELD_EPISODE_ONLY, completed_episode_receipt true, runtime_qualified false, observer and auditor invocations 1/1, configuration 01a669fc, stage_after PASS, tracked identities not present. After the run, all historical run records and all 2128 freeze pins are unchanged. Boot 7f875223 unchanged; a single stat of the preparation04 roots shows 317249-317252, mode 0700; the namespace mounted the stage read-only."
+  ],
+  "control_commit": "e7c5a3e55dcbac8715a68025069e4ed6e5860fb1",
+  "findings": [],
+  "kind": "independent_bounded_allocation16_passed_episode_outcome_review_v1",
+  "limits": [
+    "Standard-library metadata/source inspection and the stdlib bundle validator plus auditor recording/compare functions only; no target imports, renderer, episode, parent/observer/auditor main, network or repo edits. Only write: this exclusive /tmp review JSON.",
+    "Establishes one held public manual episode record only. It is not runtime qualification, controller/operator capability, policy or scientific study evidence, collection or release acceptance. All seven release gates remain open.",
+    "Worker phase and guard-cost rows are optional unauthenticated diagnostics. RSS/process enforcement is sampled. Post-run staged-forest custody was not re-hashed (the episode audit stat-checks root identity). Determinism is shown for this one source/replay pair on this host, boot, Mesa 26.2.2 llvmpipe and pinned bytes, not across hosts or GPUs."
+  ],
+  "observed": {
+    "all_seven_release_gates_open": true,
+    "allocation16": {
+      "clock_margins": {
+        "parent_normal_1200": 504.6,
+        "worker_600": {
+          "replay": 233.5,
+          "source": 276.3
+        }
+      },
+      "observer_external_seconds": 695.5913424769824,
+      "observer_tool_seconds": 695.6547460139845,
+      "parent_seconds": 695.4128729960066,
+      "process_creation_attempts": 0,
+      "provenance_sha256": "cadb65f6a824baa46c369d6b591f1d5fc397891c5b65c623220a993dde4552eb",
+      "renderer": {
+        "backend": "egl",
+        "egl_vendor": "Mesa Project",
+        "egl_version": "1.5",
+        "renderer": "llvmpipe (LLVM 22.1.8, 256 bits)",
+        "vendor": "Mesa",
+        "version": "4.6 (Compatibility Profile) Mesa 26.2.2-arch1.1"
+      },
+      "replay": {
+        "compared_events": 100,
+        "compared_ticks": 48,
+        "first_divergence": null,
+        "status": "passed"
+      },
+      "status": "episode_completed",
+      "ticks_completed": 48,
+      "transport_seconds": 695.5169841269962,
+      "versions": {
+        "gymnasium": "1.2.1",
+        "mujoco": "3.3.6",
+        "numpy": "2.2.5",
+        "torch": "2.9.0+cpu"
+      },
+      "worker_close_ready_seconds": {
+        "replay": 366.5,
+        "source": 323.7
+      }
+    },
+    "audit": {
+      "auditor_source_sha256": "4d8ac17f0577938ded9fa3845f0e26c1b52be8db11fa5327953c9446b156ba36",
+      "compared_ticks": 48,
+      "elapsed_seconds": 0.896,
+      "frames_checked": 384,
+      "kind": "puck-cpu-held-episode-independent-audit-v1",
+      "reviewer_recheck": "recording()+compare() rerun PASS in 0.29s",
+      "status": "PASS",
+      "tool_seconds": 1.017236835003132
+    },
+    "bundles": {
+      "replay": {
+        "path": "replay-bundle.zip",
+        "sha256": "c4c7d634e3f60bd259e7bd38abd64dd148dba3cdd9b89542613042e89a94ff88",
+        "size_bytes": 10092230
+      },
+      "reviewer_validation": "validate_palimpsest_bundle.py --run PASS for both",
+      "source": {
+        "path": "source-bundle.zip",
+        "sha256": "6443edaa430e9f949021ca375b7fdfa07f245d8b77cf59dbb7f992fca11fe1f7",
+        "size_bytes": 10085155
+      }
+    },
+    "completed_episode_receipt": true,
+    "imports": {
+      "denied_per_phase": 21,
+      "denied_subset_of_42_plus_4": true,
+      "late_delegate": "fused_cython_function via scipy.linalg._cythonized_array_utils",
+      "module_aliases": [
+        "_csparsetools",
+        "_ni_label"
+      ]
+    },
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "stage_custody": "Boot unchanged; preparation04 roots identity/mode unchanged; namespace mounted stage inputs read-only; staged bytes re-hashed by admission16 before the run (not after)."
+  },
+  "pinned_roster": {
+    "all_sizes_sha256_match": true,
+    "allocation_files": 32,
+    "bytes_verified": 45129097,
+    "manifest_path": "/tmp/palimpsest-held16-post-outcome-observation.json",
+    "missing_paths_still_absent": 63,
+    "pins_verified": 62
+  },
+  "scope": "Accept the retained PASS outcome record of the sole allocation 16 (held public manual episode on preparation04) and its ONE bound independent episode audit PASS as a held-episode record only; runtime_qualified stays false.",
+  "source_commit": "cbda0d992c12320e2c9bd8a188f89d2c73d9f77e",
+  "status": "PASS_HELD_EPISODE_OUTCOME_RECORD_ONLY"
+}
