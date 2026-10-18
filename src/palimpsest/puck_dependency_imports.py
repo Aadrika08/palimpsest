@@ -101,8 +101,9 @@ class _Distribution(importlib.metadata.Distribution):
         self.owner.guard()
         return raw.decode('utf-8')
     def locate_file(self, path):
-        text = str(path)
-        if text not in self.owner.files[self.row['root_index']]:
+        text = str(path); files = self.owner.files[self.row['root_index']]
+        if text not in files and not (self.owner.episode and text and not text.endswith('/')
+                                      and any(f.startswith(text+'/') for f in files)):
             raise ValueError('Unregistered distribution file')
         self.owner.guard()
         return self.owner.provider._holders[self.row['root_index']].root/text
@@ -147,7 +148,7 @@ class _Loader(importlib.abc.Loader):
                 payload = owner.provider.read(self.row['root_index'], self.row['path'])
                 module.__file__ = self.get_filename(name)
                 if self.row['is_package']:
-                    module.__path__ = ['/dev/null/held-package/'+name.replace('.','/')] if owner.package_search_path else []
+                    module.__path__ = ['/dev/null/held-package/'+name.replace('.','/')] if owner.episode else []
                 code=compile(payload, module.__file__, 'exec', dont_inherit=True)
                 ExportBindings.begin(owner.bindings,name,module,code)
                 # A nested Python initializer masks the outer native creator's
@@ -184,11 +185,12 @@ class _Loader(importlib.abc.Loader):
 
 
 class DependencyImports:
-    def __init__(self, provider, guard, full_guard, fail, local_names, local_roots, *, package_search_path=False):
+    def __init__(self, provider, guard, full_guard, fail, local_names, local_roots, *, episode=False):
         self.provider, self.guard, self.full_guard, self.fail = provider, guard, full_guard, fail
-        # v4 only: a package's __path__ is one string below /dev/null (never a directory, so no
-        # path hook can open it); v1-v3 keep __path__ == [].
-        self.package_search_path = package_search_path is True
+        # Registration v4 (held episode) only: a package's __path__ is one string below /dev/null
+        # (never a directory, so no path hook can open it), and a distribution also locates a
+        # directory holding registered files. v1-v3 keep __path__ == [] and file-only location.
+        self.episode = episode is True
         self.modules = {r['name']:r for r in provider.module_records()}
         self.namespaces = {r['name']:r for r in provider.namespace_records()}
         self.distributions = provider.distribution_records()
