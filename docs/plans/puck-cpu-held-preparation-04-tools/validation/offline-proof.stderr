@@ -1,0 +1,16 @@
+test_allocation16_refuses_malformed_records_and_audits (__main__.Proofs.test_allocation16_refuses_malformed_records_and_audits) ... ok
+test_allocation16_refuses_reused_run_ids_and_undeclared_misses (__main__.Proofs.test_allocation16_refuses_reused_run_ids_and_undeclared_misses) ... ok
+test_builder_refuses_bad_terminals (__main__.Proofs.test_builder_refuses_bad_terminals) ... ok
+test_configuration_and_freeze_are_the_frozen_bytes (__main__.Proofs.test_configuration_and_freeze_are_the_frozen_bytes) ... ok
+test_consumed_stage_guard_tolerates_only_recorded_retirement (__main__.Proofs.test_consumed_stage_guard_tolerates_only_recorded_retirement) ... ok
+test_one_shot_tools_preflight_before_their_single_invocation (__main__.Proofs.test_one_shot_tools_preflight_before_their_single_invocation) ... ok
+test_outer_bounds_exceed_the_source_clocks (__main__.Proofs.test_outer_bounds_exceed_the_source_clocks) ... ok
+test_preflight_requires_boot_stage_family_and_room_for_the_stage (__main__.Proofs.test_preflight_requires_boot_stage_family_and_room_for_the_stage) ... ok
+test_record_is_accepted_by_allocation16_parent_and_episode_auditor (__main__.Proofs.test_record_is_accepted_by_allocation16_parent_and_episode_auditor) ... ok
+test_retirement_tool_refuses_other_paths_and_censuses_without_following_links (__main__.Proofs.test_retirement_tool_refuses_other_paths_and_censuses_without_following_links) ... ok
+test_stat_roots_and_run_once_and_archive_copy_on_fixture (__main__.Proofs.test_stat_roots_and_run_once_and_archive_copy_on_fixture) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.817s
+
+OK
