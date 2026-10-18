@@ -1,0 +1,7 @@
+{
+  "admission_or_runtime_invoked": false,
+  "error": "ValueError: ast.literal_eval cannot read d83dab3 instantiate TEMPLATES (values are VALIDATION+'/...' expressions)",
+  "kind": "control-authoring-failure-v1",
+  "location": "history-impl.py line 27, after the byte-identical review-01 port was written and before any runner edit",
+  "recovery": "The unedited runner was re-run here by the chained batch (still RED, 7 errors). The review port was removed and recreated by the corrected history-impl.py; only the TEMPLATES key extraction changed."
+}

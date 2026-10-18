@@ -1,0 +1,13 @@
+{
+  "admission_invoked": false,
+  "canonical": "canonical-green01: 9,048B compact configuration; changes vs d83dab3 only preparation_acceptance, sources (qualifier row) and stage_parent; parent validate_configuration and validate_preparation_acceptance plus auditor configuration, preparation_epoch and historical_acceptance PASS before the freeze",
+  "entries": "entries01: the read-only model reproduces admission10-02's measured 33,719 held files and the reviewer's 37,903 entries exactly; attempt 11b projects 34,032 files + 3,187 directories + 1,071 links = 38,290 of 40,000 (margin 1,710)",
+  "freeze": "2,463 pins / 121,576,773B / 617,268B manifest 19f930d0...; all 2,150 admission10-02 pins retained (5 live sources archived via terminal10 source/), plus preparation02 controls/evidence (26), the review-01 port and 11b source evidence; d83dab3's 73 files recorded as Git-object pins",
+  "guard": "guard-green01: corrected history read on the 11b template",
+  "history": "history-red01: 33 cases, 7 errors/26 passes; history-impl-authoring-failure01: first impl stopped reading d83dab3 template names before any runner edit (chained batch re-ran RED); history-green01: all 33 pass",
+  "kind": "actual11b-control-validation-notes-v1",
+  "limits": "No admission main, pre-admission/pre-observer guard, run-once tool, SITE/staged/native census, observer, auditor or runtime invoked; the preparation02 stage was never opened by these checks (stage-guard proofs use tmpfs fixtures). /tmp writes: wrapper copy, self-check JSON and scratch.",
+  "runtime_invoked": false,
+  "selfcheck01": "PASS_AUTHENTICATED_CONTROL_METADATA_ONLY in 7.28s; full 2,463-pin warm roster; consumed 07-10 and admission10 01/02; preparation02 accepted with matching registration, stage receipt and invocation via the current namespace command (legacy would differ); preparation01 superseded; d83dab3 never invoked (39 outputs absent, 73 Git files verified); 35 empty directories; 32-name planned absence; worker registration v5; FD 4->4",
+  "tools": "tools-green01: 7 cases PASS - templates compile, every one-shot guard loads the Git-bound stage guard before acting, stage guard on tmpfs fixtures refuses boot/inode/mode/missing-stage changes and non-tmpfs, pre-observer derivation, and collect-outcome records a missing allocation and missing terminals as FAILED_CONSUMED and refuses a different configuration SHA"
+}

@@ -1,0 +1,101 @@
+{
+  "admission_main_invoked": false,
+  "attempt11_d83dab3": "NEVER_INVOKED",
+  "changed_sources_vs_preparation03": 0,
+  "closure": {
+    "children": [],
+    "fd_after": 4,
+    "fd_before": 4,
+    "threads": []
+  },
+  "compact_configuration_authenticated": true,
+  "configuration": {
+    "sha256": "32f8aeb553a534b463f2b7a594ca721273fa251ae743256d6fe23efa74f6bed2",
+    "size_bytes": 9048
+  },
+  "consumed": {
+    "admission10_01": "FAILED_CONSUMED",
+    "admission10_02": "ADMITTED_CONSUMED_BY_RUNTIME10",
+    "admission11b": "ADMITTED_CONSUMED_BY_RUNTIME11",
+    "qualifications07_11": "FAILED_CONSUMED"
+  },
+  "d83dab3_git_files": 73,
+  "epoch14": {
+    "limits": {
+      "address_space_bytes": 8589934592,
+      "child_hard_seconds": 375,
+      "file_bytes": 16777216,
+      "hard_seconds": 390,
+      "max_fds": 40000,
+      "max_processes": 3,
+      "min_available_ram_bytes": 2147483648,
+      "min_free_bytes": 4294967296,
+      "min_tmpfs_free_bytes": 268435456,
+      "normal_seconds": 360,
+      "output_bytes": 67108864,
+      "rss_bytes": 2147483648,
+      "scratch_bytes": 67108864
+    },
+    "non_360_worker_clocks_refused": [
+      180,
+      361
+    ],
+    "observer_outer_term_seconds": 450,
+    "observer_wrapper_seconds": 440,
+    "worker_deadline_seconds": 360
+  },
+  "freeze": {
+    "sha256": "7cecde69672e25b68ebff99f5e007d65d2a91da5d2ad896ee84d2e3f4ce27971",
+    "size_bytes": 698687
+  },
+  "full_manifest_warm_raw_roles": true,
+  "hidden_imports_undeclared": [
+    "networkx",
+    "pandas",
+    "sklearn",
+    "torch.utils._cxx_pytree"
+  ],
+  "historical_absent_paths": 23,
+  "historical_empty_directories": 41,
+  "historical_missing_receipts": 19,
+  "historical_run_files": 126,
+  "negative_absence_names": 32,
+  "new_helper_paths": 6,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 133828234,
+  "pins": 2768,
+  "preparation01": "ACCEPTED_SUPERSEDED_STAGE_LOST",
+  "preparation01_relative_changed_source_paths": [
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/puck_dependency_bindings.py",
+    "src/palimpsest/puck_dependency_files.py",
+    "src/palimpsest/puck_dependency_imports.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "preparation02": "ACCEPTED_CONSUMED_BY_RUNTIME11",
+  "preparation02_run_files": 51,
+  "preparation03": {
+    "invocation_via": "current auditor namespace_command",
+    "legacy_namespace_command_would_differ": true,
+    "registration_invocation_receipts": "MATCH",
+    "status": "ACCEPTED_PREPARATION03"
+  },
+  "preparation03_run_files": 51,
+  "pretty_manifest_authenticated": true,
+  "prior_amendment02_original10_and_11b_pins_preserved": true,
+  "qualifier_validate_configuration": true,
+  "qualifier_validate_preparation_acceptance": true,
+  "replaced_live_sources_archived": [
+    "scripts/audit_puck_cpu_held_runtime.py",
+    "scripts/observe_puck_cpu_held_allocation.py",
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/puck_dependency_files.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "runtime_invoked": false,
+  "stages_touched": false,
+  "status": "PASS_AUTHENTICATED_CONTROL_METADATA_ONLY",
+  "worker_qualification": "v5"
+}

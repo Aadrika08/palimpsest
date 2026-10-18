@@ -1,0 +1,166 @@
+{
+  "acceptance_pins": {
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-preparation-03.json",
+      "sha256": "f915023564ace5cfe61bd034fc24f8ee6f33ebce0c783875b52ce2cf49def54d",
+      "size_bytes": 7906
+    },
+    "externally_observed_auditor_cli": {
+      "path": "docs/reports/puck-cpu-held-preparation-03/audit/palimpsest-puck-cpu-held-preparation-03-audit-01.external-cli.json",
+      "sha256": "53b7f6e57cd13fc60189286f2b8c007c3311d4596df512cdec2b95d09ace726b",
+      "size_bytes": 1466
+    },
+    "independent_audit": {
+      "path": "docs/reports/puck-cpu-held-preparation-03/audit/palimpsest-puck-cpu-held-preparation-03-audit-01.json",
+      "sha256": "c5c7da423dd81cbf9f6b60907f50e1e326d3afbbee8fa2269eea9ed3fd19e78b",
+      "size_bytes": 1583
+    },
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-03/result.json",
+      "sha256": "c7e6c0e8baf8daf2d221b5a3510cd586fedc50de71c3bd2b21cc8c36e79dfebf",
+      "size_bytes": 7325
+    }
+  },
+  "acceptance_proof": {
+    "auditor_configuration": "PASS",
+    "auditor_historical_acceptance": "PASS",
+    "auditor_preparation_epoch": "PASS",
+    "epoch": 14,
+    "hidden_imports": [
+      "networkx",
+      "pandas",
+      "sklearn",
+      "torch.utils._cxx_pytree"
+    ],
+    "negative_imports": 32,
+    "normal_seconds": 360,
+    "parent_validate_preparation_acceptance": "PASS",
+    "worker_deadline_seconds": 360,
+    "worker_registration": "PASS"
+  },
+  "at_utc": "2026-10-17T07:27:29.862121+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "copies": [
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/audit/palimpsest-puck-cpu-held-preparation-03-audit-01.json",
+      "sha256": "c5c7da423dd81cbf9f6b60907f50e1e326d3afbbee8fa2269eea9ed3fd19e78b",
+      "size_bytes": 1583,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/audit/palimpsest-puck-cpu-held-preparation-03-audit-01.external-cli.json",
+      "sha256": "53b7f6e57cd13fc60189286f2b8c007c3311d4596df512cdec2b95d09ace726b",
+      "size_bytes": 1466,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.external-cli.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/audit/palimpsest-puck-cpu-held-preparation-03-audit-01.stdout",
+      "sha256": "c5c7da423dd81cbf9f6b60907f50e1e326d3afbbee8fa2269eea9ed3fd19e78b",
+      "size_bytes": 1583,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/audit/palimpsest-puck-cpu-held-preparation-03-audit-01.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-puck-cpu-held-preparation-03-audit-01.stderr"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/records/palimpsest-prep03-observer-terminal.json",
+      "sha256": "ad165ffac9aea63d4017a65000d34f61c353ff0410457c641dc8884fd4f7835e",
+      "size_bytes": 3654,
+      "source": "/tmp/palimpsest-prep03-observer-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/records/palimpsest-prep03-audit-terminal.json",
+      "sha256": "a52697fb551eb07930700f449f8c56ea118a8095518573dfd784153916bd179b",
+      "size_bytes": 4456,
+      "source": "/tmp/palimpsest-prep03-audit-terminal.json"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/records/palimpsest-prep03-observer.stdout",
+      "sha256": "5f1c25b6049b2a16106ae5d38e810fad90dde15bc1c6c354681483597870d415",
+      "size_bytes": 945,
+      "source": "/tmp/palimpsest-prep03-observer.stdout"
+    },
+    {
+      "archived": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-preparation-03/records/palimpsest-prep03-observer.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": "/tmp/palimpsest-prep03-observer.stderr"
+    }
+  ],
+  "head": "a55d258378e2d2f47f6dddb796239d94cc0cf50f",
+  "kind": "palimpsest-prep03-archive-record-v1",
+  "preflight": {
+    "absent": 3,
+    "at_utc": "2026-10-17T07:27:29.077065+00:00",
+    "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+    "dry_run": false,
+    "git": {
+      "clean": true,
+      "controls_git_bound": 17,
+      "head": "a55d258378e2d2f47f6dddb796239d94cc0cf50f",
+      "origin": "a55d258378e2d2f47f6dddb796239d94cc0cf50f"
+    },
+    "host": {
+      "baseline_external_files": 10,
+      "baseline_files": 4233,
+      "baseline_links": 1048,
+      "native_aliases": 23,
+      "native_files": 29
+    },
+    "kind": "palimpsest-prep03-preflight-v1",
+    "phase": "archive",
+    "pins_checked": 44,
+    "prepared": {
+      "observer_boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+      "result_sha256": "c7e6c0e8baf8daf2d221b5a3510cd586fedc50de71c3bd2b21cc8c36e79dfebf",
+      "staged_roots": {
+        "roots": [
+          {
+            "device": 55,
+            "inode": 43194,
+            "matches": true,
+            "root_index": 0
+          },
+          {
+            "device": 55,
+            "inode": 43195,
+            "matches": true,
+            "root_index": 1
+          },
+          {
+            "device": 55,
+            "inode": 43196,
+            "matches": true,
+            "root_index": 2
+          },
+          {
+            "device": 55,
+            "inode": 43197,
+            "matches": true,
+            "root_index": 3
+          }
+        ],
+        "stage_parent": "/tmp/palimpsest-puck-cpu-held-03",
+        "stage_parent_device": 55,
+        "stage_parent_inode": 43108
+      },
+      "transport_sha256": "5f1c25b6049b2a16106ae5d38e810fad90dde15bc1c6c354681483597870d415"
+    },
+    "resources": {
+      "disk_available_bytes": 44206264320,
+      "floors_met": true,
+      "mem_available_bytes": 7048724480,
+      "nofile": [
+        524288,
+        524288
+      ],
+      "tmp_flags": 6,
+      "tmpfs_available_bytes": 4905246720
+    },
+    "status": "PASS_PREFLIGHT_ARCHIVE"
+  },
+  "scope": "byte-identical archive of preparation03 audit evidence; not runtime qualification"
+}

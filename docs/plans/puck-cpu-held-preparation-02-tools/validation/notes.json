@@ -1,0 +1,9 @@
+{
+  "kind": "prep02-offline-control-validation-v1",
+  "control_commit": "8d0f40cbc1e8f881a52239bc39d7a9abdf74c4ff",
+  "build_controls": "build-controls.json: qualifier canonical serializer reproduces preparation01 bytes; preparation02 differs only in kind/version/allocation_id/stage_parent and 5 of 24 source pins; parent validate_configuration and auditor configuration PASS; allocation/preparation output runs/puck-cpu-held-preparation-02",
+  "offline_proof": "offline-proof.stdout/stderr: 9 unittest cases PASS on synthetic fixtures under /tmp/palimpsest-prep02-proof-* (removed). The CLI record builder reproduces preparation01's record keys and pretty byte format exactly; its record for a synthetic v12 preparation is accepted by the parent's validate_preparation_acceptance and the auditor's configuration, preparation_epoch and historical_acceptance for a synthetic epoch-11 configuration (candidate D); 'at' without scope, elapsed 130s, returncode 1, a timeout-wrapped argv, the preparation01 transport path, the legacy auditor SHA and a v1 or allocation-1 audit are each refused by the parent with the expected message",
+  "preflight_dry_run": "preflight-observer-dry-run.json: PASS at boot 7f875223 with 44 pins, 29 native files, 23 native aliases, 4233/1048 baseline files/links, 10 external files and 19 reserved paths absent; resources meet floors (MemAvailable 9128804352B). Dry run reports, not enforces: origin branch absent (not pushed) and untracked validation outputs",
+  "not_run": "observer, qualifier main, auditor main, staging, run-observer-once, run-audit-once, archive and the authored preparation02 integration test (it creates runs/ and /tmp/palimpsest-puck-cpu-held-02-* fixtures)",
+  "writes": "Only /tmp/palimpsest-prep02-* scratch files and these validation files; nothing under runs/ or /tmp/palimpsest-puck-cpu-held-02*"
+}

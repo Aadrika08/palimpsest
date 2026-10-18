@@ -1,0 +1,71 @@
+{
+  "admission_invoked": false,
+  "derived": [
+    {
+      "new_sha256": "3ca6af5adf126b3ea0c612986dba7956e53e56d3dea5cb2973e7d01b3d92473d",
+      "old_sha256": "9652a8adb26b930800595bd473dfc224ef9e58664644bc7e30a72d68fd7fdc74",
+      "replacements": 9,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/pre-admission-guard.py.in",
+      "target": "pre-admission-guard.py.in"
+    },
+    {
+      "new_sha256": "0d42e3f2b78a8ba2f04fa4f446ab5e5d477f94f68b3e3a4ef3c5dca019cdb43a",
+      "old_sha256": "174dfc9c3bd6854bcf60b27ee612aa8fc8fa702ac335c246a76f70d14c6f7a52",
+      "replacements": 1,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/guard-path-check.py",
+      "target": "guard-path-check.py"
+    },
+    {
+      "new_sha256": "e2fc5e0793d3117b18299f184cd4db7d9b23fe6a58315bd9308b48f397027ce7",
+      "old_sha256": "5fc64c930cdca00b9c1c0bd80ca2758428604cb2d66150d884d6c31a11d7cecf",
+      "replacements": 3,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/run-admission-once.py.in",
+      "target": "tools/run-admission-once.py.in"
+    },
+    {
+      "new_sha256": "abee77c99141526ba4a4491de6ddea17d196ef7247c0520ecd93352eb4c73959",
+      "old_sha256": "aecad31116b5fb0e17147aee51fe45a4f193ebba676e6559b05a693346b28cb2",
+      "replacements": 3,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/run-observer-once.py.in",
+      "target": "tools/run-observer-once.py.in"
+    },
+    {
+      "new_sha256": "c70f6ee2d5449bc427f829e1a1342ad1b9fd2070511612584dfa82107a725070",
+      "old_sha256": "9db034a7f49628cf9e9eaf770b4dd48378279230829be2eab5616b70f6368402",
+      "replacements": 3,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/run-audit-once.py.in",
+      "target": "tools/run-audit-once.py.in"
+    },
+    {
+      "new_sha256": "c43928a3e17642025ac756c817507fda63f0d0f7845d4ee30952f86a332ef713",
+      "old_sha256": "f3da1594e88847f15ce527fff10443c676f5863144c7fad89887c45807fd9fce",
+      "replacements": 2,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/bind-audit-command.py",
+      "target": "tools/bind-audit-command.py"
+    },
+    {
+      "new_sha256": "47efb7c2e9ceb12e888648c604b1ea70061a9c39410d8b229cf2a9fcb1f45d60",
+      "old_sha256": "6c14355ba3e6c29d0642d7ad6d13a53158b38c1f8a976f133a1bd1579bbf84b4",
+      "replacements": 4,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/make-observer-guard.py",
+      "target": "tools/make-observer-guard.py"
+    },
+    {
+      "new_sha256": "c2d44ed8da33131271ca39908e43d78523b28d21c8b9d29eef0b4ad181c0706b",
+      "old_sha256": "07aa3cca4a2e6104b955bffbdf375e56c88b43521307fa71313a44e5b8d24e1f",
+      "replacements": 2,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/instantiate.py",
+      "target": "tools/instantiate.py"
+    },
+    {
+      "new_sha256": "ba164efa90dc2a0b77aadf319135dfc8dd1c240b2be04a37c2be60e8e2501db0",
+      "old_sha256": "4df1758f114fc47597156e47e69ea58d9849ccc705ff486def4cb59638f94a31",
+      "replacements": 6,
+      "source": "git d83dab3c92387c80e81af528fea25dd3f8931598:docs/plans/puck-cpu-held-qualification-11-control-validation/tools/archive-evidence.py.in",
+      "target": "tools/archive-evidence.py.in"
+    }
+  ],
+  "runtime_invoked": false,
+  "stage_touched": false,
+  "tools_invoked": false
+}

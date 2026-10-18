@@ -1,0 +1,17 @@
+test_builder_refuses_bad_terminals (__main__.Proofs.test_builder_refuses_bad_terminals) ... ok
+test_compact_record_bytes_are_also_accepted (__main__.Proofs.test_compact_record_bytes_are_also_accepted) ... ok
+test_configuration_and_freeze_are_the_frozen_bytes (__main__.Proofs.test_configuration_and_freeze_are_the_frozen_bytes) ... ok
+test_epoch14_worker_registration_uses_the_360s_clock (__main__.Proofs.test_epoch14_worker_registration_uses_the_360s_clock) ... ok
+test_one_shot_tools_preflight_before_their_single_invocation (__main__.Proofs.test_one_shot_tools_preflight_before_their_single_invocation) ... ok
+test_preflight_requires_the_preparation_boot (__main__.Proofs.test_preflight_requires_the_preparation_boot) ... ok
+test_qualification11_cannot_consume_preparation03 (__main__.Proofs.test_qualification11_cannot_consume_preparation03) ... ok
+test_record_builder_reproduces_preparation01_shape_and_bytes (__main__.Proofs.test_record_builder_reproduces_preparation01_shape_and_bytes) ... ok
+test_record_is_accepted_by_parent_and_auditor_for_epoch14 (__main__.Proofs.test_record_is_accepted_by_parent_and_auditor_for_epoch14) ... ok
+test_stat_roots_and_run_once_and_archive_copy_on_fixture (__main__.Proofs.test_stat_roots_and_run_once_and_archive_copy_on_fixture) ... ok
+test_validators_refuse_legacy_auditor_or_preparation01_audit (__main__.Proofs.test_validators_refuse_legacy_auditor_or_preparation01_audit) ... ok
+test_validators_refuse_malformed_records (__main__.Proofs.test_validators_refuse_malformed_records) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.344s
+
+OK
