@@ -135,7 +135,9 @@ def bundle(run, target, defect=None):
     with zipfile.ZipFile(target, 'x', compression=zipfile.ZIP_STORED) as archive:
         for relative, path in members:
             raw = path.read_bytes()
-            archive.writestr(relative, raw)
+            # As artifacts.export_run writes members: streamed, stored, with a forced zip64 local header.
+            with archive.open(relative, 'w', force_zip64=True) as stream:
+                stream.write(raw)
             files.append(dict(path=relative, size_bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
         if defect == 'unlisted-member':
             archive.writestr('recording/extra.txt', b'unlisted')

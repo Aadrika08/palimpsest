@@ -97,3 +97,60 @@ def test_bundle_refuses_unsafe_or_inconsistent_archives(tmp_path,defect):
     else:(run/'replay-report.json').write_text('{}\n')
     with pytest.raises((ValueError,zipfile.BadZipFile,KeyError,FileNotFoundError)):
         v.validate_bundle(bundle,run if defect.startswith(('run','extra')) else None)
+
+
+def patched(bundle,old,new):
+    raw=bundle.read_bytes();assert raw.count(old)>=1;bundle.write_bytes(raw.replace(old,new))
+
+
+@pytest.mark.parametrize('defect',['prepended','trailing','between','comment','local-name','local-crc','data-descriptor',
+    'nul-name','control-name','case-collision','symlink-mode','manifest-duplicate-key','manifest-nan','manifest-bool-size',
+    'symlinked-bundle','total-bound'])
+def test_bundle_layout_is_exact_and_contiguous(tmp_path,defect,monkeypatch):
+    v=api();run,bundle,_=authored_run(tmp_path);rows=members(bundle);manifest=json.loads(rows[-1][1]);body=rows[:-1]
+    target=bundle
+    if defect=='prepended':bundle.write_bytes(b'PREPENDED'+bundle.read_bytes())
+    elif defect=='trailing':bundle.write_bytes(bundle.read_bytes()+b'TRAILING')
+    elif defect=='between':
+        raw=bundle.read_bytes();second=raw.index(b'PK\x03\x04',4);bundle.write_bytes(raw[:second]+b'GAP!'+raw[second:])
+    elif defect=='comment':
+        with zipfile.ZipFile(bundle,'a') as archive:archive.comment=b'authored comment'
+    elif defect=='local-name':patched(bundle,b'PK\x03\x04',b'PK\x03\x04') or None;raw=bytearray(bundle.read_bytes());i=raw.index(b'recording/');raw[i]=ord('R');bundle.write_bytes(bytes(raw))
+    elif defect=='local-crc':raw=bytearray(bundle.read_bytes());raw[14]^=1;bundle.write_bytes(bytes(raw))
+    elif defect=='data-descriptor':
+        class Stream(io.RawIOBase):
+            def __init__(self):self.data=bytearray()
+            def writable(self):return True
+            def write(self,b):self.data+=b;return len(b)
+        out=Stream()
+        with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_STORED) as archive:
+            for name,payload in rows:
+                with archive.open(name,'w') as stream:stream.write(payload)
+        bundle.write_bytes(bytes(out.data))
+    elif defect=='nul-name':rewrite(bundle,body+[('recording/aaaa',b'x')],manifest=rows[-1][1]);patched(bundle,b'recording/aaaa',b'recording/a\x00aa')
+    elif defect=='control-name':rewrite(bundle,body+[('recording/a\x07b',b'x')],manifest=rows[-1][1])
+    elif defect=='case-collision':
+        upper=[(n.replace('recording/manifest.json','recording/MANIFEST.json'),p) for n,p in body if n=='recording/manifest.json']
+        rewrite(bundle,body+upper,manifest=rows[-1][1])
+    elif defect=='symlink-mode':
+        stream=io.BytesIO()
+        with zipfile.ZipFile(stream,'w') as archive:
+            for name,payload in body:
+                info=zipfile.ZipInfo(name);info.external_attr=0o120777<<16 if name.endswith('.snp') else 0o600<<16
+                archive.writestr(info,payload)
+            archive.writestr('bundle-manifest.json',rows[-1][1])
+        bundle.write_bytes(stream.getvalue())
+    elif defect=='manifest-duplicate-key':
+        rewrite(bundle,body,manifest=rows[-1][1][:-1]+b',"format":"palimpsest-bundle-v1"}')
+    elif defect=='manifest-nan':rewrite(bundle,body,manifest=rows[-1][1].replace(b'"derived": {',b'"derived": {"x": NaN, ',1))
+    elif defect=='manifest-bool-size':
+        manifest['files'][0]['size_bytes']=True;rewrite(bundle,[(body[0][0],b'x')]+body[1:],manifest=json.dumps(manifest).encode())
+    elif defect=='symlinked-bundle':target=tmp_path/'link.zip';target.symlink_to(bundle.name)
+    else:monkeypatch.setattr(v,'MAX_TOTAL_BYTES',1024)
+    with pytest.raises((ValueError,OSError)):v.validate_bundle(target)
+
+
+def test_symlinked_run_files_are_refused(tmp_path):
+    v=api();run,bundle,_=authored_run(tmp_path)
+    path=run/'recording/manifest.json';real=run/'manifest-real.json';path.rename(real);path.symlink_to(real)
+    with pytest.raises((ValueError,OSError)):v.validate_bundle(bundle,run)
