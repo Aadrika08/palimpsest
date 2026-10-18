@@ -322,6 +322,13 @@ def execute(config,raw,started):
     require(len({r['path'] for r in rows})==len(rows),'Overlapping allocation-16 pins')
     admission=q.resource_admission(config)
     deadline=started+LIMITS['normal_seconds'];state={};before_fds=len(os.listdir('/proc/self/fd'))
+    # Read-only host drift (native leaves, aliases, EGL vendor JSON, trusted baseline) refuses before reservation.
+    native=q.decode(q.read(ROOT/config['inputs']['native']['path'],16*MiB,config['inputs']['native']['sha256']))
+    baseline=q.decode(q.read(ROOT/config['inputs']['baseline']['path'],16*MiB,config['inputs']['baseline']['sha256']))
+    for row in native['native_files']:
+        require(native_leaf_row(row['path'],deadline)=={k:row[k] for k in ('size_bytes','sha256')},'Native leaf changed before reservation: '+row['path'])
+    for path,target in native['aliases']:require(os.readlink(path)==target,'Native alias changed before reservation: '+path)
+    egl_vendor_control(native,read(native['egl_vendor']['path'],64*1024));baseline_api.verify_baseline(baseline,deadline)
     bounds.reserve_output(output,dict(sources=dict(root=str(ROOT),files=rows)))
     for name in ('control','logs-source','logs-replay','payload-source','payload-replay'):(output/name).mkdir(mode=0o700)
     result=dict(CLAIMS,kind='puck-cpu-held-episode-outcome-v16',version=VERSION,allocation_id=VERSION,

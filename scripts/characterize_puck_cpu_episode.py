@@ -390,6 +390,19 @@ def execute(config,digest,started):
     resource.setrlimit(resource.RLIMIT_AS,(LIMITS['address_space_bytes'],LIMITS['address_space_bytes']))
     resource.setrlimit(resource.RLIMIT_FSIZE,(LIMITS['file_bytes'],LIMITS['file_bytes']))
     with AdmissionInputs(ROOT,rows,deadline):pass
+    # Read-only host drift (native leaves, aliases, EGL vendor JSON, trusted baseline) refuses before reservation.
+    def pinned(role):
+        pin=next(r for r in config['inputs'] if r['path']==ROLES[role]);raw=read(ROOT/pin['path'],32*MiB)
+        if len(raw)!=pin['size_bytes'] or sha(raw)!=pin['sha256']:raise ValueError('Pinned input differs before reservation: '+role)
+        return json.loads(raw)
+    native,baseline=pinned('native_metadata'),pinned('baseline')
+    _native(native,deadline)
+    for row in native['native_files']:
+        if native_leaf_row(row['path'],deadline)!={k:row[k] for k in ('size_bytes','sha256')}:
+            raise ValueError('Native input identity changed before reservation: '+row['path'])
+    for path,target in native['aliases']:
+        if os.readlink(path)!=target:raise ValueError('Native alias changed before reservation: '+path)
+    egl_vendor_control(native,read(native['egl_vendor']['path'],MiB));build.verify_baseline(baseline,deadline)
     bounds.reserve_output(output,{'sources':{'root':str(ROOT),'files':rows},'installed':{'root':str(ROOT/SITE)}})
     for name in ('payload-source','payload-replay','probe-logs','source-logs','replay-logs'):
         (output/name).mkdir(mode=0o700)

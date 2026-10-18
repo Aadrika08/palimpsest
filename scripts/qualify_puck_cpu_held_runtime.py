@@ -902,6 +902,16 @@ def execute(config,raw,started):
             if len({r['path'] for r in rows})!=len(rows):raise ValueError('Overlapping CPU amendment source/input pins')
         else:rows=rows+[config['preparation']]
     deadline=started+limits['normal_seconds'];state={};before_fds=len(os.listdir('/proc/self/fd'))
+    if config['version']==15:
+        # Preparation04 refuses read-only host drift (native leaves, aliases, baseline) before reservation.
+        native=decode(read(ROOT/config['inputs']['native']['path'],16*MiB,config['inputs']['native']['sha256']))
+        baseline=decode(read(ROOT/config['inputs']['baseline']['path'],16*MiB,config['inputs']['baseline']['sha256']))
+        for row in native['native_files']:
+            if native_leaf_row(row['path'],deadline)!={k:row[k] for k in ('size_bytes','sha256')}:
+                raise ValueError('Original CPU native input changed before reservation: '+row['path'])
+        for path,target in native['aliases']:
+            if os.readlink(path)!=target:raise ValueError('Original CPU native alias changed before reservation: '+path)
+        baseline_api.verify_baseline(baseline,deadline)
     bounds.reserve_output(output,dict(sources=dict(root=str(ROOT),files=rows)))
     for name in ('logs','control','payload'):(output/name).mkdir(mode=0o700)
     result=dict(CLAIMS,kind='puck-cpu-held-runtime-outcome-v'+str(config['version']),version=config['version'],phase=phase,allocation_id=config['allocation_id'],
