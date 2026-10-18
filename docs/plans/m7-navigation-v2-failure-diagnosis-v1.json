@@ -1,0 +1,101 @@
+{
+  "analysis": {
+    "aggregate_by": [
+      "arm",
+      "training_seed",
+      "outcome",
+      "terminal_class"
+    ],
+    "arms": [
+      "old-corpus",
+      "augmented"
+    ],
+    "classification": {
+      "goal": "goal",
+      "stalled_contact": "terminal-contact-stall",
+      "stalled_clear": "terminal-clear-stall",
+      "time_limit_contact": "terminal-contact-time-limit",
+      "time_limit_clear": "terminal-clear-time-limit"
+    },
+    "numeric_fields": [
+      "action",
+      "control",
+      "pose",
+      "next_pose",
+      "sensors",
+      "simulation_time"
+    ],
+    "pairing": "same scene_seed and training_seed, old-corpus versus augmented, common executed prefix",
+    "per_run_measures": [
+      "initial_goal_distance_metres",
+      "minimum_goal_distance_metres",
+      "final_goal_distance_metres",
+      "best_progress_metres",
+      "net_progress_metres",
+      "regression_from_best_metres",
+      "path_length_metres",
+      "contact_ticks",
+      "terminal_contact_suffix_ticks",
+      "terminal_stall_like_suffix_ticks",
+      "reverse_command_ticks",
+      "stopped_command_ticks",
+      "velocity_sign_changes",
+      "heading_sign_changes",
+      "mean_abs_velocity_command",
+      "mean_abs_heading_command"
+    ],
+    "thresholds": {
+      "command_deadband": 0.05,
+      "pair_divergence_absolute": 1e-06,
+      "stall_step_metres": 0.002
+    }
+  },
+  "cases": [
+    {"arm": "old-corpus", "id": "dev-3110-seed-10-old-corpus", "outcome": "goal", "run_id": "720f7a14bf054149b6be862bc72b36b6", "scene_seed": 3110, "ticks": 348, "training_seed": 10},
+    {"arm": "augmented", "id": "dev-3110-seed-10-augmented", "outcome": "stalled", "run_id": "490f10150b724a6ea09f249cb6be8de5", "scene_seed": 3110, "ticks": 256, "training_seed": 10},
+    {"arm": "old-corpus", "id": "dev-3110-seed-11-old-corpus", "outcome": "stalled", "run_id": "c5b67607d1314fd59f502fb3e4a514cd", "scene_seed": 3110, "ticks": 147, "training_seed": 11},
+    {"arm": "augmented", "id": "dev-3110-seed-11-augmented", "outcome": "time_limit", "run_id": "11097b97bbb84252aff021d6d59985b5", "scene_seed": 3110, "ticks": 600, "training_seed": 11},
+    {"arm": "old-corpus", "id": "dev-3110-seed-12-old-corpus", "outcome": "stalled", "run_id": "ccabed40514846fd9c98b7cc3d4986cd", "scene_seed": 3110, "ticks": 475, "training_seed": 12},
+    {"arm": "augmented", "id": "dev-3110-seed-12-augmented", "outcome": "stalled", "run_id": "24fa2e8ce83f497c8c64a79f8f3e6dba", "scene_seed": 3110, "ticks": 369, "training_seed": 12},
+    {"arm": "old-corpus", "id": "dev-3111-seed-10-old-corpus", "outcome": "goal", "run_id": "794aab1bcd7d4a25973bdde017d29a76", "scene_seed": 3111, "ticks": 415, "training_seed": 10},
+    {"arm": "augmented", "id": "dev-3111-seed-10-augmented", "outcome": "stalled", "run_id": "29a5f234da1c445287f28d6d42a22972", "scene_seed": 3111, "ticks": 198, "training_seed": 10},
+    {"arm": "old-corpus", "id": "dev-3111-seed-11-old-corpus", "outcome": "stalled", "run_id": "74b5071b81ed4e25bd5544eab15c2dcc", "scene_seed": 3111, "ticks": 271, "training_seed": 11},
+    {"arm": "augmented", "id": "dev-3111-seed-11-augmented", "outcome": "time_limit", "run_id": "87900d4d59ce40358a9d4c4fb08a1f21", "scene_seed": 3111, "ticks": 600, "training_seed": 11},
+    {"arm": "old-corpus", "id": "dev-3111-seed-12-old-corpus", "outcome": "goal", "run_id": "8c6b2a7dff4b48cbabb7d33fb2639be5", "scene_seed": 3111, "ticks": 543, "training_seed": 12},
+    {"arm": "augmented", "id": "dev-3111-seed-12-augmented", "outcome": "stalled", "run_id": "fd1a535e98914477a46d0d8872b0901d", "scene_seed": 3111, "ticks": 419, "training_seed": 12},
+    {"arm": "old-corpus", "id": "dev-3112-seed-10-old-corpus", "outcome": "stalled", "run_id": "7845e79b720f4c76ac1f12fae1292857", "scene_seed": 3112, "ticks": 268, "training_seed": 10},
+    {"arm": "augmented", "id": "dev-3112-seed-10-augmented", "outcome": "time_limit", "run_id": "24e2edfb25d94467b154eb17e5578f12", "scene_seed": 3112, "ticks": 600, "training_seed": 10},
+    {"arm": "old-corpus", "id": "dev-3112-seed-11-old-corpus", "outcome": "goal", "run_id": "855c309c04fa41ef87eaa8fd6d090191", "scene_seed": 3112, "ticks": 533, "training_seed": 11},
+    {"arm": "augmented", "id": "dev-3112-seed-11-augmented", "outcome": "time_limit", "run_id": "deb5c846f16d49a3afb1baaccf6ecf10", "scene_seed": 3112, "ticks": 600, "training_seed": 11},
+    {"arm": "old-corpus", "id": "dev-3112-seed-12-old-corpus", "outcome": "stalled", "run_id": "496f043ce3d148078d7fb3423e3d14ee", "scene_seed": 3112, "ticks": 294, "training_seed": 12},
+    {"arm": "augmented", "id": "dev-3112-seed-12-augmented", "outcome": "stalled", "run_id": "552bc86d5ff643e4a01d4d65994f2378", "scene_seed": 3112, "ticks": 344, "training_seed": 12},
+    {"arm": "old-corpus", "id": "dev-3113-seed-10-old-corpus", "outcome": "stalled", "run_id": "410d794192864c2598a08fbd42d31ddb", "scene_seed": 3113, "ticks": 594, "training_seed": 10},
+    {"arm": "augmented", "id": "dev-3113-seed-10-augmented", "outcome": "time_limit", "run_id": "20e26c31286d46ebbbfaaf04f4792be0", "scene_seed": 3113, "ticks": 600, "training_seed": 10},
+    {"arm": "old-corpus", "id": "dev-3113-seed-11-old-corpus", "outcome": "time_limit", "run_id": "94a48d827b494310a96229c8fa383080", "scene_seed": 3113, "ticks": 600, "training_seed": 11},
+    {"arm": "augmented", "id": "dev-3113-seed-11-augmented", "outcome": "time_limit", "run_id": "ea4379b91e0a4ce6846d3e4623c7989f", "scene_seed": 3113, "ticks": 600, "training_seed": 11},
+    {"arm": "old-corpus", "id": "dev-3113-seed-12-old-corpus", "outcome": "time_limit", "run_id": "d5bb253bf9354fb592912bf93b11c2b9", "scene_seed": 3113, "ticks": 600, "training_seed": 12},
+    {"arm": "augmented", "id": "dev-3113-seed-12-augmented", "outcome": "stalled", "run_id": "8e8a8698bd1d4afd9dc4129f63265189", "scene_seed": 3113, "ticks": 548, "training_seed": 12}
+  ],
+  "input": {
+    "development_index_path": "docs/reports/m7-navigation-development-v2.json",
+    "development_index_sha256": "850c6337e1fa4e2916751a8f02c20dae4a9ba347eb88eb3f17d17cedb065dc71",
+    "expected_events": 22159,
+    "expected_ledger_bytes": 2382058832,
+    "expected_ledger_files": 542,
+    "expected_numeric_ticks": 10822,
+    "expected_runs": 24,
+    "held_out_scene_ids_forbidden": [3120, 3121, 3122, 3123, 3124, 3125, 3126, 3127],
+    "producer_commit": "e3f9a471aacf359943eebb72f6a1e37aebe0ca2c",
+    "run_root_relative": "runs/m7-navigation-development-v2-e3f9a47-v1"
+  },
+  "limits": {
+    "deadline_seconds": 300,
+    "max_input_bytes": 3221225472,
+    "max_output_bytes": 16777216,
+    "min_free_bytes": 1073741824
+  },
+  "qualification_claims": [],
+  "schema": "m7-navigation-v2-failure-diagnosis-protocol-v1",
+  "scope": "One prospective read-only diagnosis of the consumed 24-run navigation-v2 development batch; no held-out access, inference, fitting, physics, capability, topology or R3 claim.",
+  "status": "prospective-frozen-before-trajectory-decode"
+}

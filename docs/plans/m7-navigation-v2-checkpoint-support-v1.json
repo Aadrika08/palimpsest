@@ -1,0 +1,309 @@
+{
+  "id": "M7-NAV-CHECKPOINT-SUPPORT-V1",
+  "version": 1,
+  "state": "prospective frozen protocol; no checkpoint bytes opened, model constructed, or inference executed",
+  "base_commit": "c8ee6a5bf1f50476412f17b0928c18bdec57ec10",
+  "purpose": "Describe selected-checkpoint action and raw-readout support on the unchanged recorded-development inputs before any navigation-v3 retraining.",
+  "attempt_contract": {
+    "actual_invocations": 1,
+    "retry_after_failure": false,
+    "durable_reservation": "Before any checkpoint hash, local behavior import, model construction, or inference, create the fresh output directory and fsync an attempt.json reservation. Directory existence permanently refuses another analysis attempt, including after crash or outer timeout.",
+    "output_parent": "Create if absent, validate as a non-symlink directory, and fsync only the exact audit-worktree runs/ parent before checking output freshness and reserving the attempt.",
+    "outer_supervisor": {"program": "/usr/bin/timeout", "arguments": ["--signal=TERM", "210s"], "through_return_seconds": 210},
+    "source_review": "Independent review of the frozen implementation and synthetic tests must return GO before the sole invocation.",
+    "post_run_review": "Independent verification may read only the compact audit output and pinned tracked documents; it must not run inference again."
+  },
+  "immutable_inputs": {
+    "model_index": {
+      "path": "data/manifests/male-navigation-research-development-v2.json",
+      "bytes": 43600,
+      "sha256": "f938d9799b45b4c33d65a1d2c5363fea4e7b419ad9051722bff1a3df99ea77cf"
+    },
+    "data_manifest": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/data-manifest.json",
+      "bytes": 80969,
+      "sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41"
+    },
+    "old_manifest": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-data-development-7d5fc1f-20261003/data-manifest.json",
+      "bytes": 101377,
+      "sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014"
+    },
+    "safe_transfer": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-arrays.npz",
+      "bytes": 5225698,
+      "sha256": "a15f4b9267de04a2f952c19e6ddc65b8338696977b764e7418f044b25e6a5271"
+    },
+    "safe_transfer_metadata": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-result.json",
+      "bytes": 75043,
+      "sha256": "363445d80f13814804768a791bdff859e644f75dc39923daf762884fed70b2db"
+    },
+    "graph": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn/male-reduced-v1/source-graph.json",
+      "bytes": 101560,
+      "sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0"
+    },
+    "graph_manifest": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/data/manifests/malecns-reduced-neighborhood-v1.json",
+      "bytes": 5364,
+      "sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f"
+    },
+    "cell_source": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/upstream/fly-gym/models/connectome_rnn_model.py",
+      "bytes": 11055,
+      "sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+    }
+  },
+  "reader_sources": {
+    "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+    "scripts/prepare_male_navigation_v2.py": "ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333",
+    "scripts/train_male_navigation_v2.py": "808f0e410d37d3dbcb56bb4978d4ad2ac824cb5977dafb05873a02fd9aa74737",
+    "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+    "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+    "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
+    "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+    "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2"
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "torch_distribution": "2.9.0",
+    "torch_build": "2.9.0+cu128",
+    "device": "cpu",
+    "threads": 1,
+    "cuda": "hidden and uninitialized",
+    "deterministic_algorithms": true
+  },
+  "checkpoints": [
+    {
+      "training_seed": 10,
+      "arm": "old-corpus",
+      "selected_epoch": 20,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/old-corpus.pt",
+      "bytes": 303341,
+      "sha256": "bdc2878684c1fe24b01612878b6122fe7b6edb62b9ce6079633e0d98008d39ea"
+    },
+    {
+      "training_seed": 10,
+      "arm": "augmented",
+      "selected_epoch": 1,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/augmented.pt",
+      "bytes": 303341,
+      "sha256": "d44149ea0c0885d90ff0505aeb2ba47d33027ac7868fb310b56da033dffd621c"
+    },
+    {
+      "training_seed": 11,
+      "arm": "old-corpus",
+      "selected_epoch": 16,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/old-corpus.pt",
+      "bytes": 303341,
+      "sha256": "b4ba80f5b0ce7d0ee5cb9e5f372c38b35a25fa0fdd46f19960675c16ac64e633"
+    },
+    {
+      "training_seed": 11,
+      "arm": "augmented",
+      "selected_epoch": 1,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/augmented.pt",
+      "bytes": 303341,
+      "sha256": "e9c876af78468da0ccc78e147cf31e14bd8e8e85adda3e00fe2efeba162cc44d"
+    },
+    {
+      "training_seed": 12,
+      "arm": "old-corpus",
+      "selected_epoch": 17,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/old-corpus.pt",
+      "bytes": 303341,
+      "sha256": "d004ba5ff517af72b81a57fabdd8be73acdee7bfabb36594682565903af18bbb"
+    },
+    {
+      "training_seed": 12,
+      "arm": "augmented",
+      "selected_epoch": 7,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/augmented.pt",
+      "bytes": 303341,
+      "sha256": "0956d82483f9765de392baa6e2ab581ec86ebae82ac7dfe24aba20ecad8e5b7b"
+    }
+  ],
+  "pair_reports": [
+    {
+      "training_seed": 10,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/report.json",
+      "bytes": 13624,
+      "sha256": "8ccee3be54f42910c3a2f34b61bc99e31cd8d7b518f891c3c67e297a495d63d6"
+    },
+    {
+      "training_seed": 11,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/report.json",
+      "bytes": 13618,
+      "sha256": "12c217942093d763d51e02fc1e03727a13367c4d83fd6e9f5755b320f1adeeb6"
+    },
+    {
+      "training_seed": 12,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/report.json",
+      "bytes": 13620,
+      "sha256": "5c283107aa2e4beb4980a2c930baf3fe5d988254407b03867874d25069353c4d"
+    }
+  ],
+  "recorded_development": {
+    "rows": 1228,
+    "sources": 4,
+    "window": 32,
+    "windows_per_model": 39,
+    "models": 6,
+    "total_rows": 7368,
+    "total_windows": 234,
+    "sequence_order": [
+      {
+        "run_id": "1624ef1853e74eaba50b07d11fe06cbf",
+        "rows": 189,
+        "feature_target_sha256": "a421488bf8de1906704ad687476a7af1b6f83134fbaefeda0f3a0871a5bfdf83"
+      },
+      {
+        "run_id": "a16bf1619171400d82dc7116240f6aa2",
+        "rows": 338,
+        "feature_target_sha256": "450d8860be9861941d4c626d6eaef889508fa606230b9254b17baa1921ba2a25"
+      },
+      {
+        "run_id": "80f8e7c3e5594aa79375b2784e1a1b9e",
+        "rows": 319,
+        "feature_target_sha256": "8318d3c3cdd82c5070e7571b85d7cbae86dc33e005514d7fe3a0b903d0319fa1"
+      },
+      {
+        "run_id": "76a8641291a144e5977a5826932e943c",
+        "rows": 382,
+        "feature_target_sha256": "2b7f379cbaf6a625fe0a308d34f12fe292a92f371832f83f7020eb6c7952f7a9"
+      }
+    ],
+    "hidden_state": "exact zero at each source start; carry between 32-row windows without reset",
+    "use": "already-consumed recorded-development diagnostic only; never a capability or selection gate"
+  },
+  "budget_accounting": {
+    "full_fit": {
+      "old_corpus": {
+        "rows_per_epoch": 2117,
+        "windows_per_epoch": 72,
+        "epochs": 20,
+        "row_presentations": 42340,
+        "optimizer_updates": 1440
+      },
+      "augmented": {
+        "rows_per_epoch": 7197,
+        "windows_per_epoch": 236,
+        "epochs": 20,
+        "row_presentations": 143940,
+        "optimizer_updates": 4720
+      }
+    },
+    "selected_checkpoints": [
+      {
+        "training_seed": 10,
+        "old_corpus": {"epoch": 20, "row_presentations": 42340, "optimizer_updates": 1440},
+        "augmented": {"epoch": 1, "row_presentations": 7197, "optimizer_updates": 236}
+      },
+      {
+        "training_seed": 11,
+        "old_corpus": {"epoch": 16, "row_presentations": 33872, "optimizer_updates": 1152},
+        "augmented": {"epoch": 1, "row_presentations": 7197, "optimizer_updates": 236}
+      },
+      {
+        "training_seed": 12,
+        "old_corpus": {"epoch": 17, "row_presentations": 35989, "optimizer_updates": 1224},
+        "augmented": {"epoch": 7, "row_presentations": 50379, "optimizer_updates": 1652}
+      }
+    ],
+    "interpretation": "The v2 treatment changed corpus composition, row exposure, optimizer updates, source order, and selected effective budget jointly. This audit must not assign causality."
+  },
+  "inference_contract": {
+    "order": [
+      "seed-10/old-corpus",
+      "seed-10/augmented",
+      "seed-11/old-corpus",
+      "seed-11/augmented",
+      "seed-12/old-corpus",
+      "seed-12/augmented"
+    ],
+    "admission_before_torch": "Validate all current local behavior source hashes before importing them. Durably reserve the sole attempt before checkpoint hashing. Then validate every pinned file, all six candidate bundles, runtime distribution metadata, empty held-out lists, exact four-source development roster, fresh output, storage, and source hashes before importing Torch or constructing a model.",
+    "passes_per_checkpoint": 1,
+    "gradient_enabled": false,
+    "optimizer_allowed": false,
+    "simulator_allowed": false,
+    "fresh_scene_generation_allowed": false,
+    "development_run_root_allowed": false,
+    "held_out_allowed": false,
+    "action_mapping": ["velocity = 3*tanh(raw[0])", "heading = pi*tanh(raw[1])"]
+  },
+  "metrics": {
+    "deadband": 0.05,
+    "quantiles": [0.0, 0.01, 0.05, 0.25, 0.5, 0.75, 0.95, 0.99, 1.0],
+    "per_target_component": ["minimum", "maximum", "mean", "standard_deviation", "quantiles", "negative/deadband/positive counts", "within-source sign changes"],
+    "per_model_component": ["minimum", "maximum", "mean", "standard_deviation", "quantiles", "negative/deadband/positive counts", "within-source sign changes"],
+    "per_model": ["raw-output component summaries", "action component summaries", "reverse-command ticks", "stopped-command ticks", "loss", "velocity MAE", "wrapped heading MAE", "exact tanh scaling", "output stream SHA-256"],
+    "per_matched_seed": ["mean absolute action difference", "maximum absolute action difference", "first differing recorded-development row"],
+    "published_metric_check": "Recomputed loss, velocity MAE, and wrapped-heading MAE must exactly equal the selected-recorded-development values bound by the model index.",
+    "support_classification": {
+      "target_support_absent": "The recorded-development target component does not contain both signs outside the unchanged deadband; checkpoint sign support is uninformative for that component.",
+      "checkpoint_sign_missing": "Targets contain both signs but checkpoint outputs omit at least one target-supported sign.",
+      "checkpoint_signs_present_no_switch": "Both signs occur in checkpoint outputs but no within-source cross-sign transition occurs.",
+      "checkpoint_switches": "At least one within-source checkpoint output crosses between non-deadband signs."
+    },
+    "gate": "descriptive only; no metric changes model selection, capability thresholds, or release state"
+  },
+  "stopping_rules": [
+    "Any path, byte count, hash, roster, runtime, source, fresh-output, storage, or held-out mismatch stops before Torch import and retains the durable attempt reservation plus a bounded failure receipt when publication remains possible.",
+    "A crash or 210-second outer timeout leaves the durable attempt reservation and permanently forbids a retry.",
+    "All six bundles must be admitted before the first checkpoint is constructed.",
+    "After Torch import, the first load, shape, dtype, finite, scaling, count, published-metric, source-drift, deadline, or output-cap mismatch stops the invocation; remaining checkpoints are not run.",
+    "Exactly 1,228 rows and 39 windows per checkpoint, 7,368 rows and 234 windows total, are required.",
+    "Failure of the sole actual invocation is terminal for this protocol; no correction, retry, replacement input, threshold change, or partial publication is permitted.",
+    "Immediately before success publication, recheck the 180-second internal deadline, 1 GiB RSS cap, aggregate 16 MiB output cap, unchanged behavior-source hashes, and unchanged input hashes.",
+    "Success fsyncs all payloads and a prepared report before the report rename; the final report rename is the last fallible commit step and no operation follows it."
+  ],
+  "limits": {
+    "internal_seconds": 180,
+    "normal_through_return_seconds": 210,
+    "output_bytes": 16777216,
+    "log_bytes_each": 1048576,
+    "minimum_free_bytes": 1073741824,
+    "rss_budget_bytes": 1073741824,
+    "input_file_cap_bytes": 8388608,
+    "model_count": 6,
+    "source_count": 4
+  },
+  "future_gates": {
+    "navigation_v3_development": "A separately frozen set of four fresh scenes gives 24 matched old/augmented owners; every augmented seed must achieve at least 3/4 goals.",
+    "navigation_v3_held_out": "Only a passed development gate may open a separately frozen and disjoint eight-scene reserve giving 48 owners; every augmented seed must achieve at least 6/8 goals.",
+    "threshold_changes": false,
+    "topology_estimand": "not tested here and must remain separate from the data/training capability estimand"
+  },
+  "claims": {
+    "qualification_claims": [],
+    "r3_complete": false,
+    "can_decide": [
+      "Whether each selected checkpoint expresses target-supported action signs and within-source switching on the unchanged recorded-development inputs.",
+      "Whether the published selected recorded-development metrics reproduce in the pinned runtime.",
+      "Whether the augmented selected checkpoints show a common-input output-support restriction that is present before closed-loop state divergence."
+    ],
+    "cannot_decide": [
+      "Why any checkpoint has its observed output support.",
+      "Whether advice labels, source order, optimizer exposure, checkpoint selection, or closed-loop state caused the development failures.",
+      "Whether matched-budget retraining would improve navigation.",
+      "Fresh-scene navigation capability, held-out performance, topology advantage, biological validity, hardware behavior, or R3 completion."
+    ]
+  },
+  "implementation": {
+    "new_script": "scripts/audit_male_navigation_v2_checkpoint_support.py",
+    "new_tests": "tests/test_male_navigation_v2_checkpoint_support.py",
+    "reuse": [
+      "prepare_male_navigation_v2.read_old_transfer",
+      "male_navigation_research candidate admission",
+      "male_policy weights-only checkpoint loading",
+      "male_model forward diagnostics",
+      "train_male_reduced.loss_for"
+    ],
+    "source_freeze": "The implemented script and test SHA-256 values must be added to a separate reviewed execution manifest before the sole invocation; this prospective protocol remains unchanged."
+  }
+}
