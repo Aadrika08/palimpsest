@@ -23,7 +23,7 @@ assert admission==Path(envelope['phase_outputs']['admission']['stdout']).read_by
 assert len(admission)==@ADMISSION_SIZE@ and hashlib.sha256(admission).hexdigest()=='@ADMISSION_SHA@'
 a=json.loads(admission)
 assert a['status']=='DATA_ONLY_ADMITTED' and a['admission_check_id']==1 and a['episode16_invoked'] is False
-assert a['runtime_qualified'] is False and a['closure']==dict(fd_count_before=4,fd_count_after=4,active_children=[],active_non_main_threads=[])
+assert a['runtime_qualified'] is False and a['closure']==dict(fd_count_before=5,fd_count_after=5,active_children=[],active_non_main_threads=[])
 review_path=Path('/tmp/palimpsest-held16-independent-admission-review.json')
 assert pin(review_path)==dict(size_bytes=@REVIEW_SIZE@,sha256='@REVIEW_SHA@')
 review=json.loads(review_path.read_bytes());assert review['decision']=='GO'"""
