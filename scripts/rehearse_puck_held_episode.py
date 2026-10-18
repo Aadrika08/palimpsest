@@ -13,8 +13,12 @@ fresh scratch output directory, it
 5. runs the REAL guarded v4 bootstrap twice (worker A source, then a fresh
    worker B replay over A's read-only output) with allocation 16's limits
    (2 GiB RSS, 8 GiB address space, 16 MiB files, 64 MiB scratch and output,
-   360 s per worker), then summarizes timings, peak RSS, guard failures,
-   process creation, held entries and outputs in rehearsal.json.
+   600 s per worker), then summarizes timings, peak RSS, guard failures,
+   process creation, held entries and outputs in rehearsal.json;
+6. when both workers complete, runs allocation 16's receipt and bundle checks
+   and the episode auditor's internal checks (independent provenance, every
+   recording, the frozen schedule, bundles, the replay comparison and report)
+   on the rehearsal outputs.
 
 It writes nothing under runs/ and grants no runtime, collection or study authority.
 """
@@ -184,11 +188,12 @@ def _rehearse(*,summary,site,inventory,layout,template,generated,native,baseline
     episode_control=output/'episode-control';write(episode_control/'dependencies.json',dependency_raw)
     write(episode_control/'egl-vendor.json',vendor)
     worker_files=[pins[p] for p in q.EPISODE_WORKER_SOURCES];bootstrap=(capsule/e.BOOTSTRAP).read_bytes()
-    config=dict(run_ids=dict(RUN_IDS))
+    config=dict(run_ids=dict(RUN_IDS));registrations={}
     for key,value in (('NOFILE',e.LIMITS['max_fds']),('AS',e.LIMITS['address_space_bytes']),('FSIZE',e.LIMITS['file_bytes'])):
         resource.setrlimit(getattr(resource,'RLIMIT_'+key),(value,value))
     for phase in ('source','replay'):
-        _,registration_raw,worker=e.registration(config,phase,worker_files,dependency_raw,bootstrap,q)
+        registration_value,registration_raw,worker=e.registration(config,phase,worker_files,dependency_raw,bootstrap,q)
+        registrations[phase]=(registration_value,registration_raw)
         write(episode_control/('worker-registration-'+phase+'.json'),registration_raw)
         phase_dir=output/('episode-'+phase);(phase_dir/'payload').mkdir(parents=True);(phase_dir/'logs').mkdir()
         command=sandbox_command(baseline_doc,native_doc,[p for p in nine],phase='episode-'+phase,stage_parent=str(stage),
@@ -216,8 +221,52 @@ def _rehearse(*,summary,site,inventory,layout,template,generated,native,baseline
             validator=load('scripts/validate_palimpsest_bundle.py')
             summary['phases']['episode_'+phase]['bundle']=validator.validate_bundle(phase_dir/'payload'/bundle['path'],
                                                                                    phase_dir/'payload'/RUN_IDS[phase])
+    if all(summary['phases'].get('episode_'+p,{}).get('supervision',{}).get('status')=='completed' for p in ('source','replay')):
+        summary['alloc16_checks']=alloc16_checks(e,output,config,registrations,dependency_raw,dependencies,
+                                                 (capsule/'pyproject.toml').read_bytes())
     summary['seconds']=time.monotonic()-started
     return summary
+
+
+def alloc16_checks(e,output,config,registrations,dependency_raw,dependencies,pyproject_raw):
+    """Allocation 16's own receipt/bundle checks and the episode auditor's internal checks, each recorded."""
+    checks={};phases=('source','replay')
+    def check(name,function):
+        try:checks[name]=dict(status='passed',detail=function())
+        except Exception as error:checks[name]=dict(status='failed',error=type(error).__name__+': '+str(error)[:2000])
+    def receipt(phase):return json.loads((output/('episode-'+phase)/'logs/stdout.log').read_bytes())
+    def payload(phase):return output/('episode-'+phase)/'payload'
+    def parent():
+        entries={}
+        for phase in phases:
+            value=receipt(phase);e.validate_receipt(value,config,phase,registrations[phase][1],dependency_raw,dependencies)
+            entry=value['entry_result'];bundle=entry['bundle'];raw=(payload(phase)/bundle['path']).read_bytes()
+            e.require(len(raw)==bundle['size_bytes'] and sha(raw)==bundle['sha256'],'Held '+phase+' bundle bytes differ from the receipt')
+            e.require({x.name for x in os.scandir(payload(phase))}=={bundle['path'],config['run_ids'][phase]},'Held '+phase+' payload members differ')
+            entries[phase]=entry
+        e.require(entries['source']['provenance_sha256']==entries['replay']['provenance_sha256'],'Held provenance differs between source and replay')
+        e.require((payload('replay')/config['run_ids']['replay']/'replay-report.json').is_file(),'Held replay report is missing')
+        return dict(replay=entries['replay']['replay'],bundles={p:entries[p]['bundle'] for p in phases})
+    def auditor():
+        a=load('scripts/audit_puck_cpu_held_episode.py');reader=a.Reader(time.monotonic()+300);v=a.validator();entries={};rows={}
+        for phase in phases:
+            value=receipt(phase);entry=value['entry_result'];a.validate_entry(entry,config,phase)
+            report,report_raw=a.provenance_report(registrations[phase][0],dependencies['distributions'],pyproject_raw)
+            a.require(entry['provenance_sha256']==sha(report_raw),'The '+phase+' held provenance digest differs from the independent record')
+            run=payload(phase)/config['run_ids'][phase];checked=v.validate_bundle(payload(phase)/entry['bundle']['path'],run)
+            a.require(checked['sha256']==entry['bundle']['sha256'],'Validated bundle differs: '+phase)
+            rows[phase]=a.recording(run,v,reader,a.EPISODE['schedule']['ticks'],report);entries[phase]=entry
+        a.require(entries['source']['initial_snapshot_id']==rows['source'][1]['snapshot_id'],'Source snapshot identity differs')
+        a.compare(rows['source'][0],rows['replay'][0])
+        report=json.loads((payload('replay')/config['run_ids']['replay']/'replay-report.json').read_bytes())
+        a.require(report.get('status')=='passed' and report.get('compared_ticks')==a.EPISODE['schedule']['ticks']
+                  and report.get('first_divergence') is None and report.get('mode')=='actions'
+                  and report.get('source_run_id')==config['run_ids']['source'] and report.get('run_id')==config['run_ids']['replay']
+                  and report.get('compared_events')==entries['replay']['replay']['compared_events'],'Replay report differs')
+        return dict(compared_ticks=report['compared_ticks'],compared_events=report['compared_events'],
+                    first_divergence=report['first_divergence'],recorded_ticks={p:len(rows[p][0]) for p in phases})
+    check('parent_receipts',parent);check('auditor_internal',auditor)
+    return checks
 
 
 def main():
