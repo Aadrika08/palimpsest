@@ -32,7 +32,23 @@ on the same integrated release candidate.
    candidate, with final review/verification, reproducible installation, licences,
    limitations, runbook and a complete requirements-to-evidence matrix.
 
-## Active work unit: choose the next milestone after the accepted episode
+## Active work unit: foundation repairs, then the lab and six artworks
+
+**Main is integrated (2026-10-18).** PR #179 merged every unmerged branch into
+`main` (merge `8626ecb`): all 126 branches merged and 113 draft PRs closed.
+
+**Next track (user choice): the lab and the six artworks** (milestone 3's lab and
+encounters). First come Phase 1 foundation repairs on
+`chore/foundation-repairs-v1`:
+
+- a canonical test command;
+- the frozen-pin policy after integration;
+- a packet verifier for submodule sources.
+
+The research decisions are deferred to a later brief. These include the memory
+ordering and protected-access decisions for valid memory results, and the
+capability work for puck and MaleCNS controllers. Nothing in this track changes
+their protocols or claims.
 
 **Completed (2026-10-18): milestone 1's episode route.** Allocation 16 ran once on
 boot `7f875223…`. It recorded a 48-tick public manual episode (reproduction,
@@ -60,19 +76,24 @@ This proves the engineering, operator and renderer route only.
 `runtime_qualified` stays false, and no controller capability, study result or
 release gate is claimed. All seven release gates remain open.
 
-**Next decision (user):** which milestone comes next:
-
-- milestone 2, valid memory results (blocked on the PR119 ordering and PR123
-  protected-access decisions below);
-- milestone 3, capable puck and MaleCNS controllers;
-- milestone 4, the six-artwork lab.
-
 Known engineering debt for any longer held route:
 
-- guard custody takes about 75% of worker time, re-checking 27k held files;
-- the held-entry and held-byte margins are thin (37,982 of 40,000 entries;
-  2.04 of 2 GiB held bytes);
-- the packet `verify_evidence.py` does not check submodule source paths.
+- Guard custody takes about 75% of worker time, re-checking 27k held files.
+- The held-entry margin is thin: 37,982 of 40,000 entries.
+- The held-byte margin is also thin. The ceiling is 2 GiB, i.e. 2,147,483,648
+  bytes. Admission16 held a peak of 2,044,405,373 bytes (33,824 files), matching
+  its entry model exactly, which leaves a margin of 103,078,275 bytes (about
+  98 MiB).
+  - That peak is 2.04 decimal GB, or about 1.90 GiB (95.2% of the ceiling).
+    The earlier "2.04 of 2 GiB" phrasing mixed decimal gigabytes with binary
+    gibibytes.
+  - The review's 1,566,986,344 bytes (34,337 files) is admission14's measured
+    peak, the baseline that admission16's model reproduces.
+  - Admission16's larger figure comes from binding preparation04 and
+    characterization-04 history.
+- `scripts/verify_evidence_packet.py` now checks submodule source paths through
+  the source commit's gitlink; the archived packet `verify_evidence.py` copies do
+  not.
 
 The staged preparation04 forest is valid only on boot `7f875223…`.
 
