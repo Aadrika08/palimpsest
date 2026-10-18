@@ -32,57 +32,49 @@ on the same integrated release candidate.
    candidate, with final review/verification, reproducible installation, licences,
    limitations, runbook and a complete requirements-to-evidence matrix.
 
-## Active work unit: qualify the public operator/renderer episode route
+## Active work unit: choose the next milestone after the accepted episode
 
-**Completed (2026-10-17): held CPU four-import route accepted.** Runtime14 (epoch 14
-on preparation03, policy v5, user-approved 360s clock) imported numpy 2.2.5,
-torch 2.9.0+cpu, torchvision 0.24.0+cpu and mujoco 3.3.6 in 202.5s, with every
-custody check intact. All 36 declared names were requested and denied, and
-nothing else. The independent v14 audit PASSED and the outcome review PASSED
-([report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-held-qualification-14/docs/reports/puck-cpu-held-qualification-14.md)).
-This proves the import route only: `runtime_qualified` stays false and all seven
-release gates remain open.
+**Completed (2026-10-18): milestone 1's episode route.** Allocation 16 ran once on
+boot `7f875223…`. It recorded a 48-tick public manual episode (reproduction,
+checker, seed 7) in the held, import-guarded sandbox:
 
-The path here:
+- a registered tick-0 snapshot and Mesa llvmpipe EGL rendering;
+- zero process creation;
+- a fresh-worker replay with 48 ticks and 100 events compared and no divergence;
+- byte-validated source and replay bundles.
 
-- Runtime10 failed on undeclared `backports_abc`.
-- The diagnostic census showed that the one-name fix would fail. The v2 contract
-  added stock-absence policy v5 (PR177).
-- A reboot erased preparation01's stage. Preparation02 replaced it, then runtime11
-  proved policy v5 but hit the 180s deadline in `import mujoco`.
-- The user chose to raise the clock. Preparation03 and epoch 14 followed, and
-  runtime14 passed.
+The independent episode audit passed, and the outcome review passed
+([report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-held-episode-16/docs/reports/puck-cpu-held-episode-16.md)).
+The source is `research/public-held-episode-v1` (`cbda0d9`, reviewed), built on
+PR177's runtime14 import route.
 
-Guard checks still take about 132s of runtime14's 190s of imports, so the 180s
-limit remains unmet.
+User decisions recorded on the way:
 
-**Next finite exit:** one bounded public manual CPU episode, held and observed,
-with a registered tick-0 snapshot, finite steps and normal close. Every tick is
-replayed against a comparison declared before execution, and the source and
-replay bundles are exported. Independent outcome, byte and cleanup audits must
-accept it. A task failure can prove this route; it cannot prove controller
-capability.
+- a 360s clock for the import route;
+- 600s per episode worker;
+- about 48 ticks;
+- evidence-index history binding;
+- one exact `_sysconfigdata` stdlib exception.
 
-The next actions, in order, are:
+This proves the engineering, operator and renderer route only.
+`runtime_qualified` stays false, and no controller capability, study result or
+release gate is claimed. All seven release gates remain open.
 
-1. Port the reviewed constructor seam (`52a8f5d`) onto the qualified source and
-   decide the held diagnostics policy (git/metadata/`nvidia-smi` children).
-2. Add a closed episode descriptor, worker entry, bounded parent and independent
-   auditor. Use the offline census (branch `research/public-episode-census-v1`):
-   - 308 modules to register
-   - 10 new declared absences
-   - the `_sysconfigdata` stdlib-name gap
-   - child processes
-   - EGL software rendering, needing no `/dev/dri`
+**Next decision (user):** which milestone comes next:
 
-   Re-run the offline census with exact guard semantics before freezing.
-3. Freeze the seed, a finite schedule of at most 600 ticks, clocks sized from
-   runtime14's guard cost, and the replay comparison (cameras and integers
-   exact, floats 1e-6). Then admit fresh, invoke once, and audit independently.
+- milestone 2, valid memory results (blocked on the PR119 ordering and PR123
+  protected-access decisions below);
+- milestone 3, capable puck and MaleCNS controllers;
+- milestone 4, the six-artwork lab.
 
-Preparation03's stage is valid only on boot `7f875223…`. A reboot requires a new
-preparation epoch. Consumed attempts 01–11, runtime14 and every admission and
-preparation remain immutable history; never overwrite or silently retry them.
+Known engineering debt for any longer held route:
+
+- guard custody takes about 75% of worker time, re-checking 27k held files;
+- the held-entry and held-byte margins are thin (37,982 of 40,000 entries;
+  2.04 of 2 GiB held bytes);
+- the packet `verify_evidence.py` does not check submodule source paths.
+
+The staged preparation04 forest is valid only on boot `7f875223…`.
 
 Project disk has about 45GiB free at the 2026-10-16 check. Every execution must
 refresh its own resource checks; clearing disk space is not admission. Scientific
