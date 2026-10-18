@@ -1,0 +1,75 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Chromium shared memory must stay on /dev/shm, not TMPDIR: /tmp/.org.chromium.Chromium.xxo7FJ, /tmp/.org.chromium.Chromium.olxEZr, /tmp/.org.chromium.Chromium.ouv3jL
++ actual - expected
+
++ [
++   '/tmp/.org.chromium.Chromium.xxo7FJ',
++   '/tmp/.org.chromium.Chromium.olxEZr',
++   '/tmp/.org.chromium.Chromium.ouv3jL',
++   '/tmp/.org.chromium.Chromium.La2j0F',
++   '/tmp/.org.chromium.Chromium.OGB1Dj',
++   '/tmp/.org.chromium.Chromium.xZlbmX',
++   '/tmp/.org.chromium.Chromium.t9j8f1',
++   '/tmp/.org.chromium.Chromium.7yMekS',
++   '/tmp/.org.chromium.Chromium.32Alki',
++   '/tmp/.org.chromium.Chromium.swf8BJ',
++   '/tmp/.org.chromium.Chromium.E4YIYK',
++   '/tmp/.org.chromium.Chromium.C4Z7Se',
++   '/tmp/.org.chromium.Chromium.nY7MlX',
++   '/tmp/.org.chromium.Chromium.ajULbz',
++   '/tmp/.org.chromium.Chromium.nJ4Vu7',
++   '/tmp/.org.chromium.Chromium.LzUJcI',
++   '/tmp/.org.chromium.Chromium.26zczp',
++   '/tmp/.org.chromium.Chromium.kYLfdJ',
++   '/tmp/.org.chromium.Chromium.uTH0gb',
++   '/tmp/.org.chromium.Chromium.rmOqsQ',
++   '/tmp/.org.chromium.Chromium.sNGIfQ',
++   '/tmp/.org.chromium.Chromium.Wh28rs',
++   '/tmp/.org.chromium.Chromium.nElvP9',
++   '/tmp/.org.chromium.Chromium.BaFXkf',
++   '/tmp/.org.chromium.Chromium.63Jt7f',
++   '/tmp/.org.chromium.Chromium.b89eAH'
++ ]
+- []
+
+    at file:///home/utkarsh/Work/shraddha/brain/.worktrees/lab-chromium-resources-v1/ui/tests/browser-shm.check.ts:38:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    '/tmp/.org.chromium.Chromium.xxo7FJ',
+    '/tmp/.org.chromium.Chromium.olxEZr',
+    '/tmp/.org.chromium.Chromium.ouv3jL',
+    '/tmp/.org.chromium.Chromium.La2j0F',
+    '/tmp/.org.chromium.Chromium.OGB1Dj',
+    '/tmp/.org.chromium.Chromium.xZlbmX',
+    '/tmp/.org.chromium.Chromium.t9j8f1',
+    '/tmp/.org.chromium.Chromium.7yMekS',
+    '/tmp/.org.chromium.Chromium.32Alki',
+    '/tmp/.org.chromium.Chromium.swf8BJ',
+    '/tmp/.org.chromium.Chromium.E4YIYK',
+    '/tmp/.org.chromium.Chromium.C4Z7Se',
+    '/tmp/.org.chromium.Chromium.nY7MlX',
+    '/tmp/.org.chromium.Chromium.ajULbz',
+    '/tmp/.org.chromium.Chromium.nJ4Vu7',
+    '/tmp/.org.chromium.Chromium.LzUJcI',
+    '/tmp/.org.chromium.Chromium.26zczp',
+    '/tmp/.org.chromium.Chromium.kYLfdJ',
+    '/tmp/.org.chromium.Chromium.uTH0gb',
+    '/tmp/.org.chromium.Chromium.rmOqsQ',
+    '/tmp/.org.chromium.Chromium.sNGIfQ',
+    '/tmp/.org.chromium.Chromium.Wh28rs',
+    '/tmp/.org.chromium.Chromium.nElvP9',
+    '/tmp/.org.chromium.Chromium.BaFXkf',
+    '/tmp/.org.chromium.Chromium.63Jt7f',
+    '/tmp/.org.chromium.Chromium.b89eAH'
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+exit=1
