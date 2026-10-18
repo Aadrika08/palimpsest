@@ -74,3 +74,28 @@ def test_v3_held_package_search_path_is_unchanged():
     result=run('import fixture_dep\nreturn {"path": fixture_dep.__path__}',version=3)
     assert result.returncode==0,result.stderr
     assert json.loads(result.stdout)['entry_result']=={'path':[]}
+
+
+# numpy/testing/_private/utils.py compares np_dist.locate_file('numpy') with Path(np.__file__).parent
+# at import time; the held distribution refused the registered package directory.
+def test_v4_distribution_locates_registered_directories_but_not_unregistered_paths():
+    receipt=succeeded(run('''
+        import importlib.metadata, pathlib, fixture_dep
+        dist = importlib.metadata.distribution('fixture-dep')
+        assert dist.locate_file('fixture_dep') == pathlib.Path(fixture_dep.__file__).parent
+        refused = []
+        for path in ('fixture_dep/missing.py', 'missing', '', '../fixture_dep', '/fixture_dep', 'fixture_dep/'):
+            try:
+                dist.locate_file(path)
+            except ValueError as error:
+                refused.append(str(error))
+        return {"kind": "authored-episode", "refused": refused}
+    '''))
+    assert receipt['entry_result']['refused']==['Unregistered distribution file']*6
+
+
+def test_v3_distribution_still_refuses_directories():
+    result=run('import importlib.metadata\ntry:\n    importlib.metadata.distribution("fixture-dep").locate_file("fixture_dep")\n'
+               'except ValueError as error:\n    return {"refused": str(error)}\nreturn {"refused": None}',version=3)
+    assert result.returncode==0,result.stderr
+    assert json.loads(result.stdout)['entry_result']=={'refused':'Unregistered distribution file'}
