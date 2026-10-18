@@ -1,0 +1,15 @@
+{"phase": "import.numpy", "seconds": 0.1069, "new_modules": 106}
+{"phase": "import.torch", "seconds": 1.3835, "new_modules": 870}
+{"phase": "import.torchvision", "seconds": 2.0019, "new_modules": 990}
+{"phase": "import.mujoco", "seconds": 0.0769, "new_modules": 70}
+{"phase": "import.palimpsest", "seconds": 0.0202, "new_modules": 10}
+{"phase": "open", "seconds": 1.0353, "new_modules": 324}
+/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  return _C._get_float32_matmul_precision()
+{"phase": "snapshot", "seconds": 0.0116, "new_modules": 2}
+{"phase": "ticks", "seconds": 0.7595, "new_modules": 1}
+{"phase": "close", "seconds": 0.0077, "new_modules": 0}
+{"phase": "replay.actions", "seconds": 1.2052, "new_modules": 2}
+{"phase": "export.svg", "seconds": 0.0028, "new_modules": 0}
+{"phase": "export.bundle", "seconds": 0.009, "new_modules": 0}
+{"phase": "teardown-start", "elapsed_total": 6.674}

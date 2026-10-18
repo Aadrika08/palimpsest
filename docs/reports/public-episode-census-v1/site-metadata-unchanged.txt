@@ -1,0 +1,3 @@
+before fdeb7899ca8aaa9a231e501b5c2ae9f29759118ac8378c5c84da04040d71ba00  -
+# sha256 of sorted 'relpath size mtime ctime' lines for every site entry: find SITE -printf '%P %s %T@ %C@\n' | sort | sha256sum (reproduces the v2 diagnostics value)
+after-all-runs fdeb7899ca8aaa9a231e501b5c2ae9f29759118ac8378c5c84da04040d71ba00  -

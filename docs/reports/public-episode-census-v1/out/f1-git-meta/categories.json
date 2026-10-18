@@ -1,0 +1,706 @@
+{
+ "kind": "diagnostic-episode-census-categories-v1",
+ "diagnostic_only": true,
+ "census": "/tmp/claude-1000/-home-utkarsh-Work-shraddha-brain/ea2ee336-67d3-44c2-9213-2883eff1b2e7/scratchpad/episode-census/out/f1-git-meta/census-census.json",
+ "registered_modules": 1783,
+ "needs_registration": {
+  "total": 349,
+  "outside_four_imports": 308,
+  "by_top": {
+   "OpenGL": {
+    "count": 5,
+    "phases": {
+     "open": 5
+    },
+    "first": "OpenGL.arrays.ctypesarrays",
+    "caller": [
+     "OpenGL/plugins.py:45",
+     "OpenGL/plugins.py:18",
+     "OpenGL/arrays/arraydatatype.py:50"
+    ],
+    "origins": {
+     "site": 5
+    }
+   },
+   "__mp_main__": {
+    "count": 1,
+    "phases": {
+     "import.torch": 1
+    },
+    "first": "__mp_main__",
+    "caller": null,
+    "origins": {
+     "other": 1
+    }
+   },
+   "_csparsetools": {
+    "count": 1,
+    "phases": {
+     "open": 1
+    },
+    "first": "_csparsetools",
+    "caller": null,
+    "origins": {
+     "site": 1
+    }
+   },
+   "_cython_3_0_12": {
+    "count": 1,
+    "phases": {
+     "import.torchvision": 1
+    },
+    "first": "_cython_3_0_12",
+    "caller": null,
+    "origins": {
+     "nofile": 1
+    }
+   },
+   "_ni_label": {
+    "count": 1,
+    "phases": {
+     "open": 1
+    },
+    "first": "_ni_label",
+    "caller": null,
+    "origins": {
+     "site": 1
+    }
+   },
+   "cython_runtime": {
+    "count": 1,
+    "phases": {
+     "import.torchvision": 1
+    },
+    "first": "cython_runtime",
+    "caller": null,
+    "origins": {
+     "nofile": 1
+    }
+   },
+   "farama_notifications": {
+    "count": 1,
+    "phases": {
+     "open": 1
+    },
+    "first": "farama_notifications",
+    "caller": [
+     "gymnasium/__init__.py:64",
+     "upstream:environment/mujoco_two_cam_env_random_obstacles.py:4",
+     "src:palimpsest/flynn.py:19"
+    ],
+    "origins": {
+     "site": 1
+    }
+   },
+   "glfw": {
+    "count": 2,
+    "phases": {
+     "open": 2
+    },
+    "first": "glfw",
+    "caller": [
+     "upstream:environment/mujoco_two_cam_env_random_obstacles.py:9",
+     "src:palimpsest/flynn.py:19",
+     "/tmp/p.py:290"
+    ],
+    "origins": {
+     "site": 2
+    }
+   },
+   "gymnasium": {
+    "count": 54,
+    "phases": {
+     "open": 54
+    },
+    "first": "gymnasium",
+    "caller": [
+     "upstream:environment/mujoco_two_cam_env_random_obstacles.py:4",
+     "src:palimpsest/flynn.py:19",
+     "/tmp/p.py:290"
+    ],
+    "origins": {
+     "site": 54
+    }
+   },
+   "numpy": {
+    "count": 46,
+    "phases": {
+     "open": 46
+    },
+    "first": "numpy.char",
+    "caller": [
+     "numpy/__init__.py:370",
+     "scipy/_lib/array_api_compat/numpy/__init__.py:1",
+     "scipy/_lib/_array_api.py:18"
+    ],
+    "origins": {
+     "site": 46
+    }
+   },
+   "scipy": {
+    "count": 198,
+    "phases": {
+     "open": 198
+    },
+    "first": "scipy",
+    "caller": [
+     "upstream:core/astar.py:6",
+     "upstream:environment/mujoco_two_cam_env_random_obstacles.py:13",
+     "src:palimpsest/flynn.py:19"
+    ],
+    "origins": {
+     "site": 198
+    }
+   },
+   "torch": {
+    "count": 38,
+    "phases": {
+     "import.torch": 38
+    },
+    "first": "torch.classes",
+    "caller": null,
+    "origins": {
+     "nofile": 32,
+     "site": 4,
+     "other": 2
+    }
+   }
+  },
+  "names": [
+   "OpenGL.arrays.ctypesarrays",
+   "OpenGL.arrays.ctypesparameters",
+   "OpenGL.arrays.ctypespointers",
+   "OpenGL.arrays.lists",
+   "OpenGL.arrays.nones",
+   "__mp_main__",
+   "_csparsetools",
+   "_cython_3_0_12",
+   "_ni_label",
+   "cython_runtime",
+   "farama_notifications",
+   "glfw",
+   "glfw.library",
+   "gymnasium",
+   "gymnasium.core",
+   "gymnasium.envs",
+   "gymnasium.envs.registration",
+   "gymnasium.error",
+   "gymnasium.experimental",
+   "gymnasium.logger",
+   "gymnasium.spaces",
+   "gymnasium.spaces.box",
+   "gymnasium.spaces.dict",
+   "gymnasium.spaces.discrete",
+   "gymnasium.spaces.graph",
+   "gymnasium.spaces.multi_binary",
+   "gymnasium.spaces.multi_discrete",
+   "gymnasium.spaces.oneof",
+   "gymnasium.spaces.sequence",
+   "gymnasium.spaces.space",
+   "gymnasium.spaces.text",
+   "gymnasium.spaces.tuple",
+   "gymnasium.spaces.utils",
+   "gymnasium.utils",
+   "gymnasium.utils.colorize",
+   "gymnasium.utils.ezpickle",
+   "gymnasium.utils.passive_env_checker",
+   "gymnasium.utils.record_constructor",
+   "gymnasium.utils.seeding",
+   "gymnasium.vector",
+   "gymnasium.vector.async_vector_env",
+   "gymnasium.vector.sync_vector_env",
+   "gymnasium.vector.utils",
+   "gymnasium.vector.utils.misc",
+   "gymnasium.vector.utils.shared_memory",
+   "gymnasium.vector.utils.space_utils",
+   "gymnasium.vector.vector_env",
+   "gymnasium.wrappers",
+   "gymnasium.wrappers.atari_preprocessing",
+   "gymnasium.wrappers.common",
+   "gymnasium.wrappers.rendering",
+   "gymnasium.wrappers.stateful_action",
+   "gymnasium.wrappers.stateful_observation",
+   "gymnasium.wrappers.stateful_reward",
+   "gymnasium.wrappers.transform_action",
+   "gymnasium.wrappers.transform_observation",
+   "gymnasium.wrappers.transform_reward",
+   "gymnasium.wrappers.utils",
+   "gymnasium.wrappers.vector",
+   "gymnasium.wrappers.vector.common",
+   "gymnasium.wrappers.vector.dict_info_to_list",
+   "gymnasium.wrappers.vector.rendering",
+   "gymnasium.wrappers.vector.stateful_observation",
+   "gymnasium.wrappers.vector.stateful_reward",
+   "gymnasium.wrappers.vector.vectorize_action",
+   "gymnasium.wrappers.vector.vectorize_observation",
+   "gymnasium.wrappers.vector.vectorize_reward",
+   "numpy._core.defchararray",
+   "numpy._core.strings",
+   "numpy._core.tests",
+   "numpy._core.tests._natype",
+   "numpy._typing._add_docstring",
+   "numpy.char",
+   "numpy.core",
+   "numpy.core._utils",
+   "numpy.ctypeslib",
+   "numpy.f2py",
+   "numpy.f2py.__version__",
+   "numpy.f2py._backends",
+   "numpy.f2py._isocbind",
+   "numpy.f2py.auxfuncs",
+   "numpy.f2py.capi_maps",
+   "numpy.f2py.cb_rules",
+   "numpy.f2py.cfuncs",
+   "numpy.f2py.common_rules",
+   "numpy.f2py.crackfortran",
+   "numpy.f2py.diagnose",
+   "numpy.f2py.f2py2e",
+   "numpy.f2py.f90mod_rules",
+   "numpy.f2py.func2subr",
+   "numpy.f2py.rules",
+   "numpy.f2py.symbolic",
+   "numpy.f2py.use_rules",
+   "numpy.ma",
+   "numpy.ma.core",
+   "numpy.ma.extras",
+   "numpy.polynomial",
+   "numpy.polynomial._polybase",
+   "numpy.polynomial.chebyshev",
+   "numpy.polynomial.hermite",
+   "numpy.polynomial.hermite_e",
+   "numpy.polynomial.laguerre",
+   "numpy.polynomial.legendre",
+   "numpy.polynomial.polynomial",
+   "numpy.polynomial.polyutils",
+   "numpy.rec",
+   "numpy.strings",
+   "numpy.testing",
+   "numpy.testing._private",
+   "numpy.testing._private.extbuild",
+   "numpy.testing._private.utils",
+   "numpy.testing.overrides",
+   "numpy.typing",
+   "scipy",
+   "scipy.__config__",
+   "scipy._distributor_init",
+   "scipy._lib",
+   "scipy._lib._array_api",
+   "scipy._lib._ccallback",
+   "scipy._lib._ccallback_c",
+   "scipy._lib._docscrape",
+   "scipy._lib._pep440",
+   "scipy._lib._testutils",
+   "scipy._lib._threadsafety",
+   "scipy._lib._util",
+   "scipy._lib.array_api_compat",
+   "scipy._lib.array_api_compat._internal",
+   "scipy._lib.array_api_compat.common",
+   "scipy._lib.array_api_compat.common._aliases",
+   "scipy._lib.array_api_compat.common._fft",
+   "scipy._lib.array_api_compat.common._helpers",
+   "scipy._lib.array_api_compat.common._linalg",
+   "scipy._lib.array_api_compat.numpy",
+   "scipy._lib.array_api_compat.numpy._aliases",
+   "scipy._lib.array_api_compat.numpy._info",
+   "scipy._lib.array_api_compat.numpy.fft",
+   "scipy._lib.array_api_compat.numpy.linalg",
+   "scipy._lib.array_api_extra",
+   "scipy._lib.array_api_extra._funcs",
+   "scipy._lib.decorator",
+   "scipy._lib.deprecation",
+   "scipy._lib.doccer",
+   "scipy.linalg",
+   "scipy.linalg._basic",
+   "scipy.linalg._cythonized_array_utils",
+   "scipy.linalg._decomp",
+   "scipy.linalg._decomp_cholesky",
+   "scipy.linalg._decomp_cossin",
+   "scipy.linalg._decomp_ldl",
+   "scipy.linalg._decomp_lu",
+   "scipy.linalg._decomp_lu_cython",
+   "scipy.linalg._decomp_polar",
+   "scipy.linalg._decomp_qr",
+   "scipy.linalg._decomp_qz",
+   "scipy.linalg._decomp_schur",
+   "scipy.linalg._decomp_svd",
+   "scipy.linalg._decomp_update",
+   "scipy.linalg._expm_frechet",
+   "scipy.linalg._fblas",
+   "scipy.linalg._flapack",
+   "scipy.linalg._linalg_pythran",
+   "scipy.linalg._matfuncs",
+   "scipy.linalg._matfuncs_expm",
+   "scipy.linalg._matfuncs_sqrtm",
+   "scipy.linalg._matfuncs_sqrtm_triu",
+   "scipy.linalg._misc",
+   "scipy.linalg._procrustes",
+   "scipy.linalg._sketches",
+   "scipy.linalg._solve_toeplitz",
+   "scipy.linalg._solvers",
+   "scipy.linalg._special_matrices",
+   "scipy.linalg.basic",
+   "scipy.linalg.blas",
+   "scipy.linalg.cython_blas",
+   "scipy.linalg.cython_lapack",
+   "scipy.linalg.decomp",
+   "scipy.linalg.decomp_cholesky",
+   "scipy.linalg.decomp_lu",
+   "scipy.linalg.decomp_qr",
+   "scipy.linalg.decomp_schur",
+   "scipy.linalg.decomp_svd",
+   "scipy.linalg.lapack",
+   "scipy.linalg.matfuncs",
+   "scipy.linalg.misc",
+   "scipy.linalg.special_matrices",
+   "scipy.ndimage",
+   "scipy.ndimage._delegators",
+   "scipy.ndimage._filters",
+   "scipy.ndimage._fourier",
+   "scipy.ndimage._interpolation",
+   "scipy.ndimage._measurements",
+   "scipy.ndimage._morphology",
+   "scipy.ndimage._nd_image",
+   "scipy.ndimage._ndimage_api",
+   "scipy.ndimage._ni_docstrings",
+   "scipy.ndimage._ni_label",
+   "scipy.ndimage._ni_support",
+   "scipy.ndimage._rank_filter_1d",
+   "scipy.ndimage._support_alternative_backends",
+   "scipy.ndimage.filters",
+   "scipy.ndimage.fourier",
+   "scipy.ndimage.interpolation",
+   "scipy.ndimage.measurements",
+   "scipy.ndimage.morphology",
+   "scipy.sparse",
+   "scipy.sparse._base",
+   "scipy.sparse._bsr",
+   "scipy.sparse._compressed",
+   "scipy.sparse._construct",
+   "scipy.sparse._coo",
+   "scipy.sparse._csc",
+   "scipy.sparse._csparsetools",
+   "scipy.sparse._csr",
+   "scipy.sparse._data",
+   "scipy.sparse._dia",
+   "scipy.sparse._dok",
+   "scipy.sparse._extract",
+   "scipy.sparse._index",
+   "scipy.sparse._lil",
+   "scipy.sparse._matrix",
+   "scipy.sparse._matrix_io",
+   "scipy.sparse._sparsetools",
+   "scipy.sparse._sputils",
+   "scipy.sparse.base",
+   "scipy.sparse.bsr",
+   "scipy.sparse.compressed",
+   "scipy.sparse.construct",
+   "scipy.sparse.coo",
+   "scipy.sparse.csc",
+   "scipy.sparse.csgraph",
+   "scipy.sparse.csgraph._flow",
+   "scipy.sparse.csgraph._laplacian",
+   "scipy.sparse.csgraph._matching",
+   "scipy.sparse.csgraph._min_spanning_tree",
+   "scipy.sparse.csgraph._reordering",
+   "scipy.sparse.csgraph._shortest_path",
+   "scipy.sparse.csgraph._tools",
+   "scipy.sparse.csgraph._traversal",
+   "scipy.sparse.csgraph._validation",
+   "scipy.sparse.csr",
+   "scipy.sparse.data",
+   "scipy.sparse.dia",
+   "scipy.sparse.dok",
+   "scipy.sparse.extract",
+   "scipy.sparse.lil",
+   "scipy.sparse.linalg",
+   "scipy.sparse.linalg._dsolve",
+   "scipy.sparse.linalg._dsolve._add_newdocs",
+   "scipy.sparse.linalg._dsolve._superlu",
+   "scipy.sparse.linalg._dsolve.linsolve",
+   "scipy.sparse.linalg._eigen",
+   "scipy.sparse.linalg._eigen._svds",
+   "scipy.sparse.linalg._eigen.arpack",
+   "scipy.sparse.linalg._eigen.arpack._arpack",
+   "scipy.sparse.linalg._eigen.arpack.arpack",
+   "scipy.sparse.linalg._eigen.lobpcg",
+   "scipy.sparse.linalg._eigen.lobpcg.lobpcg",
+   "scipy.sparse.linalg._expm_multiply",
+   "scipy.sparse.linalg._interface",
+   "scipy.sparse.linalg._isolve",
+   "scipy.sparse.linalg._isolve._gcrotmk",
+   "scipy.sparse.linalg._isolve.iterative",
+   "scipy.sparse.linalg._isolve.lgmres",
+   "scipy.sparse.linalg._isolve.lsmr",
+   "scipy.sparse.linalg._isolve.lsqr",
+   "scipy.sparse.linalg._isolve.minres",
+   "scipy.sparse.linalg._isolve.tfqmr",
+   "scipy.sparse.linalg._isolve.utils",
+   "scipy.sparse.linalg._matfuncs",
+   "scipy.sparse.linalg._norm",
+   "scipy.sparse.linalg._onenormest",
+   "scipy.sparse.linalg._propack",
+   "scipy.sparse.linalg._propack._cpropack",
+   "scipy.sparse.linalg._propack._dpropack",
+   "scipy.sparse.linalg._propack._spropack",
+   "scipy.sparse.linalg._propack._zpropack",
+   "scipy.sparse.linalg._special_sparse_arrays",
+   "scipy.sparse.linalg._svdp",
+   "scipy.sparse.linalg.dsolve",
+   "scipy.sparse.linalg.eigen",
+   "scipy.sparse.linalg.interface",
+   "scipy.sparse.linalg.isolve",
+   "scipy.sparse.linalg.matfuncs",
+   "scipy.sparse.sparsetools",
+   "scipy.sparse.sputils",
+   "scipy.special",
+   "scipy.special._basic",
+   "scipy.special._comb",
+   "scipy.special._ellip_harm",
+   "scipy.special._ellip_harm_2",
+   "scipy.special._gufuncs",
+   "scipy.special._input_validation",
+   "scipy.special._lambertw",
+   "scipy.special._logsumexp",
+   "scipy.special._multiufuncs",
+   "scipy.special._orthogonal",
+   "scipy.special._sf_error",
+   "scipy.special._specfun",
+   "scipy.special._special_ufuncs",
+   "scipy.special._spfun_stats",
+   "scipy.special._spherical_bessel",
+   "scipy.special._support_alternative_backends",
+   "scipy.special._ufuncs",
+   "scipy.special._ufuncs_cxx",
+   "scipy.special.add_newdocs",
+   "scipy.special.basic",
+   "scipy.special.orthogonal",
+   "scipy.special.sf_error",
+   "scipy.special.specfun",
+   "scipy.special.spfun_stats",
+   "scipy.version",
+   "torch._C._aoti",
+   "torch._C._autograd",
+   "torch._C._cpu",
+   "torch._C._distributed_autograd",
+   "torch._C._distributed_c10d",
+   "torch._C._distributed_rpc",
+   "torch._C._dynamo",
+   "torch._C._dynamo.autograd_compiler",
+   "torch._C._dynamo.eval_frame",
+   "torch._C._dynamo.guards",
+   "torch._C._dynamo.utils",
+   "torch._C._export",
+   "torch._C._export.pt2_archive_constants",
+   "torch._C._fft",
+   "torch._C._functionalization",
+   "torch._C._functorch",
+   "torch._C._instruction_counter",
+   "torch._C._itt",
+   "torch._C._jit",
+   "torch._C._jit_tree_views",
+   "torch._C._lazy",
+   "torch._C._lazy_ts_backend",
+   "torch._C._linalg",
+   "torch._C._monitor",
+   "torch._C._nativert",
+   "torch._C._nested",
+   "torch._C._nn",
+   "torch._C._onnx",
+   "torch._C._profiler",
+   "torch._C._return_types",
+   "torch._C._sparse",
+   "torch._C._special",
+   "torch._C._te",
+   "torch._C._verbose",
+   "torch._C.cpp",
+   "torch._C.cpp.nn",
+   "torch.classes",
+   "torch.ops"
+  ]
+ },
+ "local_source_modules": [
+  "core",
+  "core.astar",
+  "environment",
+  "environment.mujoco_two_cam_env_random_obstacles",
+  "palimpsest",
+  "palimpsest.artifacts",
+  "palimpsest.assets",
+  "palimpsest.body_profile",
+  "palimpsest.doctor",
+  "palimpsest.engine",
+  "palimpsest.evaluate",
+  "palimpsest.flynn",
+  "palimpsest.interventions",
+  "palimpsest.male_model",
+  "palimpsest.male_policy",
+  "palimpsest.memory",
+  "palimpsest.memory_reference",
+  "palimpsest.memory_task",
+  "palimpsest.profiles",
+  "palimpsest.records",
+  "palimpsest.replay",
+  "palimpsest.snapshots"
+ ],
+ "needs_declared_absence_new": {
+  "cffi": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "glfw/__init__.py:79",
+    "upstream:environment/mujoco_two_cam_env_random_obstacles.py:9",
+    "src:palimpsest/flynn.py:19"
+   ]
+  },
+  "charset_normalizer": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "numpy/f2py/crackfortran.py:149",
+    "numpy/f2py/f2py2e.py:19",
+    "numpy/f2py/__init__.py:18"
+   ]
+  },
+  "cython": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/_lib/_testutils.py:21",
+    "scipy/_lib/__init__.py:12",
+    "scipy/__init__.py:67"
+   ]
+  },
+  "glfw_preview": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "glfw/__init__.py:55",
+    "upstream:environment/mujoco_two_cam_env_random_obstacles.py:9",
+    "src:palimpsest/flynn.py:19"
+   ]
+  },
+  "scikits": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/sparse/linalg/_dsolve/linsolve.py:17",
+    "scipy/sparse/linalg/_dsolve/__init__.py:58",
+    "scipy/sparse/linalg/__init__.py:132"
+   ]
+  },
+  "scipy._distributor_init_local": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/_distributor_init.py:16",
+    "scipy/__init__.py:63",
+    "upstream:core/astar.py:6"
+   ]
+  },
+  "scipy.linalg._cblas": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/linalg/blas.py:215",
+    "scipy/linalg/_misc.py:3",
+    "scipy/linalg/__init__.py:203"
+   ]
+  },
+  "scipy.linalg._clapack": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/linalg/lapack.py:853",
+    "scipy/linalg/_misc.py:4",
+    "scipy/linalg/__init__.py:203"
+   ]
+  },
+  "scipy.linalg._fblas_64": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/linalg/blas.py:220",
+    "scipy/linalg/_misc.py:3",
+    "scipy/linalg/__init__.py:203"
+   ]
+  },
+  "scipy.linalg._flapack_64": {
+   "phase": "open.import_upstream",
+   "caller": [
+    "scipy/linalg/lapack.py:858",
+    "scipy/linalg/_misc.py:4",
+    "scipy/linalg/__init__.py:203"
+   ]
+  }
+ },
+ "v5_absent_requested": [
+  "OpenGL_accelerate",
+  "accimage",
+  "av",
+  "backports_abc",
+  "colorama",
+  "defusedxml",
+  "dill",
+  "flint",
+  "fx2trt_oss",
+  "gmpy",
+  "gmpy2",
+  "hypothesis",
+  "monkeytype",
+  "numpy._distributor_init_local",
+  "onnx",
+  "onnx_tf",
+  "onnxruntime",
+  "opt_einsum",
+  "org",
+  "pydot",
+  "pynvml",
+  "tabulate",
+  "tensorflow",
+  "tensorrt",
+  "torch._rocm_init",
+  "torch2trt",
+  "torchdistx",
+  "tqdm",
+  "tree",
+  "triton",
+  "tvm",
+  "xarray"
+ ],
+ "v5_absent_not_requested": [],
+ "hidden_candidates": {
+  "networkx": {
+   "phase": "import.torchvision",
+   "caller": [
+    "torch/_dynamo/trace_rules.py:3664",
+    "torch/_dynamo/trace_rules.py:3843",
+    "torch/_dynamo/symbolic_convert.py:59"
+   ],
+   "n": 1
+  },
+  "pandas": {
+   "phase": "import.torchvision",
+   "caller": [
+    "torch/_dynamo/trace_rules.py:3664",
+    "torch/_dynamo/trace_rules.py:3843",
+    "torch/_dynamo/symbolic_convert.py:59"
+   ],
+   "n": 1
+  },
+  "sklearn": {
+   "phase": "import.torchvision",
+   "caller": [
+    "torch/_dynamo/trace_rules.py:3664",
+    "torch/_dynamo/trace_rules.py:3843",
+    "torch/_dynamo/symbolic_convert.py:59"
+   ],
+   "n": 1
+  },
+  "torch.utils._cxx_pytree": {
+   "phase": "import.torchvision",
+   "caller": [
+    "torch/distributed/_functional_collectives.py:17",
+    "torch/distributed/tensor/placement_types.py:8",
+    "torch/distributed/tensor/_dtensor_spec.py:6"
+   ],
+   "n": 4
+  }
+ },
+ "v5_hidden_in_requests": [
+  "networkx",
+  "pandas",
+  "sklearn",
+  "torch.utils._cxx_pytree"
+ ]
+}
