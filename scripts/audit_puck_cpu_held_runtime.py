@@ -163,7 +163,7 @@ STDLIB_311=frozenset(('__future__', '_abc', '_aix_support', '_ast', '_asyncio', 
 'webbrowser', 'winreg', 'winsound', 'wsgiref', 'xdrlib', 'xml', 'xmlrpc', 'zipapp', 'zipfile', 'zipimport', 'zlib',
 'zoneinfo'))
 # The characterization-04 outcome auditor bytes whose PASS preparation04 accepts.
-CHARACTERIZATION04_AUDITOR_SHA256='7d9660320bf1f835290ad3c8821d0dc44bbce0847f1e1f777486f4dd14969950'
+CHARACTERIZATION04_AUDITOR_SHA256='1608a3d79a2ebb10723023b25c054401bbd598b2e95508422b1e6bfaa2efac46'
 PREPARATION04_ROLES=tuple(sorted(ROLES+('observation_replay_report',)))
 EPISODE_OBSERVATION_PATHS=dict(observation_configuration='frozen-configuration.json',
     observation_report='raw/payload/source/characterization.json',observation_replay_report='raw/payload/replay/characterization.json',

@@ -318,8 +318,11 @@ def validate_report(report,phase,request_sha,worker_sha,dynamic_leaves):
     dispatch=report['native_cache_dispatch']
     require(type(dispatch) is dict and set(dispatch)=={'events','unattributed','errors'} and dispatch['unattributed']==[]
             and dispatch['errors']==[] and type(dispatch['events']) is list and len(dispatch['events'])<=4096
-            and all(type(e) is dict and set(e)=={'cache','producer','phase','added','first'} and e['phase'] in ('native_create','module_exec')
-                    and type(e['first']) is bool and type(e['added']) is list and e['added']==sorted(set(e['added']))
+            and all(type(e) is dict and set(e)=={'cache','producer','phase','added','first','closed'} and type(e['cache']) is str
+                    and ((type(e['producer']) is str and e['phase'] in ('native_create','module_exec'))
+                         or (e['producer'] is None and e['phase'] is None))
+                    and type(e['first']) is bool and type(e['closed']) is bool and type(e['added']) is list
+                    and all(type(k) is str for k in e['added']) and e['added']==sorted(set(e['added']))
                     for e in dispatch['events']),'Complete attributed native cache dispatch record required')
     misses=report['import_misses'];require(type(misses) is list and misses==sorted(set(misses)) and len(misses)<=4096,'Import misses differ')
     value=report['episode_result'];ids=EPISODE['run_ids'];ticks=EPISODE['schedule']['ticks']

@@ -126,7 +126,7 @@ LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e9417543
 PREPARATION02_AUDITOR_SHA256='04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b'
 PREPARATION03_AUDITOR_SHA256='6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd'
 # The independent auditor whose bytes must accept preparation04 (allocation 15).
-PREPARATION04_AUDITOR_SHA256='14ab28020dcc673099a97ea873880f87a42d030a0c9c22552efa3083b5f1fc20'
+PREPARATION04_AUDITOR_SHA256='f4074bc1d11f7012b0d1b487572d5c5f2149d1cc98169f35ae22a49df8717f26'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',
@@ -223,7 +223,7 @@ STDLIB_311=frozenset(('__future__', '_abc', '_aix_support', '_ast', '_asyncio', 
 'webbrowser', 'winreg', 'winsound', 'wsgiref', 'xdrlib', 'xml', 'xmlrpc', 'zipapp', 'zipfile', 'zipimport', 'zlib',
 'zoneinfo'))
 # The independent characterization-04 outcome auditor whose PASS preparation04 accepts.
-CHARACTERIZATION04_AUDITOR_SHA256='7d9660320bf1f835290ad3c8821d0dc44bbce0847f1e1f777486f4dd14969950'
+CHARACTERIZATION04_AUDITOR_SHA256='1608a3d79a2ebb10723023b25c054401bbd598b2e95508422b1e6bfaa2efac46'
 PREPARATION04_INPUT_ROLES=tuple(sorted(INPUT_ROLES+('observation_replay_report',)))
 EPISODE_OBSERVATION_PATHS=dict(observation_configuration='frozen-configuration.json',
     observation_report='raw/payload/source/characterization.json',

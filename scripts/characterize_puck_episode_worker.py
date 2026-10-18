@@ -133,13 +133,15 @@ class _Admission:
 
 
 class _DispatchWatch:
-    """Attribute shared native-cache dispatch keys to the innermost completing site producer phase.
+    """Attribute shared native-cache dispatch keys exactly where the held guard checks them.
 
-    A head finder enables a profile hook only while an import runs. At each site
-    module completion (a Python module body returning, or _imp.create_dynamic /
-    _imp.exec_dynamic returning for an extension) it snapshots the dispatch keys
-    (module, class or function values) of every virtual cache module, so each new
-    key is attributed exactly as the held guard checks it at that phase's close.
+    A head finder enables a profile hook only while an import runs. It keeps the
+    stack of open held phases (site extension create/exec, site Python module
+    bodies) and snapshots the dispatch keys (module, class or function values) of
+    every virtual cache module at the held guard's check points: each site
+    extension's create/exec start and every phase close. Each new key goes to the
+    innermost open phase, and ``closed`` records whether its cache's creator phase
+    had already closed, so later keys are distinguishable from creator keys.
     """
     DELEGATES = (types.ModuleType, type, types.FunctionType, types.BuiltinFunctionType)
 
@@ -147,6 +149,7 @@ class _DispatchWatch:
         import _imp
         self.site = site_root.rstrip('/') + '/'; self.create = _imp.create_dynamic; self.execute = _imp.exec_dynamic
         self.depth = 0; self.active = False; self.state = {}; self.events = []; self.errors = []; self.code = None
+        self.stack = []; self.creators = {}; self.closed = set()
 
     def find_spec(self, fullname, path=None, target=None):
         if not self.active:
@@ -170,19 +173,29 @@ class _DispatchWatch:
                 result[name] = {key: item for key, item in raw.items() if isinstance(item, self.DELEGATES)}
         return result
 
-    def completed(self, producer, phase):
+    def check(self):
+        producer, phase = self.stack[-1] if self.stack else (None, None)
         current = self.caches()
         for cache, keys in current.items():
             before = self.state.get(cache)
             if before is None:
-                self.events.append(dict(cache=cache, producer=producer, phase=phase, added=sorted(keys), first=True))
+                self.creators[cache] = (producer, phase)
+                self.events.append(dict(cache=cache, producer=producer, phase=phase, added=sorted(keys), first=True, closed=False))
                 continue
             if any(key not in keys or keys[key] is not value for key, value in before.items()):
                 self.errors.append(dict(cache=cache, producer=producer, phase=phase, error='dispatch changed or removed'))
             added = sorted(set(keys) - set(before))
             if added:
-                self.events.append(dict(cache=cache, producer=producer, phase=phase, added=added, first=False))
+                self.events.append(dict(cache=cache, producer=producer, phase=phase, added=added, first=False,
+                                        closed=cache in self.closed))
         self.state = current
+
+    def close(self, key):
+        self.check()
+        if not self.stack or self.stack[-1] != key:
+            raise RuntimeError('Observed held phase stack differs')
+        self.closed.update(cache for cache, creator in self.creators.items() if creator == key)
+        self.stack.pop()
 
     def profile(self, frame, event, arg):
         try:
@@ -192,11 +205,14 @@ class _DispatchWatch:
                 self.depth -= 1
                 if self.depth <= 0:
                     self.active = False; sys.setprofile(None)
-            elif event == 'return' and frame.f_code.co_name == '<module>':
+            elif event in ('call', 'return') and frame.f_code.co_name == '<module>':
                 path = frame.f_globals.get('__file__')
-                if type(path) is str and path.startswith(self.site):
-                    self.completed(frame.f_globals.get('__name__'), 'module_exec')
-            elif event == 'c_return' and (arg is self.create or arg is self.execute):
+                # Only a site file's own module body (not exec'd strings in its globals) is a held phase.
+                if type(path) is str and path.startswith(self.site) and frame.f_code.co_filename == path:
+                    key = (frame.f_globals.get('__name__'), 'module_exec')
+                    if event == 'call': self.stack.append(key)
+                    else: self.close(key)
+            elif event in ('c_call', 'c_return', 'c_exception') and (arg is self.create or arg is self.execute):
                 target = frame.f_locals.get('args', (None,))[0]
                 if arg is self.create:
                     name, origin, phase = getattr(target, 'name', None), getattr(target, 'origin', None), 'native_create'
@@ -204,7 +220,8 @@ class _DispatchWatch:
                     raw = types.ModuleType.__dict__['__dict__'].__get__(target)
                     name, origin, phase = raw.get('__name__'), raw.get('__file__'), 'module_exec'
                 if type(origin) is str and origin.startswith(self.site):
-                    self.completed(name, phase)
+                    if event == 'c_call': self.check(); self.stack.append((name, phase))
+                    else: self.close((name, phase))
         except BaseException as error:
             if len(self.errors) < 64:
                 self.errors.append(dict(error=type(error).__name__ + ': ' + str(error)[:512]))

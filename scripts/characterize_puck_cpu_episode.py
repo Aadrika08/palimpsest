@@ -326,9 +326,12 @@ def validate_dispatch(value):
             and value['errors']==[] and type(value['events']) is list and len(value['events'])<=4096,
             'Complete attributed native cache dispatch record required')
     for event in value['events']:
-        require(type(event) is dict and set(event)=={'cache','producer','phase','added','first'}
-                and type(event['cache']) is str and type(event['producer']) is str
-                and event['phase'] in ('native_create','module_exec') and type(event['first']) is bool
+        # producer/phase are both None when no held phase was open at the check point.
+        require(type(event) is dict and set(event)=={'cache','producer','phase','added','first','closed'}
+                and type(event['cache']) is str
+                and ((type(event['producer']) is str and event['phase'] in ('native_create','module_exec'))
+                     or (event['producer'] is None and event['phase'] is None))
+                and type(event['first']) is bool and type(event['closed']) is bool
                 and type(event['added']) is list and all(type(k) is str for k in event['added'])
                 and event['added']==sorted(set(event['added'])),'Native cache dispatch event differs')
 

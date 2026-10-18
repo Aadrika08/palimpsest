@@ -304,7 +304,9 @@ class ExportBindings:
         # Declared later producers per (cache, key), and each key's reference sealed at its producer's close.
         self.late={(v['name'],item['attribute']):{(p['producer'],p['phase']) for p in item['producers']}
                    for v in profile.get('native_cache',[]) for item in v.get('late_delegates',[])}
-        self.late_seals={}
+        # A late key first seen while a declared producer is innermost stays pending (its reference
+        # fixed) through nested phases, and is sealed at that producer's own close.
+        self.late_seals={}; self.late_pending={}
         self.published={r['name']:r for r in profile['exports'] if r['phase']==_PUBLISH_PHASE}
         self.publication_closed=set(); self.publication_phases=set()
         if any(name in sys.modules for name in self.native_cache):
@@ -361,12 +363,15 @@ class ExportBindings:
                     for key,delegate in previous.delegates):
                 raise RuntimeError('Native cache dispatch reference changed')
             for key in late:
-                sealed=self.late_seals.get((name,key),_MISSING)
+                fixed=self.late_seals.get((name,key),_MISSING)
+                if fixed is _MISSING and (name,key) in self.late_pending:fixed=self.late_pending[(name,key)][1]
                 present=module_dict(value).get(key,_MISSING)
-                if sealed is not _MISSING:
-                    if present is not sealed:raise RuntimeError('Native cache late delegate changed or disappeared')
-                elif present is not _MISSING and (name not in self.cache_closed or current_phase not in self.late[(name,key)]):
-                    raise RuntimeError('Native cache late delegate appeared outside its declared producer')
+                if fixed is not _MISSING:
+                    if present is not fixed:raise RuntimeError('Native cache late delegate changed or disappeared')
+                elif present is not _MISSING:
+                    if name not in self.cache_closed or current_phase not in self.late[(name,key)]:
+                        raise RuntimeError('Native cache late delegate appeared outside its declared producer')
+                    self.late_pending[(name,key)]=(current_phase,present)
     def _publication_recheck(self):
         current_phase=self.phase_stack[-1] if self.phase_stack else None
         for name,row in self.published.items():
@@ -429,12 +434,9 @@ class ExportBindings:
             # Existing metadata/references were proved unchanged above. Capture
             # only the additional declared delegates produced by nested imports.
             self.cache_seals[cache]=complete; self.cache_closed.add(cache)
-        # Seal each declared late key at the close of the producer phase that added it.
-        for (cache,attribute),producers in self.late.items():
-            if key not in producers or (cache,attribute) in self.late_seals:continue
-            value=sys.modules.get(cache,_MISSING)
-            delegate=module_dict(value).get(attribute,_MISSING) if value is not _MISSING else _MISSING
-            if delegate is not _MISSING:self.late_seals[(cache,attribute)]=delegate
+        # Seal each pending late key at the close of the producer phase that added it.
+        for item,(owner,delegate) in list(self.late_pending.items()):
+            if owner==key:self.late_seals[item]=delegate;del self.late_pending[item]
         self.phase_stack.pop()
         ExportBindings._cache_recheck(self)
         ExportBindings._publication_recheck(self)

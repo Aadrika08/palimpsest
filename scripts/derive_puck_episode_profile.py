@@ -75,7 +75,13 @@ def split(rows,capsule,prefix):
 
 
 def native_cache_rows(rows,reports):
-    """Each kept template cache row with its observed creator keys and every later key's producers."""
+    """Each kept template cache row checked against its observed creator keys, plus every later key's producers.
+
+    Keys observed before the creator phase closes (including those added by nested
+    phases) are creator keys and must equal the template's. Keys observed after it
+    closes become late delegates of the phase innermost when the held guard first
+    sees them.
+    """
     names={row['name'] for row in rows};result=[]
     for value in reports.values():
         for event in value['native_cache_dispatch']['events']:
@@ -85,11 +91,18 @@ def native_cache_rows(rows,reports):
         late={}
         for phase,value in reports.items():
             events=[e for e in value['native_cache_dispatch']['events'] if e['cache']==row['name']]
-            if not events or not events[0]['first'] or (events[0]['producer'],events[0]['phase'])!=(row['producer'],row['phase']):
+            if (not events or not events[0]['first'] or any(e['first'] for e in events[1:])
+                    or (events[0]['producer'],events[0]['phase'])!=(row['producer'],row['phase'])):
                 raise ValueError('Shared cache '+row['name']+' was not first observed at its template creator in '+phase)
-            if events[0]['added']!=row['delegate_attributes'] or any(e['first'] for e in events[1:]):
+            closed=[e['closed'] for e in events]
+            if closed!=sorted(closed) or closed[0]:
+                raise ValueError('Shared cache '+row['name']+' creator close order differs in '+phase)
+            if sorted({k for e in events if not e['closed'] for k in e['added']})!=row['delegate_attributes']:
                 raise ValueError('Shared cache '+row['name']+' creator keys differ from the template in '+phase)
-            for event in events[1:]:
+            for event in events:
+                if not event['closed']:continue
+                if event['producer'] is None:
+                    raise ValueError('Shared cache '+row['name']+' later key appeared outside any producer phase in '+phase)
                 for key in event['added']:late.setdefault(key,set()).add((event['producer'],event['phase']))
         if late:
             row=dict(row,late_delegates=[dict(attribute=key,producers=[dict(producer=p,phase=f) for p,f in sorted(late[key])])
