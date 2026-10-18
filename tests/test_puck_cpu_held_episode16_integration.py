@@ -55,6 +55,7 @@ def test_allocation16_completes_one_held_episode(chain):
     assert candidate['import_profile']['native_cache']==[dict(name='_cython_authored',producer='authoredcy._creator',phase='module_exec',
         delegate_attributes=['cython_function_or_method','generator'],late_delegates=late)]
     assert candidate['import_profile']['module_aliases']==[dict(name='_tools',target='authoredcy._tools')]
+    assert candidate['import_profile']['native_origins']==[dict(name='authoredcy._linked',policy='held-directory-observed-v1')]
     for phase in ('source','replay'):
         receipt=json.loads((output/('logs-'+phase)/'stdout.log').read_bytes())
         assert receipt['dependencies']['native_cache_modules']==candidate['import_profile']['native_cache']

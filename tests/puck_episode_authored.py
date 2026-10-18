@@ -315,7 +315,8 @@ def authored_cython(site):
     adds a second creator key before the creator closes. ``_fused``'s exec later
     adds a key to the closed cache and then imports ``_lapack`` from C, as scipy's
     fused Cython modules cimport scipy.linalg.cython_lapack. ``_tools`` registers
-    itself under its bare name, as scipy.sparse._csparsetools does.
+    itself under its bare name, as scipy.sparse._csparsetools does, and ``_linked``
+    needs a packaged helper library through RUNPATH $ORIGIN.
     """
     import importlib.machinery
     import sysconfig
@@ -345,4 +346,18 @@ def authored_cython(site):
     build('_lapack','lapack','')
     # As scipy.sparse._csparsetools does, _tools's exec also registers itself under its compiled bare name.
     build('_tools','tool','','if(PyDict_SetItemString(PyImport_GetModuleDict(),"_tools",m)<0)return -1;')
+    # As scipy.special._ufuncs needs libsf_error_state.so, _linked needs a packaged helper through
+    # RUNPATH $ORIGIN, which only the held-directory native origin can resolve.
+    helper=package/'authoredhelper.c';helper.write_text('int authored_helper(void){return 51;}\n')
+    subprocess.run(['cc','-shared','-fPIC',str(helper),'-o',str(package/'libauthoredhelper.so')],check=True,capture_output=True,timeout=30)
+    helper.unlink()
+    linked=package/'_linked.c'
+    linked.write_text('#include <Python.h>\nextern int authored_helper(void);\n'
+        'static PyObject* helped(PyObject* s,PyObject* a){return PyLong_FromLong(authored_helper());}\n'
+        'static PyMethodDef methods[]={{"helped",helped,METH_NOARGS,NULL},{NULL,NULL,0,NULL}};\n'
+        'static struct PyModuleDef mod={PyModuleDef_HEAD_INIT,"_linked",NULL,0,methods,NULL,NULL,NULL,NULL};\n'
+        'PyMODINIT_FUNC PyInit__linked(void){return PyModuleDef_Init(&mod);}\n')
+    subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(linked),'-o',str(package/('_linked'+suffix)),
+                    '-L'+str(package),'-lauthoredhelper','-Wl,-rpath,$ORIGIN'],check=True,capture_output=True,timeout=30)
+    linked.unlink()
     return sorted(p for p in package.iterdir() if p.is_file())

@@ -294,7 +294,8 @@ def run(admission):
     assert len(admission._dependencies.distributions)==1 and admission._reg['runtime']['python_version']=='3.11.15'
     import numpy,torch,mujoco,gymnasium
     if MODE=='dispatch':
-        import authoredcy._creator,authoredcy._fused,authoredcy._tools
+        import authoredcy._creator,authoredcy._fused,authoredcy._tools,authoredcy._linked
+        assert authoredcy._linked.helped()==51
     if MODE=='spawn':
         import subprocess
         try:subprocess.run(['/bin/true'])

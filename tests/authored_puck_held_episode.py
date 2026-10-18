@@ -182,6 +182,8 @@ def run(admission):
     import numpy, torch, torch.utils, mujoco, gymnasium, scipy.linalg  # noqa: F401  (observed packages and roster parents)
     import authoredcy._creator, authoredcy._fused  # noqa: F401  (a shared cache module extended by a later producer)
     import authoredcy._tools  # noqa: F401  (an extension registering itself under its bare name)
+    import authoredcy._linked  # an extension needing a packaged helper through RUNPATH $ORIGIN
+    assert authoredcy._linked.helped() == 51
     admission.recheck()
     episode = copy.deepcopy(admission._reg['episode'])
     defect = AUTHORED_DEFECT

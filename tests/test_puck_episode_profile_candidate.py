@@ -138,6 +138,8 @@ def evidence(monkeypatch):
         path=parent.ROLES['native_metadata' if role=='native' else role]
         pins[path]=dict(path=path,size_bytes=len(raws[role]),sha256=sha(raws[role]))
     monkeypatch.setattr(parent,'required_inputs',lambda:[pins[p] for p in sorted(pins)])
+    # The authored site paths are not real files; static ELF origin review is specified separately below.
+    monkeypatch.setattr(m,'native_origin_rows',lambda rows,modules,files,site:rows,raising=False)
     monkeypatch.setattr(parent,'ENVIRONMENT',dict(parent.ENVIRONMENT,PYGLFW_LIBRARY=SITE+'/glfw/x11/libglfw.so'))
     config=parent.configuration(authored_sources(parent));raws['configuration']=pretty(config)
     worker=next(r['sha256'] for r in config['sources'] if r['path']==parent.WORKER)
@@ -276,3 +278,34 @@ def test_export_paths_cross_regular_modules_by_name_and_end_at_a_recorded_edge()
     assert not m.export_reached(dict(export,attributes=['numpy','_C','_autograd']),rows)
     rows['torch._C._autograd']['exports']=[dict(producer='torch.fft',attribute='_autograd')]
     assert not m.export_reached(export,rows)
+
+
+def test_native_origin_rows_follow_static_origin_dependencies(tmp_path):
+    # scipy.special._ufuncs needs libsf_error_state.so through RUNPATH $ORIGIN, which a leaf-FD
+    # load (/proc/self/fd/N) cannot resolve: such extensions need the held-directory origin.
+    import subprocess,sysconfig
+    m=api();site=tmp_path/'site';(site/'pkg/sub').mkdir(parents=True);(site/'pkg.libs').mkdir()
+    def cc(source,target,*flags):
+        c=tmp_path/(Path(target).name+'.c');c.write_text(source)
+        subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),'-o',str(site/target),*flags],
+                       check=True,capture_output=True,timeout=30)
+    cc('int helper(void){return 1;}\n','pkg/libhelper.so')
+    cc('int other(void){return 2;}\n','pkg.libs/libother.so')
+    ext='#include <Python.h>\nPyMODINIT_FUNC PyInit_{0}(void){{return NULL;}}\n'
+    cc(ext.format('_local')+'extern int helper(void);int use(void){return helper();}\n','pkg/_local.so',
+       '-L'+str(site/'pkg'),'-lhelper','-Wl,-rpath,$ORIGIN')
+    cc(ext.format('_sibling')+'extern int other(void);int use(void){return other();}\n','pkg/sub/_sibling.so',
+       '-L'+str(site/'pkg.libs'),'-lother','-Wl,-rpath,$ORIGIN/../../pkg.libs')
+    cc(ext.format('_plain'),'pkg/_plain.so')
+    cc(ext.format('_absolute')+'extern int helper(void);int use(void){return helper();}\n','pkg/_absolute.so',
+       '-L'+str(site/'pkg'),'-lhelper','-Wl,-rpath,'+str(site/'pkg'))
+    files=[dict(path=p.relative_to(site).as_posix(),size_bytes=p.stat().st_size,sha256=sha(p.read_bytes()))
+           for p in sorted(site.rglob('*')) if p.is_file()]
+    modules=[dict(name='pkg.'+n,root_index=0,path='pkg/'+n+'.so',kind='extension',is_package=False) for n in ('_absolute','_local','_plain')]
+    modules+=[dict(name='pkg.sub._sibling',root_index=0,path='pkg/sub/_sibling.so',kind='extension',is_package=False),
+              dict(name='pkg',root_index=0,path='pkg/__init__.py',kind='python',is_package=True)]
+    template=[dict(name='pkg._plain',policy='held-directory-observed-v1')]
+    assert m.native_origin_rows(template,modules,files,str(site))==[dict(name='pkg._local',policy='held-directory-observed-v1'),
+        dict(name='pkg._plain',policy='held-directory-observed-v1'),dict(name='pkg.sub._sibling',policy='held-directory-observed-v1')]
+    (site/'pkg/_local.so').write_bytes((site/'pkg/_local.so').read_bytes()+b'\0')
+    with pytest.raises(ValueError):m.native_origin_rows(template,modules,files,str(site))
