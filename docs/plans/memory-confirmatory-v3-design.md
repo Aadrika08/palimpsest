@@ -33,9 +33,13 @@ The [completed terminal attribution](../reports/memory-terminal-attribution.md)
 now establishes FOV-only exit loss at tick 880: -90.890360 degrees, 0.452448 m,
 no occlusion, after exit selection at 864 and visibility through 879. This is
 travel visibility loss in one retained own branch, not proof of a geometry or
-controller repair. The next feasibility gate must cover continued target
-visibility during null route-z travel; arrival-only successor checks are
-insufficient. This observation supplies no new native allocation or sham audit.
+controller repair. The next matrix must retain null/direct-route-z coverage and
+its audited visibility failures; arrival-only successor checks do not qualify
+that travel. This does not introduce an all-success/all-visible prerequisite for
+scored arms. The existing prerequisites require success only in their declared
+open-route/retreat/acquisition/restore cells. A scored natural failure remains a
+900 outcome, and harmful transfer may be a valid scientific result. This
+observation supplies no new native allocation or sham audit.
 
 ## Conditions, resources and common fork
 
@@ -174,6 +178,18 @@ and acceptable null-cost/success-loss margins require prospective justification
 from new development evidence; this pilot cannot supply them. No significance,
 equivalence or useful-null claim follows merely from failure to detect a benefit.
 
+### Prospective analysis amendment, 8 October 2026
+
+The later [analysis contract](memory-family-analysis-v3.md) supersedes only the
+timing in the preceding paragraph and stage 2 below. It freezes the estimator,
+48-family phase size, utility margins, complete owner order, exact decision table,
+and precision screen before development. This avoids choosing an analysis after
+seeing development means. Development may evaluate technical gates and the fixed
+four-endpoint precision screen; it cannot change the estimator, margins, family
+count, ordering, or held-out rule. A failed screen ends this design rather than
+authorizing adaptation. The pilot still supplies no variance, sample size, or
+threshold, and every other evidence boundary in this document remains binding.
+
 ## Splits, gates and finite stages
 
 Preserve the historical U/E inputs and provenance; no refitting in this proposal.
@@ -193,8 +209,8 @@ relabel v1 reserved seeds or development records as v3 held-out evidence.
    families, fallback profiles or corrective studies. Qualify affected source/
    profile/snapshot/sensing paths; unchanged old prerequisites are not rerun for
    appearances, and changed scientific paths do not inherit their qualification.
-   Collect all nine conditions and natural failures; review feasibility and
-   variance before committing the confirmatory sample count and analysis.
+   Collect all nine conditions and natural failures, then evaluate the already
+   fixed four-endpoint precision gate before permitting held-out registration.
 3. **One held-out phase:** separately freeze/register only after mandatory
    development gates pass. Execute the entire predeclared matrix within its own
    finite allocation, without tuning, case substitution or post-result extensions.

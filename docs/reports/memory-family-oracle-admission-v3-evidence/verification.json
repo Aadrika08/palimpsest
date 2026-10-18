@@ -1,0 +1,50 @@
+{
+  "schema": "memory-family-oracle-admission-v3-verification",
+  "version": 1,
+  "date": "2026-10-08",
+  "base_commit": "e100275fa76bbd516727985e356ced85cf974ab6",
+  "implementation_commit": "a469dc07384974d3bac4ab9b7f0ef8e42ce6564b",
+  "branch": "research/memory-family-oracle-raw-adapter",
+  "native_owners_started": 0,
+  "model_runs": 0,
+  "qualification_claims": [],
+  "tests": [
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_memory_family_oracle_admission_v3.py tests/test_snapshots.py::SnapshotContainerParsing::test_duplicate_metadata_key_rejected",
+      "result": "16 passed in 3.54s"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_memory_family_oracle_admission_v3.py tests/test_memory_family_oracle_v3.py",
+      "result": "20 passed in 68.09s",
+      "executor": "independent read-only reviewer"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_memory_family_oracle_admission_v3.py tests/test_memory_family_oracle_v3.py tests/test_memory_family_world.py tests/test_memory_family_runtime.py tests/test_memory_family_slots.py tests/test_memory_decision.py tests/test_memory_task.py tests/test_memory_experiment.py tests/test_snapshots.py tests/test_artifacts.py tests/test_replay.py -k 'not FlynnContinuation'",
+      "result": "139 passed, 7 skipped, 4 deselected in 89.62s"
+    },
+    {
+      "command": ".venv/bin/python -m py_compile scripts/memory_family_oracle_admission_v3.py tests/test_memory_family_oracle_admission_v3.py src/palimpsest/snapshots.py tests/test_snapshots.py",
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "sha256": {
+    "scripts/memory_family_oracle_admission_v3.py": "7c66428e9940378d3f97d76c44acff0ef39bea4f639a80f26587e6be5d7c2a0f",
+    "tests/test_memory_family_oracle_admission_v3.py": "27aef4b39539521e77574fd2ee849d108de788242320a7b5454f76d157b82a5d",
+    "src/palimpsest/snapshots.py": "129b71b1b7a8e9661a3f33f7e43863a24f9639c00240efd9f80d0e269bf12308",
+    "tests/test_snapshots.py": "68c803bb73dcb7616d5f4ad5fbbc45e3c15243ad2919eff9a6002d2f87bc0a27",
+    "docs/plans/memory-family-oracle-admission-v3.md": "3b618c2b0726c6b54d55bbca4c5cc3c03e0c4382683739fa4963a6a6c4b90ed2"
+  },
+  "limits": [
+    "synthetic temporary recordings only",
+    "no version-3 producer registration or owner/cleanup receipts",
+    "no immutable producer close",
+    "no native owner or model run",
+    "no development or held-out collection",
+    "no physical rover evidence",
+    "CI excluded by instruction"
+  ]
+}

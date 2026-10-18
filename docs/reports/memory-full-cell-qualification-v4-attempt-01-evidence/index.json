@@ -1,0 +1,78 @@
+{
+  "attempt": 1,
+  "claims": {
+    "family_admission": false,
+    "pruning_authorized": false,
+    "qualification_claims": []
+  },
+  "diagnostic": {
+    "independent_runtime_hash_seconds": 0.026286,
+    "independent_runtime_read_max_bytes": 33554432,
+    "independent_runtime_read_max_seconds": 60,
+    "mismatches": [
+      {
+        "frozen_max_bytes": 1048576,
+        "frozen_size_bytes": null,
+        "is_regular": true,
+        "matches_original_sha256": true,
+        "nlink": 1,
+        "observed_sha256": "572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a",
+        "observed_size_bytes": 21662864,
+        "path": "python3.11",
+        "role": "runtime"
+      }
+    ],
+    "registered_descriptors_checked": 226
+  },
+  "external_exit_code": 1,
+  "external_wall_observation_upper_seconds": 31.003,
+  "files": [
+    {
+      "path": "attempt.json",
+      "sha256": "714e1695c80b2bc17746e124719103469ee30e550de0b3445575b81303237630",
+      "size_bytes": 180
+    },
+    {
+      "path": "failure.json",
+      "sha256": "3a89969786f7b34198cc36275aade56f071a16dedf5be187c0b0e34c768c81a7",
+      "size_bytes": 192
+    },
+    {
+      "path": "outer/stderr.log",
+      "sha256": "14bab38cbc1f7c37ad31a3d247aa20c9c006e171c2db777717c353ade31dd01c",
+      "size_bytes": 1713
+    },
+    {
+      "path": "outer/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "outer-failure.json",
+      "sha256": "2b17e8713ac96a3c394901c06aaaef880e7cf026b139e2423638baf18de8f306",
+      "size_bytes": 192
+    },
+    {
+      "path": "parent-started.json",
+      "sha256": "1039b6f0a846b7bdf9a06221d00bfec1dab37fddd2d587841c9a0843a5fcad06",
+      "size_bytes": 58
+    },
+    {
+      "path": "supervisor.json",
+      "sha256": "a45def06ca83dbcc63e040e8daa9623f36b148b1f1c3dfd0b62a7737ee8aa92d",
+      "size_bytes": 182
+    }
+  ],
+  "freeze_sha256": "9bba5a4a4fdd980ab2022d7ef0813aa4b2fa6a2c26c6ce86fead7110ad624c82",
+  "model_inference_calls": 0,
+  "native_owners": 0,
+  "next_attempt_authorized": false,
+  "original_output_bytes": 2517,
+  "physics_steps": 0,
+  "recorded_sampled_peak_rss_bytes": 54091776,
+  "recorded_supervision_elapsed_seconds": 1.605572235,
+  "schema": "memory-full-cell-qualification-v4-failed-attempt-evidence",
+  "source_commit": "59270515f93a9c93820cb105fb5dec82e9744d4a",
+  "status": "failed-consumed-before-numerical-worker",
+  "worker_started": false
+}

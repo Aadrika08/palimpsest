@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-replay-custody-v4/scripts/qualify_memory_full_cell_v4.py", line 677, in <module>
+    main()
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-replay-custody-v4/scripts/qualify_memory_full_cell_v4.py", line 620, in main
+    return _parent(freeze, args, job)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-replay-custody-v4/scripts/qualify_memory_full_cell_v4.py", line 578, in _parent
+    inputs = _held_inputs(freeze, deadline, stack)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-replay-custody-v4/scripts/qualify_memory_full_cell_v4.py", line 160, in _held_inputs
+    return {role: stack.enter_context(HeldReplayFiles(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-replay-custody-v4/scripts/qualify_memory_full_cell_v4.py", line 160, in <dictcomp>
+    return {role: stack.enter_context(HeldReplayFiles(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 517, in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-replay-custody-v4/scripts/memory_family_replay_custody_v4.py", line 256, in __enter__
+    raise ValueError('Replay leaf type, alias count or size differs')
+ValueError: Replay leaf type, alias count or size differs

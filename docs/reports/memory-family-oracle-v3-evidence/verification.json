@@ -1,0 +1,54 @@
+{
+  "schema": "memory-family-oracle-v3-verification-v1",
+  "date": "2026-10-08",
+  "base_commit": "35f6a792a226c72290a77b78c72be603167126d0",
+  "plan_commit": "48f135b2ab7b741318d2525b23d24717970bf5d5",
+  "plan_amendment_commit": "451a222cc4e6e7461ef0f62a1bbe6608d17f4229",
+  "implementation_commit": "46b8488f2a980b88186880c92c8135979c3f5df3",
+  "claim": "pure-oracle-admission-software-only",
+  "native_owners": 0,
+  "physics_steps": 0,
+  "model_runs": 0,
+  "real_record_sets_admitted": 0,
+  "scientific_observations_read": 0,
+  "held_out_blocks_selected": 0,
+  "study_allocation_granted": false,
+  "coverage": {
+    "family_rows": 48,
+    "case_kinds": 3,
+    "cases": 144,
+    "change_singleton_gold": 48,
+    "null_or_no_event_empty_gold": 96,
+    "registered_schedules": 2,
+    "closure_sides": 2,
+    "non_oracle_conditions_rejecting_proof": 8
+  },
+  "tests": {
+    "focused_oracle": {"passed": 5, "skipped": 0, "seconds": 64.66},
+    "affected_regression": {"passed": 92, "skipped": 0, "seconds": 81.08},
+    "py_compile": true,
+    "diff_check": true,
+    "full_repository_suite_run": false,
+    "ci_run": false
+  },
+  "review": {
+    "independent_boundary_review": true,
+    "engine_contract_parity_review": true,
+    "test_quality_review": true,
+    "follow_up_critical": 0,
+    "follow_up_important": 0
+  },
+  "source_sha256": {
+    "scripts/memory_family_oracle_v3.py": "f7f45d9f19df9dd5830bcbf1c436ebfed3029657e8a568e87e2fd37469dcc42a",
+    "tests/test_memory_family_oracle_v3.py": "aba6b19a7debc39adf0cbb04de68a1317b7d6d262ce14c3c47f3d6b7bf266528",
+    "docs/plans/memory-family-oracle-v3.md": "a4fd09250917aca0e07a3a3f659b8f587a6427cf0fa07257abe32625db44d6a0"
+  },
+  "deferred": [
+    "raw recording/report/snapshot/history checksum validation",
+    "owner and manifest validation",
+    "source identity and namespace inventory",
+    "native allocation and physics execution",
+    "development result and held-out selection",
+    "scientific qualification"
+  ]
+}
