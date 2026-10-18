@@ -5,9 +5,12 @@ compatibility read (all src/palimpsest/*.py, pyproject.toml, uv.lock and the
 model manifest) plus the four fly-gym modules and the checker model XML that
 the manual environment loads, each under its real import name.
 """
+import json
 from pathlib import Path
 
 import pytest
+
+import frozen_pins
 
 from test_puck_cpu_held_parent import api
 
@@ -25,8 +28,10 @@ def rows(paths):
 
 
 def test_episode_closure_registers_every_runtime_read_and_nothing_else():
-    m=api()
-    palimpsest=sorted('src/palimpsest/'+p.name for p in (ROOT/'src/palimpsest').glob('*.py'))
+    # The closure is frozen with allocation 16's source commit (its evidence index), not main's
+    # current src/palimpsest, which grew after integration (docs/plans/frozen-source-pins-after-integration.md).
+    m=api();commit=json.loads((ROOT/'docs/reports/puck-cpu-held-episode-16/evidence-index.json').read_bytes())['source_commit']
+    palimpsest=frozen_pins.files_at(commit,'src/palimpsest','.py')
     assert list(m.EPISODE_WORKER_SOURCES)==sorted([m.BOOTSTRAP,*palimpsest,*UPSTREAM,*DATA])
     assert {'src/palimpsest/doctor.py','src/palimpsest/evaluate.py','src/palimpsest/puck_held_episode.py',
             'src/palimpsest/held_provenance.py','src/palimpsest/puck_worker_preflight.py'}<=set(m.EPISODE_WORKER_SOURCES)
