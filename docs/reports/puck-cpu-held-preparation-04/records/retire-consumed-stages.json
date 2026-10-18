@@ -1,0 +1,84 @@
+{
+  "at_utc": "2026-10-18T10:47:43.661677+00:00",
+  "boot_id": "7f875223-b4cf-421e-b04d-81e3c1f19460",
+  "census": {
+    "path": "runs/palimpsest-prep04-tools/retire-consumed-stages-census.json",
+    "sha256": "51381eb3d8a851eeabbfe888c0a00aea8f5bc85b1a6a4c99c4add537a6e2307b",
+    "size_bytes": 10754432
+  },
+  "kind": "palimpsest-prep04-consumed-stage-retirement-v1",
+  "outputs_untouched": [
+    {
+      "ctime_ns": 1792202523976335562,
+      "device": 56,
+      "directory": true,
+      "exists": true,
+      "inode": 27531034,
+      "mode": 16832,
+      "mtime_ns": 1792202523976335562,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-02"
+    },
+    {
+      "ctime_ns": 1792222029962860011,
+      "device": 56,
+      "directory": true,
+      "exists": true,
+      "inode": 27580920,
+      "mode": 16832,
+      "mtime_ns": 1792222029962860011,
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-preparation-03"
+    }
+  ],
+  "stages": [
+    {
+      "census": {
+        "census_sha256": "4db2cc9647eaa8eaae6397859acf280bd3dac522632b76f7446ea1288301fceb",
+        "directories": 2081,
+        "entries": 29336,
+        "file_bytes": 1318494346,
+        "files": 27255,
+        "other": 0,
+        "symlinks": 0
+      },
+      "identity": {
+        "ctime_ns": 1792202510972139931,
+        "device": 55,
+        "directory": true,
+        "exists": true,
+        "inode": 10398,
+        "mode": 16832,
+        "mtime_ns": 1792202510972139931,
+        "path": "/tmp/palimpsest-puck-cpu-held-02"
+      },
+      "path": "/tmp/palimpsest-puck-cpu-held-02",
+      "result_sha256": "4ef13965e6f312a0bcdef9c49e57190f6a9526988f20f1959357bcc31400e0d4",
+      "status": "RETIRED"
+    },
+    {
+      "census": {
+        "census_sha256": "4db2cc9647eaa8eaae6397859acf280bd3dac522632b76f7446ea1288301fceb",
+        "directories": 2081,
+        "entries": 29336,
+        "file_bytes": 1318494346,
+        "files": 27255,
+        "other": 0,
+        "symlinks": 0
+      },
+      "identity": {
+        "ctime_ns": 1792222014167700783,
+        "device": 55,
+        "directory": true,
+        "exists": true,
+        "inode": 43108,
+        "mode": 16832,
+        "mtime_ns": 1792222014167700783,
+        "path": "/tmp/palimpsest-puck-cpu-held-03"
+      },
+      "path": "/tmp/palimpsest-puck-cpu-held-03",
+      "result_sha256": "c7e6c0e8baf8daf2d221b5a3510cd586fedc50de71c3bd2b21cc8c36e79dfebf",
+      "status": "RETIRED"
+    }
+  ],
+  "tmpfs_free_bytes_after": 5688090624,
+  "tmpfs_free_bytes_before": 2912657408
+}
