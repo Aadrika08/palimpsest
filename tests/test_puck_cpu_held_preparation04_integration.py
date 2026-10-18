@@ -48,20 +48,23 @@ def episode_project(tmp_path):
         limitations=[AUTHORED]))
     linked=('inventory','layout','native','baseline','accepted_result','accepted_snapshot','accepted_audit',
             'accepted_configuration','accepted_index')
-    put('observation_configuration',dict(kind='puck-cpu-runtime-characterization-v3',version=3,
+    sources=[dict(path=name,size_bytes=len(raw),sha256=digest(raw))
+             for name in api.PREPARATION04_SOURCES for raw in ((root/name).read_bytes(),)]
+    put('observation_configuration',dict(kind='puck-cpu-runtime-characterization-v3',version=3,sources=sources,
         roles={('native_metadata' if r=='native' else r):inputs[r]['path'] for r in linked},
         inputs=[inputs[r] for r in linked],expected_versions=dict(api.EPISODE_VERSIONS),authored_scope=AUTHORED))
     images=[dict(path=p) for p in sorted(nine+[api.PYTHON]+[p for p in LEAVES if 'EGL' not in p])]
     for role,phase in (('observation_report','source'),('observation_replay_report','replay')):
         put(role,dict(api.CLAIMS,kind='puck-episode-characterization-result-v1',version=1,status='observed',phase=phase,
             versions=dict(api.EPISODE_VERSIONS),expected_versions=dict(api.EPISODE_VERSIONS),
-            baseline_maps=dict(images=images),authored_scope=AUTHORED))
+            baseline_maps=dict(images=images),import_misses=['org'],authored_scope=AUTHORED))
     put('observation_result',dict(api.CLAIMS,kind='puck-cpu-characterization-outcome-v3',version=3,status='observed',
         versions=dict(api.EPISODE_VERSIONS),configuration_sha256=inputs['observation_configuration']['sha256'],
         source_report_sha256=inputs['observation_report']['sha256'],
         replay_report_sha256=inputs['observation_replay_report']['sha256'],authored_scope=AUTHORED))
     shas={role:inputs[role]['sha256'] for role in ('observation_configuration','observation_result','observation_report','observation_replay_report')}
     put('observation_audit',dict(kind='cpu-episode-characterization-outcome-audit-v1',status='PASS',authored_scope=AUTHORED,
+        auditor_source_sha256=api.CHARACTERIZATION04_AUDITOR_SHA256,
         verified=dict(configuration_sha256=shas['observation_configuration'],result_sha256=shas['observation_result'],
             source_report_sha256=shas['observation_report'],replay_report_sha256=shas['observation_replay_report'])))
     put('observation_index',dict(kind='cpu-episode-characterization-evidence-index-v1',authored_scope=AUTHORED,
@@ -72,10 +75,8 @@ def episode_project(tmp_path):
         characterization_configuration_sha256=shas['observation_configuration'],
         observation_reports=dict(source=shas['observation_report'],replay=shas['observation_replay_report']),
         observation_result_sha256=shas['observation_result'],outcome_audit_sha256=inputs['observation_audit']['sha256'],
-        native_metadata_sha256=inputs['native']['sha256'])
+        native_metadata_sha256=inputs['native']['sha256'],import_misses=['org'])
     put('candidate',candidate)
-    sources=[dict(path=name,size_bytes=len(raw),sha256=digest(raw))
-             for name in api.PREPARATION04_SOURCES for raw in ((root/name).read_bytes(),)]
     return root,api,inputs,sources
 
 

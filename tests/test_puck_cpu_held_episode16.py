@@ -36,8 +36,11 @@ def qualifier():
     return load(ROOT/'scripts/qualify_puck_cpu_held_runtime.py','episode16_qualifier_fixture')
 
 
+EMPTY=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+
+
 def config(m,q):
-    sources=sorted([dict(path=p,size_bytes=0 if p.endswith('fly-gym/core/__init__.py') else 1,sha256='a'*64)
+    sources=sorted([dict(path=p,size_bytes=0 if p in EMPTY else 1,sha256='a'*64)
                     for p in [*q.PREPARATION04_SOURCES,m.PARENT]],key=lambda r:r['path'])
     inputs={role:dict(path='docs/authored-'+role+'.json',size_bytes=1,sha256='b'*64) for role in q.PREPARATION04_INPUT_ROLES}
     acceptance=dict(configuration=dict(path='authored-prepare04-configuration.json',size_bytes=1,sha256='c'*64),
@@ -70,7 +73,7 @@ def test_exact_configuration_is_admitted():
 
 @pytest.mark.parametrize('defect',['kind','bool-version','stage03','limits','glfw-site','egl-path','torchvision',
     'roster','hidden','run-ids-equal','run-ids-char04','run-id-shape','no-parent','extra-source','no-replay-role',
-    'acceptance-path','authority','extra-key'])
+    'acceptance-path','authority','extra-key','empty-source'])
 def test_configuration_refuses_drift(defect):
     m=api();q=qualifier();value=config(m,q)
     if defect=='kind':value['kind']='puck-cpu-held-runtime-allocation-v16'
@@ -90,6 +93,7 @@ def test_configuration_refuses_drift(defect):
     elif defect=='no-replay-role':value['inputs'].pop('observation_replay_report')
     elif defect=='acceptance-path':value['preparation_acceptance']['result']['path']='runs/puck-cpu-held-preparation-03/result.json'
     elif defect=='authority':value['claims']['runtime_qualified']=True
+    elif defect=='empty-source':next(r for r in value['sources'] if r['path']=='src/palimpsest/__init__.py')['size_bytes']=0
     else:value['phase']='qualify'
     with pytest.raises(ValueError):m.validate_configuration(value,q)
 
@@ -132,7 +136,7 @@ def receipt(m,value,phase,registration_raw,dependency_raw,dependencies):
 
 
 @pytest.mark.parametrize('defect',[None,'spawn','phase','hidden','denied','short','diverged','renderer','torchvision',
-    'registration','claims','bundle-size'])
+    'registration','claims','bundle-size','publication'])
 def test_receipt_validation_requires_a_clean_complete_episode(defect):
     m=api();q=qualifier();value=config(m,q);dependencies=dict(roots=[dict(files=[dict(size_bytes=2)])],import_profile=dict(native_cache=[]))
     phase='replay' if defect=='diverged' else 'source';registration_raw=b'{"registration":1}';dependency_raw=b'{"dependencies":1}'
@@ -148,6 +152,7 @@ def test_receipt_validation_requires_a_clean_complete_episode(defect):
     elif defect=='registration':item['registration_sha256']='0'*64
     elif defect=='claims':entry['executable']=True
     elif defect=='bundle-size':entry['bundle']['size_bytes']=16*1024**2+1
+    elif defect=='publication':item['dependencies']['published_export_modules']=[dict(name='torch._C._autograd')]
     if defect is None:m.validate_receipt(item,value,phase,registration_raw,dependency_raw,dependencies)
     else:
         with pytest.raises(ValueError):m.validate_receipt(item,value,phase,registration_raw,dependency_raw,dependencies)
@@ -194,3 +199,19 @@ def test_every_characterized_miss_must_be_declared_before_reservation():
     for misses in (['authored_undeclared_optional'],['org','requests']):
         with pytest.raises(ValueError,match='undeclared'):m.require_declared_misses(dict(import_misses=misses))
     with pytest.raises(ValueError):m.require_declared_misses(dict())
+
+
+def test_real_parents_and_auditors_refuse_authored_acceptance_unless_a_test_clone_opts_in():
+    m=api();auditor=load(ROOT/'scripts/audit_puck_cpu_held_episode.py','episode16_auditor_flag')
+    assert m.AUTHORED_PREPARATION is False and auditor.AUTHORED_TRANSPORT is False
+
+
+def test_published_export_creators_must_match_the_held_profile():
+    m=api();q=qualifier();value=config(m,q);registration_raw=b'{"registration":1}';dependency_raw=b'{"dependencies":1}'
+    publication=dict(name='torch._C._autograd',producer='torch.autograd',phase='module_exec_publish',attributes=['torch','_C','_autograd'],
+                     class_binding=None,delegate_attributes=['a'])
+    dependencies=dict(roots=[dict(files=[dict(size_bytes=2)])],import_profile=dict(native_cache=[],exports=[publication]))
+    item=receipt(m,value,'source',registration_raw,dependency_raw,dependencies)
+    with pytest.raises(ValueError):m.validate_receipt(item,value,'source',registration_raw,dependency_raw,dependencies)
+    item['dependencies']['published_export_modules']=[{k:publication[k] for k in ('name','producer','phase','attributes','delegate_attributes')}]
+    m.validate_receipt(item,value,'source',registration_raw,dependency_raw,dependencies)

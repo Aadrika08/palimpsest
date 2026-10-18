@@ -136,3 +136,12 @@ def test_committed_metadata06_is_a_valid_v6_episode_selection(tmp_path):
     command=sandbox_command(BASELINE,document,BASE_PATHS,phase='episode-source',command=[PYTHON,'-I'],
         environment={'HOME':'/scratch/home'},source_files=['scripts/puck_worker_bootstrap.py'],**paths)
     assert ['--symlink','libEGL_mesa.so.0.0.0','/usr/lib/libEGL_mesa.so.0'] in [command[i:i+3] for i in range(len(command)-2)]
+
+
+@pytest.mark.parametrize('leaf',['/usr/lib/libc.so.6','/usr/lib/ld-linux-x86-64.so.2','/usr/lib/libm.so.6'])
+def test_a_dynamic_leaf_cannot_be_an_original_baseline_path(leaf):
+    data=v6_case();native=data['native']
+    if leaf not in {r['path'] for r in native['native_files']}:
+        native['native_files']=sorted(native['native_files']+[big(leaf,MiB)],key=lambda r:r['path'])
+    native['dynamic_leaves']=sorted(native['dynamic_leaves']+[leaf])
+    with pytest.raises(ValueError,match='baseline'):build(data)

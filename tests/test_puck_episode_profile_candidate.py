@@ -17,7 +17,7 @@ import time
 import pytest
 
 from test_puck_cpu_registration import api as registration_api, attach, build, case, staged
-from test_puck_cpu_characterization04 import api as parent_api, authored_sources, report
+from test_puck_cpu_characterization04 import LEAVES, api as parent_api, authored_sources, report
 
 ROOT=Path(__file__).resolve().parents[1]
 SCRIPT=ROOT/'scripts/derive_puck_episode_profile.py'
@@ -123,10 +123,11 @@ def inventory():
 @pytest.fixture
 def evidence(monkeypatch):
     m=api();parent=m.PARENT
-    raws=dict(inventory=pretty(inventory()),template=pretty(template()))
+    raws=dict(inventory=pretty(inventory()),template=pretty(template()),native=pretty(dict(dynamic_leaves=LEAVES)))
     pins={row['path']:row for row in parent.required_inputs()}
-    inventory_path=parent.ROLES['inventory']
-    pins[inventory_path]=dict(path=inventory_path,size_bytes=len(raws['inventory']),sha256=sha(raws['inventory']))
+    for role in ('inventory','native'):
+        path=parent.ROLES['native_metadata' if role=='native' else role]
+        pins[path]=dict(path=path,size_bytes=len(raws[role]),sha256=sha(raws[role]))
     monkeypatch.setattr(parent,'required_inputs',lambda:[pins[p] for p in sorted(pins)])
     monkeypatch.setattr(parent,'ENVIRONMENT',dict(parent.ENVIRONMENT,PYGLFW_LIBRARY=SITE+'/glfw/x11/libglfw.so'))
     config=parent.configuration(authored_sources(parent));raws['configuration']=pretty(config)
@@ -135,7 +136,7 @@ def evidence(monkeypatch):
         value=report(parent,phase,worker_sha=worker)
         value['environment_sha256']=sha(canonical(parent.ENVIRONMENT))
         value['cache']['modules']=cache([module('palimpsest.body_profile','/puck/source/src/palimpsest/body_profile.py')] if phase=='replay' else [])
-        value['import_misses']=['org','scipy._distributor_init_local'] if phase=='source' else ['org']
+        value['import_misses']=['imp','json.tool_missing','org','scipy._distributor_init_local'] if phase=='source' else ['org','pandas']
         value['native_cache_dispatch']=dict(events=[dict(CREATOR),dict(LATER)],unattributed=[],errors=[])
         raws[phase]=canonical(value)
     result=dict(kind='puck-cpu-characterization-outcome-v3',version=3,status='observed',
@@ -151,7 +152,8 @@ def evidence(monkeypatch):
 
 def derive(m,raws,**changes):
     arguments=dict(configuration=raws['configuration'],result=raws['result'],source=raws['source'],
-        replay=raws['replay'],audit=raws['audit'],template=raws['template'],inventory=raws['inventory'],site_root=SITE)
+        replay=raws['replay'],audit=raws['audit'],template=raws['template'],inventory=raws['inventory'],
+        native=raws['native'],site_root=SITE)
     arguments.update(changes)
     return m.derive(**arguments)
 
@@ -177,7 +179,8 @@ def test_derivation_maps_site_modules_and_filters_the_template(evidence):
     assert candidate['retained_inventory_sha256']==sha(raws['inventory'])
     assert candidate['template_sha256']==sha(raws['template'])
     assert candidate['native_metadata_sha256']=='48ca37b1c45366bcd53ac195277ade6236537f89a720b50591906764eaf72569'
-    assert candidate['import_misses']==['org','scipy._distributor_init_local']
+    # 3.11 stdlib names (imp, json.*) are not misses; every other miss is a declared absent or hidden name.
+    assert candidate['import_misses']==['org','pandas','scipy._distributor_init_local']
     assert candidate['additional_package_inputs']==template()['additional_package_inputs']
     assert all(candidate[k] is False for k in ('native_phase_qualified','held_runtime_qualified','native_authorized',
         'collection_authorized','study_authorized','executable')) and candidate['qualification_claims']==[]
@@ -193,7 +196,7 @@ def test_derivation_writes_once(evidence,tmp_path):
 
 @pytest.mark.parametrize('defect',['result-failed','result-config','report-spawn','report-sha','audit-failed','audit-result',
     'outside-site','unlisted-source','generated-helper','phase-conflict','unmapped-site-file','config-sha','site-root',
-    'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache'])
+    'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss','native-pin'])
 def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
     m,raws=evidence;changes={}
     def edit(name,function,encode=canonical):
@@ -214,10 +217,12 @@ def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
     elif defect=='dispatch-absent':edit('replay',lambda v:v['native_cache_dispatch'].update(events=[]))
     elif defect=='dispatch-unlisted-cache':edit('source',lambda v:v['native_cache_dispatch']['events'].append(
         dict(LATER,cache='_cython_other',added=['x'],first=True)))
+    elif defect=='undeclared-miss':edit('source',lambda v:v['import_misses'].append('requests'))
+    elif defect=='native-pin':changes['native']=pretty(dict(dynamic_leaves=LEAVES[:1]))
     elif defect=='config-sha':changes['configuration']=raws['configuration'][:-1]+b' \n'
     else:changes['site_root']='/other/site'
     if defect in ('report-spawn','report-sha','outside-site','unlisted-source','generated-helper','phase-conflict','unmapped-site-file',
-                  'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache'):
+                  'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss'):
         name='replay' if defect in ('phase-conflict','dispatch-absent') else 'source'
         result=json.loads(raws['result']);result[name+'_report_sha256']=sha(changes[name]);changes['result']=pretty(result)
         audit=json.loads(raws['audit']);audit['verified'][name+'_report_sha256']=sha(changes[name])

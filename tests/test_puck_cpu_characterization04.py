@@ -33,6 +33,11 @@ REPORT_KIND='puck-episode-characterization-result-v1'
 FAKE_RESULT_KIND='puck-held-public-episode-result-v1'
 
 
+def load(path,name):
+    spec=importlib.util.spec_from_file_location(name,path)
+    value=importlib.util.module_from_spec(spec);spec.loader.exec_module(value);return value
+
+
 def api():
     assert SCRIPT.is_file(),'characterization-04 parent is missing'
     spec=importlib.util.spec_from_file_location('cpu_episode_parent_fixture',SCRIPT)
@@ -45,8 +50,27 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 def canonical(value):return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
 
 
+EMPTY=('upstream/fly-gym/core/__init__.py','upstream/fly-gym/environment/__init__.py')
+NINE=sorted(['/etc/ld.so.cache','/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11',
+    *('/usr/lib/'+n for n in ('ld-linux-x86-64.so.2','libc.so.6','libdl.so.2','libm.so.6','libpthread.so.0','librt.so.1','libutil.so.1'))])
+LEAVES=['/usr/lib/gconv/gconv-modules.cache','/usr/lib/libEGL_mesa.so.0.0.0','/usr/lib/locale/C.utf8/LC_CTYPE','/usr/lib/locale/locale-archive']
+
+
 def authored_sources(m):
-    return [dict(path=path,size_bytes=0 if path.endswith('__init__.py') else 1,sha256='a'*64) for path in m.SOURCES]
+    return [dict(path=path,size_bytes=0 if path in EMPTY else 1,sha256='a'*64) for path in m.SOURCES]
+
+
+def test_characterization04_pins_exactly_the_preparation04_sources():
+    m=api();q=load(ROOT/'scripts/qualify_puck_cpu_held_runtime.py','char04_qualifier_sources')
+    a=load(ROOT/'scripts/audit_puck_cpu_held_runtime.py','char04_auditor_sources')
+    assert list(m.SOURCES)==list(q.PREPARATION04_SOURCES)==list(a.PREPARATION04_SOURCES)
+
+
+@pytest.mark.parametrize('path',['src/palimpsest/__init__.py','scripts/characterize_puck_episode_worker.py','pyproject.toml'])
+def test_only_the_two_upstream_initializers_may_be_empty(path):
+    m=api();config=m.configuration(authored_sources(m));m.validate_configuration(config)
+    next(r for r in config['sources'] if r['path']==path)['size_bytes']=0
+    with pytest.raises(ValueError):m.validate_configuration(config)
 
 
 def test_characterization04_identity_is_the_next_characterization():
@@ -200,6 +224,8 @@ def report(m,phase,request_sha='a'*64,worker_sha='b'*64):
             bundle=bundle,**claims)
     images=dict(images=[dict(device='00:1f',inode=7,path='/usr/lib/libLLVM.so.22.1',segments=4,executable=True)],
         map_bytes=100,map_lines=4,persistent_snapshot_only=True,transient_anonymous_jit_closure_qualified=False)
+    baseline=dict(images,images=[dict(device='00:1f',inode=i+1,path=p,segments=1,executable=False)
+                                 for i,p in enumerate(sorted(NINE+LEAVES[:1]+LEAVES[2:]))])
     return dict(kind=REPORT_KIND,version=1,status='observed',phase=phase,request_sha256=request_sha,source_sha256=worker_sha,
         environment_sha256=sha(canonical(m.ENVIRONMENT)),python_version='3.11.15 (main) [authored]',executable_path=m.PYTHON,
         pid=1,ppid=0,runtime_qualified=False,native_authorized=False,collection_authorized=False,study_authorized=False,
@@ -208,18 +234,18 @@ def report(m,phase,request_sha='a'*64,worker_sha='b'*64):
         cache=dict(modules=[dict(name='gymnasium',spec_name='gymnasium',file=str(m.ROOT/m.SITE)+'/gymnasium/__init__.py',
             classification='module',exports=[])],attribute_edges=1,module_objects=1,cache_entries=1,
             export_scope='exceptional_cache_identities'),
-        maps=copy.deepcopy(images),baseline_maps=copy.deepcopy(images),environment_unchanged=True,pycache_unchanged=True,
+        maps=copy.deepcopy(images),baseline_maps=baseline,environment_unchanged=True,pycache_unchanged=True,
         native_cache_dispatch=dict(events=[],unattributed=[],errors=[]),observation_errors=[],seconds=6.5)
 
 
 @pytest.mark.parametrize('phase',['source','replay'])
 def test_report_validation_accepts_the_exact_observation(phase):
-    m=api();m.validate_report(report(m,phase),phase=phase,request_sha256='a'*64,worker_sha256='b'*64)
+    m=api();m.validate_report(report(m,phase),phase=phase,request_sha256='a'*64,worker_sha256='b'*64,dynamic_leaves=LEAVES)
 
 
 @pytest.mark.parametrize('defect',['spawn','spawn-events','short','diverged','compared','torchvision','gl-version','renderer',
     'egl','versions','failed','observation-error','claims','phase','request-sha','worker-sha','environment','bundle-size',
-    'run-id','error-key','slow','dispatch-unattributed','dispatch-error','dispatch-missing'])
+    'run-id','error-key','slow','dispatch-unattributed','dispatch-error','dispatch-missing','baseline-extra','baseline-missing'])
 def test_report_validation_refuses_incomplete_or_unsafe_observation(defect):
     m=api();phase='replay' if defect in ('diverged','compared') else 'source';value=report(m,phase)
     result=value['episode_result']
@@ -246,8 +272,10 @@ def test_report_validation_refuses_incomplete_or_unsafe_observation(defect):
     elif defect=='dispatch-unattributed':value['native_cache_dispatch']['unattributed']=[dict(cache='_cython_x',keys=['late'])]
     elif defect=='dispatch-error':value['native_cache_dispatch']['errors']=[dict(error='dispatch changed or removed')]
     elif defect=='dispatch-missing':value.pop('native_cache_dispatch')
+    elif defect=='baseline-extra':value['baseline_maps']['images'].append(dict(device='00:1f',inode=99,path='/usr/lib/libstray.so',segments=1,executable=True))
+    elif defect=='baseline-missing':value['baseline_maps']['images']=[r for r in value['baseline_maps']['images'] if 'libm.so' not in r['path']]
     else:value['seconds']=float(m.LIMITS['normal_seconds'])
-    with pytest.raises(ValueError):m.validate_report(value,phase=phase,request_sha256='a'*64,worker_sha256='b'*64)
+    with pytest.raises(ValueError):m.validate_report(value,phase=phase,request_sha256='a'*64,worker_sha256='b'*64,dynamic_leaves=LEAVES)
 
 
 # --- real worker over authored packages -------------------------------------

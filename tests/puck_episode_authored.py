@@ -188,13 +188,26 @@ HELD_AUDITOR='scripts/audit_puck_cpu_held_runtime.py'
 ARCHIVE='docs/reports/puck-cpu-characterization-04'
 
 
+EPISODE_AUDITOR='scripts/audit_puck_cpu_held_episode.py'
+
+
 def authored_scale(project):
-    """Patch the qualifier and episode parent clones to the authored preparation roster and RAM floor."""
-    root=project['root']
+    """Patch clones to the authored roster, RAM floor and authored acceptance, then re-pin the patched auditors."""
+    root=project['root'];real=load(ROOT/QUALIFIER,'authored_scale_real_qualifier_'+str(id(project)))
     patch(root,QUALIFIER,[(b"PREPARATION_NEGATIVE_IMPORTS=['numpy._distributor_init_local','org']",b"PREPARATION_NEGATIVE_IMPORTS=['org']"),
         (b"min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB",b'min_available_ram_bytes=128*MiB')])
-    for name in (EPISODE_PARENT,'scripts/audit_puck_cpu_held_episode.py'):
-        if (root/name).exists():patch(root,name,[(b'min_available_ram_bytes=2048*MiB',b'min_available_ram_bytes=128*MiB')])
+    patch(root,EPISODE_PARENT,[(b'min_available_ram_bytes=2048*MiB',b'min_available_ram_bytes=128*MiB'),
+        (b'AUTHORED_PREPARATION=False',b'AUTHORED_PREPARATION=True')])
+    patch(root,EPISODE_AUDITOR,[(b'min_available_ram_bytes=2048*MiB',b'min_available_ram_bytes=128*MiB'),
+        (b'AUTHORED_TRANSPORT=False',b'AUTHORED_TRANSPORT=True')])
+    # The characterization-04 auditor clone is patched, so every clone that pins it is re-pinned, then likewise
+    # the held-runtime auditor clone that now carries that pin.
+    characterization=sha((root/CHAR_AUDITOR).read_bytes())
+    patch(root,HELD_AUDITOR,[(real.CHARACTERIZATION04_AUDITOR_SHA256.encode(),characterization.encode())])
+    held=sha((root/HELD_AUDITOR).read_bytes())
+    patch(root,QUALIFIER,[(real.CHARACTERIZATION04_AUDITOR_SHA256.encode(),characterization.encode()),
+        (real.PREPARATION04_AUDITOR_SHA256.encode(),held.encode())])
+    patch(root,EPISODE_AUDITOR,[(real.PREPARATION04_AUDITOR_SHA256.encode(),held.encode())])
 
 
 def derive_candidate(characterized):
@@ -216,7 +229,8 @@ def derive_candidate(characterized):
         '--configuration',str(root/ARCHIVE/'frozen-configuration.json'),'--result',str(run_root/'result.json'),
         '--source',str(run_root/'payload-source/characterization.json'),'--replay',str(run_root/'payload-replay/characterization.json'),
         '--audit',str(root/ARCHIVE/'outcome-audit-04.json'),'--template',str(root/template['path']),
-        '--inventory',str(root/characterized['inputs']['inventory']['path']),'--site-root',str(characterized['site']),
+        '--inventory',str(root/characterized['inputs']['inventory']['path']),'--native',str(root/characterized['inputs']['native']['path']),
+        '--site-root',str(characterized['site']),
         '--output',str(root/candidate)],root)
     assert code==0,(stdout,stderr)
     raw=(root/candidate).read_bytes()

@@ -61,7 +61,11 @@ def test_preparation04_keeps_preparation_limits_and_roster_but_prepares_the_epis
     assert config['negative_imports']==m.PREPARATION_NEGATIVE_IMPORTS
     assert m.EPISODE_VERSIONS==EPISODE_VERSIONS and config['expected_versions']==EPISODE_VERSIONS
     assert set(config['inputs'])==set(m.INPUT_ROLES)|{REPLAY_ROLE} and REPLAY_ROLE not in m.INPUT_ROLES
-    assert set(m.PREPARATION04_SOURCES)==set(m.SOURCES)|set(m.EPISODE_WORKER_SOURCES)
+    assert set(m.PREPARATION04_SOURCES)==set(m.SOURCES)|set(m.EPISODE_WORKER_SOURCES)|set(m.CHARACTERIZATION04_SCRIPTS)
+    assert m.CHARACTERIZATION04_SCRIPTS==('scripts/admit_puck_retained_installation.py','scripts/characterize_puck_cpu_episode.py',
+        'scripts/characterize_puck_episode_worker.py','scripts/characterize_puck_runtime_imports.py','scripts/install_puck_cpu.py')
+    assert len(m.EPISODE_NEGATIVE_IMPORTS)==42 and m.EPISODE_HIDDEN_IMPORTS==m.QUALIFY11_HIDDEN_IMPORTS
+    assert len(m.STDLIB_311)==305 and {'imp','distutils','json','_sysconfigdata__linux_x86_64-linux-gnu'}&m.STDLIB_311=={'imp','distutils','json'}
     assert list(m.PREPARATION04_SOURCES)==sorted(m.PREPARATION04_SOURCES)
     for key in ('root','interpreter','environment','claims','phase'):assert config[key]==prior[key]
 
@@ -73,7 +77,7 @@ def test_preparation04_accepts_only_its_own_stage_family(stage):
 
 @pytest.mark.parametrize('defect',['stage03','stage03-family','stage-prefix','qualify','v13-version','v13-id','v13-kind',
     'bool-version','bool-id','preparation-key','acceptance-key','limits-clock','limits-q14','torchvision','no-replay-role',
-    'old-sources','roster','extra','empty-nonempty-size'])
+    'old-sources','roster','extra','empty-nonempty-size','empty-palimpsest'])
 def test_preparation04_refuses_aliases_reuse_and_policy_changes(defect):
     m,config,_=preparation04_config()
     if defect=='stage03':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-03'
@@ -94,6 +98,7 @@ def test_preparation04_refuses_aliases_reuse_and_policy_changes(defect):
     elif defect=='old-sources':config['sources']=[dict(path=p,size_bytes=1,sha256='a'*64) for p in m.SOURCES]
     elif defect=='roster':config['negative_imports']=['org']
     elif defect=='extra':config['output']=m.PREPARATION03
+    elif defect=='empty-palimpsest':next(r for r in config['sources'] if r['path']=='src/palimpsest/__init__.py')['size_bytes']=0
     else:next(r for r in config['sources'] if r['path']=='pyproject.toml')['size_bytes']=-1
     with pytest.raises(ValueError):m.validate_configuration(config)
 
@@ -146,18 +151,22 @@ def episode_case():
     entries=[dict(inputs[k],path=v) for k,v in accepted_names.items()]
     next(r for r in entries if r['path']=='raw/configuration.json').update(size_bytes=len(retained),sha256=sha(retained))
     put('accepted_index',dict(kind='retained-admission-02-evidence-index-v1',entries=entries))
-    put('observation_configuration',dict(kind='puck-cpu-runtime-characterization-v3',version=3,
+    sources=[dict(path=p,size_bytes=0 if p in EMPTY else 1,sha256='a'*64) for p in m.PREPARATION04_SOURCES]
+    put('observation_configuration',dict(kind='puck-cpu-runtime-characterization-v3',version=3,sources=sources,
         roles={**{('native_metadata' if k=='native' else k):inputs[k]['path'] for k in ROLES},
                'observation02_configuration':'docs/reports/puck-cpu-characterization-02/frozen-configuration.json'},
         inputs=[inputs[k] for k in ROLES]))
     images=[dict(path=p) for p in sorted(NINE+LOCALE)]
+    misses=dict(source=['json.tool_missing','org','pandas'],replay=['org'])
     for role,phase in (('observation_report','source'),(REPLAY_ROLE,'replay')):
         put(role,dict(m.CLAIMS,kind='puck-episode-characterization-result-v1',version=1,status='observed',phase=phase,
-            versions=dict(EPISODE_VERSIONS),expected_versions=dict(EPISODE_VERSIONS),baseline_maps=dict(images=images)))
+            versions=dict(EPISODE_VERSIONS),expected_versions=dict(EPISODE_VERSIONS),baseline_maps=dict(images=images),
+            import_misses=misses[phase]))
     put('observation_result',dict(m.CLAIMS,kind='puck-cpu-characterization-outcome-v3',version=3,status='observed',
         configuration_sha256=inputs['observation_configuration']['sha256'],versions=dict(EPISODE_VERSIONS),
         source_report_sha256=inputs['observation_report']['sha256'],replay_report_sha256=inputs[REPLAY_ROLE]['sha256']))
     put('observation_audit',dict(kind='cpu-episode-characterization-outcome-audit-v1',status='PASS',
+        auditor_source_sha256=m.CHARACTERIZATION04_AUDITOR_SHA256,
         verified=dict(configuration_sha256=inputs['observation_configuration']['sha256'],
             result_sha256=inputs['observation_result']['sha256'],source_report_sha256=inputs['observation_report']['sha256'],
             replay_report_sha256=inputs[REPLAY_ROLE]['sha256'])))
@@ -170,8 +179,8 @@ def episode_case():
         observation_reports=dict(source=inputs['observation_report']['sha256'],replay=inputs[REPLAY_ROLE]['sha256']),
         observation_result_sha256=inputs['observation_result']['sha256'],outcome_audit_sha256=inputs['observation_audit']['sha256'],
         retained_inventory_sha256=inputs['inventory']['sha256'],native_metadata_sha256=inputs['native']['sha256'],
-        additional_package_inputs=[dict(root='docs/generated',files=[generated])]))
-    config=dict(config,version=15,inputs=inputs)
+        import_misses=['org','pandas'],additional_package_inputs=[dict(root='docs/generated',files=[generated])]))
+    config=dict(config,version=15,inputs=inputs,sources=sources)
     return m,config,blobs
 
 
@@ -186,7 +195,8 @@ def test_preparation04_binds_characterization04_and_candidate02():
 
 @pytest.mark.parametrize('defect',['frozen-kind','frozen-role','index-kind','index-replay','result-replay','result-config',
     'result-failed','report-phase','report-torchvision','replay-status','audit-failed','audit-replay','candidate-kind',
-    'candidate-replay','candidate-native','candidate-result','candidate-torchvision','generated'])
+    'candidate-replay','candidate-native','candidate-result','candidate-torchvision','generated','frozen-sources',
+    'char04-auditor','candidate-misses','undeclared-miss'])
 def test_preparation04_refuses_unbound_characterization04_evidence(defect):
     m,config,blobs=episode_case();inputs=config['inputs']
     def edit(role,function):
@@ -208,6 +218,12 @@ def test_preparation04_refuses_unbound_characterization04_evidence(defect):
     elif defect=='candidate-native':edit('candidate',lambda v:v.update(native_metadata_sha256='0'*64))
     elif defect=='candidate-result':edit('candidate',lambda v:v.update(observation_result_sha256='0'*64))
     elif defect=='candidate-torchvision':edit('candidate',lambda v:v['expected_versions'].update(torchvision='0.24.0+cpu'))
+    elif defect=='frozen-sources':edit('observation_configuration',lambda v:v['sources'][0].update(sha256='0'*64))
+    elif defect=='char04-auditor':edit('observation_audit',lambda v:v.update(auditor_source_sha256='0'*64))
+    elif defect=='candidate-misses':edit('candidate',lambda v:v.update(import_misses=['org']))
+    elif defect=='undeclared-miss':
+        edit('observation_report',lambda v:v['import_misses'].append('requests'))
+        edit('candidate',lambda v:v.update(import_misses=['org','pandas','requests']))
     else:inputs['generated']=dict(inputs['generated'],sha256='0'*64)
     with pytest.raises(ValueError):m.validate_inputs(config,blobs)
 
@@ -249,7 +265,8 @@ def test_the_independent_auditor_accepts_only_the_exact_preparation04_identity()
                    dict(sources=[dict(path=p,size_bytes=1,sha256='a'*64) for p in m.SOURCES]),
                    dict(inputs={k:v for k,v in config['inputs'].items() if k!=REPLAY_ROLE}),
                    dict(sources=sorted(config['sources']+[dict(path='src/palimpsest/zz_unlisted.py',size_bytes=1,sha256='a'*64)],
-                                       key=lambda r:r['path']))):
+                                       key=lambda r:r['path'])),
+                   dict(sources=[dict(r,size_bytes=0) if r['path']=='src/palimpsest/__init__.py' else r for r in config['sources']])):
         with pytest.raises(ValueError):a.configuration(dict(copy.deepcopy(config),**change),False)
 
 
@@ -258,6 +275,8 @@ def test_the_independent_auditor_binds_characterization04_and_candidate02():
     data={role:json.loads(raw) for role,raw in blobs.items() if role!='generated'}
     a.inputs_binding(config,data,blobs)
     for role,change in (('observation_result',dict(replay_report_sha256='0'*64)),('candidate',dict(native_metadata_sha256='0'*64)),
+                        ('observation_audit',dict(auditor_source_sha256='0'*64)),('candidate',dict(import_misses=['org'])),
+                        ('observation_configuration',dict(sources=[])),
                         ('observation_audit',dict(status='FAIL')),('observation_replay_report',dict(phase='source')),
                         ('observation_configuration',dict(kind='puck-cpu-runtime-characterization-v1',version=1))):
         changed=dict(data,**{role:dict(data[role],**change)})
