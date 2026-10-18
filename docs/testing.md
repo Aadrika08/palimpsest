@@ -36,10 +36,10 @@ check; it does not reproduce this environment.
     any `__pycache__` ("Qualification source has unbound bytecode").
   - If a crashed run leaves caches behind, remove them before running again:
     `find src scripts -name __pycache__ -prune -exec rm -rf {} +`.
-- **Two basetemps.**
+- **Three basetemps.**
   - **Pass 1:** every test marked neither `runs_basetemp` nor `tmpfs_basetemp`,
-    with `--basetemp` outside
-    the repository, on the project disk (`~/.cache/palimpsest-pytest/...`).
+    with `--basetemp` outside the repository, on the project disk
+    (`~/.cache/palimpsest-pytest/...`).
     - Allocation tests refuse temporary roots inside the repository: "Allocation
       root overlaps an immutable input".
     - Namespace and bwrap tests refuse `/tmp`, because it overlaps the fixed
