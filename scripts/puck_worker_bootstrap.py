@@ -751,7 +751,7 @@ class HeldWorkerBootstrap:
                 if self._missing_policy_version==5:
                     profile=provider.import_profile()
                     registered=(self._dependencies.modules.keys()|self._dependencies.namespaces.keys()
-                        |{row['name'] for key in ('exports','native_cache') for row in profile.get(key,[])})
+                        |{row['name'] for key in ('exports','native_cache','module_aliases') for row in profile.get(key,[])})
                     for hidden in self._hidden_imports:
                         if any(name==hidden or name.startswith(hidden+'.') for name in registered):
                             raise ValueError('Hidden import overlaps a registered dependency module, namespace or export: '+hidden)

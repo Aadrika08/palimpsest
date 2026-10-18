@@ -193,7 +193,7 @@ class DependencyImports:
         self._binding_receiver=self.bindings; self._provider_receiver=provider
         self.native_origins={v['name']:v['policy'] for v in profile['native_origins']}
         if any(local==row['name'] or local.startswith(row['name']+'.')
-                for row in profile.get('native_cache',[]) for local in local_names):
+                for row in profile.get('native_cache',[])+profile.get('module_aliases',[]) for local in local_names):
             raise ValueError('Native cache and source import mappings overlap')
         if {v['name'] for v in profile['exports']} & set(local_names):
             raise ValueError('Dependency export and source import mappings overlap')
@@ -280,6 +280,9 @@ class DependencyImports:
                     for item in row['late_delegates']]} if 'late_delegates' in row else {})}
                 for name,row in sorted(self.bindings.native_cache.items())
                 if name in self.bindings.cache_closed]
+        if self.bindings.aliases:
+            receipt['module_aliases']=[{'name':name,'target':target}
+                for name,target in sorted(self.bindings.aliases.items()) if name in self.bindings.alias_seals]
         receipt['native_origin_policies']=dict(self.native_origins)
         receipt['images'] = self.images()
         return receipt

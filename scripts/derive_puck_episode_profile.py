@@ -111,6 +111,40 @@ def native_cache_rows(rows,reports):
     return result
 
 
+def module_aliases(reports,site_root):
+    """Site extensions observed under their compiled bare name too, identical in both phases."""
+    observed={}
+    for phase,value in reports.items():
+        observed[phase]=sorted((row['name'],row['spec_name']) for row in value['cache']['modules']
+            if row.get('classification')=='alias' and '.' not in row['name']
+            and row['name'] not in sys.stdlib_module_names and type(row.get('spec_name')) is str
+            and type(row.get('file')) is str and row['file'].startswith(site_root+'/'))
+    if len(set(map(tuple,observed.values())))!=1:
+        raise ValueError('Source and replay observe different module aliases')
+    return [dict(name=name,target=target) for name,target in next(iter(observed.values()))]
+
+
+def export_reached(export,by_name):
+    """An early consistency check that a declared export path is plausible in the observed cache.
+
+    Characterization records producer edges only for exceptional cache identities,
+    so a step may also cross an ordinary module by name (``producer.attribute`` or
+    a top-level ``attribute``); the final step must be a recorded edge into the
+    export. The held bindings verify the exact raw producer edge at run time.
+    """
+    possible={export['producer']}
+    for attribute in export['attributes']:
+        reached={name for name,row in by_name.items() if any(edge['producer'] in possible
+                 and edge['attribute']==attribute for edge in row.get('exports',[]))}
+        for name in {attribute}|{p+'.'+attribute for p in possible}:
+            row=by_name.get(name)
+            if row is not None and row.get('spec_name')==name:reached.add(name)
+        possible=reached
+    row=by_name.get(export['name'])
+    return export['name'] in possible and row is not None and any(
+        edge['attribute']==export['attributes'][-1] for edge in row.get('exports',[]))
+
+
 def derive_profile(reports,template,inventory,site_root):
     """The candidate profile, module paths and namespaces from two validated characterization reports."""
     old=load(template,'Template candidate');profile=copy.deepcopy(old.get('import_profile'))
@@ -121,6 +155,8 @@ def derive_profile(reports,template,inventory,site_root):
     for key in ('exports','module_changes','native_origins','native_cache'):
         profile[key]=[row for row in profile[key] if row['name'] in observed]
     profile['native_cache']=native_cache_rows(profile['native_cache'],reports)
+    aliases=module_aliases(reports,site_root)
+    if aliases:profile['module_aliases']=aliases
     rows=load(inventory,'Retained inventory')['entries']
     census={row['path']:(None,None,stat.S_IFREG) for row in rows}
     for row in rows:
@@ -131,11 +167,7 @@ def derive_profile(reports,template,inventory,site_root):
         site,names=split(value['cache']['modules'],set(PARENT.CAPSULE),prefix);served.update(names)
         by_name={row['name']:row for row in value['cache']['modules']}
         for export in profile['exports']:
-            possible={export['producer']}
-            for attribute in export['attributes']:
-                possible={name for name,row in by_name.items() if any(edge['producer'] in possible
-                    and edge['attribute']==attribute for edge in row.get('exports',[]))}
-            if export['name'] not in possible:
+            if not export_reached(export,by_name):
                 raise ValueError('Declared export edge is absent from the '+phase+' object graph: '+export['name'])
         physical,virtual=_module_maps(site_root,dict(cache=dict(modules=site)),profile,census,allow_native_cache=True)
         for target,items in ((modules,physical),(namespaces,virtual)):

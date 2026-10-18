@@ -423,7 +423,8 @@ class HeldDependencyNamespace:
             if len(_canonical(self._metadata())) + len(self._raw) > MAX_METADATA_BYTES:
                 raise ValueError('Dependency serialized metadata exceeds 64 MiB')
             self._state = 'active'; self.recheck()
-            cache=self._registration.get('import_profile',{}).get('native_cache',[])
+            profile=self._registration.get('import_profile',{})
+            cache=profile.get('native_cache',[])+profile.get('module_aliases',[])
             if cache:
                 self._require_absent_imports(tuple(sorted(row['name'] for row in cache)), cache_creation=True)
             for row in self._registration['distributions']:
@@ -466,7 +467,8 @@ class HeldDependencyNamespace:
             declared = {row['name'] for row in reg['modules'] + reg['namespaces']}
             declared.update(row['name'] for row in reg.get('import_profile', {}).get('exports', []))
             if not cache_creation:
-                declared.update(row['name'] for row in reg.get('import_profile', {}).get('native_cache', []))
+                declared.update(row['name'] for key in ('native_cache', 'module_aliases')
+                                for row in reg.get('import_profile', {}).get(key, []))
             packages = {row['name']:row for row in reg['modules'] if row['is_package']}
             packages.update({row['name']:row for row in reg['namespaces']})
             censuses = {index:{path for path, identity in child._namespace}

@@ -37,7 +37,7 @@ BOOTSTRAP='scripts/puck_worker_bootstrap.py'
 PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11'
 INTERPRETER=dict(path=PYTHON,size_bytes=21662864,sha256='572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a')
 # The independent auditor bytes that must have accepted preparation04.
-PREPARATION04_AUDITOR_SHA256='f4074bc1d11f7012b0d1b487572d5c5f2149d1cc98169f35ae22a49df8717f26'
+PREPARATION04_AUDITOR_SHA256='4ef23799994785c2154aeedd83a03e0457cdfd7f9e4573d12d44e462fb782f7c'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',mujoco='3.3.6',gymnasium='1.2.1')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',

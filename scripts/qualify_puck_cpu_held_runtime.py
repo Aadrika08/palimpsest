@@ -126,7 +126,7 @@ LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e9417543
 PREPARATION02_AUDITOR_SHA256='04192a3ba3d7020a5399465aa6da4f7d7ebe3d74172e4b448ea500b09aa9a62b'
 PREPARATION03_AUDITOR_SHA256='6292b55088a8b4bfb60b2d65688970cd47e6a76e207f771c3d695dd463bae3cd'
 # The independent auditor whose bytes must accept preparation04 (allocation 15).
-PREPARATION04_AUDITOR_SHA256='f4074bc1d11f7012b0d1b487572d5c5f2149d1cc98169f35ae22a49df8717f26'
+PREPARATION04_AUDITOR_SHA256='4ef23799994785c2154aeedd83a03e0457cdfd7f9e4573d12d44e462fb782f7c'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',
@@ -630,6 +630,7 @@ def validate_worker_result(result,*,registration_sha256,dependency_sha256,depend
             or type(dep.get('file_count')) is not int or dep['file_count']!=count
             or type(dep.get('input_bytes')) is not int or dep['input_bytes']!=byte_count
             or dep.get('native_cache_modules',[])!=caches
+            or dep.get('module_aliases',[])!=dependencies['import_profile'].get('module_aliases',[])
             or (dep.get('published_export_modules')!=publications if publications
                 else 'published_export_modules' in dep)
             or entry.get('kind')!='puck-held-runtime-import-qualification-result-v2'

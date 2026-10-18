@@ -288,7 +288,8 @@ def validate_receipt(receipt,config,phase,registration_raw,dependency_raw,depend
             and receipt.get('process_creation_attempts')==dict(count=0,events=[])
             and dep.get('registration_sha256')==digest(dependency_raw) and dep.get('native_identity')=='tmpfs-raw-dev-inode-v1'
             and dep.get('root_count')==4 and dep.get('file_count')==count and dep.get('input_bytes')==total
-            and dep.get('native_cache_modules',[])==sorted(dependencies['import_profile'].get('native_cache',[]),key=lambda r:r['name']),
+            and dep.get('native_cache_modules',[])==sorted(dependencies['import_profile'].get('native_cache',[]),key=lambda r:r['name'])
+            and dep.get('module_aliases',[])==dependencies['import_profile'].get('module_aliases',[]),
             'Held episode '+phase+' bootstrap receipt differs or attempted process creation')
     validate_entry(receipt.get('entry_result'),config,phase)
 

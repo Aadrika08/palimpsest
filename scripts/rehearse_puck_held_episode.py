@@ -144,7 +144,8 @@ def _rehearse(*,summary,site,inventory,layout,template,generated,native,baseline
         study_authorized=False,executable=False,qualification_claims=[])
     candidate_raw=pretty(candidate);write(output/'candidate-rehearsal.json',candidate_raw)
     summary['candidate']=dict(sha256=sha(candidate_raw),module_paths=len(module_paths),namespaces=len(namespaces),
-        native_cache=profile['native_cache'],exports=len(profile['exports']),import_misses=misses)
+        native_cache=profile['native_cache'],module_aliases=profile.get('module_aliases',[]),exports=len(profile['exports']),
+        import_misses=misses)
     # 4. Stage with the real stager in the preparation namespace.
     pins_raw={k:dict(size_bytes=len(v),sha256=sha(v)) for k,v in (('inventory',raws['inventory']),('layout',raws['layout']),
               ('candidate',candidate_raw),('native',raws['native']))}

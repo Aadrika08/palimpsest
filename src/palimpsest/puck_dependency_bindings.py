@@ -42,11 +42,13 @@ def _profile_groups(profile, *, allow_native_cache=False):
     groups=('exports','module_changes','native_origins')
     extended=type(profile) is dict and 'kind' in profile
     if extended:
-        _fields(profile, (*groups,'kind','version','native_cache'))
+        # module_aliases is optional; profiles without it keep their exact v2 shape.
+        aliased=('module_aliases',) if 'module_aliases' in profile else ()
+        _fields(profile, (*groups,'kind','version','native_cache',*aliased))
         if (not allow_native_cache or profile['kind']!='puck-producer-import-profile-v2'
                 or type(profile['version']) is not int or profile['version']!=2):
             raise ValueError('Explicit v3 native cache import profile required')
-        groups+=('native_cache',)
+        groups+=('native_cache',*aliased)
     else:
         _fields(profile, groups)
     if any(type(profile[k]) is not list for k in groups):
@@ -170,6 +172,23 @@ def validate_profile(profile, modules, namespaces, *, allow_native_cache=False):
             if keys!=sorted(set(keys)):
                 raise ValueError('Native cache late delegate keys must be sorted and distinct')
         cached.add(name)
+    if 'module_aliases' in profile:
+        rows=profile['module_aliases']
+        if not 1<=len(rows)<=16:
+            raise ValueError('Dependency module aliases must be a finite nonempty list')
+        aliased=[]
+        for row in rows:
+            _fields(row, ('name','target'))
+            name=_name(row['name']); target=_name(row['target'])
+            if ('.' in name or name in names or name in exports or name in cached or name in aliased
+                    or name in sys.stdlib_module_names or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')):
+                raise ValueError('Dependency module alias overlaps or spoofs another namespace')
+            # Only an extension registering itself under its own compiled bare name.
+            if target not in physical or physical[target]['kind']!='extension' or target.rsplit('.',1)[-1]!=name:
+                raise ValueError('Dependency module alias must be its extension\'s own compiled bare name')
+            aliased.append(name)
+        if aliased!=sorted(set(aliased)):
+            raise ValueError('Dependency module aliases must be sorted and distinct')
 
 
 def module_dict(module):
@@ -309,13 +328,16 @@ class ExportBindings:
         self.late_seals={}; self.late_pending={}
         self.published={r['name']:r for r in profile['exports'] if r['phase']==_PUBLISH_PHASE}
         self.publication_closed=set(); self.publication_phases=set()
+        self.aliases={v['name']:v['target'] for v in profile.get('module_aliases',[])}; self.alias_seals={}
+        if any(name in sys.modules for name in self.aliases):
+            raise RuntimeError('Dependency module alias is preexisting before its extension initialization')
         if any(name in sys.modules for name in self.native_cache):
             raise RuntimeError('Native cache entry is preexisting before native initialization')
         if any(name in sys.modules for name in self.published):
             raise RuntimeError('Published dependency export is preexisting before producer initialization')
     def open_phase(self, name, phase):
         require_instance_dispatch(self,ExportBindings)
-        if not self.native_cache and not self.published: return
+        if not self.native_cache and not self.published and not self.aliases: return
         if len(self.phase_stack)>=MAX_PROFILE_ROWS:
             raise ValueError('Native cache initializer nesting exceeds bound')
         key=(name,phase)
@@ -372,6 +394,18 @@ class ExportBindings:
                     if name not in self.cache_closed or current_phase not in self.late[(name,key)]:
                         raise RuntimeError('Native cache late delegate appeared outside its declared producer')
                     self.late_pending[(name,key)]=(current_phase,present)
+        ExportBindings._alias_recheck(self,current_phase)
+    def _alias_recheck(self, current_phase):
+        for name,target in self.aliases.items():
+            value=sys.modules.get(name,_MISSING); sealed=self.alias_seals.get(name)
+            if sealed is not None:
+                if value is not sealed: raise RuntimeError('Dependency module alias changed or disappeared')
+                continue
+            if value is _MISSING: continue
+            if (current_phase!=(target,'module_exec') or type(value) is not types.ModuleType
+                    or value is not sys.modules.get(target)):
+                raise RuntimeError('Dependency module alias appeared outside its own extension exec')
+            self.alias_seals[name]=value
     def _publication_recheck(self):
         current_phase=self.phase_stack[-1] if self.phase_stack else None
         for name,row in self.published.items():
@@ -406,7 +440,7 @@ class ExportBindings:
             self.prepared[name]=(row,observed)
     def close_phase(self, name, phase):
         require_instance_dispatch(self,ExportBindings)
-        if not self.native_cache and not self.published: return
+        if not self.native_cache and not self.published and not self.aliases: return
         key=(name,phase)
         if not self.phase_stack or self.phase_stack[-1]!=key:
             raise RuntimeError('Native cache initializer phase stack differs')
@@ -449,6 +483,8 @@ class ExportBindings:
         if (self.phase_stack or set(self.cache_seals)!=set(self.native_cache) or self.cache_closed!=set(self.native_cache)
                 or set(self.late_seals)!=set(self.late)):
             raise RuntimeError('Native cache terminal completion is incomplete')
+        if set(self.alias_seals)!=set(self.aliases):
+            raise RuntimeError('Dependency module alias terminal completion is incomplete')
     def begin(self, name, module, code=None):
         require_instance_dispatch(self,ExportBindings)
         if name in self.producers and self.producers[name] is not module:
@@ -531,4 +567,4 @@ class ExportBindings:
                 self.active[name]=seal.module
             elif name in self.active: raise RuntimeError('Held dependency export cache entry disappeared')
         ExportBindings._cache_recheck(self)
-        return set(self.active)|set(self.cache_seals)
+        return set(self.active)|set(self.cache_seals)|set(self.alias_seals)

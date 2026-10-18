@@ -244,6 +244,7 @@ def _module_maps(site_root, observation, profile, census, *, allow_native_cache=
         return result
     exports = profile_names('exports'); changes = profile_names('module_changes')
     cached=profile_names('native_cache') if 'native_cache' in profile else set()
+    aliases={row['name']:row.get('target') for row in profile.get('module_aliases',[]) if type(row) is dict}
     regular = {path for path, identity in census.items() if stat.S_ISREG(identity[2])}
     directories = {path for path, identity in census.items() if stat.S_ISDIR(identity[2])}
     physical = []; namespaces = []; seen = set()
@@ -264,6 +265,10 @@ def _module_maps(site_root, observation, profile, census, *, allow_native_cache=
             if (row.get('classification')!='virtual' or row.get('file') is not None
                     or row.get('spec_name') is not None):
                 raise ValueError('Native cache observation must retain its cache-only identity')
+            continue
+        if name in aliases:
+            if row.get('classification')!='alias' or row.get('spec_name')!=aliases[name] or type(row.get('file')) is not str:
+                raise ValueError('Dependency module alias observation must retain its extension identity')
             continue
         file = row.get('file')
         if name in changes and file is None:
@@ -299,6 +304,8 @@ def _module_maps(site_root, observation, profile, census, *, allow_native_cache=
         raise ValueError('Dependency module-change identity is absent from retained cache')
     if not cached<=seen:
         raise ValueError('Native cache identity is absent from retained observation')
+    if not set(aliases)<=seen:
+        raise ValueError('Dependency module alias identity is absent from retained observation')
     validate_profile(profile, physical, namespaces, allow_native_cache=allow_native_cache)
     return sorted(physical, key=lambda row: row['name']), sorted(namespaces, key=lambda row: row['name'])
 
