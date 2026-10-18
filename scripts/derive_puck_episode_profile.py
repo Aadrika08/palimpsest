@@ -226,6 +226,11 @@ def derive_profile(reports,template,inventory,site_root):
                     raise ValueError('Source and replay map one module differently: '+item['name'])
     module_paths=sorted(modules.values(),key=lambda r:r['name']);namespace_rows=sorted(namespaces.values(),key=lambda r:r['name'])
     profile['native_origins']=native_origin_rows(profile['native_origins'],module_paths,rows,site_root)
+    # Every episode capsule module is registered statically by the v4 registration; observed ones must be among them.
+    static={row['name'] for row in QUALIFIER.source_modules([dict(path=p) for p in QUALIFIER.EPISODE_WORKER_SOURCES])}
+    if not served<=static:
+        raise ValueError('Observed local source modules are outside the static episode registration: '+', '.join(sorted(served-static)[:16]))
+    served=static
     validate_profile(profile,module_paths,namespace_rows,allow_native_cache=True)
     misses=sorted({name for value in reports.values() for name in value['import_misses']
                    if name.split('.')[0] not in QUALIFIER.STDLIB_311})

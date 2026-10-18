@@ -37,4 +37,10 @@ def test_the_rehearsal_runs_both_guarded_workers_into_scratch(tmp_path):
     assert summary['candidate']['native_cache'][0]['late_delegates']==[dict(attribute='fused_cython_function',
         producers=[dict(producer='authoredcy._fused',phase='module_exec')])]
     assert summary['candidate']['module_aliases']==[dict(name='_tools',target='authoredcy._tools')]
+    # Allocation-16 style checks on the rehearsal outputs: the parent's receipt/bundle checks and the
+    # episode auditor's internal recording, provenance, schedule, bundle and replay comparison checks.
+    checks=summary['alloc16_checks']
+    assert checks['parent_receipts']['status']=='passed',checks
+    assert checks['auditor_internal']['status']=='passed',checks
+    assert checks['auditor_internal']['detail']['compared_ticks']==48 and checks['auditor_internal']['detail']['first_divergence'] is None
     assert not Path(stage).exists()
