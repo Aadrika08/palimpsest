@@ -83,7 +83,12 @@ def module(name,path,*,classification='module'):
 SITE_FILES=('numpy/__init__.py','numpy/random/__init__.py','numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so',
     'torch/__init__.py','mujoco/__init__.py','gymnasium/__init__.py','gymnasium/envs/__init__.py','scipy/__init__.py',
     'scipy/_lib/__init__.py','scipy/_lib/_ccallback_c.cpython-311-x86_64-linux-gnu.so',
-    'scipy/_lib/_fpumode.cpython-311-x86_64-linux-gnu.so')
+    'scipy/_lib/_fpumode.cpython-311-x86_64-linux-gnu.so','scipy/sparse/__init__.py',
+    'scipy/sparse/_csparsetools.cpython-311-x86_64-linux-gnu.so')
+# scipy.sparse._csparsetools's exec also registers the module under its compiled bare name.
+ALIAS=dict(name='_csparsetools',spec_name='scipy.sparse._csparsetools',classification='alias',exports=[],
+           file=SITE+'/scipy/sparse/_csparsetools.cpython-311-x86_64-linux-gnu.so',
+           same_object_cache_names=['_csparsetools','scipy.sparse._csparsetools'])
 # As the held guard sees numpy.random: bit_generator's exec creates the cache, and a key added by the
 # nested _common exec before bit_generator closes is still a creator key. Keys after the close are late.
 CREATOR=dict(cache='_cython_3_0_12',producer='numpy.random.bit_generator',phase='module_exec',
@@ -101,7 +106,7 @@ def cache(extra=()):
         module('palimpsest','/puck/source/src/palimpsest/__init__.py'),
         module('palimpsest.engine','/puck/source/src/palimpsest/engine.py'),
         module('core','/puck/source/upstream/fly-gym/core/__init__.py'),
-        dict(name='_cython_3_0_12',spec_name=None,file=None,classification='virtual',exports=[]),*extra]
+        dict(name='_cython_3_0_12',spec_name=None,file=None,classification='virtual',exports=[]),dict(ALIAS),*extra]
     return sorted(rows,key=lambda r:r['name'])
 
 
@@ -168,7 +173,7 @@ def test_derivation_maps_site_modules_and_filters_the_template(evidence):
     assert candidate['expected_versions']==dict(numpy='2.2.5',torch='2.9.0+cpu',mujoco='3.3.6',gymnasium='1.2.1')
     names=[r['name'] for r in candidate['module_paths']]
     assert names==sorted(['gymnasium','gymnasium.envs','mujoco','numpy','numpy.random','numpy.random.bit_generator','scipy',
-                          'scipy._lib','scipy._lib._ccallback_c','scipy._lib._fpumode','torch'])
+                          'scipy._lib','scipy._lib._ccallback_c','scipy._lib._fpumode','scipy.sparse','scipy.sparse._csparsetools','torch'])
     assert all(r['root_index']==0 for r in candidate['module_paths'])
     assert candidate['source_modules']==['core','palimpsest','palimpsest.body_profile','palimpsest.engine']
     profile=candidate['import_profile']
@@ -176,6 +181,7 @@ def test_derivation_maps_site_modules_and_filters_the_template(evidence):
         phase='module_exec',delegate_attributes=['cython_function_or_method','generator'],
         late_delegates=[dict(attribute='fused_cython_function',producers=[dict(producer='scipy._lib._ccallback_c',phase='module_exec')])])]
     assert [r['name'] for r in profile['native_origins']]==['numpy.random.bit_generator']
+    assert profile['module_aliases']==[dict(name='_csparsetools',target='scipy.sparse._csparsetools')]
     assert candidate['observation_reports']==dict(source=sha(raws['source']),replay=sha(raws['replay']))
     assert candidate['characterization_configuration_sha256']==sha(raws['configuration'])
     assert candidate['observation_result_sha256']==sha(raws['result'])
@@ -201,7 +207,7 @@ def test_derivation_writes_once(evidence,tmp_path):
 @pytest.mark.parametrize('defect',['result-failed','result-config','report-spawn','report-sha','audit-failed','audit-result',
     'outside-site','unlisted-source','generated-helper','phase-conflict','unmapped-site-file','config-sha','site-root',
     'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss','native-pin',
-    'dispatch-nested-key','dispatch-late-outside','dispatch-reopened','dispatch-closed-creator'])
+    'dispatch-nested-key','dispatch-late-outside','dispatch-reopened','dispatch-closed-creator','alias-one-phase','alias-foreign'])
 def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
     m,raws=evidence;changes={}
     def edit(name,function,encode=canonical):
@@ -226,13 +232,15 @@ def test_derivation_refuses_unbound_or_unmappable_evidence(evidence,defect):
     elif defect=='dispatch-nested-key':edit('source',lambda v:v['native_cache_dispatch']['events'][1].update(added=['other']))
     elif defect=='dispatch-late-outside':edit('source',lambda v:v['native_cache_dispatch']['events'][2].update(producer=None,phase=None))
     elif defect=='dispatch-reopened':edit('source',lambda v:v['native_cache_dispatch']['events'].append(dict(NESTED,added=['zeta'])))
+    elif defect=='alias-one-phase':edit('source',lambda v:v['cache'].update(modules=[r for r in v['cache']['modules'] if r['name']!='_csparsetools']))
+    elif defect=='alias-foreign':edit('source',lambda v:next(r for r in v['cache']['modules'] if r['name']=='_csparsetools').update(name='_other'))
     elif defect=='dispatch-closed-creator':edit('source',lambda v:v['native_cache_dispatch']['events'][0].update(closed=True))
     elif defect=='native-pin':changes['native']=pretty(dict(dynamic_leaves=LEAVES[:1]))
     elif defect=='config-sha':changes['configuration']=raws['configuration'][:-1]+b' \n'
     else:changes['site_root']='/other/site'
     if defect in ('report-spawn','report-sha','outside-site','unlisted-source','generated-helper','phase-conflict','unmapped-site-file',
                   'dispatch-creator','dispatch-base','dispatch-absent','dispatch-unlisted-cache','undeclared-miss',
-                  'dispatch-nested-key','dispatch-late-outside','dispatch-reopened','dispatch-closed-creator'):
+                  'dispatch-nested-key','dispatch-late-outside','dispatch-reopened','dispatch-closed-creator','alias-one-phase','alias-foreign'):
         name='replay' if defect in ('phase-conflict','dispatch-absent') else 'source'
         result=json.loads(raws['result']);result[name+'_report_sha256']=sha(changes[name]);changes['result']=pretty(result)
         audit=json.loads(raws['audit']);audit['verified'][name+'_report_sha256']=sha(changes[name])

@@ -36,4 +36,5 @@ def test_the_rehearsal_runs_both_guarded_workers_into_scratch(tmp_path):
         assert value['entry_result']['phase']==phase and value['bundle']['members']>0
     assert summary['candidate']['native_cache'][0]['late_delegates']==[dict(attribute='fused_cython_function',
         producers=[dict(producer='authoredcy._fused',phase='module_exec')])]
+    assert summary['candidate']['module_aliases']==[dict(name='_tools',target='authoredcy._tools')]
     assert not Path(stage).exists()

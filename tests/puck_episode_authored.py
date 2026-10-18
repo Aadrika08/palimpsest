@@ -314,7 +314,8 @@ def authored_cython(site):
     ``_common`` from C (as bit_generator cimports numpy.random._common), whose exec
     adds a second creator key before the creator closes. ``_fused``'s exec later
     adds a key to the closed cache and then imports ``_lapack`` from C, as scipy's
-    fused Cython modules cimport scipy.linalg.cython_lapack.
+    fused Cython modules cimport scipy.linalg.cython_lapack. ``_tools`` registers
+    itself under its bare name, as scipy.sparse._csparsetools does.
     """
     import importlib.machinery
     import sysconfig
@@ -342,4 +343,6 @@ def authored_cython(site):
     build('_common','generator',existing)
     build('_fused','fused_cython_function',existing,nested('_lapack'))
     build('_lapack','lapack','')
+    # As scipy.sparse._csparsetools does, _tools's exec also registers itself under its compiled bare name.
+    build('_tools','tool','','if(PyDict_SetItemString(PyImport_GetModuleDict(),"_tools",m)<0)return -1;')
     return sorted(p for p in package.iterdir() if p.is_file())
