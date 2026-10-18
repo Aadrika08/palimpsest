@@ -44,7 +44,7 @@ worker refusal. All 11 test batches, intended REDs and the corrected /tmp fixtur
 layout are preserved; 97 artifacts/692,265B including 11 empty logs match originals
 and committed bytes. Independent review finds no material issue in the new reader.
 
-The [next bounded work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
+The [next bounded work unit](plans/simulation-release-execution-goal.md#active-work-unit-foundation-repairs-then-the-lab-and-six-artworks)
 is the closed new CPU parent epoch, finite ordinary observer, separately pinned
 independent terminal/identity/full-byte auditor and complete authored source route.
 The current parent still emits request-v2; the earlier terminal record is not a
@@ -72,7 +72,7 @@ serialization. The actual admission was not rerun. Installation01 and admission0
 remain FAIL, with their missing receipts absent. The private selected-tree policy
 and inert-bytecode exception grant package-data acceptance only.
 
-The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
+The [next work unit](plans/simulation-release-execution-goal.md#active-work-unit-foundation-repairs-then-the-lab-and-six-artworks)
 ends with that actual episode bundle. Accepted ordinary characterization02 below
 supplies observations; PR147 supplies the prospective CPU profile and tmpfs copier,
 and PR148 supplies the dedicated bounded source parent and authored end-to-end
