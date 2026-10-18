@@ -177,7 +177,11 @@ def test_derivation_maps_site_modules_and_filters_the_template(evidence):
     assert names==sorted(['gymnasium','gymnasium.envs','mujoco','numpy','numpy.random','numpy.random.bit_generator','scipy',
                           'scipy._lib','scipy._lib._ccallback_c','scipy._lib._fpumode','scipy.sparse','scipy.sparse._csparsetools','torch'])
     assert all(r['root_index']==0 for r in candidate['module_paths'])
-    assert candidate['source_modules']==['core','palimpsest','palimpsest.body_profile','palimpsest.engine']
+    # Every episode capsule module is registered statically (v4 registrations map them all), not only the
+    # observed ones, so error-path imports such as palimpsest.storage stay importable under the guard.
+    q=m.QUALIFIER;static=sorted(r['name'] for r in q.source_modules([dict(path=p) for p in q.EPISODE_WORKER_SOURCES]))
+    assert candidate['source_modules']==static and 'palimpsest.storage' in static
+    assert {'core','palimpsest','palimpsest.body_profile','palimpsest.engine'}<=set(static)
     profile=candidate['import_profile']
     assert profile['module_changes']==[] and profile['native_cache']==[dict(name='_cython_3_0_12',producer='numpy.random.bit_generator',
         phase='module_exec',delegate_attributes=['cython_function_or_method','generator'],
