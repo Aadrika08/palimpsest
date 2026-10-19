@@ -1,0 +1,11 @@
+file:///home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/tests/measurement.check.ts:2
+import {cadence,windowRate,cadenceAcceptance,CADENCE_ACCEPTANCE} from './measurement.ts';
+                                             ^^^^^^^^^^^^^^^^^^
+SyntaxError: The requested module './measurement.ts' does not provide an export named 'CADENCE_ACCEPTANCE'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:455:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:553:5)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+exit=1
