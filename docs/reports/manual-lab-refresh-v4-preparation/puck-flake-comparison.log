@@ -1,0 +1,4 @@
+== head: 1 failed, 232 passed in 181.14s (0:03:01)
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+== baseline: 1 failed, 232 passed in 179.91s (0:02:59)
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes

@@ -27,3 +27,12 @@ export async function commandMetrics(page:Page){return page.evaluate(()=>(window
 export function summarize(values:number[]){const sorted=[...values].sort((a,b)=>a-b);const percentile=(p:number)=>sorted.length?sorted[Math.max(0,Math.ceil(sorted.length*p)-1)]:null;return{count:values.length,p50:percentile(.5),p95:percentile(.95),p99:percentile(.99)};}
 export function cadence(times:number[]){const intervals=times.slice(1).map((time,index)=>time-times[index]);return{count:times.length,hz:times.length>1?(times.length-1)*1000/(times.at(-1)!-times[0]):null,interval_ms:summarize(intervals)};}
 export function windowRate(times:number[],started:number,ended:number){const duration=ended-started;return{count:times.length,window_ms:Number.isFinite(duration)?duration:null,hz:Number.isFinite(duration)&&duration>0?times.length*1000/duration:null};}
+// Decided acceptance (manual lab refresh v4): keep 30 Hz emission; delivered
+// display mean >= 29 Hz over the full window, p99 inter-sample gap <= 70 ms and
+// command acknowledgement p95 < 150 ms. Missing data never passes.
+export const CADENCE_ACCEPTANCE={emission_hz:30,display_mean_hz_min:29,interarrival_p99_ms_max:70,acknowledgement_p95_ms_below:150};
+export function cadenceAcceptance(display:number[],started:number,ended:number,ackP95:number|null){
+  const rate=windowRate(display,started,ended),gaps=cadence(display).interval_ms;
+  const passed=rate.hz!==null&&rate.hz>=CADENCE_ACCEPTANCE.display_mean_hz_min&&gaps.p99!==null&&gaps.p99<=CADENCE_ACCEPTANCE.interarrival_p99_ms_max&&ackP95!==null&&ackP95<CADENCE_ACCEPTANCE.acknowledgement_p95_ms_below;
+  return {mean_hz:rate.hz,interarrival_p50_ms:gaps.p50,interarrival_p99_ms:gaps.p99,acknowledgement_p95_ms:ackP95,passed};
+}

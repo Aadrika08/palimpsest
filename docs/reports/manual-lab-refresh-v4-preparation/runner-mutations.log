@@ -1,0 +1,5 @@
+== s/'passed': late - early <= allowance/'passed': True/: 2 failed, 13 passed in 0.16s
+== s/and p99 <= CADENCE\['interarrival_p99_ms_max'\]/and True/: 1 failed, 14 passed in 0.17s
+== s/if value < FLOORS\[name\]:/if False:/: 2 failed, 13 passed in 30.21s
+== s/'passed': not data\['network_failures'\] and not data\['page_errors'\]/'passed': True/: 1 failed, 14 passed in 0.15s
+== s/or '\/runs\/' in str(source) or '\/exports\/' in str(source)/or False/: 1 failed, 14 passed in 0.16s

@@ -358,6 +358,32 @@ class ActualOwner(unittest.TestCase):
                 finally:
                     supervisor.shutdown()
 
+    def test_actual_live_owner_records_through_the_background_writer(self):
+        from palimpsest.records import iter_ticks
+        with tempfile.TemporaryDirectory() as tmp:
+            supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs", startup_timeout=60.)
+            self.addCleanup(supervisor.shutdown)
+            run = supervisor.start({"scenario": "sparse-navigation", "texture": "checker", "controller": "manual", "device": "cpu", "seed": 0})
+            deadline = time.monotonic() + 60
+            while not (supervisor.describe(run)["status"] == "ready" and supervisor.describe(run)["sample"]) and time.monotonic() < deadline:
+                time.sleep(.03)
+            for tick in range(33):  # one full chunk plus a pending tick
+                supervisor.call(run, "command", {"id": f"step-{tick}", "kind": "step", "expected_state": "paused",
+                    "expected_episode": 0, "expected_revision": supervisor.describe(run)["state"]["revision"]})
+                while supervisor.describe(run)["state"]["total_tick"] < tick + 1 and time.monotonic() < deadline:
+                    time.sleep(.01)
+            snapshot = supervisor.call(run, "snapshot", {"expected_revision": supervisor.describe(run)["state"]["revision"]})
+            self.assertTrue(snapshot["snapshot_id"])
+            closed = supervisor.close(run)
+            self.assertEqual(closed["status"], "closed", closed.get("failure"))
+            writer = closed["recording_writer"]
+            self.assertEqual((writer["mode"], writer["error"], writer["queued_items"]), ("background", None, 0))
+            self.assertGreaterEqual(writer["written_items"], 3)
+            self.assertIn("backpressure_events", writer)
+            persisted = json.loads((supervisor.path(run) / "supervisor.json").read_text())
+            self.assertEqual(persisted["recording_writer"], writer)
+            self.assertEqual(len(list(iter_ticks(supervisor.path(run) / "recording"))), 33)
+
     def test_actual_spawned_manual_step_snapshot_branch_and_disconnect(self):
         with tempfile.TemporaryDirectory() as tmp:
             supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs", startup_timeout=60.)

@@ -1,0 +1,137 @@
+{
+ "note": "Measured cadence test (8 s window) x3 per batch on a fresh server; only the runs root differs.",
+ "results": [
+  {
+   "runs_root": "project disk (btrfs, ~97% used)",
+   "batch": "disk",
+   "mean_hz": 29.277651807761007,
+   "interarrival_p50_ms": 33.20000001788139,
+   "interarrival_p99_ms": 64.09999999403954,
+   "acknowledgement_p95_ms": 82.2999999821186,
+   "passed": true,
+   "gaps_over_50ms": 7,
+   "max_gap_ms": 93.89999997615814
+  },
+  {
+   "runs_root": "project disk (btrfs, ~97% used)",
+   "batch": "disk",
+   "mean_hz": 29.28348909657321,
+   "interarrival_p50_ms": 33.10000002384186,
+   "interarrival_p99_ms": 66.2999999821186,
+   "acknowledgement_p95_ms": 54.099999994039536,
+   "passed": true,
+   "gaps_over_50ms": 7,
+   "max_gap_ms": 77.09999999403954
+  },
+  {
+   "runs_root": "project disk (btrfs, ~97% used)",
+   "batch": "disk",
+   "mean_hz": 29.1494344511652,
+   "interarrival_p50_ms": 33,
+   "interarrival_p99_ms": 64.7000000178814,
+   "acknowledgement_p95_ms": 31.400000005960464,
+   "passed": true,
+   "gaps_over_50ms": 6,
+   "max_gap_ms": 167.7000000178814
+  },
+  {
+   "runs_root": "/dev/shm tmpfs",
+   "batch": "devshm",
+   "mean_hz": 30.03639264172928,
+   "interarrival_p50_ms": 32.79999998211861,
+   "interarrival_p99_ms": 53.70000001788139,
+   "acknowledgement_p95_ms": 25,
+   "passed": true,
+   "gaps_over_50ms": 4,
+   "max_gap_ms": 55.5
+  },
+  {
+   "runs_root": "/dev/shm tmpfs",
+   "batch": "devshm",
+   "mean_hz": 29.91138751453277,
+   "interarrival_p50_ms": 33.20000001788139,
+   "interarrival_p99_ms": 46,
+   "acknowledgement_p95_ms": 21.599999994039536,
+   "passed": true,
+   "gaps_over_50ms": 2,
+   "max_gap_ms": 56.099999994039536
+  },
+  {
+   "runs_root": "/dev/shm tmpfs",
+   "batch": "devshm",
+   "mean_hz": 30.022548054718534,
+   "interarrival_p50_ms": 33,
+   "interarrival_p99_ms": 52.69999998807907,
+   "acknowledgement_p95_ms": 32.60000002384186,
+   "passed": true,
+   "gaps_over_50ms": 3,
+   "max_gap_ms": 54.400000005960464
+  },
+  {
+   "runs_root": "project disk (btrfs, ~97% used)",
+   "batch": "disk2",
+   "mean_hz": 29.658429598658337,
+   "interarrival_p50_ms": 33,
+   "interarrival_p99_ms": 64,
+   "acknowledgement_p95_ms": 56.900000005960464,
+   "passed": true,
+   "gaps_over_50ms": 6,
+   "max_gap_ms": 64.89999997615814
+  },
+  {
+   "runs_root": "project disk (btrfs, ~97% used)",
+   "batch": "disk2",
+   "mean_hz": 26.041991153199177,
+   "interarrival_p50_ms": 32.900000005960464,
+   "interarrival_p99_ms": 64,
+   "acknowledgement_p95_ms": 57.599999994039536,
+   "passed": false,
+   "gaps_over_50ms": 6,
+   "max_gap_ms": 1039.300000011921
+  },
+  {
+   "runs_root": "project disk (btrfs, ~97% used)",
+   "batch": "disk2",
+   "mean_hz": 29.66138660748803,
+   "interarrival_p50_ms": 33.099999994039536,
+   "interarrival_p99_ms": 63.79999998211861,
+   "acknowledgement_p95_ms": 31.900000005960464,
+   "passed": true,
+   "gaps_over_50ms": 5,
+   "max_gap_ms": 76.5
+  },
+  {
+   "runs_root": "/dev/shm tmpfs",
+   "batch": "devshm2",
+   "mean_hz": 30.02180006228589,
+   "interarrival_p50_ms": 33.099999994039536,
+   "interarrival_p99_ms": 45.099999994039536,
+   "acknowledgement_p95_ms": 21,
+   "passed": true,
+   "gaps_over_50ms": 0,
+   "max_gap_ms": 46.20000001788139
+  },
+  {
+   "runs_root": "/dev/shm tmpfs",
+   "batch": "devshm2",
+   "mean_hz": 30.02292206491219,
+   "interarrival_p50_ms": 33,
+   "interarrival_p99_ms": 46.19999998807907,
+   "acknowledgement_p95_ms": 17.599999994039536,
+   "passed": true,
+   "gaps_over_50ms": 2,
+   "max_gap_ms": 55.39999997615814
+  },
+  {
+   "runs_root": "/dev/shm tmpfs",
+   "batch": "devshm2",
+   "mean_hz": 29.908778226387234,
+   "interarrival_p50_ms": 33.099999994039536,
+   "interarrival_p99_ms": 45.400000005960464,
+   "acknowledgement_p95_ms": 27.400000005960464,
+   "passed": true,
+   "gaps_over_50ms": 2,
+   "max_gap_ms": 54.5
+  }
+ ]
+}

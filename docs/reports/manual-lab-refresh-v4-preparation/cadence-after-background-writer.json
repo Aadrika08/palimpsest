@@ -1,0 +1,65 @@
+{
+ "note": "After 579fc44 (background recording writer): measured cadence test x6, runs root on the project disk (btrfs ~97% used), fresh server per batch of 3.",
+ "results": [
+  {
+   "batch": "fixdisk1",
+   "mean_hz": 30.030030030096942,
+   "interarrival_p50_ms": 33.29999998211861,
+   "interarrival_p99_ms": 45.29999998211861,
+   "acknowledgement_p95_ms": 20.80000001192093,
+   "passed": true,
+   "gaps_over_50ms": 1,
+   "max_gap_ms": 56.400000005960464
+  },
+  {
+   "batch": "fixdisk1",
+   "mean_hz": 30.276223819810426,
+   "interarrival_p50_ms": 33,
+   "interarrival_p99_ms": 47,
+   "acknowledgement_p95_ms": 26.099999994039536,
+   "passed": true,
+   "gaps_over_50ms": 2,
+   "max_gap_ms": 55.69999998807907
+  },
+  {
+   "batch": "fixdisk1",
+   "mean_hz": 29.898718092483985,
+   "interarrival_p50_ms": 33.099999994039536,
+   "interarrival_p99_ms": 45.5,
+   "acknowledgement_p95_ms": 21.900000005960464,
+   "passed": true,
+   "gaps_over_50ms": 2,
+   "max_gap_ms": 55.5
+  },
+  {
+   "batch": "fixdisk2",
+   "mean_hz": 30.015443630680924,
+   "interarrival_p50_ms": 33.19999998807907,
+   "interarrival_p99_ms": 45,
+   "acknowledgement_p95_ms": 20.400000005960464,
+   "passed": true,
+   "gaps_over_50ms": 1,
+   "max_gap_ms": 53.19999998807907
+  },
+  {
+   "batch": "fixdisk2",
+   "mean_hz": 30.035269631952165,
+   "interarrival_p50_ms": 33.29999998211861,
+   "interarrival_p99_ms": 45.599999994039536,
+   "acknowledgement_p95_ms": 21.900000005960464,
+   "passed": true,
+   "gaps_over_50ms": 1,
+   "max_gap_ms": 53.099999994039536
+  },
+  {
+   "batch": "fixdisk2",
+   "mean_hz": 29.77488195938937,
+   "interarrival_p50_ms": 33.19999998807907,
+   "interarrival_p99_ms": 45.20000001788139,
+   "acknowledgement_p95_ms": 27.19999998807907,
+   "passed": true,
+   "gaps_over_50ms": 1,
+   "max_gap_ms": 57.20000001788139
+  }
+ ]
+}

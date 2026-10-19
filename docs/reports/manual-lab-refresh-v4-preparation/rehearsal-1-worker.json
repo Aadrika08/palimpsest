@@ -1,0 +1,145 @@
+{
+  "acceptance_started_utc": "2026-10-19T01:09:50Z",
+  "build": {
+    "ui/dist/assets/index-DP8Vou6b.js": {
+      "bytes": 257795,
+      "sha256": "ea70ba1e34e10f456238097e970ae19535caae3694c51a215f60c3427f9d5dcb"
+    },
+    "ui/dist/assets/index-YXzjLjgu.css": {
+      "bytes": 7190,
+      "sha256": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87"
+    },
+    "ui/dist/index.html": {
+      "bytes": 418,
+      "sha256": "d7e3f6a221ee55f5a6346a381d38d145206d91487a4471ad92b62523ffa01f5f"
+    }
+  },
+  "elapsed_seconds": 83.8792330470169,
+  "endurance_seconds": 300,
+  "evaluation": {
+    "checks": {
+      "acceptance_tests": {
+        "duration": 80156.22499999999,
+        "expected": 7,
+        "flaky": 0,
+        "passed": false,
+        "skipped": 0,
+        "startTime": "2026-10-19T01:09:50.787Z",
+        "unexpected": 1
+      },
+      "endurance": {
+        "passed": false,
+        "reason": "0 endurance reports"
+      },
+      "endurance_tests": {
+        "passed": false
+      },
+      "exports": {
+        ".svg": 1,
+        ".zip": 1,
+        "passed": true
+      },
+      "measured_cadence": {
+        "acknowledgement_count": 12,
+        "acknowledgement_p95_ms": 59.900000005960464,
+        "criteria": {
+          "acknowledgement_p95_ms_below": 150,
+          "display_mean_hz_min": 29,
+          "emission_hz": 30,
+          "interarrival_p99_ms_max": 70
+        },
+        "display_updates": 231,
+        "interarrival_p50_ms": 33.19999998807907,
+        "interarrival_p99_ms": 75.2000000178814,
+        "mean_hz": 28.792581236189953,
+        "passed": false,
+        "window_ms": 8022.9000000059605,
+        "windows": 1
+      },
+      "owner_closes": {
+        "count": 7,
+        "passed": true
+      }
+    },
+    "passed": false
+  },
+  "failure": {
+    "message": "Child exited 1",
+    "type": "RuntimeError"
+  },
+  "observed_processes": 56,
+  "owned_survivors_requiring_kill": [],
+  "preflight": {
+    "browser_shm_check": {
+      "elapsed_seconds": 0.870625494979322,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4-rehearsal/20261019T010947Z/preflight",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-19T01:09:47.745023+00:00",
+      "status": "completed",
+      "timeout_seconds": 60
+    },
+    "browsers": {
+      "chromium": "Chromium 152.0.7977.82 Arch Linux",
+      "chromium_binary_sha256": "27c398e1738a5bf578e4414654b959b8fdb63446dfb309c114a95e97c5d243ff",
+      "node": "v24.21.0",
+      "playwright": "1.63.0"
+    },
+    "chromium_shared_memory": "Playwright default --disable-dev-shm-usage is ignored; regions live on /dev/shm",
+    "dev_shm_free_bytes": 7690891264,
+    "floors": {
+      "dev_shm_free_bytes": 1073741824,
+      "project_free_bytes": 4294967296,
+      "project_initial_free_bytes": 10737418240,
+      "tmp_free_bytes": 2147483648
+    },
+    "project_free_bytes": 15877382144,
+    "tmp_free_bytes": 4787122176,
+    "utc": "2026-10-19T01:09:47Z"
+  },
+  "process": {
+    "pid": 3349278,
+    "process_group": 3349277,
+    "start_ticks": 20556114
+  },
+  "qualification_claims": [],
+  "selected": [
+    [
+      "lab-endurance.spec.ts",
+      "mixed browser endurance with forced-GC renderer samples"
+    ],
+    [
+      "lab.spec.ts",
+      "actual local manual workflow, snapshots, sequential branches, comparison and export"
+    ],
+    [
+      "lab.spec.ts",
+      "actual replay jobs recover without samples and expose controls, reports and authenticated bundle"
+    ],
+    [
+      "lab.spec.ts",
+      "actual trajectory overlay isolation and keyboard error recovery"
+    ],
+    [
+      "lab.spec.ts",
+      "actual memory inspector, U-only branch and evidence-linked route annotations"
+    ],
+    [
+      "lab.spec.ts",
+      "measured browser responsiveness and actual display cadence"
+    ],
+    [
+      "lab.spec.ts",
+      "actual declared task inspection and snapshot continuation: exploration-landmarks"
+    ],
+    [
+      "lab.spec.ts",
+      "actual declared task inspection and snapshot continuation: encoder-homing"
+    ],
+    [
+      "recorded-snapshots.spec.ts",
+      "closed recorded runs recover snapshots and branch from the selected source"
+    ]
+  ],
+  "status": "failed"
+}

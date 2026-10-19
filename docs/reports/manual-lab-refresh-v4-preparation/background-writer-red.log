@@ -1,0 +1,133 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______ BackgroundWriter.test_bounded_queue_blocks_and_counts_backpressure ______
+
+self = <test_records_background.BackgroundWriter testMethod=test_bounded_queue_blocks_and_counts_backpressure>
+
+    def test_bounded_queue_blocks_and_counts_backpressure(self):
+        gate = threading.Event()
+        def blocked(descriptor):
+            gate.wait(5.)
+            REAL_FSYNC(descriptor)
+        writer = RunWriter(self.root / 'run', {})
+>       writer.start_background(max_items=2)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunWriter' object has no attribute 'start_background'
+
+tests/test_records_background.py:88: AttributeError
+_ BackgroundWriter.test_caller_does_not_wait_for_fsync_and_finish_drains_durably _
+
+self = <test_records_background.BackgroundWriter testMethod=test_caller_does_not_wait_for_fsync_and_finish_drains_durably>
+
+    def test_caller_does_not_wait_for_fsync_and_finish_drains_durably(self):
+        synced = []
+        def slow(descriptor):
+            time.sleep(.15)
+            synced.append(descriptor)
+            REAL_FSYNC(descriptor)
+        writer = RunWriter(self.root / 'run', {})
+>       writer.start_background()
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunWriter' object has no attribute 'start_background'
+
+tests/test_records_background.py:66: AttributeError
+_____ BackgroundWriter.test_killed_process_leaves_a_valid_published_prefix _____
+
+self = <test_records_background.BackgroundWriter testMethod=test_killed_process_leaves_a_valid_published_prefix>
+
+        def test_killed_process_leaves_a_valid_published_prefix(self):
+            code = f"""
+    import os, sys, time
+    sys.path.insert(0, {str(REPO / 'src')!r})
+    import numpy as np
+    from pathlib import Path
+    from palimpsest import records
+    real = os.fsync
+    def slow(descriptor):
+        time.sleep(.05)
+        real(descriptor)
+    records.os.fsync = slow
+    writer = records.RunWriter(Path(sys.argv[1]), {{}})
+    writer.start_background()
+    for tick in range(100000):
+        writer.tick(0, tick, camera=np.full(4096, tick % 251, np.uint8))
+        if tick == 200:
+            print('ready', flush=True)
+    """
+            child = subprocess.Popen([sys.executable, '-c', code, str(self.root / 'run')], stdout=subprocess.PIPE, text=True)
+            try:
+>               self.assertEqual(child.stdout.readline().strip(), 'ready')
+E               AssertionError: '' != 'ready'
+E               + ready
+
+tests/test_records_background.py:185: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+AttributeError: 'RunWriter' object has no attribute 'start_background'
+___ BackgroundWriter.test_quota_and_budget_count_queued_but_unwritten_bytes ____
+
+self = <test_records_background.BackgroundWriter testMethod=test_quota_and_budget_count_queued_but_unwritten_bytes>
+
+    def test_quota_and_budget_count_queued_but_unwritten_bytes(self):
+        gate = threading.Event()
+        def blocked(descriptor):
+            gate.wait(5.)
+            REAL_FSYNC(descriptor)
+        budget = StorageBudget((self.root,), StorageLimits(max_bytes=60_000, min_free_bytes=0))
+        writer = RunWriter(self.root / 'run', {}, storage_budget=budget)
+>       writer.start_background()
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunWriter' object has no attribute 'start_background'
+
+tests/test_records_background.py:136: AttributeError
+__ BackgroundWriter.test_recording_is_byte_identical_to_the_synchronous_path ___
+
+self = <test_records_background.BackgroundWriter testMethod=test_recording_is_byte_identical_to_the_synchronous_path>
+
+    def test_recording_is_byte_identical_to_the_synchronous_path(self):
+        synchronous = RunWriter(self.root / 'sync', {'run_id': 'same'})
+        schedule(synchronous)
+        background = RunWriter(self.root / 'background', {'run_id': 'same'})
+>       background.start_background()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunWriter' object has no attribute 'start_background'
+
+tests/test_records_background.py:54: AttributeError
+____________ BackgroundWriter.test_synchronous_default_is_unchanged ____________
+
+self = <test_records_background.BackgroundWriter testMethod=test_synchronous_default_is_unchanged>
+
+    def test_synchronous_default_is_unchanged(self):
+        writer = RunWriter(self.root / 'run', {})
+>       self.assertIsNone(writer.background_stats())
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunWriter' object has no attribute 'background_stats'
+
+tests/test_records_background.py:200: AttributeError
+____ BackgroundWriter.test_writer_error_fails_the_run_and_keeps_the_prefix _____
+
+self = <test_records_background.BackgroundWriter testMethod=test_writer_error_fails_the_run_and_keeps_the_prefix>
+
+    def test_writer_error_fails_the_run_and_keeps_the_prefix(self):
+        calls = []
+        def failing(descriptor):
+            calls.append(descriptor)
+            if len(calls) > 2:
+                raise OSError('disk failure')
+            REAL_FSYNC(descriptor)
+        writer = RunWriter(self.root / 'run', {})
+>       writer.start_background()
+        ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunWriter' object has no attribute 'start_background'
+
+tests/test_records_background.py:114: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_records_background.py::BackgroundWriter::test_bounded_queue_blocks_and_counts_backpressure
+FAILED tests/test_records_background.py::BackgroundWriter::test_caller_does_not_wait_for_fsync_and_finish_drains_durably
+FAILED tests/test_records_background.py::BackgroundWriter::test_killed_process_leaves_a_valid_published_prefix
+FAILED tests/test_records_background.py::BackgroundWriter::test_quota_and_budget_count_queued_but_unwritten_bytes
+FAILED tests/test_records_background.py::BackgroundWriter::test_recording_is_byte_identical_to_the_synchronous_path
+FAILED tests/test_records_background.py::BackgroundWriter::test_synchronous_default_is_unchanged
+FAILED tests/test_records_background.py::BackgroundWriter::test_writer_error_fails_the_run_and_keeps_the_prefix
+7 failed in 0.29s

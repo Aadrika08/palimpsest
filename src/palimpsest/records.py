@@ -5,7 +5,10 @@ import io
 import json
 import os
 from pathlib import Path
+import queue
 import re
+import threading
+import time
 import zipfile
 
 
@@ -41,6 +44,81 @@ def _integer(value):
     return type(value) is int and value >= 0
 
 
+def _publish_chunk(path, payload):
+    temporary = path.with_suffix(".tmp")
+    try:
+        with temporary.open("xb") as stream:
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+class _BackgroundWrites:
+    """One FIFO writer thread for chunk files and event lines.
+
+    Items are written in submission order, so events.jsonl keeps its sequence
+    order and a chunk file is durable before its chunk event. The queue is
+    bounded: a full queue blocks the caller (counted as backpressure) instead of
+    growing memory. The first write error stops all later writes; the owner
+    raises it on its next call.
+    """
+
+    def __init__(self, events, max_items):
+        self.queue = queue.Queue(max_items)
+        self.lock = threading.Lock()
+        self.pending_bytes = 0
+        self.error = None
+        self.surfaced = False
+        self.stats = {"mode": "background", "max_items": max_items, "max_queued_items": 0, "written_items": 0,
+                      "backpressure_events": 0, "backpressure_seconds": 0.}
+        self.thread = threading.Thread(target=self._run, args=(events,), name="palimpsest-recording-writer", daemon=True)
+        self.thread.start()
+
+    def put(self, item, size):
+        with self.lock:
+            self.pending_bytes += size
+        if self.queue.full():
+            self.stats["backpressure_events"] += 1
+            started = time.monotonic()
+            self.queue.put((item, size))
+            self.stats["backpressure_seconds"] += time.monotonic() - started
+        else:
+            self.queue.put((item, size))
+        self.stats["max_queued_items"] = max(self.stats["max_queued_items"], self.queue.qsize())
+
+    def _run(self, events):
+        while True:
+            item, size = self.queue.get()
+            try:
+                if item is None:
+                    return
+                if self.error is None:
+                    if item[0] == "chunk":
+                        _publish_chunk(item[1], item[2])
+                    else:
+                        events.write(item[1])
+                        events.flush()
+                        os.fsync(events.fileno())
+                    self.stats["written_items"] += 1
+            except BaseException as error:
+                self.error = error
+            finally:
+                with self.lock:
+                    self.pending_bytes -= size
+                self.queue.task_done()
+
+    def stop(self):
+        self.queue.put((None, 0))
+        self.thread.join()
+
+    def view(self):
+        error = None if self.error is None else {"type": type(self.error).__name__, "message": str(self.error)}
+        return {**self.stats, "queued_items": self.queue.qsize(), "pending_bytes": self.pending_bytes, "error": error}
+
+
 def _load_json(value):
     def reject_constant(constant):
         raise ValueError(f"invalid JSON constant: {constant}")
@@ -56,6 +134,7 @@ class RunWriter:
         self.storage_budget = storage_budget
         self._bytes = self._manifest_bytes = 0
         self._broken = False
+        self._background = None
         self.path = Path(path)
         self.manifest = {**manifest, "status": "running", "recording_format": FORMAT,
                          "recording_max_bytes": max_bytes}
@@ -73,12 +152,45 @@ class RunWriter:
         self._last_tick = None
         self._finished = False
 
+    def start_background(self, max_items=16):
+        """Move chunk-file and event writes (and their fsyncs) to one bounded thread.
+
+        The caller still validates, sequences, stages and hashes every record and
+        checks quotas, counting queued-but-unwritten bytes, so the published bytes
+        are identical to the synchronous path. ``flush``, ``finish`` and ``close``
+        wait for the queue to drain; a write error fails the next writer call.
+        A killed process keeps a valid published prefix, possibly shorter by the
+        queued items. Default writers stay synchronous.
+        """
+        self._active()
+        if self._background is not None:
+            raise ValueError("background writes already started")
+        if not _integer(max_items) or max_items == 0:
+            raise ValueError("max_items must be a positive integer")
+        self._background = _BackgroundWrites(self._events, max_items)
+
+    def background_stats(self):
+        return None if self._background is None else self._background.view()
+
+    def _raise_background_error(self):
+        background = self._background
+        if background is not None and background.error is not None:
+            self._broken = True
+            background.surfaced = True
+            raise RuntimeError("Background recording write failed") from background.error
+
+    def _drain(self):
+        if self._background is not None:
+            self._background.queue.join()
+            self._raise_background_error()
+
     def _check_budget(self, additional):
         try:
+            pending = 0 if self._background is None else self._background.pending_bytes
             if self._max_bytes is not None and self._bytes + additional > self._max_bytes:
                 raise RuntimeError("Recording quota exceeded before publication")
             if self.storage_budget is not None:
-                self.storage_budget.check(additional, path=self.path)
+                self.storage_budget.check(additional + pending, path=self.path)
         except (OSError, ValueError, RuntimeError):
             self._broken = True
             raise
@@ -99,12 +211,18 @@ class RunWriter:
             raise ValueError("run writer is closed or finished")
 
     def event(self, kind: str, **data):
+        self._raise_background_error()
         self._active()
         if not isinstance(kind, str) or not kind or "sequence" in data:
             raise ValueError("event requires a kind and cannot override its sequence")
         payload = _json({**data, "sequence": self._sequence, "kind": kind}) + "\n"
         payload_bytes = len(payload.encode("utf-8"))
         self._check_budget(payload_bytes)
+        if self._background is not None:
+            self._sequence += 1
+            self._bytes += payload_bytes
+            self._background.put(("event", payload), payload_bytes)
+            return
         try:
             self._events.write(payload)
             self._events.flush()
@@ -118,6 +236,7 @@ class RunWriter:
     def tick(self, episode: int, tick: int, **arrays):
         import numpy as np
 
+        self._raise_background_error()
         self._active()
         if not _integer(episode) or not _integer(tick) or not arrays:
             raise ValueError("tick requires nonnegative episode/tick numbers and numeric arrays")
@@ -165,47 +284,75 @@ class RunWriter:
                                start=self._buffer[0][0], count=len(self._buffer), arrays=self._schema)
             event_bytes = len((_json({**chunk_event, "sequence": self._sequence, "kind": "chunk"}) + "\n").encode("utf-8"))
             self._check_budget(len(payload) + event_bytes)
-            with temporary.open("xb") as stream:
-                stream.write(payload)
-                stream.flush()
-                os.fsync(stream.fileno())
-            temporary.replace(path)
+            if self._background is not None:
+                self._background.put(("chunk", path, payload), len(payload))
+            else:
+                with temporary.open("xb") as stream:
+                    stream.write(payload)
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                temporary.replace(path)
             self._bytes += len(payload)
             self.event("chunk", **chunk_event)
         except Exception:
             self._broken = True
             raise
         finally:
-            temporary.unlink(missing_ok=True)
+            if self._background is None:  # The writer thread owns its temporary file.
+                temporary.unlink(missing_ok=True)
         self._buffer.clear()
         self._chunk += 1
 
+    def drain(self):
+        """Wait until queued background writes are durable; buffered ticks stay buffered.
+
+        Unlike ``flush`` this never publishes a partial chunk, so chunk boundaries are
+        unchanged. A no-op for synchronous writers, whose writes are already durable.
+        """
+        self._raise_background_error()
+        self._drain()
+
     def flush(self):
-        """Publish pending ticks without finishing the run."""
+        """Publish pending ticks without finishing the run; background writes drain."""
+        self._raise_background_error()
         self._active()
         self._flush()
+        self._drain()
 
     def finish(self, summary: dict, status="completed"):
+        self._raise_background_error()
         self._active()
         if not isinstance(status, str) or not status or status == "running":
             raise ValueError("finish requires a terminal status")
         manifest = {**self.manifest, **summary, "status": status, "recording_format": FORMAT}
         _json(manifest)
         self._flush()
+        self._drain()  # Every chunk and event is durable before the terminal manifest.
         manifest.update(recorded_ticks=self._tick_count, recorded_chunks=self._chunk, recorded_events=self._sequence)
         self._write_manifest(manifest)
         self.manifest = manifest
         self._finished = True
+        self._stop_background()
         self._events.close()
+
+    def _stop_background(self):
+        if self._background is not None and self._background.thread.is_alive():
+            self._background.stop()
 
     def close(self):
         """Publish pending ticks, retaining a running status unless finish succeeded."""
         if not self._events.closed:
             try:
-                if not self._broken:
+                if not self._broken and (self._background is None or self._background.error is None):
                     self._flush()
             finally:
-                self._events.close()
+                try:
+                    self._stop_background()  # Already accepted items still publish in order.
+                finally:
+                    self._events.close()
+            background = self._background
+            if background is not None and background.error is not None and not background.surfaced:
+                self._raise_background_error()
 
 
 def iter_ticks(path: Path):

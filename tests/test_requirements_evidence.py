@@ -84,7 +84,9 @@ def test_every_simulation_completion_gate_has_one_explicit_status():
     assert {gate for gate, _ in actual} == GATES
     assert {status for _, status in actual} <= STATUSES
     assert all(status != "deferred" for _, status in actual)
-    assert dict(actual)["SIM-LAB"] == "failed"
+    # The manual-browser gate passed in manual lab refresh v5; asset-backed setup and
+    # profile browser workflows remain, so the gate is limited, not passed.
+    assert dict(actual)["SIM-LAB"] == "limited"
 
 
 def test_release_matrix_links_are_portable(tmp_path):
