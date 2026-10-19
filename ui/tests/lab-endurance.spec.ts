@@ -74,6 +74,11 @@ test('mixed browser endurance with forced-GC renderer samples',async({page},info
       cycle.replay={mode,result:JSON.parse(await replayReport.innerText())};
       await page.getByRole('button',{name:'Recorded playback',exact:true}).click();await expect(page.locator('.mode')).toHaveText('Recorded playback');
       await page.getByLabel('Recorded run',{exact:true}).selectOption('');
+      // Run lists stay bounded; any older run is still reachable through search.
+      cycle.window={recorded_options:await page.getByLabel('Recorded run',{exact:true}).locator('option').count()};
+      expect(cycle.window.recorded_options).toBeLessThanOrEqual(21);
+      if(cycles.length){const first=cycles[0].source;const search=page.getByLabel('Find run',{exact:true});await search.fill(first.slice(0,10));
+        await expect(page.getByLabel('Recorded run',{exact:true}).locator(`option[value="${first}"]`)).toHaveCount(1);cycle.window.search_reached_first_source=true;await search.fill('');}
       if(await page.getByRole('button',{name:'Close run',exact:true}).isEnabled())await page.getByRole('button',{name:'Close run',exact:true}).click();
       // Interruption: reload every fifth cycle and require stream recovery.
       if(ordinal%5===4){await page.reload();await expect(page.locator('.connection')).toContainText('Local stream connected',{timeout:15_000});cycle.reloaded=true;}
