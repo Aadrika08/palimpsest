@@ -113,6 +113,15 @@ class BrowserFilesystems(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'initial floor'):
                 v4.preflight_facts()
 
+    def test_browser_phase_failure_is_recorded_not_raised(self):
+        class Done:
+            returncode = 1
+            def poll(self):
+                return 1
+        self.assertEqual(v4.checked_wait(Done(), 30, v4.time.monotonic(), 60, require_success=False), 1)
+        with self.assertRaisesRegex(RuntimeError, 'Child exited 1'):
+            v4.checked_wait(Done(), 30, v4.time.monotonic(), 60)
+
     def test_continuing_floor_stops_a_running_phase(self):
         class Child:
             returncode = None

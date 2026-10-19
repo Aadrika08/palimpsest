@@ -307,7 +307,10 @@ def observe():
     assert len(OBSERVED) <= PROCESS_CEILING, 'Owned process inventory exceeds frozen ceiling'
 
 
-def checked_wait(child, seconds, start, worker_deadline):
+def checked_wait(child, seconds, start, worker_deadline, require_success=True):
+    """Wait under floors and deadlines. Browser phases record a failed exit and
+    continue, so one consumed session always yields acceptance and endurance
+    evidence; the evaluation then fails it."""
     until, last = time.monotonic() + seconds, 0.
     while child.poll() is None:
         if time.monotonic() - last >= 1.:
@@ -319,8 +322,9 @@ def checked_wait(child, seconds, start, worker_deadline):
         if time.monotonic() > until or time.monotonic() - start > worker_deadline:
             raise TimeoutError('Frozen child/aggregate deadline exceeded')
         time.sleep(.1)
-    if child.returncode:
+    if child.returncode and require_success:
         raise RuntimeError(f'Child exited {child.returncode}')
+    return child.returncode
 
 
 def check_server_logs():
@@ -348,7 +352,7 @@ def serve(name, start, worker_deadline, result):
                     time.sleep(.1)
             browser = subprocess.Popen(COMMANDS[name], cwd=ROOT / 'ui', env=environment(name))
             try:
-                checked_wait(browser, deadlines()['phases'][name], start, worker_deadline)
+                checked_wait(browser, deadlines()['phases'][name], start, worker_deadline, require_success=False)
             finally:
                 if browser.poll() is None:
                     browser.terminate()

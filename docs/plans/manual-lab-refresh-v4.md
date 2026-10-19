@@ -66,4 +66,6 @@ The worker runs these phases in order:
 - Cleanup allows one natural-exit window of 2 s for exact descendant identities. A survivor is killed and fails the session.
 - Deadlines: worker 5730 s, supervisor 5790 s, publication 5880 s, outer TERM at 5970 s and KILL 10 s after that.
 
+A failed browser phase is recorded and the session continues, so the single consumed allocation always produces both acceptance and endurance evidence; the evaluation then fails it. Infrastructure failures stop the session: a floor, a deadline, server readiness or shutdown, or a selection mismatch.
+
 Qualification claims remain empty. This session is software and browser acceptance of the lab only. It makes no human-usability, artistic, scientific or hardware claim.
