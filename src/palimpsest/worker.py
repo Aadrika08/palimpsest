@@ -281,6 +281,12 @@ def _snapshot(engine, path, registry, config, initial=False, budget=None, prefli
     engine.writer.event("snapshot_registered", run_id=engine.run_id, snapshot_id=identifier,
                         filename=filename, initial=initial, episode=engine.episode, tick=engine.episode_step,
                         revision=engine.revision, sha256=registry[identifier]["sha256"])
+    # A branch may read this still-owned source run as soon as the id is returned;
+    # its registration event must already be published (no chunk-boundary change).
+    # Writer test doubles without background writes have nothing to drain.
+    drain = getattr(engine.writer, "drain", None)
+    if drain is not None:
+        drain()
     return identifier
 
 

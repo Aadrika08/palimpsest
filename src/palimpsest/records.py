@@ -303,6 +303,15 @@ class RunWriter:
         self._buffer.clear()
         self._chunk += 1
 
+    def drain(self):
+        """Wait until queued background writes are durable; buffered ticks stay buffered.
+
+        Unlike ``flush`` this never publishes a partial chunk, so chunk boundaries are
+        unchanged. A no-op for synchronous writers, whose writes are already durable.
+        """
+        self._raise_background_error()
+        self._drain()
+
     def flush(self):
         """Publish pending ticks without finishing the run; background writes drain."""
         self._raise_background_error()
