@@ -4,14 +4,14 @@ import {RUN_WINDOW,windowRuns,windowSnapshots} from '../src/run-window.ts';
 // A bounded window keeps selects small while every run stays reachable by search.
 const runs=Array.from({length:90},(_,i)=>({run_id:i.toString(16).padStart(32,'0'),controller:i%2?'teacher':'manual',scenario:'sparse-navigation'}));
 const ids=(view:{runs:{run_id:string}[]})=>view.runs.map(r=>r.run_id);
-assert.equal(RUN_WINDOW,20);
+assert.equal(RUN_WINDOW,10);
 const plain=windowRuns(runs,{query:'',pinned:[],recent:[]});
-assert.equal(plain.runs.length,20);assert.equal(plain.hidden,70);assert.equal(plain.total,90);
+assert.equal(plain.runs.length,10);assert.equal(plain.hidden,80);assert.equal(plain.total,90);
 // Session-recent runs come first, newest first; selected values are always present.
 const recent=[runs[89].run_id,runs[88].run_id];const pinned=[runs[3].run_id,'',runs[89].run_id];
 const view=windowRuns(runs,{query:'',pinned,recent});
 assert.deepEqual(ids(view).slice(0,3),[runs[3].run_id,runs[89].run_id,runs[88].run_id]);
-assert.equal(view.runs.length,20);assert.equal(new Set(ids(view)).size,20);
+assert.equal(view.runs.length,10);assert.equal(new Set(ids(view)).size,10);
 // Search reaches any run by id fragment, controller or scenario; pins stay visible.
 assert.deepEqual(ids(windowRuns(runs,{query:runs[45].run_id.slice(-4),pinned:[],recent:[]})),[runs[45].run_id]);
 assert.deepEqual(ids(windowRuns(runs,{query:' '+runs[45].run_id.slice(-6).toUpperCase()+' ',pinned:[runs[3].run_id],recent:[]})),[runs[3].run_id,runs[45].run_id]);
@@ -24,7 +24,7 @@ for(const run of runs)assert.ok(ids(windowRuns(runs,{query:run.run_id,pinned:[],
 // Snapshots: newest last in state; the window keeps the chosen one and the newest, or search matches.
 const snaps=Array.from({length:60},(_,i)=>({run_id:runs[i].run_id,snapshot_id:'s'+i,revision:i}));
 const sv=windowSnapshots(snaps,{query:'',chosen:'s2'});
-assert.equal(sv.snapshots.length,20);assert.equal(sv.snapshots[0].snapshot_id,'s2');assert.equal(sv.snapshots.at(-1)!.snapshot_id,'s59');assert.equal(sv.hidden,40);
+assert.equal(sv.snapshots.length,10);assert.equal(sv.snapshots[0].snapshot_id,'s2');assert.equal(sv.snapshots.at(-1)!.snapshot_id,'s59');assert.equal(sv.hidden,50);
 assert.deepEqual(windowSnapshots(snaps,{query:runs[7].run_id,chosen:''}).snapshots.map(s=>s.snapshot_id),['s7']);
-assert.deepEqual(windowSnapshots(snaps,{query:'s1',chosen:''}).snapshots.length,11);
+assert.deepEqual(windowSnapshots(snaps,{query:'s1',chosen:''}).snapshots.length,10);assert.equal(windowSnapshots(snaps,{query:'s1',chosen:''}).hidden,1);
 console.log('Run window checks passed: bounded selects, pinned and recent runs, search reaches every run and snapshot.');

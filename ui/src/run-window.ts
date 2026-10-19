@@ -4,7 +4,7 @@ import type {RunSummary, Snapshot} from './protocol';
 // so the page's DOM stays bounded however many runs a session records. Selected
 // values are always present, runs from this browser session come first, and a
 // search over id, controller and scenario reaches any run.
-export const RUN_WINDOW=20;
+export const RUN_WINDOW=10;
 
 type RunView={runs:RunSummary[];total:number;hidden:number};
 

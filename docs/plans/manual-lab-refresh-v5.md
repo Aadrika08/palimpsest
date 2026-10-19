@@ -6,7 +6,7 @@ The v3 failure has a cause and a fix (see the [diagnosis](../reports/lab-chromiu
 
 v5 follows v4. [v4](../reports/manual-lab-refresh-v4.md) passed everything that ran, but an interruption stopped it at endurance cycle 18 of 30. It also showed the page's idle DOM growing by about 70 nodes per cycle. That growth came from every recorded run being rendered into the run and snapshot selects. v5 makes three changes:
 
-1. **Bounded run lists.** The UI shows a window of 20 runs and snapshots (`ui/src/run-window.ts`). Selected runs and this tab's recent runs always appear in it. A **Find run** search over run id, controller and scenario reaches any run, so every run stays selectable. Checked by `npm run test:run-window`; the endurance spec also searches for cycle 0's source run on every later cycle.
+1. **Bounded run lists.** The UI shows a window of 10 runs and 10 snapshots (`ui/src/run-window.ts`). Selected runs and this tab's recent runs always appear in it. A **Find run** search over run id, controller and scenario reaches any run, so every run stays selectable. Checked by `npm run test:run-window`; the endurance spec also searches for cycle 0's source run on every later cycle.
 2. **A DOM-node gate.** Idle post-GC DOM nodes are gated under the same rule as listeners. The thresholds are set from rehearsal data.
 3. **A detached launcher.** Root starts the session as a transient systemd user unit (`detached_command()` in the runner; the exact command is in the preparation report). It needs no TTY and no parent process. The runner refreshes an atomic heartbeat file at `.superpowers/sdd/manual-lab-refresh-v5/progress.json` at least every 5 s, recording the phase, status, elapsed time, endurance cycles completed out of expected, free space and pid.
 
