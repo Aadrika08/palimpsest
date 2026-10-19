@@ -7,7 +7,9 @@
   - The supervisor recorded the worker as `interrupted`, and the worker failed with `KeyboardInterrupt` (from the SIGTERM handler).
   - The endurance browser was stopped at cycle 18 of 30.
   - Every phase before the interruption had passed.
-- **Evidence** is in [`manual-lab-refresh-v4-evidence/`](manual-lab-refresh-v4-evidence/), byte copies made by the runner's publish step: 51 files, 28 MB, including the endurance Playwright trace. The run was interrupted before `publication.json` was written; the partial publication is retained as-is.
+- **Evidence** is in [`manual-lab-refresh-v4-evidence/`](manual-lab-refresh-v4-evidence/). The runner's publish step made byte copies, including the registration and the endurance Playwright trace. The run was interrupted before `publication.json` was written.
+  - git ignores `.superpowers/` paths, so after the session the 49 published phase files were packed into `retained-records.zip`: 5,210,561 bytes, sha256 in `publication-index.json`.
+  - Each member was compared byte-for-byte with its canonical phase file and read back from the archive.
 - The canonical phase folder `.superpowers/sdd/manual-lab-refresh-v4/` is kept locally, ignored by git, 2.2 GB including runs. Its `result.json` says `failed`.
 
 ## Criteria with measured values
