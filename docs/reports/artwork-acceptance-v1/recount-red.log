@@ -1,0 +1,109 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ Recount.test_cached_budget_walks_once_per_interval_and_counts_admitted_bytes _
+
+self = <test_storage_recount.Recount testMethod=test_cached_budget_walks_once_per_interval_and_counts_admitted_bytes>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+__________ Recount.test_default_budget_still_walks_before_every_check __________
+
+self = <test_storage_recount.Recount testMethod=test_default_budget_still_walks_before_every_check>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+_______ Recount.test_files_written_by_this_writer_are_never_undercounted _______
+
+self = <test_storage_recount.Recount testMethod=test_files_written_by_this_writer_are_never_undercounted>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+___________ Recount.test_free_space_floor_is_checked_on_every_write ____________
+
+self = <test_storage_recount.Recount testMethod=test_free_space_floor_is_checked_on_every_write>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+__________________ Recount.test_invalid_interval_is_rejected ___________________
+
+self = <test_storage_recount.Recount testMethod=test_invalid_interval_is_rejected>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+____________ Recount.test_live_owner_budget_uses_the_cached_recount ____________
+
+self = <test_storage_recount.Recount testMethod=test_live_owner_budget_uses_the_cached_recount>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+_______ Recount.test_recording_quota_is_unchanged_with_cached_accounting _______
+
+self = <test_storage_recount.Recount testMethod=test_recording_quota_is_unchanged_with_cached_accounting>
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.clock = [100.]
+>       patcher = patch.object(storage.time, 'monotonic', side_effect=lambda: self.clock[0])
+                               ^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.storage' has no attribute 'time'
+
+tests/test_storage_recount.py:21: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_storage_recount.py::Recount::test_cached_budget_walks_once_per_interval_and_counts_admitted_bytes
+FAILED tests/test_storage_recount.py::Recount::test_default_budget_still_walks_before_every_check
+FAILED tests/test_storage_recount.py::Recount::test_files_written_by_this_writer_are_never_undercounted
+FAILED tests/test_storage_recount.py::Recount::test_free_space_floor_is_checked_on_every_write
+FAILED tests/test_storage_recount.py::Recount::test_invalid_interval_is_rejected
+FAILED tests/test_storage_recount.py::Recount::test_live_owner_budget_uses_the_cached_recount
+FAILED tests/test_storage_recount.py::Recount::test_recording_quota_is_unchanged_with_cached_accounting
+7 failed in 0.17s
