@@ -1,0 +1,93 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_______________ PairTests.test_each_eye_reaches_its_own_channel ________________
+
+self = <test_afterimage_pair.PairTests testMethod=test_each_eye_reaches_its_own_channel>
+
+    def test_each_eye_reaches_its_own_channel(self):
+>       run, policy = self.record()
+                      ^^^^^^^^^^^^^
+
+tests/test_afterimage_pair.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_afterimage_pair.py:46: in record
+    afterimage._record(afterimage.load_stimulus(self.root / 'stimulus.json'), policy, run, self.identity,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/palimpsest/afterimage.py:80: in load_stimulus
+    spec = _spec(artifacts._json(payload))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'creator': 'Palimpsest public lab run', 'eyes': 'recorded-pair', 'frame_file': 'frames.npy', 'frame_file_sha256': '7fd26e7b0b101a77bc6cc58b2a5db7bfe3dd9bebe61d99d5dd8e80e567176364', ...}
+
+    def _spec(value):
+        required = {'schema_version', 'title', 'creator', 'frame_file', 'frame_file_sha256', 'source_times_seconds', 'rights'}
+        if not isinstance(value, dict) or set(value) != required or type(value['schema_version']) is not int or value['schema_version'] != 1:
+>           raise ValueError('unsupported stimulus manifest schema')
+E           ValueError: unsupported stimulus manifest schema
+
+src/palimpsest/afterimage.py:54: ValueError
+_____________ PairTests.test_pair_shape_and_declaration_are_strict _____________
+ValueError: unsupported stimulus manifest schema
+
+During handling of the above exception, another exception occurred:
+
+self = <test_afterimage_pair.PairTests testMethod=test_pair_shape_and_declaration_are_strict>
+
+    def test_pair_shape_and_declaration_are_strict(self):
+        for change in ({'eyes': 'same-frame'}, {'source': None}, {'schema_version': 3}):
+            with self.subTest(change=change):
+                (self.root / 'stimulus.json').write_text(json.dumps({**self.spec, **change}))
+                with self.assertRaises(ValueError):
+                    afterimage.load_stimulus(self.root / 'stimulus.json')
+        np.save(self.root / 'frames.npy', self.frames[:, 0])  # a single eye is not a pair
+        spec = {**self.spec, 'frame_file_sha256': hashlib.sha256((self.root / 'frames.npy').read_bytes()).hexdigest()}
+        (self.root / 'stimulus.json').write_text(json.dumps(spec))
+>       with self.assertRaisesRegex(ValueError, 'T×2×128×128×3'):
+E       AssertionError: "T×2×128×128×3" does not match "unsupported stimulus manifest schema"
+
+tests/test_afterimage_pair.py:84: AssertionError
+__ PairTests.test_render_records_the_pair_interface_without_embedding_frames ___
+
+self = <test_afterimage_pair.PairTests testMethod=test_render_records_the_pair_interface_without_embedding_frames>
+
+    def test_render_records_the_pair_interface_without_embedding_frames(self):
+>       run, _ = self.record()
+                 ^^^^^^^^^^^^^
+
+tests/test_afterimage_pair.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_afterimage_pair.py:46: in record
+    afterimage._record(afterimage.load_stimulus(self.root / 'stimulus.json'), policy, run, self.identity,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/palimpsest/afterimage.py:80: in load_stimulus
+    spec = _spec(artifacts._json(payload))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'creator': 'Palimpsest public lab run', 'eyes': 'recorded-pair', 'frame_file': 'frames.npy', 'frame_file_sha256': '7fd26e7b0b101a77bc6cc58b2a5db7bfe3dd9bebe61d99d5dd8e80e567176364', ...}
+
+    def _spec(value):
+        required = {'schema_version', 'title', 'creator', 'frame_file', 'frame_file_sha256', 'source_times_seconds', 'rights'}
+        if not isinstance(value, dict) or set(value) != required or type(value['schema_version']) is not int or value['schema_version'] != 1:
+>           raise ValueError('unsupported stimulus manifest schema')
+E           ValueError: unsupported stimulus manifest schema
+
+src/palimpsest/afterimage.py:54: ValueError
+________ PairTests.test_six_hundred_pairs_fit_the_input_and_record_caps ________
+
+self = <test_afterimage_pair.PairTests testMethod=test_six_hundred_pairs_fit_the_input_and_record_caps>
+
+    def test_six_hundred_pairs_fit_the_input_and_record_caps(self):
+        pair_bytes = 600 * 2 * 128 * 128 * 3
+>       self.assertLessEqual(pair_bytes + 4096, afterimage.MAX_PAIR_INPUT_BYTES)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.afterimage' has no attribute 'MAX_PAIR_INPUT_BYTES'
+
+tests/test_afterimage_pair.py:89: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_afterimage_pair.py::PairTests::test_each_eye_reaches_its_own_channel
+FAILED tests/test_afterimage_pair.py::PairTests::test_pair_shape_and_declaration_are_strict
+FAILED tests/test_afterimage_pair.py::PairTests::test_render_records_the_pair_interface_without_embedding_frames
+FAILED tests/test_afterimage_pair.py::PairTests::test_six_hundred_pairs_fit_the_input_and_record_caps
+4 failed, 1 passed in 0.22s

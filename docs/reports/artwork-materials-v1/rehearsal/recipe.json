@@ -1,0 +1,153 @@
+{
+  "commit": "c81fbd2f6cd82fe08c6fa65e50e67a1e424a756a",
+  "flynn_receipt": {
+    "arguments": {
+      "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+      "episode_ticks": 50,
+      "episodes": 2,
+      "max_bytes": 4294967296,
+      "min_free_bytes": 10737418240,
+      "output": "/home/utkarsh/.cache/artwork-materials-v1-detached-rehearsal/all/flynn",
+      "scenario": "sparse-navigation",
+      "seed": 0,
+      "stage": "flynn",
+      "total_ticks": 100
+    },
+    "commit": "c81fbd2f6cd82fe08c6fa65e50e67a1e424a756a",
+    "episodes": [
+      {
+        "ending": "declared-length reset",
+        "episode": 0,
+        "last_outcome": null,
+        "ticks": 50
+      },
+      {
+        "ending": "declared-length reset",
+        "episode": 1,
+        "last_outcome": null,
+        "ticks": 50
+      }
+    ],
+    "files": {
+      "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000000.npz": {
+        "sha256": "a7d746916d6ad7f0a60f4a159d9f4d4d46571093f483bde8253e13676e73ac76",
+        "size_bytes": 6919538
+      },
+      "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000001.npz": {
+        "sha256": "0f54093a050711bdee10f369aa1c98935d3dca76676a4067c0d3a320d1a671da",
+        "size_bytes": 3894222
+      },
+      "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000002.npz": {
+        "sha256": "81096cb410bb19a22701367cd58ef949bb7fde342cbe731b0af9bca2fa520b58",
+        "size_bytes": 6919538
+      },
+      "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000003.npz": {
+        "sha256": "1b01670c3ec3476e48353af28527eda85624f641c1b4b7cbfbc37b6adedd3a8b",
+        "size_bytes": 3894222
+      },
+      "runs/c8186aeb08844a49b99708d994e32973/recording/events.jsonl": {
+        "sha256": "e6fedda0adc5d933a6074c2716371c119280547c6e8ae76e3e73fd39b65c84be",
+        "size_bytes": 126308
+      },
+      "runs/c8186aeb08844a49b99708d994e32973/recording/manifest.json": {
+        "sha256": "fc2ea4e711fdd8c5207f7f341d78a8ad45463bfc0fefb9017d5a042c387d76af",
+        "size_bytes": 2270
+      }
+    },
+    "recorded_ticks": 100,
+    "schedule": "FLYNN policy; no manual input",
+    "schema": "artwork-materials-v1-session",
+    "source_run_id": "c8186aeb08844a49b99708d994e32973",
+    "stage": "flynn",
+    "status": "completed"
+  },
+  "manual_receipt": {
+    "arguments": {
+      "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+      "branch_at": 20,
+      "episode_ticks": 50,
+      "episodes": 2,
+      "max_bytes": 4294967296,
+      "min_free_bytes": 10737418240,
+      "output": "/home/utkarsh/.cache/artwork-materials-v1-detached-rehearsal/all/manual",
+      "scenario": "sparse-navigation",
+      "seed": 0,
+      "stage": "manual",
+      "total_ticks": 0
+    },
+    "branch_edit": {
+      "kind": "move_goal",
+      "label": "goal moved at the branch snapshot",
+      "xy": [
+        5.0,
+        5.0
+      ]
+    },
+    "branch_ending": "paused",
+    "branch_run_id": "5a0554278b274b879904f8e034d6d1fc",
+    "branch_snapshot_id": "128ca15931b44f2186e471739b696235",
+    "branch_tick": 20,
+    "branch_ticks": 30,
+    "commit": "c81fbd2f6cd82fe08c6fa65e50e67a1e424a756a",
+    "episodes": [
+      {
+        "ending": "declared-length reset",
+        "episode": 0,
+        "last_outcome": null,
+        "ticks": 50
+      },
+      {
+        "ending": "declared-length reset",
+        "episode": 1,
+        "last_outcome": null,
+        "ticks": 50
+      }
+    ],
+    "files": {
+      "runs/14b5ab61bb894fcb92f318ed2c61305d/recording/chunks/000000.npz": {
+        "sha256": "40b7dc19484e75c17d185ff6a7b88e13b04581066336d2af59dcec78d9ff3251",
+        "size_bytes": 3938940
+      },
+      "runs/14b5ab61bb894fcb92f318ed2c61305d/recording/chunks/000001.npz": {
+        "sha256": "d902388fa6e16ca58a21bf6558803b7f2765084b01542d3a95b3b1c2ef0265ab",
+        "size_bytes": 5906400
+      },
+      "runs/14b5ab61bb894fcb92f318ed2c61305d/recording/chunks/000002.npz": {
+        "sha256": "d96d9e64b4700ac6a93a7f3a773b6efaa553a7af24f57d2aa96526c371de4e76",
+        "size_bytes": 6299892
+      },
+      "runs/14b5ab61bb894fcb92f318ed2c61305d/recording/chunks/000003.npz": {
+        "sha256": "31783c08290ed00c678fdcef6fb53dc4ea204282b39b7863582d128524dc34c9",
+        "size_bytes": 3545448
+      },
+      "runs/14b5ab61bb894fcb92f318ed2c61305d/recording/events.jsonl": {
+        "sha256": "a84007fe2ec820e7fa215d62d0f0598fd8bfac54ea7a7cc06c14d992129a688b",
+        "size_bytes": 229033
+      },
+      "runs/14b5ab61bb894fcb92f318ed2c61305d/recording/manifest.json": {
+        "sha256": "8d1415c7f41d3e45195198676cbc8069feacc3d202077e3c860f185387394acf",
+        "size_bytes": 2232
+      },
+      "runs/5a0554278b274b879904f8e034d6d1fc/recording/chunks/000000.npz": {
+        "sha256": "acfb4cc1512eae947885b41b90ff32e827f64c22a6f422d93c0e28c5c7edd307",
+        "size_bytes": 5906400
+      },
+      "runs/5a0554278b274b879904f8e034d6d1fc/recording/events.jsonl": {
+        "sha256": "6cd00652469bcdcfd6dbf81501f41e6610e2a1f1aacc1a2906770ccf75e5f23c",
+        "size_bytes": 81219
+      },
+      "runs/5a0554278b274b879904f8e034d6d1fc/recording/manifest.json": {
+        "sha256": "ea0def3550bb1985e115b025974e6c6115a55d23a9b88832238bcde0c4ba9f63",
+        "size_bytes": 2399
+      }
+    },
+    "recorded_ticks": 100,
+    "schedule": "action = [0.8, 0.6 * sin(2 * pi * tick * 0.02 / 5)] for global tick index (fixed, public)",
+    "schema": "artwork-materials-v1-session",
+    "source_run_id": "14b5ab61bb894fcb92f318ed2c61305d",
+    "stage": "manual",
+    "status": "completed"
+  },
+  "schedule": "action = [0.8, 0.6 * sin(2 * pi * tick * 0.02 / 5)] for global tick index (fixed, public)",
+  "schema": "artwork-materials-v1-recipe"
+}

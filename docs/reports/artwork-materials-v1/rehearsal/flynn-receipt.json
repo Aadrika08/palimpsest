@@ -1,0 +1,61 @@
+{
+  "arguments": {
+    "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "episode_ticks": 50,
+    "episodes": 2,
+    "max_bytes": 4294967296,
+    "min_free_bytes": 10737418240,
+    "output": "/home/utkarsh/.cache/artwork-materials-v1-detached-rehearsal/all/flynn",
+    "scenario": "sparse-navigation",
+    "seed": 0,
+    "stage": "flynn",
+    "total_ticks": 100
+  },
+  "commit": "c81fbd2f6cd82fe08c6fa65e50e67a1e424a756a",
+  "episodes": [
+    {
+      "ending": "declared-length reset",
+      "episode": 0,
+      "last_outcome": null,
+      "ticks": 50
+    },
+    {
+      "ending": "declared-length reset",
+      "episode": 1,
+      "last_outcome": null,
+      "ticks": 50
+    }
+  ],
+  "files": {
+    "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000000.npz": {
+      "sha256": "a7d746916d6ad7f0a60f4a159d9f4d4d46571093f483bde8253e13676e73ac76",
+      "size_bytes": 6919538
+    },
+    "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000001.npz": {
+      "sha256": "0f54093a050711bdee10f369aa1c98935d3dca76676a4067c0d3a320d1a671da",
+      "size_bytes": 3894222
+    },
+    "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000002.npz": {
+      "sha256": "81096cb410bb19a22701367cd58ef949bb7fde342cbe731b0af9bca2fa520b58",
+      "size_bytes": 6919538
+    },
+    "runs/c8186aeb08844a49b99708d994e32973/recording/chunks/000003.npz": {
+      "sha256": "1b01670c3ec3476e48353af28527eda85624f641c1b4b7cbfbc37b6adedd3a8b",
+      "size_bytes": 3894222
+    },
+    "runs/c8186aeb08844a49b99708d994e32973/recording/events.jsonl": {
+      "sha256": "e6fedda0adc5d933a6074c2716371c119280547c6e8ae76e3e73fd39b65c84be",
+      "size_bytes": 126308
+    },
+    "runs/c8186aeb08844a49b99708d994e32973/recording/manifest.json": {
+      "sha256": "fc2ea4e711fdd8c5207f7f341d78a8ad45463bfc0fefb9017d5a042c387d76af",
+      "size_bytes": 2270
+    }
+  },
+  "recorded_ticks": 100,
+  "schedule": "FLYNN policy; no manual input",
+  "schema": "artwork-materials-v1-session",
+  "source_run_id": "c8186aeb08844a49b99708d994e32973",
+  "stage": "flynn",
+  "status": "completed"
+}

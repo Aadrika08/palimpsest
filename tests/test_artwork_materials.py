@@ -69,7 +69,7 @@ class Generators(unittest.TestCase):
 
     def test_detached_commands_need_no_tty_and_queue_on_the_shared_lock(self):
         full = m.commands(self.root, scale='full')
-        self.assertEqual(set(full), {'manual', 'flynn', 'materials'})
+        self.assertEqual(set(full), {'all', 'manual', 'flynn', 'materials'})
         for name, command in full.items():
             self.assertEqual(command[:2], ['systemd-run', '--user'])
             self.assertIn('--property=StandardInput=null', command)
@@ -79,11 +79,21 @@ class Generators(unittest.TestCase):
             self.assertEqual(command[lock + 1], m.LOCK)  # no -w: stages queue in order
             self.assertEqual(command[lock + 2:lock + 4], ['timeout', '--signal=TERM'])
             self.assertEqual(command[command.index('--output') + 1], str(self.root / name))
+        self.assertEqual(full['all'][full['all'].index('--scale') + 1], 'full')
         self.assertEqual(full['flynn'][full['flynn'].index('--total-ticks') + 1], '6000')
         self.assertEqual(full['materials'][full['materials'].index('--frames') + 1], '600')
         self.assertEqual(full['materials'][full['materials'].index('--choir-seconds') + 1], '120')
         rehearsal = m.commands(self.root, scale='rehearsal')
         self.assertTrue(all(cmd[2].endswith('-rehearsal') for cmd in rehearsal.values()))
+
+
+    def test_admission_refuses_when_estimated_outputs_cross_the_floor(self):
+        from unittest.mock import patch
+        from types import SimpleNamespace
+        with patch.object(m.shutil, 'disk_usage', return_value=SimpleNamespace(free=m.FREE_FLOOR + 2 * 1024**3)):
+            with self.assertRaisesRegex(RuntimeError, 'would cross'):
+                m.admit(self.root, ('manual', 'flynn', 'materials'))
+            m.admit(self.root, ('manual',))
 
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ PYTHON = '/home/utkarsh/Work/shraddha/brain/.venv/bin/python'
 ASSETS = Path('/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn')
 GiB = 1024**3
 DT = .02
-FREE_FLOOR = 10 * GiB  # stop rather than eat into the operator's 10 GiB margin
+FREE_FLOOR = 10 * GiB  # default: stop rather than eat into the operator's 10 GiB margin
 SCHEDULE = 'action = [0.8, 0.6 * sin(2 * pi * tick * 0.02 / 5)] for global tick index (fixed, public)'
 GOAL_CANDIDATES = ([5., 5.], [-5., 5.], [5., -5.], [-5., -5.], [0., 5.], [5., 0.], [0., -5.], [-5., 0.])
 
@@ -99,6 +99,16 @@ def floor_check(path):
     free = shutil.disk_usage(path).free
     if free < FREE_FLOOR:
         raise RuntimeError(f'free space {free} below the {FREE_FLOOR}-byte floor')
+
+
+ESTIMATED_BYTES = {'manual': 700 * 1024**2, 'flynn': 1400 * 1024**2, 'materials': 250 * 1024**2}
+
+
+def admit(path, stages):
+    """Refuse up front when the declared floor cannot survive the estimated outputs."""
+    free, need = shutil.disk_usage(path).free, sum(ESTIMATED_BYTES[s] for s in stages)
+    if free - need < FREE_FLOOR:
+        raise RuntimeError(f'free space {free} minus estimated outputs {need} would cross the {FREE_FLOOR}-byte floor')
 
 
 # --------------------------------------------------------------------------- lab sessions
@@ -488,6 +498,8 @@ const audio=document.querySelector('audio'),stop=document.getElementById('stop-a
         'afterimage': sources['afterimage'].name, 'left': manual['source_run_id'], 'right': manual['branch_run_id'],
         'choir': flynn['source_run_id']}, 'files': input_manifest(sources, inputs)})
     route = [episode['ticks'] + 1 for episode in manual['episodes']]
+    # Declared Choir length is what was recorded (episodes may end early); the request is kept beside it.
+    declared = {**declared, 'choir_requested_seconds': declared['choir_seconds'], 'choir_seconds': round(seconds, 9)}
     write_json(pack / 'declaration.json', {'schema': 'artwork-materials-v1-declaration', **declared,
                                            'borrowed_body_route_points': route,
                                            'one_map_route_points': sorted(set(route + [manual['branch_ticks'] + 1])),
@@ -519,21 +531,46 @@ def detached(stage, unit, output_root, extra, timeout):
 
 
 def commands(output_root, *, scale='full'):
+    suffix = '-rehearsal' if scale == 'rehearsal' else ''
+    timeouts = {'manual': 3600, 'flynn': 6 * 3600, 'materials': 3600, 'all': 8 * 3600}
+    extra = stage_arguments(scale, output_root)
+    result = {'all': detached('all', f'palimpsest-art-all{suffix}', output_root, ['--scale', scale], timeouts['all'])}
+    for stage in ('manual', 'flynn', 'materials'):
+        result[stage] = detached(stage, f'palimpsest-art-{stage}{suffix}', output_root, extra[stage], timeouts[stage])
+    return result
+
+
+def stage_arguments(scale, output_root):
     rehearsal = scale == 'rehearsal'
-    manual = ['--episodes', '2' if rehearsal else '5', '--episode-ticks', '50' if rehearsal else '600',
-              '--branch-at', '20' if rehearsal else '300']
-    flynn = ['--episodes', '2' if rehearsal else '10', '--episode-ticks', '50' if rehearsal else '600',
-             '--total-ticks', '100' if rehearsal else '6000']
     root = Path(output_root)
-    materials = ['--manual', str(root / 'manual'), '--flynn', str(root / 'flynn'), '--frames', '20' if rehearsal else '600',
-                 '--stride', '5', '--choir-seconds', '2' if rehearsal else '120', '--declared-gain', '1']
-    suffix = '-rehearsal' if rehearsal else ''
-    return {'manual': detached('manual', f'palimpsest-art-manual{suffix}', root, manual, 1800 if rehearsal else 3600),
-            'flynn': detached('flynn', f'palimpsest-art-flynn{suffix}', root, flynn, 3600 if rehearsal else 6 * 3600),
-            'materials': detached('materials', f'palimpsest-art-materials{suffix}', root, materials, 1800 if rehearsal else 3600)}
+    return {'manual': ['--episodes', '2' if rehearsal else '5', '--episode-ticks', '50' if rehearsal else '600',
+                       '--branch-at', '20' if rehearsal else '300'],
+            'flynn': ['--episodes', '2' if rehearsal else '10', '--episode-ticks', '50' if rehearsal else '600',
+                      '--total-ticks', '100' if rehearsal else '6000'],
+            'materials': ['--manual', str(root / 'manual'), '--flynn', str(root / 'flynn'), '--frames', '20' if rehearsal else '600',
+                          '--stride', '5', '--choir-seconds', '2' if rehearsal else '120', '--declared-gain', '1']}
+
+
+def run_all(args):
+    """One process, one lock: stages run strictly in order and stop at the first failure."""
+    root = Path(args.output).absolute()
+    root.mkdir(parents=True, exist_ok=False)
+    admit(root, ('manual', 'flynn', 'materials') if args.scale == 'full' else ())
+    progress = Progress(root, 'all')
+    status = 'completed'
+    for stage, extra in stage_arguments(args.scale, root).items():
+        progress.update(step=stage)
+        code = main([stage, '--output', str(root / stage), '--assets', str(args.assets),
+                     '--min-free-bytes', str(FREE_FLOOR), *extra])
+        if code:
+            status = f'failed at {stage}'
+            break
+    progress.close(status)
+    return 0 if status == 'completed' else 1
 
 
 def main(argv=None):
+    global FREE_FLOOR
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     stages = parser.add_subparsers(dest='stage', required=True)
     for name in ('manual', 'flynn'):
@@ -557,10 +594,19 @@ def main(argv=None):
     materials.add_argument('--stride', type=int, default=5)
     materials.add_argument('--choir-seconds', type=float, default=120.)
     materials.add_argument('--declared-gain', type=float, default=1.)
+    every = stages.add_parser('all', help='manual, flynn and materials in order, under one lock')
+    every.add_argument('--output', type=Path, required=True)
+    every.add_argument('--assets', type=Path, default=ASSETS)
+    every.add_argument('--scale', choices=('full', 'rehearsal'), default='full')
+    for stage in (every, materials, *[stages.choices[name] for name in ('manual', 'flynn')]):
+        stage.add_argument('--min-free-bytes', type=int, default=FREE_FLOOR)
     show = stages.add_parser('detached')
     show.add_argument('--output-root', type=Path, required=True)
     show.add_argument('--scale', choices=('full', 'rehearsal'), default='full')
     args = parser.parse_args(argv)
+    FREE_FLOOR = getattr(args, 'min_free_bytes', FREE_FLOOR)
+    if args.stage == 'all':
+        return run_all(args)
     if args.stage == 'detached':
         import shlex
         for name, command in commands(args.output_root, scale=args.scale).items():

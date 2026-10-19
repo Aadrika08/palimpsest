@@ -1,0 +1,174 @@
+.........FFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+________________ EpisodeChoir.test_cli_dispatches_episode_range ________________
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_cli_dispatches_episode_range>
+
+    def test_cli_dispatches_episode_range(self):
+        from palimpsest import cli
+        run = self.fixture()
+        output = self.root / 'exports' / 'choir.wav'
+        output.parent.mkdir()
+>       code = cli.main(['sonify', str(run), '--population', 'visual_left', '--episodes', '0-2', '--max-seconds', '120',
+                         '--boundary-fade-seconds', '0.02', '--declared-gain', '1', '--output', str(output),
+                         '--min-free-bytes', '0'])
+
+tests/test_sonification_episodes.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/cli.py:124: in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:1877: in parse_args
+    self.error(msg % ' '.join(argv))
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2640: in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ArgumentParser(prog='palimpsest', usage=None, description=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+status = 2
+message = 'palimpsest: error: unrecognized arguments: --episodes 0-2 --max-seconds 120 --boundary-fade-seconds 0.02 --declared-gain 1\n'
+
+    def exit(self, status=0, message=None):
+        if message:
+            self._print_message(message, _sys.stderr)
+>       _sys.exit(status)
+E       SystemExit: 2
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/argparse.py:2627: SystemExit
+----------------------------- Captured stderr call -----------------------------
+usage: palimpsest [-h] [--repo REPO] [--assets ASSETS]
+                  {doctor,memory-fit,assets,evaluate,lab,replay,compare,export,sonify,atlas,specimens,afterimage}
+                  ...
+palimpsest: error: unrecognized arguments: --episodes 0-2 --max-seconds 120 --boundary-fade-seconds 0.02 --declared-gain 1
+_________ EpisodeChoir.test_declared_gain_is_explicit_and_never_clips __________
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_declared_gain_is_explicit_and_never_clips>
+
+    def test_declared_gain_is_explicit_and_never_clips(self):
+        run = self.fixture()
+>       plain, _ = self.read(self.export(run, 'plain.wav'))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sonification_episodes.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_declared_gain_is_explicit_and_never_clips>
+run = PosixPath('/tmp/tmpi1g6twex/eace759a0ea941fb8cbb3c0f19eba4a0')
+name = 'plain.wav', kwargs = {}
+options = {'boundary_fade_seconds': 0.02, 'declared_gain': 1.0, 'episodes': [0, 1, 2], 'max_seconds': 120, ...}
+
+    def export(self, run, name='choir.wav', **kwargs):
+        options = dict(populations=('visual_left',), episodes=[0, 1, 2], max_seconds=120, boundary_fade_seconds=.02,
+                       declared_gain=1.)
+        options.update(kwargs)
+>       return sonification.sonify_episodes(run, self.root / name, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.sonification' has no attribute 'sonify_episodes'
+
+tests/test_sonification_episodes.py:53: AttributeError
+______ EpisodeChoir.test_duration_cap_cuts_at_a_recorded_tick_and_says_so ______
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_duration_cap_cuts_at_a_recorded_tick_and_says_so>
+
+    def test_duration_cap_cuts_at_a_recorded_tick_and_says_so(self):
+>       samples, meta = self.read(self.export(self.fixture(), max_seconds=.2))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sonification_episodes.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_duration_cap_cuts_at_a_recorded_tick_and_says_so>
+run = PosixPath('/tmp/tmplh5z9njq/c128776af394473ab9176ceffe51a125')
+name = 'choir.wav', kwargs = {'max_seconds': 0.2}
+options = {'boundary_fade_seconds': 0.02, 'declared_gain': 1.0, 'episodes': [0, 1, 2], 'max_seconds': 0.2, ...}
+
+    def export(self, run, name='choir.wav', **kwargs):
+        options = dict(populations=('visual_left',), episodes=[0, 1, 2], max_seconds=120, boundary_fade_seconds=.02,
+                       declared_gain=1.)
+        options.update(kwargs)
+>       return sonification.sonify_episodes(run, self.root / name, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.sonification' has no attribute 'sonify_episodes'
+
+tests/test_sonification_episodes.py:53: AttributeError
+_______ EpisodeChoir.test_episodes_in_order_with_declared_boundary_fades _______
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_episodes_in_order_with_declared_boundary_fades>
+
+    def test_episodes_in_order_with_declared_boundary_fades(self):
+        run = self.fixture()
+>       samples, meta = self.read(self.export(run))
+                                  ^^^^^^^^^^^^^^^^
+
+tests/test_sonification_episodes.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_episodes_in_order_with_declared_boundary_fades>
+run = PosixPath('/tmp/tmp4wesid4v/e086939775664124878b62fe6de37257')
+name = 'choir.wav', kwargs = {}
+options = {'boundary_fade_seconds': 0.02, 'declared_gain': 1.0, 'episodes': [0, 1, 2], 'max_seconds': 120, ...}
+
+    def export(self, run, name='choir.wav', **kwargs):
+        options = dict(populations=('visual_left',), episodes=[0, 1, 2], max_seconds=120, boundary_fade_seconds=.02,
+                       declared_gain=1.)
+        options.update(kwargs)
+>       return sonification.sonify_episodes(run, self.root / name, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.sonification' has no attribute 'sonify_episodes'
+
+tests/test_sonification_episodes.py:53: AttributeError
+__________ EpisodeChoir.test_episodes_must_be_consecutive_and_present __________
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_episodes_must_be_consecutive_and_present>
+
+    def test_episodes_must_be_consecutive_and_present(self):
+        run = self.fixture()
+        for episodes in ([0, 2], [1, 0], [0, 1, 2, 3], []):
+            with self.subTest(episodes=episodes), self.assertRaises(ValueError):
+>               self.export(run, f'bad-{len(episodes)}.wav', episodes=episodes)
+
+tests/test_sonification_episodes.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def export(self, run, name='choir.wav', **kwargs):
+        options = dict(populations=('visual_left',), episodes=[0, 1, 2], max_seconds=120, boundary_fade_seconds=.02,
+                       declared_gain=1.)
+        options.update(kwargs)
+>       return sonification.sonify_episodes(run, self.root / name, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.sonification' has no attribute 'sonify_episodes'
+
+tests/test_sonification_episodes.py:53: AttributeError
+__________ EpisodeChoir.test_levels_are_recorded_from_the_written_pcm __________
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_levels_are_recorded_from_the_written_pcm>
+
+    def test_levels_are_recorded_from_the_written_pcm(self):
+>       samples, meta = self.read(self.export(self.fixture()))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sonification_episodes.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_sonification_episodes.EpisodeChoir testMethod=test_levels_are_recorded_from_the_written_pcm>
+run = PosixPath('/tmp/tmp4i8o5vgz/9984b25e117149dc84345976338c913b')
+name = 'choir.wav', kwargs = {}
+options = {'boundary_fade_seconds': 0.02, 'declared_gain': 1.0, 'episodes': [0, 1, 2], 'max_seconds': 120, ...}
+
+    def export(self, run, name='choir.wav', **kwargs):
+        options = dict(populations=('visual_left',), episodes=[0, 1, 2], max_seconds=120, boundary_fade_seconds=.02,
+                       declared_gain=1.)
+        options.update(kwargs)
+>       return sonification.sonify_episodes(run, self.root / name, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.sonification' has no attribute 'sonify_episodes'
+
+tests/test_sonification_episodes.py:53: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_sonification_episodes.py::EpisodeChoir::test_cli_dispatches_episode_range
+FAILED tests/test_sonification_episodes.py::EpisodeChoir::test_declared_gain_is_explicit_and_never_clips
+FAILED tests/test_sonification_episodes.py::EpisodeChoir::test_duration_cap_cuts_at_a_recorded_tick_and_says_so
+FAILED tests/test_sonification_episodes.py::EpisodeChoir::test_episodes_in_order_with_declared_boundary_fades
+FAILED tests/test_sonification_episodes.py::EpisodeChoir::test_episodes_must_be_consecutive_and_present
+FAILED tests/test_sonification_episodes.py::EpisodeChoir::test_levels_are_recorded_from_the_written_pcm
+6 failed, 9 passed in 0.30s
