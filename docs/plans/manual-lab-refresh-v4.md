@@ -37,6 +37,8 @@ The worker runs these phases in order:
    - a page reload every fifth cycle, which must recover the local stream;
    - stay idle until the cycle ends, then take a forced-GC renderer sample (`HeapProfiler.collectGarbage` twice).
 
+Live lab owners record through a bounded background writer (`RunWriter.start_background`, commit `579fc44`). It keeps the chunk and event fsyncs out of the step and display loop. Every recording is still byte-identical to the synchronous path and fully durable before the run closes. Each owner's writer statistics are kept in its `supervisor.json`, including backpressure events, the queue high-water mark and any error. Replay jobs and all other recording paths stay synchronous.
+
 ## Acceptance criteria (all required)
 
 **Cadence (decided tolerance).** Emission stays at 30 Hz. The delivered DOM display rate must average at least 29 Hz over the full window. The 99th-percentile gap between samples must be at most 70 ms. Command acknowledgement p95 must be under 150 ms. The p50 and p99 gaps are recorded.
