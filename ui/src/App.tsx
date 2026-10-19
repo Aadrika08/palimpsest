@@ -4,6 +4,7 @@ import {download,request,session} from './api';
 import Arena from './Arena';
 import {memoryAnnotations} from './memory-events';
 import {windowRuns,windowSnapshots} from './run-window';
+import {busyTracker} from './busy';
 
 const json=(value:unknown)=>JSON.stringify(value??null,null,2);
 const fixed=(value:unknown)=>typeof value==='number'?value.toFixed(3):'Unavailable';
@@ -28,7 +29,7 @@ export default function App() {
   const [eyes,setEyes]=useState({left:true,right:true}); const [left,setLeft]=useState('');const [right,setRight]=useState('');
   const [runQuery,setRunQuery]=useState('');const [recentRuns,setRecentRuns]=useState<string[]>(()=>{try{const value=JSON.parse(sessionStorage.getItem('palimpsest.recentRuns')??'[]');return Array.isArray(value)?value.filter((x:unknown):x is string=>typeof x==='string').slice(0,64):[];}catch{return [];}}); const [comparison,setComparison]=useState<Compare>();
   const [showTrajectory,setShowTrajectory]=useState(true);const errorRef=useRef<HTMLDivElement>(null);const requestFocus=useRef<HTMLElement|null>(null);
-  const [error,setError]=useState('');const [notice,setNotice]=useState('');const [busy,setBusy]=useState(false);const [connected,setConnected]=useState(false);const [manualFocus,setManualFocus]=useState(false);
+  const [error,setError]=useState('');const [notice,setNotice]=useState('');const [busy,setBusy]=useState(false);const busyOps=useRef(busyTracker(setBusy));const [connected,setConnected]=useState(false);const [manualFocus,setManualFocus]=useState(false);
   const eyeRevision=useRef('');const activeRef=useRef(active);const statusRef=useRef(status);const keys=useRef(new Set<string>());const eventCursor=useRef(0);const actionChain=useRef(Promise.resolve());
   activeRef.current=active;statusRef.current=status;
   const state:State|undefined=status?.state??live?.state; const sample=playback??live; const phase=state?.phase??status?.status??'idle';
@@ -67,7 +68,7 @@ export default function App() {
     void Promise.all([request<Profiles>('/profiles').then(setProfiles),refreshRuns()]).catch(e=>setError(String(e)));void connect();poll=setInterval(()=>void refresh().catch(e=>setError(String(e))),1000);
     return()=>{cancelled=true;clearTimeout(retry);clearInterval(poll);socket?.close();};
   },[adopt,applyStatus,refresh,refreshRuns]);
-  async function perform(work:()=>Promise<void>) {requestFocus.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setBusy(true);setError('');try{await work();}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
+  async function perform(work:()=>Promise<void>) {requestFocus.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setError('');try{await busyOps.current.run(work);}catch(e){setError(e instanceof Error?e.message:String(e));}}
   function begin(id:string,replayMode?:'actions'|'policy'){setRecentRuns(previous=>{const next=[id,...previous.filter(x=>x!==id)].slice(0,64);try{sessionStorage.setItem('palimpsest.recentRuns',JSON.stringify(next));}catch{/* per-tab convenience only */}return next;});activeRef.current=id;setActive(id);setStatus({run_id:id,status:'loading',...(replayMode?{job:'replay',replay_mode:replayMode,jobstate:'loading'}:{})});setLive(undefined);setPlayback(undefined);setPreview(undefined);setEvents([]);setReceipts([]);eventCursor.current=0;keys.current.clear();setManualFocus(false);setNotice(`Loading run ${id}.`);}
   async function command(kind:string,payload?:unknown) {if(kind!=='set_action')await actionChain.current;const current=statusRef.current?.state;const id=activeRef.current;if(!id||!current)throw new Error('Wait for the worker to load.');const receipt=await request<Receipt>(`/runs/${id}/commands`,{id:crypto.randomUUID(),kind,expected_state:current.phase,expected_episode:current.episode,expected_revision:current.revision,...(payload===undefined?{}:{payload})});setReceipts(r=>[...r,receipt].slice(-100));setNotice(`${kind.replaceAll('_',' ')} queued; waiting for the control boundary.`);await refresh();}
   function drive(stop=false){const held=keys.current;const calibrated=isBodyProfile(statusRef.current?.state?.scenario);if(!canDrive(statusRef.current?.state))return;const velocity=calibrated ? .3 : 1;const heading=calibrated ? .2 : .8;const payload=stop?[0,0]:[((held.has('ArrowUp')||held.has('w')?1:0)-(held.has('ArrowDown')||held.has('s')?1:0))*velocity,((held.has('ArrowLeft')||held.has('a')?1:0)-(held.has('ArrowRight')||held.has('d')?1:0))*heading];actionChain.current=actionChain.current.catch(()=>{}).then(()=>command('set_action',{action:payload})).catch(e=>setError(String(e)));}
