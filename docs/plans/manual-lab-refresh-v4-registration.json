@@ -1,0 +1,1258 @@
+{
+  "cadence_acceptance": {
+    "acknowledgement_p95_ms_below": 150,
+    "display_mean_hz_min": 29,
+    "emission_hz": 30,
+    "interarrival_p99_ms_max": 70
+  },
+  "code_base": "5456b33",
+  "commands": {
+    "acceptance": [
+      "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/playwright.config.ts",
+      "--workers",
+      "1",
+      "--retries",
+      "0",
+      "--reporter=list,json",
+      "--timeout",
+      "180000",
+      "--output",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/acceptance/test-results",
+      "tests/lab.spec.ts",
+      "tests/recorded-snapshots.spec.ts"
+    ],
+    "acceptance_server": [
+      "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+      "-B",
+      "-m",
+      "palimpsest",
+      "lab",
+      "--port",
+      "8774",
+      "--runs",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/acceptance/runs",
+      "--exports",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/acceptance/exports",
+      "--storage-max-bytes",
+      "2147483648",
+      "--min-free-bytes",
+      "4294967296",
+      "--max-runs",
+      "32",
+      "--max-snapshots",
+      "4",
+      "--max-exports",
+      "4",
+      "--log-max-bytes",
+      "1048576"
+    ],
+    "build": [
+      "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/npm",
+      "--prefix",
+      "ui",
+      "run",
+      "build"
+    ],
+    "endurance": [
+      "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+      "-I",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/scripts/lab_chromium_resource_probe.py",
+      "--out",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/endurance/chromium-resources.jsonl",
+      "--shm-dir",
+      "/dev/shm",
+      "--interval",
+      "5",
+      "--max-bytes",
+      "4194304",
+      "--timeout",
+      "4500",
+      "--",
+      "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/playwright.config.ts",
+      "--workers",
+      "1",
+      "--retries",
+      "0",
+      "--reporter=list,json",
+      "--timeout",
+      "4200000",
+      "--output",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/endurance/test-results",
+      "tests/lab-endurance.spec.ts"
+    ],
+    "endurance_server": [
+      "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+      "-B",
+      "-m",
+      "palimpsest",
+      "lab",
+      "--port",
+      "8775",
+      "--runs",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/endurance/runs",
+      "--exports",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4/endurance/exports",
+      "--storage-max-bytes",
+      "4294967296",
+      "--min-free-bytes",
+      "4294967296",
+      "--max-runs",
+      "128",
+      "--max-snapshots",
+      "2",
+      "--max-exports",
+      "1",
+      "--log-max-bytes",
+      "1048576"
+    ],
+    "preflight": [
+      "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/npm",
+      "--prefix",
+      "ui",
+      "run",
+      "test:browser-shm"
+    ],
+    "selection": [
+      "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/ui/playwright.config.ts",
+      "--workers",
+      "1",
+      "--retries",
+      "0",
+      "--list",
+      "--reporter=json",
+      "tests/lab.spec.ts",
+      "tests/recorded-snapshots.spec.ts",
+      "tests/lab-endurance.spec.ts"
+    ]
+  },
+  "control_max_bytes": 7516192768,
+  "deadlines_seconds": {
+    "outer": 5970,
+    "phases": {
+      "acceptance": 900,
+      "build": 90,
+      "endurance": 4500,
+      "preflight": 60,
+      "selection": 60
+    },
+    "publication": 5880,
+    "supervisor": 5790,
+    "worker": 5730
+  },
+  "endurance": {
+    "cycle_seconds": 120,
+    "expected_cycles": 30,
+    "seconds": 3600,
+    "stream_seconds": 4
+  },
+  "environment": {
+    "MKL_NUM_THREADS": "1",
+    "MUJOCO_GL": "egl",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "TMPDIR": "/tmp"
+  },
+  "floors": {
+    "dev_shm_free_bytes": 1073741824,
+    "project_free_bytes": 4294967296,
+    "project_initial_free_bytes": 10737418240,
+    "tmp_free_bytes": 2147483648
+  },
+  "installed_dependencies": {
+    "installed_manifest_entries": 26,
+    "top_level_versions": {
+      "@playwright/test": "1.63.0",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "typescript": "7.0.2",
+      "vite": "8.3.2"
+    }
+  },
+  "invocations": {
+    "corrective_attempts": 0,
+    "launch_max": 1
+  },
+  "listener_allowance": {
+    "absolute": 64,
+    "fraction": 0.1,
+    "min_cycles": 3
+  },
+  "node": {
+    "bytes": 126595440,
+    "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+  },
+  "outer": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=10s",
+    "5970s",
+    "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+    "-B",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/scripts/manual_lab_refresh_v4.py",
+    "--launch"
+  ],
+  "ports": {
+    "acceptance": 8774,
+    "endurance": 8775
+  },
+  "python": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+    "version": "3.11.15 (main, Jun 23 2026, 15:19:43) [Clang 22.1.3 ]"
+  },
+  "qualification_claims": [],
+  "runtime_versions": {
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "torch": "2.9.0",
+    "uvicorn": "0.54.0"
+  },
+  "schema": "manual-lab-refresh-v4",
+  "server_caps": {
+    "acceptance": {
+      "max_exports": 4,
+      "max_runs": 32,
+      "max_snapshots": 4,
+      "storage_max_bytes": 2147483648
+    },
+    "endurance": {
+      "max_exports": 1,
+      "max_runs": 128,
+      "max_snapshots": 2,
+      "storage_max_bytes": 4294967296
+    }
+  },
+  "sources": {
+    "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node": {
+      "bytes": 126595440,
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+    },
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11": {
+      "bytes": 21662864,
+      "sha256": "572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a"
+    },
+    "/usr/bin/chromium": {
+      "bytes": 14424,
+      "sha256": "78f94ee05d5d6fd1bd8239b9700d3cf54d540911febad4c7cea01080273943f9"
+    },
+    "/usr/lib/chromium/chromium": {
+      "bytes": 319274072,
+      "sha256": "27c398e1738a5bf578e4414654b959b8fdb63446dfb309c114a95e97c5d243ff"
+    },
+    "docs/plans/manual-lab-refresh-v4.md": {
+      "bytes": 6112,
+      "sha256": "99ce7f8bc0a88ee4e005990d62ee7b8d11eb5ea9fdc793474b54d93559090c36"
+    },
+    "pyproject.toml": {
+      "bytes": 1454,
+      "sha256": "13732ced452f853e68be7a7f26cb74e7f18d460f16ff965eca5d5871936a6d70"
+    },
+    "scripts/lab_chromium_resource_probe.py": {
+      "bytes": 7318,
+      "sha256": "27a8143e5958f55009a71d6ad958818d5c9d97a4c40f862029d9f65dba1b863b"
+    },
+    "scripts/manual_lab_refresh_v4.py": {
+      "bytes": 35005,
+      "sha256": "15760bee27eb0a31082d5b91d67f9d5e103d2d041d6b6c0ece1ba84a886d43af"
+    },
+    "scripts/verify_afterimage.py": {
+      "bytes": 17050,
+      "sha256": "02b8e6accd8e3217ade97fdbcd6857cf297a742903de85381f91c676f490a680"
+    },
+    "scripts/verify_endurance.py": {
+      "bytes": 30913,
+      "sha256": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803"
+    },
+    "src/palimpsest/__init__.py": {
+      "bytes": 63,
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8"
+    },
+    "src/palimpsest/__main__.py": {
+      "bytes": 48,
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    "src/palimpsest/afterimage.py": {
+      "bytes": 20402,
+      "sha256": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72"
+    },
+    "src/palimpsest/artifacts.py": {
+      "bytes": 36752,
+      "sha256": "2774cf9cd2c4bd1b7b960572cabd9c01f883e8214135ce7db9c53a430e0560af"
+    },
+    "src/palimpsest/assets.py": {
+      "bytes": 11122,
+      "sha256": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3"
+    },
+    "src/palimpsest/atlas.py": {
+      "bytes": 7380,
+      "sha256": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f"
+    },
+    "src/palimpsest/body_adaptation.py": {
+      "bytes": 18570,
+      "sha256": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81"
+    },
+    "src/palimpsest/body_homing.py": {
+      "bytes": 8415,
+      "sha256": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551"
+    },
+    "src/palimpsest/body_profile.py": {
+      "bytes": 28648,
+      "sha256": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54"
+    },
+    "src/palimpsest/bounded_qualification.py": {
+      "bytes": 22914,
+      "sha256": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a"
+    },
+    "src/palimpsest/cli.py": {
+      "bytes": 17436,
+      "sha256": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287"
+    },
+    "src/palimpsest/comparison.py": {
+      "bytes": 14885,
+      "sha256": "dc747630b10372055e638e354d47de39ee4397409ec30edf0e8db5714874ce14"
+    },
+    "src/palimpsest/doctor.py": {
+      "bytes": 8528,
+      "sha256": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834"
+    },
+    "src/palimpsest/engine.py": {
+      "bytes": 99631,
+      "sha256": "f3a3cbf3537583151ab2f4d68fa83078f0988e853b7c9ca9adfc2cf841447d0b"
+    },
+    "src/palimpsest/evaluate.py": {
+      "bytes": 19531,
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a"
+    },
+    "src/palimpsest/flynn.py": {
+      "bytes": 14608,
+      "sha256": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4"
+    },
+    "src/palimpsest/held_provenance.py": {
+      "bytes": 8421,
+      "sha256": "8cb30e7d2edfac2fdd8f8e298afd83d9835afda7c6ea7c9c6e772bb2b555d71c"
+    },
+    "src/palimpsest/interventions.py": {
+      "bytes": 5510,
+      "sha256": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe"
+    },
+    "src/palimpsest/lab.py": {
+      "bytes": 42084,
+      "sha256": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b"
+    },
+    "src/palimpsest/male_matched_budget.py": {
+      "bytes": 9413,
+      "sha256": "79bd896d1a52ebfe8c9b9b82df3d6b25f673d722f10841d56db1d4caebe6fde5"
+    },
+    "src/palimpsest/male_model.py": {
+      "bytes": 23088,
+      "sha256": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad"
+    },
+    "src/palimpsest/male_navigation_research.py": {
+      "bytes": 22217,
+      "sha256": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32"
+    },
+    "src/palimpsest/male_policy.py": {
+      "bytes": 19386,
+      "sha256": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe"
+    },
+    "src/palimpsest/male_recovery_heldout.py": {
+      "bytes": 15471,
+      "sha256": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977"
+    },
+    "src/palimpsest/male_recovery_research.py": {
+      "bytes": 19101,
+      "sha256": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf"
+    },
+    "src/palimpsest/male_research.py": {
+      "bytes": 19037,
+      "sha256": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232"
+    },
+    "src/palimpsest/memory.py": {
+      "bytes": 19390,
+      "sha256": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542"
+    },
+    "src/palimpsest/memory_decision.py": {
+      "bytes": 32168,
+      "sha256": "f22e72166fbd8a7cf7c1d01a9535f202e7f6b99246c298bc970274a04c863982"
+    },
+    "src/palimpsest/memory_decision_world.py": {
+      "bytes": 31012,
+      "sha256": "d518e0cdaa6ac2352c7ed681ca85d7722708b50feb106ad0f9cb8c3f6fa75991"
+    },
+    "src/palimpsest/memory_experiment.py": {
+      "bytes": 26609,
+      "sha256": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8"
+    },
+    "src/palimpsest/memory_history.py": {
+      "bytes": 19922,
+      "sha256": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c"
+    },
+    "src/palimpsest/memory_reference.py": {
+      "bytes": 6678,
+      "sha256": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661"
+    },
+    "src/palimpsest/memory_task.py": {
+      "bytes": 22484,
+      "sha256": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682"
+    },
+    "src/palimpsest/memory_world.py": {
+      "bytes": 15320,
+      "sha256": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12"
+    },
+    "src/palimpsest/profiles.py": {
+      "bytes": 13307,
+      "sha256": "9a947c62f200640f973786e14e5bffaa365a1ea1f09617c984ebf16cea1aa2a3"
+    },
+    "src/palimpsest/puck_balanced.py": {
+      "bytes": 8346,
+      "sha256": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c"
+    },
+    "src/palimpsest/puck_balanced_development.py": {
+      "bytes": 9355,
+      "sha256": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8"
+    },
+    "src/palimpsest/puck_balanced_student.py": {
+      "bytes": 12251,
+      "sha256": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e"
+    },
+    "src/palimpsest/puck_build_inputs.py": {
+      "bytes": 13905,
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65"
+    },
+    "src/palimpsest/puck_bundle_provenance.py": {
+      "bytes": 8332,
+      "sha256": "dd5edbcad6b63e960de6c31685926e09b7ab0a329dc398069eefaa19b5fbe99f"
+    },
+    "src/palimpsest/puck_collection_admission.py": {
+      "bytes": 7953,
+      "sha256": "536f2f8c953f64d62396cba6690501479aa5128820de96640e6d1cc21528318e"
+    },
+    "src/palimpsest/puck_collection_close.py": {
+      "bytes": 17526,
+      "sha256": "5773525db10a06beb627eba99c4ba8f394596cdf492c7cd57efde950915e884b"
+    },
+    "src/palimpsest/puck_collection_ledger.py": {
+      "bytes": 8051,
+      "sha256": "da0621e397f3baa577c2f01a493053841b92772ed3d743caa7c74e741588dabf"
+    },
+    "src/palimpsest/puck_cpu_namespace.py": {
+      "bytes": 11039,
+      "sha256": "4c9f7a91cbe3d59af6f4b3e9e124ac99916aba8255031af1367693024854c72b"
+    },
+    "src/palimpsest/puck_cpu_registration.py": {
+      "bytes": 21623,
+      "sha256": "e35105b29b271f56b52c35a6e405307b57a10a064dd78ddbb3c7dc32eb3a8779"
+    },
+    "src/palimpsest/puck_dependency_bindings.py": {
+      "bytes": 34501,
+      "sha256": "f6d686bf28bfc23ce09faf63d5e95113d18c19ea6f5b2e7a059346046e529631"
+    },
+    "src/palimpsest/puck_dependency_files.py": {
+      "bytes": 34048,
+      "sha256": "a2382959c5cc039dc3a169378760569c7a2533323104512f1fa4d5ca10fea02c"
+    },
+    "src/palimpsest/puck_dependency_imports.py": {
+      "bytes": 16319,
+      "sha256": "c157b3a897aa72ee456301eaa6724c5edb050ab8810ce1f40d94ac4b50080e2c"
+    },
+    "src/palimpsest/puck_development.py": {
+      "bytes": 8973,
+      "sha256": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802"
+    },
+    "src/palimpsest/puck_execution.py": {
+      "bytes": 21440,
+      "sha256": "aed15e6601d19803d5ddc28747bc41bf9b657e9098b08d9e76db4424a2907631"
+    },
+    "src/palimpsest/puck_execution_files.py": {
+      "bytes": 15001,
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062"
+    },
+    "src/palimpsest/puck_held_episode.py": {
+      "bytes": 9462,
+      "sha256": "083c5c117502256ee2b32fbbc001f53fa2d72a7c566afa3444e9f7436c17a917"
+    },
+    "src/palimpsest/puck_learning.py": {
+      "bytes": 15646,
+      "sha256": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d"
+    },
+    "src/palimpsest/puck_model.py": {
+      "bytes": 8844,
+      "sha256": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5"
+    },
+    "src/palimpsest/puck_native_identity.py": {
+      "bytes": 2837,
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb"
+    },
+    "src/palimpsest/puck_native_origins.py": {
+      "bytes": 1660,
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1"
+    },
+    "src/palimpsest/puck_on_policy.py": {
+      "bytes": 83904,
+      "sha256": "c1c0889b217a8baff732c13e77676185901576be293dad0181115e696fe25242"
+    },
+    "src/palimpsest/puck_package_payloads.py": {
+      "bytes": 15959,
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76"
+    },
+    "src/palimpsest/puck_profile.py": {
+      "bytes": 34243,
+      "sha256": "eb0f8036f18d94b0fb8eb95e8af2821b26bc57f8e71d938579567e194088ce80"
+    },
+    "src/palimpsest/puck_retained_installation.py": {
+      "bytes": 6213,
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc"
+    },
+    "src/palimpsest/puck_runtime_qualification.py": {
+      "bytes": 2516,
+      "sha256": "32a1618b5d79863f8b2a4de16909e1a060c684ab36ef88c7808871e99d17b0f5"
+    },
+    "src/palimpsest/puck_runtime_registration.py": {
+      "bytes": 18151,
+      "sha256": "e8bf16eac387fab8819ac20e871cee2bf4f4c6a31d24530e9b85697c5264f74f"
+    },
+    "src/palimpsest/puck_runtime_staging.py": {
+      "bytes": 12544,
+      "sha256": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6"
+    },
+    "src/palimpsest/puck_scene_catalog.py": {
+      "bytes": 15686,
+      "sha256": "12de1d806a0755594dce52980ee8a378510fe74eb4a374b7689b00306e62ca01"
+    },
+    "src/palimpsest/puck_scene_git.py": {
+      "bytes": 41020,
+      "sha256": "5c4da951d8cfbec15c10ab32c15fd28b42a232684af7bec1e989ea5742ebac69"
+    },
+    "src/palimpsest/puck_scene_inventory_scope.py": {
+      "bytes": 31017,
+      "sha256": "3f93fcbc809d90cff7e0b46e3093004bb81358babfffb3b8ee508cb76aecd38b"
+    },
+    "src/palimpsest/puck_scene_markdown.py": {
+      "bytes": 19179,
+      "sha256": "d91d80fda0be70ccec6fd2577efbabd1b97672c20bdca72b8db68fc99fecb556"
+    },
+    "src/palimpsest/puck_scene_reference_resolution.py": {
+      "bytes": 37652,
+      "sha256": "c28f4ec5669549b3502560986a9b4c49eddced62a8b900072c8908e50f7b3c4a"
+    },
+    "src/palimpsest/puck_scene_registry.py": {
+      "bytes": 11855,
+      "sha256": "fe59478c064d565ff1e37d69ff27d3e53172588c273348e114935a046aeac864"
+    },
+    "src/palimpsest/puck_scene_reports.py": {
+      "bytes": 14424,
+      "sha256": "e099f7deee74485deff0d04f36e1f985ec93ba9ba509f37b31d8f6602f3e0fb9"
+    },
+    "src/palimpsest/puck_scene_retained.py": {
+      "bytes": 19712,
+      "sha256": "e898248fff03db9675e5d62131807e9a2d19137a1403d9ffd3306ed17cd5806b"
+    },
+    "src/palimpsest/puck_scene_roots.py": {
+      "bytes": 21465,
+      "sha256": "f3dd54059353cafd937796b943cd130484ecd89c70821c55413b46c49a4221a7"
+    },
+    "src/palimpsest/puck_scene_training.py": {
+      "bytes": 5648,
+      "sha256": "fb90a8d4a30da7d4b6e6fb77076abcffb5c0fd13742c7c55a3e21bf518d477db"
+    },
+    "src/palimpsest/puck_student.py": {
+      "bytes": 12134,
+      "sha256": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8"
+    },
+    "src/palimpsest/puck_teacher.py": {
+      "bytes": 5415,
+      "sha256": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82"
+    },
+    "src/palimpsest/puck_worker_preflight.py": {
+      "bytes": 465,
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7"
+    },
+    "src/palimpsest/records.py": {
+      "bytes": 14238,
+      "sha256": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3"
+    },
+    "src/palimpsest/replay.py": {
+      "bytes": 29576,
+      "sha256": "1b332948a641b3c1a0c65a16ff8dfdf67688ad342ef74480b1f6ac2d783e203d"
+    },
+    "src/palimpsest/snapshots.py": {
+      "bytes": 48935,
+      "sha256": "129b71b1b7a8e9661a3f33f7e43863a24f9639c00240efd9f80d0e269bf12308"
+    },
+    "src/palimpsest/sonification.py": {
+      "bytes": 11502,
+      "sha256": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949"
+    },
+    "src/palimpsest/specimens.py": {
+      "bytes": 10339,
+      "sha256": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41"
+    },
+    "src/palimpsest/storage.py": {
+      "bytes": 9316,
+      "sha256": "1cb7ed62858f254bfede7495fed779c4f9133f0a359c8e4ee93d5b040f3051f5"
+    },
+    "src/palimpsest/task_mechanics.py": {
+      "bytes": 17588,
+      "sha256": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6"
+    },
+    "src/palimpsest/task_profiles.py": {
+      "bytes": 15514,
+      "sha256": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79"
+    },
+    "src/palimpsest/worker.py": {
+      "bytes": 25911,
+      "sha256": "a44a15087317d76e3cec921bcc76be37c3c28eb70931bfca7ba0dfb2066989d7"
+    },
+    "tests/test_manual_lab_refresh_v4.py": {
+      "bytes": 13104,
+      "sha256": "869d1d24fc41b7230fb2e54751478eceee5d32453a7571e4643a74db5f3ddcc7"
+    },
+    "ui/index.html": {
+      "bytes": 319,
+      "sha256": "ead0be681d4ac32c955686962c2ac2a2b459099ac03884b2d06eeca62021cfd9"
+    },
+    "ui/package-lock.json": {
+      "bytes": 41434,
+      "sha256": "772176aaaaffaca340d4c91e22c6243d20d0339c17f5973e4295f79b4ca481b0"
+    },
+    "ui/package.json": {
+      "bytes": 819,
+      "sha256": "ce053efc3a8ca57f92418495248443366eebc8bcb39dfe8c987e15d7509d4a39"
+    },
+    "ui/playwright.config.ts": {
+      "bytes": 830,
+      "sha256": "25ff517cc2f07bd77c278ae8ad2278c9459ebef15f57bd27f70b96e13ad42c32"
+    },
+    "ui/src/App.tsx": {
+      "bytes": 38875,
+      "sha256": "b3488942f9eb1c0a2885fab682275b2cce6a1e13c5c6297e9464982124c5ba7e"
+    },
+    "ui/src/Arena.tsx": {
+      "bytes": 3377,
+      "sha256": "863c05da9137f5deb1d0a8b191626f1abce1e7ad78c66b146caacc50cf563877"
+    },
+    "ui/src/api.ts": {
+      "bytes": 1572,
+      "sha256": "5d5583b8d52a8a1ed97faa72849b1d6655764d5d93d9d4dfb5176abd824726d1"
+    },
+    "ui/src/main.tsx": {
+      "bytes": 155,
+      "sha256": "1411490ded30f203ea8d24183d9adf5c734984f1d6df8934f7fde5c56745eab5"
+    },
+    "ui/src/memory-events.ts": {
+      "bytes": 1311,
+      "sha256": "5c1932883b3094f87ad099c9d02f91574cc76d44d4e94426decf970b23f80c37"
+    },
+    "ui/src/protocol.ts": {
+      "bytes": 3389,
+      "sha256": "df8d11ff89c88e0e86ae3487ba4c9a74324dca16b859fb3fd8811fe688b985c2"
+    },
+    "ui/src/style.css": {
+      "bytes": 7235,
+      "sha256": "8238f8f7e59814ae88384ad2782f9dc9317a61d6280a48bb97524459607cf4eb"
+    },
+    "ui/tests/adaptive-lab.spec.ts": {
+      "bytes": 11985,
+      "sha256": "7d3af4c4f6a54a972e7f921b50563e248c597143dd92402e00672effcef80cc6"
+    },
+    "ui/tests/body-lab.spec.ts": {
+      "bytes": 9787,
+      "sha256": "6db0a4d648234431498f50e8ae45f7d34d87a074ec1f578facbf15ed1af41e7b"
+    },
+    "ui/tests/browser-shm.check.ts": {
+      "bytes": 2607,
+      "sha256": "d0ed59d9eccd8957c761f2335d2c4f6c4dfc72ddf3efee42bcba43e8d35c5522"
+    },
+    "ui/tests/chromium-resources.spec.ts": {
+      "bytes": 10141,
+      "sha256": "971410add66df154591e8f9456d0c3ac2b3bd873a6b6512573278d16f59080e7"
+    },
+    "ui/tests/lab-endurance.spec.ts": {
+      "bytes": 10226,
+      "sha256": "6c32e9d4e97b18293252984e21498a0eb6c40c6ab8138ce3d11d36e1a680550e"
+    },
+    "ui/tests/lab.spec.ts": {
+      "bytes": 34863,
+      "sha256": "0e4978a54562c969966d89e4534498006d4eed2b9e16d9356b527c67269be425"
+    },
+    "ui/tests/male-lab.spec.ts": {
+      "bytes": 11564,
+      "sha256": "ca1b849afe1e4d6ffaec8873cb5ea4ef378ce450cdf6309d277d782f14340e78"
+    },
+    "ui/tests/measurement.check.ts": {
+      "bytes": 2009,
+      "sha256": "259fd55e1fa2713b2097540f89eaff9f182c9ed015d1ac86aa35f7d57f2fcfa0"
+    },
+    "ui/tests/measurement.ts": {
+      "bytes": 4748,
+      "sha256": "00df2b2492653ab79d533bad3d1ef0106ccbf20ba4deeadd77cf75cfd711dd3d"
+    },
+    "ui/tests/memory-events.check.ts": {
+      "bytes": 1337,
+      "sha256": "5ead46e31b3912cce808f08968f50dbbb694a61f628aa88ac830d383a772461b"
+    },
+    "ui/tests/recorded-snapshots.spec.ts": {
+      "bytes": 4262,
+      "sha256": "77e8ddbe9fd158d8b84a220e5c840f0178286619276f802a51c24ef8ccdb0a51"
+    },
+    "ui/tests/serve_lab.py": {
+      "bytes": 582,
+      "sha256": "f326bef7611ff20f4f387b0f951a434237880eaf54aedfb3cf6f57ed0c87d3f5"
+    },
+    "ui/tsconfig.json": {
+      "bytes": 284,
+      "sha256": "fe96f1b0c7f4ee8b710094f9433ab21e55c1af689ca055d629157b88ebfb0e2e"
+    },
+    "ui/vite.config.ts": {
+      "bytes": 96,
+      "sha256": "e21c6f45692018b8de0377389cd10c9e05b6cb5725849f04e36454c17a7978d9"
+    },
+    "upstream/fly-gym/.gitignore": {
+      "bytes": 1683,
+      "sha256": "19567ab0c51e4b945dae80f54dded6daafd71b82f75f9d020785d2ca8a5ce7d6"
+    },
+    "upstream/fly-gym/LICENSE": {
+      "bytes": 1069,
+      "sha256": "10764b6b4c73bf08133910416883b42aa70881a2440ddbe54c5c622030ec95f9"
+    },
+    "upstream/fly-gym/README.md": {
+      "bytes": 14374,
+      "sha256": "c4c99375f590e254574c9c7216ce54088cb64ed63cbca4621432e761df4c6a42"
+    },
+    "upstream/fly-gym/agents/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "upstream/fly-gym/agents/connectome_rnn_agent.py": {
+      "bytes": 29578,
+      "sha256": "4c1018f21032f9e65155141b10282469f6928e0564027fce2b6d95f1c6f80133"
+    },
+    "upstream/fly-gym/agents/efficientnet_agent.py": {
+      "bytes": 9719,
+      "sha256": "ef702b6461b5dad2d7825a028967a06a90ae2ceb14fe305ef11f323e3701ce67"
+    },
+    "upstream/fly-gym/agents/mobilenet_agent.py": {
+      "bytes": 10079,
+      "sha256": "6797507c74fb69d8028f2b4ae285b1dd3c0cb549ff206324afff0e5c9e96ca9f"
+    },
+    "upstream/fly-gym/agents/teacher_analytic_agent.py": {
+      "bytes": 8488,
+      "sha256": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/JO-C_and_JO-E.csv": {
+      "bytes": 4225,
+      "sha256": "93e1ef45d1bd817ee73f949b595b3f1a430ed6055c83158457271ab3d1a9f8df"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/consolidated_cell_types.csv": {
+      "bytes": 3691688,
+      "sha256": "df6e428c824979a72e3fb1e36cf9f00f88b6d59bb526ff8087b894a8fb2bbe32"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/data source.txt": {
+      "bytes": 1268,
+      "sha256": "6aa19fb24f0304620889075b5e93a93bcb4d5bcb8ae25e4fdcc0908c1b35c75d"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/descending_neurons.csv": {
+      "bytes": 76543,
+      "sha256": "28d630d66e6bc4766d5d69c3527ff5a75596ac0155b3a565d32c600c415d8935"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/head_bristles_left.csv": {
+      "bytes": 8340,
+      "sha256": "b0c642f80af6c4937a333d3099111890e2f943c87efe3cfcf08489456283ea73"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/head_bristles_right.csv": {
+      "bytes": 7585,
+      "sha256": "531ca4b81fe3244d759c5c31627ade2b3ad0bb5f4f32bddb9c494590bf40aaf7"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_left.csv": {
+      "bytes": 164306,
+      "sha256": "dc9f28f54efe087180fd6a9c87cfe7943e37200090609943448b21f34fba1348"
+    },
+    "upstream/fly-gym/connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_right.csv": {
+      "bytes": 174299,
+      "sha256": "aed0fe89bd3bcd175ab88673954276337c30842d993e578367d3848fb69f8332"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/JO-C_and_JO-E.csv": {
+      "bytes": 1340,
+      "sha256": "414d15c86fd78bfe34c79ca68ae935cea4e5b8bfee872f24e1447531f5057d41"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/consolidated_cell_types.csv": {
+      "bytes": 1600520,
+      "sha256": "52c1b2340c7df1311687584e8642b007eae65001315b7a64a0ff109c238e020e"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/descending_neurons.csv": {
+      "bytes": 8058,
+      "sha256": "7e417c6f86988e3797f1ed03ddaf9d5b9d711fa2f39b59960d6ae4cff829e499"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/generate_ws_network_new.py": {
+      "bytes": 35909,
+      "sha256": "a22eb4af2ac8b4dcf35e13e6fdd2191e333635a348d9a8b53a1f84bffed46bed"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/head_bristles_left.csv": {
+      "bytes": 171,
+      "sha256": "cb574a375257cd36b93a6cae412d2a6b1e8e668d360acb63a39c1f823863f7b5"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/head_bristles_right.csv": {
+      "bytes": 248,
+      "sha256": "e53be521d051baad75df51d0ed63041ed7aeb2fbc4f23a3f1f6d2a677f5b8411"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/visual_column_L1_L2_L3_rear_view_left.csv": {
+      "bytes": 118351,
+      "sha256": "4a6bd91c7cc4b60263f858d0ff039762cc4e85448d085b62a61691ba576ac1ab"
+    },
+    "upstream/fly-gym/connectomes/ws_small_world/visual_column_L1_L2_L3_rear_view_right.csv": {
+      "bytes": 125529,
+      "sha256": "d322b5786d243207834c80130e946c9d9861a0957e564d9e73f9600f7ea2e8dc"
+    },
+    "upstream/fly-gym/core/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "upstream/fly-gym/core/astar.py": {
+      "bytes": 7044,
+      "sha256": "e000e623a9ae7fae6f2f7b6a03d64a7db84720c516b96d8812711025380e30a1"
+    },
+    "upstream/fly-gym/core/utils.py": {
+      "bytes": 14789,
+      "sha256": "75089c94aa9c88d9cbbcc2c0a21ee82ea1b7bb158323c017813abb98a451a9c4"
+    },
+    "upstream/fly-gym/core/vfhplus.py": {
+      "bytes": 20567,
+      "sha256": "8ceb30f0ee1a78fe916b5ebdc49ae37890991d7d344a756a3da0b9fd7c4f96eb"
+    },
+    "upstream/fly-gym/docs/data/game.json": {
+      "bytes": 91812,
+      "sha256": "409cd9ce3a69fb858babaae133855edacf0d1fd5835f4db958fae45f15c7d1c5"
+    },
+    "upstream/fly-gym/docs/data/runs/1.bin": {
+      "bytes": 186408,
+      "sha256": "8ae2d0e47c3e84fcf29dffdf2bc7db7ccea73b0315bffb54c441473f26dae055"
+    },
+    "upstream/fly-gym/docs/data/runs/10.bin": {
+      "bytes": 127532,
+      "sha256": "7f4b30162ac2547c8a06ef7837d2d759ede36618a70200d99b5403c669ecc8a2"
+    },
+    "upstream/fly-gym/docs/data/runs/11.bin": {
+      "bytes": 199822,
+      "sha256": "6f0289b819ea9fc9eac79ac6a9bbc2801d911fb67be28896809fc531dd82ea85"
+    },
+    "upstream/fly-gym/docs/data/runs/12.bin": {
+      "bytes": 214283,
+      "sha256": "c1b4577b6437f278810c1d850f4efa37fb60e7be3dc0657d3ed512d2bd3bf717"
+    },
+    "upstream/fly-gym/docs/data/runs/13.bin": {
+      "bytes": 118483,
+      "sha256": "b1e1e54dc7c45be5710e89c456016d5a6f92209ed7b291bab4e27ca1d24309cc"
+    },
+    "upstream/fly-gym/docs/data/runs/14.bin": {
+      "bytes": 209721,
+      "sha256": "3efabf396f7bf29c63a72a05467951b361857402530d50085115e8bc1fa042cb"
+    },
+    "upstream/fly-gym/docs/data/runs/15.bin": {
+      "bytes": 125605,
+      "sha256": "c382657335a33b3b970168892b4cc4c8109b11650375ff3eb61117b61298f8b1"
+    },
+    "upstream/fly-gym/docs/data/runs/16.bin": {
+      "bytes": 107112,
+      "sha256": "2995ce5f99d9578a974623169e5d3ea074cca5ffe1cbc582728deda8914b2283"
+    },
+    "upstream/fly-gym/docs/data/runs/17.bin": {
+      "bytes": 208783,
+      "sha256": "944225816c9a0cd995d138fb62666088c1a3d4c819820ef0633875088bed7847"
+    },
+    "upstream/fly-gym/docs/data/runs/18.bin": {
+      "bytes": 105352,
+      "sha256": "17d59e46da583e47d2f6c918bc931124951ed15ca354210e67602c2be7fd96d0"
+    },
+    "upstream/fly-gym/docs/data/runs/19.bin": {
+      "bytes": 134676,
+      "sha256": "b9fbe84ec568d49fed5b64cf5412cf301e4e4a3c5a2032ff570f27528af3a664"
+    },
+    "upstream/fly-gym/docs/data/runs/2.bin": {
+      "bytes": 139104,
+      "sha256": "b850cde1225f00e1462a446a0274f9a9181c2a102c63483c9a03e9151082ea16"
+    },
+    "upstream/fly-gym/docs/data/runs/20.bin": {
+      "bytes": 250191,
+      "sha256": "3cfb0cad6818ca05e09755607be3f4709b0fc199fc809cdf0bcd0eda1dccce79"
+    },
+    "upstream/fly-gym/docs/data/runs/21.bin": {
+      "bytes": 149702,
+      "sha256": "359ff2e2ecbb9aa00427c958e90875f08466cda562c78abe31e216dae51cbea0"
+    },
+    "upstream/fly-gym/docs/data/runs/22.bin": {
+      "bytes": 239613,
+      "sha256": "ba81029ebbb904460d924e0901b0b1f8a91d2e5ac76e3449e38985ea073b4ed0"
+    },
+    "upstream/fly-gym/docs/data/runs/23.bin": {
+      "bytes": 395067,
+      "sha256": "650adec6b0217294cbf5ed8585bad94f0ce4838f9298bbc902bd174e1f4c5bcb"
+    },
+    "upstream/fly-gym/docs/data/runs/24.bin": {
+      "bytes": 123783,
+      "sha256": "51655b444a2f8cff6befd5d0dabb74e74e606c6d56eb7a36d0370cbc99e70c2b"
+    },
+    "upstream/fly-gym/docs/data/runs/25.bin": {
+      "bytes": 114581,
+      "sha256": "74c0033e9f194b0395b685694420169854b49ce429615293db60cce18a627b0a"
+    },
+    "upstream/fly-gym/docs/data/runs/26.bin": {
+      "bytes": 246850,
+      "sha256": "1ee198bb771f5918162a7cfaf3ffa0bcd848654d687eb9b167ed3d15db641ce3"
+    },
+    "upstream/fly-gym/docs/data/runs/27.bin": {
+      "bytes": 254669,
+      "sha256": "07dd19b20aab9547668933fb313c2b2f2068563cfba6ad035379c336752ea6a5"
+    },
+    "upstream/fly-gym/docs/data/runs/28.bin": {
+      "bytes": 168426,
+      "sha256": "ed06ba433ff43af8e4165a160475bc91c75694863aeaf88e88a3b60ebecaf393"
+    },
+    "upstream/fly-gym/docs/data/runs/29.bin": {
+      "bytes": 258768,
+      "sha256": "3a958adee9f550f4bd3d4d94da0fd664efb992b394574a999cd5c9e835af9e83"
+    },
+    "upstream/fly-gym/docs/data/runs/3.bin": {
+      "bytes": 131707,
+      "sha256": "55ab19998a67841f87b1f1cd03be91ac1ad897805b55603e3b5814ce2598f378"
+    },
+    "upstream/fly-gym/docs/data/runs/30.bin": {
+      "bytes": 115005,
+      "sha256": "f600460e8ce4ca288baa1f728c3567fb6bbc4934fb97237b5a08d20cbdbb9b19"
+    },
+    "upstream/fly-gym/docs/data/runs/31.bin": {
+      "bytes": 166767,
+      "sha256": "a370825093429179478f0265a599b4b1e671d80bb3492d4dbfef173339c6f7b9"
+    },
+    "upstream/fly-gym/docs/data/runs/32.bin": {
+      "bytes": 168753,
+      "sha256": "36efa0ddec1ee0f6e1a1a8bf159863962095da121c2aef7fedbec79617d00c06"
+    },
+    "upstream/fly-gym/docs/data/runs/33.bin": {
+      "bytes": 271150,
+      "sha256": "8a578a3ff019adb4ddfd2b87b087bab99b137267fb2540bfe717831a0be19254"
+    },
+    "upstream/fly-gym/docs/data/runs/34.bin": {
+      "bytes": 244107,
+      "sha256": "3300d36846999cb6adab1edac5fcb4ce9d3cc526864c2c7b2be29c17491eca44"
+    },
+    "upstream/fly-gym/docs/data/runs/35.bin": {
+      "bytes": 268557,
+      "sha256": "e3ca42156a2131021648576397518282d7443d17c28a353d50f7f4670dbd3b5e"
+    },
+    "upstream/fly-gym/docs/data/runs/36.bin": {
+      "bytes": 110457,
+      "sha256": "1c0ddde26ca03f5811cc3e80ab8c112ec261e6e5ac6a5575a0cfe86098c8673b"
+    },
+    "upstream/fly-gym/docs/data/runs/37.bin": {
+      "bytes": 149110,
+      "sha256": "41dabbd8d5276640f3a8572aa39d64cc0298e2c30007bea3caff855fd6b60e7e"
+    },
+    "upstream/fly-gym/docs/data/runs/38.bin": {
+      "bytes": 121531,
+      "sha256": "9f8831d22ac66c701a48783b8c125ff653333c1aae5c917eeb3fe7e1ec509abc"
+    },
+    "upstream/fly-gym/docs/data/runs/39.bin": {
+      "bytes": 199297,
+      "sha256": "830bddb75631b02bb6aae8917428af811029fd3c29a7b5b26dab6ac15e961c6f"
+    },
+    "upstream/fly-gym/docs/data/runs/4.bin": {
+      "bytes": 218962,
+      "sha256": "df1f17e24e1e0b3ef77caa950dd1263f5e7aa3a24595f03e844a7e40e2501af9"
+    },
+    "upstream/fly-gym/docs/data/runs/40.bin": {
+      "bytes": 108817,
+      "sha256": "f5a06cf3c284abe3d144cf4922c593fabe69ca8a5e06bad1d05ed68827541bd4"
+    },
+    "upstream/fly-gym/docs/data/runs/41.bin": {
+      "bytes": 154563,
+      "sha256": "2293c94bc3ee34c30acca4c0e93360d7b8bcf1968a1185bb6988f928204579aa"
+    },
+    "upstream/fly-gym/docs/data/runs/42.bin": {
+      "bytes": 152747,
+      "sha256": "249dcf69403d9b97dbe86b4b3f7aae330a10b4db88ced7ed4d15488a32c258d9"
+    },
+    "upstream/fly-gym/docs/data/runs/43.bin": {
+      "bytes": 158582,
+      "sha256": "d401ac1115e4b287dca0dc4612e3d344a7740b4a3af96153b04edea890c04a48"
+    },
+    "upstream/fly-gym/docs/data/runs/44.bin": {
+      "bytes": 175523,
+      "sha256": "7d9d5ca53f75a0124f82a3bbbede165ea2a57c0fa6abd0bcc5477def5bd05697"
+    },
+    "upstream/fly-gym/docs/data/runs/45.bin": {
+      "bytes": 184804,
+      "sha256": "ad54ba0d525bfed4536a69dcb78619d3ce64fc7e9d78db134b2ec723bbffc66d"
+    },
+    "upstream/fly-gym/docs/data/runs/46.bin": {
+      "bytes": 392122,
+      "sha256": "00d1fec0da82db02fc41e5a85aae8a8548bef3eee5e58226525892244bc203a9"
+    },
+    "upstream/fly-gym/docs/data/runs/47.bin": {
+      "bytes": 494929,
+      "sha256": "24774ce2fa1bb2ace64150115d489212b6da2fc4269519e5b05e4d053738f81c"
+    },
+    "upstream/fly-gym/docs/data/runs/48.bin": {
+      "bytes": 203879,
+      "sha256": "eafd9a1b05ae7e855069244e799ee5fe72cf2c02651aef9458a11d00b2b4e014"
+    },
+    "upstream/fly-gym/docs/data/runs/49.bin": {
+      "bytes": 198095,
+      "sha256": "dee502e24332d7b63e5fec26587285439e594d85ab2a5b8a74494c205567835e"
+    },
+    "upstream/fly-gym/docs/data/runs/5.bin": {
+      "bytes": 169048,
+      "sha256": "41950e7f88bd7b7c128bf161a32d34f1c40d11e9be34d18b8293e4ca29ccdde4"
+    },
+    "upstream/fly-gym/docs/data/runs/50.bin": {
+      "bytes": 103563,
+      "sha256": "7990ec93074f547c22aac39534648cd0e0005beacc21b965938a903437bcda1b"
+    },
+    "upstream/fly-gym/docs/data/runs/6.bin": {
+      "bytes": 147323,
+      "sha256": "c308160dee70f711fe74680babf0a704d55171df061b2a6b447470ff33ab39e7"
+    },
+    "upstream/fly-gym/docs/data/runs/7.bin": {
+      "bytes": 115327,
+      "sha256": "32dbcaf30364b3cfdaefce955746663e33546c0769955e48e7d63617445e4e53"
+    },
+    "upstream/fly-gym/docs/data/runs/8.bin": {
+      "bytes": 385173,
+      "sha256": "7eb1078b18bb988bab544e0d33b28b95055ab733f09162912b790adb4888054f"
+    },
+    "upstream/fly-gym/docs/data/runs/9.bin": {
+      "bytes": 112112,
+      "sha256": "46142af9661a5b412686174e6d8f26e213ab85e8a93f1a3d26d6fd274010c95f"
+    },
+    "upstream/fly-gym/docs/game.js": {
+      "bytes": 22169,
+      "sha256": "6b08ce82e61fbf80103716f23f58eaad301b61bbb57493e2fc69ba01187c836f"
+    },
+    "upstream/fly-gym/docs/index.html": {
+      "bytes": 7535,
+      "sha256": "0d78ab8ce8f0ab6ab6e9392167ab7e5246dfe12c0d7165877a7c2f8133a7107f"
+    },
+    "upstream/fly-gym/docs/sim.js": {
+      "bytes": 15703,
+      "sha256": "b1154527c54fd7eac609f7a2d9dee7d1088771939a1462a4042431e3e8788a7d"
+    },
+    "upstream/fly-gym/environment/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "upstream/fly-gym/environment/mujoco_model_random_obstacles.xml": {
+      "bytes": 16971,
+      "sha256": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+    },
+    "upstream/fly-gym/environment/mujoco_model_random_obstacles_realistic.xml": {
+      "bytes": 17075,
+      "sha256": "110941ff620b3a0d537416aea8b3a8ee4edc69a10e22e80818f012fd14c983e1"
+    },
+    "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py": {
+      "bytes": 33934,
+      "sha256": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751"
+    },
+    "upstream/fly-gym/environment/textures/ground.png": {
+      "bytes": 1083892,
+      "sha256": "47ef6e4045a91ba3c4178d60c2dd7ba3c832cafe4de6b50c5b836cf37bf70588"
+    },
+    "upstream/fly-gym/environment/textures/obstacle.png": {
+      "bytes": 933780,
+      "sha256": "9ba9605c05f77a4abd98807c871269f4899dbd10d043c936bb1001094cec339d"
+    },
+    "upstream/fly-gym/environment/textures/skybox.png": {
+      "bytes": 590265,
+      "sha256": "0bda7aabb8d943c05a93b0d2fe34568116d0cee52f4c24bb3b70b65178e3b709"
+    },
+    "upstream/fly-gym/environment/textures/wall.png": {
+      "bytes": 820338,
+      "sha256": "c0db29e31faeb6f1165a6405e27bf9ba857d47ec019a23c272573c223eda498b"
+    },
+    "upstream/fly-gym/export_web_game.py": {
+      "bytes": 16651,
+      "sha256": "f0bfa52bfac2740f08ff6315b55e3aa446a69add0648402c84703cdd8d712a79"
+    },
+    "upstream/fly-gym/models/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "upstream/fly-gym/models/connectome_rnn_model.py": {
+      "bytes": 11055,
+      "sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+    },
+    "upstream/fly-gym/models/teacher_analytic_model.py": {
+      "bytes": 2928,
+      "sha256": "1b441217112b913968723d4de761d3b0fd1adabad7c5ce9b754928a40f16e8ab"
+    },
+    "upstream/fly-gym/play_vs_connectome_rnn.py": {
+      "bytes": 20982,
+      "sha256": "3314e2980d6df6c6ca8e0803bb6985b2673cbb380a103cecfdd23118d1f31434"
+    },
+    "upstream/fly-gym/requirements.txt": {
+      "bytes": 771,
+      "sha256": "835f2ff13f91a4bd85f7742b2537a1d04b75e5b4d6468320dc2b511a0d10fcb8"
+    },
+    "upstream/fly-gym/results/bar_average_speed.png": {
+      "bytes": 162109,
+      "sha256": "8c508e70b15645ebfc594cbfb4b58974a9259bc23dadb03ec464bd3092300c1e"
+    },
+    "upstream/fly-gym/results/bar_average_spl.png": {
+      "bytes": 132907,
+      "sha256": "4fca1f46b1e8cfc3571611989af74f6c2f4acf59c08dbfb54ec59e1c44ea409f"
+    },
+    "upstream/fly-gym/results/bar_average_spl_success.png": {
+      "bytes": 152104,
+      "sha256": "411620cfc2fc65c4a4fdc6f73294c9ae1b7a421d659a2b7a311f31ad2bf867b0"
+    },
+    "upstream/fly-gym/results/bar_collisions.png": {
+      "bytes": 154427,
+      "sha256": "6d2c8a464df32e4180a2fa5d3f9203b626f3f1926c4282b62c4fe58ffe853360"
+    },
+    "upstream/fly-gym/results/bar_success_rate.png": {
+      "bytes": 133326,
+      "sha256": "c5ce98967449444e4fdccce795f95fbda914bf8922148f86c01b630107238272"
+    },
+    "upstream/fly-gym/results/bar_time_to_goal.png": {
+      "bytes": 135115,
+      "sha256": "1cbf25912e601877679fa2271d4b1597ff7cc71de0ea6602c99ccbbf0b3ff219"
+    },
+    "upstream/fly-gym/results/collision_statistics.csv": {
+      "bytes": 683,
+      "sha256": "f5e6f00fbec7b3384f35cad648c2926b0f43f58711aeed0e1fda33453f24130f"
+    },
+    "upstream/fly-gym/results/collision_statistics_checker_texture.csv": {
+      "bytes": 1894,
+      "sha256": "d9e30e89a744152af0b00d2236575ddea4c1cc4ad6e41ba05584c68b6af595a8"
+    },
+    "upstream/fly-gym/results/direction_tuning_plot.png": {
+      "bytes": 65419,
+      "sha256": "7b2c86cc072a397bac6ba2815ca354a0610be0d5f5534268aac16b02aa3e4fa0"
+    },
+    "upstream/fly-gym/results/spl_accumulated_histograms.png": {
+      "bytes": 353551,
+      "sha256": "1f223821ddad0f25ac0014d71e92b219583e0efc0595a94d15fccc98028bc0bb"
+    },
+    "upstream/fly-gym/results/spl_histograms.png": {
+      "bytes": 358529,
+      "sha256": "011fd914f1142aa41f507ec22f6451318373a41451152805a45993cd4915a622"
+    },
+    "upstream/fly-gym/results/spl_violin_plots.png": {
+      "bytes": 87877,
+      "sha256": "adff97879f1696a25afecc7d90623a138451e389cdcc84ef068827980ffaa199"
+    },
+    "upstream/fly-gym/run_connectome_rnn_checkpoint.py": {
+      "bytes": 24952,
+      "sha256": "8708e72aed42b2383d66c7efc5e41a81e21bb9d6dfca48e534a0ef300487cd34"
+    },
+    "upstream/fly-gym/run_vision_agent_checkpoint.py": {
+      "bytes": 18259,
+      "sha256": "4203eed57e31c940ebfff0df5f63da160044afa03ecedd7a483960149a8cc336"
+    },
+    "upstream/fly-gym/shared_config.py": {
+      "bytes": 6044,
+      "sha256": "8eb9a0b3f1f56fe98e056ac3cc7d6b728572e345f1f86df4e3619b2bff6ce001"
+    },
+    "upstream/fly-gym/tests/debug_rnn_grad.py": {
+      "bytes": 2655,
+      "sha256": "92fc42c20912db7c98aa6ca8634f747ba31bb69baef5cbd3f817f19615871819"
+    },
+    "upstream/fly-gym/tests/test_vfhplus.py": {
+      "bytes": 2722,
+      "sha256": "d77224237bf0b9d2fd55e3a4af160dc9937f82594c617e527d129f2eb3f37bef"
+    },
+    "upstream/fly-gym/tests/tune_direction_threshold.py": {
+      "bytes": 8656,
+      "sha256": "a8d2f6ba4e2ba393cf611c839afa09071c22cf5808cfb707fd1aed26ec316fb7"
+    },
+    "upstream/fly-gym/tools/analysis_pca.py": {
+      "bytes": 10831,
+      "sha256": "988ede02e6abe9908affb24346bcff0b53a95ff22e1985c599c8b689e49a2f9b"
+    },
+    "upstream/fly-gym/tools/analysis_pca_statistics.py": {
+      "bytes": 19717,
+      "sha256": "2f9d858dc37480d60904cee19678b1cadbd8ac3ed2709a57a2345ec99beeb51a"
+    },
+    "upstream/fly-gym/tools/collision_statistics.py": {
+      "bytes": 20280,
+      "sha256": "250578753ae183059da7ecac3b554b26b2666a0438b43ab4f8abf7d317319c60"
+    },
+    "upstream/fly-gym/tools/compare_trajectories.py": {
+      "bytes": 6412,
+      "sha256": "ebcb2b90c67c7d3af8cd1ab1c3ce76576dc6c05e554fb2cbed8e4b0bff015e17"
+    },
+    "upstream/fly-gym/tools/count_collisions.py": {
+      "bytes": 8061,
+      "sha256": "e10fa6ea99b33974837fa5dd7677f518be53663bb99a007afcc4c50b6485e6fc"
+    },
+    "upstream/fly-gym/tools/visualize_episodes.py": {
+      "bytes": 5288,
+      "sha256": "60b0c8dde801854f26b8af7dea0a063783230801ef46386aa6c3950e345f0b3d"
+    },
+    "upstream/fly-gym/train_connectome_rnn_dagger.py": {
+      "bytes": 44408,
+      "sha256": "b1b0365ba5d85e0b05b18d2124e9948d2f844b31c3aa3b122420b0c917c96807"
+    },
+    "upstream/fly-gym/train_visionnet_dagger.py": {
+      "bytes": 42324,
+      "sha256": "962d8beab7c58fb2055f29019cdd2b8d02058a79ded1ed0fc947f5f361b38dbc"
+    },
+    "uv.lock": {
+      "bytes": 160034,
+      "sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "tests": {
+    "acceptance": [
+      [
+        "lab.spec.ts",
+        "actual local manual workflow, snapshots, sequential branches, comparison and export"
+      ],
+      [
+        "lab.spec.ts",
+        "actual replay jobs recover without samples and expose controls, reports and authenticated bundle"
+      ],
+      [
+        "lab.spec.ts",
+        "actual trajectory overlay isolation and keyboard error recovery"
+      ],
+      [
+        "lab.spec.ts",
+        "actual memory inspector, U-only branch and evidence-linked route annotations"
+      ],
+      [
+        "lab.spec.ts",
+        "measured browser responsiveness and actual display cadence"
+      ],
+      [
+        "lab.spec.ts",
+        "actual declared task inspection and snapshot continuation: exploration-landmarks"
+      ],
+      [
+        "lab.spec.ts",
+        "actual declared task inspection and snapshot continuation: encoder-homing"
+      ],
+      [
+        "recorded-snapshots.spec.ts",
+        "closed recorded runs recover snapshots and branch from the selected source"
+      ]
+    ],
+    "endurance": [
+      [
+        "lab-endurance.spec.ts",
+        "mixed browser endurance with forced-GC renderer samples"
+      ]
+    ]
+  }
+}
