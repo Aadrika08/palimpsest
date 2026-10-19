@@ -1,0 +1,120 @@
+.......FFFFF..........                                                   [100%]
+=================================== FAILURES ===================================
+___________________ DomGate.test_evaluation_gates_dom_nodes ____________________
+
+self = <test_manual_lab_refresh_v5.DomGate testMethod=test_evaluation_gates_dom_nodes>
+
+    def test_evaluation_gates_dom_nodes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            v5.configure(endurance_seconds=3600, cycle_seconds=120)
+            root = Evaluation().phase(Path(directory))
+            path = next(root.glob('endurance/test-results/*/lab-endurance.json'))
+            data = json.loads(path.read_text())
+            for index, item in enumerate(data['cycles']):
+                item['idle_gc']['nodes'] = 1500 + 70 * index
+            path.write_text(json.dumps(data))
+            result = v5.evaluate(root)
+>           self.assertFalse(result['passed'])
+E           AssertionError: True is not false
+
+tests/test_manual_lab_refresh_v5.py:114: AssertionError
+___________ DomGate.test_v4_dom_growth_fails_and_bounded_nodes_pass ____________
+
+self = <test_manual_lab_refresh_v5.DomGate testMethod=test_v4_dom_growth_fails_and_bounded_nodes_pass>
+
+    def test_v4_dom_growth_fails_and_bounded_nodes_pass(self):
+        v4_session = [1816, 1918, 2020, 2122, 1200, 2161, 2263, 2365, 2467, 1545, 2506, 2608, 2710, 2812, 1890, 2869, 2953]
+        result = v5.listener_verdict(self.cycles(v4_session))
+        self.assertTrue(result['listeners']['passed'])
+>       self.assertFalse(result['dom_nodes']['passed'])
+                         ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'dom_nodes'
+
+tests/test_manual_lab_refresh_v5.py:98: KeyError
+______________ Detached.test_checked_wait_refreshes_the_heartbeat ______________
+
+self = <test_manual_lab_refresh_v5.Detached testMethod=test_checked_wait_refreshes_the_heartbeat>
+
+    def test_checked_wait_refreshes_the_heartbeat(self):
+        class Done:
+            returncode = 0
+            calls = 0
+            def poll(self):
+                self.calls += 1
+                return None if self.calls < 3 else 0
+        with ExitStack() as stack:
+            for name in ('observe', 'BUDGET', 'check_server_logs', 'shm_floors'):
+                stack.enter_context(patch.object(v5, name))
+>           beat = stack.enter_context(patch.object(v5, 'write_progress'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_manual_lab_refresh_v5.py:146: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x71aabec928d0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'manual_v5_fixture' from '/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v5/scripts/manual_lab_refresh_v5.py'> does not have the attribute 'write_progress'
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1419: AttributeError
+________ Detached.test_detached_command_has_no_tty_or_parent_dependency ________
+
+self = <test_manual_lab_refresh_v5.Detached testMethod=test_detached_command_has_no_tty_or_parent_dependency>
+
+    def test_detached_command_has_no_tty_or_parent_dependency(self):
+>       command = v5.detached_command()
+                  ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'manual_v5_fixture' has no attribute 'detached_command'
+
+tests/test_manual_lab_refresh_v5.py:151: AttributeError
+_________ Detached.test_progress_heartbeat_is_atomic_and_counts_cycles _________
+
+self = <test_manual_lab_refresh_v5.Detached testMethod=test_progress_heartbeat_is_atomic_and_counts_cycles>
+
+    def test_progress_heartbeat_is_atomic_and_counts_cycles(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            v5.configure(phase=root / 'phase', endurance_seconds=3600, cycle_seconds=120)
+            report = root / 'phase/endurance/test-results/x/lab-endurance.json'
+            report.parent.mkdir(parents=True)
+            report.write_text(json.dumps({'cycles': [{}, {}, {}]}))
+            with patch.object(v5, 'free_bytes', return_value=5 * GiB):
+>               v5.write_progress('endurance', status='running')
+                ^^^^^^^^^^^^^^^^^
+E               AttributeError: module 'manual_v5_fixture' has no attribute 'write_progress'
+
+tests/test_manual_lab_refresh_v5.py:127: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_manual_lab_refresh_v5.py::DomGate::test_evaluation_gates_dom_nodes
+FAILED tests/test_manual_lab_refresh_v5.py::DomGate::test_v4_dom_growth_fails_and_bounded_nodes_pass
+FAILED tests/test_manual_lab_refresh_v5.py::Detached::test_checked_wait_refreshes_the_heartbeat
+FAILED tests/test_manual_lab_refresh_v5.py::Detached::test_detached_command_has_no_tty_or_parent_dependency
+FAILED tests/test_manual_lab_refresh_v5.py::Detached::test_progress_heartbeat_is_atomic_and_counts_cycles
+5 failed, 17 passed in 0.21s
