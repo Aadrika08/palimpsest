@@ -1,0 +1,296 @@
+{
+  "acceptance_browser_returncode": 0,
+  "acceptance_floors": {
+    "dev_shm_free_bytes": 7753809920,
+    "tmp_free_bytes": 4774502400
+  },
+  "acceptance_server_returncode": -15,
+  "acceptance_started_utc": "2026-10-19T02:45:18Z",
+  "build": {
+    "ui/dist/assets/index-DP8Vou6b.js": {
+      "bytes": 257795,
+      "sha256": "ea70ba1e34e10f456238097e970ae19535caae3694c51a215f60c3427f9d5dcb"
+    },
+    "ui/dist/assets/index-YXzjLjgu.css": {
+      "bytes": 7190,
+      "sha256": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87"
+    },
+    "ui/dist/index.html": {
+      "bytes": 418,
+      "sha256": "d7e3f6a221ee55f5a6346a381d38d145206d91487a4471ad92b62523ffa01f5f"
+    }
+  },
+  "elapsed_seconds": 370.53516710799886,
+  "endurance_browser_returncode": 0,
+  "endurance_floors": {
+    "dev_shm_free_bytes": 7770910720,
+    "tmp_free_bytes": 4774518784
+  },
+  "endurance_seconds": 300,
+  "endurance_server_returncode": -15,
+  "endurance_started_utc": "2026-10-19T02:46:29Z",
+  "evaluation": {
+    "checks": {
+      "acceptance_tests": {
+        "duration": 69944.374,
+        "expected": 8,
+        "flaky": 0,
+        "passed": true,
+        "skipped": 0,
+        "startTime": "2026-10-19T02:45:19.569Z",
+        "unexpected": 0
+      },
+      "endurance_cadence": {
+        "acknowledgement_count": 40,
+        "acknowledgement_p95_ms": 20.900000005960464,
+        "criteria": {
+          "acknowledgement_p95_ms_below": 150,
+          "display_mean_hz_min": 29,
+          "emission_hz": 30,
+          "interarrival_p99_ms_max": 70
+        },
+        "display_updates": 617,
+        "interarrival_p50_ms": 33.0,
+        "interarrival_p99_ms": 56.0,
+        "mean_hz": 29.579274372955464,
+        "passed": true,
+        "window_ms": 20859.19999998808,
+        "windows": 5
+      },
+      "endurance_cycles": {
+        "configuration": {
+          "cycle_seconds": 60,
+          "cycles": 5,
+          "seconds": 300,
+          "stream_seconds": 4
+        },
+        "count": 5,
+        "expected": 5,
+        "passed": true,
+        "reloads": 1,
+        "replays": [
+          "Action replay",
+          "Policy replay"
+        ]
+      },
+      "endurance_failures": {
+        "network": [],
+        "page_errors": [],
+        "passed": true
+      },
+      "endurance_tests": {
+        "duration": 292030.927,
+        "expected": 1,
+        "flaky": 0,
+        "passed": true,
+        "skipped": 0,
+        "startTime": "2026-10-19T02:46:30.488Z",
+        "unexpected": 0
+      },
+      "exports": {
+        ".svg": 1,
+        ".zip": 1,
+        "passed": true
+      },
+      "listener_growth": {
+        "listeners": {
+          "allowance": 64,
+          "idle_gc": [
+            256,
+            256,
+            256,
+            256,
+            210
+          ],
+          "idle_gc_early_median": 256,
+          "idle_gc_late_median": 210,
+          "passed": true,
+          "rule": "idle post-GC late-third median may exceed early-third median by at most max(absolute, fraction*early)",
+          "streaming_minus_idle_gc": [
+            148,
+            808,
+            48,
+            48,
+            894
+          ],
+          "streaming_raw": [
+            404,
+            1064,
+            304,
+            304,
+            1104
+          ],
+          "unreclaimed_growth": -46
+        },
+        "passed": true,
+        "recorded_only": {
+          "dom_nodes": {
+            "allowance": 256,
+            "idle_gc": [
+              1816,
+              1918,
+              2020,
+              2122,
+              1200
+            ],
+            "idle_gc_early_median": 1816,
+            "idle_gc_late_median": 1200,
+            "passed": true,
+            "rule": "idle post-GC late-third median may exceed early-third median by at most max(absolute, fraction*early)",
+            "streaming_minus_idle_gc": [
+              -168,
+              4,
+              -217,
+              -217,
+              1022
+            ],
+            "streaming_raw": [
+              1648,
+              1922,
+              1803,
+              1905,
+              2222
+            ],
+            "unreclaimed_growth": -616
+          },
+          "js_heap_used": {
+            "allowance": 8388608,
+            "idle_gc": [
+              4690644,
+              4861680,
+              4953780,
+              5144928,
+              3271788
+            ],
+            "idle_gc_early_median": 4690644,
+            "idle_gc_late_median": 3271788,
+            "passed": true,
+            "rule": "idle post-GC late-third median may exceed early-third median by at most max(absolute, fraction*early)",
+            "streaming_minus_idle_gc": [
+              648640,
+              2749884,
+              1818776,
+              1733496,
+              5384916
+            ],
+            "streaming_raw": [
+              5339284,
+              7611564,
+              6772556,
+              6878424,
+              8656704
+            ],
+            "unreclaimed_growth": -1418856
+          }
+        }
+      },
+      "measured_cadence": {
+        "acknowledgement_count": 12,
+        "acknowledgement_p95_ms": 24.600000023841858,
+        "criteria": {
+          "acknowledgement_p95_ms_below": 150,
+          "display_mean_hz_min": 29,
+          "emission_hz": 30,
+          "interarrival_p99_ms_max": 70
+        },
+        "display_updates": 240,
+        "interarrival_p50_ms": 33.0,
+        "interarrival_p99_ms": 45.099999994039536,
+        "mean_hz": 29.922948407872024,
+        "passed": true,
+        "window_ms": 8020.5999999940395,
+        "windows": 1
+      },
+      "owner_closes": {
+        "count": 7,
+        "passed": true
+      }
+    },
+    "passed": true
+  },
+  "observed_processes": 76,
+  "owned_survivors_requiring_kill": [],
+  "preflight": {
+    "browser_shm_check": {
+      "elapsed_seconds": 1.1714783910138067,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4-rehearsal/20261019T024515Z/preflight",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-19T02:45:16.077455+00:00",
+      "status": "completed",
+      "timeout_seconds": 60
+    },
+    "browsers": {
+      "chromium": "Chromium 152.0.7977.82 Arch Linux",
+      "chromium_binary_sha256": "27c398e1738a5bf578e4414654b959b8fdb63446dfb309c114a95e97c5d243ff",
+      "node": "v24.21.0",
+      "playwright": "1.63.0"
+    },
+    "chromium_shared_memory": "Playwright default --disable-dev-shm-usage is ignored; regions live on /dev/shm",
+    "dev_shm_free_bytes": 7764348928,
+    "floors": {
+      "dev_shm_free_bytes": 1073741824,
+      "project_free_bytes": 4294967296,
+      "project_initial_free_bytes": 10737418240,
+      "tmp_free_bytes": 2147483648
+    },
+    "project_free_bytes": 14301839360,
+    "tmp_free_bytes": 4774526976,
+    "utc": "2026-10-19T02:45:15Z"
+  },
+  "process": {
+    "pid": 3425510,
+    "process_group": 3425509,
+    "start_ticks": 21128921
+  },
+  "qualification_claims": [],
+  "selected": [
+    [
+      "lab-endurance.spec.ts",
+      "mixed browser endurance with forced-GC renderer samples"
+    ],
+    [
+      "lab.spec.ts",
+      "actual local manual workflow, snapshots, sequential branches, comparison and export"
+    ],
+    [
+      "lab.spec.ts",
+      "actual replay jobs recover without samples and expose controls, reports and authenticated bundle"
+    ],
+    [
+      "lab.spec.ts",
+      "actual trajectory overlay isolation and keyboard error recovery"
+    ],
+    [
+      "lab.spec.ts",
+      "actual memory inspector, U-only branch and evidence-linked route annotations"
+    ],
+    [
+      "lab.spec.ts",
+      "measured browser responsiveness and actual display cadence"
+    ],
+    [
+      "lab.spec.ts",
+      "actual declared task inspection and snapshot continuation: exploration-landmarks"
+    ],
+    [
+      "lab.spec.ts",
+      "actual declared task inspection and snapshot continuation: encoder-homing"
+    ],
+    [
+      "recorded-snapshots.spec.ts",
+      "closed recorded runs recover snapshots and branch from the selected source"
+    ]
+  ],
+  "status": "passed",
+  "storage": {
+    "additional_bytes": 0,
+    "files": 402,
+    "free_bytes": 14249766912,
+    "headroom_bytes": 16777216,
+    "max_bytes": 7516192768,
+    "min_free_bytes": 4294967296,
+    "remaining_bytes": 6750751374,
+    "used_bytes": 765441394
+  }
+}

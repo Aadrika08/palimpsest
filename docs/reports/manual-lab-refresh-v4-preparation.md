@@ -2,7 +2,7 @@
 
 The v4 session is prepared and registered, and has not been run. The registration is `docs/plans/manual-lab-refresh-v4-registration.json`, 244 pinned sources, with no `launched.json` marker. The protocol is in [manual-lab-refresh-v4.md](../plans/manual-lab-refresh-v4.md). Evidence is in [`manual-lab-refresh-v4-preparation/`](manual-lab-refresh-v4-preparation/).
 
-**Main finding: the real session will probably fail the cadence criterion on this host.** The cause is synchronous recording writes to the nearly full project disk (see "Cadence: decision needed" below). Every functional part of the session passed in both rehearsals.
+**Status: the session is ready to run.** The first two rehearsals failed only the cadence criterion, because recording writes were made synchronously to the nearly full project disk. You chose to fix this in code. Live lab owners now record through a bounded background writer (see "Background recording writer" below). The third rehearsal, run after that fix, **passed every check**, including cadence, with the runs folder still on the project disk.
 
 ## Rehearsals
 
@@ -31,7 +31,7 @@ I streamed one run to 600 ticks and sampled the page with and without a forced G
 
 The endurance rehearsal agrees: the idle post-GC count stayed flat across cycles (256, 256, 257, 254, 210; the 210 follows a page reload). The v4 rule fails only growth that is not reclaimed, so it guards against a future leak without flagging this.
 
-## Cadence: decision needed before the real run
+## Cadence: diagnosis (before the fix)
 
 **Symptom.** The delivered display stream has periodic stalls.
 
@@ -55,12 +55,87 @@ The endurance rehearsal agrees: the idle post-GC count stayed flat across cycles
 
 The project-disk p99 sits just under the 70 ms limit. In the full rehearsals the measured test ran fifth in the suite, and it crossed the limit both times (75–76 ms). During endurance, the project disk also accumulates more data each cycle.
 
-**Options (a decision is needed):**
+**Options presented** (the chosen option was 1):
 1. **Code:** move the recorder's chunk and event writes off the worker's step and display loop, using a bounded background writer that keeps the same durability and storage checks. Write it test-first, then re-register.
 2. **Environment:** free a substantial amount of project-disk space or use faster storage, then rehearse again. Putting the session's runs folder on tmpfs would also need a decision, because evidence would then live in RAM.
 3. **Run as is** and accept that the cadence criterion will probably fail.
 
 Any change to the pinned sources makes the current registration invalid. To re-register: delete `docs/plans/manual-lab-refresh-v4-registration.json`, run `--register` again, and commit.
+
+## Background recording writer (the chosen fix)
+
+| Commit | What it is |
+| --- | --- |
+| `8a683a2` | Failing tests, written first |
+| `579fc44` | The implementation |
+
+The new method is `RunWriter.start_background()` in `src/palimpsest/records.py`.
+
+**What moved to the background, and what did not.** The caller still validates every record, assigns its sequence number, stages the `.npz` chunk, hashes it and checks quotas. One first-in-first-out thread only writes the chunk files and event lines and fsyncs them. Because of that split, the published bytes are identical to the synchronous path.
+
+**Durability.** The data is fully on disk before a run counts as closed:
+- `flush` (which snapshots use), `finish` and `close` all wait for the queue to empty.
+- The terminal manifest is written only after every chunk and event is durable.
+
+**Kill behaviour.** A killed process keeps a valid published prefix of the recording. That prefix can be shorter than before by at most the items still queued: up to 16, and 0 to 8 were observed.
+
+**Quotas.** Bytes that are queued but not yet written count against both the writer quota and the storage budget.
+
+**Backpressure.** When the queue (16 items) is full, the caller blocks instead of using more memory. These events are counted, with the time spent blocked.
+
+**Errors.** The first write error stops all later writes and fails the next writer call. The engine then fails the run, and the published prefix stays valid.
+
+**Who uses it.** Only the live lab owner turns it on (`worker.py`, right after `Engine.open`). Replay jobs, campaign and held-episode workers, evaluation, and every other `RunWriter` user stay synchronous and unchanged. Those paths have frozen registrations or no display cadence to protect, and their per-event durability timing is part of what they have already reviewed and recorded.
+
+**Statistics.** Each owner's writer statistics (`recording_writer`: mode, items written, high-water mark, backpressure count and seconds, error) reach its run view and its `supervisor.json`.
+
+**Bug found while testing.** The caller's temporary-file cleanup could delete a chunk file that the writer thread was still publishing. A deterministic test reproduced it (`FileNotFoundError` on rename), and it is fixed.
+
+**Proof of identical bytes.** `tests/test_records_background.py::test_recording_is_byte_identical_to_the_synchronous_path` runs the same fixed schedule through both paths: events, 70 ticks in episode 0, an explicit flush, 5 ticks in episode 1, then finish. Every file comes out byte-identical (manifest, `events.jsonl` and every chunk).
+
+A full-engine comparison is not possible on either path. The recordings contain wall-clock latency fields (`latency`, `step_latency`), so even two synchronous runs differ. The writer is the only component that changed how bytes are produced.
+
+### Tests
+
+- **`tests/test_records_background.py`:** 8 tests. Before the implementation, 7 failed (`background-writer-red.log`); the race test was added later and failed until the cleanup fix.
+  - identical bytes;
+  - the caller does not wait on fsync, and flush drains;
+  - the race above;
+  - the bounded queue and its backpressure count;
+  - errors fail the run and keep the prefix;
+  - quotas and the storage budget count queued bytes;
+  - a process killed with SIGKILL leaves a valid published prefix that is a whole number of chunks;
+  - the synchronous default is unchanged.
+- **`tests/test_lab.py`:** an opt-in test runs a real live owner through 33 steps and a snapshot. It checks background mode, no error, an empty queue at close, the persisted `supervisor.json` and 33 published ticks. Before the change it failed with `KeyError recording_writer` (`live-owner-red.log`). With `PALIMPSEST_SIMULATION_TESTS=1`, all 20 `test_lab` tests pass.
+- **`tests/test_recovery.py`:** a background write failure fails the engine run, keeps a 32-tick prefix and leaves no temporary files.
+
+**Full canonical suite** (`scripts/run_tests.sh`, `full-suite-summary.log`):
+- Pass 1: 5,975 passed, 304 skipped and 18 failed.
+- The isolated, process and tmpfs passes: 7 + 5 + 31 all passed.
+
+All 18 failures are puck bootstrap tests that raise "Collection root or ancestor changed while held", or tests near them. That guard holds every ancestor directory from `/` downward and fails if any of their timestamps change. In this worktree that includes the shared `.worktrees` directory, which other sessions keep changing, so the failing set changes from run to run: 45 failures on the first run, which also hit stray bytecode I had created myself and since removed; 18 on the second; and 64 when I re-ran just those files.
+
+Run from a quiet location (`puck-flake-comparison.log`), the same 9 files gave the same result at this branch's head as at `main` `5456b33`: 1 failed and 232 passed, and the one failure is the same test (`test_authored03_completes_after_real_failed01_02_without_changing_their_bytes`). So these failures come from the environment, not from this branch.
+
+The 304 skips are opt-in tests (including the new live-owner test) plus historical frozen-pin cases. Archived evidence is unaffected. Historical registrations that pin `src/palimpsest/*.py` (now including the changed `records.py`, `worker.py` and `lab.py`) report as historical under the existing frozen-pin policy. No test failed because of a pin mismatch.
+
+### Cadence on the project disk after the fix
+
+**Measured 8 s test, 6 runs** (`cadence-after-background-writer.json`): all 6 passed, at 29.77–30.28 Hz. The p99 gap was 45.0–47.0 ms and acknowledgement p95 was 20–27 ms. Before the fix the same disk gave 26.0–29.7 Hz with a p99 gap of 63.8–66.3 ms.
+
+**Rehearsal 3** (`--rehearse 300 60`, 371 s, `rehearsal-3-background-writer-worker.json`) **passed every check:**
+
+| Check | Result |
+| --- | --- |
+| Acceptance tests | 8 of 8 passed, including the enforced cadence test |
+| Measured cadence | 29.92 Hz, p99 gap 45.1 ms, acknowledgement p95 24.6 ms |
+| Endurance cadence (pooled) | 29.58 Hz, p99 gap 56.0 ms, acknowledgement p95 20.9 ms |
+| Endurance cycles | 5 of 5 |
+| Listener growth | Passed; idle post-GC counts 256, 256, 256, 256, 210 |
+| Failures | 0 network failures, 0 page errors |
+| Exports and run closes | Passed |
+
+Across the 22 live owners in this rehearsal, every one used the background writer. Together they wrote 581 items, with a queue high-water mark of 8 of 16, 0 backpressure events and no errors. The 8 replay jobs stayed synchronous.
 
 ## Expected duration and resources for the real session
 
