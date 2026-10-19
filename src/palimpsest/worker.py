@@ -357,6 +357,10 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
             controller=config["controller"], device=config["device"], seed=config["seed"],
             scenario=config["scenario"], texture=config["texture"], run_id=run_id, storage_budget=budget,
             expected_policy_identity=config.get('policy_identity'))
+        # Live lab owners publish recording I/O from a bounded background thread so
+        # chunk/event fsyncs never stall stepping or display samples. Replay jobs and
+        # every other RunWriter user stay synchronous.
+        engine.writer.start_background()
         heartbeat()
         trace = []
         if config.get("snapshot_path"):
@@ -395,7 +399,7 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
         def status(kind="status"):
             return {"type": kind, "status": "failed" if engine.phase == "failed" else "ready",
                 "state": engine.public_state(), "receipts": list(engine.receipts.values()),
-                "storage_preflight": preflight,
+                "storage_preflight": preflight, "recording_writer": engine.writer.background_stats(),
                 "snapshots": [{k: v for k, v in item.items() if k not in ("filename", "config", "sha256")}
                               for item in registry.values()], "initial_snapshot_id": initial}
         send(status())
@@ -484,7 +488,8 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
                 engine.close()
                 heartbeat()
                 send({"type": "closed", "status": "failed" if failed else "closed",
-                      "state": engine.public_state(), "receipts": list(engine.receipts.values())})
+                      "state": engine.public_state(), "receipts": list(engine.receipts.values()),
+                      "recording_writer": engine.writer.background_stats()})
             except BaseException as error:
                 traceback.print_exc()
                 with contextlib.suppress(Exception):

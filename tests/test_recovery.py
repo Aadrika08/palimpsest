@@ -128,6 +128,40 @@ class RecoveryTests(unittest.TestCase):
             self.assertEqual(json.loads((path / 'manifest.json').read_text())['status'], 'running')
             self.assertFalse(list((path / 'chunks').glob('*.tmp')))
 
+    def test_background_writer_failure_fails_the_engine_run(self):
+        # The lab owner's background writer surfaces a disk failure as a failed run.
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'recording'
+            writer, env = RunWriter(path, {'run_id': 'fixture'}), SmallEnv()
+            engine = Engine(env, writer)
+            writer.start_background()
+            real, calls = os.fsync, []
+            def fail_after_first_chunk(descriptor):
+                calls.append(descriptor)
+                if os.readlink(f'/proc/self/fd/{descriptor}').endswith('000001.tmp'):
+                    raise OSError(errno.ENOSPC, 'disk full')  # the second chunk file
+                real(descriptor)
+            with patch('palimpsest.records.os.fsync', side_effect=fail_after_first_chunk):
+                for tick in range(200):  # the error surfaces at a later call, never silently
+                    try:
+                        engine.submit({'id': str(tick), 'kind': 'step', 'expected_state': 'paused',
+                                       'expected_episode': 0, 'expected_revision': engine.revision})
+                        engine.advance()
+                    except RuntimeError as error:  # as for a synchronous event failure in submit
+                        self.assertIn('Background recording write failed', str(error))
+                    state = engine.public_state()
+                    if state['phase'] == 'failed':
+                        break
+                    if tick >= 64:
+                        time.sleep(.01)
+            self.assertEqual(state['phase'], 'failed')
+            self.assertIn('Background recording write failed', state['last_outcome']['message'])
+            engine.close()
+            self.assertTrue(env.closed)
+            self.assertEqual(len(list(iter_ticks(path))), 32)
+            self.assertEqual(json.loads((path / 'manifest.json').read_text())['status'], 'running')
+            self.assertFalse(list((path / 'chunks').glob('*.tmp')))
+
 
 if __name__ == '__main__':
     unittest.main()

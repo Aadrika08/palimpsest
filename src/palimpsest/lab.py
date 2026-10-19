@@ -251,7 +251,7 @@ class LabSupervisor:
                 owner.view["state"] = state
             return
         for key in ("status", "state", "receipts", "snapshots", "initial_snapshot_id", "failure", "replay",
-                    "job", "replay_mode", "jobstate", "underlying_state", "storage_preflight"):
+                    "job", "replay_mode", "jobstate", "underlying_state", "storage_preflight", "recording_writer"):
             if key in message:
                 owner.view[key] = message[key]
         self._publish(message)
