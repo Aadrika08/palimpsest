@@ -1,0 +1,65 @@
+...F...F..                                                               [100%]
+=================================== FAILURES ===================================
+_ BackgroundWriter.test_drain_publishes_queued_events_without_changing_chunk_boundaries _
+
+self = <test_records_background.BackgroundWriter testMethod=test_drain_publishes_queued_events_without_changing_chunk_boundaries>
+
+    def test_drain_publishes_queued_events_without_changing_chunk_boundaries(self):
+        writer = RunWriter(self.root / 'run', {})
+        writer.start_background()
+        def slow(descriptor):
+            time.sleep(.1)
+            REAL_FSYNC(descriptor)
+        with patch('palimpsest.records.os.fsync', side_effect=slow):
+            for tick in range(5):
+                writer.tick(0, tick, action=np.zeros(2))
+            writer.event('registered', name='x')
+>           writer.drain()
+            ^^^^^^^^^^^^
+E           AttributeError: 'RunWriter' object has no attribute 'drain'
+
+tests/test_records_background.py:229: AttributeError
+_ BackgroundWriter.test_snapshot_registration_is_durable_when_the_snapshot_returns _
+
+self = <test_records_background.BackgroundWriter testMethod=test_snapshot_registration_is_durable_when_the_snapshot_returns>
+
+    def test_snapshot_registration_is_durable_when_the_snapshot_returns(self):
+        from palimpsest import worker
+        from test_engine import SmallEnv
+        from palimpsest.engine import Engine
+        run = self.root / 'source'
+        (run / 'snapshots').mkdir(parents=True)
+        writer = RunWriter(run / 'recording', {'run_id': 'source'})
+        engine = Engine(SmallEnv(), writer)
+        writer.start_background()
+        armed, gate = threading.Event(), threading.Event()
+        def held(descriptor):
+            if armed.is_set():
+                gate.wait(5.)  # the writer is still busy with an earlier queued item
+            REAL_FSYNC(descriptor)
+        def save(snapshot, path, **kw):
+            path.write_bytes(b'snapshot')
+            armed.set()
+            writer.event('earlier-queued-work')
+            threading.Timer(.3, gate.set).start()
+        config = {'scenario': 'sparse-navigation', 'texture': 'checker', 'controller': 'manual', 'device': 'cpu', 'seed': 0}
+        with patch('palimpsest.snapshots.capture', return_value={'stub': True}), \
+                patch('palimpsest.snapshots.save_snapshot', side_effect=save), \
+                patch('palimpsest.records.os.fsync', side_effect=held):
+            identifier = worker._snapshot(engine, run, {}, config)
+            events = [json.loads(line) for line in (run / 'recording/events.jsonl').read_text().splitlines()]
+>       self.assertEqual([event['snapshot_id'] for event in events if event['kind'] == 'snapshot_registered'], [identifier])
+E       AssertionError: Lists differ: [] != ['3348a6fda54643f9aff5b93bea5ea2ea']
+E       
+E       Second list contains 1 additional elements.
+E       First extra element 0:
+E       '3348a6fda54643f9aff5b93bea5ea2ea'
+E       
+E       - []
+E       + ['3348a6fda54643f9aff5b93bea5ea2ea']
+
+tests/test_records_background.py:267: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_records_background.py::BackgroundWriter::test_drain_publishes_queued_events_without_changing_chunk_boundaries
+FAILED tests/test_records_background.py::BackgroundWriter::test_snapshot_registration_is_durable_when_the_snapshot_returns
+2 failed, 8 passed in 1.89s

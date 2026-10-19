@@ -1,0 +1,680 @@
+{
+  "acceptance_browser_returncode": 0,
+  "acceptance_floors": {
+    "dev_shm_free_bytes": 7779708928,
+    "tmp_free_bytes": 4774510592
+  },
+  "acceptance_server_returncode": -15,
+  "acceptance_started_utc": "2026-10-19T02:59:05Z",
+  "build": {
+    "ui/dist/assets/index-DP8Vou6b.js": {
+      "bytes": 257795,
+      "sha256": "ea70ba1e34e10f456238097e970ae19535caae3694c51a215f60c3427f9d5dcb"
+    },
+    "ui/dist/assets/index-YXzjLjgu.css": {
+      "bytes": 7190,
+      "sha256": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87"
+    },
+    "ui/dist/index.html": {
+      "bytes": 418,
+      "sha256": "d7e3f6a221ee55f5a6346a381d38d145206d91487a4471ad92b62523ffa01f5f"
+    }
+  },
+  "elapsed_seconds": 364.5510951689794,
+  "endurance_browser_returncode": 0,
+  "endurance_floors": {
+    "dev_shm_free_bytes": 7783907328,
+    "tmp_free_bytes": 4774510592
+  },
+  "endurance_seconds": 300,
+  "endurance_server_returncode": -15,
+  "endurance_started_utc": "2026-10-19T03:00:11Z",
+  "evaluation": {
+    "checks": {
+      "acceptance_tests": {
+        "duration": 64616.983,
+        "expected": 8,
+        "flaky": 0,
+        "passed": true,
+        "skipped": 0,
+        "startTime": "2026-10-19T02:59:06.430Z",
+        "unexpected": 0
+      },
+      "endurance_cadence": {
+        "acknowledgement_count": 40,
+        "acknowledgement_p95_ms": 23,
+        "criteria": {
+          "acknowledgement_p95_ms_below": 150,
+          "display_mean_hz_min": 29,
+          "emission_hz": 30,
+          "interarrival_p99_ms_max": 70
+        },
+        "display_updates": 621,
+        "interarrival_p50_ms": 32.69999998807907,
+        "interarrival_p99_ms": 51.20000001788139,
+        "mean_hz": 29.815489651051525,
+        "passed": true,
+        "window_ms": 20828.099999964237,
+        "windows": 5
+      },
+      "endurance_cycles": {
+        "configuration": {
+          "cycle_seconds": 60,
+          "cycles": 5,
+          "seconds": 300,
+          "stream_seconds": 4
+        },
+        "count": 5,
+        "expected": 5,
+        "passed": true,
+        "reloads": 1,
+        "replays": [
+          "Action replay",
+          "Policy replay"
+        ]
+      },
+      "endurance_failures": {
+        "network": [],
+        "page_errors": [],
+        "passed": true
+      },
+      "endurance_tests": {
+        "duration": 292005.41099999996,
+        "expected": 1,
+        "flaky": 0,
+        "passed": true,
+        "skipped": 0,
+        "startTime": "2026-10-19T03:00:12.055Z",
+        "unexpected": 0
+      },
+      "exports": {
+        ".svg": 1,
+        ".zip": 1,
+        "passed": true
+      },
+      "listener_growth": {
+        "listeners": {
+          "allowance": 64,
+          "idle_gc": [
+            256,
+            256,
+            256,
+            256,
+            210
+          ],
+          "idle_gc_early_median": 256,
+          "idle_gc_late_median": 210,
+          "passed": true,
+          "rule": "idle post-GC late-third median may exceed early-third median by at most max(absolute, fraction*early)",
+          "streaming_minus_idle_gc": [
+            148,
+            888,
+            888,
+            48,
+            54
+          ],
+          "streaming_raw": [
+            404,
+            1144,
+            1144,
+            304,
+            264
+          ],
+          "unreclaimed_growth": -46
+        },
+        "passed": true,
+        "recorded_only": {
+          "dom_nodes": {
+            "allowance": 256,
+            "idle_gc": [
+              1816,
+              1918,
+              2020,
+              2122,
+              1200
+            ],
+            "idle_gc_early_median": 1816,
+            "idle_gc_late_median": 1200,
+            "passed": true,
+            "rule": "idle post-GC late-third median may exceed early-third median by at most max(absolute, fraction*early)",
+            "streaming_minus_idle_gc": [
+              -168,
+              4,
+              -8,
+              -217,
+              807
+            ],
+            "streaming_raw": [
+              1648,
+              1922,
+              2012,
+              1905,
+              2007
+            ],
+            "unreclaimed_growth": -616
+          },
+          "js_heap_used": {
+            "allowance": 8388608,
+            "idle_gc": [
+              4684012,
+              4861372,
+              4964600,
+              5041712,
+              3242824
+            ],
+            "idle_gc_early_median": 4684012,
+            "idle_gc_late_median": 3242824,
+            "passed": true,
+            "rule": "idle post-GC late-third median may exceed early-third median by at most max(absolute, fraction*early)",
+            "streaming_minus_idle_gc": [
+              649940,
+              2762468,
+              3626524,
+              2954944,
+              2602736
+            ],
+            "streaming_raw": [
+              5333952,
+              7623840,
+              8591124,
+              7996656,
+              5845560
+            ],
+            "unreclaimed_growth": -1441188
+          }
+        }
+      },
+      "measured_cadence": {
+        "acknowledgement_count": 12,
+        "acknowledgement_p95_ms": 29,
+        "criteria": {
+          "acknowledgement_p95_ms_below": 150,
+          "display_mean_hz_min": 29,
+          "emission_hz": 30,
+          "interarrival_p99_ms_max": 70
+        },
+        "display_updates": 241,
+        "interarrival_p50_ms": 33.0,
+        "interarrival_p99_ms": 53.30000001192093,
+        "mean_hz": 30.033023864415227,
+        "passed": true,
+        "window_ms": 8024.5,
+        "windows": 1
+      },
+      "owner_closes": {
+        "count": 7,
+        "passed": true
+      }
+    },
+    "passed": true,
+    "recorded": {
+      "recording_writers": {
+        "background": 22,
+        "backpressure_events": 0,
+        "backpressure_seconds": 0.0,
+        "errors": [],
+        "max_queued_items": 10,
+        "owners": 30,
+        "per_owner": [
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 2,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 37
+            },
+            "run_id": "0c418bf67a5e4205b00e6f4448242657"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 54
+            },
+            "run_id": "15e30a0bbb924b18b901438ecdf775e9"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 14
+            },
+            "run_id": "1a587d1629de49a59a16ec0f8511375b"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 2,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 12
+            },
+            "run_id": "1b633135c71c4c928799a3545e6cc8b3"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 4,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 13
+            },
+            "run_id": "1ece76b6a2bc408fa61e79f073a8c214"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 13
+            },
+            "run_id": "2100214d078a44b795efcb426b1eff77"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 24
+            },
+            "run_id": "2af39fd1f3e442858103e50a7b866d70"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 2,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 17
+            },
+            "run_id": "337b984afed34a6a80a6e87957a28998"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 5,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 55
+            },
+            "run_id": "5a81b04a36c744789e891be6a8e9e67a"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": null,
+            "run_id": "68e0a850478b4b8cbe5cc4a51cdc5896"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": null,
+            "run_id": "70b20263a5ad442ea649873ca79ff817"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 3,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 13
+            },
+            "run_id": "94681e437cb04d6097a074d9cb912f99"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": null,
+            "run_id": "9b0101c842ea4ea5940395d673557a4d"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 6
+            },
+            "run_id": "9d03f9cf4fd64e74b10faeae259a5712"
+          },
+          {
+            "phase": "acceptance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 10,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 42
+            },
+            "run_id": "e5d1d8af721749dcaffb333be9eb04e2"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 3,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 43
+            },
+            "run_id": "128b9c14ac894ea3a14aea1b4f84cbab"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 12
+            },
+            "run_id": "366b83bfa9f64e038dee6344094c08c6"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 3,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 12
+            },
+            "run_id": "4719cda5b2144ad9bb97bc7d99cff2b0"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 15
+            },
+            "run_id": "61c50389b8f7446d8f26b3e8c52fb0ac"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 15
+            },
+            "run_id": "7de8e245e39d4d14ad5e379e45bcc761"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": null,
+            "run_id": "8a39c7da07b54225a56c6997a6d534e7"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 3,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 43
+            },
+            "run_id": "8c6324ee68c54f51b329d261900df382"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 43
+            },
+            "run_id": "95655002964e4c41a49eb12892908a41"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 3,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 43
+            },
+            "run_id": "98717a2b6ee04e14b20dd65fe124c261"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": null,
+            "run_id": "c29e590c0b21484a807a96c63ccd1443"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": null,
+            "run_id": "c838b4e610fa4806b1c5760027daeec2"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": null,
+            "run_id": "cb09ca8c07f54bc489fcf74cd5e0ba95"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 43
+            },
+            "run_id": "e068140aa1f94edb8417a9f1a8b6f1e9"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": null,
+            "run_id": "f7d4424dd880497886e355300fbb64d2"
+          },
+          {
+            "phase": "endurance",
+            "recording_writer": {
+              "backpressure_events": 0,
+              "backpressure_seconds": 0.0,
+              "error": null,
+              "max_items": 16,
+              "max_queued_items": 1,
+              "mode": "background",
+              "pending_bytes": 0,
+              "queued_items": 0,
+              "written_items": 12
+            },
+            "run_id": "fc4052dd7b1845eca8c714b36f94c2a3"
+          }
+        ],
+        "synchronous": 8,
+        "written_items": 581
+      }
+    }
+  },
+  "observed_processes": 78,
+  "owned_survivors_requiring_kill": [],
+  "preflight": {
+    "browser_shm_check": {
+      "elapsed_seconds": 0.820302113017533,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v4/.superpowers/sdd/manual-lab-refresh-v4-rehearsal/20261019T025903Z/preflight",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-19T02:59:03.661684+00:00",
+      "status": "completed",
+      "timeout_seconds": 60
+    },
+    "browsers": {
+      "chromium": "Chromium 152.0.7977.82 Arch Linux",
+      "chromium_binary_sha256": "27c398e1738a5bf578e4414654b959b8fdb63446dfb309c114a95e97c5d243ff",
+      "node": "v24.21.0",
+      "playwright": "1.63.0"
+    },
+    "chromium_shared_memory": "Playwright default --disable-dev-shm-usage is ignored; regions live on /dev/shm",
+    "dev_shm_free_bytes": 7779708928,
+    "floors": {
+      "dev_shm_free_bytes": 1073741824,
+      "project_free_bytes": 4294967296,
+      "project_initial_free_bytes": 10737418240,
+      "tmp_free_bytes": 2147483648
+    },
+    "project_free_bytes": 14266781696,
+    "tmp_free_bytes": 4774514688,
+    "utc": "2026-10-19T02:59:03Z"
+  },
+  "process": {
+    "pid": 3435337,
+    "process_group": 3435336,
+    "start_ticks": 21211707
+  },
+  "qualification_claims": [],
+  "selected": [
+    [
+      "lab-endurance.spec.ts",
+      "mixed browser endurance with forced-GC renderer samples"
+    ],
+    [
+      "lab.spec.ts",
+      "actual local manual workflow, snapshots, sequential branches, comparison and export"
+    ],
+    [
+      "lab.spec.ts",
+      "actual replay jobs recover without samples and expose controls, reports and authenticated bundle"
+    ],
+    [
+      "lab.spec.ts",
+      "actual trajectory overlay isolation and keyboard error recovery"
+    ],
+    [
+      "lab.spec.ts",
+      "actual memory inspector, U-only branch and evidence-linked route annotations"
+    ],
+    [
+      "lab.spec.ts",
+      "measured browser responsiveness and actual display cadence"
+    ],
+    [
+      "lab.spec.ts",
+      "actual declared task inspection and snapshot continuation: exploration-landmarks"
+    ],
+    [
+      "lab.spec.ts",
+      "actual declared task inspection and snapshot continuation: encoder-homing"
+    ],
+    [
+      "recorded-snapshots.spec.ts",
+      "closed recorded runs recover snapshots and branch from the selected source"
+    ]
+  ],
+  "status": "passed",
+  "storage": {
+    "additional_bytes": 0,
+    "files": 402,
+    "free_bytes": 14211579904,
+    "headroom_bytes": 16777216,
+    "max_bytes": 7516192768,
+    "min_free_bytes": 4294967296,
+    "remaining_bytes": 6758625577,
+    "used_bytes": 757567191
+  }
+}

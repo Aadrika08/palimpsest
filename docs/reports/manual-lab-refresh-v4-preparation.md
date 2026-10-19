@@ -137,6 +137,26 @@ The 304 skips are opt-in tests (including the new live-owner test) plus historic
 
 Across the 22 live owners in this rehearsal, every one used the background writer. Together they wrote 581 items, with a queue high-water mark of 8 of 16, 0 backpressure events and no errors. The 8 replay jobs stayed synchronous.
 
+### Review fixes and rehearsal 4
+
+The independent review approved the change and asked for two small fixes, both made test-first.
+
+**Snapshot registration lag** (commits `cd69f3b`, `dcde8a6`). `_snapshot` wrote the snapshot file and its index synchronously but only queued the `snapshot_registered` event. A branch reading the still-owned source run right after the snapshot id came back could therefore race it. It now calls `RunWriter.drain()` right after queuing that event. `drain()` waits for queued writes without publishing a partial chunk, so chunk boundaries are unchanged, and it does nothing for synchronous writers. Before the fix the regression test found no event when `_snapshot` returned (`drain-red.log`).
+
+**Writer statistics in the evidence** (commits `162c20a`, `f163878`). `evaluate()` now records every owner's writer statistics under `recorded.recording_writers`, as evidence rather than a new gate.
+
+The protocol now also notes the worst-case queue memory: 16 items of about 6.3 MB each, so about 100 MB per owner.
+
+**Rehearsal 4** (365 s, `rehearsal-4-review-fixes-worker.json`) **passed every check:**
+
+| Check | Result |
+| --- | --- |
+| Acceptance tests | 8 of 8 |
+| Measured cadence | 30.03 Hz, p99 53.3 ms, ack p95 29 ms |
+| Endurance cadence (pooled) | 29.82 Hz, p99 51.2 ms, ack p95 23 ms |
+| Endurance cycles | 5 of 5 |
+| Recording writers | 30 owners: 22 background, 8 synchronous replay jobs; 581 items; queue peak 10; 0 backpressure; no errors |
+
 ## Expected duration and resources for the real session
 
 **Duration:** about 63–65 minutes.
