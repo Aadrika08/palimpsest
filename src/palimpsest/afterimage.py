@@ -19,6 +19,7 @@ from .records import RunWriter, iter_ticks
 MiB = 1024**2
 MAX_FRAMES = 600
 MAX_INPUT_BYTES = 32 * MiB
+MAX_PAIR_INPUT_BYTES = 64 * MiB  # 600 recorded left/right pairs are 59 MB.
 MAX_RECORD_BYTES = 96 * MiB
 MAX_RUN_BYTES = 128 * MiB
 MAX_SVG_BYTES = 4 * MiB
@@ -32,6 +33,12 @@ MAPPING = {'id': 'response-plane-v1', 'x': '360 * action[0] / 3',
 INTERFACE = {'eyes': 'same supplied RGB frame in both channels',
              'sensors': [0., 0., 1., 0.], 'sensor_order': ['contact', 'contact_angle', 'bearing_x', 'bearing_y'],
              'claim': 'authored artificial interface; no biological stereo or sensor mapping'}
+# Schema 2 (artwork materials v1): the fly's own recorded eye images, each replayed
+# to its own channel. Sensors stay fixed and nothing is simulated, so this is
+# still an authored interface, not fly perception.
+INTERFACE_PAIR = {'eyes': 'recorded left and right eye frames, each in its own channel',
+                  'sensors': [0., 0., 1., 0.], 'sensor_order': ['contact', 'contact_angle', 'bearing_x', 'bearing_y'],
+                  'claim': 'recorded simulator eye images replayed to the fixed model; fixed sensors, no physics; not fly perception'}
 SOURCE_NAMES = ('afterimage.py', 'records.py', 'artifacts.py', 'male_policy.py', 'male_model.py',
                 'storage.py', 'evaluate.py', 'cli.py')
 
@@ -50,8 +57,14 @@ def _text(value):
 
 def _spec(value):
     required = {'schema_version', 'title', 'creator', 'frame_file', 'frame_file_sha256', 'source_times_seconds', 'rights'}
-    if not isinstance(value, dict) or set(value) != required or type(value['schema_version']) is not int or value['schema_version'] != 1:
+    version = value.get('schema_version') if isinstance(value, dict) else None
+    if version == 2 and type(version) is int:
+        required |= {'eyes', 'source'}
+    if not isinstance(value, dict) or set(value) != required or type(version) is not int or version not in (1, 2):
         raise ValueError('unsupported stimulus manifest schema')
+    if version == 2 and (value['eyes'] != 'recorded-pair' or not isinstance(value['source'], dict) or not value['source']
+                         or len(json.dumps(value['source'], allow_nan=False)) > 64 * 1024):
+        raise ValueError('schema 2 requires recorded-pair eyes and a bounded source declaration')
     name = value['frame_file']
     if (not all(_text(value[k]) for k in ('title', 'creator', 'frame_file')) or
             '/' in name or '\\' in name or Path(name).suffix != '.npy' or not _is_hash(value['frame_file_sha256'])):
@@ -79,7 +92,8 @@ def load_stimulus(path):
     payload = artifacts._read(path, MiB)
     spec = _spec(artifacts._json(payload))
     frame_path = path.parent / spec['frame_file']
-    raw = artifacts._read(frame_path, MAX_INPUT_BYTES)
+    pair = spec['schema_version'] == 2
+    raw = artifacts._read(frame_path, MAX_PAIR_INPUT_BYTES if pair else MAX_INPUT_BYTES)
     if _sha(raw) != spec['frame_file_sha256']:
         raise ValueError('stimulus NPY checksum differs')
     stream = io.BytesIO(raw)
@@ -88,12 +102,14 @@ def load_stimulus(path):
         raise ValueError('stimulus requires NPY version 1 or 2')
     header = np.lib.format.read_array_header_1_0 if version == (1, 0) else np.lib.format.read_array_header_2_0
     shape, fortran, dtype = header(stream, max_header_size=4096)
-    if (shape != (len(spec['source_times_seconds']), 128, 128, 3) or fortran or dtype != np.dtype('uint8') or
+    expected = (len(spec['source_times_seconds']), *((2,) if pair else ()), 128, 128, 3)
+    if (shape != expected or fortran or dtype != np.dtype('uint8') or
             stream.tell() + math.prod(shape) != len(raw)):
-        raise ValueError('stimulus requires exact C-order uint8 T×128×128×3 bytes')
+        raise ValueError('stimulus requires exact C-order uint8 ' + ('T×2×128×128×3' if pair else 'T×128×128×3') + ' bytes')
     frames = np.frombuffer(raw, dtype=np.uint8, offset=stream.tell()).reshape(shape)
-    metadata = {'manifest': spec, 'manifest_sha256': _sha(payload), 'frame_file_bytes': len(raw),
-                'frame_sha256': [_sha(frame.tobytes()) for frame in frames]}
+    hashes = ([[_sha(frame[0].tobytes()), _sha(frame[1].tobytes())] for frame in frames] if pair
+              else [_sha(frame.tobytes()) for frame in frames])
+    metadata = {'manifest': spec, 'manifest_sha256': _sha(payload), 'frame_file_bytes': len(raw), 'frame_sha256': hashes}
     return {'frames': frames, 'metadata': metadata, 'paths': (path, frame_path),
             'fingerprints': artifacts._fingerprint((path, frame_path))}
 
@@ -105,7 +121,7 @@ def _source_hashes():
 def _unchanged(stimulus):
     if (artifacts._fingerprint(stimulus['paths']) != stimulus['fingerprints'] or
             _sha(artifacts._read(stimulus['paths'][0], MiB)) != stimulus['metadata']['manifest_sha256'] or
-            _sha(artifacts._read(stimulus['paths'][1], MAX_INPUT_BYTES)) != stimulus['metadata']['manifest']['frame_file_sha256']):
+            _sha(artifacts._read(stimulus['paths'][1], MAX_PAIR_INPUT_BYTES)) != stimulus['metadata']['manifest']['frame_file_sha256']):
         raise ValueError('stimulus source changed during inference')
 
 
@@ -136,20 +152,22 @@ def _record(stimulus, policy, destination, identity, *, storage_budget=None, evi
     sources = _source_hashes()
     manifest = {'run_id': destination.name, 'kind': KIND, 'schema_version': 1, 'label': LABEL,
                 'evidence': evidence, 'policy_identity': identity, 'device': 'cpu', 'seed': 0,
-                'stimulus': stimulus['metadata'], 'interface': INTERFACE, 'model_dt_seconds': DT,
+                'stimulus': stimulus['metadata'], 'interface': _interface(stimulus['metadata']['manifest']), 'model_dt_seconds': DT,
                 'source_code_sha256': sources, 'reset': 'once at sequence start; carried across every frame',
                 'timing': '20ms model index; external source timestamps and offline wall latency are separate'}
     writer = RunWriter(destination / 'recording', manifest, max_bytes=MAX_RECORD_BYTES, storage_budget=storage_budget)
     try:
         policy.reset()
+        pair = stimulus['metadata']['manifest']['schema_version'] == 2
         for index, frame in enumerate(stimulus['frames']):
-            observation = {'cam_left': frame.copy(), 'cam_right': frame.copy(),
+            left, right = (frame[0], frame[1]) if pair else (frame, frame)
+            observation = {'cam_left': left.copy(), 'cam_right': right.copy(),
                            'sensors': {'collision': 0., 'collision_angle': 0., 'wind_direction': np.array([1., 0.])}}
             start = time.monotonic()
             result = policy.act(observation)
             latency = time.monotonic() - start
             _response(result)
-            writer.tick(0, index, cam_left=frame, cam_right=frame,
+            writer.tick(0, index, cam_left=left, cam_right=right,
                         sensors=np.array(INTERFACE['sensors'], dtype=np.float32), **result,
                         source_frame_index=np.array(index, dtype=np.int64),
                         source_timestamp_seconds=np.array(stimulus['metadata']['manifest']['source_times_seconds'][index], dtype=np.float64),
@@ -166,6 +184,10 @@ def _record(stimulus, policy, destination, identity, *, storage_budget=None, evi
     return destination
 
 
+def _interface(spec):
+    return INTERFACE_PAIR if spec['schema_version'] == 2 else INTERFACE
+
+
 def _load_recording(source):
     """Validate this non-physics schema before deriving a portrait."""
     import numpy as np
@@ -174,7 +196,7 @@ def _load_recording(source):
     manifest = artifacts._manifest(source)
     if (manifest.get('kind') != KIND or manifest.get('schema_version') != 1 or manifest.get('status') != 'completed' or
             manifest.get('sources_unchanged') is not True or manifest.get('model_dt_seconds') != DT or
-            manifest.get('interface') != INTERFACE or manifest.get('label') != LABEL or
+            manifest.get('interface') not in (INTERFACE, INTERFACE_PAIR) or manifest.get('label') != LABEL or
             manifest.get('device') != 'cpu' or manifest.get('seed') != 0 or
             manifest.get('evidence') not in ('actual model inference', 'synthetic fixture verification')):
         raise ValueError('completed, unchanged Afterimage recording required')
@@ -188,10 +210,15 @@ def _load_recording(source):
         raise ValueError('recording lacks stimulus provenance')
     spec = _spec(stimulus['manifest'])
     count = len(spec['source_times_seconds'])
+    pair = spec['schema_version'] == 2
+    eyes = 2 if pair else 1
+    frame_hashes = stimulus['frame_sha256']
+    shaped = isinstance(frame_hashes, list) and all(
+        (isinstance(v, list) and len(v) == 2 and all(_is_hash(h) for h in v)) if pair else _is_hash(v) for v in frame_hashes)
     if (not _is_hash(stimulus['manifest_sha256']) or type(stimulus['frame_file_bytes']) is not int or
-            not count * 128 * 128 * 3 < stimulus['frame_file_bytes'] <= MAX_INPUT_BYTES or
-            not isinstance(stimulus['frame_sha256'], list) or len(stimulus['frame_sha256']) != count or
-            not all(_is_hash(v) for v in stimulus['frame_sha256']) or
+            not count * eyes * 128 * 128 * 3 < stimulus['frame_file_bytes'] <= (MAX_PAIR_INPUT_BYTES if pair else MAX_INPUT_BYTES) or
+            manifest['interface'] != _interface(spec) or
+            not shaped or len(frame_hashes) != count or
             manifest.get('recorded_ticks') != count or manifest.get('input_frames') != count):
         raise ValueError('recording stimulus counts or hashes differ')
     events = artifacts._events(source)
@@ -231,8 +258,9 @@ def _load_recording(source):
             if (int(row['source_frame_index']) != index or float(row['source_timestamp_seconds']) != spec['source_times_seconds'][index] or
                     float(row['model_time_seconds']) != (index + 1) * DT or float(row['inference_wall_seconds']) < 0 or
                     not np.array_equal(row['sensors'], np.array(INTERFACE['sensors'], dtype=np.float32)) or
-                    not np.array_equal(row['cam_left'], row['cam_right']) or
-                    _sha(row['cam_left'].tobytes()) != stimulus['frame_sha256'][index]):
+                    (pair and [_sha(row['cam_left'].tobytes()), _sha(row['cam_right'].tobytes())] != frame_hashes[index]) or
+                    (not pair and (not np.array_equal(row['cam_left'], row['cam_right']) or
+                                   _sha(row['cam_left'].tobytes()) != frame_hashes[index]))):
                 raise ValueError('frame, source time or artificial interface alignment differs')
             _response({key: row[key] for key in ('action', 'encoded_input', 'raw_output')})
             action = row['action'].astype(float).tolist()
@@ -257,7 +285,7 @@ def render(source, output, *, storage_budget=None):
     provenance = {'kind': KIND, 'label': LABEL, 'evidence': manifest['evidence'], 'source_run_id': manifest['run_id'],
                   'recording_files_sha256': {str(path.relative_to(source)): _sha(artifacts._read(path, MAX_RECORD_BYTES)) for path in paths},
                   'policy_identity': manifest['policy_identity'], 'source_code_sha256': manifest['source_code_sha256'],
-                  'stimulus': manifest['stimulus'], 'interface': INTERFACE, 'mapping': MAPPING,
+                  'stimulus': manifest['stimulus'], 'interface': manifest['interface'], 'mapping': MAPPING,
                   'model_dt_seconds': DT, 'alignment': rows,
                   'rights_limit': 'Operator statement, not verified consent or exhibition permission.',
                   'limits': 'No biological perception/activity, physical trajectory or causal memory claim.'}
