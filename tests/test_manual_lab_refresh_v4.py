@@ -194,6 +194,25 @@ class Evaluation(unittest.TestCase):
         self.assertTrue(result['passed'], json.dumps(result, default=str)[:2000])
         self.assertEqual(result['checks']['endurance_cycles']['reloads'], 6)
 
+    def test_owner_writer_statistics_are_recorded_without_a_new_gate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            v4.configure(endurance_seconds=3600, cycle_seconds=120)
+            root = self.phase(Path(directory))
+            stats = {'mode': 'background', 'written_items': 40, 'max_queued_items': 3, 'backpressure_events': 1,
+                     'backpressure_seconds': .25, 'queued_items': 0, 'pending_bytes': 0, 'max_items': 16, 'error': None}
+            for name, phase, writer in (('a' * 32, 'acceptance', stats), ('b' * 32, 'endurance', {**stats, 'written_items': 2}),
+                                        ('c' * 32, 'endurance', None)):
+                (root / phase / 'runs' / name).mkdir(parents=True)
+                (root / phase / 'runs' / name / 'supervisor.json').write_text(json.dumps({'status': 'closed', 'recording_writer': writer}))
+            result = v4.evaluate(root)
+            self.assertTrue(result['passed'])
+            writers = result['recorded']['recording_writers']
+            self.assertEqual((writers['owners'], writers['background'], writers['synchronous']), (3, 2, 1))
+            self.assertEqual((writers['written_items'], writers['max_queued_items'], writers['backpressure_events']), (42, 3, 2))
+            self.assertAlmostEqual(writers['backpressure_seconds'], .5)
+            self.assertEqual(writers['errors'], [])
+            self.assertEqual(len(writers['per_owner']), 3)
+
     def test_each_missing_or_failed_part_fails(self):
         cases = {'cycles': {'cycles': 29},
                  'network': {'failures': [{'error': 'net::ERR_INSUFFICIENT_RESOURCES'}]},
