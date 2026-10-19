@@ -37,7 +37,7 @@ The worker runs these phases in order:
    - a page reload every fifth cycle, which must recover the local stream;
    - stay idle until the cycle ends, then take a forced-GC renderer sample (`HeapProfiler.collectGarbage` twice).
 
-Live lab owners record through a bounded background writer (`RunWriter.start_background`, commit `579fc44`). It keeps the chunk and event fsyncs out of the step and display loop. Every recording is still byte-identical to the synchronous path and fully durable before the run closes. Each owner's writer statistics are kept in its `supervisor.json`, including backpressure events, the queue high-water mark and any error. Replay jobs and all other recording paths stay synchronous.
+Live lab owners record through a bounded background writer (`RunWriter.start_background`, commit `579fc44`). It keeps the chunk and event fsyncs out of the step and display loop. Every recording is still byte-identical to the synchronous path and fully durable before the run closes. Each owner's writer statistics are kept in its `supervisor.json`, including backpressure events, the queue high-water mark and any error. Replay jobs and all other recording paths stay synchronous. The queue holds at most 16 items. Each chunk carries about 6.3 MB of camera arrays, so the queue can hold at most about 100 MB per owner before the owner blocks. `evaluate()` records every owner's writer statistics in the session evidence (`evaluation.recorded.recording_writers`); a writer error already fails that owner's close.
 
 ## Acceptance criteria (all required)
 

@@ -298,7 +298,28 @@ def evaluate(phase):
         checks['listener_growth'] = listener_verdict(cycles)
     else:
         checks['endurance'] = {'passed': False, 'reason': f'{len(endurance)} endurance reports'}
-    return {'passed': all(check.get('passed') for check in checks.values()), 'checks': checks}
+    return {'passed': all(check.get('passed') for check in checks.values()), 'checks': checks,
+            'recorded': {'recording_writers': writer_statistics(phase)}}
+
+
+def writer_statistics(phase):
+    """Per-owner recording writer statistics from supervisor.json; evidence, not a gate.
+
+    Live owners report background statistics; replay jobs record synchronously
+    (``recording_writer`` is null). Writer errors already fail their owner's close.
+    """
+    rows = []
+    for path in sorted(phase.glob('*/runs/*/supervisor.json')):
+        stats = json.loads(path.read_text()).get('recording_writer')
+        rows.append({'phase': path.parts[-4], 'run_id': path.parent.name, 'recording_writer': stats})
+    live = [row['recording_writer'] for row in rows if row['recording_writer']]
+    return {'owners': len(rows), 'background': len(live), 'synchronous': len(rows) - len(live),
+            'written_items': sum(stats['written_items'] for stats in live),
+            'max_queued_items': max((stats['max_queued_items'] for stats in live), default=0),
+            'backpressure_events': sum(stats['backpressure_events'] for stats in live),
+            'backpressure_seconds': sum(stats['backpressure_seconds'] for stats in live),
+            'errors': [row for row in rows if row['recording_writer'] and row['recording_writer'].get('error')],
+            'per_owner': rows}
 
 
 def observe():
