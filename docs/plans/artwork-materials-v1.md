@@ -50,7 +50,18 @@ Launch the `all` unit. Follow it by reading `~/.cache/artwork-materials-v1/all/p
 
 The outer timeout is 8 h.
 
-**Disk:** the project disk now has about 10.6 GiB free. The `all` stage checks up front that free space, minus about 2.3 GB of estimated output, stays above a 10 GiB floor, so **it will refuse today**. To keep the 10 GiB margin, free about 2 GB first. For example, the v4 and v5 local phase folders (2.1 GB and 2.9 GB, both ignored by git) compress about 16 times with zstd. Alternatively, launch with an explicit lower `--min-free-bytes`.
+**Disk.** Nothing is deleted during the run, so peak use equals the final outputs. The estimate scales the rehearsal's measured per-tick sizes to the full run:
+
+| Output | Size |
+| --- | --- |
+| Manual (3,300 ticks × 199,219 B) | 0.66 GB |
+| FLYNN (6,000 ticks × 217,560 B) | 1.31 GB |
+| Materials | 0.19 GB |
+| **Peak total** | **about 2.16 GB (2.0 GiB)** |
+
+Materials break down as 59 MB stimulus, 60 MB Afterimage record, about 20 MB exports, and about 24 MB each for the pack and its ZIP. The only transient extras are chunk temporary files (at most about 6 MB).
+
+The project disk had 10.89 GB free (10.14 GiB) at the last check. That leaves about 8.7 GB (8.1 GiB) after the run, which keeps the required 4 GiB free. The detached commands pass `--min-free-bytes 4294967296`. Before writing, `all` checks free space minus a 2.35 GiB estimate against that floor, and every writer checks the same floor while running.
 
 ## Still open
 

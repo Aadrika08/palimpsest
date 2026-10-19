@@ -38,6 +38,7 @@ ASSETS = Path('/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data
 GiB = 1024**3
 DT = .02
 FREE_FLOOR = 10 * GiB  # default: stop rather than eat into the operator's 10 GiB margin
+OPERATOR_FLOOR = 4 * GiB  # the detached commands keep at least 4 GiB free (coordinator, 19 Oct 2026)
 SCHEDULE = 'action = [0.8, 0.6 * sin(2 * pi * tick * 0.02 / 5)] for global tick index (fixed, public)'
 GOAL_CANDIDATES = ([5., 5.], [-5., 5.], [5., -5.], [-5., -5.], [0., 5.], [5., 0.], [0., -5.], [-5., 0.])
 
@@ -101,6 +102,8 @@ def floor_check(path):
         raise RuntimeError(f'free space {free} below the {FREE_FLOOR}-byte floor')
 
 
+# Measured in the rehearsal: manual 199,219 B/tick (3,300 ticks), FLYNN 217,560 B/tick (6,000 ticks),
+# materials about 192 MB (stimulus 59 MB, Afterimage record 60 MB, exports, pack and its ZIP).
 ESTIMATED_BYTES = {'manual': 700 * 1024**2, 'flynn': 1400 * 1024**2, 'materials': 250 * 1024**2}
 
 
@@ -534,9 +537,10 @@ def commands(output_root, *, scale='full'):
     suffix = '-rehearsal' if scale == 'rehearsal' else ''
     timeouts = {'manual': 3600, 'flynn': 6 * 3600, 'materials': 3600, 'all': 8 * 3600}
     extra = stage_arguments(scale, output_root)
-    result = {'all': detached('all', f'palimpsest-art-all{suffix}', output_root, ['--scale', scale], timeouts['all'])}
+    floor = ['--min-free-bytes', str(OPERATOR_FLOOR)]  # coordinator: keep at least 4 GiB free
+    result = {'all': detached('all', f'palimpsest-art-all{suffix}', output_root, ['--scale', scale, *floor], timeouts['all'])}
     for stage in ('manual', 'flynn', 'materials'):
-        result[stage] = detached(stage, f'palimpsest-art-{stage}{suffix}', output_root, extra[stage], timeouts[stage])
+        result[stage] = detached(stage, f'palimpsest-art-{stage}{suffix}', output_root, [*extra[stage], *floor], timeouts[stage])
     return result
 
 
