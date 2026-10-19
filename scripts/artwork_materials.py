@@ -39,13 +39,16 @@ GiB = 1024**3
 DT = .02
 FREE_FLOOR = 10 * GiB  # default: stop rather than eat into the operator's 10 GiB margin
 OPERATOR_FLOOR = 4 * GiB  # the detached commands keep at least 4 GiB free (coordinator, 19 Oct 2026)
-SCHEDULE = 'action = [0.8, 0.6 * sin(2 * pi * tick * 0.02 / 5)] for global tick index (fixed, public)'
+SEGMENT_TICKS = 25  # the manual action changes every 0.5 s, so one run stays inside the owner's command cap
+SCHEDULE = ('action = [0.8, 0.6 * sin(2 * pi * t0 * 0.02 / 5)], t0 = global tick rounded down to a multiple of 25 '
+            '(piecewise constant every 0.5 s; fixed, public)')
 GOAL_CANDIDATES = ([5., 5.], [-5., 5.], [5., -5.], [-5., -5.], [0., 5.], [5., 0.], [0., -5.], [-5., 0.])
 
 
 def manual_action(tick):
-    """The fixed public manual drive: steady forward speed with a slow weave."""
-    return [.8, round(.6 * math.sin(2 * math.pi * tick * DT / 5), 9)]
+    """The fixed public manual drive: steady forward speed with a slow weave, held for 25 ticks."""
+    start = tick - tick % SEGMENT_TICKS
+    return [.8, round(.6 * math.sin(2 * math.pi * start * DT / 5), 9)]
 
 
 def sha(path):
@@ -104,7 +107,7 @@ def floor_check(path):
 
 # Measured in the rehearsal: manual 199,219 B/tick (3,300 ticks), FLYNN 217,560 B/tick (6,000 ticks),
 # materials about 192 MB (stimulus 59 MB, Afterimage record 60 MB, exports, pack and its ZIP).
-ESTIMATED_BYTES = {'manual': 700 * 1024**2, 'flynn': 1400 * 1024**2, 'materials': 250 * 1024**2}
+ESTIMATED_BYTES = {'manual': 700 * 1024**2, 'flynn': 1550 * 1024**2, 'materials': 250 * 1024**2}  # FLYNN may run to 6,600 ticks
 
 
 def admit(path, stages):
@@ -150,10 +153,28 @@ class Session:
                          (expect_tick is None or v['state']['total_tick'] >= expect_tick))
 
     def step(self, action=None):
+        """One tick. A manual action is sent only when it differs from the held one: the
+        owner keeps a bounded per-run idempotency store (Engine.MAX_IDS = 4096 commands)."""
         state = self.view()['state']
-        if action is not None:
+        if action is not None and action != getattr(self, 'held', None):
             self.command('set_action', {'action': action})
+            self.held = action
         return self.command('step', expect_tick=state['total_tick'] + 1)['state']
+
+    def run_episode(self, progress, label):
+        """Free-run to the episode's own end (no manual input: deterministic per tick)."""
+        self.command('run')
+        deadline = time.monotonic() + 3600
+        while time.monotonic() < deadline:
+            view = self.view()
+            if view['status'] == 'failed':
+                raise RuntimeError(f'owner failed: {view.get("failure")}')
+            state = view['state']
+            if state['phase'] in ('terminated', 'truncated'):
+                return state
+            progress.update(step=label, total_ticks=state['total_tick'])
+            time.sleep(.2)
+        raise TimeoutError('episode did not end')
 
 
 def start_owner(supervisor, config):
@@ -172,8 +193,21 @@ def start_owner(supervisor, config):
 def drive(session, *, controller, episodes, episode_ticks, total_ticks, seed, branch_at, progress):
     """Step consecutive episodes; returns per-episode summaries and an optional snapshot."""
     summaries, snapshot, tick = [], None, 0
+    free_run = controller != 'manual' and episode_ticks >= 600 and branch_at is None
     for episode in range(episodes):
         steps = 0
+        session.held = None  # the engine zeroes manual intent at each new episode
+        if free_run:
+            state = session.run_episode(progress, f'{controller} episode {episode + 1}/{episodes}')
+            steps = state['total_tick'] - tick
+            tick = state['total_tick']
+            summaries.append({'episode': state['episode'], 'ticks': steps, 'ending': state['phase'],
+                              'last_outcome': state.get('last_outcome')})
+            if total_ticks and tick >= total_ticks:
+                break
+            if episode + 1 < episodes:
+                session.command('reset', {'seed': seed + episode + 1})
+            continue
         while True:
             state = session.step(manual_action(tick) if controller == 'manual' else None)
             tick, steps = tick + 1, steps + 1
@@ -183,7 +217,9 @@ def drive(session, *, controller, episodes, episode_ticks, total_ticks, seed, br
                 progress.update(step=f'{controller} episode {episode + 1}/{episodes}', total_ticks=tick, episode_ticks=steps)
             ended = state['phase'] in ('terminated', 'truncated')
             if ended or steps >= episode_ticks or (total_ticks and tick >= total_ticks):
-                summaries.append({'episode': state['episode'], 'ticks': steps, 'ending': state['phase'] if ended else 'declared-length reset',
+                ending = state['phase'] if ended else ('declared total reached' if total_ticks and tick >= total_ticks
+                                                       else 'declared-length reset')
+                summaries.append({'episode': state['episode'], 'ticks': steps, 'ending': ending,
                                   'last_outcome': state.get('last_outcome')})
                 break
         if total_ticks and tick >= total_ticks:
@@ -232,7 +268,7 @@ def lab_stage(args, controller):
                 break
             if goal is None:
                 raise RuntimeError('no fixed goal candidate was valid for the branch')
-            branch_session = Session(supervisor, branch, progress)
+            branch_session = Session(supervisor, branch, progress)  # a new owner: its own command store
             start_tick, steps = branch_session.view()['state']['total_tick'], 0
             while True:
                 state = branch_session.step(manual_action(start_tick + steps))
@@ -534,7 +570,7 @@ def detached(stage, unit, output_root, extra, timeout):
 
 
 def commands(output_root, *, scale='full'):
-    suffix = '-rehearsal' if scale == 'rehearsal' else ''
+    suffix = {'rehearsal': '-rehearsal', 'cap': '-cap-rehearsal'}.get(scale, '')
     timeouts = {'manual': 3600, 'flynn': 6 * 3600, 'materials': 3600, 'all': 8 * 3600}
     extra = stage_arguments(scale, output_root)
     floor = ['--min-free-bytes', str(OPERATOR_FLOOR)]  # coordinator: keep at least 4 GiB free
@@ -545,11 +581,19 @@ def commands(output_root, *, scale='full'):
 
 
 def stage_arguments(scale, output_root):
-    rehearsal = scale == 'rehearsal'
     root = Path(output_root)
-    return {'manual': ['--episodes', '2' if rehearsal else '5', '--episode-ticks', '50' if rehearsal else '600',
-                       '--branch-at', '20' if rehearsal else '300'],
-            'flynn': ['--episodes', '2' if rehearsal else '10', '--episode-ticks', '50' if rehearsal else '600',
+    if scale == 'cap':
+        # Short, but beyond one owner's 4,096-command store under the 8faab2b client path.
+        return {'manual': ['--episodes', '20', '--episode-ticks', '600', '--total-ticks', '2400', '--branch-at', '300'],
+                'flynn': ['--episodes', '30', '--episode-ticks', '600', '--total-ticks', '4200'],
+                'materials': ['--manual', str(root / 'manual'), '--flynn', str(root / 'flynn'), '--frames', '480',
+                              '--stride', '5', '--choir-seconds', '84', '--declared-gain', '1']}
+    rehearsal = scale == 'rehearsal'
+    # Episodes can end early (the 8faab2b launch saw 'stalled' at 255 and 526 ticks), so the stages
+    # run consecutive episodes until the declared total; --episodes is only an upper bound.
+    return {'manual': ['--episodes', '2' if rehearsal else '20', '--episode-ticks', '50' if rehearsal else '600',
+                       '--total-ticks', '100' if rehearsal else '3000', '--branch-at', '20' if rehearsal else '300'],
+            'flynn': ['--episodes', '2' if rehearsal else '30', '--episode-ticks', '50' if rehearsal else '600',
                       '--total-ticks', '100' if rehearsal else '6000'],
             'materials': ['--manual', str(root / 'manual'), '--flynn', str(root / 'flynn'), '--frames', '20' if rehearsal else '600',
                           '--stride', '5', '--choir-seconds', '2' if rehearsal else '120', '--declared-gain', '1']}
@@ -559,7 +603,7 @@ def run_all(args):
     """One process, one lock: stages run strictly in order and stop at the first failure."""
     root = Path(args.output).absolute()
     root.mkdir(parents=True, exist_ok=False)
-    admit(root, ('manual', 'flynn', 'materials') if args.scale == 'full' else ())
+    admit(root, ('manual', 'flynn', 'materials') if args.scale in ('full', 'cap') else ())
     progress = Progress(root, 'all')
     status = 'completed'
     for stage, extra in stage_arguments(args.scale, root).items():
@@ -601,12 +645,12 @@ def main(argv=None):
     every = stages.add_parser('all', help='manual, flynn and materials in order, under one lock')
     every.add_argument('--output', type=Path, required=True)
     every.add_argument('--assets', type=Path, default=ASSETS)
-    every.add_argument('--scale', choices=('full', 'rehearsal'), default='full')
+    every.add_argument('--scale', choices=('full', 'rehearsal', 'cap'), default='full')
     for stage in (every, materials, *[stages.choices[name] for name in ('manual', 'flynn')]):
         stage.add_argument('--min-free-bytes', type=int, default=FREE_FLOOR)
     show = stages.add_parser('detached')
     show.add_argument('--output-root', type=Path, required=True)
-    show.add_argument('--scale', choices=('full', 'rehearsal'), default='full')
+    show.add_argument('--scale', choices=('full', 'rehearsal', 'cap'), default='full')
     args = parser.parse_args(argv)
     FREE_FLOOR = getattr(args, 'min_free_bytes', FREE_FLOOR)
     if args.stage == 'all':
