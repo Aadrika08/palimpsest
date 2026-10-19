@@ -16,7 +16,8 @@
     "test:browser-shm": "node tests/browser-shm.check.ts",
     "test:performance": "PALIMPSEST_MEASURE_UI=1 playwright test --grep 'measured browser'",
     "test:run-window": "node tests/run-window.check.ts",
-    "test:busy": "node tests/busy.check.ts"
+    "test:busy": "node tests/busy.check.ts",
+    "test:artwork": "playwright test tests/artwork-encounter.spec.ts"
   },
   "dependencies": {
     "react": "19.3.0",

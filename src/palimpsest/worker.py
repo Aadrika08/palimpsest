@@ -290,6 +290,19 @@ def _snapshot(engine, path, registry, config, initial=False, budget=None, prefli
     return identifier
 
 
+# The owner is the single admitted payload writer: recount its roots at most every
+# few seconds instead of before every chunk/event (v5 late-session cadence drift).
+OWNER_RECOUNT_SECONDS = 5.
+
+
+def owner_budget(storage):
+    if not storage:
+        return None
+    from .storage import StorageBudget, StorageLimits
+    return StorageBudget(tuple(Path(p) for p in storage["roots"]), StorageLimits(**storage["limits"]),
+                         headroom_bytes=storage["headroom_bytes"], recount_seconds=OWNER_RECOUNT_SECONDS)
+
+
 def run_worker(config, commands, replies, display, disconnected, stop, progress, *, engine_factory=None):
     """All Engine calls, GL contexts and tensors stay in this process/thread."""
     os.setsid()
@@ -335,8 +348,7 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress,
 def _own(config, commands, replies, display, disconnected, stop, progress, final_messages=None, *, engine_factory=None):
     from .storage import StorageBudget, StorageLimits, StorageLimitError
     storage = config.get("storage")
-    budget = StorageBudget(tuple(Path(p) for p in storage["roots"]), StorageLimits(**storage["limits"]),
-                           headroom_bytes=storage["headroom_bytes"]) if storage else None
+    budget = owner_budget(storage)
     engine, failed, replay_transport = None, False, None
     run_id, path, started = config["run_id"], Path(config["run_path"]), time.monotonic()
     def send(message):

@@ -5,8 +5,10 @@ import errno
 import fcntl
 import os
 from pathlib import Path
+import math
 import shutil
 import stat
+import time
 
 MiB = 1024**2
 GiB = 1024**3
@@ -55,10 +57,20 @@ class StorageBudget:
     ``lock()`` for the service/CLI operation; the admitted child shares its
     parent's lease and receives this roots/limits configuration, not a new lock.
     """
-    def __init__(self, roots, limits: StorageLimits, *, headroom_bytes=0):
+    def __init__(self, roots, limits: StorageLimits, *, headroom_bytes=0, recount_seconds=None):
         if not isinstance(limits, StorageLimits):
             raise TypeError("limits must be StorageLimits")
         _nonnegative(headroom_bytes, "headroom_bytes")
+        if recount_seconds is not None and (type(recount_seconds) not in (int, float) or not math.isfinite(recount_seconds)
+                                            or recount_seconds <= 0):
+            raise ValueError("recount_seconds must be a positive finite number or None")
+        # Optional bounded-cost accounting for the single admitted payload writer:
+        # walk the roots at most once per interval and count every admitted byte as
+        # used until the next walk. Admitted bytes are never released early, so the
+        # estimate can only over-count; concurrent capped logs/status files stay
+        # within headroom_bytes as before. None keeps a full walk before every check.
+        self.recount_seconds, self.recounts = recount_seconds, 0
+        self._counted, self._counted_at, self._admitted = None, None, 0
         self.roots = tuple(sorted({_safe_path(root) for root in roots}))
         if not self.roots:
             raise ValueError("At least one storage root is required")
@@ -106,12 +118,23 @@ class StorageBudget:
                 "max_bytes": self.limits.max_bytes, "headroom_bytes": self.headroom_bytes,
                 "min_free_bytes": self.limits.min_free_bytes}
 
+    def _accounted(self):
+        if self.recount_seconds is None:
+            return self.usage()
+        now = time.monotonic()
+        if self._counted is None or now - self._counted_at >= self.recount_seconds:
+            self._counted, self._counted_at, self._admitted = self.usage(), now, 0
+            self.recounts += 1
+        used = self._counted["used_bytes"] + self._admitted
+        return {**self._counted, "used_bytes": used, "remaining_bytes": max(0, self.limits.max_bytes - used),
+                "admitted_since_recount_bytes": self._admitted}
+
     def check(self, additional_bytes, *, path):
         _nonnegative(additional_bytes, "additional_bytes")
         destination = _safe_path(path)
         if not any(destination.is_relative_to(root) for root in self.roots):
             raise StorageLimitError("Destination is outside configured storage roots")
-        report = self.usage()
+        report = self._accounted()
         required = additional_bytes + self.headroom_bytes
         if report["used_bytes"] + required > self.limits.max_bytes:
             raise StorageLimitError(f"Storage quota exceeded: used={report['used_bytes']}, additional={additional_bytes}, "
@@ -123,6 +146,8 @@ class StorageBudget:
         if free - required < self.limits.min_free_bytes:
             raise StorageLimitError(f"Storage free-space floor reached: free={free}, additional={additional_bytes}, "
                                     f"headroom={self.headroom_bytes}, floor={self.limits.min_free_bytes}")
+        if self.recount_seconds is not None:
+            self._admitted += additional_bytes
         return {**report, "additional_bytes": additional_bytes, "free_bytes": free}
 
     def check_count(self, kind, current, additional=1):
