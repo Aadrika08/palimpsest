@@ -27,15 +27,17 @@ def _hash(value):
     return isinstance(value, str) and len(value) == 64 and all(c in '0123456789abcdef' for c in value)
 
 
-def _source(run_path):
+def _source(run_path, max_seconds=None, max_bytes=None):
     """Bound the existing whole-record validator before it reads numeric chunks."""
+    max_seconds = MAX_SECONDS if max_seconds is None else max_seconds
+    max_bytes = MAX_SOURCE_BYTES if max_bytes is None else max_bytes
     run = artifacts._safe_path(run_path)
     manifest = artifacts._manifest(run)
     dt = manifest.get('control_interval_seconds')
     count = manifest.get('recorded_ticks')
     if type(dt) not in (int, float) or not math.isfinite(dt) or not 1 / SAMPLE_RATE <= dt <= MAX_SECONDS:
         raise ValueError('invalid recorded control interval')
-    if type(count) is not int or not 1 <= count <= artifacts.MAX_TICKS or count * dt > MAX_SECONDS:
+    if type(count) is not int or not 1 <= count <= artifacts.MAX_TICKS or count * dt > max_seconds:
         raise ValueError('recording exceeds the sonification duration limit or has no ticks')
     events = artifacts._events(run)
     chunks = [event for event in events if event['kind'] == 'chunk']
@@ -44,7 +46,7 @@ def _source(run_path):
     paths = [run / 'recording' / name for name in ('manifest.json', 'events.jsonl')]
     paths += [run / 'recording' / event['path'] for event in chunks]
     fingerprint = artifacts._fingerprint(paths)
-    if sum(item[2] for item in fingerprint) > MAX_SOURCE_BYTES:
+    if sum(item[2] for item in fingerprint) > max_bytes:
         raise ValueError('recording exceeds the sonification input byte limit')
     data = artifacts._load(run)
     if data['fingerprint'] != fingerprint:
@@ -189,6 +191,176 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
             stream.seek(4)
             stream.write(struct.pack('<I', size - 8))
             if size != bound or artifacts._fingerprint(data['paths']) != data['fingerprint']:
+                raise ValueError('recording changed or output size differs during sonification')
+    except BaseException:
+        output.unlink()
+        raise
+    return output
+
+
+# Multi-episode choir (artwork materials v1): one FLYNN run, consecutive episodes
+# rendered in order on one sample axis. Every sample still maps to its recorded
+# tick; episode boundaries are marked by a declared short linear fade (out at the
+# end of an episode, in at the start of the next). No normalization: an optional
+# gain must be declared, is recorded, and may never clip.
+MULTI_MAX_SOURCE_SECONDS = 240
+MULTI_MAX_SOURCE_BYTES = 3 * 1024**3
+MULTI_MAX_METADATA_BYTES = 512 * 1024
+MAX_DECLARED_GAIN = 100.
+
+
+def _level_dbfs(value):
+    return 20 * math.log10(value) if value > 0 else None
+
+
+def sonify_episodes(run_path, output_path, *, populations, episodes, max_seconds=MAX_SECONDS,
+                    boundary_fade_seconds=.02, declared_gain=1., storage_budget=None):
+    import numpy as np
+
+    if not isinstance(populations, (tuple, list)) or not populations or any(
+            not isinstance(name, str) or name not in FREQUENCIES for name in populations) or len(set(populations)) != len(populations):
+        raise ValueError('select one or more distinct recorded populations')
+    if (not isinstance(episodes, (list, tuple)) or not episodes or any(type(e) is not int or e < 0 for e in episodes)
+            or list(episodes) != list(range(episodes[0], episodes[0] + len(episodes)))):
+        raise ValueError('episodes must be a nonempty consecutive ascending list')
+    if type(max_seconds) not in (int, float) or not math.isfinite(max_seconds) or not 0 < max_seconds <= MAX_SECONDS:
+        raise ValueError('declared duration must be within 0..120 seconds')
+    if type(declared_gain) not in (int, float) or not math.isfinite(declared_gain) or not 0 < declared_gain <= MAX_DECLARED_GAIN:
+        raise ValueError('declared gain must be a positive finite linear factor up to 100')
+    if type(boundary_fade_seconds) not in (int, float) or not 0 < boundary_fade_seconds <= .5:
+        raise ValueError('boundary fade must be within 0..0.5 seconds')
+    selected = [name for name in FREQUENCIES if name in populations]
+    data, dt = _source(run_path, MULTI_MAX_SOURCE_SECONDS, MULTI_MAX_SOURCE_BYTES)
+    provenance = _lineage(data)
+    manifest = data['manifest']
+    names = manifest.get('population_names')
+    if not isinstance(names, list) or not names or any(not isinstance(name, str) or name not in FREQUENCIES for name in names) or len(set(names)) != len(names):
+        raise ValueError('invalid recorded population names')
+    if manifest.get('population_columns') != ['count', 'mean', 'min', 'max'] or manifest.get('population_scale') != [-1., 1.]:
+        raise ValueError('unsupported recorded population columns or scale')
+    if not set(selected) <= set(names):
+        raise ValueError('selected neural telemetry is missing')
+    limit = int(Fraction(str(max_seconds)) / Fraction(str(dt)))
+    rows, counts, previous, truncated = [], None, None, False
+    for row in iter_ticks(data['run'] / 'recording'):
+        stats = np.asarray(row.get('population_stats'))
+        if stats.shape != (len(names), 4) or stats.dtype.kind not in 'iuf' or not np.isfinite(stats).all():
+            raise ValueError('missing or invalid neural population telemetry')
+        numbers, means, minima, maxima = stats.T
+        if (np.any(numbers < 1) or np.any(numbers != np.floor(numbers)) or
+                np.any(minima < -1) or np.any(maxima > 1) or np.any(minima > means) or np.any(means > maxima)):
+            raise ValueError('invalid neural population statistics or fixed scale')
+        if counts is not None and not np.array_equal(numbers, counts):
+            raise ValueError('recorded population membership counts changed')
+        counts = numbers.copy()
+        end = artifacts._scalar(row['simulation_time'], 'simulation time', True)
+        if end + 1e-8 < dt or (previous is not None and row['episode'] == previous[0] and not math.isclose(end - previous[1], dt, rel_tol=0., abs_tol=1e-8)):
+            raise ValueError('recorded time does not preserve the control interval')
+        previous = row['episode'], end
+        if row['episode'] in episodes:
+            if len(rows) == limit:
+                truncated = True
+                continue
+            rows.append((row['episode'], row['tick'], end, [float(means[names.index(name)]) for name in selected]))
+    present = sorted({row[0] for row in rows})
+    if present != list(episodes)[:len(present)] or not rows or (not truncated and present != list(episodes)):
+        raise ValueError('selected episodes are missing from the recording')
+    interval = Fraction(str(dt)) * SAMPLE_RATE
+    boundaries = [int(index * interval + Fraction(1, 2)) for index in range(len(rows) + 1)]
+    fade = int(Fraction(str(boundary_fade_seconds)) * SAMPLE_RATE)
+    spans, starts = [], [index for index, row in enumerate(rows) if index == 0 or row[0] != rows[index - 1][0]]
+    for number, start in enumerate(starts):
+        stop = starts[number + 1] if number + 1 < len(starts) else len(rows)
+        spans.append({'episode': rows[start][0], 'first_tick': rows[start][1], 'last_tick': rows[stop - 1][1],
+                      'first_sample': boundaries[start], 'end_sample': boundaries[stop]})
+    marks = [span['first_sample'] for span in spans[1:]]
+    if any(span['end_sample'] - span['first_sample'] < 2 * fade for span in spans):
+        raise ValueError('an episode is shorter than its boundary fades')
+    source_files = []
+    for index, path in enumerate(data['paths']):
+        digest = (hashlib.sha256(artifacts._read(path, artifacts.MAX_EVENTS)).hexdigest()
+                  if index < 2 else data['chunks'][index - 2]['sha256'])
+        source_files.append({'path': path.relative_to(data['run']).as_posix(), 'sha256': digest,
+                             'size_bytes': data['fingerprint'][index][2]})
+    metadata = {'version': 2, 'artwork': 'counterfactual choir', 'label': LABEL,
+        'source': {'run_id': manifest['run_id'], 'profile': manifest['profile'],
+            'evidence_class': manifest.get('evidence_class', 'recorded model telemetry; no new inference'),
+            'recording_sha256': hashlib.sha256(_json(source_files)).hexdigest(),
+            'files': source_files, 'provenance': provenance},
+        'renderer': {'mapping_version': 'population-sine-episodes-v1', 'numpy_version': np.__version__},
+        'timing': {'clock': 'simulation time', 'episodes': list(episodes), 'control_interval_seconds': dt,
+            'declared_seconds': max_seconds, 'truncated_at_max_seconds': truncated,
+            'ticks': [[row[0], row[1]] for row in rows], 'episode_spans': spans,
+            'sample_boundaries': boundaries, 'boundary_rounding': 'nearest sample; half up; cumulative from output origin'},
+        'mapping': {'statistic': 'signed recorded population mean; held constant for each control tick',
+            'voices': [{'population': name, 'frequency_hz': FREQUENCIES[name], 'gain': GAIN} for name in selected],
+            'carrier': 'sin(2*pi*frequency_hz*sample_index/sample_rate_hz)', 'phase_origin_sample': 0,
+            'mix': 'sum of selected voices; no normalization, clipping, interpolation, or added activity',
+            'episode_boundary_marker': {'shape': 'linear', 'fade_samples': fade, 'boundaries_samples': marks,
+                'rule': 'fade out over the last fade_samples of each episode before a boundary and in over the first '
+                        'fade_samples after it; every sample keeps its recorded tick'},
+            'pcm': 'round-to-nearest-even(32767 * declared_gain * envelope * mixed signal); signed little-endian int16',
+            'sample_rate_hz': SAMPLE_RATE, 'channels': 1, 'sample_width_bytes': 2},
+        'gain': {'declared_linear': float(declared_gain), 'declared_db': 20 * math.log10(declared_gain),
+                 'applied_to': 'every sample after the fixed mapping and boundary envelope', 'normalization': 'none'},
+        'levels': {'peak_dbfs': -999., 'rms_dbfs': -999., 'scope': 'measured on the written PCM'},
+        'pcm_sha256': '0' * 64}
+    artifacts._no_secrets(metadata)
+    encoded = _json(metadata)
+    slack = 256  # the measured levels replace fixed-width placeholders
+    bound = 44 + boundaries[-1] * 2 + 8 + len(encoded) + slack
+    if len(encoded) > MULTI_MAX_METADATA_BYTES or bound > MAX_OUTPUT_BYTES:
+        raise ValueError('sonification exceeds the output byte limit')
+    output = artifacts._safe_path(output_path)
+    if output.suffix.lower() != '.wav' or output.is_relative_to(data['run'] / 'recording'):
+        raise ValueError('output must be a WAV outside the authoritative recording')
+    if artifacts._fingerprint(data['paths']) != data['fingerprint']:
+        raise ValueError('recording changed before sonification')
+
+    def envelope(start, stop):
+        positions = np.arange(start, stop)
+        value = np.ones(len(positions))
+        for mark in marks:
+            out = (positions >= mark - fade) & (positions < mark)
+            value[out] = (mark - positions[out] - 1) / fade
+            into = (positions >= mark) & (positions < mark + fade)
+            value[into] = (positions[into] - mark + 1) / fade
+        return value
+
+    blocks = []
+    for index, (_, _, _, means) in enumerate(rows):
+        positions = np.arange(boundaries[index], boundaries[index + 1], dtype=np.float64)
+        signal = np.zeros(len(positions))
+        for name, mean in zip(selected, means):
+            signal += GAIN * mean * np.sin(2 * np.pi * FREQUENCIES[name] * positions / SAMPLE_RATE)
+        signal *= declared_gain * envelope(boundaries[index], boundaries[index + 1])
+        if np.any(np.abs(signal) > 1):
+            raise ValueError('declared gain would clip; choose a smaller declared gain')
+        blocks.append(signal)
+    signal = np.concatenate(blocks)
+    pcm = np.rint(32767 * signal).astype('<i2')
+    values = pcm.astype(np.float64) / 32767
+    metadata['levels'].update(peak_dbfs=_level_dbfs(float(np.max(np.abs(values)))),
+                              rms_dbfs=_level_dbfs(math.sqrt(float(np.mean(values ** 2)))))
+    raw = pcm.tobytes()
+    metadata['pcm_sha256'] = hashlib.sha256(raw).hexdigest()
+    encoded = _json(metadata)
+    size = 44 + len(raw) + 8 + len(encoded) + len(encoded) % 2
+    if size > bound:
+        raise ValueError('sonification exceeds its reserved output size')
+    if storage_budget is not None:
+        storage_budget.check(size, path=output)
+    stream = output.open('xb')
+    try:
+        with stream:
+            with wave.open(stream, 'wb') as audio:
+                audio.setparams((1, 2, SAMPLE_RATE, boundaries[-1], 'NONE', 'not compressed'))
+                audio.writeframesraw(raw)
+            stream.write(struct.pack('<4sI', b'plmp', len(encoded)) + encoded + b'\0' * (len(encoded) % 2))
+            written = stream.tell()
+            stream.seek(4)
+            stream.write(struct.pack('<I', written - 8))
+            if written != size or artifacts._fingerprint(data['paths']) != data['fingerprint']:
                 raise ValueError('recording changed or output size differs during sonification')
     except BaseException:
         output.unlink()

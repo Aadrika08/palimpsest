@@ -99,6 +99,10 @@ def main(argv=None):
     sonify.add_argument('source', type=Path)
     sonify.add_argument('--population', choices=('visual_left', 'visual_right', 'descending'), action='append', required=True)
     sonify.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
+    sonify.add_argument('--episodes', help='consecutive range A-B rendered in order with marked boundaries (overrides --episode)')
+    sonify.add_argument('--max-seconds', type=float, default=120., help='declared duration cap for --episodes; cuts at a recorded tick')
+    sonify.add_argument('--boundary-fade-seconds', type=float, default=.02, help='declared episode-boundary fade for --episodes')
+    sonify.add_argument('--declared-gain', type=float, default=1., help='explicit linear gain for --episodes; recorded, never silent, never clips')
     sonify.add_argument('--output', type=Path, required=True, help='new WAV path with embedded provenance; never overwritten')
     atlas = commands.add_parser('atlas', help='export pinned MaleCNS connectivity and node-isolation reachability')
     atlas.add_argument('--graph', type=Path, required=True)
@@ -181,8 +185,15 @@ def main(argv=None):
                     from .comparison import export_comparison
                     result = export_comparison(args.left, args.right, output, storage_budget=budget)
                 elif args.command == 'sonify':
-                    from .sonification import sonify
-                    result = sonify(args.source, output, populations=args.population, episode=args.episode, storage_budget=budget)
+                    from .sonification import sonify, sonify_episodes
+                    if args.episodes:
+                        first, _, last = args.episodes.partition('-')
+                        episodes = list(range(int(first), int(last or first) + 1))
+                        result = sonify_episodes(args.source, output, populations=args.population, episodes=episodes,
+                            max_seconds=args.max_seconds, boundary_fade_seconds=args.boundary_fade_seconds,
+                            declared_gain=args.declared_gain, storage_budget=budget)
+                    else:
+                        result = sonify(args.source, output, populations=args.population, episode=args.episode, storage_budget=budget)
                 else:
                     result = export_run(args.source, output, args.format, storage_budget=budget)
                 report = {'artifact': str(result)}
