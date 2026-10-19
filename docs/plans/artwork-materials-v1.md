@@ -37,31 +37,41 @@ Measured costs:
 - Manual: about 0.2 MB per tick.
 - FLYNN: about 0.22 MB per tick, and about 0.13 s per tick end to end, including the per-tick step round trip.
 
-## Full run (operator-launched; command in `docs/reports/artwork-materials-v1/full-commands.txt`)
+## First full launch failed; fixed and rehearsed again
 
-Launch the `all` unit. Follow it by reading `~/.cache/artwork-materials-v1/all/progress.json` and each stage's `progress.json`.
+**What failed.** At 14:38:21Z the operator launched `palimpsest-art-all` on `8faab2b`. It failed after 464 s, in the `manual` stage. The receipt says `OwnerError: idempotency limit reached; a new session is required`. The run was `95485a8806c8445889532f67e993dd36`, with 2,000 ticks recorded across 4 finished episodes (600, 255, 526 and 600 ticks).
+
+**Why.** The client sent `set_action` plus `step` for every tick, so it used up the engine's per-run idempotency store after 2,048 ticks. That store holds at most 4,096 commands (`Engine.MAX_IDS`). It is carried in snapshots, so the cap is deliberate and it stays. Two episodes also ended early because the rover stalled.
+
+**What changed** (`e297968` failing test, `4c8a02e` fix):
+- The manual schedule now holds each action for 25 ticks (0.5 s), and `set_action` is sent only when the action changes. 3,000 ticks then take about 3,125 commands.
+- FLYNN free-runs each episode to its own end. It has no inputs, so every tick is still deterministic, and it uses about 2 commands per episode.
+- Both stages run consecutive episodes until a declared total: 3,000 manual ticks (enough for 600 Afterimage frames) and 6,000 FLYNN ticks (the 120 s Choir). `--episodes` is now only an upper bound.
+- A fake owner with the same 4,096 cap reproduces the failure, and the new tests pass against it.
+- The failed partial output (392 MB) was removed. Its receipt and progress files are kept in `docs/reports/artwork-materials-v1/failed-launch-8faab2b/`.
+
+**Rehearsal past the old failure point** (`--scale cap`, detached `palimpsest-art-all-cap-rehearsal`). It completed in 370.7 s:
+
+| Stage | Result | Time |
+| --- | --- | --- |
+| manual | 2,400 ticks in 5 episodes (600, 174 stalled, 600, 600, 426); branch of 300 ticks | 227 s |
+| flynn | 4,312 ticks in 14 episodes, 13 ending at the goal | 119 s |
+| materials | 480 frames, 84 s Choir | 24.5 s |
+
+The browser harness passed 4 of 4 on its 15.8 MB pack, including all 480 frames by keyboard and a full 84 s play. Evidence is in `docs/reports/artwork-materials-v1/cap-rehearsal/`.
+
+**Needs the user's confirmation.** FLYNN usually reaches the goal in 200–550 ticks, so "10 consecutive 600-tick episodes" cannot happen in this scenario. The generator records about 20 consecutive, goal-ended episodes up to 6,000 ticks, sonifies them in order with marked boundaries, and cuts at 120 s. Every episode's length and ending is in the receipt and the WAV metadata.
+
+## Full run (operator-launched; command in `docs/reports/artwork-materials-v1/full-commands.txt`)
 
 | Stage | Expected time | Expected size |
 | --- | --- | --- |
-| manual (5 × 600 ticks plus a 300-tick branch) | about 3 min | about 0.66 GB |
-| flynn (10 × 600 ticks) | about 13–20 min | about 1.3 GB |
-| materials (600-frame Afterimage, 120 s Choir, pack) | about 2–4 min | about 0.2 GB |
-| **Total** | **about 20–30 min** | **about 2.2 GB** |
+| manual (3,000 ticks plus a 300-tick branch) | about 5 min | about 0.63 GB |
+| flynn (6,000–6,600 ticks) | about 3 min | at most about 1.36 GB |
+| materials (600 frames, 120 s Choir) | about 0.5 min | about 0.17 GB |
+| **Total** | **about 9 min** | **about 2.2 GB** |
 
-The outer timeout is 8 h.
-
-**Disk.** Nothing is deleted during the run, so peak use equals the final outputs. The estimate scales the rehearsal's measured per-tick sizes to the full run:
-
-| Output | Size |
-| --- | --- |
-| Manual (3,300 ticks × 199,219 B) | 0.66 GB |
-| FLYNN (6,000 ticks × 217,560 B) | 1.31 GB |
-| Materials | 0.19 GB |
-| **Peak total** | **about 2.16 GB (2.0 GiB)** |
-
-Materials break down as 59 MB stimulus, 60 MB Afterimage record, about 20 MB exports, and about 24 MB each for the pack and its ZIP. The only transient extras are chunk temporary files (at most about 6 MB).
-
-The project disk had 10.89 GB free (10.14 GiB) at the last check. That leaves about 8.7 GB (8.1 GiB) after the run, which keeps the required 4 GiB free. The detached commands pass `--min-free-bytes 4294967296`. Before writing, `all` checks free space minus a 2.35 GiB estimate against that floor, and every writer checks the same floor while running.
+**Disk.** Nothing is deleted during the run, so the peak is about 2.2 GB. The project disk had 9.94 GB free at the last check, which leaves about 7.7 GB (7.2 GiB) afterwards. That keeps the required 4 GiB free (`--min-free-bytes 4294967296`).
 
 ## Still open
 

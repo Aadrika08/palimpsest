@@ -1,0 +1,21 @@
+{
+  "arguments": {
+    "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "branch_at": 300,
+    "episode_ticks": 600,
+    "episodes": 5,
+    "max_bytes": 4294967296,
+    "min_free_bytes": 4294967296,
+    "output": "/home/utkarsh/.cache/artwork-materials-v1/all/manual",
+    "scenario": "sparse-navigation",
+    "seed": 0,
+    "stage": "manual",
+    "total_ticks": 0
+  },
+  "commit": "8faab2bc993b738c447aab4e15b8030c47cbb900",
+  "error": "OwnerError: idempotency limit reached; a new session is required",
+  "schedule": "action = [0.8, 0.6 * sin(2 * pi * tick * 0.02 / 5)] for global tick index (fixed, public)",
+  "schema": "artwork-materials-v1-session",
+  "stage": "manual",
+  "status": "failed"
+}

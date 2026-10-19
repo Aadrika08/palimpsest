@@ -1,0 +1,87 @@
+{
+  "arguments": {
+    "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "branch_at": 300,
+    "episode_ticks": 600,
+    "episodes": 20,
+    "max_bytes": 4294967296,
+    "min_free_bytes": 4294967296,
+    "output": "/home/utkarsh/.cache/artwork-materials-v1-cap-rehearsal/all/manual",
+    "scenario": "sparse-navigation",
+    "seed": 0,
+    "stage": "manual",
+    "total_ticks": 2400
+  },
+  "branch_edit": {
+    "kind": "move_goal",
+    "label": "goal moved at the branch snapshot",
+    "xy": [
+      5.0,
+      5.0
+    ]
+  },
+  "branch_ending": "truncated",
+  "branch_run_id": "44ed007ef4204cc4a074937b9fd2b121",
+  "branch_snapshot_id": "e347911533e74b538536430ac927ce01",
+  "branch_tick": 300,
+  "branch_ticks": 300,
+  "commit": "4c8a02e2075939523fa49e642ca8d785763cee4c",
+  "episodes": [
+    {
+      "ending": "truncated",
+      "episode": 0,
+      "last_outcome": {
+        "episode": 0,
+        "final_distance": 8.512471199035645,
+        "reason": "time_limit",
+        "steps": 600
+      },
+      "ticks": 600
+    },
+    {
+      "ending": "terminated",
+      "episode": 1,
+      "last_outcome": {
+        "episode": 1,
+        "final_distance": 5.632560729980469,
+        "reason": "stalled",
+        "steps": 174
+      },
+      "ticks": 174
+    },
+    {
+      "ending": "truncated",
+      "episode": 2,
+      "last_outcome": {
+        "episode": 2,
+        "final_distance": 8.604429244995117,
+        "reason": "time_limit",
+        "steps": 600
+      },
+      "ticks": 600
+    },
+    {
+      "ending": "truncated",
+      "episode": 3,
+      "last_outcome": {
+        "episode": 3,
+        "final_distance": 10.967960357666016,
+        "reason": "time_limit",
+        "steps": 600
+      },
+      "ticks": 600
+    },
+    {
+      "ending": "declared total reached",
+      "episode": 4,
+      "last_outcome": null,
+      "ticks": 426
+    }
+  ],
+  "recorded_ticks": 2400,
+  "schedule": "action = [0.8, 0.6 * sin(2 * pi * t0 * 0.02 / 5)], t0 = global tick rounded down to a multiple of 25 (piecewise constant every 0.5 s; fixed, public)",
+  "schema": "artwork-materials-v1-session",
+  "source_run_id": "d1df8de39e0b4f6687e89d73f5dffee4",
+  "stage": "manual",
+  "status": "completed"
+}

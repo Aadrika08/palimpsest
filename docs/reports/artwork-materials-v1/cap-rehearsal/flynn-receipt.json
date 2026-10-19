@@ -1,0 +1,177 @@
+{
+  "arguments": {
+    "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "episode_ticks": 600,
+    "episodes": 30,
+    "max_bytes": 4294967296,
+    "min_free_bytes": 4294967296,
+    "output": "/home/utkarsh/.cache/artwork-materials-v1-cap-rehearsal/all/flynn",
+    "scenario": "sparse-navigation",
+    "seed": 0,
+    "stage": "flynn",
+    "total_ticks": 4200
+  },
+  "commit": "4c8a02e2075939523fa49e642ca8d785763cee4c",
+  "episodes": [
+    {
+      "ending": "terminated",
+      "episode": 0,
+      "last_outcome": {
+        "episode": 0,
+        "final_distance": 0.7980125546455383,
+        "reason": "goal",
+        "steps": 273
+      },
+      "ticks": 273
+    },
+    {
+      "ending": "terminated",
+      "episode": 1,
+      "last_outcome": {
+        "episode": 1,
+        "final_distance": 0.7944015860557556,
+        "reason": "goal",
+        "steps": 199
+      },
+      "ticks": 199
+    },
+    {
+      "ending": "terminated",
+      "episode": 2,
+      "last_outcome": {
+        "episode": 2,
+        "final_distance": 0.7907834649085999,
+        "reason": "goal",
+        "steps": 211
+      },
+      "ticks": 211
+    },
+    {
+      "ending": "terminated",
+      "episode": 3,
+      "last_outcome": {
+        "episode": 3,
+        "final_distance": 0.7856740355491638,
+        "reason": "goal",
+        "steps": 206
+      },
+      "ticks": 206
+    },
+    {
+      "ending": "truncated",
+      "episode": 4,
+      "last_outcome": {
+        "episode": 4,
+        "final_distance": 2.4316771030426025,
+        "reason": "time_limit",
+        "steps": 600
+      },
+      "ticks": 600
+    },
+    {
+      "ending": "terminated",
+      "episode": 5,
+      "last_outcome": {
+        "episode": 5,
+        "final_distance": 0.7766829133033752,
+        "reason": "goal",
+        "steps": 306
+      },
+      "ticks": 306
+    },
+    {
+      "ending": "terminated",
+      "episode": 6,
+      "last_outcome": {
+        "episode": 6,
+        "final_distance": 0.7910472750663757,
+        "reason": "goal",
+        "steps": 228
+      },
+      "ticks": 228
+    },
+    {
+      "ending": "terminated",
+      "episode": 7,
+      "last_outcome": {
+        "episode": 7,
+        "final_distance": 0.7939921021461487,
+        "reason": "goal",
+        "steps": 285
+      },
+      "ticks": 285
+    },
+    {
+      "ending": "terminated",
+      "episode": 8,
+      "last_outcome": {
+        "episode": 8,
+        "final_distance": 0.7857518792152405,
+        "reason": "goal",
+        "steps": 313
+      },
+      "ticks": 313
+    },
+    {
+      "ending": "terminated",
+      "episode": 9,
+      "last_outcome": {
+        "episode": 9,
+        "final_distance": 0.7835898995399475,
+        "reason": "goal",
+        "steps": 251
+      },
+      "ticks": 251
+    },
+    {
+      "ending": "terminated",
+      "episode": 10,
+      "last_outcome": {
+        "episode": 10,
+        "final_distance": 0.7780652642250061,
+        "reason": "goal",
+        "steps": 260
+      },
+      "ticks": 260
+    },
+    {
+      "ending": "terminated",
+      "episode": 11,
+      "last_outcome": {
+        "episode": 11,
+        "final_distance": 0.7761260271072388,
+        "reason": "goal",
+        "steps": 266
+      },
+      "ticks": 266
+    },
+    {
+      "ending": "terminated",
+      "episode": 12,
+      "last_outcome": {
+        "episode": 12,
+        "final_distance": 0.7833998799324036,
+        "reason": "goal",
+        "steps": 361
+      },
+      "ticks": 361
+    },
+    {
+      "ending": "terminated",
+      "episode": 13,
+      "last_outcome": {
+        "episode": 13,
+        "final_distance": 0.7842207551002502,
+        "reason": "goal",
+        "steps": 553
+      },
+      "ticks": 553
+    }
+  ],
+  "recorded_ticks": 4312,
+  "schedule": "FLYNN policy; no manual input",
+  "schema": "artwork-materials-v1-session",
+  "source_run_id": "41d75cb76ffa4568b5c618a7404ef322",
+  "stage": "flynn",
+  "status": "completed"
+}
