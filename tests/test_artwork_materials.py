@@ -98,3 +98,105 @@ class Generators(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class FakeOwner:
+    """The lab owner's command contract at the generator's client boundary, with the
+    engine's per-run idempotency cap (Engine.MAX_IDS) and 600-tick truncation."""
+    MAX_IDS = 4096
+
+    def __init__(self, max_steps=600, lengths=()):
+        from palimpsest.engine import Engine
+        self.cap, self.max_steps = Engine.MAX_IDS, max_steps
+        self.ids, self.receipts, self.applied = set(), [], []
+        self.state = {'phase': 'paused', 'episode': 0, 'revision': 0, 'total_tick': 0, 'episode_step': 0, 'last_outcome': None}
+        self.action, self.snapshots, self.lengths = [0., 0.], [], list(lengths)
+
+    def describe(self, run):
+        return {'status': 'ready', 'state': dict(self.state), 'receipts': list(self.receipts[-8:])}
+
+    def tick(self):
+        self.applied.append((self.state['episode'], self.state['episode_step'], list(self.action)))
+        self.state['total_tick'] += 1
+        self.state['episode_step'] += 1
+        episode = self.state['episode']
+        if episode < len(self.lengths) and self.lengths[episode] < self.max_steps and self.state['episode_step'] >= self.lengths[episode]:
+            self.state['phase'] = 'terminated'  # e.g. 'stalled', as in the 8faab2b launch
+        elif self.state['episode_step'] >= self.max_steps:
+            self.state['phase'] = 'truncated'
+
+    def call(self, run, operation, body):
+        if operation == 'snapshot':
+            self.snapshots.append((self.state['episode'], self.state['episode_step']))
+            return {'snapshot_id': 'a' * 32}
+        if len(self.ids) >= self.cap:
+            raise RuntimeError('idempotency limit reached; a new session is required')
+        self.ids.add(body['id'])
+        kind = body['kind']
+        assert body['expected_state'] == self.state['phase'] and body['expected_revision'] == self.state['revision']
+        if kind == 'set_action':
+            self.action = list(body['payload']['action'])
+        elif kind == 'step':
+            self.tick()
+        elif kind == 'run':
+            while self.state['phase'] not in ('truncated', 'terminated'):
+                self.tick()
+        elif kind == 'reset':
+            self.state.update(episode=self.state['episode'] + 1, episode_step=0, phase='paused')
+            self.action = [0., 0.]  # the engine zeroes manual intent at a new episode
+        self.state['revision'] += 1
+        self.receipts.append({'id': body['id'], 'status': 'applied'})
+        return {'id': body['id'], 'status': 'queued'}
+
+
+class FullScaleCommandBudget(unittest.TestCase):
+    """The full runs must stay inside one run's idempotency cap (the 8faab2b launch did not)."""
+
+    def drive(self, owner, **options):
+        from unittest.mock import MagicMock
+        session = m.Session(owner, 'r' * 32, MagicMock())
+        return m.drive(session, progress=MagicMock(), seed=0, **options)
+
+    def test_full_manual_run_and_branch_point_fit_one_owner(self):
+        owner = FakeOwner()
+        summaries, snapshot, ticks = self.drive(owner, controller='manual', episodes=5, episode_ticks=600,
+                                                total_ticks=0, branch_at=300)
+        self.assertEqual((ticks, len(summaries)), (3000, 5))
+        self.assertTrue(all(s['ticks'] == 600 and s['ending'] == 'truncated' for s in summaries))
+        self.assertEqual(owner.snapshots, [(0, 300)])
+        self.assertLess(len(owner.ids), owner.cap)
+        # Contiguous episodes in one run, and every tick drives the fixed schedule.
+        self.assertEqual([(e, s) for e, s, _ in owner.applied], [(e, s) for e in range(5) for s in range(600)])
+        for index, (_, _, action) in enumerate(owner.applied):
+            self.assertEqual(action, m.manual_action(index))
+
+    def test_full_flynn_run_fits_one_owner(self):
+        owner = FakeOwner()
+        summaries, _, ticks = self.drive(owner, controller='flynn', episodes=10, episode_ticks=600,
+                                         total_ticks=6000, branch_at=None)
+        self.assertEqual((ticks, len(summaries)), (6000, 10))
+        self.assertLess(len(owner.ids), 64)
+        self.assertEqual([(e, s) for e, s, _ in owner.applied], [(e, s) for e in range(10) for s in range(600)])
+
+    def test_episodes_that_end_early_continue_until_the_declared_total(self):
+        owner = FakeOwner(lengths=[600, 255, 526, 600])  # the failed launch's actual episode lengths
+        summaries, snapshot, ticks = self.drive(owner, controller='manual', episodes=20, episode_ticks=600,
+                                                total_ticks=3000, branch_at=300)
+        self.assertEqual(ticks, 3000)
+        self.assertEqual([s['ticks'] for s in summaries], [600, 255, 526, 600, 600, 419])
+        self.assertEqual([s['ending'] for s in summaries][:3], ['truncated', 'terminated', 'terminated'])
+        self.assertEqual(summaries[-1]['ending'], 'declared total reached')
+        self.assertEqual(len(owner.applied), 3000)
+        self.assertLess(len(owner.ids), owner.cap)
+        flynn = FakeOwner(lengths=[600, 300])
+        summaries, _, ticks = self.drive(flynn, controller='flynn', episodes=30, episode_ticks=600,
+                                         total_ticks=6000, branch_at=None)
+        self.assertGreaterEqual(ticks, 6000)
+        self.assertEqual([s['ticks'] for s in summaries][:2], [600, 300])
+        self.assertEqual(len(summaries), 11)
+
+    def test_full_scale_stage_arguments_target_declared_totals(self):
+        full = m.stage_arguments('full', '/nonexistent/root')
+        self.assertEqual(full['manual'][full['manual'].index('--total-ticks') + 1], '3000')
+        self.assertEqual(full['flynn'][full['flynn'].index('--total-ticks') + 1], '6000')
+
