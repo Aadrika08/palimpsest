@@ -15,7 +15,8 @@
     "test:memory": "node tests/memory-events.check.ts",
     "test:browser-shm": "node tests/browser-shm.check.ts",
     "test:performance": "PALIMPSEST_MEASURE_UI=1 playwright test --grep 'measured browser'",
-    "test:run-window": "node tests/run-window.check.ts"
+    "test:run-window": "node tests/run-window.check.ts",
+    "test:busy": "node tests/busy.check.ts"
   },
   "dependencies": {
     "react": "19.3.0",
