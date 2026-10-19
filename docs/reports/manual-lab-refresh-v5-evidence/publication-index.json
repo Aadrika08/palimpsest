@@ -1,0 +1,164 @@
+{
+  "archive": {
+    "bytes": 2019988,
+    "sha256": "5fc03aff0f1d4cc3d634134d8bc14b944208ba039f3e3e8088d8f0de4c87859a"
+  },
+  "canonical_advanced_after_copy": [
+    ".superpowers/sdd/manual-lab-refresh-v5/progress.json"
+  ],
+  "members": {
+    ".superpowers/sdd/manual-lab-refresh-v5/.palimpsest-storage.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/playwright-results.json": {
+      "bytes": 297834,
+      "sha256": "f570ac65768c84382c1305191be1570950ce0a92c209cb38a3efd3774090a7be"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/server.stderr.log": {
+      "bytes": 1273,
+      "sha256": "b3d1c30e80c17d75f37edd191243220834cd04b4114456ededd332e29ea5c7bb"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/server.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/.last-run.json": {
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-actual-declared-task-i-00ac1-continuation-encoder-homing/owner-close.json": {
+      "bytes": 20299,
+      "sha256": "08b1cc32c3d27338d6674e6ded8d64ca78e7e7a32e5a9bc8b2b736e8909bacdf"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-actual-declared-task-i-4d73d-ation-exploration-landmarks/owner-close.json": {
+      "bytes": 21005,
+      "sha256": "9969eb0759bb4de10746568e9720c369d909efb45b54c5ad93683c0461b5ccbb"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-actual-local-manual-wo-b6c0e-nches-comparison-and-export/owner-close.json": {
+      "bytes": 23457,
+      "sha256": "bd5cf86c83a9c5503ee32e071ecfd18bf7a1aca78f4a3d2cff9bc341e466a27e"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-actual-memory-inspecto-8936b-ce-linked-route-annotations/owner-close.json": {
+      "bytes": 32590,
+      "sha256": "072b46437f169bbac4a7889c2b6df04e0e60ed593adccded88eb9882956999bf"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-actual-replay-jobs-rec-b4b54-ts-and-authenticated-bundle/owner-close.json": {
+      "bytes": 4481,
+      "sha256": "0b6787244c5b17fb30dbffcd8b433cefd8aa4d21e0f075e24de94fe0d01e0137"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-actual-trajectory-over-4f282-and-keyboard-error-recovery/owner-close.json": {
+      "bytes": 13623,
+      "sha256": "6cf0aa7b038ac8db75b73699fb57f68cee5f83fab7c17ff6a0f3ff275f77d974"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-measured-browser-respo-842ba--and-actual-display-cadence/owner-close.json": {
+      "bytes": 57241,
+      "sha256": "e07a0d127221b4d6e4c4cbb4a55c2e4ce1d33382f126a8452ebf0144cd3ae82e"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/acceptance/test-results/lab-measured-browser-respo-842ba--and-actual-display-cadence/ui-performance.json": {
+      "bytes": 27544,
+      "sha256": "0bb99ab245bb81ec968da6d60e8a2c4e4b74976266506bd4257eeef23d2c2aec"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/endurance/chromium-resources.jsonl": {
+      "bytes": 1168870,
+      "sha256": "a70069e7f24cf2dc938f75556d80b2a896f2d5233b48c9dcc73c9cb54b62cb57"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/endurance/playwright-results.json": {
+      "bytes": 11790,
+      "sha256": "ac69fdaeb6defe450c093e7cb6e92578d0144a259cd9753fa8aa596875c88a5a"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/endurance/server.stderr.log": {
+      "bytes": 997,
+      "sha256": "36177499fccb21b0d2ac45541eb59ceb1bb8c885be2d089b067c3d54f5dd9234"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/endurance/server.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/endurance/test-results/.last-run.json": {
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/endurance/test-results/lab-endurance-mixed-browse-6d215--forced-GC-renderer-samples/lab-endurance.json": {
+      "bytes": 182520,
+      "sha256": "2271a7dfed7b01f65231960ecbe37cd602104b2f97528d0eebb793eccfaafabd"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/launched.json": {
+      "bytes": 391,
+      "sha256": "31fb3837f93791d6130d498c8c98e8bdf3f49f208249691f83f7a10a068d68c0"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/preflight/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/preflight/stdout.log": {
+      "bytes": 151,
+      "sha256": "7b699ea56c4d960894fdf2c6cac3811f2c48928b78d7d7dea744ef0fbd83f3fa"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/preflight/supervisor.json": {
+      "bytes": 320,
+      "sha256": "843e93649a74a776fd779ba07058a801dbcd79ce09da0b56731cf8604e3ebf9b"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/progress.json": {
+      "bytes": 324,
+      "sha256": "2fad99f0c7d92e65f6b2de56a3f01cf150499026d0f0c7ac60f6c74764edb649"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/selection/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/selection/stdout.log": {
+      "bytes": 7901,
+      "sha256": "1bd84f6d69b7c0a3bc376459a56697b20bfa9f76d1836cffe1a3af88c7e42729"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/selection/supervisor.json": {
+      "bytes": 321,
+      "sha256": "8790479872eed4dd8af50dc295cb4d9441cbcacaa415aeec8dfc2464cb0a38b8"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/supervision/stderr.log": {
+      "bytes": 269,
+      "sha256": "84e6b5641a820c1f360b8a1de2661afa60eea5495e5fa656dfbed8b0ae44cd95"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/supervision/stdout.log": {
+      "bytes": 24794,
+      "sha256": "b1cc65fdcbc88279e505b1d8fc5600a7c66b9aedcc0e94dba90ba63109de7dd3"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/supervision/supervisor.json": {
+      "bytes": 323,
+      "sha256": "24eaa1c86fda903b25adcd8e0b82369dda4b974a0292171568b757de60bf093b"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v5/worker.json": {
+      "bytes": 52759,
+      "sha256": "420fb5d2542de0796ebe0b7618bb2d92cb2982373be12bbf902522d54a88a425"
+    },
+    "ui/test-results/.palimpsest-storage.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ui/test-results/actual-lab-desktop.png": {
+      "bytes": 352363,
+      "sha256": "37f5b45836343b578ccf5cb5ef1c0289e6b25ac264709466fff8c6d60b41d204"
+    },
+    "ui/test-results/actual-lab-mobile.png": {
+      "bytes": 315378,
+      "sha256": "5d372378e952aefdafb7ef7871ba26d32ceb6348be408daeb0a0a47335056d20"
+    },
+    "ui/test-results/actual-memory-desktop.png": {
+      "bytes": 361619,
+      "sha256": "25e62f4acf7887a34bba59933ed183d70464164c96330de256a175d6a4a910a3"
+    },
+    "ui/test-results/actual-memory-mobile.png": {
+      "bytes": 328878,
+      "sha256": "4e53b0ad684e366659e92ae2bc2c4126a52014511f53867d0910d3461f6b28e3"
+    },
+    "ui/test-results/actual-replay-completed.png": {
+      "bytes": 310238,
+      "sha256": "da69904c9b01fb47309c585fbbe0918e15d12148028bcbdeb7efaf152c538bf0"
+    },
+    "ui/test-results/actual-replay-paused.png": {
+      "bytes": 284632,
+      "sha256": "4cd00dde272c3cd4c1d79a249357447521f4e380799c79690e8598b6764d16d8"
+    }
+  },
+  "note": "Byte copies published by manual_lab_refresh_v5.py --launch (publication.json is the runner receipt). git ignores .superpowers/ and test-results/ paths, so those members are packaged here; each matched its receipt hash, matched its canonical source except the heartbeat (which advanced to phase \"published\" after the copy), and was re-read from the archive."
+}
