@@ -216,6 +216,57 @@ for tick in range(100000):
         self.assertEqual([tick['tick'] for tick in ticks], list(range(len(ticks))))
         self.assertEqual(len(ticks) % records.CHUNK_TICKS, 0)
 
+    def test_drain_publishes_queued_events_without_changing_chunk_boundaries(self):
+        writer = RunWriter(self.root / 'run', {})
+        writer.start_background()
+        def slow(descriptor):
+            time.sleep(.1)
+            REAL_FSYNC(descriptor)
+        with patch('palimpsest.records.os.fsync', side_effect=slow):
+            for tick in range(5):
+                writer.tick(0, tick, action=np.zeros(2))
+            writer.event('registered', name='x')
+            writer.drain()
+            self.assertEqual([json.loads(line)['kind'] for line in (self.root / 'run/events.jsonl').read_text().splitlines()],
+                             ['registered'])  # the five buffered ticks stay buffered
+        for tick in range(5, 32):
+            writer.tick(0, tick, action=np.zeros(2))
+        writer.finish({})
+        writer.close()
+        chunks = [event for event in map(json.loads, (self.root / 'run/events.jsonl').read_text().splitlines()) if event['kind'] == 'chunk']
+        self.assertEqual([(event['start'], event['count']) for event in chunks], [(0, 32)])
+        synchronous = RunWriter(self.root / 'sync', {})
+        synchronous.drain()  # a no-op on the synchronous path
+        synchronous.close()
+
+    def test_snapshot_registration_is_durable_when_the_snapshot_returns(self):
+        from palimpsest import worker
+        from test_engine import SmallEnv
+        from palimpsest.engine import Engine
+        run = self.root / 'source'
+        (run / 'snapshots').mkdir(parents=True)
+        writer = RunWriter(run / 'recording', {'run_id': 'source'})
+        engine = Engine(SmallEnv(), writer)
+        writer.start_background()
+        armed, gate = threading.Event(), threading.Event()
+        def held(descriptor):
+            if armed.is_set():
+                gate.wait(5.)  # the writer is still busy with an earlier queued item
+            REAL_FSYNC(descriptor)
+        def save(snapshot, path, **kw):
+            path.write_bytes(b'snapshot')
+            armed.set()
+            writer.event('earlier-queued-work')
+            threading.Timer(.3, gate.set).start()
+        config = {'scenario': 'sparse-navigation', 'texture': 'checker', 'controller': 'manual', 'device': 'cpu', 'seed': 0}
+        with patch('palimpsest.snapshots.capture', return_value={'stub': True}), \
+                patch('palimpsest.snapshots.save_snapshot', side_effect=save), \
+                patch('palimpsest.records.os.fsync', side_effect=held):
+            identifier = worker._snapshot(engine, run, {}, config)
+            events = [json.loads(line) for line in (run / 'recording/events.jsonl').read_text().splitlines()]
+        self.assertEqual([event['snapshot_id'] for event in events if event['kind'] == 'snapshot_registered'], [identifier])
+        engine.close()
+
     def test_synchronous_default_is_unchanged(self):
         writer = RunWriter(self.root / 'run', {})
         self.assertIsNone(writer.background_stats())
