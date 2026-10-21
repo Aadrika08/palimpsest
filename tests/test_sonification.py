@@ -25,7 +25,7 @@ class SonificationTests(unittest.TestCase):
         self.root = Path(self.temp.name)
 
     def fixture(self, *, means=(1., 0., -1.), dt=.02, start=0, status='completed',
-                manifest=None, stats=None, time_offset=0., lineage=None):
+                manifest=None, stats=None, time_offset=0., lineage=None, episode_length=None):
         run = self.root / uuid.uuid4().hex
         header = dict(run_id=run.name, controller='flynn', profile='flynn',
                       scenario={'id': 'fixture-only'}, control_interval_seconds=dt,
@@ -45,14 +45,18 @@ class SonificationTests(unittest.TestCase):
                          parent_run_id=header['parent_run_id'], parent_event_prefix=header['parent_event_prefix'],
                          world={'arena': 7., 'pose': [0., 0., 0.], 'obstacles': [], 'goal': [3., 3., .5]})
         for index, mean in enumerate(means):
-            tick = start + index
+            episode = index // episode_length if episode_length else 0
+            tick = index % episode_length if episode_length else start + index
+            if episode_length and index and tick == 0:
+                writer.event('episode_started', run_id=run.name, episode=episode, episode_step=0,
+                             world={'arena': 7., 'pose': [0., 0., 0.], 'obstacles': [], 'goal': [3., 3., .5]})
             arrays = dict(pose=np.array([tick * .1, 0., 0.]), next_pose=np.array([(tick + 1) * .1, 0., 0.]),
                           reward=np.array(0.), sensors=np.zeros(4),
                           simulation_time=np.array((tick + 1) * dt + (time_offset if index else 0.)))
             if stats is not False:
                 arrays['population_stats'] = np.array(stats if stats is not None else
                     [[8., mean, mean, mean], [8., 0., 0., 0.], [2., .5, .5, .5]])
-            writer.tick(0, tick, **arrays)
+            writer.tick(episode, tick, **arrays)
         writer.finish({}, status=status)
         return run
 
@@ -195,6 +199,64 @@ class SonificationTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertEqual(Path(json.loads(captured.getvalue())['artifact']), self.root / 'cli.wav')
         self.read(self.root / 'cli.wav')
+
+    def test_composition_exact_duration_prefix_and_continuous_carrier(self):
+        run = self.fixture(means=[.5] * 6003, episode_length=601)
+        samples, meta = self.read(self.export(run, episode=None))
+        self.assertEqual(len(samples), 5760000)
+        self.assertEqual(meta['version'], 2)
+        self.assertEqual(meta['timing']['clock'], 'concatenated simulation time')
+        segments = meta['timing']['segments']
+        self.assertEqual(len(segments), 10)
+        self.assertEqual(segments[1]['output_start_sample'], 601 * 960)
+        self.assertEqual(segments[-1]['end_tick_inclusive'], 590)
+        self.assertTrue(meta['timing']['final_episode_prefix'])
+        positions = np.arange(len(samples), dtype=np.float64)
+        expected = np.rint(32767 * .25 * .5 * np.sin(2 * np.pi * 220 * positions / 48000)).astype('<i2')
+        np.testing.assert_array_equal(samples, expected)
+
+    def test_composition_rejects_short_wrong_interval_and_corrupt_tail(self):
+        for kwargs in (dict(means=[0.] * 5999, episode_length=600),
+                       dict(means=[0.] * 6000, episode_length=600, dt=.01),
+                       dict(means=[0.] * 6000, start=1)):
+            with self.assertRaises(ValueError):
+                self.export(self.fixture(**kwargs), episode=None)
+        run = self.fixture(means=[0.] * 6001, episode_length=600)
+        chunk = sorted((run / 'recording/chunks').glob('*.npz'))[-1]
+        chunk.write_bytes(chunk.read_bytes() + b'corrupt')
+        with self.assertRaises(ValueError):
+            self.export(run, episode=None)
+        self.assertFalse((self.root / 'choir.wav').exists())
+
+    def test_composition_cli_and_source_cap_preflight(self):
+        from palimpsest import cli, sonification
+        run = self.fixture(means=[0.] * 6000, episode_length=600)
+        with patch.object(Path, 'home', return_value=self.root), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(cli.main(['sonify', str(run), '--compose-episodes', '--population', 'visual_left',
+                                      '--output', str(self.root / 'cli.wav'), '--min-free-bytes', '0']), 0)
+        with patch.object(sonification, 'MAX_COMPOSITION_SOURCE_BYTES', 1), patch.object(sonification.artifacts, '_load') as load:
+            with self.assertRaises(ValueError):
+                self.export(run, episode=None)
+            load.assert_not_called()
+
+    def test_composition_metadata_bounds_and_default_remain_distinct(self):
+        from palimpsest import sonification
+        run = self.fixture(means=[0.] * 6000, episode_length=600)
+        single, metadata = self.read(self.export(run))
+        self.assertEqual(len(single), 600 * 960)
+        self.assertEqual(metadata['version'], 1)
+        self.assertEqual(metadata['timing']['episode'], 0)
+        with patch.object(sonification, 'MAX_COMPOSITION_METADATA_BYTES', 1):
+            with self.assertRaisesRegex(ValueError, 'output byte limit'):
+                self.export(run, 'bounded.wav', episode=None)
+        self.assertFalse((self.root / 'bounded.wav').exists())
+        with patch.object(sonification, 'MAX_SOURCE_BYTES', 1):
+            self.export(run, 'larger-admission.wav', episode=None)
+        too_long = self.fixture(means=[0.] * 6601, episode_length=600)
+        with patch.object(sonification.artifacts, '_load') as load:
+            with self.assertRaisesRegex(ValueError, '6000'):
+                self.export(too_long, 'too-long.wav', episode=None)
+            load.assert_not_called()
 
     def test_render_failure_removes_our_partial_output(self):
         run = self.fixture()

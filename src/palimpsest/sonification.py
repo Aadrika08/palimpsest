@@ -14,6 +14,10 @@ SAMPLE_RATE = 48_000
 GAIN = .25
 MAX_SECONDS = 120
 MAX_SOURCE_BYTES = 512 * 1024**2
+MAX_COMPOSITION_SOURCE_BYTES = 2 * 1024**3
+COMPOSITION_TICKS = 6000
+MAX_COMPOSITION_SOURCE_TICKS = 6600
+MAX_COMPOSITION_METADATA_BYTES = 256 * 1024
 MAX_OUTPUT_BYTES = 16 * 1024**2
 MAX_METADATA_BYTES = 64 * 1024
 LABEL = 'Composed mapping of recorded model activity, not biological audio; offline derivative, not live inference.'
@@ -27,7 +31,7 @@ def _hash(value):
     return isinstance(value, str) and len(value) == 64 and all(c in '0123456789abcdef' for c in value)
 
 
-def _source(run_path):
+def _source(run_path, *, compose=False):
     """Bound the existing whole-record validator before it reads numeric chunks."""
     run = artifacts._safe_path(run_path)
     manifest = artifacts._manifest(run)
@@ -35,8 +39,10 @@ def _source(run_path):
     count = manifest.get('recorded_ticks')
     if type(dt) not in (int, float) or not math.isfinite(dt) or not 1 / SAMPLE_RATE <= dt <= MAX_SECONDS:
         raise ValueError('invalid recorded control interval')
-    if type(count) is not int or not 1 <= count <= artifacts.MAX_TICKS or count * dt > MAX_SECONDS:
+    if type(count) is not int or not 1 <= count <= artifacts.MAX_TICKS or (not compose and count * dt > MAX_SECONDS):
         raise ValueError('recording exceeds the sonification duration limit or has no ticks')
+    if compose and (dt != .02 or not COMPOSITION_TICKS <= count <= MAX_COMPOSITION_SOURCE_TICKS):
+        raise ValueError('composition requires 6000–6600 source intervals at 0.02 seconds')
     events = artifacts._events(run)
     chunks = [event for event in events if event['kind'] == 'chunk']
     if len(chunks) > artifacts.MAX_CHUNKS or any(event.get('path') != f'chunks/{i:06d}.npz' for i, event in enumerate(chunks)):
@@ -44,7 +50,7 @@ def _source(run_path):
     paths = [run / 'recording' / name for name in ('manifest.json', 'events.jsonl')]
     paths += [run / 'recording' / event['path'] for event in chunks]
     fingerprint = artifacts._fingerprint(paths)
-    if sum(item[2] for item in fingerprint) > MAX_SOURCE_BYTES:
+    if sum(item[2] for item in fingerprint) > (MAX_COMPOSITION_SOURCE_BYTES if compose else MAX_SOURCE_BYTES):
         raise ValueError('recording exceeds the sonification input byte limit')
     data = artifacts._load(run)
     if data['fingerprint'] != fingerprint:
@@ -92,16 +98,18 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
 
     All recording integrity and telemetry checks finish before creating output.
     A selected episode is rendered in simulation time, never measured wall time.
+    ``episode=None`` composes the first 6000 intervals with labelled episode resets.
     """
     import numpy as np
 
     if not isinstance(populations, (tuple, list)) or not populations or any(
             not isinstance(name, str) or name not in FREQUENCIES for name in populations) or len(set(populations)) != len(populations):
         raise ValueError('select one or more distinct recorded populations')
-    if type(episode) is not int or episode < 0:
+    if episode is not None and (type(episode) is not int or episode < 0):
         raise ValueError('episode must be a nonnegative integer')
     selected = [name for name in FREQUENCIES if name in populations]
-    data, dt = _source(run_path)
+    compose = episode is None
+    data, dt = _source(run_path, compose=compose)
     provenance = _lineage(data)
     manifest = data['manifest']
     names = manifest.get('population_names')
@@ -112,6 +120,7 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
     if not set(selected) <= set(names):
         raise ValueError('selected neural telemetry is missing')
     rows, counts, previous = [], None, None
+    segments = []
     for row in iter_ticks(data['run'] / 'recording'):
         stats = np.asarray(row.get('population_stats'))
         if stats.shape != (len(names), 4) or stats.dtype.kind not in 'iuf' or not np.isfinite(stats).all():
@@ -126,8 +135,18 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
         end = artifacts._scalar(row['simulation_time'], 'simulation time', True)
         if end + 1e-8 < dt or (previous is not None and row['episode'] == previous[0] and not math.isclose(end - previous[1], dt, rel_tol=0., abs_tol=1e-8)):
             raise ValueError('recorded time does not preserve the control interval')
+        if compose and (previous is None or row['episode'] != previous[0]):
+            if row['tick'] != 0 or not math.isclose(end, dt, rel_tol=0., abs_tol=1e-8) or (previous is not None and row['episode'] != previous[0] + 1):
+                raise ValueError('composition requires consecutive episodes starting at tick/time zero')
         previous = row['episode'], end
-        if row['episode'] == episode:
+        if row['episode'] == episode or (compose and len(rows) < COMPOSITION_TICKS):
+            if compose:
+                if not segments or segments[-1]['episode'] != row['episode']:
+                    segments.append({'episode': row['episode'], 'start_tick': row['tick'],
+                                     'output_start_sample': len(rows) * 960,
+                                     'simulation_start_seconds': max(0., end - dt)})
+                segments[-1].update(end_tick_inclusive=row['tick'], simulation_end_seconds=end,
+                                    output_end_sample_exclusive=(len(rows) + 1) * 960)
             rows.append((row['tick'], end, [float(means[names.index(name)]) for name in selected]))
     if not rows:
         raise ValueError('selected episode has no recorded neural telemetry')
@@ -156,10 +175,22 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
             'pcm': 'round-to-nearest-even(32767 * mixed signal); signed little-endian int16',
             'sample_rate_hz': SAMPLE_RATE, 'channels': 1, 'sample_width_bytes': 2},
         'pcm_sha256': '0' * 64}
+    if compose:
+        last = segments[-1]
+        metadata['version'] = 2
+        metadata['timing'] = {
+            'clock': 'concatenated simulation time', 'control_interval_seconds': dt,
+            'duration_seconds': 120, 'source_intervals': manifest['recorded_ticks'],
+            'selected_intervals': len(rows), 'segments': segments,
+            'final_episode_prefix': last['end_tick_inclusive'] < data['episodes'][last['episode']]['ticks'][-1],
+            'sample_boundaries': boundaries,
+            'boundary_rounding': 'nearest sample; half up; cumulative from output origin',
+            'episode_handling': 'chronological episodes; resets retained; loading/paused wall time omitted; continuous carrier phase'}
+        metadata['label'] += ' Episode composition; see timing.segments for resets and any final prefix.'
     artifacts._no_secrets(metadata)
     encoded = _json(metadata)
     bound = 44 + boundaries[-1] * 2 + 8 + len(encoded) + len(encoded) % 2
-    if len(encoded) > MAX_METADATA_BYTES or bound > MAX_OUTPUT_BYTES:
+    if len(encoded) > (MAX_COMPOSITION_METADATA_BYTES if compose else MAX_METADATA_BYTES) or bound > MAX_OUTPUT_BYTES:
         raise ValueError('sonification exceeds the output byte limit')
     output = artifacts._safe_path(output_path)
     if output.suffix.lower() != '.wav' or output.is_relative_to(data['run'] / 'recording'):

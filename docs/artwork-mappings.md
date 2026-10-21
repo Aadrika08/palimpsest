@@ -56,6 +56,40 @@ Identical selected telemetry and timing produce identical PCM under the same num
 runtime, even for different run IDs. Their WAV metadata still identifies distinct runs;
 an unchanged signal is kept unchanged rather than embellished into an audible difference.
 
+## Ordered 120-second episode composition
+
+```sh
+palimpsest sonify runs/lab/<run-id> --compose-episodes \
+  --population visual_left --population visual_right --population descending \
+  --output exports/choir-120s.wav
+```
+
+This explicit mode consumes a completed recording of 6,000–6,600 intervals at
+0.02 seconds and selects exactly its first 6,000 intervals. It produces 5,760,000
+samples (120 seconds), without looping, padding, silence insertion or crossfades.
+Episodes must be consecutive and begin at tick zero and simulation time 0.02 s
+for their first completed interval. The carrier phase continues across resets.
+`--episode` and `--compose-episodes` are mutually exclusive; omission still selects
+single episode zero.
+
+The WAV's version-2 `plmp` metadata labels concatenated simulation time, records
+each episode's source tick/time range and output sample range, and identifies a
+final partial episode. Loading/paused wall time is omitted. Presentation tools must
+show these composition boundaries when packaging new material; the historical
+25.34-second encounter package is unchanged. All source intervals, including an
+unused tail, still undergo checksum, telemetry and terminal-count validation.
+
+Composition sources are bounded at **2 GiB and 6,600 intervals**, leaving up to one
+600-interval tail after the selected prefix. Metadata is capped at **256 KiB**;
+output remains capped at **16 MiB**. These are fixed bounds, not user overrides.
+The existing reader loads one chunk at a time (128 MiB numeric chunk ceiling),
+retaining compact route summaries; the sonifier retains only selected population
+means and timing. It does not retain the full camera recording in memory. Source
+validation still performs multiple disk passes. Byte admission does not qualify
+inference performance or guarantee a recording will fit; oversized sources fail.
+Use lab records with population telemetry: the ordinary `evaluate` writer does
+not supply the required population summaries.
+
 ## Timing, bounds, and provenance
 
 Export one episode at a time, retaining every recorded tick. Tick boundary `i` maps
@@ -67,7 +101,7 @@ simulation timestamps, and all sample boundaries are retained. This renders
 **simulation time**, regardless of how slowly the original inference ran in wall time;
 it is not an inference-speed measurement or real-time reconstruction.
 
-The entire source recording is limited to 512 MiB and 120 simulated seconds; the
+In the default single-episode mode, the entire source recording is limited to 512 MiB and 120 simulated seconds; the
 existing reader's chunk/tick bounds also apply. Each output is capped at 16 MiB,
 including at most 64 KiB of embedded metadata. Existing managed-storage byte,
 free-space, export-count, and single-writer lease checks apply to the CLI. All
