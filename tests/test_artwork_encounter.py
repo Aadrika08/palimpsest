@@ -36,7 +36,58 @@ class EncounterTests(unittest.TestCase):
         self.files = {name: b'synthetic derivative' for name in encounter.MEMBERS
                       if name != 'checksums.json'}
         self.files['afterimage.svg'] = self.svg()
+        self.files['counterfactual-choir.wav'] = self.wav()
         self.files['README.md'] = b'Fixture </script><script>alert(1)</script>'
+
+    def wav(self, *, compose=False, mutate=None):
+        count = 6000 if compose else 3
+        pcm = bytes(count * 960 * 2)
+        timing = {'control_interval_seconds': .02, 'episode': 0, 'start_tick': 0,
+                  'end_tick_inclusive': count - 1, 'sample_boundaries': [i * 960 for i in range(count + 1)]}
+        if compose:
+            timing.update(clock='concatenated simulation time', duration_seconds=120,
+                          selected_intervals=6000, final_episode_prefix=True,
+                          segments=[{'episode': i, 'start_tick': 0, 'end_tick_inclusive': 599,
+                                     'simulation_start_seconds': 0., 'simulation_end_seconds': 12.,
+                                     'output_start_sample': i * 576000,
+                                     'output_end_sample_exclusive': (i + 1) * 576000} for i in range(10)])
+        meta = {'version': 2 if compose else 1, 'artwork': 'counterfactual choir',
+                'pcm_sha256': hashlib.sha256(pcm).hexdigest(), 'timing': timing,
+                'mapping': {'sample_rate_hz': 48000, 'channels': 1, 'sample_width_bytes': 2,
+                            'voices': [{'population': 'visual_left'}]}}
+        if mutate:
+            mutate(meta)
+        def chunk(kind, payload):
+            return struct.pack('<4sI', kind, len(payload)) + payload + b'\0' * (len(payload) % 2)
+        body = b'WAVE' + chunk(b'fmt ', struct.pack('<HHIIHH', 1, 1, 48000, 96000, 2, 16))
+        body += chunk(b'data', pcm) + chunk(b'plmp', json.dumps(meta).encode())
+        return b'RIFF' + struct.pack('<I', len(body)) + body
+
+    def test_choir_duration_and_episode_boundaries_come_from_audio(self):
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Playback ends after 0.06 seconds', page)
+        self.assertNotIn('Playback ends after 25.34 seconds', page)
+        self.files['counterfactual-choir.wav'] = self.wav(compose=True)
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Playback ends after 120 seconds', page)
+        self.assertIn('Episode boundaries', page)
+        self.assertIn('Final episode uses a recorded prefix', page)
+        self.assertIn('<td>9</td><td>108–120</td><td>0–599</td>', page)
+        self.assertNotIn('autoplay', page)
+
+    def test_choir_rejects_malformed_audio_and_inconsistent_metadata(self):
+        for mutate in (lambda m: m.update(pcm_sha256='0' * 64),
+                       lambda m: m['timing'].update(duration_seconds=119),
+                       lambda m: m['timing']['segments'][1].update(output_start_sample=0),
+                       lambda m: m['timing']['segments'][-1].update(end_tick_inclusive=598),
+                       lambda m: m['timing']['segments'][1].update(episode='<script>'),
+                       lambda m: m['mapping']['voices'][0].update(population='<script>')):
+            with self.assertRaises(ValueError):
+                encounter.choir_details(self.wav(compose=True, mutate=mutate))
+        raw = self.wav()
+        for bad in (b'not audio', raw[:-1], raw + b'trailing'):
+            with self.assertRaises(ValueError):
+                encounter.choir_details(bad)
 
     def svg(self):
         import html

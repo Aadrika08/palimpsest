@@ -143,14 +143,93 @@ def script_json(value):
     return raw
 
 
+def choir_details(raw):
+    """Validate bounded Choir PCM/provenance before using it as presentation text."""
+    require(12 <= len(raw) <= 16 * 1024**2 and raw[:4] == b'RIFF'
+            and raw[8:12] == b'WAVE' and struct.unpack_from('<I', raw, 4)[0] == len(raw) - 8,
+            'bounded complete Choir WAV required')
+    chunks, position = {}, 12
+    while position < len(raw):
+        require(position + 8 <= len(raw), 'truncated WAV chunk')
+        kind, size = struct.unpack_from('<4sI', raw, position)
+        end = position + 8 + size
+        require(end + size % 2 <= len(raw) and kind not in chunks, 'invalid or duplicate WAV chunk')
+        chunks[kind] = raw[position + 8:end]
+        position = end + size % 2
+    require(chunks.get(b'fmt ') == struct.pack('<HHIIHH', 1, 1, 48000, 96000, 2, 16)
+            and b'data' in chunks and b'plmp' in chunks and len(chunks[b'plmp']) <= 256 * 1024,
+            '48 kHz mono PCM and bounded Choir metadata required')
+    pcm = chunks[b'data']
+    require(len(pcm) > 0 and len(pcm) % 2 == 0, 'complete PCM samples required')
+    meta = json.loads(chunks[b'plmp'])
+    require(isinstance(meta, dict) and type(meta.get('version')) is int and meta['version'] in (1, 2)
+            and meta.get('artwork') == 'counterfactual choir'
+            and meta.get('pcm_sha256') == hashlib.sha256(pcm).hexdigest(), 'Choir identity or PCM hash differs')
+    timing, mapping = meta.get('timing'), meta.get('mapping')
+    require(isinstance(timing, dict) and isinstance(mapping, dict), 'Choir timing/mapping required')
+    require(mapping.get('sample_rate_hz') == 48000 and mapping.get('channels') == 1
+            and mapping.get('sample_width_bytes') == 2, 'Choir mapping disagrees with PCM')
+    voices = mapping.get('voices')
+    require(isinstance(voices, list) and 1 <= len(voices) <= 3
+            and all(isinstance(v, dict) and v.get('population') in ('visual_left', 'visual_right', 'descending') for v in voices),
+            'declared Choir voices required')
+    names = [v['population'] for v in voices]
+    require(len(set(names)) == len(names), 'duplicate Choir voice')
+    frames = len(pcm) // 2
+    boundaries = timing.get('sample_boundaries')
+    require(isinstance(boundaries, list) and 2 <= len(boundaries) <= 100001
+            and all(type(v) is int for v in boundaries) and boundaries[0] == 0
+            and boundaries[-1] == frames and all(b > a for a, b in zip(boundaries, boundaries[1:])),
+            'Choir sample boundaries disagree with PCM')
+    dt = timing.get('control_interval_seconds')
+    require(type(dt) in (int, float) and math.isfinite(dt) and dt > 0
+            and abs((len(boundaries) - 1) * dt * 48000 - frames) <= .500001,
+            'Choir interval duration disagrees with PCM')
+    segments = []
+    prefix = False
+    if meta['version'] == 2:
+        require(timing.get('clock') == 'concatenated simulation time' and frames == 5760000
+                and dt == .02 and timing.get('duration_seconds') == 120
+                and timing.get('selected_intervals') == 6000 and len(boundaries) == 6001
+                and boundaries == list(range(0, 5760001, 960)), '120-second composition timing required')
+        segments = timing.get('segments')
+        prefix = timing.get('final_episode_prefix')
+        require(isinstance(segments, list) and 1 <= len(segments) <= 6000 and type(prefix) is bool,
+                'composition segments and prefix declaration required')
+        previous_end, previous_episode = 0, None
+        for segment in segments:
+            require(isinstance(segment, dict) and all(type(segment.get(k)) is int for k in
+                    ('episode', 'start_tick', 'end_tick_inclusive', 'output_start_sample', 'output_end_sample_exclusive')),
+                    'integer composition ranges required')
+            episode, start, end = segment['episode'], segment['output_start_sample'], segment['output_end_sample_exclusive']
+            ticks = segment['end_tick_inclusive'] + 1
+            require(episode >= 0 and (previous_episode is None or episode == previous_episode + 1)
+                    and segment['start_tick'] == 0 and ticks > 0 and start == previous_end
+                    and end - start == ticks * 960 and end <= frames,
+                    'composition ranges must cover consecutive episodes and samples')
+            native_start, native_end = segment.get('simulation_start_seconds'), segment.get('simulation_end_seconds')
+            require(all(type(v) in (int, float) and math.isfinite(v) for v in (native_start, native_end))
+                    and abs(native_start) <= 1e-8 and abs(native_end - ticks * .02) <= 1e-7,
+                    'composition native time differs from ticks')
+            previous_end, previous_episode = end, episode
+        require(previous_end == frames, 'composition does not cover full audio')
+    else:
+        require(all(type(timing.get(k)) is int for k in ('episode', 'start_tick', 'end_tick_inclusive'))
+                and timing['episode'] >= 0 and timing['start_tick'] >= 0
+                and timing['end_tick_inclusive'] - timing['start_tick'] + 1 == len(boundaries) - 1,
+                'single-episode timing disagrees with PCM')
+    return frames / 48000, names, segments, prefix
+
+
 def encounter_html(files):
     rows = alignment(files['afterimage.svg'])
+    choir_duration, voices, segments, prefix = choir_details(files['counterfactual-choir.wav'])
     durations = (len(rows), rows[-1]['source_timestamp_seconds'] - rows[0]['source_timestamp_seconds'], rows[-1]['model_time_seconds'])
     captions = (
         ('afterimage', 'Afterimage', 'Authored model responses to geometric frames. Offline inference / recorded playback; not fly perception or biological activity.'),
         ('borrowed-body', 'Borrowed body', 'Recorded south-change simulator route: 1,267 intervals, 1,268 points, 25.34 simulation seconds. No physical pen marks.'),
         ('one-map', 'One map, many possible lives', 'Separate mirrored no-U cases: south 25.34 seconds; north 25.84 seconds. No paired intervention or causal memory-effect claim.'),
-        ('choir', 'Counterfactual choir', '25.34-second composed mapping of visual_left, visual_right and descending model populations. Not biological audio or a counterfactual experiment.'),
+        ('choir', 'Counterfactual choir', f'{choir_duration:g}-second composed mapping of {html.escape(", ".join(voices))} model populations. Not biological audio or a counterfactual experiment.'),
         ('atlas', 'Atlas of what disappears', 'Reduced graph before/after isolating node 12781: 135 removed edges, 137 lost reachable input/output pairs. Structural analysis, not measured impairment.'),
         ('specimens', 'The space between two flies', 'One curated, unregistered DNge104 anatomical pair, shared micrometre scale, unequal coverage. No population sex inference.'))
     nav = ''.join(f'<a href="#{key}">{html.escape(title)}</a>' for key, title, _ in captions)
@@ -161,8 +240,12 @@ def encounter_html(files):
         elif name.endswith('.html'):
             media = f'<iframe src="{name}" title="Recorded route comparison and provenance" sandbox="" loading="lazy"></iframe>'
         else:
-            media = f'<p>Start at low volume. Playback ends after 25.34 seconds; repeats must be declared and recorded.</p><audio controls preload="none" src="{name}"></audio><button id="stop-audio" hidden>Stop audio and return to start</button>'
+            media = f'<p>Start at low volume. Playback ends after {choir_duration:g} seconds; repeats must be declared and recorded.</p><audio controls preload="none" src="{name}"></audio><button id="stop-audio" hidden>Stop audio and return to start</button>'
         inspector = ''
+        if key == 'choir' and segments:
+            table = ''.join(f"<tr><td>{s['episode']}</td><td>{s['output_start_sample'] / 48000:g}–{s['output_end_sample_exclusive'] / 48000:g}</td><td>{s['start_tick']}–{s['end_tick_inclusive']}</td></tr>" for s in segments)
+            ending = 'Final episode uses a recorded prefix.' if prefix else 'Final selected episode is included in full.'
+            inspector = f'<p>Composition of {len(segments)} recorded episodes. Episode resets are retained; loading and paused wall time are omitted. {ending}</p><details><summary>Episode boundaries</summary><div class="table-scroll"><table><caption>Source episodes in playback order</caption><thead><tr><th scope="col">Episode</th><th scope="col">Playback seconds</th><th scope="col">Source ticks (inclusive)</th></tr></thead><tbody>{table}</tbody></table></div></details>'
         if key == 'afterimage':
             table = ''.join('<tr>' + ''.join(f'<td>{html.escape(str(v))}</td>' for v in
                 (r['frame'] + 1, r['source_timestamp_seconds'], r['model_time_seconds'], *r['action'], *r['point'])) + '</tr>' for r in rows)

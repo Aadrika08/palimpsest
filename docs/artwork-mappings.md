@@ -74,9 +74,10 @@ single episode zero.
 
 The WAV's version-2 `plmp` metadata labels concatenated simulation time, records
 each episode's source tick/time range and output sample range, and identifies a
-final partial episode. Loading/paused wall time is omitted. Presentation tools must
-show these composition boundaries when packaging new material; the historical
-25.34-second encounter package is unchanged. All source intervals, including an
+final partial episode. Loading/paused wall time is omitted. The encounter generator validates WAV structure, PCM identity and timing before
+deriving its duration label. For version-2 audio it displays an accessible episode
+boundary table with playback seconds, source ticks and a final-prefix notice.
+The historical 25.34-second encounter package is unchanged. All source intervals, including an
 unused tail, still undergo checksum, telemetry and terminal-count validation.
 
 Composition sources are bounded at **2 GiB and 6,600 intervals**, leaving up to one
