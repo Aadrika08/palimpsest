@@ -5,6 +5,11 @@ Open the current local encounter:
 Its portable ZIP is beside the encounter directory. Automated checks establish
 record integrity and browser behavior; they do not fill in these judgments.
 
+The requested [agent curatorial review](../reports/artwork-curatorial-review-2026-10-22.md)
+now records recommendations for all six modes and an ordered revision plan.
+It prioritizes a readable One map comparison. It is separate from the human
+decisions below and does not supply independent viewing or listening evidence.
+
 ## Reviewer and session declaration
 
 - Reviewer / role: **pending**

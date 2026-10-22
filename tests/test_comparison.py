@@ -173,7 +173,8 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(svg.find('s:g', ns).attrib['transform'], 'translate(400 400) scale(51.42857142857143 -51.42857142857143)')
         self.assertIn('offline', html.lower())
         self.assertIn('do not establish causality', html)
-        self.assertLess(html.index('Recorded differences'), html.index('Route overlay'))
+        self.assertLess(html.index('Route overlay'), html.index('Source conditions'))
+        self.assertIn('Recorded differences', html)
         self.assertEqual(len(re.findall(r'<svg\b', html)), 3)
         identifiers = []
         for match in re.finditer(r'<svg\b.*?</svg>', html, re.S):

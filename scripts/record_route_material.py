@@ -1,4 +1,4 @@
-"""One public lab parent, registered snapshot and goal-edit branch; no retries."""
+"""One public lab parent, registered snapshot and obstacle-edit branch; no retries."""
 import argparse
 import hashlib
 import json
@@ -13,9 +13,9 @@ from palimpsest.storage import StorageBudget, StorageLimits
 from verify_afterimage import cleanup_check, process_identity, write_json
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAN = 'docs/plans/route-material-2026-10-22.md'
+PLAN = 'docs/plans/route-obstacle-material-2026-10-22.md'
 LIMITS = StorageLimits(max_bytes=2 * 1024**3, min_free_bytes=2 * 1024**3)
-EDIT = {'kind': 'move_goal', 'xy': [0., 0.]}
+EDIT = {'kind': 'move_obstacle', 'index': 0, 'xy': [.75, -.75]}
 
 
 def pins():

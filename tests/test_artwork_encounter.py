@@ -124,6 +124,17 @@ class EncounterTests(unittest.TestCase):
         self.assertIn('500 intervals / 10 simulation seconds', page)
         self.assertIn('branch at tick 100', page)
         self.assertNotIn('two route sources have no parent relationship', page)
+        source['intervention'] = {'kind': 'move_obstacle', 'index': 0, 'xy': [.75, -.75]}
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        right['provenance']['interventions'][0]['change'] = {
+            'kind': 'move_obstacle', 'index': 0, 'new': {'xy': [.75, -.75]}}
+        self.files['one-map-many-lives.html'] = ('<pre id="comparison-metadata">' + html.escape(json.dumps({'comparison': {'left': left, 'right': right}})) + '</pre>').encode()
+        source['files_sha256']['one-map-many-lives.html'] = hashlib.sha256(self.files['one-map-many-lives.html']).hexdigest()
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Obstacle 0 moved to [0.75, -0.75]; goal unchanged', page)
+        self.assertIn('Shared post-snapshot window: ticks 100–600 (10 simulation seconds)', page)
         source['snapshot_id'] = '4' * 32
         self.files['routes-source.json'] = json.dumps(source).encode()
         with self.assertRaises(ValueError): encounter.encounter_html(self.files)
