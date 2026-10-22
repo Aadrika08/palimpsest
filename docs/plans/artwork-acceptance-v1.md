@@ -14,7 +14,7 @@ This plan records the user's decisions of 19 October 2026 and the input-contract
 5. **Afterimage eye selection (21 October):** left camera only, every fifth interval from 3,000 chronological 50 Hz source intervals, producing 600 frames. Keep the existing duplicated-image `male-original` CPU mapping, seed 0 and one initial model reset. Retain source episode boundaries and distinguish concatenated source time from model time.
 6. **Choir episode handling (21 October):** explicitly concatenate chronological episodes from one public FLYNN CPU recording, mapping exactly 6,000 genuine intervals to 120 seconds. Label episode boundaries and any final-episode prefix; retain fixed audio mapping and continuous carrier phase without looping, normalization or crossfades.
 
-The [accepted input contract](../superpowers/plans/2026-10-21-artwork-input-contract.md) fixes selection, timestamps, provenance and rejection rules. **Blocker 1 is closed.** Runtime readiness, source capacity, implementation and actual material generation remain pending.
+The [accepted input contract](../superpowers/plans/2026-10-21-artwork-input-contract.md) fixes selection, timestamps, provenance and rejection rules. **Blocker 1 is closed.** Afterimage and Choir material generation and their timed browser checks passed on 22 October; route/branch material and human acceptance remain pending.
 
 ## Per encounter
 
@@ -49,17 +49,16 @@ When new material replaces the current derivatives, the same harness runs agains
 1. **Harness and committed inputs (done).**
 2. **Material generation (partially complete).**
    - [Real Choir material and browser check](../reports/choir-material-2026-10-22.md) passed on 22 October: 6,004 actual CPU FLYNN intervals, independently audited 120-second export, local encounter package and full playback. Human listening acceptance remains open.
-   - A ≥60 s public manual lab recording and the Afterimage inference over 600 of its frames.
-   - A 120 s FLYNN CPU run and the Choir export.
+   - [Afterimage material and browser check](../reports/afterimage-material-2026-10-22.md) passed on 22 October: 3,543 scripted manual-controller intervals, 600 selected left-eye frames, actual male-original inference in 3.73 s, independent mapping audit and all 600 responses displayed in 60.012 s. Human viewing acceptance remains open.
    - A public lab run plus a labelled branch for One map and Borrowed body.
 3. **Declared-duration sessions.** Each mode is held open for its declared time, with an automated record and interruption labelling where relevant.
 4. **Milestone 4.** Human listening and viewing, the independent operator, and the rights, audience and custodian declarations.
 
 ## Notes and open technical points
 
-The [21 October runtime/capacity check](../reports/artwork-runtime-capacity-2026-10-21.md) passes locked setup, asset validation, EGL rendering and 23 focused synthetic tests. It establishes that the complete Choir source exceeds the original 512 MiB reader cap. The subsequent explicit `--compose-episodes` implementation admits up to 2 GiB / 6,600 source intervals, validates the entire recording, and exports its first 6,000 intervals with version-2 episode provenance. Actual source-generation and browser acceptance remain pending.
+The [21 October runtime/capacity check](../reports/artwork-runtime-capacity-2026-10-21.md) passes locked setup, asset validation, EGL rendering and 23 focused synthetic tests. It establishes that the complete Choir source exceeds the original 512 MiB reader cap. The subsequent explicit `--compose-episodes` implementation admits up to 2 GiB / 6,600 source intervals, validates the entire recording, and exports its first 6,000 intervals with version-2 episode provenance. Actual Choir generation and browser playback subsequently passed; human listening acceptance remains pending.
 
 - **Which input archive backs which pack.** The current encounter pack derives from `palimpsest-artwork-inputs-development-v1.zip`, which is 577,207,446 bytes and stays local. GitHub limits files to 100 MB. Its 98-file manifest is committed (`docs/reports/artwork-review-development-evidence/input-manifest.json`), and the harness checks provenance against it. The committed 4.86 MB archive backs the earlier six-mode offline handoff (`docs/artwork-handoff.json`). New material should be built from committed or public-rebuildable inputs.
-- **Afterimage feasibility.** Left-eye selection is accepted. Require 3,000 actual source intervals; early terminations may require more than five episodes. Verify the 32 MiB input / 96 MiB recording caps and the existing 120-second inference timeout before generation.
-- **Choir implementation and capacity.** Labelled episode concatenation is implemented through `--compose-episodes`; the single-episode default is preserved. Composition limits are 2 GiB source, 256 KiB metadata and 16 MiB output. Existing synthetic tests cover exact 120-second PCM and prefix provenance; actual full-size lab material still needs verification. Insufficient telemetry must fail without padding or automatic retries.
-- **Choir loudness.** The current WAV peaks at −31.1 dBFS (RMS about −38.6 dBFS). The fixed mapping has no normalisation, so the listening-level policy for milestone 4 should take this into account.
+- **Afterimage feasibility (passed).** The actual NPY is 29,491,328 bytes and portrait record 59,458,069 bytes; inference completed in 3.73 s under the unchanged 120-second supervisor. The report records storage-floor/default deviations and remaining browser coverage limits.
+- **Choir implementation and capacity (passed).** Labelled episode concatenation is implemented through `--compose-episodes`; the single-episode default is preserved. Composition limits are 2 GiB source, 256 KiB metadata and 16 MiB output. Synthetic tests and the actual 6,004-interval lab source pass exact 120-second PCM and prefix checks. Insufficient telemetry must fail without padding or automatic retries.
+- **Choir loudness.** The actual 22 October WAV peaks at −31.813 dBFS (RMS −40.088 dBFS). The fixed mapping has no normalisation, so the listening-level policy for milestone 4 should take this into account.

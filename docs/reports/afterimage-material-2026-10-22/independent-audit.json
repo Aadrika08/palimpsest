@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "source_intervals": 3543,
+  "source_episodes": {
+    "0": {
+      "start_interval": 0,
+      "end_interval_inclusive": 599
+    },
+    "1": {
+      "start_interval": 600,
+      "end_interval_inclusive": 861
+    },
+    "2": {
+      "start_interval": 862,
+      "end_interval_inclusive": 1461
+    },
+    "3": {
+      "start_interval": 1462,
+      "end_interval_inclusive": 1785
+    },
+    "4": {
+      "start_interval": 1786,
+      "end_interval_inclusive": 1981
+    },
+    "5": {
+      "start_interval": 1982,
+      "end_interval_inclusive": 2524
+    },
+    "6": {
+      "start_interval": 2525,
+      "end_interval_inclusive": 2942
+    },
+    "7": {
+      "start_interval": 2943,
+      "end_interval_inclusive": 3542
+    }
+  },
+  "selected_intervals": 3000,
+  "frames": 600,
+  "source_bytes": 697712617,
+  "npy_bytes": 29491328,
+  "record_bytes": 59458069,
+  "portrait_inference_seconds": 3.7316509209922515,
+  "model_time_seconds": 12,
+  "presentation_seconds": 60,
+  "source_sample_span_seconds": 59.9,
+  "svg_bytes": 289373,
+  "svg_sha256": "19112974f2332be3109c4aaa72005715a846ddd022b8b33c634940182988c2cc",
+  "all_frame_response_points_checked": true,
+  "source_pins_unchanged": true,
+  "independent_model_forward_rerun": false,
+  "qualification_claims": []
+}

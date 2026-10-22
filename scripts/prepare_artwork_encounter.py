@@ -6,6 +6,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import shutil
 import signal
 import stat
@@ -221,12 +222,45 @@ def choir_details(raw):
     return frames / 48000, names, segments, prefix
 
 
+def camera_provenance(files, rows):
+    raw = files.get('afterimage-source.json')
+    if raw is None:
+        return None
+    require(len(raw) <= 1024**2, 'Afterimage source index too large')
+    source = json.loads(raw)
+    meta = json.loads(ET.fromstring(files['afterimage.svg']).find('{http://www.w3.org/2000/svg}metadata').text)
+    require(source.get('schema_version') == 1 and source.get('camera') == 'cam_left'
+            and source.get('source_controller') == 'manual' and source.get('selected_intervals') == 3000
+            and type(source.get('source_intervals')) is int and 3000 <= source['source_intervals'] <= 3600
+            and source.get('presentation_seconds') == 60 and source.get('clock') == 'concatenated source time'
+            and meta.get('policy_identity', {}).get('controller') == 'male-original'
+            and isinstance(source.get('frame_file_sha256'), str)
+            and re.fullmatch('[0-9a-f]{64}', source['frame_file_sha256'])
+            and source.get('frame_file_sha256') == meta['stimulus']['manifest'].get('frame_file_sha256')
+            and isinstance(source.get('frames'), list) and len(source['frames']) == len(rows) == 600,
+            'Afterimage camera source contract differs')
+    for i, (entry, row) in enumerate(zip(source['frames'], rows)):
+        require(entry.get('frame') == i and entry.get('source_interval') == i * 5
+                and entry.get('presentation_seconds') == row['source_timestamp_seconds'] == i / 10
+                and entry.get('frame_sha256') == row.get('frame_sha256')
+                and isinstance(entry.get('frame_sha256'), str) and re.fullmatch('[0-9a-f]{64}', entry['frame_sha256'])
+                and type(entry.get('episode')) is int and entry['episode'] >= 0
+                and type(entry.get('tick')) is int and entry['tick'] >= 0
+                and isinstance(entry.get('eyes'), list) and len(entry['eyes']) == 2
+                and all(type(eye) is bool for eye in entry['eyes'])
+                and type(entry.get('simulation_time_seconds')) in (int, float)
+                and abs(entry['simulation_time_seconds'] - (entry['tick'] + 1) * .02) < 1e-7,
+                'Afterimage frame/source provenance differs')
+    return source
+
+
 def encounter_html(files):
     rows = alignment(files['afterimage.svg'])
+    source = camera_provenance(files, rows)
     choir_duration, voices, segments, prefix = choir_details(files['counterfactual-choir.wav'])
     durations = (len(rows), rows[-1]['source_timestamp_seconds'] - rows[0]['source_timestamp_seconds'], rows[-1]['model_time_seconds'])
     captions = (
-        ('afterimage', 'Afterimage', 'Authored model responses to geometric frames. Offline inference / recorded playback; not fly perception or biological activity.'),
+        ('afterimage', 'Afterimage', ('Authored model responses to scripted manual-controller left-camera footage. Source controller: manual; portrait controller: male-original. ' if source else 'Authored model responses to geometric frames. ') + 'Offline inference / recorded playback; not fly perception or biological activity.'),
         ('borrowed-body', 'Borrowed body', 'Recorded south-change simulator route: 1,267 intervals, 1,268 points, 25.34 simulation seconds. No physical pen marks.'),
         ('one-map', 'One map, many possible lives', 'Separate mirrored no-U cases: south 25.34 seconds; north 25.84 seconds. No paired intervention or causal memory-effect claim.'),
         ('choir', 'Counterfactual choir', f'{choir_duration:g}-second composed mapping of {html.escape(", ".join(voices))} model populations. Not biological audio or a counterfactual experiment.'),
@@ -247,15 +281,23 @@ def encounter_html(files):
             ending = 'Final episode uses a recorded prefix.' if prefix else 'Final selected episode is included in full.'
             inspector = f'<p>Composition of {len(segments)} recorded episodes. Episode resets are retained; loading and paused wall time are omitted. {ending}</p><details><summary>Episode boundaries</summary><div class="table-scroll"><table><caption>Source episodes in playback order</caption><thead><tr><th scope="col">Episode</th><th scope="col">Playback seconds</th><th scope="col">Source ticks (inclusive)</th></tr></thead><tbody>{table}</tbody></table></div></details>'
         if key == 'afterimage':
+            note = ('60-second sample-and-hold presentation at 10 fps, on concatenated source time. '
+                    'Source episode resets are retained; the portrait model carries hidden state across them. '
+                    '<a href="afterimage-source.json">Source episodes, eye masks and frame hashes</a>. '
+                    'Human artistic acceptance remains open.' if source else
+                    'Insufficient for assessing sustained material. Manual inspection adds no frames or elapsed source time.')
+            playback = ('<button id="play-portrait">Play 60-second portrait</button>'
+                        '<button id="stop-portrait">Stop portrait and return to start</button>'
+                        '<p id="portrait-status" role="status">Ready; playback has not started.</p>' if source else '')
             table = ''.join('<tr>' + ''.join(f'<td>{html.escape(str(v))}</td>' for v in
                 (r['frame'] + 1, r['source_timestamp_seconds'], r['model_time_seconds'], *r['action'], *r['point'])) + '</tr>' for r in rows)
             inspector = f'''<p>{durations[0]} frames / {durations[1]:.9g} source seconds / {durations[2]:.9g} model seconds.
-Insufficient for assessing sustained material. Manual inspection adds no frames or elapsed source time.</p>
+{note}</p>
 <details><summary>Inspect recorded responses one at a time</summary>
-<div id="controls" hidden><button id="previous">Previous frame</button><button id="next">Next frame</button>
+<div id="controls" hidden>{playback}<button id="previous">Previous frame</button><button id="next">Next frame</button>
 <p id="frame-status" aria-live="polite"></p>
 <svg viewBox="-400 -400 800 800" role="img" aria-labelledby="inspect-title inspect-description">
-<title id="inspect-title">Manual response-plane inspection</title><desc id="inspect-description">Exact chronological prefix on fixed axes ±360. The red marker is the sequence start; blue marks the selected response. Coincident responses remain coincident.</desc>
+<title id="inspect-title">Recorded response-plane inspection</title><desc id="inspect-description">Exact chronological prefix on fixed axes ±360. The red marker is the sequence start; blue marks the selected response. Coincident responses remain coincident.</desc>
 <rect x="-360" y="-360" width="720" height="720" fill="none" stroke="#8c8a83"/>
 <path d="M -360 0 H 360 M 0 -360 V 360" fill="none" stroke="#8c8a83"/>
 <polyline id="prefix" fill="none" stroke="#244c5a" stroke-width="2"/>
@@ -285,11 +327,22 @@ The two route sources have no parent relationship. Inspection and repeats do not
 <details><summary>Original review guide as plain text</summary><pre>''' + html.escape(files['README.md'].decode('utf-8')) + '''</pre></details>
 <p>Record keep, revise presentation or insufficient sample for each mode, with one reason. Missing judgment is not acceptance.
 This encounter adds no scientific, biological, exhibition-duration or physical qualification.</p></footer>
+<script id="source-index" type="application/json">''' + script_json(source) + '''</script>
 <script id="alignment" type="application/json">''' + script_json(rows) + '''</script><script>
 const rows=JSON.parse(document.getElementById('alignment').textContent);let frame=0;
+const source=JSON.parse(document.getElementById('source-index').textContent);
 const previous=document.getElementById('previous'),next=document.getElementById('next');
-function inspect(){const row=rows[frame];document.getElementById('prefix').setAttribute('points',rows.slice(0,frame+1).map(r=>r.point.join(',')).join(' '));const marker=document.getElementById('selected');marker.setAttribute('cx',row.point[0]);marker.setAttribute('cy',row.point[1]);document.getElementById('frame-status').textContent=`Frame ${frame+1} of ${rows.length}; source time ${row.source_timestamp_seconds} s; model time ${row.model_time_seconds} s. Fixed axes ±360.`;previous.disabled=frame===0;next.disabled=frame===rows.length-1;}
+function inspect(){const row=rows[frame];document.getElementById('prefix').setAttribute('points',rows.slice(0,frame+1).map(r=>r.point.join(',')).join(' '));const marker=document.getElementById('selected');marker.setAttribute('cx',row.point[0]);marker.setAttribute('cy',row.point[1]);document.getElementById('frame-status').textContent=`Frame ${frame+1} of ${rows.length}; source time ${row.source_timestamp_seconds} s; model time ${row.model_time_seconds} s. Fixed axes ±360.`+(source?` Source episode ${source.frames[frame].episode}, tick ${source.frames[frame].tick}; eyes ${source.frames[frame].eyes.join(', ')}.`:'');previous.disabled=frame===0;next.disabled=frame===rows.length-1;}
 previous.addEventListener('click',()=>{if(frame>0){frame--;inspect();}});next.addEventListener('click',()=>{if(frame<rows.length-1){frame++;inspect();}});inspect();document.getElementById('controls').hidden=false;
+if(source){
+ const play=document.getElementById('play-portrait'),stopPortrait=document.getElementById('stop-portrait'),status=document.getElementById('portrait-status');let timer=null,start=0;
+ function stopPortraitPlayback(){if(timer!==null)cancelAnimationFrame(timer);timer=null;play.disabled=false;frame=0;inspect();status.textContent='Stopped; returned to start.';}
+ function step(now){const elapsed=(now-start)/1000;const selected=Math.min(599,Math.floor(elapsed*10));if(frame!==selected){frame=selected;inspect();}previous.disabled=true;next.disabled=true;if(elapsed>=60){timer=null;play.disabled=false;inspect();status.textContent='Completed 60-second presentation; no repeat.';return;}timer=requestAnimationFrame(step);}
+ play.addEventListener('click',()=>{frame=0;inspect();start=performance.now();play.disabled=true;previous.disabled=true;next.disabled=true;status.textContent='Playing 60 seconds at 10 fps; no repeat.';timer=requestAnimationFrame(step);});
+ stopPortrait.addEventListener('click',stopPortraitPlayback);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&timer!==null)stopPortraitPlayback();});
+ play.closest('details').addEventListener('toggle',event=>{if(!event.target.open&&timer!==null)stopPortraitPlayback();});
+}
 const audio=document.querySelector('audio'),stop=document.getElementById('stop-audio');stop.addEventListener('click',()=>{audio.pause();audio.currentTime=0;});stop.hidden=false;
 </script></main></html>''').encode('utf-8')
 

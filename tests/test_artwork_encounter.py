@@ -75,6 +75,34 @@ class EncounterTests(unittest.TestCase):
         self.assertIn('<td>9</td><td>108–120</td><td>0–599</td>', page)
         self.assertNotIn('autoplay', page)
 
+    def test_afterimage_presentation_requires_matched_camera_provenance(self):
+        times = [i / 10 for i in range(600)]
+        self.meta['stimulus']['manifest']['source_times_seconds'] = times
+        self.meta['stimulus']['manifest']['frame_file_sha256'] = 'a' * 64
+        self.meta['policy_identity'] = {'controller': 'male-original'}
+        self.meta['alignment'] = [dict(self.meta['alignment'][0], frame=i,
+            source_timestamp_seconds=t, model_time_seconds=(i + 1) * .02, frame_sha256='b' * 64)
+            for i, t in enumerate(times)]
+        self.files['afterimage.svg'] = self.svg()
+        source = {'schema_version': 1, 'camera': 'cam_left', 'source_controller': 'manual',
+                  'source_run_id': '0' * 32, 'selected_intervals': 3000, 'source_intervals': 3000,
+                  'clock': 'concatenated source time', 'presentation_seconds': 60,
+                  'frame_file_sha256': 'a' * 64,
+                  'frames': [{'frame': i, 'source_interval': i * 5, 'episode': i // 120,
+                              'tick': (i % 120) * 5, 'presentation_seconds': t, 'eyes': [True, True],
+                              'simulation_time_seconds': ((i % 120) * 5 + 1) * .02,
+                              'observation_time_seconds': (i % 120) * 5 * .02,
+                              'frame_sha256': 'b' * 64} for i, t in enumerate(times)]}
+        self.files['afterimage-source.json'] = json.dumps(source).encode()
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Play 60-second portrait', page)
+        self.assertIn('scripted manual-controller', page)
+        self.assertIn('59.9 source seconds', page)
+        self.assertNotIn('Insufficient for assessing sustained material', page)
+        source['frames'][1]['frame_sha256'] = 'c' * 64
+        self.files['afterimage-source.json'] = json.dumps(source).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+
     def test_choir_rejects_malformed_audio_and_inconsistent_metadata(self):
         for mutate in (lambda m: m.update(pcm_sha256='0' * 64),
                        lambda m: m['timing'].update(duration_seconds=119),
@@ -260,6 +288,7 @@ class EncounterTests(unittest.TestCase):
 const elements=Object.fromEntries(['previous','next','prefix','selected','frame-status','controls','stop-audio','alignment'].map(id=>[id,{hidden:true,handlers:{},attrs:{},addEventListener(e,f){this.handlers[e]=f;},setAttribute(k,v){this.attrs[k]=v;}}]));
 const player={currentTime:4,paused:false,pause(){this.paused=true;}};
 globalThis.document={getElementById:id=>elements[id],querySelector:()=>player};
+elements['source-index']={textContent:'null'};
 elements.alignment.textContent=ROWS;
 '''.replace('ROWS', json.dumps(json.dumps(self.meta['alignment'])))
         checks = '''
