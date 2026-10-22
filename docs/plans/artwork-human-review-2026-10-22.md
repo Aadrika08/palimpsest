@@ -1,13 +1,13 @@
 # Human artwork review — pending
 
 Open the current local encounter:
-`runs/route-obstacle-material-2026-10-22-v1/handoff/index.html`.
+`runs/afterimage-presentation-2026-10-22-v2/encounter/index.html`.
 Its portable ZIP is beside the encounter directory. Automated checks establish
 record integrity and browser behavior; they do not fill in these judgments.
 
 The requested [agent curatorial review](../reports/artwork-curatorial-review-2026-10-22.md)
 now records recommendations for all six modes and an ordered revision plan.
-The [new obstacle comparison](../reports/route-obstacle-material-2026-10-22.md) addresses its first recommendation; Afterimage presentation is next. It is separate from the human
+The [new obstacle comparison](../reports/route-obstacle-material-2026-10-22.md) addresses its first recommendation; The [Afterimage source-frame presentation](../reports/afterimage-presentation-2026-10-22.md) is also implemented; human viewing remains pending. It is separate from the human
 decisions below and does not supply independent viewing or listening evidence.
 
 ## Reviewer and session declaration
@@ -28,7 +28,7 @@ with one reason. There are no preselected decisions.
 
 | Mode | Material and known limitation | Human decision / reason |
 | --- | --- | --- |
-| Afterimage | 600 actual responses, 60 s display, fixed axes and duplicated-camera artificial interface. Small response extent is retained. | Pending |
+| Afterimage | 600 actual responses, 60 s display, fixed axes and duplicated-camera artificial interface. Small response extent is retained; each response is paired with its original recorded source frame. | Pending |
 | Counterfactual choir | 120 s composition across 18 source episodes; final prefix labelled. Fixed low-level mapping, no normalization. | Pending |
 | One map, many possible lives | Parent 7.5 s; branch continuation 5.58 s after an obstacle edit at tick 100. Shared continuation 5.5 s. Unequal ranges and a derived-position refresh offset are disclosed. No causal memory claim. | Pending |
 | Borrowed body | 375 simulated intervals / 376 points, 7.5 s source. No physical pen marks. | Pending |

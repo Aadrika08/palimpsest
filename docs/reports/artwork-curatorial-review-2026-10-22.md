@@ -91,3 +91,8 @@ recommendation 1: 279 branch intervals (5.58 s), a 5.5 s common continuation and
 a visible modest detour. Agent recommendation for that new pair: keep for the
 next development encounter. The original decisions above refer to the older
 package and remain historical; human acceptance is still pending.
+
+The [Afterimage presentation follow-up](afterimage-presentation-2026-10-22.md)
+addresses recommendation 2 by pairing the 600 original source frames with their
+responses, retaining fixed axes and small response extent. Human artistic
+acceptance remains pending; a guided introduction is the next presentation task.

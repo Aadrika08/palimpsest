@@ -254,6 +254,24 @@ def camera_provenance(files, rows):
     return source
 
 
+def camera_preview(files, source):
+    if 'afterimage-frames.json' not in files and 'afterimage-frames.png' not in files:
+        return False
+    require(source is not None, 'camera preview requires source provenance')
+    raw = files.get('afterimage-frames.json', b'')
+    require(0 < len(raw) <= 4096, 'bounded camera preview manifest required')
+    meta = json.loads(raw)
+    png = files.get('afterimage-frames.png', b'')
+    require(meta.get('schema_version') == 1 and meta.get('columns') == 10
+            and meta.get('rows') == 60 and meta.get('width') == meta.get('height') == 128
+            and 33 <= len(png) <= 32 * 1024**2
+            and png[:16] == b'\x89PNG\r\n\x1a\n\x00\x00\x00\x0dIHDR'
+            and struct.unpack('>IIBBBBB', png[16:29]) == (1280, 7680, 8, 2, 0, 0, 0)
+            and hashlib.sha256(png).hexdigest() == meta.get('png_sha256'),
+            'camera preview dimensions, format or hash differs')
+    return True
+
+
 def route_captions(files):
     if 'routes-source.json' not in files:
         return None
@@ -312,6 +330,7 @@ def route_captions(files):
 def encounter_html(files):
     rows = alignment(files['afterimage.svg'])
     source = camera_provenance(files, rows)
+    preview = camera_preview(files, source)
     routes = route_captions(files)
     choir_duration, voices, segments, prefix = choir_details(files['counterfactual-choir.wav'])
     durations = (len(rows), rows[-1]['source_timestamp_seconds'] - rows[0]['source_timestamp_seconds'], rows[-1]['model_time_seconds'])
@@ -349,18 +368,23 @@ def encounter_html(files):
                         '<p id="portrait-status" role="status">Ready; playback has not started.</p>' if source else '')
             table = ''.join('<tr>' + ''.join(f'<td>{html.escape(str(v))}</td>' for v in
                 (r['frame'] + 1, r['source_timestamp_seconds'], r['model_time_seconds'], *r['action'], *r['point'])) + '</tr>' for r in rows)
+            source_view = ('<figure><h3>1. Recorded left-camera frame</h3><canvas id="source-frame" width="128" height="128" role="img" aria-label="Selected recorded source frame"></canvas><figcaption id="source-frame-caption">Loading recorded frames…</figcaption><p>The same image was supplied to both model cameras with fixed sensor values. This is an authored interface.</p></figure>' if preview else '')
+            if preview:
+                media = ''  # The original remains linked; foreground the paired inspection.
             inspector = f'''<p>{durations[0]} frames / {durations[1]:.9g} source seconds / {durations[2]:.9g} model seconds.
 {note}</p>
-<details><summary>Inspect recorded responses one at a time</summary>
+<details {"open" if preview else ""}><summary>Inspect recorded responses one at a time</summary>
 <div id="controls" hidden>{playback}<button id="previous">Previous frame</button><button id="next">Next frame</button>
 <p id="frame-status" aria-live="polite"></p>
+<div class="{"response-pair" if preview else "response-only"}">{source_view}<figure><h3>2. Selected model response</h3>
 <svg viewBox="-400 -400 800 800" role="img" aria-labelledby="inspect-title inspect-description">
 <title id="inspect-title">Recorded response-plane inspection</title><desc id="inspect-description">Exact chronological prefix on fixed axes ±360. The red marker is the sequence start; blue marks the selected response. Coincident responses remain coincident.</desc>
 <rect x="-360" y="-360" width="720" height="720" fill="none" stroke="#8c8a83"/>
 <path d="M -360 0 H 360 M 0 -360 V 360" fill="none" stroke="#8c8a83"/>
 <polyline id="prefix" fill="none" stroke="#244c5a" stroke-width="2"/>
 <circle cx="{rows[0]['point'][0]}" cy="{rows[0]['point'][1]}" r="4" fill="#aa392b"/>
-<circle id="selected" r="4" fill="#244c5a"/></svg></div>
+<circle id="selected" r="4" fill="#244c5a"/></svg>
+<figcaption>Fixed axes ±360; red is the first response and blue is the selected response. Small changes remain small.</figcaption><p id="response-value"></p></figure></div></div>
 <div class="table-scroll"><table><caption>Exact recorded alignment; all frames, including coincident responses</caption>
 <thead><tr><th>Frame</th><th>Source time (s)</th><th>Model time (s)</th><th>Velocity</th><th>Heading</th><th>x</th><th>y</th></tr></thead><tbody>{table}</tbody></table></div></details>'''
         sections.append(f'<section id="{key}" aria-labelledby="{key}-title"><h2 id="{key}-title">{title}</h2><p>{caption}</p><p><a href="{name}">Open original artifact and embedded provenance</a></p>{media}{inspector}<a href="#modes">Return to modes</a></section>')
@@ -374,6 +398,7 @@ nav{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;background:#edf4f8;padding:1rem
 img,svg{display:block;max-width:100%;height:auto;margin:1rem auto}img{max-height:75vh;object-fit:contain}iframe{width:100%;height:38rem;border:1px solid #253746;box-sizing:border-box}
 audio{display:block;max-width:100%;margin:1rem 0}button,summary{font:inherit;cursor:pointer}button{padding:.5rem .8rem;margin:.25rem}button:disabled{cursor:default}
 details{margin:1rem 0;padding:1rem;background:#edf4f8}#controls svg{max-width:38rem}.table-scroll{overflow:auto}table{border-collapse:collapse}th,td{padding:.5rem;text-align:left;border-bottom:1px solid #b6c8d4;white-space:nowrap}
+.response-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}.response-pair figure{margin:0;min-width:0}.response-pair h3{font-size:1rem}#source-frame{display:block;width:256px;max-width:100%;height:auto;image-rendering:pixelated;margin:1rem auto}@media(max-width:700px){.response-pair{grid-template-columns:1fr}}
 pre{white-space:pre-wrap;overflow-wrap:anywhere}footer{padding:1rem 0} [hidden]{display:none!important}
 </style><main><h1>Palimpsest</h1><p>Six recorded encounters. Open this page locally; each original artifact retains its source identities and mapping.
 No live model, simulator or rover runs here. Human artistic and independent operator acceptance remain open.</p>
@@ -390,14 +415,16 @@ This encounter adds no scientific, biological, exhibition-duration or physical q
 const rows=JSON.parse(document.getElementById('alignment').textContent);let frame=0;
 const source=JSON.parse(document.getElementById('source-index').textContent);
 const previous=document.getElementById('previous'),next=document.getElementById('next');
-function inspect(){const row=rows[frame];document.getElementById('prefix').setAttribute('points',rows.slice(0,frame+1).map(r=>r.point.join(',')).join(' '));const marker=document.getElementById('selected');marker.setAttribute('cx',row.point[0]);marker.setAttribute('cy',row.point[1]);document.getElementById('frame-status').textContent=`Frame ${frame+1} of ${rows.length}; source time ${row.source_timestamp_seconds} s; model time ${row.model_time_seconds} s. Fixed axes ±360.`+(source?` Source episode ${source.frames[frame].episode}, tick ${source.frames[frame].tick}; eyes ${source.frames[frame].eyes.join(', ')}.`:'');previous.disabled=frame===0;next.disabled=frame===rows.length-1;}
+const canvas=document.getElementById('source-frame');let camera=null,cameraReady=!canvas;
+function inspect(){const row=rows[frame];if(cameraReady&&canvas){canvas.getContext('2d').drawImage(camera,(frame%10)*128,Math.floor(frame/10)*128,128,128,0,0,128,128);const e=source.frames[frame];document.getElementById('source-frame-caption').textContent=`Frame ${frame+1}; episode ${e.episode}, tick ${e.tick}; observation at ${e.observation_time_seconds} s in that episode.`;canvas.setAttribute('aria-label',`Recorded left-camera frame ${frame+1}, episode ${e.episode}, tick ${e.tick}`);canvas.dataset.frame=frame;}document.getElementById('response-value').textContent=`Recorded action: velocity ${row.action[0]}, heading ${row.action[1]}. Response point: (${row.point[0]}, ${row.point[1]}).`;document.getElementById('prefix').setAttribute('points',rows.slice(0,frame+1).map(r=>r.point.join(',')).join(' '));const marker=document.getElementById('selected');marker.setAttribute('cx',row.point[0]);marker.setAttribute('cy',row.point[1]);document.getElementById('frame-status').textContent=`Frame ${frame+1} of ${rows.length}; source time ${row.source_timestamp_seconds} s; model time ${row.model_time_seconds} s. Fixed axes ±360.`+(source?` Source episode ${source.frames[frame].episode}, tick ${source.frames[frame].tick}; eyes ${source.frames[frame].eyes.join(', ')}.`:'');previous.disabled=frame===0;next.disabled=frame===rows.length-1;}
 previous.addEventListener('click',()=>{if(frame>0){frame--;inspect();}});next.addEventListener('click',()=>{if(frame<rows.length-1){frame++;inspect();}});inspect();document.getElementById('controls').hidden=false;
 if(source){
  const play=document.getElementById('play-portrait'),stopPortrait=document.getElementById('stop-portrait'),status=document.getElementById('portrait-status');let timer=null,start=0;
  function stopPortraitPlayback(){if(timer!==null)cancelAnimationFrame(timer);timer=null;play.disabled=false;frame=0;inspect();status.textContent='Stopped; returned to start.';}
  function step(now){const elapsed=(now-start)/1000;const selected=Math.min(599,Math.floor(elapsed*10));if(frame!==selected){frame=selected;inspect();}previous.disabled=true;next.disabled=true;if(elapsed>=60){timer=null;play.disabled=false;inspect();status.textContent='Completed 60-second presentation; no repeat.';return;}timer=requestAnimationFrame(step);}
- play.addEventListener('click',()=>{frame=0;inspect();start=performance.now();play.disabled=true;previous.disabled=true;next.disabled=true;status.textContent='Playing 60 seconds at 10 fps; no repeat.';timer=requestAnimationFrame(step);});
- stopPortrait.addEventListener('click',stopPortraitPlayback);
+ play.addEventListener('click',()=>{if(!cameraReady)return;frame=0;inspect();start=performance.now();play.disabled=true;previous.disabled=true;next.disabled=true;status.textContent='Playing 60 seconds at 10 fps; no repeat.';timer=requestAnimationFrame(step);});
+ if(canvas){play.disabled=true;previous.disabled=true;next.disabled=true;camera=new Image();camera.onload=()=>{if(camera.naturalWidth!==1280||camera.naturalHeight!==7680){status.textContent='Source frames have invalid dimensions; playback unavailable.';return;}cameraReady=true;inspect();play.disabled=false;};camera.onerror=()=>{status.textContent='Source frames could not load; playback unavailable.';};camera.src='afterimage-frames.png';}
+ stopPortrait.addEventListener('click',()=>{if(cameraReady)stopPortraitPlayback();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&timer!==null)stopPortraitPlayback();});
  play.closest('details').addEventListener('toggle',event=>{if(!event.target.open&&timer!==null)stopPortraitPlayback();});
 }

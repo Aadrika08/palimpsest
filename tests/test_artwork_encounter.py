@@ -99,6 +99,24 @@ class EncounterTests(unittest.TestCase):
         self.assertIn('scripted manual-controller', page)
         self.assertIn('59.9 source seconds', page)
         self.assertNotIn('Insufficient for assessing sustained material', page)
+        png = b'\x89PNG\r\n\x1a\n' + struct.pack('>I', 13) + b'IHDR' + struct.pack('>IIBBBBB', 1280, 7680, 8, 2, 0, 0, 0) + bytes(4)
+        preview = {'schema_version': 1, 'columns': 10, 'rows': 60, 'width': 128, 'height': 128,
+                   'png_sha256': hashlib.sha256(png).hexdigest()}
+        self.files['afterimage-frames.json'] = json.dumps(preview).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        self.files['afterimage-frames.png'] = png
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('<details open>', page)
+        self.assertIn('Recorded left-camera frame', page)
+        self.assertIn('Small changes remain small', page)
+        preview['columns'] = 9
+        self.files['afterimage-frames.json'] = json.dumps(preview).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        preview['columns'] = 10
+        preview['png_sha256'] = '0' * 64
+        self.files['afterimage-frames.json'] = json.dumps(preview).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        del self.files['afterimage-frames.json'], self.files['afterimage-frames.png']
         source['frames'][1]['frame_sha256'] = 'c' * 64
         self.files['afterimage-source.json'] = json.dumps(source).encode()
         with self.assertRaises(ValueError): encounter.encounter_html(self.files)
@@ -321,7 +339,7 @@ class EncounterTests(unittest.TestCase):
         page = encounter.encounter_html(self.files).decode()
         code = re.search(r'<script>(.*?)</script>', page, re.S).group(1)
         stub = '''const assert=(condition)=>{if(!condition)throw Error('control assertion failed');};
-const elements=Object.fromEntries(['previous','next','prefix','selected','frame-status','controls','stop-audio','alignment'].map(id=>[id,{hidden:true,handlers:{},attrs:{},addEventListener(e,f){this.handlers[e]=f;},setAttribute(k,v){this.attrs[k]=v;}}]));
+const elements=Object.fromEntries(['previous','next','prefix','selected','frame-status','response-value','controls','stop-audio','alignment'].map(id=>[id,{hidden:true,handlers:{},attrs:{},addEventListener(e,f){this.handlers[e]=f;},setAttribute(k,v){this.attrs[k]=v;}}]));
 const player={currentTime:4,paused:false,pause(){this.paused=true;}};
 globalThis.document={getElementById:id=>elements[id],querySelector:()=>player};
 elements['source-index']={textContent:'null'};
