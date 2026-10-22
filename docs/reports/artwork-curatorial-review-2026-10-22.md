@@ -83,3 +83,11 @@ retired research allocations or change scientific release gates.
 This review adds no runtime changes, new recordings, listening evidence or
 fresh duration tests. The existing portable ZIP remains the reviewed version;
 this recommendation lives alongside it in the repository.
+
+## Follow-up
+
+The [subsequent obstacle allocation](route-obstacle-material-2026-10-22.md) addresses
+recommendation 1: 279 branch intervals (5.58 s), a 5.5 s common continuation and
+a visible modest detour. Agent recommendation for that new pair: keep for the
+next development encounter. The original decisions above refer to the older
+package and remain historical; human acceptance is still pending.

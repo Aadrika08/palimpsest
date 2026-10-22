@@ -70,6 +70,7 @@ Audit and packaging scripts are retained in docs/reports/route-obstacle-material
 Reruns are not guaranteed byte-identical. The earlier goal-edit study is preserved.
 """.encode()
     files['human-review.md'] = files['human-review.md'].replace(
+        b'runs/static-artwork-sessions-2026-10-22-v1/encounter/index.html', b'index.html').replace(
         b'Parent 7.5 s; branch continuation only 0.14 s after a goal edit at tick 100.',
         f"Parent {left['simulation_seconds']:g} s; branch continuation {right['simulation_seconds']:g} s after an obstacle edit at tick 100.".encode())
     for name in ('afterimage.svg', 'counterfactual-choir.wav', 'atlas.svg', 'space-between-two-flies.svg'):

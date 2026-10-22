@@ -305,7 +305,7 @@ def route_captions(files):
     require(a > 100, 'parent lacks its branch boundary')
     delta = [right['traces'][0]['points'][0][i] - left['traces'][0]['points'][100][i] for i in (0, 1)]
     return (f'Recorded FLYNN parent route: {a} intervals, {a + 1} points, {a * .02:g} simulation seconds. No physical pen marks.',
-            f'Public FLYNN parent and labelled branch at tick 100. Parent: {a} intervals / {a * .02:g} simulation seconds; branch continuation: {b} intervals / {b * .02:g} simulation seconds. {edit_label}; controller unchanged. Shared post-snapshot window: ticks 100–{100 + min(a - 100, b)} ({min(a - 100, b) * .02:g} simulation seconds), ending at the earlier outcome. Full routes retain their unequal ranges. No causal memory-effect claim.',
+            f'Public FLYNN parent and labelled branch at tick 100. Parent: {a} intervals / {a * .02:g} simulation seconds; branch continuation: {b} intervals / {b * .02:g} simulation seconds. {edit_label}; controller unchanged. Shared post-snapshot window: tick boundaries 100–{100 + min(a - 100, b)} ({min(a - 100, b) * .02:g} simulation seconds), ending at the earlier outcome. Full routes retain their unequal ranges. No causal memory-effect claim.',
             f'Parent {source["parent_run_id"]}; branch {source["branch_run_id"]}; snapshot {source["snapshot_id"]}. Parent includes ticks before the branch; the branch starts at tick 100. Recorded branch-start XY offset from parent tick 100: [{delta[0]:.9g}, {delta[1]:.9g}] world units. Coordinates are shown unchanged. Source identities and the declared edit are retained in the original comparison and routes-source.json.')
 
 

@@ -134,7 +134,7 @@ class EncounterTests(unittest.TestCase):
         self.files['routes-source.json'] = json.dumps(source).encode()
         page = encounter.encounter_html(self.files).decode()
         self.assertIn('Obstacle 0 moved to [0.75, -0.75]; goal unchanged', page)
-        self.assertIn('Shared post-snapshot window: ticks 100–600 (10 simulation seconds)', page)
+        self.assertIn('Shared post-snapshot window: tick boundaries 100–600 (10 simulation seconds)', page)
         source['snapshot_id'] = '4' * 32
         self.files['routes-source.json'] = json.dumps(source).encode()
         with self.assertRaises(ValueError): encounter.encounter_html(self.files)

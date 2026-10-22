@@ -54,7 +54,7 @@ When new material replaces the current derivatives, the same harness runs agains
 3. **Declared-duration sessions (automated gate passed).** Each mode is held open for its declared time, with an automated record and interruption labelling where relevant.
    - Afterimage's 60-second and Choir's 120-second sessions passed.
    - [Four static sessions](../reports/static-artwork-sessions-2026-10-22.md) each exceeded 600 s with 599 visible/in-view probes, unchanged geometry and screenshots, and zero browser errors or external requests. These ran concurrently in independent headless browsers; they do not count as human viewing.
-4. **Milestone 4 (next).** The [agent curatorial review](../reports/artwork-curatorial-review-2026-10-22.md) recommends improving One map's short comparison first, followed by Afterimage presentation and a guided encounter. Human listening and viewing, the independent operator, and the rights, audience and custodian declarations remain open. Use the [pending human review sheet](artwork-human-review-2026-10-22.md); no human judgments are prefilled.
+4. **Milestone 4 (next).** The [agent curatorial review](../reports/artwork-curatorial-review-2026-10-22.md) identified One map's short comparison first. The [new obstacle comparison](../reports/route-obstacle-material-2026-10-22.md) supplies 279 continuation intervals (5.58 s), with a 5.5 s shared window; Afterimage presentation and a guided encounter follow. Human listening and viewing, the independent operator, and the rights, audience and custodian declarations remain open. Use the [pending human review sheet](artwork-human-review-2026-10-22.md); no human judgments are prefilled.
 
 ## Notes and open technical points
 
