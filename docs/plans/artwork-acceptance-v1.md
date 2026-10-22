@@ -47,7 +47,8 @@ When new material replaces the current derivatives, the same harness runs agains
 
 0. **Storage-budget recount fix (done).** The lab owner now recounts its storage at most every 5 s instead of before every write. This fixes the v5 late-session cadence drift.
 1. **Harness and committed inputs (done).**
-2. **Material generation (detached runs, waiting for a green light).**
+2. **Material generation (partially complete).**
+   - [Real Choir material and browser check](../reports/choir-material-2026-10-22.md) passed on 22 October: 6,004 actual CPU FLYNN intervals, independently audited 120-second export, local encounter package and full playback. Human listening acceptance remains open.
    - A ≥60 s public manual lab recording and the Afterimage inference over 600 of its frames.
    - A 120 s FLYNN CPU run and the Choir export.
    - A public lab run plus a labelled branch for One map and Borrowed body.
