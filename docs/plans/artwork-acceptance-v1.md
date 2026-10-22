@@ -14,7 +14,7 @@ This plan records the user's decisions of 19 October 2026 and the input-contract
 5. **Afterimage eye selection (21 October):** left camera only, every fifth interval from 3,000 chronological 50 Hz source intervals, producing 600 frames. Keep the existing duplicated-image `male-original` CPU mapping, seed 0 and one initial model reset. Retain source episode boundaries and distinguish concatenated source time from model time.
 6. **Choir episode handling (21 October):** explicitly concatenate chronological episodes from one public FLYNN CPU recording, mapping exactly 6,000 genuine intervals to 120 seconds. Label episode boundaries and any final-episode prefix; retain fixed audio mapping and continuous carrier phase without looping, normalization or crossfades.
 
-The [accepted input contract](../superpowers/plans/2026-10-21-artwork-input-contract.md) fixes selection, timestamps, provenance and rejection rules. **Blocker 1 is closed.** Afterimage and Choir material generation and their timed browser checks passed on 22 October; route/branch material and human acceptance remain pending.
+The [accepted input contract](../superpowers/plans/2026-10-21-artwork-input-contract.md) fixes selection, timestamps, provenance and rejection rules. **Blocker 1 is closed.** Afterimage and Choir material generation and their timed browser checks passed on 22 October. The public route/branch material and short browser checks also passed; the four static viewing durations and human acceptance remain pending.
 
 ## Per encounter
 
@@ -47,11 +47,12 @@ When new material replaces the current derivatives, the same harness runs agains
 
 0. **Storage-budget recount fix (done).** The lab owner now recounts its storage at most every 5 s instead of before every write. This fixes the v5 late-session cadence drift.
 1. **Harness and committed inputs (done).**
-2. **Material generation (partially complete).**
+2. **Material generation (complete for the declared source requirements; artistic acceptance open).**
    - [Real Choir material and browser check](../reports/choir-material-2026-10-22.md) passed on 22 October: 6,004 actual CPU FLYNN intervals, independently audited 120-second export, local encounter package and full playback. Human listening acceptance remains open.
    - [Afterimage material and browser check](../reports/afterimage-material-2026-10-22.md) passed on 22 October: 3,543 scripted manual-controller intervals, 600 selected left-eye frames, actual male-original inference in 3.73 s, independent mapping audit and all 600 responses displayed in 60.012 s. Human viewing acceptance remains open.
-   - A public lab run plus a labelled branch for One map and Borrowed body.
+   - [Public route and labelled branch](../reports/route-material-2026-10-22.md) passed on 22 October: FLYNN parent 375 intervals, snapshot at tick 100, sole goal edit and seven-interval branch continuation. All exported coordinates and lineage audited. The short branch and cached-pose refresh offset are explicitly retained; human suitability judgment remains open.
 3. **Declared-duration sessions.** Each mode is held open for its declared time, with an automated record and interruption labelling where relevant.
+   - Afterimage's 60-second and Choir's 120-second sessions passed. The four static ten-minute sessions are next.
 4. **Milestone 4.** Human listening and viewing, the independent operator, and the rights, audience and custodian declarations.
 
 ## Notes and open technical points

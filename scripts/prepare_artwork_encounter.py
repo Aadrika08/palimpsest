@@ -254,15 +254,66 @@ def camera_provenance(files, rows):
     return source
 
 
+def route_captions(files):
+    if 'routes-source.json' not in files:
+        return None
+    raw = files['routes-source.json']
+    require(len(raw) <= 1024**2, 'route provenance exceeds limit')
+    source = json.loads(raw)
+    for name in ('borrowed-body.svg', 'one-map-many-lives.html'):
+        require(len(files[name]) <= 16 * 1024**2
+                and hashlib.sha256(files[name]).hexdigest() == source['files_sha256'][name],
+                'route derivative hash differs')
+    for key in ('parent_run_id', 'branch_run_id', 'snapshot_id'):
+        require(isinstance(source.get(key), str) and re.fullmatch('[0-9a-f]{32}', source[key]), 'route identity differs')
+    require(source['parent_run_id'] != source['branch_run_id'] and source.get('branch_tick') == 100
+            and source.get('intervention') == {'kind': 'move_goal', 'xy': [0., 0.]}, 'route allocation differs')
+    nodes = ET.fromstring(files['borrowed-body.svg']).findall('{http://www.w3.org/2000/svg}metadata')
+    require(len(nodes) == 1, 'one route metadata node required')
+    body = json.loads(nodes[0].text)
+    matches = re.findall(r'<pre id="comparison-metadata">(.*?)</pre>', files['one-map-many-lives.html'].decode(), re.S)
+    require(len(matches) == 1, 'one comparison metadata node required')
+    comparison = json.loads(html.unescape(matches[0]))['comparison']
+    left, right = comparison['left'], comparison['right']
+    require(body['run_id'] == left['run_id'] == source['parent_run_id']
+            and right['run_id'] == source['branch_run_id'] and body['traces'] == left['traces']
+            and right['provenance'].get('parent_run_id') == left['run_id']
+            and right['provenance'].get('source_snapshot_id') == source['snapshot_id'], 'route lineage differs')
+    counts = []
+    for side, start in ((left, 0), (right, 100)):
+        require(side['provenance'].get('controller') == 'flynn'
+                and side['provenance'].get('control_interval_seconds') == .02
+                and len(side['traces']) == 1, 'single-episode 50 Hz FLYNN routes required')
+        trace = side['traces'][0]
+        require(trace['episode'] == 0 and trace['start_tick'] == start
+                and 2 <= len(trace['points']) <= 601 - start
+                and all(isinstance(p, list) and len(p) == 2
+                        and all(type(v) in (int, float) and math.isfinite(v) for v in p) for p in trace['points']),
+                'route points or tick range differs')
+        counts.append(len(trace['points']) - 1)
+    edits = right['provenance'].get('interventions', [])
+    require(len(edits) == 1 and edits[0].get('kind') == 'intervention'
+            and edits[0].get('episode') == 0 and edits[0].get('episode_step') == 100
+            and edits[0].get('change', {}).get('kind') == 'move_goal'
+            and edits[0]['change'].get('new', {}).get('xy') == [0., 0.], 'route intervention differs')
+    a, b = counts
+    require(a > 100, 'parent lacks its branch boundary')
+    delta = [right['traces'][0]['points'][0][i] - left['traces'][0]['points'][100][i] for i in (0, 1)]
+    return (f'Recorded FLYNN parent route: {a} intervals, {a + 1} points, {a * .02:g} simulation seconds. No physical pen marks.',
+            f'Public FLYNN parent and labelled branch at tick 100. Parent: {a} intervals / {a * .02:g} simulation seconds; branch continuation: {b} intervals / {b * .02:g} simulation seconds. Goal moved to [0, 0]; controller unchanged. No causal memory-effect claim.',
+            f'Parent {source["parent_run_id"]}; branch {source["branch_run_id"]}; snapshot {source["snapshot_id"]}. Parent includes ticks before the branch; the branch starts at tick 100. Recorded branch-start XY offset from parent tick 100: [{delta[0]:.9g}, {delta[1]:.9g}] world units. Coordinates are shown unchanged. Source identities and the goal edit are retained in the original comparison and routes-source.json.')
+
+
 def encounter_html(files):
     rows = alignment(files['afterimage.svg'])
     source = camera_provenance(files, rows)
+    routes = route_captions(files)
     choir_duration, voices, segments, prefix = choir_details(files['counterfactual-choir.wav'])
     durations = (len(rows), rows[-1]['source_timestamp_seconds'] - rows[0]['source_timestamp_seconds'], rows[-1]['model_time_seconds'])
     captions = (
         ('afterimage', 'Afterimage', ('Authored model responses to scripted manual-controller left-camera footage. Source controller: manual; portrait controller: male-original. ' if source else 'Authored model responses to geometric frames. ') + 'Offline inference / recorded playback; not fly perception or biological activity.'),
-        ('borrowed-body', 'Borrowed body', 'Recorded south-change simulator route: 1,267 intervals, 1,268 points, 25.34 simulation seconds. No physical pen marks.'),
-        ('one-map', 'One map, many possible lives', 'Separate mirrored no-U cases: south 25.34 seconds; north 25.84 seconds. No paired intervention or causal memory-effect claim.'),
+        ('borrowed-body', 'Borrowed body', routes[0] if routes else 'Recorded south-change simulator route: 1,267 intervals, 1,268 points, 25.34 simulation seconds. No physical pen marks.'),
+        ('one-map', 'One map, many possible lives', routes[1] if routes else 'Separate mirrored no-U cases: south 25.34 seconds; north 25.84 seconds. No paired intervention or causal memory-effect claim.'),
         ('choir', 'Counterfactual choir', f'{choir_duration:g}-second composed mapping of {html.escape(", ".join(voices))} model populations. Not biological audio or a counterfactual experiment.'),
         ('atlas', 'Atlas of what disappears', 'Reduced graph before/after isolating node 12781: 135 removed edges, 137 lost reachable input/output pairs. Structural analysis, not measured impairment.'),
         ('specimens', 'The space between two flies', 'One curated, unregistered DNge104 anatomical pair, shared micrometre scale, unequal coverage. No population sex inference.'))
@@ -276,6 +327,8 @@ def encounter_html(files):
         else:
             media = f'<p>Start at low volume. Playback ends after {choir_duration:g} seconds; repeats must be declared and recorded.</p><audio controls preload="none" src="{name}"></audio><button id="stop-audio" hidden>Stop audio and return to start</button>'
         inspector = ''
+        if key == 'one-map' and routes:
+            inspector = '<p>' + html.escape(routes[2]) + '</p><p><a href="routes-source.json">Route source and branch provenance</a></p>'
         if key == 'choir' and segments:
             table = ''.join(f"<tr><td>{s['episode']}</td><td>{s['output_start_sample'] / 48000:g}–{s['output_end_sample_exclusive'] / 48000:g}</td><td>{s['start_tick']}–{s['end_tick_inclusive']}</td></tr>" for s in segments)
             ending = 'Final episode uses a recorded prefix.' if prefix else 'Final selected episode is included in full.'
@@ -322,7 +375,7 @@ No live model, simulator or rover runs here. Human artistic and independent oper
 <p>Declare your finite session, repeat policy, audience/use, custodian and retention before review. Record actual start/end, interruptions and any assistance. Stop audio before closing.</p>
 <nav id="modes" aria-label="Artwork modes">''' + nav + '</nav>' + ''.join(sections) + '''
 <footer><h2>Sources and review boundaries</h2><p>Source seconds describe the retained material, not live model performance.
-The two route sources have no parent relationship. Inspection and repeats do not extend the original recording.</p>
+''' + ('The route sources retain their registered parent and snapshot relationship.' if routes else 'The two route sources have no parent relationship.') + ''' Inspection and repeats do not extend the original recording.</p>
 <p><a href="README.md">Original review guide</a> · <a href="THIRD_PARTY_NOTICES.md">Distinct source notices</a> · <a href="checksums.json">Original artifact checksums</a></p>
 <details><summary>Original review guide as plain text</summary><pre>''' + html.escape(files['README.md'].decode('utf-8')) + '''</pre></details>
 <p>Record keep, revise presentation or insufficient sample for each mode, with one reason. Missing judgment is not acceptance.

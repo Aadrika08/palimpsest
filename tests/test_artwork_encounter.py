@@ -103,6 +103,31 @@ class EncounterTests(unittest.TestCase):
         self.files['afterimage-source.json'] = json.dumps(source).encode()
         with self.assertRaises(ValueError): encounter.encounter_html(self.files)
 
+    def test_route_captions_follow_validated_parent_and_branch_metadata(self):
+        import html
+        parent, branch, snapshot = '1' * 32, '2' * 32, '3' * 32
+        left = {'run_id': parent, 'provenance': {'controller': 'flynn', 'control_interval_seconds': .02},
+                'traces': [{'episode': 0, 'start_tick': 0, 'points': [[0., 0.]] * 601}]}
+        right = {'run_id': branch, 'provenance': {'controller': 'flynn', 'control_interval_seconds': .02,
+                 'parent_run_id': parent, 'source_snapshot_id': snapshot,
+                 'interventions': [{'kind': 'intervention', 'episode': 0, 'episode_step': 100,
+                                   'change': {'kind': 'move_goal', 'new': {'xy': [0., 0.]}}}]},
+                 'traces': [{'episode': 0, 'start_tick': 100, 'points': [[0., 0.]] * 501}]}
+        self.files['borrowed-body.svg'] = ('<svg xmlns="http://www.w3.org/2000/svg"><metadata>' + html.escape(json.dumps(left)) + '</metadata></svg>').encode()
+        self.files['one-map-many-lives.html'] = ('<pre id="comparison-metadata">' + html.escape(json.dumps({'comparison': {'left': left, 'right': right}})) + '</pre>').encode()
+        source = {'parent_run_id': parent, 'branch_run_id': branch, 'snapshot_id': snapshot,
+                  'branch_tick': 100, 'intervention': {'kind': 'move_goal', 'xy': [0., 0.]},
+                  'files_sha256': {n: hashlib.sha256(self.files[n]).hexdigest() for n in ('borrowed-body.svg', 'one-map-many-lives.html')}}
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('600 intervals, 601 points, 12 simulation seconds', page)
+        self.assertIn('500 intervals / 10 simulation seconds', page)
+        self.assertIn('branch at tick 100', page)
+        self.assertNotIn('two route sources have no parent relationship', page)
+        source['snapshot_id'] = '4' * 32
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+
     def test_choir_rejects_malformed_audio_and_inconsistent_metadata(self):
         for mutate in (lambda m: m.update(pcm_sha256='0' * 64),
                        lambda m: m['timing'].update(duration_seconds=119),
