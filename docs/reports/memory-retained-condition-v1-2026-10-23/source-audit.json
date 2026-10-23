@@ -1,0 +1,45 @@
+{
+  "scope": "source compatibility only; no runtime qualification",
+  "source_checks": [
+    {
+      "path": "src/palimpsest/artifacts.py",
+      "historical_commit": "0693a2fad2cd2a31f6f1d4ea71f19ef495f52dfc",
+      "historical_sha256": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "current_sha256": "2774cf9cd2c4bd1b7b960572cabd9c01f883e8214135ce7db9c53a430e0560af",
+      "functions_ast_equal": {
+        "_read": true,
+        "_json": true,
+        "_manifest": true,
+        "_events": true,
+        "_fingerprint": true,
+        "_safe_path": true
+      }
+    },
+    {
+      "path": "src/palimpsest/records.py",
+      "historical_commit": "6b7d2a6e8c505a4f276bdccdb7e828fca959bdab",
+      "historical_sha256": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "current_sha256": "99f35816317264a2269c20e85a859a00c804441ba50fae2650ac2e8acfe3c92d",
+      "functions_ast_equal": {
+        "iter_ticks": true
+      }
+    }
+  ],
+  "memory_pilot_engine_calls": [
+    {
+      "line": 599,
+      "keywords": {
+        "controller": "'flynn'",
+        "device": "'cpu'",
+        "seed": "job['case']['seed']",
+        "scenario": "'memory-decision-v2'",
+        "memory_case": "job['case']",
+        "run_id": "job['run_id']",
+        "max_bytes": "limit",
+        "storage_budget": "storage",
+        "null": "{'restore_snapshot': native} if native is not None else {}"
+      }
+    }
+  ],
+  "memory_pilot_starts_background_writer": false
+}

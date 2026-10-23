@@ -10,6 +10,11 @@ The [current completion checklist](plans/project-completion-2026-10-23.md)
 tracks the renewed simulation-first goal and delivery on remote main. The
 22 October artwork reports supersede earlier short-material limitations.
 Memory v1 is retired at 44/48; its four missing cells are not active backlog.
+The [retained-condition reader](reports/memory-retained-condition-v1-2026-10-23.md)
+now validates authored post-prune evidence for all nine conditions. A separate
+current-source profile restores its previously historical-skipped memory checks:
+482 affected checks passed on Btrfs and 56 new checks passed on tmpfs. Qualification,
+whole-case publication, actual pruning and scientific acceptance remain open.
 The historical recovery notes below remain evidence of earlier states.
 
 ## Historical recovery state

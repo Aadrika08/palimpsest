@@ -79,3 +79,9 @@ branch into `main` changed those files, so tests of those historical protocols
 are either checked against the pinned commit or skipped as historical, through
 `tests/frozen_pins.py`. See
 [frozen-source-pins-after-integration](plans/frozen-source-pins-after-integration.md).
+
+The [retained-condition source revision](plans/memory-retained-condition-v1.md)
+resumes memory-v4 checks against the integrated source with a separately named
+prospective profile. Its new tests do not use historical skips. Both earlier
+profiles remain checked against Git history; no old scientific evidence is
+rebound to the new source.
