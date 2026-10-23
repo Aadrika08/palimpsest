@@ -56,3 +56,17 @@ frozen-source validation, uses `/dev/shm` for required tmpfs fixtures and allows
 
 All successful fixture, source and browser checks remain distinct from research
 capability, human listening/viewing and independent operator acceptance.
+
+## Landing state
+
+All thirteen previously local artwork commits are pushed through `cfddb09`.
+[PR #184](https://github.com/Aadrika08/palimpsest/pull/184) is draft with that
+remote head. GitHub rejected the newer `e4ce6aa` push because the repository
+owner's OAuth credential lacks workflow-write scope for `checks.yml`. The other
+configured account has no push permission. The missing access was requested;
+main remains `2814138` and no merge or force-push occurred.
+
+Hosted run [39989172177](https://github.com/Aadrika08/palimpsest/actions/runs/39989172177)
+passed frontend and failed old-workflow collection on `afterimage_material`,
+`verify_artwork_handoff` and `record_choir_material`. The local canonical-runner
+fix includes those script import paths. It has not yet run on the hosted runner.

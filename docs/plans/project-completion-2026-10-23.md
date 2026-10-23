@@ -11,11 +11,20 @@ human acceptance.
 
 Live remote check on 23 October: `origin/main` is `2814138`; the clean artwork
 branch ends at `cfddb09`, directly descending from main. Its 14 commits beyond
-main include one already pushed composition commit and 13 local commits. No
-existing PR is open for this branch. The latest hosted fixture job failed during
-collection because `verify_artwork_handoff` was absent from the import path;
-frontend passed. A full canonical source-suite run and artwork UI checks are
-underway before landing. Their results must be recorded, not assumed.
+main include one already pushed composition commit and 13 local commits. The thirteen artwork commits have now been pushed to that branch. Draft
+[PR #184](https://github.com/Aadrika08/palimpsest/pull/184) targets main. The
+local integration candidate `e4ce6aa` adds the guided portable ZIP, test-fixture
+repairs and canonical CI configuration. GitHub rejected its push because the
+Aadrika08 OAuth credential lacks `workflow` scope; the other configured account
+has no repository write permission. Main remains unchanged. Required access has
+been requested; no force-push or permission bypass was attempted.
+
+The [integration report](../reports/main-integration-2026-10-23.md) records the
+completed canonical run, all twelve failing cases and their passing targeted
+rechecks. All artwork browser checks passed. Hosted run `39989172177` on the
+published `cfddb09` passed frontend and failed fixture collection under the old
+workflow (three missing script imports). The CI repair remains local pending
+workflow-write access.
 
 ## Ordered work and evidence required
 
@@ -24,7 +33,7 @@ underway before landing. Their results must be recorded, not assumed.
 | 1 | Integrate completed artwork work | Review passed the production delta. Resolve current regression failures and CI configuration; land and verify remote main without rewriting history. |
 | 2 | Finish the guided artwork introduction | One map now has a 5.58 s obstacle branch; Afterimage pairs 600 exact source frames with responses. The [guided introduction](../reports/guided-encounter-2026-10-23.md) is implemented; direct local-file opening, keyboard/mobile navigation and unchanged-derivative checks passed. Portable ZIP is included for delivery. |
 | 3 | Prepare independent acceptance | Produce a usable package and current runbook; user viewing/listening decisions and an independent operator's installation/all-six-mode session remain required. Record audience/use, source permissions and custody rather than assigning fictitious owners. |
-| 4 | Complete memory/R2 engineering and qualification | Single-condition sealing already exists and has source tests. Trusted qualification pins are empty, the seed-400 qualification/family-case applicability is unresolved, and whole-case closure is missing. Prepare prospective ordering and qualification decisions, implement case closure using the existing seal, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
+| 4 | Complete memory/R2 engineering and qualification | Single-condition sealing already exists and has source tests. Trusted qualification pins are empty, the seed-400 qualification/family-case applicability is unresolved, and retained-condition reading plus whole-case publication are missing. The existing condition rereader still consumes raw data and replays the model; it cannot validate the required post-prune case. Pruning remains an explicit refusing stub. Prepare prospective ordering and qualification decisions, implement case closure using the existing seal, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
 | 5 | Qualify learned puck | Earlier original/balanced development arms scored 0/4 per model. Complete v3 runtime, source/scene/custody and collection admission; resolve protected catalog access versus independent identity projections. Then execute the declared collection/training/evaluation stages. Required capability remains 3/4 development and 6/8 held-out per model. |
 | 6 | Qualify MaleCNS navigation | v2 augmented models scored 0/4 per seed. Matched-budget attempt 2 failed importing httpx before training and is consumed. A new reviewed prospective design/allocation and dependency/source closure precede training. Preserve the 3/4 development and 6/8 held-out thresholds. |
 | 7 | Verify one integrated release candidate | Fresh setup/assets, supported-controller browser flows, replay/export (including PNG), recovery and applicable endurance; explicit timing limits; source/licence/runbook/evidence matrix review. All agreed gates must close on the candidate actually delivered on remote main. |
@@ -52,3 +61,13 @@ completion around the already passing subset.
 The October 18 episode16 proof and manual-lab v5 evidence remain scoped passes.
 Historical reports are not instructions to repeat consumed allocations. Agent
 curatorial recommendations do not fill the human or independent-operator gates.
+
+## Next independent source slice
+
+While main landing awaits credential scope, prepare retained-condition reading
+and whole-case publication atop the existing seals. Preserve the three-case-file,
+32 MiB close-receipt and 454-entry limits, derive the registered condition order,
+retain qualification refusal before protected access, and use authored fixtures
+for post-prune trees. Real pruning, ordering and seed binding remain separate
+reviewed decisions. Source-only tests cannot authorize a study or fabricate a
+qualification receipt.
