@@ -34,14 +34,15 @@ memory execution or either new runtime mode.
 | First tmpfs reader run after new profile | 45 passed, 1 failed in 80.74 s; natural-failure fixture cursor mismatch |
 | Corrected tmpfs reader/profile run | 56 passed in 102.03 s |
 | Btrfs reader plus affected memory, recorder, Engine and artifact regressions | 482 passed, 14 dependency deprecation warnings, no skips; 482.55 s |
+| Historical byte pins and requirements links after source commit `29b438e` | 19 passed in 0.72 s |
 
 [Logs and source audit](memory-retained-condition-v1-2026-10-23/) retain the failures
 and successful reruns. The Btrfs command used the canonical `scripts/run_tests.sh`
 with a project-runs basetemp and the fourteen test files named in `checks.json`.
 The tmpfs command used the same runner with a `/tmp` basetemp and the two new test
 files. The new current-source tests are not added to the historical skip list.
-Historical byte-pin checks and documentation links are checked after committing
-the source profile, because those pins must name bytes present in Git history.
+Historical byte-pin checks and documentation links passed after committing the
+source profile, because those pins must name bytes present in Git history.
 
 
 The natural-failure fixture had computed total ticks from the advanced failure

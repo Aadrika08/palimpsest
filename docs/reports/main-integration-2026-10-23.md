@@ -70,3 +70,12 @@ Hosted run [39989172177](https://github.com/Aadrika08/palimpsest/actions/runs/39
 passed frontend and failed old-workflow collection on `afterimage_material`,
 `verify_artwork_handoff` and `record_choir_material`. The local canonical-runner
 fix includes those script import paths. It has not yet run on the hosted runner.
+
+The next local source commit, `29b438e`, adds the
+[retained-condition reader and current-source profile](memory-retained-condition-v1-2026-10-23.md).
+Its scoped checks pass: 482 affected Btrfs tests, 56 new tmpfs tests and 19
+historical-pin/link tests. This restores the relevant memory tests against the
+integrated source while preserving old profiles. It is additional local evidence,
+not a rerun of the whole suite or a hosted CI result. A fresh remote check still
+finds main at `2814138` and the feature branch at `cfddb09`; workflow access is
+still pending.

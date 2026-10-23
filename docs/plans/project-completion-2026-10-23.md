@@ -26,6 +26,11 @@ published `cfddb09` passed frontend and failed fixture collection under the old
 workflow (three missing script imports). The CI repair remains local pending
 workflow-write access.
 
+Source commit `29b438e` subsequently adds the retained-condition reader and its
+prospective current-source profile. Its 482 affected Btrfs checks, 56 new tmpfs
+checks and 19 historical-pin/link checks pass. This remains local with the
+integration batch; it is not hosted CI or a wholly green final-release suite.
+
 ## Ordered work and evidence required
 
 | Order | Work | Present evidence / remaining exit |

@@ -73,10 +73,21 @@
       "path": "docs/reports/memory-retained-condition-v1-2026-10-23/source-audit.json",
       "size_bytes": 1491,
       "sha256": "559572858f0f2216a94867bed745f1e74d3eab0e692ec29d5b8bd2f96e18f034"
+    },
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/history-links-pass.log",
+      "size_bytes": 99,
+      "sha256": "e6396efe40cf15f574edb67564512af66a4c78f7447df731899bd83906e61134"
     }
   ],
   "accepted_qualification": false,
   "actual_raw_pruned": false,
   "whole_case_published": false,
-  "study_executed": false
+  "study_executed": false,
+  "postcommit_history_links": {
+    "source_commit": "29b438e",
+    "passed": 19,
+    "seconds": 0.72,
+    "command": "PALIMPSEST_TEST_BASETEMP=/tmp/palimpsest-retained-condition-tests scripts/run_tests.sh -- tests/test_frozen_pins.py tests/test_requirements_evidence.py"
+  }
 }
