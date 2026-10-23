@@ -1,0 +1,94 @@
+{
+  "branch_final_state": {
+    "closed": false,
+    "controller": "flynn",
+    "episode": 0,
+    "episode_step": 379,
+    "eyes": {
+      "left": true,
+      "right": true
+    },
+    "last_outcome": {
+      "episode": 0,
+      "final_distance": 0.7873929142951965,
+      "reason": "goal",
+      "steps": 379
+    },
+    "metrics": {
+      "contact_ticks": 0,
+      "path_length": 9.101946959212505,
+      "reward": 13.42883383196399
+    },
+    "parent_run_id": "99c9983184884b35a2a473293640550d",
+    "pending_commands": 0,
+    "phase": "terminated",
+    "revision": 103,
+    "run_id": "4fdd85003a4048778d3c8189c6dca725",
+    "scenario": "reproduction",
+    "simulation_time": 7.579999999999387,
+    "task": null,
+    "texture": "checker",
+    "total_tick": 379
+  },
+  "branch_run_id": "4fdd85003a4048778d3c8189c6dca725",
+  "branch_tick": 100,
+  "intervention": {
+    "index": 0,
+    "kind": "move_obstacle",
+    "xy": [
+      0.75,
+      -0.75
+    ]
+  },
+  "lab_workers_exited": true,
+  "parent_final_state": {
+    "closed": false,
+    "controller": "flynn",
+    "episode": 0,
+    "episode_step": 375,
+    "eyes": {
+      "left": true,
+      "right": true
+    },
+    "last_outcome": {
+      "episode": 0,
+      "final_distance": 0.7863963842391968,
+      "reason": "goal",
+      "steps": 375
+    },
+    "metrics": {
+      "contact_ticks": 0,
+      "path_length": 9.007070026214649,
+      "reward": 13.360694103322771
+    },
+    "parent_run_id": null,
+    "pending_commands": 0,
+    "phase": "terminated",
+    "revision": 102,
+    "run_id": "99c9983184884b35a2a473293640550d",
+    "scenario": "reproduction",
+    "simulation_time": 7.499999999999396,
+    "task": null,
+    "texture": "checker",
+    "total_tick": 375
+  },
+  "parent_run_id": "99c9983184884b35a2a473293640550d",
+  "qualification_claims": [],
+  "snapshot": {
+    "config": {
+      "controller": "flynn",
+      "device": "cpu",
+      "scenario": "reproduction",
+      "seed": 0,
+      "texture": "checker"
+    },
+    "episode": 0,
+    "filename": "46c9979f208143c281046cc83943e924.snp",
+    "initial": false,
+    "revision": 100,
+    "sha256": "1dd643ddcde3776568062c42d33df492c3d96af543ace826c49acaee72f3b8c3",
+    "snapshot_id": "46c9979f208143c281046cc83943e924",
+    "tick": 100
+  },
+  "status": "passed"
+}

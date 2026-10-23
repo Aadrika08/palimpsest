@@ -135,12 +135,13 @@ figure{margin:0}svg{display:block;width:100%;height:auto}figcaption{font-size:.9
 <h1>One map, many possible lives</h1>
 <p>Offline recorded comparison · static playback view. No live inference, new simulation, or policy rerun occurs in this document.</p>
 <p>These recorded differences are descriptive; they do not establish causality. This presentation is not a controlled U-only experiment and does not independently verify parent snapshots or memory-effect claims.</p>
-<h2>Source conditions</h2><div class="table-scroll" tabindex="0" aria-label="Source conditions table">''' + table + '</div>'
-        + '<p>Eye flags describe recorded input channels: true means enabled, false means masked, and null means not recorded. Other goal/contact cues may still be available; inspect the observation profile.</p>'
-        + '<h2>Recorded differences</h2><p>' + str(len(report['differences'])) + ' differing recorded fields. Expand a field to inspect both values.</p>' + differences
+'''
         + '<h2>Route overlay</h2><p>' + route_status + '</p><figure class="overlay">' + _overlay(report, metadata['projection'])
         + f'<figcaption>A: solid blue with circle start. B: dashed amber with square start. One shared projection: ±{metadata["projection"]["arena"]} recorded world units on each axis; y increases upward. No rescaling, offsets, or route smoothing between conditions. Separate episodes are not joined.</figcaption></figure>'
         + '<p>The overlay shows routes only. World conditions can differ; the final recorded worlds below and the provenance retain those differences. Equal route arrays do not establish equal internal activity or the absence of a memory effect.</p>'
+        + '<h2>Source conditions</h2><div class="table-scroll" tabindex="0" aria-label="Source conditions table">' + table + '</div>'
+        + '<p>Eye flags describe recorded input channels: true means enabled, false means masked, and null means not recorded. Other goal/contact cues may still be available; inspect the observation profile.</p>'
+        + '<h2>Recorded differences</h2><p>' + str(len(report['differences'])) + ' differing recorded fields. Expand a field to inspect both values.</p>' + differences
         + '<div class="worlds">' + worlds + '</div><h2>Recorded lineage</h2>' + _pre(report['lineage'])
         + '<details><summary>Comparison summary and source provenance</summary><pre id="comparison-metadata">' + html.escape(_json(metadata))
         + '</pre></details></main></body></html>').encode('utf-8')

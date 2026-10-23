@@ -6,6 +6,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import shutil
 import signal
 import stat
@@ -143,14 +144,201 @@ def script_json(value):
     return raw
 
 
+def choir_details(raw):
+    """Validate bounded Choir PCM/provenance before using it as presentation text."""
+    require(12 <= len(raw) <= 16 * 1024**2 and raw[:4] == b'RIFF'
+            and raw[8:12] == b'WAVE' and struct.unpack_from('<I', raw, 4)[0] == len(raw) - 8,
+            'bounded complete Choir WAV required')
+    chunks, position = {}, 12
+    while position < len(raw):
+        require(position + 8 <= len(raw), 'truncated WAV chunk')
+        kind, size = struct.unpack_from('<4sI', raw, position)
+        end = position + 8 + size
+        require(end + size % 2 <= len(raw) and kind not in chunks, 'invalid or duplicate WAV chunk')
+        chunks[kind] = raw[position + 8:end]
+        position = end + size % 2
+    require(chunks.get(b'fmt ') == struct.pack('<HHIIHH', 1, 1, 48000, 96000, 2, 16)
+            and b'data' in chunks and b'plmp' in chunks and len(chunks[b'plmp']) <= 256 * 1024,
+            '48 kHz mono PCM and bounded Choir metadata required')
+    pcm = chunks[b'data']
+    require(len(pcm) > 0 and len(pcm) % 2 == 0, 'complete PCM samples required')
+    meta = json.loads(chunks[b'plmp'])
+    require(isinstance(meta, dict) and type(meta.get('version')) is int and meta['version'] in (1, 2)
+            and meta.get('artwork') == 'counterfactual choir'
+            and meta.get('pcm_sha256') == hashlib.sha256(pcm).hexdigest(), 'Choir identity or PCM hash differs')
+    timing, mapping = meta.get('timing'), meta.get('mapping')
+    require(isinstance(timing, dict) and isinstance(mapping, dict), 'Choir timing/mapping required')
+    require(mapping.get('sample_rate_hz') == 48000 and mapping.get('channels') == 1
+            and mapping.get('sample_width_bytes') == 2, 'Choir mapping disagrees with PCM')
+    voices = mapping.get('voices')
+    require(isinstance(voices, list) and 1 <= len(voices) <= 3
+            and all(isinstance(v, dict) and v.get('population') in ('visual_left', 'visual_right', 'descending') for v in voices),
+            'declared Choir voices required')
+    names = [v['population'] for v in voices]
+    require(len(set(names)) == len(names), 'duplicate Choir voice')
+    frames = len(pcm) // 2
+    boundaries = timing.get('sample_boundaries')
+    require(isinstance(boundaries, list) and 2 <= len(boundaries) <= 100001
+            and all(type(v) is int for v in boundaries) and boundaries[0] == 0
+            and boundaries[-1] == frames and all(b > a for a, b in zip(boundaries, boundaries[1:])),
+            'Choir sample boundaries disagree with PCM')
+    dt = timing.get('control_interval_seconds')
+    require(type(dt) in (int, float) and math.isfinite(dt) and dt > 0
+            and abs((len(boundaries) - 1) * dt * 48000 - frames) <= .500001,
+            'Choir interval duration disagrees with PCM')
+    segments = []
+    prefix = False
+    if meta['version'] == 2:
+        require(timing.get('clock') == 'concatenated simulation time' and frames == 5760000
+                and dt == .02 and timing.get('duration_seconds') == 120
+                and timing.get('selected_intervals') == 6000 and len(boundaries) == 6001
+                and boundaries == list(range(0, 5760001, 960)), '120-second composition timing required')
+        segments = timing.get('segments')
+        prefix = timing.get('final_episode_prefix')
+        require(isinstance(segments, list) and 1 <= len(segments) <= 6000 and type(prefix) is bool,
+                'composition segments and prefix declaration required')
+        previous_end, previous_episode = 0, None
+        for segment in segments:
+            require(isinstance(segment, dict) and all(type(segment.get(k)) is int for k in
+                    ('episode', 'start_tick', 'end_tick_inclusive', 'output_start_sample', 'output_end_sample_exclusive')),
+                    'integer composition ranges required')
+            episode, start, end = segment['episode'], segment['output_start_sample'], segment['output_end_sample_exclusive']
+            ticks = segment['end_tick_inclusive'] + 1
+            require(episode >= 0 and (previous_episode is None or episode == previous_episode + 1)
+                    and segment['start_tick'] == 0 and ticks > 0 and start == previous_end
+                    and end - start == ticks * 960 and end <= frames,
+                    'composition ranges must cover consecutive episodes and samples')
+            native_start, native_end = segment.get('simulation_start_seconds'), segment.get('simulation_end_seconds')
+            require(all(type(v) in (int, float) and math.isfinite(v) for v in (native_start, native_end))
+                    and abs(native_start) <= 1e-8 and abs(native_end - ticks * .02) <= 1e-7,
+                    'composition native time differs from ticks')
+            previous_end, previous_episode = end, episode
+        require(previous_end == frames, 'composition does not cover full audio')
+    else:
+        require(all(type(timing.get(k)) is int for k in ('episode', 'start_tick', 'end_tick_inclusive'))
+                and timing['episode'] >= 0 and timing['start_tick'] >= 0
+                and timing['end_tick_inclusive'] - timing['start_tick'] + 1 == len(boundaries) - 1,
+                'single-episode timing disagrees with PCM')
+    return frames / 48000, names, segments, prefix
+
+
+def camera_provenance(files, rows):
+    raw = files.get('afterimage-source.json')
+    if raw is None:
+        return None
+    require(len(raw) <= 1024**2, 'Afterimage source index too large')
+    source = json.loads(raw)
+    meta = json.loads(ET.fromstring(files['afterimage.svg']).find('{http://www.w3.org/2000/svg}metadata').text)
+    require(source.get('schema_version') == 1 and source.get('camera') == 'cam_left'
+            and source.get('source_controller') == 'manual' and source.get('selected_intervals') == 3000
+            and type(source.get('source_intervals')) is int and 3000 <= source['source_intervals'] <= 3600
+            and source.get('presentation_seconds') == 60 and source.get('clock') == 'concatenated source time'
+            and meta.get('policy_identity', {}).get('controller') == 'male-original'
+            and isinstance(source.get('frame_file_sha256'), str)
+            and re.fullmatch('[0-9a-f]{64}', source['frame_file_sha256'])
+            and source.get('frame_file_sha256') == meta['stimulus']['manifest'].get('frame_file_sha256')
+            and isinstance(source.get('frames'), list) and len(source['frames']) == len(rows) == 600,
+            'Afterimage camera source contract differs')
+    for i, (entry, row) in enumerate(zip(source['frames'], rows)):
+        require(entry.get('frame') == i and entry.get('source_interval') == i * 5
+                and entry.get('presentation_seconds') == row['source_timestamp_seconds'] == i / 10
+                and entry.get('frame_sha256') == row.get('frame_sha256')
+                and isinstance(entry.get('frame_sha256'), str) and re.fullmatch('[0-9a-f]{64}', entry['frame_sha256'])
+                and type(entry.get('episode')) is int and entry['episode'] >= 0
+                and type(entry.get('tick')) is int and entry['tick'] >= 0
+                and isinstance(entry.get('eyes'), list) and len(entry['eyes']) == 2
+                and all(type(eye) is bool for eye in entry['eyes'])
+                and type(entry.get('simulation_time_seconds')) in (int, float)
+                and abs(entry['simulation_time_seconds'] - (entry['tick'] + 1) * .02) < 1e-7,
+                'Afterimage frame/source provenance differs')
+    return source
+
+
+def camera_preview(files, source):
+    if 'afterimage-frames.json' not in files and 'afterimage-frames.png' not in files:
+        return False
+    require(source is not None, 'camera preview requires source provenance')
+    raw = files.get('afterimage-frames.json', b'')
+    require(0 < len(raw) <= 4096, 'bounded camera preview manifest required')
+    meta = json.loads(raw)
+    png = files.get('afterimage-frames.png', b'')
+    require(meta.get('schema_version') == 1 and meta.get('columns') == 10
+            and meta.get('rows') == 60 and meta.get('width') == meta.get('height') == 128
+            and 33 <= len(png) <= 32 * 1024**2
+            and png[:16] == b'\x89PNG\r\n\x1a\n\x00\x00\x00\x0dIHDR'
+            and struct.unpack('>IIBBBBB', png[16:29]) == (1280, 7680, 8, 2, 0, 0, 0)
+            and hashlib.sha256(png).hexdigest() == meta.get('png_sha256'),
+            'camera preview dimensions, format or hash differs')
+    return True
+
+
+def route_captions(files):
+    if 'routes-source.json' not in files:
+        return None
+    raw = files['routes-source.json']
+    require(len(raw) <= 1024**2, 'route provenance exceeds limit')
+    source = json.loads(raw)
+    for name in ('borrowed-body.svg', 'one-map-many-lives.html'):
+        require(len(files[name]) <= 16 * 1024**2
+                and hashlib.sha256(files[name]).hexdigest() == source['files_sha256'][name],
+                'route derivative hash differs')
+    for key in ('parent_run_id', 'branch_run_id', 'snapshot_id'):
+        require(isinstance(source.get(key), str) and re.fullmatch('[0-9a-f]{32}', source[key]), 'route identity differs')
+    require(source['parent_run_id'] != source['branch_run_id'] and source.get('branch_tick') == 100
+            and source.get('intervention') in ({'kind': 'move_goal', 'xy': [0., 0.]},
+                {'kind': 'move_obstacle', 'index': 0, 'xy': [.75, -.75]}), 'route allocation differs')
+    edit = source['intervention']
+    edit_label = ('Goal moved to [0, 0]' if edit['kind'] == 'move_goal' else
+                  'Obstacle 0 moved to [0.75, -0.75]; goal unchanged')
+    nodes = ET.fromstring(files['borrowed-body.svg']).findall('{http://www.w3.org/2000/svg}metadata')
+    require(len(nodes) == 1, 'one route metadata node required')
+    body = json.loads(nodes[0].text)
+    matches = re.findall(r'<pre id="comparison-metadata">(.*?)</pre>', files['one-map-many-lives.html'].decode(), re.S)
+    require(len(matches) == 1, 'one comparison metadata node required')
+    comparison = json.loads(html.unescape(matches[0]))['comparison']
+    left, right = comparison['left'], comparison['right']
+    require(body['run_id'] == left['run_id'] == source['parent_run_id']
+            and right['run_id'] == source['branch_run_id'] and body['traces'] == left['traces']
+            and right['provenance'].get('parent_run_id') == left['run_id']
+            and right['provenance'].get('source_snapshot_id') == source['snapshot_id'], 'route lineage differs')
+    counts = []
+    for side, start in ((left, 0), (right, 100)):
+        require(side['provenance'].get('controller') == 'flynn'
+                and side['provenance'].get('control_interval_seconds') == .02
+                and len(side['traces']) == 1, 'single-episode 50 Hz FLYNN routes required')
+        trace = side['traces'][0]
+        require(trace['episode'] == 0 and trace['start_tick'] == start
+                and 2 <= len(trace['points']) <= 601 - start
+                and all(isinstance(p, list) and len(p) == 2
+                        and all(type(v) in (int, float) and math.isfinite(v) for v in p) for p in trace['points']),
+                'route points or tick range differs')
+        counts.append(len(trace['points']) - 1)
+    edits = right['provenance'].get('interventions', [])
+    require(len(edits) == 1 and edits[0].get('kind') == 'intervention'
+            and edits[0].get('episode') == 0 and edits[0].get('episode_step') == 100
+            and edits[0].get('change', {}).get('kind') == edit['kind']
+            and edits[0]['change'].get('index') == edit.get('index')
+            and edits[0]['change'].get('new', {}).get('xy') == edit['xy'], 'route intervention differs')
+    a, b = counts
+    require(a > 100, 'parent lacks its branch boundary')
+    delta = [right['traces'][0]['points'][0][i] - left['traces'][0]['points'][100][i] for i in (0, 1)]
+    return (f'Recorded FLYNN parent route: {a} intervals, {a + 1} points, {a * .02:g} simulation seconds. No physical pen marks.',
+            f'Public FLYNN parent and labelled branch at tick 100. Parent: {a} intervals / {a * .02:g} simulation seconds; branch continuation: {b} intervals / {b * .02:g} simulation seconds. {edit_label}; controller unchanged. Shared post-snapshot window: tick boundaries 100–{100 + min(a - 100, b)} ({min(a - 100, b) * .02:g} simulation seconds), ending at the earlier outcome. Full routes retain their unequal ranges. No causal memory-effect claim.',
+            f'Parent {source["parent_run_id"]}; branch {source["branch_run_id"]}; snapshot {source["snapshot_id"]}. Parent includes ticks before the branch; the branch starts at tick 100. Recorded branch-start XY offset from parent tick 100: [{delta[0]:.9g}, {delta[1]:.9g}] world units. Coordinates are shown unchanged. Source identities and the declared edit are retained in the original comparison and routes-source.json.')
+
+
 def encounter_html(files):
     rows = alignment(files['afterimage.svg'])
+    source = camera_provenance(files, rows)
+    preview = camera_preview(files, source)
+    routes = route_captions(files)
+    choir_duration, voices, segments, prefix = choir_details(files['counterfactual-choir.wav'])
     durations = (len(rows), rows[-1]['source_timestamp_seconds'] - rows[0]['source_timestamp_seconds'], rows[-1]['model_time_seconds'])
     captions = (
-        ('afterimage', 'Afterimage', 'Authored model responses to geometric frames. Offline inference / recorded playback; not fly perception or biological activity.'),
-        ('borrowed-body', 'Borrowed body', 'Recorded south-change simulator route: 1,267 intervals, 1,268 points, 25.34 simulation seconds. No physical pen marks.'),
-        ('one-map', 'One map, many possible lives', 'Separate mirrored no-U cases: south 25.34 seconds; north 25.84 seconds. No paired intervention or causal memory-effect claim.'),
-        ('choir', 'Counterfactual choir', '25.34-second composed mapping of visual_left, visual_right and descending model populations. Not biological audio or a counterfactual experiment.'),
+        ('afterimage', 'Afterimage', ('Authored model responses to scripted manual-controller left-camera footage. Source controller: manual; portrait controller: male-original. ' if source else 'Authored model responses to geometric frames. ') + 'Offline inference / recorded playback; not fly perception or biological activity.'),
+        ('borrowed-body', 'Borrowed body', routes[0] if routes else 'Recorded south-change simulator route: 1,267 intervals, 1,268 points, 25.34 simulation seconds. No physical pen marks.'),
+        ('one-map', 'One map, many possible lives', routes[1] if routes else 'Separate mirrored no-U cases: south 25.34 seconds; north 25.84 seconds. No paired intervention or causal memory-effect claim.'),
+        ('choir', 'Counterfactual choir', f'{choir_duration:g}-second composed mapping of {html.escape(", ".join(voices))} model populations. Not biological audio or a counterfactual experiment.'),
         ('atlas', 'Atlas of what disappears', 'Reduced graph before/after isolating node 12781: 135 removed edges, 137 lost reachable input/output pairs. Structural analysis, not measured impairment.'),
         ('specimens', 'The space between two flies', 'One curated, unregistered DNge104 anatomical pair, shared micrometre scale, unequal coverage. No population sex inference.'))
     nav = ''.join(f'<a href="#{key}">{html.escape(title)}</a>' for key, title, _ in captions)
@@ -161,23 +349,42 @@ def encounter_html(files):
         elif name.endswith('.html'):
             media = f'<iframe src="{name}" title="Recorded route comparison and provenance" sandbox="" loading="lazy"></iframe>'
         else:
-            media = f'<p>Start at low volume. Playback ends after 25.34 seconds; repeats must be declared and recorded.</p><audio controls preload="none" src="{name}"></audio><button id="stop-audio" hidden>Stop audio and return to start</button>'
+            media = f'<p>Start at low volume. Playback ends after {choir_duration:g} seconds; repeats must be declared and recorded.</p><audio controls preload="none" src="{name}"></audio><button id="stop-audio" hidden>Stop audio and return to start</button>'
         inspector = ''
+        if key == 'one-map' and routes:
+            inspector = '<p>' + html.escape(routes[2]) + '</p><p><a href="routes-source.json">Route source and branch provenance</a></p>'
+        if key == 'choir' and segments:
+            table = ''.join(f"<tr><td>{s['episode']}</td><td>{s['output_start_sample'] / 48000:g}–{s['output_end_sample_exclusive'] / 48000:g}</td><td>{s['start_tick']}–{s['end_tick_inclusive']}</td></tr>" for s in segments)
+            ending = 'Final episode uses a recorded prefix.' if prefix else 'Final selected episode is included in full.'
+            inspector = f'<p>Composition of {len(segments)} recorded episodes. Episode resets are retained; loading and paused wall time are omitted. {ending}</p><details><summary>Episode boundaries</summary><div class="table-scroll"><table><caption>Source episodes in playback order</caption><thead><tr><th scope="col">Episode</th><th scope="col">Playback seconds</th><th scope="col">Source ticks (inclusive)</th></tr></thead><tbody>{table}</tbody></table></div></details>'
         if key == 'afterimage':
+            note = ('60-second sample-and-hold presentation at 10 fps, on concatenated source time. '
+                    'Source episode resets are retained; the portrait model carries hidden state across them. '
+                    '<a href="afterimage-source.json">Source episodes, eye masks and frame hashes</a>. '
+                    'Human artistic acceptance remains open.' if source else
+                    'Insufficient for assessing sustained material. Manual inspection adds no frames or elapsed source time.')
+            playback = ('<button id="play-portrait">Play 60-second portrait</button>'
+                        '<button id="stop-portrait">Stop portrait and return to start</button>'
+                        '<p id="portrait-status" role="status">Ready; playback has not started.</p>' if source else '')
             table = ''.join('<tr>' + ''.join(f'<td>{html.escape(str(v))}</td>' for v in
                 (r['frame'] + 1, r['source_timestamp_seconds'], r['model_time_seconds'], *r['action'], *r['point'])) + '</tr>' for r in rows)
+            source_view = ('<figure><h3>1. Recorded left-camera frame</h3><canvas id="source-frame" width="128" height="128" role="img" aria-label="Selected recorded source frame"></canvas><figcaption id="source-frame-caption">Loading recorded frames…</figcaption><p>The same image was supplied to both model cameras with fixed sensor values. This is an authored interface.</p></figure>' if preview else '')
+            if preview:
+                media = ''  # The original remains linked; foreground the paired inspection.
             inspector = f'''<p>{durations[0]} frames / {durations[1]:.9g} source seconds / {durations[2]:.9g} model seconds.
-Insufficient for assessing sustained material. Manual inspection adds no frames or elapsed source time.</p>
-<details><summary>Inspect recorded responses one at a time</summary>
-<div id="controls" hidden><button id="previous">Previous frame</button><button id="next">Next frame</button>
+{note}</p>
+<details {"open" if preview else ""}><summary>Inspect recorded responses one at a time</summary>
+<div id="controls" hidden>{playback}<button id="previous">Previous frame</button><button id="next">Next frame</button>
 <p id="frame-status" aria-live="polite"></p>
+<div class="{"response-pair" if preview else "response-only"}">{source_view}<figure><h3>2. Selected model response</h3>
 <svg viewBox="-400 -400 800 800" role="img" aria-labelledby="inspect-title inspect-description">
-<title id="inspect-title">Manual response-plane inspection</title><desc id="inspect-description">Exact chronological prefix on fixed axes ±360. The red marker is the sequence start; blue marks the selected response. Coincident responses remain coincident.</desc>
+<title id="inspect-title">Recorded response-plane inspection</title><desc id="inspect-description">Exact chronological prefix on fixed axes ±360. The red marker is the sequence start; blue marks the selected response. Coincident responses remain coincident.</desc>
 <rect x="-360" y="-360" width="720" height="720" fill="none" stroke="#8c8a83"/>
 <path d="M -360 0 H 360 M 0 -360 V 360" fill="none" stroke="#8c8a83"/>
 <polyline id="prefix" fill="none" stroke="#244c5a" stroke-width="2"/>
 <circle cx="{rows[0]['point'][0]}" cy="{rows[0]['point'][1]}" r="4" fill="#aa392b"/>
-<circle id="selected" r="4" fill="#244c5a"/></svg></div>
+<circle id="selected" r="4" fill="#244c5a"/></svg>
+<figcaption>Fixed axes ±360; red is the first response and blue is the selected response. Small changes remain small.</figcaption><p id="response-value"></p></figure></div></div>
 <div class="table-scroll"><table><caption>Exact recorded alignment; all frames, including coincident responses</caption>
 <thead><tr><th>Frame</th><th>Source time (s)</th><th>Model time (s)</th><th>Velocity</th><th>Heading</th><th>x</th><th>y</th></tr></thead><tbody>{table}</tbody></table></div></details>'''
         sections.append(f'<section id="{key}" aria-labelledby="{key}-title"><h2 id="{key}-title">{title}</h2><p>{caption}</p><p><a href="{name}">Open original artifact and embedded provenance</a></p>{media}{inspector}<a href="#modes">Return to modes</a></section>')
@@ -191,22 +398,36 @@ nav{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;background:#edf4f8;padding:1rem
 img,svg{display:block;max-width:100%;height:auto;margin:1rem auto}img{max-height:75vh;object-fit:contain}iframe{width:100%;height:38rem;border:1px solid #253746;box-sizing:border-box}
 audio{display:block;max-width:100%;margin:1rem 0}button,summary{font:inherit;cursor:pointer}button{padding:.5rem .8rem;margin:.25rem}button:disabled{cursor:default}
 details{margin:1rem 0;padding:1rem;background:#edf4f8}#controls svg{max-width:38rem}.table-scroll{overflow:auto}table{border-collapse:collapse}th,td{padding:.5rem;text-align:left;border-bottom:1px solid #b6c8d4;white-space:nowrap}
+.response-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}.response-pair figure{margin:0;min-width:0}.response-pair h3{font-size:1rem}#source-frame{display:block;width:256px;max-width:100%;height:auto;image-rendering:pixelated;margin:1rem auto}@media(max-width:700px){.response-pair{grid-template-columns:1fr}}
 pre{white-space:pre-wrap;overflow-wrap:anywhere}footer{padding:1rem 0} [hidden]{display:none!important}
 </style><main><h1>Palimpsest</h1><p>Six recorded encounters. Open this page locally; each original artifact retains its source identities and mapping.
 No live model, simulator or rover runs here. Human artistic and independent operator acceptance remain open.</p>
 <p>Declare your finite session, repeat policy, audience/use, custodian and retention before review. Record actual start/end, interruptions and any assistance. Stop audio before closing.</p>
 <nav id="modes" aria-label="Artwork modes">''' + nav + '</nav>' + ''.join(sections) + '''
 <footer><h2>Sources and review boundaries</h2><p>Source seconds describe the retained material, not live model performance.
-The two route sources have no parent relationship. Inspection and repeats do not extend the original recording.</p>
+''' + ('The route sources retain their registered parent and snapshot relationship.' if routes else 'The two route sources have no parent relationship.') + ''' Inspection and repeats do not extend the original recording.</p>
 <p><a href="README.md">Original review guide</a> · <a href="THIRD_PARTY_NOTICES.md">Distinct source notices</a> · <a href="checksums.json">Original artifact checksums</a></p>
 <details><summary>Original review guide as plain text</summary><pre>''' + html.escape(files['README.md'].decode('utf-8')) + '''</pre></details>
 <p>Record keep, revise presentation or insufficient sample for each mode, with one reason. Missing judgment is not acceptance.
 This encounter adds no scientific, biological, exhibition-duration or physical qualification.</p></footer>
+<script id="source-index" type="application/json">''' + script_json(source) + '''</script>
 <script id="alignment" type="application/json">''' + script_json(rows) + '''</script><script>
 const rows=JSON.parse(document.getElementById('alignment').textContent);let frame=0;
+const source=JSON.parse(document.getElementById('source-index').textContent);
 const previous=document.getElementById('previous'),next=document.getElementById('next');
-function inspect(){const row=rows[frame];document.getElementById('prefix').setAttribute('points',rows.slice(0,frame+1).map(r=>r.point.join(',')).join(' '));const marker=document.getElementById('selected');marker.setAttribute('cx',row.point[0]);marker.setAttribute('cy',row.point[1]);document.getElementById('frame-status').textContent=`Frame ${frame+1} of ${rows.length}; source time ${row.source_timestamp_seconds} s; model time ${row.model_time_seconds} s. Fixed axes ±360.`;previous.disabled=frame===0;next.disabled=frame===rows.length-1;}
+const canvas=document.getElementById('source-frame');let camera=null,cameraReady=!canvas;
+function inspect(){const row=rows[frame];if(cameraReady&&canvas){canvas.getContext('2d').drawImage(camera,(frame%10)*128,Math.floor(frame/10)*128,128,128,0,0,128,128);const e=source.frames[frame];document.getElementById('source-frame-caption').textContent=`Frame ${frame+1}; episode ${e.episode}, tick ${e.tick}; observation at ${e.observation_time_seconds} s in that episode.`;canvas.setAttribute('aria-label',`Recorded left-camera frame ${frame+1}, episode ${e.episode}, tick ${e.tick}`);canvas.dataset.frame=frame;}document.getElementById('response-value').textContent=`Recorded action: velocity ${row.action[0]}, heading ${row.action[1]}. Response point: (${row.point[0]}, ${row.point[1]}).`;document.getElementById('prefix').setAttribute('points',rows.slice(0,frame+1).map(r=>r.point.join(',')).join(' '));const marker=document.getElementById('selected');marker.setAttribute('cx',row.point[0]);marker.setAttribute('cy',row.point[1]);document.getElementById('frame-status').textContent=`Frame ${frame+1} of ${rows.length}; source time ${row.source_timestamp_seconds} s; model time ${row.model_time_seconds} s. Fixed axes ±360.`+(source?` Source episode ${source.frames[frame].episode}, tick ${source.frames[frame].tick}; eyes ${source.frames[frame].eyes.join(', ')}.`:'');previous.disabled=frame===0;next.disabled=frame===rows.length-1;}
 previous.addEventListener('click',()=>{if(frame>0){frame--;inspect();}});next.addEventListener('click',()=>{if(frame<rows.length-1){frame++;inspect();}});inspect();document.getElementById('controls').hidden=false;
+if(source){
+ const play=document.getElementById('play-portrait'),stopPortrait=document.getElementById('stop-portrait'),status=document.getElementById('portrait-status');let timer=null,start=0;
+ function stopPortraitPlayback(){if(timer!==null)cancelAnimationFrame(timer);timer=null;play.disabled=false;frame=0;inspect();status.textContent='Stopped; returned to start.';}
+ function step(now){const elapsed=(now-start)/1000;const selected=Math.min(599,Math.floor(elapsed*10));if(frame!==selected){frame=selected;inspect();}previous.disabled=true;next.disabled=true;if(elapsed>=60){timer=null;play.disabled=false;inspect();status.textContent='Completed 60-second presentation; no repeat.';return;}timer=requestAnimationFrame(step);}
+ play.addEventListener('click',()=>{if(!cameraReady)return;frame=0;inspect();start=performance.now();play.disabled=true;previous.disabled=true;next.disabled=true;status.textContent='Playing 60 seconds at 10 fps; no repeat.';timer=requestAnimationFrame(step);});
+ if(canvas){play.disabled=true;previous.disabled=true;next.disabled=true;camera=new Image();camera.onload=()=>{if(camera.naturalWidth!==1280||camera.naturalHeight!==7680){status.textContent='Source frames have invalid dimensions; playback unavailable.';return;}cameraReady=true;inspect();play.disabled=false;};camera.onerror=()=>{status.textContent='Source frames could not load; playback unavailable.';};camera.src='afterimage-frames.png';}
+ stopPortrait.addEventListener('click',()=>{if(cameraReady)stopPortraitPlayback();});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&timer!==null)stopPortraitPlayback();});
+ play.closest('details').addEventListener('toggle',event=>{if(!event.target.open&&timer!==null)stopPortraitPlayback();});
+}
 const audio=document.querySelector('audio'),stop=document.getElementById('stop-audio');stop.addEventListener('click',()=>{audio.pause();audio.currentTime=0;});stop.hidden=false;
 </script></main></html>''').encode('utf-8')
 

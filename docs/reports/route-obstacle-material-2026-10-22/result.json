@@ -1,0 +1,30 @@
+{
+  "cleanup": {
+    "passed": true,
+    "process_group_absent": true,
+    "same_process_alive": false
+  },
+  "lab_owner_cleanup": [
+    {
+      "passed": true,
+      "process_group_absent": true,
+      "same_process_alive": false
+    },
+    {
+      "passed": true,
+      "process_group_absent": true,
+      "same_process_alive": false
+    }
+  ],
+  "qualification_claims": [],
+  "status": "passed",
+  "supervisor": {
+    "elapsed_seconds": 62.737503901997115,
+    "output": "/home/utkarsh/Work/shraddha/palimpsest/runs/route-obstacle-material-2026-10-22-v1/generation",
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-10-22T12:02:45.227807+00:00",
+    "status": "completed",
+    "timeout_seconds": 300
+  }
+}

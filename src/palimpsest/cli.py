@@ -98,7 +98,9 @@ def main(argv=None):
     sonify = commands.add_parser('sonify', help='compose an offline WAV from recorded neural population means')
     sonify.add_argument('source', type=Path)
     sonify.add_argument('--population', choices=('visual_left', 'visual_right', 'descending'), action='append', required=True)
-    sonify.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
+    choir_selection = sonify.add_mutually_exclusive_group()
+    choir_selection.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
+    choir_selection.add_argument('--compose-episodes', action='store_true', help='compose the first 6000 intervals at 50 Hz into 120 seconds, with labelled episode resets')
     sonify.add_argument('--output', type=Path, required=True, help='new WAV path with embedded provenance; never overwritten')
     atlas = commands.add_parser('atlas', help='export pinned MaleCNS connectivity and node-isolation reachability')
     atlas.add_argument('--graph', type=Path, required=True)
@@ -182,7 +184,7 @@ def main(argv=None):
                     result = export_comparison(args.left, args.right, output, storage_budget=budget)
                 elif args.command == 'sonify':
                     from .sonification import sonify
-                    result = sonify(args.source, output, populations=args.population, episode=args.episode, storage_budget=budget)
+                    result = sonify(args.source, output, populations=args.population, episode=None if args.compose_episodes else args.episode, storage_budget=budget)
                 else:
                     result = export_run(args.source, output, args.format, storage_budget=budget)
                 report = {'artifact': str(result)}

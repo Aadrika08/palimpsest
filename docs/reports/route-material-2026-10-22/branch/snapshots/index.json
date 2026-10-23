@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "snapshots": {
+    "23bae124a52b44efa82b9dfcb9c72e84": {
+      "snapshot_id": "23bae124a52b44efa82b9dfcb9c72e84",
+      "filename": "initial.snp",
+      "initial": true,
+      "revision": 101,
+      "episode": 0,
+      "tick": 100,
+      "sha256": "de4f3e5c2c84e9afa8cd07f22b79391ef6e7b373182c0234e9256008a2cabffc",
+      "config": {
+        "scenario": "reproduction",
+        "texture": "checker",
+        "controller": "flynn",
+        "device": "cpu",
+        "seed": 0
+      }
+    }
+  }
+}

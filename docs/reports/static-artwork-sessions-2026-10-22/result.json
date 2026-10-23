@@ -1,0 +1,121 @@
+{
+  "status": "passed",
+  "sessions": [
+    {
+      "name": "borrowed-body.svg",
+      "status": "passed",
+      "started_utc": "2026-10-22T11:17:14.688Z",
+      "ended_utc": "2026-10-22T11:27:15.380Z",
+      "duration_seconds": 600.6923082269999,
+      "counts": {
+        "actual": [
+          376
+        ],
+        "expected": [
+          376
+        ]
+      },
+      "events": [],
+      "errors": [],
+      "blocked": [],
+      "source_sha256": "e6f5694abc928f2cbe537454202a77e895fc2a19aea18418c2b62bedaaa08793",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "automated": true,
+      "concurrent_sessions": true,
+      "human_viewing_or_acceptance": false,
+      "browser_disconnected": true
+    },
+    {
+      "name": "one-map-many-lives.html",
+      "status": "passed",
+      "started_utc": "2026-10-22T11:17:14.709Z",
+      "ended_utc": "2026-10-22T11:27:15.380Z",
+      "duration_seconds": 600.670919052,
+      "counts": {
+        "actual": [
+          376,
+          8
+        ],
+        "expected": [
+          376,
+          8
+        ]
+      },
+      "events": [],
+      "errors": [],
+      "blocked": [],
+      "source_sha256": "9168104ef56c043af6776e520a8013a53600882cbeb770016d98f17b5fbfdb46",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "automated": true,
+      "concurrent_sessions": true,
+      "human_viewing_or_acceptance": false,
+      "browser_disconnected": true
+    },
+    {
+      "name": "atlas.svg",
+      "status": "passed",
+      "started_utc": "2026-10-22T11:17:14.813Z",
+      "ended_utc": "2026-10-22T11:27:15.380Z",
+      "duration_seconds": 600.566802764,
+      "counts": {
+        "actual": [
+          135,
+          true
+        ],
+        "expected": [
+          135,
+          true
+        ],
+        "paths_total": 3295
+      },
+      "events": [],
+      "errors": [],
+      "blocked": [],
+      "source_sha256": "33f749f00a11c3815782edd239282734fb26cc071ab83470e1bd3a2fa81e2489",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "automated": true,
+      "concurrent_sessions": true,
+      "human_viewing_or_acceptance": false,
+      "browser_disconnected": true
+    },
+    {
+      "name": "space-between-two-flies.svg",
+      "status": "passed",
+      "started_utc": "2026-10-22T11:17:14.737Z",
+      "ended_utc": "2026-10-22T11:27:15.373Z",
+      "duration_seconds": 600.6350007909999,
+      "counts": {
+        "actual": [
+          15942,
+          21065
+        ],
+        "expected": [
+          15942,
+          21065
+        ]
+      },
+      "events": [],
+      "errors": [],
+      "blocked": [],
+      "source_sha256": "88b0dd69d23ced240199aede489dc29014ae5b7cb46d79f4617615c82ae61949",
+      "viewport": {
+        "width": 1440,
+        "height": 1400
+      },
+      "automated": true,
+      "concurrent_sessions": true,
+      "human_viewing_or_acceptance": false,
+      "browser_disconnected": true
+    }
+  ],
+  "qualification_claims": []
+}

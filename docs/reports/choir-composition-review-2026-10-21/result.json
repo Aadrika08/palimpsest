@@ -1,0 +1,17 @@
+{
+  "evidence": "synthetic capacity fixture, no FLYNN inference",
+  "run": "runs/choir-review-2026-10-21/ae50ec9de2e84c66b1ccbc4fe095b1ea",
+  "source_bytes": 1181417589,
+  "output_bytes": 11597338,
+  "metadata_bytes": 77285,
+  "source_write_seconds": 7.108776151013444,
+  "export_seconds": 3.94968974198855,
+  "peak_process_rss_kib": 72612,
+  "samples": 5760000,
+  "episodes": 10,
+  "pcm_sha256": "49ff2b7672056e6993925690139387cd9b2f9b1fb556bf310e47c09281509281",
+  "checks_passed": true,
+  "source_commit": "45f1e5d",
+  "check_script_sha256": "f89c90ef2933599959cb3a5d46730f759848cb0e7b186c66d5c7ea55f3cf697b",
+  "tests": "58 passed, 14 warnings in 8.86s"
+}

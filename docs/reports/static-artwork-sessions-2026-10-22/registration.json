@@ -1,0 +1,17 @@
+{
+  "head": "99e7b80202a8723746462372fa347af3b1f13f0c",
+  "script_sha256": "d32e2f481a44178bd74b9ede745798f8d6e424b5901c94fe51320296bc5a59de",
+  "plan_sha256": "7bc3e584be951ac39f0b4057560146e584a198d30dd50002aeb62453fb79b6dc",
+  "source_archive_sha256": "0ef85fba961c9d207a6023232132929a82f908b6324d3493a4edd31fa8a6230d",
+  "modes": [
+    "borrowed-body.svg",
+    "one-map-many-lives.html",
+    "atlas.svg",
+    "space-between-two-flies.svg"
+  ],
+  "required_seconds_each": 600,
+  "watchdog_seconds_each": 640,
+  "concurrent": true,
+  "headless": true,
+  "qualification_claims": []
+}

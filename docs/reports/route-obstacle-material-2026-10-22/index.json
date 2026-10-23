@@ -1,0 +1,140 @@
+{
+  "source_commit": "efc913b",
+  "session_commit": "93964ad",
+  "local_root": "runs/route-obstacle-material-2026-10-22-v1",
+  "files": {
+    "artifacts.json": {
+      "size_bytes": 360,
+      "sha256": "f5fe451b36a89b0796f8621ad944c82232e78ba6177b1cc9b4de0c0bd95c05f6"
+    },
+    "audit.py": {
+      "size_bytes": 9812,
+      "sha256": "a62f7f04abf3612270f9d43d78caf7cda9dba1a71763ab5273a7d58c7dc1c951"
+    },
+    "borrowed-body-1440.png": {
+      "size_bytes": 50211,
+      "sha256": "28e35e1c2849f36bb6509ccecb4215edc8d9313d6c4ecb5a80c24b97bd9a3647"
+    },
+    "borrowed-body-390.png": {
+      "size_bytes": 30102,
+      "sha256": "8441894c7a4307c82987509200f27f5bf6ef1de46785986c923f6dc0a2cae705"
+    },
+    "browser.cjs": {
+      "size_bytes": 4332,
+      "sha256": "5acb67f4800e1bdae859f3705e976207220a4b3f45a9ed0684d7c6bba2626579"
+    },
+    "browser.json": {
+      "size_bytes": 341,
+      "sha256": "597fcb154bc87ea95d7381123d61ef84f5abc04cb59a54a98724bf0e053b27be"
+    },
+    "generation/result.json": {
+      "size_bytes": 2274,
+      "sha256": "8657e71b852c7f0980ed614dec436ea24144f5d24e1f0b4547e0b207672c3905"
+    },
+    "generation/stderr.log": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "generation/stdout.log": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "generation/supervisor.json": {
+      "size_bytes": 298,
+      "sha256": "579bdb0ce60b5fb209b177289fd8a74e1571c4990013da704659b51d75c0babe"
+    },
+    "handoff-browser.cjs": {
+      "size_bytes": 4524,
+      "sha256": "9e5fa129ab4f5c91815146973c75a80256385f257059279d52b12b838a8885b9"
+    },
+    "handoff-browser.json": {
+      "size_bytes": 341,
+      "sha256": "597fcb154bc87ea95d7381123d61ef84f5abc04cb59a54a98724bf0e053b27be"
+    },
+    "handoff-one-map-1440.png": {
+      "size_bytes": 131213,
+      "sha256": "84d09ceaab950dfa935e52be20b6dada615de8cf4bcbaea4369ac35198a0853a"
+    },
+    "handoff-one-map-390.png": {
+      "size_bytes": 109763,
+      "sha256": "ad438367b8bd93b37b41686c68659c238d06cb678bbfdf15ba98d22a287a3452"
+    },
+    "handoff.json": {
+      "size_bytes": 992,
+      "sha256": "bea732883380d4f94a72285eaa3b70611fcb26f842d0319c1b9ab5cbb782b0f4"
+    },
+    "handoff.py": {
+      "size_bytes": 3679,
+      "sha256": "a649d90a5cb4f204726f553e5836a8f01018fe2e9ea77099aa6a76c2a3bd67a1"
+    },
+    "independent-audit.json": {
+      "size_bytes": 15279,
+      "sha256": "1d43926a9fe371dda2824666f566554a835e68dadd2c025cf30618d5acb1cdc1"
+    },
+    "one-map-1440.png": {
+      "size_bytes": 130746,
+      "sha256": "13f825089a32f9d715141ec68dbb462727ceb234b47fce3db651c45b5114ec1c"
+    },
+    "one-map-390.png": {
+      "size_bytes": 109453,
+      "sha256": "dc735523076c79c0256fdba42edde5a05e3ae3d60ae0a66561db1ae09897b01f"
+    },
+    "package.py": {
+      "size_bytes": 6588,
+      "sha256": "a5e12481a758a4f78a32720bebe2408801a39071cdeb24d097c568a2916e5620"
+    },
+    "registration.json": {
+      "size_bytes": 10149,
+      "sha256": "66135d40b1d959b483d02806a203720d8fe20a51b95cfc0f771cfc0b8ac1d034"
+    },
+    "result.json": {
+      "size_bytes": 731,
+      "sha256": "57e87a10d6583a30b3753616f4efd7dd068464420d12faf6b0a3399a44fe528f"
+    },
+    "routes-source.json": {
+      "size_bytes": 971,
+      "sha256": "28cd0ce94ce8e0f66e8d5cc9db7ebe2a96b453a22f95c7ae8d81983ec3504ede"
+    },
+    "sessions/borrowed-body-end.png": {
+      "size_bytes": 26523,
+      "sha256": "4ab5a2ce3b1fbfd56b3f6d316b72cfbb632c8c8729ed6633a1d3baebfb240c17"
+    },
+    "sessions/borrowed-body-start.png": {
+      "size_bytes": 26523,
+      "sha256": "4ab5a2ce3b1fbfd56b3f6d316b72cfbb632c8c8729ed6633a1d3baebfb240c17"
+    },
+    "sessions/borrowed-body.json": {
+      "size_bytes": 254401,
+      "sha256": "eb50c144852daa780235ae7df5ca19a714257510071bf59f99ba60014d93a8b6"
+    },
+    "sessions/one-map-many-lives-end.png": {
+      "size_bytes": 14231,
+      "sha256": "2dbd95ab4f08a2324d9a39cdd598df6254ef4463466ac0c8083e14ec86537ab8"
+    },
+    "sessions/one-map-many-lives-start.png": {
+      "size_bytes": 14231,
+      "sha256": "2dbd95ab4f08a2324d9a39cdd598df6254ef4463466ac0c8083e14ec86537ab8"
+    },
+    "sessions/one-map-many-lives.json": {
+      "size_bytes": 260926,
+      "sha256": "f35ce860e3069730fa87dd5cba05cfce8349863908aa8fff9443fd674dc7551b"
+    },
+    "sessions/registration.json": {
+      "size_bytes": 533,
+      "sha256": "d324934edc60e1fe062842a3908ed4ea3692c485f729684b9c7ed5e6fb9cb69e"
+    },
+    "sessions/result.json": {
+      "size_bytes": 1500,
+      "sha256": "93a25fdd8167b0dd70f95901cc0e9c3d661cbd90f57b6cb6e52d8a0408ffc148"
+    },
+    "sessions.cjs": {
+      "size_bytes": 8034,
+      "sha256": "61e63f091a0e663e2c9f76c4ecde1168183dc951625c462bcf9fd165d1781207"
+    },
+    "tests.log": {
+      "size_bytes": 601,
+      "sha256": "a7db6d039d2a829ee0b9542eae10d2755ebc5754d01e4802244bc8c242701812"
+    }
+  },
+  "qualification_claims": []
+}
