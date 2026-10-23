@@ -403,6 +403,17 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere}footer{padding:1rem 0} [hidden]{
 </style><main><h1>Palimpsest</h1><p>Six recorded encounters. Open this page locally; each original artifact retains its source identities and mapping.
 No live model, simulator or rover runs here. Human artistic and independent operator acceptance remain open.</p>
 <p>Declare your finite session, repeat policy, audience/use, custodian and retention before review. Record actual start/end, interruptions and any assistance. Stop audio before closing.</p>
+<aside aria-labelledby="encounter-guide-title">
+<h2 id="encounter-guide-title">Start with a route</h2>
+<p>These six works draw on different recordings, models and anatomical sources. Each retains its own conditions and limits.</p>
+<ol>
+<li>Compare the routes in <a href="#one-map">One map, many possible lives</a>, reading what differs between their conditions. Then follow one recorded path in <a href="#borrowed-body">Borrowed body</a>.</li>
+<li>Turn to <a href="#afterimage">Afterimage</a>: inspect the recorded responses and their input provenance. The fixed axes preserve the scale of their differences.</li>
+<li>Listen to <a href="#choir">Counterfactual choir</a> at low volume. Its tones map recorded model activity; the sound is composed.</li>
+<li>Explore <a href="#atlas">Atlas of what disappears</a>. Removing connections changes structural reachability; this view does not measure behavioral impairment.</li>
+<li>Compare <a href="#specimens">The space between two flies</a> on its shared anatomical scale. Unequal specimen coverage limits the comparison; this pair does not establish population sex differences.</li>
+</ol>
+</aside>
 <nav id="modes" aria-label="Artwork modes">''' + nav + '</nav>' + ''.join(sections) + '''
 <footer><h2>Sources and review boundaries</h2><p>Source seconds describe the retained material, not live model performance.
 ''' + ('The route sources retain their registered parent and snapshot relationship.' if routes else 'The two route sources have no parent relationship.') + ''' Inspection and repeats do not extend the original recording.</p>

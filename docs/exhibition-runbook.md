@@ -1,5 +1,21 @@
 # Supervised artwork operation
 
+## Current recorded development encounter
+
+Download the [guided encounter ZIP](reports/guided-encounter-2026-10-23/palimpsest-guided-encounter-2026-10-23.zip),
+extract all files together and open `index.html`. This package includes the
+600-frame Afterimage source/response presentation, 120-second Choir, obstacle
+branch comparison and the other static works. It needs no server or model
+runtime. The [current report](reports/guided-encounter-2026-10-23.md) records its
+hashes, checks and limitations. Use the [human review sheet](plans/artwork-human-review-2026-10-22.md)
+to record actual exposure, decisions and the independent operator session.
+
+The instructions below also describe live/export workflows and historical
+source rebuilding. Opening the portable recorded package does not require those
+steps or the original machine's private `runs/` directory.
+
+## Historical export workflow
+
 For a finite offline software handoff, use the [six-mode plan](plans/m9-offline-handoff.md)
 and its [19-file source manifest](artwork-handoff.json). The source folder must be
 provided explicitly; a fresh clone does not include the local recording subsets.

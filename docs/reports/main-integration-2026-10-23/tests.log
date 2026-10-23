@@ -1,0 +1,1138 @@
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+.s.................sss....................s............................. [  6%]
+............................s............s.............................. [  7%]
+.s................F.ss.........Fs..s.................................... [  9%]
+..................s..................................................... [ 10%]
+..........s............................................................. [ 11%]
+........................................................................ [ 12%]
+..................s..................................................... [ 13%]
+........................................................................ [ 14%]
+...............s.........................................sssssssssssssss [ 15%]
+sssssssssssssssss.................ssssssssssssssssssssssssssssssssssssss [ 17%]
+sssssssssssssssssssssssssssssssssssssssssssss........................... [ 18%]
+..............sssssssssssssssssssssssssssssssssssssssssssssss..ssss..... [ 19%]
+.....................s...........................ss....ss............... [ 20%]
+.........................................ssssssssssssssssssssssss....... [ 21%]
+................................................................s....... [ 22%]
+.....ss...s.........................s................................... [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 26%]
+......................................................................ss [ 27%]
+sssssssssssssssss....................................................... [ 28%]
+.............................................sss....................s... [ 29%]
+.......................................................................s [ 30%]
+.s.sssssssssssssss...................................................... [ 31%]
+.............................................ssss.sssss.s............... [ 32%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+...........................................................s............ [ 58%]
+......................................F................................. [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+....................................................................ssss [ 64%]
+ss...................................................................... [ 65%]
+........................................................................ [ 66%]
+..........................................................s...........ss [ 68%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+....................s..ss..ss..s......s..s..........s..ss............... [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+..........s............................................................. [ 79%]
+............................................................F........... [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+..........................sssssss..s.................................... [ 95%]
+.........................................ssss...F....................... [ 96%]
+................s..........sss.......................................... [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+...........                                                              [100%]
+=================================== FAILURES ===================================
+_ NavigationV3ExecutionTests.test_leader_exit_before_identity_drains_forked_group_before_error _
+
+self = <test_male_navigation_v3_execution.NavigationV3ExecutionTests testMethod=test_leader_exit_before_identity_drains_forked_group_before_error>
+
+    def test_leader_exit_before_identity_drains_forked_group_before_error(self):
+        command = [owner.PYTHON, "-c",
+                   "import os,time; child=os.fork(); os._exit(0) if child else time.sleep(30)"]
+        created = []
+        def popen(*args, **kwargs):
+            process = subprocess.Popen(*args, **kwargs)
+            created.append(process)
+            return process
+        try:
+            with self.assertRaises(ValueError):
+>               owner.spawn_contained(
+                    command, ROOT, dict(os.environ), subprocess.DEVNULL,
+                    subprocess.DEVNULL, popen=popen, identity_reader=lambda pid: None)
+
+tests/test_male_navigation_v3_execution.py:396: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/run_male_navigation_v3_training.py:790: in spawn_contained
+    process = popen(command, cwd=cwd, env=environment, stdout=stdout, stderr=stderr,
+tests/test_male_navigation_v3_execution.py:391: in popen
+    process = subprocess.Popen(*args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       restore_signals,
+                       gid, gids, uid, umask,
+                       start_new_session, process_group):
+        """Execute program (POSIX version)"""
+    
+        if isinstance(args, (str, bytes)):
+            args = [args]
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = [args]
+        else:
+            args = list(args)
+    
+        if shell:
+            # On Android the default shell is at '/system/bin/sh'.
+            unix_shell = ('/system/bin/sh' if
+                      hasattr(sys, 'getandroidapilevel') else '/bin/sh')
+            args = [unix_shell, "-c"] + args
+            if executable:
+                args[0] = executable
+    
+        if executable is None:
+            executable = args[0]
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        if (_USE_POSIX_SPAWN
+                and os.path.dirname(executable)
+                and preexec_fn is None
+                and not close_fds
+                and not pass_fds
+                and cwd is None
+                and (p2cread == -1 or p2cread > 2)
+                and (c2pwrite == -1 or c2pwrite > 2)
+                and (errwrite == -1 or errwrite > 2)
+                and not start_new_session
+                and process_group == -1
+                and gid is None
+                and gids is None
+                and uid is None
+                and umask < 0):
+            self._posix_spawn(args, executable, env, restore_signals,
+                              p2cread, p2cwrite,
+                              c2pread, c2pwrite,
+                              errread, errwrite)
+            return
+    
+        orig_executable = executable
+    
+        # For transferring possible exec failure from child to parent.
+        # Data format: "exception name:hex errno:description"
+        # Pickle is not used; it is complex and involves memory allocation.
+        errpipe_read, errpipe_write = os.pipe()
+        # errpipe_write must not be in the standard io 0, 1, or 2 fd range.
+        low_fds_to_close = []
+        while errpipe_write < 3:
+            low_fds_to_close.append(errpipe_write)
+            errpipe_write = os.dup(errpipe_write)
+        for low_fd in low_fds_to_close:
+            os.close(low_fd)
+        try:
+            try:
+                # We must avoid complex work that could involve
+                # malloc or free in the child process to avoid
+                # potential deadlocks, thus we do all this here.
+                # and pass it to fork_exec()
+    
+                if env is not None:
+                    env_list = []
+                    for k, v in env.items():
+                        k = os.fsencode(k)
+                        if b'=' in k:
+                            raise ValueError("illegal environment variable name")
+                        env_list.append(k + b'=' + os.fsencode(v))
+                else:
+                    env_list = None  # Use execv instead of execve.
+                executable = os.fsencode(executable)
+                if os.path.dirname(executable):
+                    executable_list = (executable,)
+                else:
+                    # This matches the behavior of os._execvpe().
+                    executable_list = tuple(
+                        os.path.join(os.fsencode(dir), executable)
+                        for dir in os.get_exec_path(env))
+                fds_to_keep = set(pass_fds)
+                fds_to_keep.add(errpipe_write)
+                self.pid = _fork_exec(
+                        args, executable_list,
+                        close_fds, tuple(sorted(map(int, fds_to_keep))),
+                        cwd, env_list,
+                        p2cread, p2cwrite, c2pread, c2pwrite,
+                        errread, errwrite,
+                        errpipe_read, errpipe_write,
+                        restore_signals, start_new_session,
+                        process_group, gid, gids, uid, umask,
+                        preexec_fn, _USE_VFORK)
+                self._child_created = True
+            finally:
+                # be sure the FD is closed no matter what
+                os.close(errpipe_write)
+    
+            self._close_pipe_fds(p2cread, p2cwrite,
+                                 c2pread, c2pwrite,
+                                 errread, errwrite)
+    
+            # Wait for exec to fail or succeed; possibly raising an
+            # exception (limited in size)
+            errpipe_data = bytearray()
+            while True:
+                part = os.read(errpipe_read, 50000)
+                errpipe_data += part
+                if not part or len(errpipe_data) > 50000:
+                    break
+        finally:
+            # be sure the FD is closed no matter what
+            os.close(errpipe_read)
+    
+        if errpipe_data:
+            try:
+                pid, sts = os.waitpid(self.pid, 0)
+                if pid == self.pid:
+                    self._handle_exitstatus(sts)
+                else:
+                    self.returncode = sys.maxsize
+            except ChildProcessError:
+                pass
+    
+            try:
+                exception_name, hex_errno, err_msg = (
+                        errpipe_data.split(b':', 2))
+                # The encoding here should match the encoding
+                # written in by the subprocess implementations
+                # like _posixsubprocess
+                err_msg = err_msg.decode()
+            except ValueError:
+                exception_name = b'SubprocessError'
+                hex_errno = b'0'
+                err_msg = 'Bad exception data from child: {!r}'.format(
+                              bytes(errpipe_data))
+            child_exception_type = getattr(
+                    builtins, exception_name.decode('ascii'),
+                    SubprocessError)
+            if issubclass(child_exception_type, OSError) and hex_errno:
+                errno_num = int(hex_errno, 16)
+                if err_msg == "noexec:chdir":
+                    err_msg = ""
+                    # The error must be from chdir(cwd).
+                    err_filename = cwd
+                elif err_msg == "noexec":
+                    err_msg = ""
+                    err_filename = None
+                else:
+                    err_filename = orig_executable
+                if errno_num != 0:
+                    err_msg = os.strerror(errno_num)
+                if err_filename is not None:
+>                   raise child_exception_type(errno_num, err_msg, err_filename)
+E                   FileNotFoundError: [Errno 2] No such file or directory: '/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python'
+
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:1955: FileNotFoundError
+_ NavigationV3ExecutionTests.test_spawned_exec_has_unblocked_term_without_preexec_in_threads _
+
+self = <test_male_navigation_v3_execution.NavigationV3ExecutionTests testMethod=test_spawned_exec_has_unblocked_term_without_preexec_in_threads>
+
+    def test_spawned_exec_has_unblocked_term_without_preexec_in_threads(self):
+        command = [owner.PYTHON, "-c",
+                   "import signal,time; print(int(signal.SIGTERM in "
+                   "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)"]
+>       process, identity, handoff = owner.spawn_contained(
+            command, ROOT, dict(os.environ), subprocess.PIPE, subprocess.PIPE)
+
+tests/test_male_navigation_v3_execution.py:322: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/run_male_navigation_v3_training.py:790: in spawn_contained
+    process = popen(command, cwd=cwd, env=environment, stdout=stdout, stderr=stderr,
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: 255 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees...>
+args = ['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', 'import signal,time; print(int(signal.SIGTERM in signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)']
+executable = b'/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python'
+preexec_fn = None, close_fds = True, pass_fds = ()
+cwd = PosixPath('/home/utkarsh/Work/shraddha/palimpsest')
+env = {'CUDA_VISIBLE_DEVICES': '', 'HOME': '/home/utkarsh', 'LANG': 'C.UTF-8', 'LC_ALL': 'C.UTF-8', ...}
+startupinfo = None, creationflags = 0, shell = False, p2cread = -1
+p2cwrite = -1, c2pread = 12, c2pwrite = 13, errread = 14, errwrite = 15
+restore_signals = True, gid = None, gids = None, uid = None, umask = -1
+start_new_session = True, process_group = -1
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       restore_signals,
+                       gid, gids, uid, umask,
+                       start_new_session, process_group):
+        """Execute program (POSIX version)"""
+    
+        if isinstance(args, (str, bytes)):
+            args = [args]
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = [args]
+        else:
+            args = list(args)
+    
+        if shell:
+            # On Android the default shell is at '/system/bin/sh'.
+            unix_shell = ('/system/bin/sh' if
+                      hasattr(sys, 'getandroidapilevel') else '/bin/sh')
+            args = [unix_shell, "-c"] + args
+            if executable:
+                args[0] = executable
+    
+        if executable is None:
+            executable = args[0]
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        if (_USE_POSIX_SPAWN
+                and os.path.dirname(executable)
+                and preexec_fn is None
+                and not close_fds
+                and not pass_fds
+                and cwd is None
+                and (p2cread == -1 or p2cread > 2)
+                and (c2pwrite == -1 or c2pwrite > 2)
+                and (errwrite == -1 or errwrite > 2)
+                and not start_new_session
+                and process_group == -1
+                and gid is None
+                and gids is None
+                and uid is None
+                and umask < 0):
+            self._posix_spawn(args, executable, env, restore_signals,
+                              p2cread, p2cwrite,
+                              c2pread, c2pwrite,
+                              errread, errwrite)
+            return
+    
+        orig_executable = executable
+    
+        # For transferring possible exec failure from child to parent.
+        # Data format: "exception name:hex errno:description"
+        # Pickle is not used; it is complex and involves memory allocation.
+        errpipe_read, errpipe_write = os.pipe()
+        # errpipe_write must not be in the standard io 0, 1, or 2 fd range.
+        low_fds_to_close = []
+        while errpipe_write < 3:
+            low_fds_to_close.append(errpipe_write)
+            errpipe_write = os.dup(errpipe_write)
+        for low_fd in low_fds_to_close:
+            os.close(low_fd)
+        try:
+            try:
+                # We must avoid complex work that could involve
+                # malloc or free in the child process to avoid
+                # potential deadlocks, thus we do all this here.
+                # and pass it to fork_exec()
+    
+                if env is not None:
+                    env_list = []
+                    for k, v in env.items():
+                        k = os.fsencode(k)
+                        if b'=' in k:
+                            raise ValueError("illegal environment variable name")
+                        env_list.append(k + b'=' + os.fsencode(v))
+                else:
+                    env_list = None  # Use execv instead of execve.
+                executable = os.fsencode(executable)
+                if os.path.dirname(executable):
+                    executable_list = (executable,)
+                else:
+                    # This matches the behavior of os._execvpe().
+                    executable_list = tuple(
+                        os.path.join(os.fsencode(dir), executable)
+                        for dir in os.get_exec_path(env))
+                fds_to_keep = set(pass_fds)
+                fds_to_keep.add(errpipe_write)
+                self.pid = _fork_exec(
+                        args, executable_list,
+                        close_fds, tuple(sorted(map(int, fds_to_keep))),
+                        cwd, env_list,
+                        p2cread, p2cwrite, c2pread, c2pwrite,
+                        errread, errwrite,
+                        errpipe_read, errpipe_write,
+                        restore_signals, start_new_session,
+                        process_group, gid, gids, uid, umask,
+                        preexec_fn, _USE_VFORK)
+                self._child_created = True
+            finally:
+                # be sure the FD is closed no matter what
+                os.close(errpipe_write)
+    
+            self._close_pipe_fds(p2cread, p2cwrite,
+                                 c2pread, c2pwrite,
+                                 errread, errwrite)
+    
+            # Wait for exec to fail or succeed; possibly raising an
+            # exception (limited in size)
+            errpipe_data = bytearray()
+            while True:
+                part = os.read(errpipe_read, 50000)
+                errpipe_data += part
+                if not part or len(errpipe_data) > 50000:
+                    break
+        finally:
+            # be sure the FD is closed no matter what
+            os.close(errpipe_read)
+    
+        if errpipe_data:
+            try:
+                pid, sts = os.waitpid(self.pid, 0)
+                if pid == self.pid:
+                    self._handle_exitstatus(sts)
+                else:
+                    self.returncode = sys.maxsize
+            except ChildProcessError:
+                pass
+    
+            try:
+                exception_name, hex_errno, err_msg = (
+                        errpipe_data.split(b':', 2))
+                # The encoding here should match the encoding
+                # written in by the subprocess implementations
+                # like _posixsubprocess
+                err_msg = err_msg.decode()
+            except ValueError:
+                exception_name = b'SubprocessError'
+                hex_errno = b'0'
+                err_msg = 'Bad exception data from child: {!r}'.format(
+                              bytes(errpipe_data))
+            child_exception_type = getattr(
+                    builtins, exception_name.decode('ascii'),
+                    SubprocessError)
+            if issubclass(child_exception_type, OSError) and hex_errno:
+                errno_num = int(hex_errno, 16)
+                if err_msg == "noexec:chdir":
+                    err_msg = ""
+                    # The error must be from chdir(cwd).
+                    err_filename = cwd
+                elif err_msg == "noexec":
+                    err_msg = ""
+                    err_filename = None
+                else:
+                    err_filename = orig_executable
+                if errno_num != 0:
+                    err_msg = os.strerror(errno_num)
+                if err_filename is not None:
+>                   raise child_exception_type(errno_num, err_msg, err_filename)
+E                   FileNotFoundError: [Errno 2] No such file or directory: '/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python'
+
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:1955: FileNotFoundError
+________ test_v5_declared_absent_names_are_stock_misses_without_poison _________
+
+    def test_v5_declared_absent_names_are_stock_misses_without_poison():
+>       receipt = succeeded(run('''
+            assert owner._reg['qualification']['version'] == 5
+            def add(names):  # torch._dynamo.trace_rules.add: bare probe, no handler
+                return [importlib.util.find_spec(name) for name in names]
+            assert add(['tabulate', 'tensorflow']) == [None, None]
+            assert importlib.util.find_spec('torch._rocm_init') is None
+            for name in ('tabulate', 'torch._rocm_init'):
+                try:
+                    importlib.import_module(name)
+                except ModuleNotFoundError as error:
+                    assert type(error) is ModuleNotFoundError and error.name == name, (type(error), error.name)
+                else:
+                    raise AssertionError('DECLARED_ABSENT_LOADED')
+            try:
+                import tensorflow
+            except ImportError:
+                pass
+            assert not {'tabulate', 'tensorflow', 'torch._rocm_init'} & set(sys.modules)
+            assert owner._state == 'active' and owner._first_failure is None
+            owner.recheck()
+        ''', negatives=['tabulate', 'tensorflow']))
+
+tests/test_puck_cpu_optional_import_contract_v2.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n')
+version = 5
+
+    def succeeded(result, version=5):
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":4.738976713269949e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.04410022700903937,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.04412871098611504,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/src/palimpsest/puck_dependency_files.py", line 230, in __init__
+E             import ctypes
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py", line 404, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py", line 823, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py", line 952, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').returncode
+
+tests/test_puck_cpu_optional_import_contract_v2.py:78: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"kind": "authored-v5-stock-absence-case-v1", "stderr": "{\"diagnostic_only\":true,\"elapsed_seconds\":4.738976713269949e-06,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"bootstrap.enter\",\"sequence\":1}\n{\"diagnostic_only\":true,\"elapsed_seconds\":0.04410022700903937,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"source.ready\",\"sequence\":2}\n{\"diagnostic_only\":true,\"elapsed_seconds\":0.04412871098611504,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"dependencies.enter\",\"sequence\":3}\nTraceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py\", line 1058, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py\", line 1049, in main\n    with HeldWorkerBootstrap(payload, expected_sha256=expected,\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py\", line 742, in __enter__\n    provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/src/palimpsest/puck_dependency_files.py\", line 230, in __init__\n    import ctypes\n  File \"<frozen importlib._bootstrap>\", line 1176, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1138, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 1078, in _find_spec\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py\", line 404, in find_spec\n    self.owner._import_recheck()\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py\", line 823, in _import_recheck\n    return self._check(full=self._dependencies is None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/scripts/puck_worker_bootstrap.py\", line 952, in _check\n    if full: child.recheck()\n             ^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/src/palimpsest/puck_execution_files.py\", line 275, in recheck\n    self._check_dirs()\n  File \"/tmp/palimpsest-tmpfs-deps-2wwoy43h/source/src/palimpsest/puck_execution_files.py\", line 157, in _check_dirs\n    raise RuntimeError('Collection root or ancestor changed while held')\nRuntimeError: Collection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n", "stdout": "", "worker_returncode": 1}
+_ test_q4_runs_four_expected_imports_and_emits_explicit_version_without_authority _
+
+    def test_q4_runs_four_expected_imports_and_emits_explicit_version_without_authority():
+        result = run_q4()
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":6.832997314631939e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.04832452302798629,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.04836153204087168,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 737, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 370, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 141, in <module>
+E             class Message:
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 976, in Message
+E             from email.iterators import walk
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 404, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 823, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/scripts/puck_worker_bootstrap.py", line 952, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-tmpfs-deps-ppujseo4/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').returncode
+
+tests/test_puck_runtime_entry_v4.py:33: AssertionError
+____________________ test_release_matrix_links_are_portable ____________________
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-pytest/palimpsest-2495536/test_release_matrix_links_are_0')
+
+    def test_release_matrix_links_are_portable(tmp_path):
+        ignored_runs, missing, fragments = link_errors(MATRIX, MATRIX.read_text())
+        assert ignored_runs == []
+        assert missing == []
+>       assert fragments == []
+E       AssertionError: assert ['plans/simul...six-artworks'] == []
+E         
+E         Left contains 2 more items, first extra item: 'plans/simulation-release-execution-goal.md#active-work-unit-foundation-repairs-then-the-lab-and-six-artworks'
+E         Use -v to get more diff
+
+tests/test_requirements_evidence.py:96: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_artwork_encounter.py::EncounterTests::test_missing_unexpected_duplicate_and_escaping_members_rejected
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'afterimage.svg'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+tests/test_flynn.py: 17 warnings
+tests/test_memory_family_cell_replay_v4.py: 25 warnings
+tests/test_snapshots.py: 5 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+  /home/utkarsh/Work/shraddha/palimpsest/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_family_cell_replay_v4.py::test_actual_upstream_cell_matches_recorded_policy_without_retina[source]
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_puck_episode_profile_candidate.py: 30 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/scripts/derive_puck_episode_profile.py:176: DeprecationWarning: invalid escape sequence '\$'
+    """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_male_navigation_v3_execution.py::NavigationV3ExecutionTests::test_leader_exit_before_identity_drains_forked_group_before_error
+FAILED tests/test_male_navigation_v3_execution.py::NavigationV3ExecutionTests::test_spawned_exec_has_unblocked_term_without_preexec_in_threads
+FAILED tests/test_puck_cpu_optional_import_contract_v2.py::test_v5_declared_absent_names_are_stock_misses_without_poison
+FAILED tests/test_puck_runtime_entry_v4.py::test_q4_runs_four_expected_imports_and_emits_explicit_version_without_authority
+FAILED tests/test_requirements_evidence.py::test_release_matrix_links_are_portable
+5 failed, 6038 passed, 304 skipped, 43 deselected, 96 warnings in 1158.91s (0:19:18)
+.......                                                                  [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+7 passed, 6383 deselected, 2 warnings in 8.97s
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_real_authored03_audit_bin0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures(tmp_path):
+        from test_puck_cpu_held_amendment03 import amendment03_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment03_audit.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_real_authored03_audit_bin0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:187: AssertionError
+_ test_real_authored04_independent_audits_fresh_bindings_and_preserves_history _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_real_authored04_independe0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
+        from test_puck_cpu_held_amendment04_integration import amendment04_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment04_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment04_audit.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment04_integration.py:19: in amendment04_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True,historical_bindings=True,binding_failure=binding_failure) as case:
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_real_authored04_independe0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:187: AssertionError
+__ test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_real_authored02_has_indep0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
+        from test_puck_cpu_held_amendment import amendment_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment_audit.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_real_authored02_has_indep0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:187: AssertionError
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_authored02_uses_fresh_cap0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_authored02_uses_fresh_cap0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:187: AssertionError
+_ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_authored03_completes_afte0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment03.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-palimpsest-2495536/test_authored03_completes_afte0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:187: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_amendment03_audit.py::test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures
+FAILED tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history
+FAILED tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+5 failed, 6385 deselected, 2 warnings in 10.74s
+.................F............F                                          [100%]
+=================================== FAILURES ===================================
+__ test_native_export_is_bound_before_create_module_guard[native_create-True] __
+
+tmp_path = PosixPath('/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0')
+phase = 'native_create', success = True
+
+    @pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
+    @pytest.mark.parametrize('phase,success',[('native_create',True),('module_exec',False)])
+    def test_native_export_is_bound_before_create_module_guard(tmp_path,phase,success):
+        import subprocess,sysconfig
+        from test_puck_worker_bootstrap import descriptor
+        def mutate(deps,root):
+            p=upgrade(deps)
+            c=root/'native.c'
+            source=c.read_text().replace('return PyModule_Create(&mod);',
+                'PyObject* m=PyModule_Create(&mod);'
+                'PyObject* child=PyModule_New("fixture_dep.native_child");'
+                'if(!m || !child) return NULL;'
+                'if(PyDict_SetItemString(PyImport_GetModuleDict(),"fixture_dep.native_child",child)<0) return NULL;'
+                'if(PyModule_AddObject(m,"actual_export",child)<0) return NULL;return m;')
+            c.write_text(source)
+            native=next(v for v in deps['modules'] if v['kind']=='extension')
+            subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),
+                            '-o',str(root/native['path'])],check=True,capture_output=True,timeout=15)
+            deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+            p['exports']=[{'name':'fixture_dep.native_child','producer':'fixture_dep._native','phase':phase,
+                          'attributes':['actual_export'],'class_binding':None}]
+        result,_=dependency_fixture(tmp_path,'from fixture_dep import _native\nimport fixture_dep.native_child\nreturn {}',
+                                    native=True,mutate=mutate)
+        if success:
+>           assert result.returncode==0,result.stderr
+E           AssertionError: Traceback (most recent call last):
+E               File "<string>", line 10, in <module>
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E                 if __name__ == '__main__': main()
+E                                            ^^^^^^
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E                 with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 737, in __enter__
+E                 from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E               File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E               File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E               File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 370, in exec_module
+E                 exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E                 import importlib.metadata
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 8, in <module>
+E                 import zipfile
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py", line 15, in <module>
+E                 import struct
+E               File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E               File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E               File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 404, in find_spec
+E                 self.owner._import_recheck()
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 823, in _import_recheck
+E                 return self._check(full=self._dependencies is None)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/scripts/puck_worker_bootstrap.py", line 952, in _check
+E                 if full: child.recheck()
+E                          ^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E                 self._check_dirs()
+E               File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_export_is_bound_be0/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E                 raise RuntimeError('Collection root or ancestor changed while held')
+E             RuntimeError: Collection root or ancestor changed while held
+E             Bootstrap holder close: Collection root or ancestor changed while held
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').returncode
+
+tests/test_puck_dependency_profile.py:244: AssertionError
+_______ test_native_extension_initializes_from_held_file_and_is_observed _______
+
+tmp_path = PosixPath('/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0')
+
+    @pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
+    def test_native_extension_initializes_from_held_file_and_is_observed(tmp_path):
+        result, _ = dependency_fixture(tmp_path,'from fixture_dep import _native\nreturn {"answer":_native.answer()}',native=True)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 737, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 370, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 141, in <module>
+E             class Message:
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 976, in Message
+E             from email.iterators import walk
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 404, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 823, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 952, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-pytest/palimpsest-2495536/test_native_extension_initiali0/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').returncode
+
+tests/test_puck_worker_dependencies.py:90: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_puck_dependency_profile.py::test_native_export_is_bound_before_create_module_guard[native_create-True]
+FAILED tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed
+2 failed, 29 passed, 6359 deselected, 2 warnings in 21.64s

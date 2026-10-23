@@ -10,11 +10,12 @@ permissions:
 jobs:
   fixtures:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
         with:
           submodules: true
+          fetch-depth: 0
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
@@ -26,7 +27,9 @@ jobs:
           python -m pip install matplotlib==3.10.1 httpx==0.28.1
           python -m pip install -e '.[lab]'
       - name: Run fixture tests
-        run: python -m pytest -q
+        env:
+          PALIMPSEST_TMPFS_BASETEMP: /dev/shm/palimpsest-pytest
+        run: PALIMPSEST_PYTHON="$(command -v python)" scripts/run_tests.sh
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10

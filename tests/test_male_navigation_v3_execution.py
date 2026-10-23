@@ -316,7 +316,7 @@ class NavigationV3ExecutionTests(unittest.TestCase):
                           "handler", "handler"])
 
     def test_spawned_exec_has_unblocked_term_without_preexec_in_threads(self):
-        command = [owner.PYTHON, "-c",
+        command = [sys.executable, "-B", "-c",
                    "import signal,time; print(int(signal.SIGTERM in "
                    "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)"]
         process, identity, handoff = owner.spawn_contained(
@@ -384,7 +384,7 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual(cleaned, [50])
 
     def test_leader_exit_before_identity_drains_forked_group_before_error(self):
-        command = [owner.PYTHON, "-c",
+        command = [sys.executable, "-B", "-c",
                    "import os,time; child=os.fork(); os._exit(0) if child else time.sleep(30)"]
         created = []
         def popen(*args, **kwargs):

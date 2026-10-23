@@ -4,7 +4,15 @@ Objective: implement the approved [full plan](implementation-plan.md), R0–R5 a
 
 Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP tools are not exposed in this session; this file is the recovery fallback, not a claim that the binding was updated.
 
-## Current state
+## Current completion work — 23 October 2026
+
+The [current completion checklist](plans/project-completion-2026-10-23.md)
+tracks the renewed simulation-first goal and delivery on remote main. The
+22 October artwork reports supersede earlier short-material limitations.
+Memory v1 is retired at 44/48; its four missing cells are not active backlog.
+The historical recovery notes below remain evidence of earlier states.
+
+## Historical recovery state
 
 Accepted memory comparison coverage is **44/48 development cells**. The final
 originally planned batch, [remaining-10](reports/m5-remaining-10-comparison.md),

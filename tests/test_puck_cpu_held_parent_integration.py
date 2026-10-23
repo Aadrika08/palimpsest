@@ -187,6 +187,10 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
     native05=json.loads((ROOT/NATIVE).read_bytes())
     selected=sorted(['/etc/ld.so.cache']+['/usr/lib/'+name for name in LIBRARIES])
     native_rows={r['path']:r for r in native05['native_files']}
+    # Authored fixtures bind today's loader cache; historical admission pins stay frozen.
+    cache=Path('/etc/ld.so.cache').read_bytes()
+    native_rows['/etc/ld.so.cache']=dict(native_rows['/etc/ld.so.cache'],
+        size_bytes=len(cache),sha256=digest(cache))
     document('native',dict(kind='puck-cpu-characterization-native-metadata-v5',status='COMPLETE',
         root_scope='installed_shared_objects_and_interpreter',errors=[],oversized_native_files=[],required_missing_names=[],
         native_files=[native_rows[p] for p in selected],aliases=copy.deepcopy(baseline['host_path_aliases'])))

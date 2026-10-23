@@ -1,8 +1,8 @@
 # Human artwork review — pending
 
 Open the current local encounter:
-`runs/afterimage-presentation-2026-10-22-v2/encounter/index.html`.
-Its portable ZIP is beside the encounter directory. Automated checks establish
+`runs/guided-encounter-2026-10-23-v1/encounter/index.html`.
+The [portable guided ZIP](../reports/guided-encounter-2026-10-23/palimpsest-guided-encounter-2026-10-23.zip) is committed for download. Automated checks establish
 record integrity and browser behavior; they do not fill in these judgments.
 
 The requested [agent curatorial review](../reports/artwork-curatorial-review-2026-10-22.md)
