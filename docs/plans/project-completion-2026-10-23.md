@@ -62,7 +62,7 @@ while publication, actual ordering, pruning and qualification remain open.
 | 1 | Integrate completed artwork work | Complete: PR #184 merged at `9ac01a2`; all 25 commits through `89fb77d` are on remote main. Both hosted suites pass 6,410 tests with 88 skips and no failures; preflight/frontend checks also pass. The merge tree exactly matches the tested candidate. |
 | 2 | Finish the guided artwork introduction | One map now has a 5.58 s obstacle branch; Afterimage pairs 600 exact source frames with responses. The [guided introduction](../reports/guided-encounter-2026-10-23.md) is implemented; direct local-file opening, keyboard/mobile navigation and unchanged-derivative checks passed. Portable ZIP is included for delivery. |
 | 3 | Prepare independent acceptance | Produce a usable package and current runbook; user viewing/listening decisions and an independent operator's installation/all-six-mode session remain required. Record audience/use, source permissions and custody rather than assigning fictitious owners. |
-| 4 | Complete memory/R2 engineering and qualification | Single-condition sealing, retained-condition reading and [staged whole-case validation](../reports/memory-retained-case-v1-2026-10-25.md) are implemented. The latest source passes 392 affected checks, including 34 new checks also passed on tmpfs. Historical profiles remain preserved; the case reader does not create a new accepted qualification profile. Trusted qualification pins are empty, seed-400/family-case applicability and actual ordering are unresolved, whole-case publication is missing, and pruning remains an explicit refusing stub. Finish the publication contract and case closure using the existing seals, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
+| 4 | Complete memory/R2 engineering and qualification | Single-condition sealing, retained-condition reading and [staged whole-case validation](../reports/memory-retained-case-v1-2026-10-25.md) are implemented. The latest source passes 392 affected checks, including 34 new checks also passed on tmpfs. Historical profiles remain preserved; the case reader does not create a new accepted qualification profile. The [publication contract](memory-case-publication-v1.md) now defines three-file closure, accepted order attestation, final reading and the durable no-replace transaction; its [implementation plan](memory-case-publication-v1-implementation.md) is still unexecuted. Trusted qualification pins are empty, seed-400/family-case applicability and actual ordering remain unresolved, and pruning still refuses. Implement the contract using the existing seals, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
 | 5 | Qualify learned puck | Earlier original/balanced development arms scored 0/4 per model. Complete v3 runtime, source/scene/custody and collection admission; resolve protected catalog access versus independent identity projections. Then execute the declared collection/training/evaluation stages. Required capability remains 3/4 development and 6/8 held-out per model. |
 | 6 | Qualify MaleCNS navigation | v2 augmented models scored 0/4 per seed. Matched-budget attempt 2 failed importing httpx before training and is consumed. A new reviewed prospective design/allocation and dependency/source closure precede training. Preserve the 3/4 development and 6/8 held-out thresholds. |
 | 7 | Verify one integrated release candidate | Fresh setup/assets, supported-controller browser flows, replay/export (including PNG), recovery and applicable endurance; explicit timing limits; source/licence/runbook/evidence matrix review. All agreed gates must close on the candidate actually delivered on remote main. |
@@ -93,12 +93,17 @@ curatorial recommendations do not fill the human or independent-operator gates.
 
 ## Next independent source slice
 
-Next, specify the whole-case publication
-transaction atop the existing seals and tested staged-case validation. Define
-the three case files and their binding chain, actual owner/order evidence,
-final-path reading, marker-last writes, no-replace directory move, parent fsyncs
-and indeterminate-failure handling. Preserve the combined 32 MiB case-close and
-454-entry limits. Hold custody through the atomic move: strict read-only custody
-and returned reader dictionaries cannot authorize that mutation. Keep the empty
-qualification gate, real-pruning refusal and unresolved ordering/seed decisions.
-Source-only tests cannot authorize a study or fabricate a qualification receipt.
+The [publication contract](memory-case-publication-v1.md) and
+[implementation plan](memory-case-publication-v1-implementation.md) complete the
+specification step. They name manifest/close/commit schemas, accepted supervisor
+attestation, explicit final-path reading, marker-last writes, the same-filesystem
+no-replace directory move, both parent fsyncs and indeterminate failure. Existing
+supervisor records do not prove execution order; the new acceptance anchor must
+remain empty until independent real evidence is accepted.
+
+Next, execute implementation Task 1: the bounded order-attestation validator and
+empty-pin refusal tests. Then extract shared staged/final semantics, implement
+the custody-preserving transaction and final reader, and qualify the source change
+on a prospective profile. Preserve the combined 32 MiB case-close and 454-entry
+limits, existing qualification gate, real-pruning refusal and unresolved ordering/
+seed decisions. Source-only tests cannot authorize a study or fabricate a receipt.

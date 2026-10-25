@@ -39,9 +39,22 @@ is committed at `1ad4f8a`. It holds one source, all nine conditions and external
 dependencies through validation, derives retained cells, and checks shared
 identity, accounting and equality without claiming actual execution order.
 All 392 affected Btrfs checks pass; the 34 new checks also pass on tmpfs. Existing
-profiles remain unchanged and qualification pins remain empty. Next: specify
-the publication transaction and actual-order evidence, then implement final-path
-reading and the guarded case move. Actual pruning and research remain gated.
+profiles remain unchanged and qualification pins remain empty.
+
+The [publication contract](plans/memory-case-publication-v1.md) and
+[implementation plan](plans/memory-case-publication-v1-implementation.md) now
+specify the three case files, externally accepted supervisor attestation,
+final-path reading and durable no-replace publication. They preserve the 32 MiB /
+454-entry bounds and require continuous custody through the move. A separate,
+initially empty execution-audit acceptance module avoids a receipt/source hash
+cycle; old timestamps cannot fill this gate. This is documentation, not an
+implemented publisher or accepted execution evidence. Next: implementation Task 1,
+the order-attestation validator and empty-pin refusal tests; then shared final
+semantics, the transaction and final reader. Actual pruning and research stay gated.
+An independent builder consistency review found no remaining implementation-plan
+ambiguity. All 157 local Markdown links across the four changed documents pass,
+and the diff whitespace check passes. Source, tests, workflows and historical
+protocol files are unchanged; no new functional test result is claimed.
 
 The user's 25 October continuation resumed work in this turn. The goal service
 still reports `paused` and exposes no agent resume operation; automatic goal
