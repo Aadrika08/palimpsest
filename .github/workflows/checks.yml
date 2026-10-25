@@ -18,6 +18,7 @@ jobs:
         --cap-add SYS_ADMIN --cap-add SYS_PTRACE
         --security-opt seccomp=unconfined --security-opt apparmor=unconfined
         --security-opt systempaths=unconfined
+        --ulimit nofile=65536:65536
         --tmpfs /tmp:rw,exec,nosuid,nodev,size=4g --shm-size=2g
     defaults:
       run:
@@ -61,24 +62,29 @@ jobs:
           node --version
           runuser -u fixture -- git status --short
           runuser -u fixture -- bwrap --unshare-all --ro-bind / / --proc /proc --dev /dev /usr/bin/true
+          runuser -u fixture -- prlimit --nofile=65536: -- .venv/bin/python -B -c 'import resource; limits = resource.getrlimit(resource.RLIMIT_NOFILE); print("fixture RLIMIT_NOFILE:", limits); assert limits == (65536, 65536)'
       - name: Check hosted environment boundaries before the full suite
         run: |
-          runuser -u fixture -- scripts/run_tests.sh -- \
+          runuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh -- \
             tests/test_frozen_pins.py \
             tests/test_lab.py::Supervision::test_watchdog_terminates_owner_process_group \
             tests/test_bounded_qualification_descendants.py \
             tests/test_memory_family_allocation_v3.py::test_rollback_never_unlinks_a_replacement_inode \
             tests/test_memory_selected_pilot.py::test_worker_rejects_expired_original_owner_allocation_before_output \
+            tests/test_manual_lab_refresh_v3.py::AdmissionAndGrace::test_real_tracker_exits_after_last_inherited_pipe_writer_closes \
+            tests/test_verification_scripts.py::EnduranceProcessTests \
+            tests/test_puck_held_runtime_parent.py::test_prepare_then_separately_pinned_qualification_executes_real_held_worker \
             tests/test_puck_cpu_namespace.py::test_real_two_bwrap_passes_preserve_raw_tmpfs_inode_and_held_custody \
             tests/test_puck_cpu_distributed_observer.py::test_cli_rejects_a_different_interpreter_before_allocating \
             tests/test_storage.py::StorageTests::test_nested_inventory_rejects_special_files_scan_errors_and_changed_root
-          runuser -u fixture -- env PALIMPSEST_TEST_BASETEMP="$PWD/runs/hosted-preflight" \
+          runuser -u fixture -- prlimit --nofile=65536: -- env PALIMPSEST_TEST_BASETEMP="$PWD/runs/hosted-preflight" \
             scripts/run_tests.sh -- \
-            tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+            tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
       - name: Run fixture tests
         env:
           PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest
-        run: runuser -u fixture -- scripts/run_tests.sh
+        run: |
+          runuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10

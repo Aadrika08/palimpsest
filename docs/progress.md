@@ -33,8 +33,14 @@ declared dependencies; its five affected authored tests pass locally. Hosted
 candidate `510a750` then reports 6,376 passes, 30 failures and 88 skips in the PR
 run, with frontend passing. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
 retains both subsequent failure logs and fixes container ownership/namespace
-admission and four test-fixture assumptions. All 27 focused local checks pass;
-the next hosted candidate must pass its preflight and complete suite.
+admission and four test-fixture assumptions. All 27 focused local checks pass.
+Candidate `3739b3a` then passes hosted preflight and frontend, but its complete PR
+suite reports 6,394 passes, 12 failures and 88 skips. Eleven failures trace to
+`runuser` lowering the descriptor limit; one occurs during process exit inspection.
+The follow-up restores the required limit and makes zombie observation preserve
+identity without excusing inaccessible live processes. Fifteen held-runtime,
+five authored CPU and seventeen process/manual-verification checks pass locally.
+Hosted validation of the follow-up remains required.
 Main stays `2814138` until checks pass and the merge
 is verified. Project-code/new-parameter
 licensing and human/operator decisions remain pending.

@@ -62,17 +62,43 @@ def summary(values):
 
 
 def process(pid):
-    try:
-        root = Path('/proc') / str(pid)
+    root = Path('/proc') / str(pid)
+
+    def identity():
         fields = (root / 'stat').read_text().rsplit(') ', 1)[1].split()
-        status = dict(line.split(':', 1) for line in (root / 'status').read_text().splitlines() if ':' in line)
         return {'pid': pid, 'ppid': int(fields[1]), 'group': int(fields[2]),
                 'start_ticks': int(fields[19]), 'state': fields[0],
-                'rss_bytes': int(status.get('VmRSS', '0 kB').split()[0]) * 1024,
-                'threads': int(status['Threads']), 'fds': len(list((root / 'fd').iterdir())),
-                'command': (root / 'cmdline').read_bytes().replace(b'\0', b' ').decode(errors='replace')[:512]}
+                'rss_bytes': 0, 'threads': int(fields[17]), 'fds': 0, 'command': ''}
+
+    row = None
+    try:
+        row = identity()
+        # Zombies retain identity but have released their address space and FDs.
+        if row['state'] == 'Z':
+            return row
+        try:
+            status = dict(line.split(':', 1) for line in (root / 'status').read_text().splitlines() if ':' in line)
+            row.update(rss_bytes=int(status.get('VmRSS', '0 kB').split()[0]) * 1024,
+                       threads=int(status['Threads']), fds=len(list((root / 'fd').iterdir())),
+                       command=(root / 'cmdline').read_bytes().replace(b'\0', b' ').decode(errors='replace')[:512])
+            return row
+        except PermissionError as error:
+            # Exit can race resource inspection. Only an observed same-identity
+            # zombie excuses denied access; an inaccessible live process does not.
+            try:
+                current = identity()
+            except PermissionError:
+                error.add_note('Process identity recheck was also inaccessible')
+                raise error
+            if current['state'] == 'Z' and all(current[key] == row[key] for key in ('start_ticks', 'group')):
+                return current
+            error.add_note(f'Process identity recheck: {current}')
+            raise
     except (FileNotFoundError, ProcessLookupError):
         return None
+    except PermissionError as error:
+        error.add_note(f'Process inspection denied: pid={pid}, initial_identity={row}')
+        raise
 
 
 def descendants(server_pid):

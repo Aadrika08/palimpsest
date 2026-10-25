@@ -28,6 +28,10 @@ ownership checks under the runner's clean environment. Docker's masked system
 paths are disabled for the disposable job so nested bubblewrap can mount its own
 `/proc`. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
 records the evidence and the short hosted preflight before the complete suite.
+The suite also needs an open-file limit of 65,536: existing held-runtime controls
+require at least 40,000 descriptors. CI declares the container ceiling and
+restores the soft limit after `runuser`, which otherwise resets it to 1,024.
+The preflight records the effective limits and includes an independent CPU audit.
 
 ## What the runner sets up, and why
 

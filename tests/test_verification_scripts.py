@@ -10,12 +10,90 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 from types import SimpleNamespace
 import unittest
 from unittest.mock import MagicMock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class EnduranceProcessTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('endurance_process', ROOT / 'scripts/verify_endurance.py')
+        self.reader = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.reader)
+        self.child = subprocess.Popen([sys.executable, '-B', '-c', 'import sys; sys.stdin.read()'],
+                                      stdin=subprocess.PIPE, start_new_session=True)
+        self.root = Path('/proc') / str(self.child.pid)
+        fields = (self.root / 'stat').read_text().rsplit(') ', 1)[1].split()
+        self.start = int(fields[19])
+        self.addCleanup(self.reap)
+
+    def reap(self):
+        if self.child.poll() is None:
+            self.child.kill()
+        self.child.wait(timeout=5)
+        self.child.stdin.close()
+
+    def zombie(self):
+        self.child.stdin.close()
+        until = time.monotonic() + 5
+        while time.monotonic() < until:
+            if (self.root / 'stat').read_text().rsplit(') ', 1)[1].split()[0] == 'Z':
+                return
+            time.sleep(.01)
+        self.fail('Bounded child did not exit')
+
+    def assert_zombie(self, row):
+        self.assertEqual(set(row), {'pid', 'ppid', 'group', 'start_ticks', 'state',
+                                   'rss_bytes', 'threads', 'fds', 'command'})
+        self.assertEqual((row['pid'], row['ppid'], row['group'], row['start_ticks'], row['state']),
+                         (self.child.pid, os.getpid(), self.child.pid, self.start, 'Z'))
+        self.assertEqual((row['rss_bytes'], row['fds'], row['command']), (0, 0, ''))
+        self.assertIsInstance(row['threads'], int)
+
+    def deny_fds(self, transition=None):
+        original = Path.iterdir
+        def inspect(path):
+            if path == self.root / 'fd':
+                if transition:
+                    transition()
+                raise PermissionError(13, 'Authored procfs permission boundary', str(path))
+            return original(path)
+        return patch.object(Path, 'iterdir', inspect)
+
+    def test_observed_zombie_keeps_identity_without_fd_access(self):
+        self.zombie()
+        with self.deny_fds():
+            self.assert_zombie(self.reader.process(self.child.pid))
+
+    def test_permission_race_accepts_only_same_identity_now_zombie(self):
+        with self.deny_fds(self.zombie):
+            self.assert_zombie(self.reader.process(self.child.pid))
+
+    def test_inaccessible_live_process_still_raises_with_identity_context(self):
+        with self.deny_fds(), self.assertRaises(PermissionError) as caught:
+            self.reader.process(self.child.pid)
+        notes = ' '.join(getattr(caught.exception, '__notes__', []))
+        self.assertIn(str(self.child.pid), notes)
+        self.assertIn(str(self.start), notes)
+
+    def test_permission_race_does_not_accept_reused_pid_as_old_zombie(self):
+        original = Path.read_text
+        def read(path, *args, **kwargs):
+            value = original(path, *args, **kwargs)
+            if path == self.root / 'stat':
+                prefix, tail = value.rsplit(') ', 1)
+                fields = tail.split()
+                if fields[0] == 'Z':
+                    fields[19] = str(self.start + 1)
+                    return prefix + ') ' + ' '.join(fields)
+            return value
+        with self.deny_fds(self.zombie), patch.object(Path, 'read_text', read), \
+                self.assertRaises(PermissionError):
+            self.reader.process(self.child.pid)
 
 
 class VerificationScriptTests(unittest.TestCase):
