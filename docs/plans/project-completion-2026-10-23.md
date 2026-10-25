@@ -43,6 +43,12 @@ it is not hosted CI or scientific qualification. Remote refs and the
 workflow-scope blocker are unchanged on 25 October. Original-code and
 new-parameter licensing is an explicit pending owner decision.
 
+The [retained-case reader](../reports/memory-retained-case-v1-2026-10-25.md)
+now validates a source and all nine conditions under continuous custody.
+Source `1ad4f8a` passes 392 affected Btrfs checks; all 34 new checks also pass on
+tmpfs. Existing profiles stay unchanged. This closes staged case validation,
+while publication, actual ordering, pruning and qualification remain open.
+
 ## Ordered work and evidence required
 
 | Order | Work | Present evidence / remaining exit |
@@ -50,7 +56,7 @@ new-parameter licensing is an explicit pending owner decision.
 | 1 | Integrate completed artwork work | Review passed the production delta; the complete canonical fixture suite passes on `39a266f`. Resolve workflow-write access, push the repaired CI configuration, verify hosted checks, then land and verify remote main without rewriting history. |
 | 2 | Finish the guided artwork introduction | One map now has a 5.58 s obstacle branch; Afterimage pairs 600 exact source frames with responses. The [guided introduction](../reports/guided-encounter-2026-10-23.md) is implemented; direct local-file opening, keyboard/mobile navigation and unchanged-derivative checks passed. Portable ZIP is included for delivery. |
 | 3 | Prepare independent acceptance | Produce a usable package and current runbook; user viewing/listening decisions and an independent operator's installation/all-six-mode session remain required. Record audience/use, source permissions and custody rather than assigning fictitious owners. |
-| 4 | Complete memory/R2 engineering and qualification | Single-condition sealing and a separate retained-condition reader are implemented. The [current-source reader report](../reports/memory-retained-condition-v1-2026-10-23.md) records all-nine-condition checks and 482 passing affected regressions with no skips. Historical profiles remain preserved; a separate prospective profile binds the integrated source. Trusted qualification pins are empty, seed-400/family-case applicability is unresolved, whole-case publication is missing, and pruning remains an explicit refusing stub. Prepare prospective ordering and qualification decisions, finish case closure using the existing seals, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
+| 4 | Complete memory/R2 engineering and qualification | Single-condition sealing, retained-condition reading and [staged whole-case validation](../reports/memory-retained-case-v1-2026-10-25.md) are implemented. The latest source passes 392 affected checks, including 34 new checks also passed on tmpfs. Historical profiles remain preserved; the case reader does not create a new accepted qualification profile. Trusted qualification pins are empty, seed-400/family-case applicability and actual ordering are unresolved, whole-case publication is missing, and pruning remains an explicit refusing stub. Finish the publication contract and case closure using the existing seals, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
 | 5 | Qualify learned puck | Earlier original/balanced development arms scored 0/4 per model. Complete v3 runtime, source/scene/custody and collection admission; resolve protected catalog access versus independent identity projections. Then execute the declared collection/training/evaluation stages. Required capability remains 3/4 development and 6/8 held-out per model. |
 | 6 | Qualify MaleCNS navigation | v2 augmented models scored 0/4 per seed. Matched-budget attempt 2 failed importing httpx before training and is consumed. A new reviewed prospective design/allocation and dependency/source closure precede training. Preserve the 3/4 development and 6/8 held-out thresholds. |
 | 7 | Verify one integrated release candidate | Fresh setup/assets, supported-controller browser flows, replay/export (including PNG), recovery and applicable endurance; explicit timing limits; source/licence/runbook/evidence matrix review. All agreed gates must close on the candidate actually delivered on remote main. |
@@ -81,11 +87,12 @@ curatorial recommendations do not fill the human or independent-operator gates.
 
 ## Next independent source slice
 
-While main landing awaits credential scope, finish whole-case validation and
-publication atop the existing seals and newly tested retained reader. Preserve
-the three-case-file, 32 MiB close-receipt and 454-entry limits, derive the
-registered condition order, retain qualification refusal before protected
-access, and use authored fixtures for post-prune trees. Hold custody through the
-atomic case move: returned reader dictionaries do not retain that capability.
-Real pruning, ordering and seed binding remain separate reviewed decisions.
+While main landing awaits credential scope, specify the whole-case publication
+transaction atop the existing seals and tested staged-case validation. Define
+the three case files and their binding chain, actual owner/order evidence,
+final-path reading, marker-last writes, no-replace directory move, parent fsyncs
+and indeterminate-failure handling. Preserve the combined 32 MiB case-close and
+454-entry limits. Hold custody through the atomic move: strict read-only custody
+and returned reader dictionaries cannot authorize that mutation. Keep the empty
+qualification gate, real-pruning refusal and unresolved ordering/seed decisions.
 Source-only tests cannot authorize a study or fabricate a qualification receipt.

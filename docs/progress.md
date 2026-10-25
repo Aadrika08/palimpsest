@@ -26,6 +26,20 @@ and hash. Setup and test instructions follow published main and the canonical
 runner. Workflow-write access and hosted CI remain necessary for landing;
 project-code/new-parameter licensing and human/operator decisions are pending.
 
+The [staged retained-case reader](reports/memory-retained-case-v1-2026-10-25.md)
+is committed at `1ad4f8a`. It holds one source, all nine conditions and external
+dependencies through validation, derives retained cells, and checks shared
+identity, accounting and equality without claiming actual execution order.
+All 392 affected Btrfs checks pass; the 34 new checks also pass on tmpfs. Existing
+profiles remain unchanged and qualification pins remain empty. Next: specify
+the publication transaction and actual-order evidence, then implement final-path
+reading and the guarded case move. Actual pruning and research remain gated.
+
+The user's 25 October continuation resumed work in this turn. The goal service
+still reports `paused` and exposes no agent resume operation; automatic goal
+continuation has not been reactivated. This is separate from the user's renewed
+authorization to continue the implementation.
+
 ## Historical recovery state
 
 Accepted memory comparison coverage is **44/48 development cells**. The final

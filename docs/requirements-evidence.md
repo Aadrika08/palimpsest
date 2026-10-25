@@ -23,6 +23,13 @@ checks. Source/runtime/model/scene identities, seed, limits, complete records an
 snapshots, replay comparisons, export hashes and normal cleanup belong in its
 portable bundle.
 
+The [25 October retained-case source check](reports/memory-retained-case-v1-2026-10-25.md)
+adds continuous-custody validation across one source and all nine conditions:
+392 affected Btrfs checks pass, with all 34 new checks also passed on tmpfs.
+This derives retained outcomes and checks case consistency; it does not establish
+actual execution order, publication, pruning or runtime/scientific qualification.
+All requirement and simulation-gate statuses below remain unchanged.
+
 The [35-row source preflight](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/reports/puck-cpu-export-phase-preflight-v1.md)
 is complete: 32 source-supported creation rows and three distributed phase
 corrections. The unchanged candidate/other 32 declarations remain preserved.

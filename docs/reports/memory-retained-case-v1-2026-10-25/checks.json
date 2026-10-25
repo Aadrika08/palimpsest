@@ -1,0 +1,145 @@
+{
+  "affected_regression": {
+    "command": "PALIMPSEST_TEST_BASETEMP=/home/utkarsh/Work/shraddha/palimpsest/runs/pytest-retained-case scripts/run_tests.sh -- tests/test_memory_family_retained_case_v1.py tests/test_memory_family_raw_audit_v4.py tests/test_memory_family_producer_v4.py tests/test_memory_family_condition_close_v4.py tests/test_memory_family_retained_condition_v1.py tests/test_memory_family_retained_source_v4.py tests/test_memory_family_replay_custody_v4.py tests/test_memory_condition_replay_admission_v1.py tests/test_frozen_pins.py tests/test_requirements_evidence.py",
+    "exit_code": 0,
+    "failed": 0,
+    "filesystem": "btrfs",
+    "log": "affected-tests.log",
+    "passed": 392,
+    "seconds": 425.67,
+    "skipped": 0
+  },
+  "claims": {
+    "case_published": false,
+    "execution_order_verified": false,
+    "new_qualification_profile_accepted": false,
+    "pruning_performed": false,
+    "runtime_qualified": false,
+    "scientific_capability_demonstrated": false,
+    "study_authorized": false
+  },
+  "current_behavior_pins_verified": 27,
+  "earlier_focused_checks": [
+    {
+      "failed": 0,
+      "passed": 22,
+      "scope": "Initial new reader tests",
+      "seconds": 44.25
+    },
+    {
+      "ancestor_and_actor_identified": false,
+      "deselected": 22,
+      "failed": 1,
+      "failure": "test_case_rejects_own_sham_outcome_disagreement stopped at Replay root or ancestor changed while held",
+      "passed": 10,
+      "raw_log_retained": false,
+      "scope": "Added projection/equality checks under /tmp",
+      "seconds": 12.37
+    },
+    {
+      "deselected": 32,
+      "failed": 0,
+      "passed": 2,
+      "scope": "Equality and no-event checks under repository runs/",
+      "seconds": 29.78
+    }
+  ],
+  "files": [
+    {
+      "path": "affected-tests.log",
+      "sha256": "87d0a347b9f7dd260f20c38e6cda079b05dc428e9194cb0bada6c610fa49251b",
+      "size_bytes": 512
+    },
+    {
+      "path": "tmpfs-tests.log",
+      "sha256": "f66028ce832a40c9ba76c26fa87262682c32a7ba36dae7786ab727dbce71a1cc",
+      "size_bytes": 100
+    }
+  ],
+  "limitations": [
+    "Only authored fixtures; expected slots and commits require independent provenance",
+    "Trusted qualification pins remain empty",
+    "42/48 registered rows conflict with prior-own ordering",
+    "Returned data has no live custody; publication and real pruning are still missing",
+    "No complete canonical suite rerun after 39a266f; these are the affected checks for 1ad4f8a",
+    "Main landing and hosted CI remain blocked by GitHub workflow-write access"
+  ],
+  "schema": "memory-retained-case-v1-source-verification",
+  "scope": "Authored retained-case source checks; no production qualification or study",
+  "source_commit": "1ad4f8abf1a37c06cd3b6b7cb7b8a167dd4c728c",
+  "source_files": [
+    {
+      "path": "scripts/memory_family_retained_case_v1.py",
+      "sha256": "29a05edc363f2d7bad5e3bd6d7da3465c1a5c85c38c15ff14341a1d4b8b30053",
+      "size_bytes": 13693
+    },
+    {
+      "path": "docs/plans/memory-retained-case-v1.md",
+      "sha256": "1067e82764e7f816df1e5700b055e079ac2bf3bdeffefa9a51a5400771512e2d",
+      "size_bytes": 3580
+    },
+    {
+      "path": "tests/test_memory_family_retained_case_v1.py",
+      "sha256": "5e188c0950725bcf8a512f670833ed2a81804c3271782c646c545ae4cf809e25",
+      "size_bytes": 15453
+    },
+    {
+      "path": "tests/test_memory_family_raw_audit_v4.py",
+      "sha256": "299c090171ee431fc9bd25e7af46c812eab68626e7646cbbdfb74e1637f67107",
+      "size_bytes": 41232
+    },
+    {
+      "path": "tests/test_memory_family_producer_v4.py",
+      "sha256": "bcb432881056735314475775feb845c49f8f6bc2a99b800ee2c18b9c9cdfdc3a",
+      "size_bytes": 24884
+    },
+    {
+      "path": "tests/test_memory_family_condition_close_v4.py",
+      "sha256": "7c63525ed138886bcffae8057d8bbf2bcbac1981113ecdf9f791c417164cfd82",
+      "size_bytes": 20516
+    }
+  ],
+  "tmpfs_recheck": {
+    "command": "PALIMPSEST_TEST_BASETEMP=/dev/shm/palimpsest-retained-case scripts/run_tests.sh -- tests/test_memory_family_retained_case_v1.py",
+    "exit_code": 0,
+    "failed": 0,
+    "filesystem": "tmpfs",
+    "log": "tmpfs-tests.log",
+    "overlaps_affected_regression": true,
+    "passed": 34,
+    "seconds": 50.62,
+    "skipped": 0
+  },
+  "unchanged_profiles": [
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-protocol.json",
+      "sha256": "cbdf034970963a847d42fabc879cc4596a99c8c1b58311561a6c678233e9c4fa",
+      "size_bytes": 16536
+    },
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json",
+      "sha256": "434bd8bcdc6889a862f9c59e79f52cf9cf5d4cf7c07e15b0bf5c60eafb8c5947",
+      "size_bytes": 17529
+    },
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json",
+      "sha256": "e71fc7ea6185f7de769b9879d4b581458074b925255b4712f0f6578fb0556261",
+      "size_bytes": 18084
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-protocol.json",
+      "sha256": "fdbe24040c26d5e8572d42c7452591f9cf94702c31bea0823a2f8b9be23ea4df",
+      "size_bytes": 2738
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-directory-census-v1-protocol.json",
+      "sha256": "a20a91b81423e0c2d6c81d854de49a3eacf5530e9f186eeaf54655d5922310ae",
+      "size_bytes": 3086
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-retained-condition-v1-protocol.json",
+      "sha256": "ca8f148526c4ce33a28583a33c4d0dc474e7264aba66e89946c8d2fe3cc6f93f",
+      "size_bytes": 3108
+    }
+  ]
+}
