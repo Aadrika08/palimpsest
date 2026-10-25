@@ -51,10 +51,11 @@ def tree(root):
             for p in root.rglob('*') if p.is_file()}
 
 
-def fixture(root, *, natural_failure=False, condition='own', source=None, prior_own=None):
+def fixture(root, *, natural_failure=False, condition='own', source=None, prior_own=None,
+            row=4, kind='change'):
     """Real independent raw audit/converter/pair; only cell/model seams are authored."""
     if source is None:
-        source = source_fixture(root)
+        source = source_fixture(root, row=row, kind=kind)
         producer.seal_compact_source(**source_request(source))
     case = source['sample']['case']
     case_id = case['case_id']
@@ -66,7 +67,7 @@ def fixture(root, *, natural_failure=False, condition='own', source=None, prior_
     raw = case_path / '.raw' / run_id
     # The original fixture's raw own selector predates v4 history descriptors.
     # Build a new authored trace with v4's exact mapping before either raw audit.
-    sample = evidence(row=4)
+    sample = evidence(row=case['row'], kind=case['kind'])
     application = snapshots.read_snapshot(source['snapshot'])['application']
     histories = _histories(root, case)
     prior_result = None if prior_own is None else artifacts._json(

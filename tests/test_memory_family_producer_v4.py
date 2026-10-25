@@ -34,9 +34,9 @@ def inventory(root):
             for path in root.rglob('*') if path.is_file()}
 
 
-def fixture(root):
+def fixture(root, *, row=4, kind='change'):
     root.mkdir()
-    sample = raw_fixture(root / 'fixture', include_source=True)
+    sample = raw_fixture(root / 'fixture', include_source=True, row=row, kind=kind)
     case = sample['case']
     run_id = sample['source']['run_id']
     case_root = root / '.pending' / case['case_id']
