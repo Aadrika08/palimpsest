@@ -1,0 +1,46 @@
+{
+  "failed_candidate": "f3645c211312e78de1e21d96c03313e6bda3fda8",
+  "run_id": 40191242222,
+  "log_uncompressed": {
+    "size_bytes": 4007866,
+    "sha256": "b26f986e7ea784a3efce289902f8ab0bd8d664f53a986621f7c5f66f4877df81"
+  },
+  "counts": {
+    "failed": 485,
+    "passed": 5921,
+    "skipped": 88
+  },
+  "authored_repair": {
+    "passed": 5,
+    "failed": 0,
+    "seconds": 49.2,
+    "exit_code": 0
+  },
+  "artifacts": [
+    {
+      "path": "docs/reports/hosted-fixtures-2026-10-25/authored-prefix-refresh.log",
+      "size_bytes": 99,
+      "sha256": "aa67539c5595bbead19b9ec2b656aa67900dfb33377aff887ba24913f21d0ba3"
+    },
+    {
+      "path": "docs/reports/hosted-fixtures-2026-10-25/first-hosted-failure.log.gz",
+      "size_bytes": 327598,
+      "sha256": "fda470db401b6aa10563e6a67eb96420a750ed1063bcdbd764129d84e7ac2fd1"
+    },
+    {
+      "path": ".github/workflows/checks.yml",
+      "size_bytes": 3514,
+      "sha256": "760c644567468b3d7e63fc44f41572ffcfdb57db9bc450a752338d1a9b3e4c57"
+    },
+    {
+      "path": ".github/python-downloads.json",
+      "size_bytes": 534,
+      "sha256": "3b8ac7f72785739f19a09d0bc6674cce5a8e8c41e17c3021e8a7fc121d23dc79"
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "size_bytes": 24902,
+      "sha256": "957807ba77b6ea7dfc9a7c0511dd5d9a67cff2ddbfbe6cffe2ac238615318789"
+    }
+  ]
+}

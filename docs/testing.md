@@ -12,6 +12,16 @@ It exits nonzero if any pass fails, and removes its temporary directories when i
 finishes. The README's `uv run --no-sync pytest -q` remains a quick fixture
 check; it does not reproduce this environment.
 
+Hosted fixture CI uses a digest-pinned Arch Linux container, executable `/tmp`
+tmpfs, the exact CPython 3.11.15 build recorded in
+[the download descriptor](../.github/python-downloads.json), and the locked
+simulation/lab dependencies. Several source fixtures deliberately bind the
+interpreter ELF, its fixed installation path and the system-library layout;
+selecting any Python 3.11 build on a generic runner is insufficient. The
+[hosted environment repair](reports/hosted-fixtures-2026-10-25.md) records the
+initial failures and verification scope. These fixture checks do not qualify an
+installed numerical runtime or a different host platform.
+
 ## What the runner sets up, and why
 
 - **Interpreter.** It uses the main checkout's `.venv` (CPython 3.11.15). This is

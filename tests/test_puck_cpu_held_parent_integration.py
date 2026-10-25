@@ -184,6 +184,14 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
         collisions=collisions,wheels=wheels))
     baseline_raw=(ROOT/BASELINE).read_bytes();baseline=json.loads(baseline_raw)
     # Authored fixtures bind current host files; historical qualification pins stay frozen.
+    baseline_api=load(ROOT/'scripts/build_puck_python_louvain.py','cpu_authored_baseline')
+    prefix=baseline_api.prefix_inventory(Path(baseline['python_prefix']),time.monotonic()+60)
+    baseline.update(prefix,regular_file_count=len(prefix['files']),
+        symlink_count=len(prefix['symlinks']),
+        regular_file_bytes=sum(row[1] for row in prefix['files']))
+    for row in baseline['external_libraries']:
+        if row.get('load_paths'):
+            row['realpath']=str(Path(row['load_paths'][0]).resolve(strict=True))
     for row in [*baseline['external_libraries'], baseline['bwrap_executable']]:
         if row is not None:
             payload=Path(row.get('realpath',row.get('path'))).read_bytes()

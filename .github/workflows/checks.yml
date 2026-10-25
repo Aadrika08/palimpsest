@@ -10,26 +10,54 @@ permissions:
 jobs:
   fixtures:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
+    # The source fixtures bind this Linux layout, tmpfs and the exact Python ELF.
+    container:
+      image: archlinux@sha256:dfb01267da058e5d08ffdc543bf484c9b404655b0bac1d0201d972bf950cdfd0
+      options: >-
+        --cap-add SYS_ADMIN --cap-add SYS_PTRACE
+        --security-opt seccomp=unconfined --security-opt apparmor=unconfined
+        --tmpfs /tmp:rw,exec,nosuid,nodev,size=4g --shm-size=2g
+    defaults:
+      run:
+        shell: bash
+    env:
+      UV_PYTHON_INSTALL_DIR: /home/utkarsh/.local/share/uv/python
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
+      - name: Install namespace, compiler and EGL dependencies
+        run: pacman -Syu --noconfirm --needed git gcc bubblewrap libglvnd mesa curl tar gzip xz
       - uses: actions/checkout@v7
         with:
           submodules: true
           fetch-depth: 0
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-node@v7
         with:
-          python-version: "3.11"
-      - name: Install CPU PyTorch
-        run: python -m pip install torch==2.9.0 --index-url https://download.pytorch.org/whl/cpu
-      - name: Install fixture dependencies
+          node-version-file: ui/.node-version
+      - name: Install the exact fixture interpreter and locked dependencies
         run: |
-          python -m pip install pytest==8.4.2 numpy==2.2.5 scipy==1.15.2 pandas==2.2.3 py7zr==1.1.3 mujoco==3.3.6
-          python -m pip install matplotlib==3.10.1 httpx==0.28.1
-          python -m pip install -e '.[lab]'
+          curl --fail --location --output /tmp/uv.tar.gz https://github.com/astral-sh/uv/releases/download/0.9.25/uv-x86_64-unknown-linux-gnu.tar.gz
+          printf '%s  %s\n' fa1f4abfe101d43e820342210c3c6854028703770f81e95b119ed1e65ec81b35 /tmp/uv.tar.gz | sha256sum --check -
+          tar -xzf /tmp/uv.tar.gz -C /tmp
+          install /tmp/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin/uv
+          uv python install 3.11.15 --no-bin --python-downloads-json-url "file://$PWD/.github/python-downloads.json"
+          FIXTURE_PYTHON="$UV_PYTHON_INSTALL_DIR/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11"
+          printf '%s  %s\n' 572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a "$FIXTURE_PYTHON" | sha256sum --check -
+          printf '%s  %s\n' afa518f786b425fc598b11adbf60d667bf7fe7f5f0662a0cd6bbf6f3e25c8d21 "$UV_PYTHON_INSTALL_DIR/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/_sysconfigdata__linux_x86_64-linux-gnu.py" | sha256sum --check -
+          uv sync --locked --no-python-downloads --python "$FIXTURE_PYTHON" --extra simulation --extra lab
+          ln -s "$(command -v node)" /usr/bin/node
+          npm ci --prefix ui
+      - name: Record fixture environment
+        run: |
+          .venv/bin/python -B -c 'import sys, importlib.metadata as m; print(sys.version); print({p: m.version(p) for p in ("torch", "torchvision", "numpy", "mujoco", "pytest")})'
+          findmnt -T /tmp
+          df -h . /tmp /dev/shm
+          bwrap --version
+          node --version
       - name: Run fixture tests
         env:
-          PALIMPSEST_TMPFS_BASETEMP: /dev/shm/palimpsest-pytest
-        run: PALIMPSEST_PYTHON="$(command -v python)" scripts/run_tests.sh
+          PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest
+        run: scripts/run_tests.sh
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10

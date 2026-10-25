@@ -23,8 +23,16 @@ custody-interference diagnosis and passing runner/actual-EGL checks. The complet
 four-pass canonical fixture suite then passes on `39a266f`: **6,372 passed,
 88 skipped, zero failures**. The indexed candidate log retains its exact command
 and hash. Setup and test instructions follow published main and the canonical
-runner. Workflow-write access and hosted CI remain necessary for landing;
-project-code/new-parameter licensing and human/operator decisions are pending.
+runner. On 25 October the user authorized Aadrika08's workflow permission and all
+eight local commits through `f3645c2` were pushed. [PR #184](https://github.com/Aadrika08/palimpsest/pull/184)
+is ready for review. Its [hosted run](https://github.com/Aadrika08/palimpsest/actions/runs/40191242222)
+passed frontend and failed fixtures because the hosted environment did not meet
+the suite's runtime and system requirements. The [environment repair](reports/hosted-fixtures-2026-10-25.md)
+retains all 485 failures, pins the fixture container/interpreter and installs the
+declared dependencies; its five affected authored tests pass locally. Hosted
+verification remains pending. Main stays `2814138` until checks pass and the merge
+is verified. Project-code/new-parameter
+licensing and human/operator decisions remain pending.
 
 The [staged retained-case reader](reports/memory-retained-case-v1-2026-10-25.md)
 is committed at `1ad4f8a`. It holds one source, all nine conditions and external
