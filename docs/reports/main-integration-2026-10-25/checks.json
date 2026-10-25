@@ -1,0 +1,155 @@
+{
+  "authored_host_recheck": {
+    "deselected": 137,
+    "failed": 0,
+    "passed": 5,
+    "seconds": 46.53
+  },
+  "baseline_command": "PALIMPSEST_TMPFS_BASETEMP=/dev/shm/palimpsest-pytest scripts/run_tests.sh",
+  "baseline_commit": "b36b46b0c8cf544dc22c67fb82fd4c1049c71119",
+  "baseline_exit_code": 1,
+  "baseline_passes": [
+    {
+      "deselected": 43,
+      "failed": 5,
+      "name": "ordinary",
+      "passed": 6312,
+      "seconds": 1540.31,
+      "skipped": 88
+    },
+    {
+      "deselected": 6441,
+      "failed": 0,
+      "name": "process-isolated",
+      "passed": 7,
+      "seconds": 9.46
+    },
+    {
+      "deselected": 6443,
+      "failed": 5,
+      "name": "runs-basetemp",
+      "passed": 0,
+      "seconds": 13.3
+    },
+    {
+      "deselected": 6417,
+      "failed": 1,
+      "name": "tmpfs-basetemp",
+      "passed": 30,
+      "seconds": 25.23
+    }
+  ],
+  "delivery_link_checks": [
+    "README.md",
+    "docs/testing.md",
+    "docs/exhibition-runbook.md",
+    "docs/requirements-evidence.md",
+    "docs/plans/project-completion-2026-10-23.md",
+    "docs/reports/main-integration-2026-10-25.md"
+  ],
+  "environment": {
+    "packages": {
+      "fastapi": "0.142.2",
+      "httpx": "0.28.1",
+      "mujoco": "3.3.6",
+      "numpy": "2.2.5",
+      "pytest": "8.4.2",
+      "scipy": "1.15.2",
+      "torch": "2.9.0"
+    },
+    "platform": "Linux-7.2.8-9-omarchy-x86_64-with-glibc2.44",
+    "python": "3.11.15"
+  },
+  "files": [
+    {
+      "path": "tests.log",
+      "sha256": "e407242f015326ac345628a98aee739a44bf758781b7cb2ef48c08b179465577",
+      "size_bytes": 62568
+    },
+    {
+      "path": "fixture-diagnosis.log",
+      "sha256": "911addc08267cff06d50114bb3a5c0b65aff4df47717565f5fe6258bc8183334",
+      "size_bytes": 4403
+    },
+    {
+      "path": "host-fixture-recheck.log",
+      "sha256": "aa14ae0a862435e790f68259e29a87e40fdfdc5e06645dedb4b5d13f867b2f45",
+      "size_bytes": 115
+    },
+    {
+      "path": "runner-red.log",
+      "sha256": "557b8f420041ac76ddec91e9cb818f38dd1c04cc59f985a91e44257a7ed94645",
+      "size_bytes": 30406
+    },
+    {
+      "path": "runner-green.log",
+      "sha256": "a03a6db607233997f0b613d9b46ce81455839c5f03372e7632cf879eafebbc36",
+      "size_bytes": 99
+    },
+    {
+      "path": "custody_diagnostic.py",
+      "sha256": "06405ec69a5f30e2a14048817e83a39161019e780cc6b14298a3489fe9fc0387",
+      "size_bytes": 3039
+    },
+    {
+      "path": "custody-diagnostic.log",
+      "sha256": "ff822a73dba9bcd117e4a28aa9ed83dc524dc805c7f0d40dd9052b552e58e7aa",
+      "size_bytes": 14162
+    },
+    {
+      "path": "custody-interference.log",
+      "sha256": "ac87952e92435652ee80be51b24bad24ae605ec6495be850c2623af771c0ddfc",
+      "size_bytes": 4735
+    },
+    {
+      "path": "custody-recheck.log",
+      "sha256": "b3b62a8516334f5d69c7dc71610df99deb684d859338e6eb9530b5f9aea120fa",
+      "size_bytes": 98
+    },
+    {
+      "path": "simulation-opt-in.log",
+      "sha256": "07e971d8fd91ef8ebc3e411156abdf3c0f637d4b89f0927a43521cfe363beee9",
+      "size_bytes": 98
+    },
+    {
+      "path": "source-doc-checks.log",
+      "sha256": "c89cf21709129e754f171bde0194a8d8cc47490b72111e9097adcc17e6e155ab",
+      "size_bytes": 99
+    }
+  ],
+  "limitations": [
+    "No complete passing candidate suite yet",
+    "No hosted CI result for the local candidate",
+    "Authored fixture repair does not qualify the updated host runtime",
+    "Controlled interference does not identify the original suite mutation actor"
+  ],
+  "original_custody_recheck": {
+    "failed": 0,
+    "passed": 6,
+    "seconds": 7.35
+  },
+  "runner_regression": {
+    "after": {
+      "failed": 0,
+      "passed": 12,
+      "seconds": 0.61
+    },
+    "before": {
+      "failed": 9,
+      "passed": 3,
+      "seconds": 0.65
+    }
+  },
+  "simulation_opt_in": {
+    "actual_egl_tests": 1,
+    "failed": 0,
+    "passed": 6,
+    "seconds": 1.02,
+    "skipped": 0
+  },
+  "source_documentation_checks": {
+    "failed": 0,
+    "passed": 31,
+    "seconds": 1.21
+  }
+}

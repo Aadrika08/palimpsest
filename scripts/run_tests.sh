@@ -22,6 +22,14 @@ OUTSIDE=${PALIMPSEST_TEST_BASETEMP:-$HOME/.cache/palimpsest-pytest}/$NAME
 INSIDE=$ROOT/runs/pytest-$NAME
 TMPFS=${PALIMPSEST_TMPFS_BASETEMP:-/tmp/palimpsest-pytest}/$NAME
 
+# Preserve explicit test opt-ins without inheriting the caller's runtime environment.
+TEST_ENV=()
+for name in PALIMPSEST_SIMULATION_TESTS PALIMPSEST_MALE_TORCH_CHECKS \
+  PALIMPSEST_MALE_RUNTIME_TESTS PALIMPSEST_MALE_RUNTIME_OUTPUT PALIMPSEST_TEST_ASSETS \
+  PALIMPSEST_TEST_PUCK_TORCH PALIMPSEST_BUILD_NAMESPACE_TEST PALIMPSEST_INSTALL_FIXTURE; do
+  [[ -v "$name" ]] && TEST_ENV+=("$name=${!name}")
+done
+
 run() {  # basetemp, pytest args...
   local basetemp=$1; shift
   mkdir -p "$(dirname "$basetemp")"
@@ -29,6 +37,7 @@ run() {  # basetemp, pytest args...
     PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$ROOT/src:$ROOT/scripts:$ROOT/tests" \
     OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 \
     MUJOCO_GL=egl CUDA_VISIBLE_DEVICES= \
+    "${TEST_ENV[@]}" \
     "$PYTHON" -B -m pytest -q -p no:cacheprovider --basetemp "$basetemp" "$@")
 }
 

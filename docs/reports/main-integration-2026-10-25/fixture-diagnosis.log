@@ -1,0 +1,63 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.4.2, pluggy-1.6.0 -- /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python
+rootdir: /home/utkarsh/Work/shraddha/palimpsest
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collecting ... collected 1 item
+
+tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry FAILED [100%]
+
+=================================== FAILURES ===================================
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/integration-diagnosis/palimpsest-1020277-selected/test_authored02_uses_fresh_cap0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/runs/integration-diagnosis/palimpsest-1020277-selected/test_authored02_uses_fresh_cap0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_before":5},"collection_authorized":false,"configuration_sha256":"c8f5d503f66f9567779f3fbda127802a74290785ce700d62f08437a386ad0949","elapsed_seconds":0.23845563899885747,"error":"Original CPU native input changed","error_type":"ValueError","executable":false,"held_four_imports_observed":false,"kind":"puck-cpu-held-runtime-outcome-v1","native_authorized":false,"phase":"prepare","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:187: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+============================== 1 failed in 0.44s ===============================

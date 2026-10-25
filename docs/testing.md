@@ -71,6 +71,22 @@ check; it does not reproduce this environment.
 - **Opt-in heavier checks.** Set `PALIMPSEST_SIMULATION_TESTS=1` for real EGL
   world and scene cases. `PALIMPSEST_MALE_TORCH_CHECKS=1` and
   `PALIMPSEST_MALE_RUNTIME_TESTS=1` cover the MaleCNS runtime windows.
+  The clean environment forwards these explicit values, plus
+  `PALIMPSEST_TEST_PUCK_TORCH`, `PALIMPSEST_BUILD_NAMESPACE_TEST` and
+  `PALIMPSEST_INSTALL_FIXTURE` for their separately selected checks. They remain
+  disabled unless set to exactly `1`.
+  `PALIMPSEST_MALE_RUNTIME_OUTPUT` must name a new directory for retained actual
+  MaleCNS evidence; `PALIMPSEST_TEST_ASSETS` optionally selects its asset root.
+  These paths are also forwarded, including spaces. For example:
+
+  ```sh
+  PALIMPSEST_MALE_RUNTIME_TESTS=1 \
+    PALIMPSEST_MALE_RUNTIME_OUTPUT="$PWD/runs/male-runtime-new-session" \
+    scripts/run_tests.sh -- tests/test_male_runtime.py
+  ```
+
+  Choose a fresh output name for each session. Default fixture passes do not
+  establish that any opt-in runtime check ran.
 
 ## Frozen pins after integration
 

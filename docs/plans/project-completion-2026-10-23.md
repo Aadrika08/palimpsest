@@ -31,6 +31,15 @@ prospective current-source profile. Its 482 affected Btrfs checks, 56 new tmpfs
 checks and 19 historical-pin/link checks pass. This remains local with the
 integration batch; it is not hosted CI or a wholly green final-release suite.
 
+The [25 October integration check](../reports/main-integration-2026-10-25.md)
+ran all four passes on `b36b46b`: 6,349 passed, 11 failed, 88 skipped. Five
+authored fixtures needed current host-library descriptors; six custody-sensitive
+cases pass in a quiet recheck, with controlled `/tmp` interference retained
+separately. The runner's dropped opt-in flags are repaired and tested, including
+one actual EGL intervention. A complete passing candidate rerun remains required.
+Remote refs and the workflow-scope blocker are unchanged. Original-code and
+new-parameter licensing is now an explicit pending owner decision.
+
 ## Ordered work and evidence required
 
 | Order | Work | Present evidence / remaining exit |

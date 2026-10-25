@@ -1,0 +1,481 @@
+...FFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[-arguments0-4] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit3')
+arguments = [], calls = 4, value = ''
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...STS': '', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '',
+E              'PALIMPSEST_INSTALL_FIXTURE': '',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit3/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[-arguments1-1] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit4')
+arguments = ['--', 'tests/test_probe.py'], calls = 1, value = ''
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...STS': '', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '',
+E              'PALIMPSEST_INSTALL_FIXTURE': '',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit4/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[-arguments2-1] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit5')
+arguments = ['--integration'], calls = 1, value = ''
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...STS': '', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '',
+E              'PALIMPSEST_INSTALL_FIXTURE': '',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit5/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[0-arguments0-4] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit6')
+arguments = [], calls = 4, value = '0'
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...TS': '0', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '0',
+E              'PALIMPSEST_INSTALL_FIXTURE': '0',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit6/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '0',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[0-arguments1-1] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit7')
+arguments = ['--', 'tests/test_probe.py'], calls = 1, value = '0'
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...TS': '0', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '0',
+E              'PALIMPSEST_INSTALL_FIXTURE': '0',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit7/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '0',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[0-arguments2-1] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit8')
+arguments = ['--integration'], calls = 1, value = '0'
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...TS': '0', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '0',
+E              'PALIMPSEST_INSTALL_FIXTURE': '0',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit8/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '0',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[1-arguments0-4] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit9')
+arguments = [], calls = 4, value = '1'
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...TS': '1', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '1',
+E              'PALIMPSEST_INSTALL_FIXTURE': '1',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit9/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '1',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[1-arguments1-1] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit10')
+arguments = ['--', 'tests/test_probe.py'], calls = 1, value = '1'
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...TS': '1', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '1',
+E              'PALIMPSEST_INSTALL_FIXTURE': '1',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit10/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '1',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+_ test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[1-arguments2-1] _
+
+tmp_path = PosixPath('/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit11')
+arguments = ['--integration'], calls = 1, value = '1'
+
+    @pytest.mark.parametrize('arguments,calls', [([], 4), (['--', 'tests/test_probe.py'], 1),
+                                               (['--integration'], 1)])
+    @pytest.mark.parametrize('value', [None, '', '0', '1'])
+    def test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment(tmp_path, arguments, calls, value):
+        project = tmp_path / 'project with spaces'
+        (project / 'scripts').mkdir(parents=True)
+        (project / 'tests').mkdir()
+        for name in ('test_probe.py', 'test_probe_integration.py'):
+            (project / 'tests' / name).touch()
+        runner = project / 'scripts/run_tests.sh'
+        shutil.copyfile(ROOT / 'scripts/run_tests.sh', runner)
+        spy = tmp_path / 'python-spy'
+        spy.write_text(f'#!{sys.executable} -B\n'
+                       'import json, os, sys\n'
+                       'print(json.dumps({"env": dict(os.environ), "argv": sys.argv[1:]}))\n')
+        spy.chmod(0o700)
+        environment = {key: item for key, item in os.environ.items() if key not in (*FLAGS, *PATHS)}
+        expected = {} if value is None else dict.fromkeys(FLAGS, value)
+        if value is not None:
+            expected.update({key: str(tmp_path / (key + ' with spaces')) for key in PATHS})
+        environment.update(expected)
+        environment.update(
+            PALIMPSEST_PYTHON=str(spy), PALIMPSEST_TEST_BASETEMP=str(tmp_path / 'outside'),
+            PALIMPSEST_TMPFS_BASETEMP=str(tmp_path / 'tmpfs'),
+            PYTHONPATH='ambient-path', PYTEST_ADDOPTS='--invalid-ambient-option', LD_PRELOAD='',
+            OMP_NUM_THREADS='8', OPENBLAS_NUM_THREADS='8', MKL_NUM_THREADS='8', NUMEXPR_NUM_THREADS='8',
+            MUJOCO_GL='ambient-renderer', CUDA_VISIBLE_DEVICES='0', PALIMPSEST_UNRECOGNIZED='ambient')
+        result = subprocess.run(['/bin/bash', str(runner), *arguments], cwd=project,
+                                env=environment, capture_output=True, text=True, timeout=15)
+        assert result.returncode == 0, result.stderr
+        invocations = [json.loads(line) for line in result.stdout.splitlines()]
+        assert len(invocations) == calls
+        for invocation in invocations:
+            child = invocation['env']
+>           assert {key: child[key] for key in (*FLAGS, *PATHS) if key in child} == expected
+E           AssertionError: assert {} == {'PALIMPSEST_...TS': '1', ...}
+E             
+E             Right contains 8 more items:
+E             {'PALIMPSEST_BUILD_NAMESPACE_TEST': '1',
+E              'PALIMPSEST_INSTALL_FIXTURE': '1',
+E              'PALIMPSEST_MALE_RUNTIME_OUTPUT': '/tmp/palimpsest-runner-tests/palimpsest-1021053-selected/test_runner_preserves_explicit11/PALIMPSEST_MALE_RUNTIME_OUTPUT '
+E                                                'with spaces',
+E              'PALIMPSEST_MALE_RUNTIME_TESTS': '1',...
+E             
+E             ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_test_runner.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[-arguments0-4]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[-arguments1-1]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[-arguments2-1]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[0-arguments0-4]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[0-arguments1-1]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[0-arguments2-1]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[1-arguments0-4]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[1-arguments1-1]
+FAILED tests/test_test_runner.py::test_runner_preserves_explicit_opt_ins_and_isolates_ambient_environment[1-arguments2-1]
+9 failed, 3 passed in 0.65s

@@ -183,14 +183,18 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
         predicted_destination_directories=directories,predicted_empty_destination_directories=['empty/nested'],
         collisions=collisions,wheels=wheels))
     baseline_raw=(ROOT/BASELINE).read_bytes();baseline=json.loads(baseline_raw)
-    inputs['baseline']=write(project,'docs/authored/baseline.json',baseline_raw)
+    # Authored fixtures bind current host files; historical qualification pins stay frozen.
+    for row in [*baseline['external_libraries'], baseline['bwrap_executable']]:
+        if row is not None:
+            payload=Path(row.get('realpath',row.get('path'))).read_bytes()
+            row.update(size=len(payload),sha256=digest(payload))
+    inputs['baseline']=write(project,'docs/authored/baseline.json',baseline)
     native05=json.loads((ROOT/NATIVE).read_bytes())
     selected=sorted(['/etc/ld.so.cache']+['/usr/lib/'+name for name in LIBRARIES])
     native_rows={r['path']:r for r in native05['native_files']}
-    # Authored fixtures bind today's loader cache; historical admission pins stay frozen.
-    cache=Path('/etc/ld.so.cache').read_bytes()
-    native_rows['/etc/ld.so.cache']=dict(native_rows['/etc/ld.so.cache'],
-        size_bytes=len(cache),sha256=digest(cache))
+    for path in selected:
+        payload=Path(path).read_bytes()
+        native_rows[path]=dict(native_rows[path],size_bytes=len(payload),sha256=digest(payload))
     document('native',dict(kind='puck-cpu-characterization-native-metadata-v5',status='COMPLETE',
         root_scope='installed_shared_objects_and_interpreter',errors=[],oversized_native_files=[],required_missing_names=[],
         native_files=[native_rows[p] for p in selected],aliases=copy.deepcopy(baseline['host_path_aliases'])))

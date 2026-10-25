@@ -17,6 +17,13 @@ current-source profile restores its previously historical-skipped memory checks:
 whole-case publication, actual pruning and scientific acceptance remain open.
 The historical recovery notes below remain evidence of earlier states.
 
+The [25 October integration report](reports/main-integration-2026-10-25.md)
+retains the fresh full-suite failures, repaired authored host fixtures,
+custody-interference diagnosis and passing runner/actual-EGL checks. Setup and
+test instructions now follow published main and the canonical runner. A quiet
+complete candidate rerun and workflow-write access remain necessary for landing;
+project-code/new-parameter licensing and human/operator decisions are pending.
+
 ## Historical recovery state
 
 Accepted memory comparison coverage is **44/48 development cells**. The final

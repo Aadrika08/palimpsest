@@ -144,8 +144,8 @@ retains shared scale and unequal coverage; Borrowed body identifies the simulato
 source and does not describe a physical action. These checks require actual source
 bundles, not invented example results.
 
-These acceptance records do not yet exist. The short local render checks, eight
-Afterimage inference frames and earlier mixed lab hour test do not replace
-independent operation or a declared-duration exhibition trial. Physical work
+These acceptance records do not yet exist. The current 600-frame Afterimage,
+120-second Choir, automated static sessions and earlier mixed lab hour test do
+not replace independent operation or a declared-duration human exhibition trial. Physical work
 additionally requires the complete rover qualification and stopping-envelope
 measurements; adding pen marks to camera input creates a new feedback scenario.
