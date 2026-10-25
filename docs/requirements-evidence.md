@@ -30,6 +30,13 @@ This derives retained outcomes and checks case consistency; it does not establis
 actual execution order, publication, pruning or runtime/scientific qualification.
 All requirement and simulation-gate statuses below remain unchanged.
 
+The [25 October main landing](reports/main-landing-2026-10-25.md) delivers all
+25 completed integration commits through `89fb77d` at merge `9ac01a2`.
+Both hosted workflows pass 6,410 canonical fixture tests with 88 skips and no
+failures, plus 45 preflight and the frontend checks. The merge tree matches the
+tested candidate. This closes source integration; it does not change any runtime,
+scientific, human/operator or licensing acceptance boundary below.
+
 The [35-row source preflight](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/reports/puck-cpu-export-phase-preflight-v1.md)
 is complete: 32 source-supported creation rows and three distributed phase
 corrections. The unchanged candidate/other 32 declarations remain preserved.

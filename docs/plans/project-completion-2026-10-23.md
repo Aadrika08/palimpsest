@@ -9,25 +9,21 @@ human acceptance.
 
 ## Current integration baseline
 
-Live remote check on 25 October: `origin/main` is `2814138`, and the artwork
-branch and its remote both end at `3739b3a`, directly descending from main.
-All artwork, guided portable ZIP, fixture/CI repairs and retained-memory reader
-commits are pushed. The user completed Aadrika08's workflow authorization, clearing
-the earlier rejected push. [PR #184](https://github.com/Aadrika08/palimpsest/pull/184)
-is ready for review. Its [hosted run](https://github.com/Aadrika08/palimpsest/actions/runs/40191242222)
-passed frontend and failed fixtures. The [environment repair](../reports/hosted-fixtures-2026-10-25.md)
-retains all 485 failures and declares the required container, exact interpreter
-and dependencies; five affected authored tests pass locally. Its PR run reports
-6,376 passes, 30 failures and 88 skips; frontend passes. The subsequent
-[boundary repair](../reports/hosted-fixture-boundaries-2026-10-25.md) corrects
-container ownership/namespace admission and four fixture assumptions; all 27
-focused local checks pass. Candidate `3739b3a` passes hosted preflight/frontend,
-but reports 12 full-suite failures: eleven descriptor-limit failures and one
-process-exit inspection failure. The follow-up restores the required limit and
-preserves observed zombie identities without forgiving inaccessible live processes.
-Its 15 held-runtime, five authored CPU and 17 process/manual checks pass locally;
-hosted validation remains required. Main remains
-unchanged pending successful hosted checks and the verified merge.
+The [verified main landing](../reports/main-landing-2026-10-25.md) completes the
+integration gate. [PR #184](https://github.com/Aadrika08/palimpsest/pull/184) merged
+on 25 October at `9ac01a2`, containing all 25 commits through `89fb77d`.
+Both hosted workflows pass 6,410 canonical fixture tests with 88 skips and zero
+failures, 45 preflight checks and the frontend checks. Remote main's complete Git
+tree matches the tested candidate; local main was fast-forwarded. Workflow access
+and delivery of this batch are resolved. Current documentation records the result
+without changing the tested implementation.
+
+The [environment repair](../reports/hosted-fixtures-2026-10-25.md) and
+[boundary/resource repair](../reports/hosted-fixture-boundaries-2026-10-25.md)
+preserve the failed hosted candidates and their local repair checks. Original-code
+licensing, human/operator acceptance and the research gates remain open.
+
+## Earlier scoped validation
 
 The [integration report](../reports/main-integration-2026-10-23.md) records the
 completed canonical run, all twelve failing cases and their passing targeted
@@ -63,7 +59,7 @@ while publication, actual ordering, pruning and qualification remain open.
 
 | Order | Work | Present evidence / remaining exit |
 | --- | --- | --- |
-| 1 | Integrate completed artwork work | Review passed the production delta; the complete canonical local fixture suite passes on `39a266f`. Workflow access is resolved and all commits through `3739b3a` are pushed. Frontend/preflight CI passes; the latest complete PR fixture run has 12 failures. Verify the descriptor-limit/process-reader repair and full hosted suite, then land and verify remote main without rewriting history. |
+| 1 | Integrate completed artwork work | Complete: PR #184 merged at `9ac01a2`; all 25 commits through `89fb77d` are on remote main. Both hosted suites pass 6,410 tests with 88 skips and no failures; preflight/frontend checks also pass. The merge tree exactly matches the tested candidate. |
 | 2 | Finish the guided artwork introduction | One map now has a 5.58 s obstacle branch; Afterimage pairs 600 exact source frames with responses. The [guided introduction](../reports/guided-encounter-2026-10-23.md) is implemented; direct local-file opening, keyboard/mobile navigation and unchanged-derivative checks passed. Portable ZIP is included for delivery. |
 | 3 | Prepare independent acceptance | Produce a usable package and current runbook; user viewing/listening decisions and an independent operator's installation/all-six-mode session remain required. Record audience/use, source permissions and custody rather than assigning fictitious owners. |
 | 4 | Complete memory/R2 engineering and qualification | Single-condition sealing, retained-condition reading and [staged whole-case validation](../reports/memory-retained-case-v1-2026-10-25.md) are implemented. The latest source passes 392 affected checks, including 34 new checks also passed on tmpfs. Historical profiles remain preserved; the case reader does not create a new accepted qualification profile. Trusted qualification pins are empty, seed-400/family-case applicability and actual ordering are unresolved, whole-case publication is missing, and pruning remains an explicit refusing stub. Finish the publication contract and case closure using the existing seals, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
@@ -97,7 +93,7 @@ curatorial recommendations do not fill the human or independent-operator gates.
 
 ## Next independent source slice
 
-After main integration, specify the whole-case publication
+Next, specify the whole-case publication
 transaction atop the existing seals and tested staged-case validation. Define
 the three case files and their binding chain, actual owner/order evidence,
 final-path reading, marker-last writes, no-replace directory move, parent fsyncs

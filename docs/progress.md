@@ -4,7 +4,7 @@ Objective: implement the approved [full plan](implementation-plan.md), R0–R5 a
 
 Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP tools are not exposed in this session; this file is the recovery fallback, not a claim that the binding was updated.
 
-## Current completion work — 23 October 2026
+## Current completion work — 25 October 2026
 
 The [current completion checklist](plans/project-completion-2026-10-23.md)
 tracks the renewed simulation-first goal and delivery on remote main. The
@@ -17,33 +17,22 @@ current-source profile restores its previously historical-skipped memory checks:
 whole-case publication, actual pruning and scientific acceptance remain open.
 The historical recovery notes below remain evidence of earlier states.
 
-The [25 October integration report](reports/main-integration-2026-10-25.md)
-retains the initial full-suite failures, repaired authored host fixtures,
-custody-interference diagnosis and passing runner/actual-EGL checks. The complete
-four-pass canonical fixture suite then passes on `39a266f`: **6,372 passed,
-88 skipped, zero failures**. The indexed candidate log retains its exact command
-and hash. Setup and test instructions follow published main and the canonical
-runner. On 25 October the user authorized Aadrika08's workflow permission and all
-eight local commits through `f3645c2` were pushed. [PR #184](https://github.com/Aadrika08/palimpsest/pull/184)
-is ready for review. Its [hosted run](https://github.com/Aadrika08/palimpsest/actions/runs/40191242222)
-passed frontend and failed fixtures because the hosted environment did not meet
-the suite's runtime and system requirements. The [environment repair](reports/hosted-fixtures-2026-10-25.md)
-retains all 485 failures, pins the fixture container/interpreter and installs the
-declared dependencies; its five affected authored tests pass locally. Hosted
-candidate `510a750` then reports 6,376 passes, 30 failures and 88 skips in the PR
-run, with frontend passing. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
-retains both subsequent failure logs and fixes container ownership/namespace
-admission and four test-fixture assumptions. All 27 focused local checks pass.
-Candidate `3739b3a` then passes hosted preflight and frontend, but its complete PR
-suite reports 6,394 passes, 12 failures and 88 skips. Eleven failures trace to
-`runuser` lowering the descriptor limit; one occurs during process exit inspection.
-The follow-up restores the required limit and makes zombie observation preserve
-identity without excusing inaccessible live processes. Fifteen held-runtime,
-five authored CPU and seventeen process/manual-verification checks pass locally.
-Hosted validation of the follow-up remains required.
-Main stays `2814138` until checks pass and the merge
-is verified. Project-code/new-parameter
-licensing and human/operator decisions remain pending.
+The [verified main landing](reports/main-landing-2026-10-25.md) completes integration.
+[PR #184](https://github.com/Aadrika08/palimpsest/pull/184) merged at `9ac01a2`,
+bringing all 25 commits through `89fb77d` onto remote main. Both complete hosted
+runs pass **6,410 tests, with 88 skips and zero failures**; each also passes
+45 preflight checks and all frontend checks. The merge's entire Git tree matches
+the tested candidate. Local main was fast-forwarded to that merge. Aadrika08's
+workflow authorization is resolved; completed work from this branch is landed.
+
+The [earlier local integration report](reports/main-integration-2026-10-25.md),
+[hosted environment repair](reports/hosted-fixtures-2026-10-25.md) and
+[boundary/resource repair](reports/hosted-fixture-boundaries-2026-10-25.md)
+retain the earlier failures, successful scoped checks and unchanged historical
+evidence. CI fixes preserve runtime pins and acceptance assertions; the process
+reader retains zombie identities without excusing inaccessible live processes.
+These source checks do not close the simulation release. Project-code/new-parameter
+licensing, human/operator acceptance and the remaining research gates stay open.
 
 The [staged retained-case reader](reports/memory-retained-case-v1-2026-10-25.md)
 is committed at `1ad4f8a`. It holds one source, all nine conditions and external

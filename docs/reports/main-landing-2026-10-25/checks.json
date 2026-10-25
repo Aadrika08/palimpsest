@@ -1,0 +1,122 @@
+{
+  "candidate": "89fb77df75fac685b04c5ad18d0eedf9a5020abd",
+  "previous_main": "2814138515ec90e2b3818dd6e1b3f74a889c1759",
+  "merge_commit": "9ac01a244c401e2da5811fafb8baad02b26954da",
+  "merged_at": "2026-10-25T15:36:25Z",
+  "candidate_and_merge_tree": "804baf33ce35b5132ee921c907c9ecc2c529a583",
+  "candidate_commits_landed": 25,
+  "runs": [
+    {
+      "run_id": 40204939087,
+      "event": "pull_request",
+      "url": "https://github.com/Aadrika08/palimpsest/actions/runs/40204939087",
+      "workflow_conclusion": "success",
+      "fixture_conclusion": "success",
+      "frontend_conclusion": "success",
+      "canonical_passes": [
+        {
+          "passed": 6367,
+          "skipped": 88,
+          "seconds": 1283.97
+        },
+        {
+          "passed": 7,
+          "skipped": 0,
+          "seconds": 6.92
+        },
+        {
+          "passed": 5,
+          "skipped": 0,
+          "seconds": 48.33
+        },
+        {
+          "passed": 31,
+          "skipped": 0,
+          "seconds": 20.38
+        }
+      ],
+      "canonical_totals": {
+        "passed": 6410,
+        "failed": 0,
+        "skipped": 88
+      },
+      "preflight": [
+        {
+          "passed": 44,
+          "skipped": 0,
+          "seconds": 12.06
+        },
+        {
+          "passed": 1,
+          "skipped": 0,
+          "seconds": 9.23
+        }
+      ],
+      "log": {
+        "path": "docs/reports/main-landing-2026-10-25/hosted-40204939087.log.gz",
+        "size_bytes": 30375,
+        "sha256": "ac0b3086ff4595c511476dbc6f15285779b52a1287a8c4e8d357bf7d45428294"
+      },
+      "uncompressed_log": {
+        "size_bytes": 200142,
+        "sha256": "0cf016246261ae1ea00db51fa38005c237e21dbd58308e9800dad0c468d14a92"
+      }
+    },
+    {
+      "run_id": 40204933452,
+      "event": "push",
+      "url": "https://github.com/Aadrika08/palimpsest/actions/runs/40204933452",
+      "workflow_conclusion": "success",
+      "fixture_conclusion": "success",
+      "frontend_conclusion": "success",
+      "canonical_passes": [
+        {
+          "passed": 6367,
+          "skipped": 88,
+          "seconds": 1793.98
+        },
+        {
+          "passed": 7,
+          "skipped": 0,
+          "seconds": 10.69
+        },
+        {
+          "passed": 5,
+          "skipped": 0,
+          "seconds": 63.85
+        },
+        {
+          "passed": 31,
+          "skipped": 0,
+          "seconds": 27.7
+        }
+      ],
+      "canonical_totals": {
+        "passed": 6410,
+        "failed": 0,
+        "skipped": 88
+      },
+      "preflight": [
+        {
+          "passed": 44,
+          "skipped": 0,
+          "seconds": 15.17
+        },
+        {
+          "passed": 1,
+          "skipped": 0,
+          "seconds": 11.91
+        }
+      ],
+      "log": {
+        "path": "docs/reports/main-landing-2026-10-25/hosted-40204933452.log.gz",
+        "size_bytes": 29588,
+        "sha256": "2858b84a81c786a389ba1117b2f6b68bf50f397b9ec8191b29df359f77ad2afa"
+      },
+      "uncompressed_log": {
+        "size_bytes": 196358,
+        "sha256": "c4406b1a0602452121b85b490ac59f2553b6cd3280d442edfe34eb73f239d106"
+      }
+    }
+  ]
+}

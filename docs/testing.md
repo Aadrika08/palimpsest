@@ -32,6 +32,9 @@ The suite also needs an open-file limit of 65,536: existing held-runtime control
 require at least 40,000 descriptors. CI declares the container ceiling and
 restores the soft limit after `runuser`, which otherwise resets it to 1,024.
 The preflight records the effective limits and includes an independent CPU audit.
+The [25 October main landing](reports/main-landing-2026-10-25.md) retains two
+passing complete hosted runs: 6,410 canonical checks passed and 88 were skipped
+in each run, with their separate 45-check preflights and frontend checks passing.
 
 ## What the runner sets up, and why
 
