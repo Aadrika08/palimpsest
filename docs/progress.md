@@ -18,10 +18,12 @@ whole-case publication, actual pruning and scientific acceptance remain open.
 The historical recovery notes below remain evidence of earlier states.
 
 The [25 October integration report](reports/main-integration-2026-10-25.md)
-retains the fresh full-suite failures, repaired authored host fixtures,
-custody-interference diagnosis and passing runner/actual-EGL checks. Setup and
-test instructions now follow published main and the canonical runner. A quiet
-complete candidate rerun and workflow-write access remain necessary for landing;
+retains the initial full-suite failures, repaired authored host fixtures,
+custody-interference diagnosis and passing runner/actual-EGL checks. The complete
+four-pass canonical fixture suite then passes on `39a266f`: **6,372 passed,
+88 skipped, zero failures**. The indexed candidate log retains its exact command
+and hash. Setup and test instructions follow published main and the canonical
+runner. Workflow-write access and hosted CI remain necessary for landing;
 project-code/new-parameter licensing and human/operator decisions are pending.
 
 ## Historical recovery state

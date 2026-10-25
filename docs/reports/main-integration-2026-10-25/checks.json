@@ -39,6 +39,59 @@
       "seconds": 25.23
     }
   ],
+  "candidate": {
+    "command": "set -o pipefail; env PALIMPSEST_TMPFS_BASETEMP=/dev/shm/palimpsest-pytest scripts/run_tests.sh 2>&1 | tee runs/main-integration-2026-10-25/candidate-tests.log",
+    "commit": "39a266f32af7bcb75b0c2053421af73220e501c8",
+    "concurrent_agent_or_filesystem_tasks": false,
+    "exit_code": 0,
+    "log": "candidate-tests.log",
+    "passes": [
+      {
+        "deselected": 43,
+        "failed": 0,
+        "name": "ordinary",
+        "passed": 6329,
+        "seconds": 1672.06,
+        "skipped": 88,
+        "warnings": 96
+      },
+      {
+        "deselected": 6453,
+        "failed": 0,
+        "name": "process-isolated",
+        "passed": 7,
+        "seconds": 10.71,
+        "skipped": 0,
+        "warnings": 2
+      },
+      {
+        "deselected": 6455,
+        "failed": 0,
+        "name": "runs-basetemp",
+        "passed": 5,
+        "seconds": 60.79,
+        "skipped": 0,
+        "warnings": 2
+      },
+      {
+        "deselected": 6429,
+        "failed": 0,
+        "name": "tmpfs-basetemp",
+        "passed": 31,
+        "seconds": 25.07,
+        "skipped": 0,
+        "warnings": 2
+      }
+    ],
+    "scope": "Complete canonical non-integration suite, default opt-ins",
+    "source_and_docs_unchanged_during_run": true,
+    "totals": {
+      "failed": 0,
+      "passed": 6372,
+      "skipped": 88,
+      "summed_pytest_seconds": 1768.63
+    }
+  },
   "delivery_link_checks": [
     "README.md",
     "docs/testing.md",
@@ -115,10 +168,15 @@
       "path": "source-doc-checks.log",
       "sha256": "c89cf21709129e754f171bde0194a8d8cc47490b72111e9097adcc17e6e155ab",
       "size_bytes": 99
+    },
+    {
+      "path": "candidate-tests.log",
+      "sha256": "c2dfa8a6822254b2f52e617a95fe36b31cfe7c8062fcc5440721a32e3a1e770b",
+      "size_bytes": 15407
     }
   ],
   "limitations": [
-    "No complete passing candidate suite yet",
+    "The canonical suite excludes *_integration.py files and leaves runtime opt-ins at their defaults; 88 tests skipped",
     "No hosted CI result for the local candidate",
     "Authored fixture repair does not qualify the updated host runtime",
     "Controlled interference does not identify the original suite mutation actor"

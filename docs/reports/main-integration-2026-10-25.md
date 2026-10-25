@@ -1,5 +1,29 @@
 # Integration verification — 25 October 2026
 
+The complete canonical four-pass fixture suite passes on
+`39a266f32af7bcb75b0c2053421af73220e501c8`: **6,372 passed, zero failures and
+88 skipped**, exit 0. Source and documentation stayed fixed, with no concurrent
+agent work or filesystem diagnostics during the run.
+
+| Pass | Result |
+| --- | --- |
+| Ordinary | 6,329 passed, 88 skipped; 1,672.06 s |
+| Process-isolated | 7 passed; 10.71 s |
+| Runs-directory fixtures | 5 passed; 60.79 s |
+| Tmpfs fixtures | 31 passed; 25.07 s |
+
+The [candidate log](main-integration-2026-10-25/candidate-tests.log) and
+[check index](main-integration-2026-10-25/checks.json) retain the exact command,
+commit, outcomes, warnings and log hash. Summed pytest time is 1,768.63 s; this
+is not a separate outer-wall-time measurement. The canonical suite selects all
+non-integration test files and partitions them across four passes. It excludes
+`*_integration.py` files and leaves runtime opt-ins at their defaults. The
+88 skips include historical frozen protocols and disabled runtime opt-ins;
+deselections are not additional missing tests. This verifies the fixture suite,
+not hosted CI, scientific capability, or human/operator acceptance.
+
+## Preserved initial failure
+
 The full four-pass run on `b36b46b0c8cf544dc22c67fb82fd4c1049c71119`
 finished with **6,349 passed, 11 failed and 88 skipped**. It is not a passing
 integration result. Source and documentation stayed fixed during that run.
@@ -37,7 +61,7 @@ creation/removal reproduces the refusal: device/inode/mode/size/link count stay
 fixed while the directory's mtime/ctime change. This proves the interference
 mechanism, **not the responsible path or actor in the original run**. All six
 unmodified pytest cases also pass together in 7.35 s. No production guard or
-assertion was relaxed; a quiet complete rerun is still required.
+assertion was relaxed. All six also pass in the complete candidate rerun above.
 
 The canonical runner also dropped all documented opt-in flags through `env -i`.
 It now forwards a fixed list of present test flags and output/asset paths, with
@@ -63,5 +87,5 @@ repair has not run remotely, and no merge or force-push occurred.
 
 The project-code/new-parameter licence decision has been requested and remains
 unresolved, as do intended use, human viewing/listening and independent operator
-acceptance. No complete green candidate suite, hosted CI pass, scientific
-qualification or final release is claimed by these targeted rechecks.
+acceptance. The local canonical fixture suite is green; hosted CI, scientific
+qualification and final release remain open.

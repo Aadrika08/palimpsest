@@ -36,15 +36,18 @@ ran all four passes on `b36b46b`: 6,349 passed, 11 failed, 88 skipped. Five
 authored fixtures needed current host-library descriptors; six custody-sensitive
 cases pass in a quiet recheck, with controlled `/tmp` interference retained
 separately. The runner's dropped opt-in flags are repaired and tested, including
-one actual EGL intervention. A complete passing candidate rerun remains required.
-Remote refs and the workflow-scope blocker are unchanged. Original-code and
-new-parameter licensing is now an explicit pending owner decision.
+one actual EGL intervention. The subsequent complete four-pass candidate run on
+`39a266f` passes **6,372 tests, with 88 skips and zero failures**. Its retained
+log covers the canonical non-integration suite with default runtime opt-ins;
+it is not hosted CI or scientific qualification. Remote refs and the
+workflow-scope blocker are unchanged on 25 October. Original-code and
+new-parameter licensing is an explicit pending owner decision.
 
 ## Ordered work and evidence required
 
 | Order | Work | Present evidence / remaining exit |
 | --- | --- | --- |
-| 1 | Integrate completed artwork work | Review passed the production delta. Resolve current regression failures and CI configuration; land and verify remote main without rewriting history. |
+| 1 | Integrate completed artwork work | Review passed the production delta; the complete canonical fixture suite passes on `39a266f`. Resolve workflow-write access, push the repaired CI configuration, verify hosted checks, then land and verify remote main without rewriting history. |
 | 2 | Finish the guided artwork introduction | One map now has a 5.58 s obstacle branch; Afterimage pairs 600 exact source frames with responses. The [guided introduction](../reports/guided-encounter-2026-10-23.md) is implemented; direct local-file opening, keyboard/mobile navigation and unchanged-derivative checks passed. Portable ZIP is included for delivery. |
 | 3 | Prepare independent acceptance | Produce a usable package and current runbook; user viewing/listening decisions and an independent operator's installation/all-six-mode session remain required. Record audience/use, source permissions and custody rather than assigning fictitious owners. |
 | 4 | Complete memory/R2 engineering and qualification | Single-condition sealing and a separate retained-condition reader are implemented. The [current-source reader report](../reports/memory-retained-condition-v1-2026-10-23.md) records all-nine-condition checks and 482 passing affected regressions with no skips. Historical profiles remain preserved; a separate prospective profile binds the integrated source. Trusted qualification pins are empty, seed-400/family-case applicability is unresolved, whole-case publication is missing, and pruning remains an explicit refusing stub. Prepare prospective ordering and qualification decisions, finish case closure using the existing seals, then obtain actual qualification and valid nine-condition development/held-out evidence under their separate gates. |
