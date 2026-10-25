@@ -1,0 +1,77 @@
+{
+  "failed_candidate": "510a750f7dc542564b1f8962c2388c914e81ee8c",
+  "runs": [
+    {
+      "run_id": 40197843867,
+      "counts": {
+        "passed": 6376,
+        "failed": 30,
+        "skipped": 88
+      },
+      "log_uncompressed": {
+        "size_bytes": 278447,
+        "sha256": "b6b9eaf80ff3729bf44171e4906dd7abddad9588aade3ff02f927256c5758857"
+      }
+    },
+    {
+      "run_id": 40197840061,
+      "counts": {
+        "passed": 6375,
+        "failed": 31,
+        "skipped": 88
+      },
+      "log_uncompressed": {
+        "size_bytes": 282099,
+        "sha256": "a45ff7cd6abb21b64d4262aea871c83b9c414e2f281476a5ce71d5173b69ce0d"
+      }
+    }
+  ],
+  "local_check": {
+    "passed": 27,
+    "failed": 0,
+    "seconds": 23.67,
+    "exit_code": 0
+  },
+  "artifacts": [
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/hosted-40197840061.log.gz",
+      "size_bytes": 34433,
+      "sha256": "5e8c703a92db17c2500c018ef834e3ca7e03a4def72fb7a807c3beb00232eef5"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/hosted-40197843867.log.gz",
+      "size_bytes": 33446,
+      "sha256": "4b8c4db5cf23f5de1cca82bf6fc816939847bc9dbe0d696bf754ebf17f363d14"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/local-boundaries.log",
+      "size_bytes": 607,
+      "sha256": "3cfb47cb85e88eaaceb1b01c62968d0ba18a632a4ce7647b6575cf3f483cefc9"
+    },
+    {
+      "path": ".github/workflows/checks.yml",
+      "size_bytes": 5107,
+      "sha256": "67c55e58d298bb82c3182e3ca44bf98c1efe39211fb2506557f5174d8aa3401b"
+    },
+    {
+      "path": "tests/test_bounded_qualification_descendants.py",
+      "size_bytes": 9790,
+      "sha256": "d91c13bdea1244028509bd290a57e82af682e6212046f8deeced5a495791e590"
+    },
+    {
+      "path": "tests/test_memory_family_allocation_v3.py",
+      "size_bytes": 38803,
+      "sha256": "b98811c3dc513c4f063a3c4e700739d4a6ec0b41927f2671f6a6a8c6b08ab45c"
+    },
+    {
+      "path": "tests/test_memory_selected_pilot.py",
+      "size_bytes": 27447,
+      "sha256": "9e572981a32c28f658a096b7e136eb1f49adfc9d396e7217afba34cb5b25b732"
+    },
+    {
+      "path": "tests/test_lab.py",
+      "size_bytes": 25118,
+      "sha256": "f12e67a8fcbd039e0764e9d45a85eb8629ff254d079f74f862ac2da7c3133f4c"
+    }
+  ]
+}

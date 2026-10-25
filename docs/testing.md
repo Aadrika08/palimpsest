@@ -22,6 +22,13 @@ selecting any Python 3.11 build on a generic runner is insufficient. The
 initial failures and verification scope. These fixture checks do not qualify an
 installed numerical runtime or a different host platform.
 
+The container runs the suite as an ordinary `fixture` user owning the checkout
+and fixture interpreter prefix. This preserves permission-denial tests and Git's
+ownership checks under the runner's clean environment. Docker's masked system
+paths are disabled for the disposable job so nested bubblewrap can mount its own
+`/proc`. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
+records the evidence and the short hosted preflight before the complete suite.
+
 ## What the runner sets up, and why
 
 - **Interpreter.** It uses the main checkout's `.venv` (CPython 3.11.15). This is

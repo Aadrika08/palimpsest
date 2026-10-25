@@ -293,15 +293,21 @@ class Supervision(unittest.TestCase):
     def test_watchdog_terminates_owner_process_group(self):
         with tempfile.TemporaryDirectory() as tmp:
             supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs",
-                startup_timeout=1., worker_target=hung_owner_with_child)
+                startup_timeout=5., worker_target=hung_owner_with_child)
             self.addCleanup(supervisor.shutdown)
             run = supervisor.start({})
             pid_file = supervisor.path(run) / "child.pid"
             deadline = time.monotonic() + 5
             while not pid_file.exists() and time.monotonic() < deadline:
                 time.sleep(.02)
-            self.assertTrue(pid_file.exists())
+            self.assertTrue(pid_file.exists(), {
+                "supervisor": supervisor.describe(run),
+                "owner_exitcode": supervisor.workers[run].process.exitcode})
             child = int(pid_file.read_text())
+            # Arm the short watchdog only after the process group exists.
+            with supervisor.lock:
+                supervisor.startup_timeout = .2
+            deadline = time.monotonic() + 5
             while supervisor.describe(run)["status"] != "failed" and time.monotonic() < deadline:
                 time.sleep(.02)
             self.assertEqual(supervisor.describe(run)["failure"]["type"], "WorkerTimeout")

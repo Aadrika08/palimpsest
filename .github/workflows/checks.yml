@@ -17,6 +17,7 @@ jobs:
       options: >-
         --cap-add SYS_ADMIN --cap-add SYS_PTRACE
         --security-opt seccomp=unconfined --security-opt apparmor=unconfined
+        --security-opt systempaths=unconfined
         --tmpfs /tmp:rw,exec,nosuid,nodev,size=4g --shm-size=2g
     defaults:
       run:
@@ -26,7 +27,7 @@ jobs:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Install namespace, compiler and EGL dependencies
-        run: pacman -Syu --noconfirm --needed git gcc bubblewrap libglvnd mesa curl tar gzip xz
+        run: pacman -Syu --noconfirm --needed git gcc bubblewrap libglvnd mesa curl tar gzip xz python
       - uses: actions/checkout@v7
         with:
           submodules: true
@@ -47,6 +48,10 @@ jobs:
           uv sync --locked --no-python-downloads --python "$FIXTURE_PYTHON" --extra simulation --extra lab
           ln -s "$(command -v node)" /usr/bin/node
           npm ci --prefix ui
+      - name: Give fixture processes ordinary user ownership
+        run: |
+          useradd --create-home fixture
+          chown -R fixture:fixture "$GITHUB_WORKSPACE" "$UV_PYTHON_INSTALL_DIR"
       - name: Record fixture environment
         run: |
           .venv/bin/python -B -c 'import sys, importlib.metadata as m; print(sys.version); print({p: m.version(p) for p in ("torch", "torchvision", "numpy", "mujoco", "pytest")})'
@@ -54,10 +59,26 @@ jobs:
           df -h . /tmp /dev/shm
           bwrap --version
           node --version
+          runuser -u fixture -- git status --short
+          runuser -u fixture -- bwrap --unshare-all --ro-bind / / --proc /proc --dev /dev /usr/bin/true
+      - name: Check hosted environment boundaries before the full suite
+        run: |
+          runuser -u fixture -- scripts/run_tests.sh -- \
+            tests/test_frozen_pins.py \
+            tests/test_lab.py::Supervision::test_watchdog_terminates_owner_process_group \
+            tests/test_bounded_qualification_descendants.py \
+            tests/test_memory_family_allocation_v3.py::test_rollback_never_unlinks_a_replacement_inode \
+            tests/test_memory_selected_pilot.py::test_worker_rejects_expired_original_owner_allocation_before_output \
+            tests/test_puck_cpu_namespace.py::test_real_two_bwrap_passes_preserve_raw_tmpfs_inode_and_held_custody \
+            tests/test_puck_cpu_distributed_observer.py::test_cli_rejects_a_different_interpreter_before_allocating \
+            tests/test_storage.py::StorageTests::test_nested_inventory_rejects_special_files_scan_errors_and_changed_root
+          runuser -u fixture -- env PALIMPSEST_TEST_BASETEMP="$PWD/runs/hosted-preflight" \
+            scripts/run_tests.sh -- \
+            tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
       - name: Run fixture tests
         env:
           PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest
-        run: scripts/run_tests.sh
+        run: runuser -u fixture -- scripts/run_tests.sh
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10

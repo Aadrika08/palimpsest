@@ -830,8 +830,11 @@ def test_rollback_never_unlinks_a_replacement_inode(tmp_path):
         calls += 1
         if calls == 1:
             return first
-        target.unlink()
-        target.write_bytes(b'concurrent replacement')
+        # Create while the original still exists: unlink/recreate can reuse its inode.
+        replacement = target.with_name('replacement.json')
+        replacement.write_bytes(b'concurrent replacement')
+        assert allocation._inode(replacement) != allocation._inode(target)
+        replacement.replace(target)
         return second
 
     with patch.object(allocation, '_behavior_identity', side_effect=replace_then_drift):

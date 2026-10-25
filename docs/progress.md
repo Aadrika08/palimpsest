@@ -30,7 +30,12 @@ passed frontend and failed fixtures because the hosted environment did not meet
 the suite's runtime and system requirements. The [environment repair](reports/hosted-fixtures-2026-10-25.md)
 retains all 485 failures, pins the fixture container/interpreter and installs the
 declared dependencies; its five affected authored tests pass locally. Hosted
-verification remains pending. Main stays `2814138` until checks pass and the merge
+candidate `510a750` then reports 6,376 passes, 30 failures and 88 skips in the PR
+run, with frontend passing. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
+retains both subsequent failure logs and fixes container ownership/namespace
+admission and four test-fixture assumptions. All 27 focused local checks pass;
+the next hosted candidate must pass its preflight and complete suite.
+Main stays `2814138` until checks pass and the merge
 is verified. Project-code/new-parameter
 licensing and human/operator decisions remain pending.
 

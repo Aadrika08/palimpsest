@@ -339,6 +339,8 @@ def test_registration_cannot_derive_a_changed_diagnostic(tmp_path,monkeypatch):
 def test_worker_rejects_expired_original_owner_allocation_before_output(tmp_path,monkeypatch):
     import time
     s,reg,path=registration_fixture(tmp_path,monkeypatch)
+    # Fresh CI hosts may have less uptime than the expired 6,001-second allocation.
+    monkeypatch.setattr(time,'monotonic',lambda:10000.)
     marker=Path(reg['control_root'])/'launched.json';marker.parent.mkdir(parents=True)
     marker.write_text(json.dumps({'started_monotonic':time.monotonic()-6001,
         'registration_sha256':p.file_hash(path)}))
