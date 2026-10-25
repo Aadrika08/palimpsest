@@ -23,7 +23,7 @@ from test_memory_family_oracle_v3 import _packet, evidence
 
 
 ROOT = Path(__file__).parents[1]
-PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json'
+PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json'
 OWNER_SOURCE_SHA256 = 'd' * 64
 CONDITIONS = tuple(compact.PROTOCOL['analysis_contract']['conditions'])
 

@@ -51,22 +51,28 @@ def tree(root):
             for p in root.rglob('*') if p.is_file()}
 
 
-def fixture(root, *, natural_failure=False):
+def fixture(root, *, natural_failure=False, condition='own', source=None, prior_own=None,
+            row=4, kind='change'):
     """Real independent raw audit/converter/pair; only cell/model seams are authored."""
-    source = source_fixture(root)
-    producer.seal_compact_source(**source_request(source))
+    if source is None:
+        source = source_fixture(root, row=row, kind=kind)
+        producer.seal_compact_source(**source_request(source))
     case = source['sample']['case']
     case_id = case['case_id']
     case_path = root / '.pending' / case_id
-    condition = 'own'
     run_id = source['sample']['condition']['run_id']
+    if condition != 'own':
+        run_id = hashlib.sha256((run_id + condition).encode()).hexdigest()[:32]
+    prefix = '' if condition == 'own' else condition + '-'
     raw = case_path / '.raw' / run_id
     # The original fixture's raw own selector predates v4 history descriptors.
     # Build a new authored trace with v4's exact mapping before either raw audit.
-    sample = evidence(row=4)
+    sample = evidence(row=case['row'], kind=case['kind'])
     application = snapshots.read_snapshot(source['snapshot'])['application']
     histories = _histories(root, case)
-    selector, u, _ = _condition_values(condition, case, histories, application)
+    prior_result = None if prior_own is None else artifacts._json(
+        (prior_own['path'] / 'pair-admission.json').read_bytes())
+    selector, u, _ = _condition_values(condition, case, histories, application, prior_result)
     events, schedule, condition_world, last_outcome = _condition_events(
         sample, condition, run_id, selector, u, application,
         natural_failure=natural_failure)
@@ -76,7 +82,7 @@ def fixture(root, *, natural_failure=False):
         parent_event_prefix=application['event_prefix']),
         max_bytes=audit.RAW_LIMITS['condition']['recording_max_bytes'])
     _emit_trace(writer, events, sample['post_rows'])
-    total = sample['post_world_state']['last_tick'] + 1
+    total = sample['post_rows'][-1]['tick'] + 1
     _finish(writer, total, condition_world,
             'failed' if natural_failure else 'paused', last_outcome)
     _report(raw / 'worker-report.json', run_id=run_id, case=case,
@@ -85,7 +91,7 @@ def fixture(root, *, natural_failure=False):
         source_snapshot_sha256=source['contract']['snapshot']['sha256'],
         total_ticks=total, world_state=condition_world,
         final_phase='failed' if natural_failure else 'paused')
-    receipts = root / 'condition-audits'
+    receipts = root / (prefix + 'condition-audits')
     receipts.mkdir()
     command = [sys.executable, str(ROOT / 'scripts/memory_family_raw_audit_v4.py'),
         '--run', str(raw), '--receipt-root', str(receipts), '--run-id', run_id,
@@ -110,11 +116,11 @@ def fixture(root, *, natural_failure=False):
     owner_descriptor = write(root,
         f'.pending/{case_id}/conditions/{condition}/owner.json', owner)
     owner_descriptor['path'] = f'cases/{case_id}/conditions/{condition}/owner.json'
-    controls = {role: write(root, f'condition-controls/{role}.json',
+    controls = {role: write(root, f'{prefix}condition-controls/{role}.json',
         b'' if role in ('stdout', 'stderr') else {'closed': True})
         for role in ('job', 'supervisor', 'stdout', 'stderr', 'cleanup')}
     controls['audit'] = raw_audit
-    qualification = write(root, 'qualification.json', {'authored': True})
+    qualification = write(root, prefix + 'qualification.json', {'authored': True})
     extension = ROOT / module().EXTENSION_PATH
     contract = {'schema': 'memory-family-condition-finalization-registration-v1',
         'protocol_sha256': compact.PROTOCOL_SHA256,
@@ -129,16 +135,18 @@ def fixture(root, *, natural_failure=False):
         'raw_audit': raw_audit, 'owner_record': owner_descriptor,
         'controls': controls,
         'history_bundles': {role: value['descriptor'] for role, value in histories.items()},
-        'prior_own_receipt': None, 'qualification': qualification,
+        'prior_own_receipt': (None if prior_own is None else descriptor(
+            f'cases/{case_id}/conditions/own/pair-admission.json',
+            (prior_own['path'] / 'pair-admission.json').read_bytes())), 'qualification': qualification,
         'claims': copy.deepcopy(compact.PROTOCOL['claims'])}
-    registration = write(root, 'condition-terminal-export.json', contract)
+    registration = write(root, prefix + 'condition-terminal-export.json', contract)
     return {'root': root, 'source': source, 'path': path, 'raw': raw,
             'contract': contract, 'registration': registration, 'schedule': schedule}
 
 
 def request(sample):
     return {'evidence_root': sample['root'], 'registration': sample['registration'],
-        'case_id': sample['contract']['case']['case_id'], 'condition': 'own',
+        'case_id': sample['contract']['case']['case_id'], 'condition': sample['contract']['condition'],
         'deadline': time.monotonic() + 30}
 
 
@@ -207,7 +215,7 @@ def test_real_raw_conversion_pair_seals_with_authored_cell_seams(tmp_path, monke
 
 
 def rebind(sample):
-    sample['registration'] = write(sample['root'], 'condition-terminal-export.json', sample['contract'])
+    sample['registration'] = write(sample['root'], sample['registration']['path'], sample['contract'])
 
 
 def test_default_missing_qualification_refuses_before_source_raw_or_output(tmp_path, monkeypatch):

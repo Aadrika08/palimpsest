@@ -32,7 +32,16 @@ on the same integrated release candidate.
    candidate, with final review/verification, reproducible installation, licences,
    limitations, runbook and a complete requirements-to-evidence matrix.
 
+## Current execution update — 23 October 2026
+
+The [renewed completion checklist](project-completion-2026-10-23.md) governs
+current sequencing. The user now requires all completed work on remote main;
+main integration and applicable CI are in scope. Later artwork reports and
+current source inspection supersede the historical active-work notes below.
+
 ## Active work unit: foundation repairs, then the lab and six artworks
+
+*Historical work-unit record; see the current execution update above.*
 
 **Main is integrated (2026-10-18).** PR #179 merged every unmerged branch into
 `main` (merge `8626ecb`): all 126 branches merged and 113 draft PRs closed.

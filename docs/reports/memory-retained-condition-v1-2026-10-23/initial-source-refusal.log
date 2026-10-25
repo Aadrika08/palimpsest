@@ -1,0 +1,263 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_retained_reader_uses_receipts_without_raw_or_model[False] ________
+
+tmp_path = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2648219-selected/test_retained_reader_uses_rece0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x757d1ed2f610>
+natural_failure = False
+
+    @pytest.mark.parametrize('natural_failure', [False, True])
+    def test_retained_reader_uses_receipts_without_raw_or_model(tmp_path, monkeypatch, natural_failure):
+>       sample = sealed(tmp_path / 'evidence', monkeypatch, natural_failure=natural_failure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_retained_condition_v1.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_retained_condition_v1.py:17: in sealed
+    sample = fixture(root, natural_failure=natural_failure)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_family_condition_close_v4.py:56: in fixture
+    source = source_fixture(root)
+             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2648219-selected/test_retained_reader_uses_rece0/evidence')
+
+    def fixture(root):
+        root.mkdir()
+        sample = raw_fixture(root / 'fixture', include_source=True)
+        case = sample['case']
+        run_id = sample['source']['run_id']
+        case_root = root / '.pending' / case['case_id']
+        raw = case_root / '.raw' / run_id
+        raw.parent.mkdir(parents=True)
+        sample['source']['run_path'].rename(raw)
+        source = case_root / 'source'
+        (source / 'snapshots').mkdir(parents=True)
+        snapshot = source / 'snapshots/initial.snp'
+        sample['snapshot_path'].rename(snapshot)
+        sample['source']['run_path'] = raw
+        snapshot_descriptor = descriptor(
+            f"cases/{case['case_id']}/source/snapshots/initial.snp",
+            snapshot.read_bytes())
+        sample['snapshot_descriptor'] = snapshot_descriptor
+        sample['snapshot_path'] = snapshot
+        sample['evidence_root'] = root
+        request = _request(sample, 'source')
+        # Receipts live outside the raw run and are published by a separate process.
+        request.update(evidence_root=root, snapshot_reference=snapshot_descriptor)
+        command = [
+            sys.executable, str(ROOT / 'scripts/memory_family_raw_audit_v4.py'),
+            '--run', str(raw), '--receipt-root', str(sample['receipts']),
+            '--run-id', run_id, '--case-id', case['case_id'], '--operation', 'source',
+            '--source-identity-sha256', request['source_identity_sha256'],
+            '--evidence-root', str(root), '--source-snapshot',
+            json.dumps(snapshot_descriptor), '--deadline-seconds', '30',
+        ]
+        result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True,
+                                env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1089, in <module>
+E             main()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1077, in main
+E             result = audit_raw_run(
+E                      ^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1056, in audit_raw_run
+E             return _with_snapshot(_audit_raw_run, run_path, receipt_root, **values)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1036, in _with_snapshot
+E             result = function(run_path, receipt_root, **values,
+E                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 945, in _audit_raw_run
+E             receipt = _audit_candidate(run, **values)
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 749, in _audit_candidate
+E             source_identity = canonical_source_identity(source_identity_sha256)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 106, in canonical_source_identity
+E             behavior = compact.behavior_source_identities(REPO_ROOT)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_compact_v4.py", line 232, in behavior_source_identities
+E             raise ValueError(f"Behavior source differs: {expected['id']}")
+E         ValueError: Behavior source differs: engine
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '/home/utkarsh/Work/shraddha/palimps...\n    raise ValueError(f"Behavior source differs: {expected[\'id\']}")\nValueError: Behavior source differs: engine\n').returncode
+
+tests/test_memory_family_producer_v4.py:70: AssertionError
+________ test_retained_reader_uses_receipts_without_raw_or_model[True] _________
+
+tmp_path = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2648219-selected/test_retained_reader_uses_rece1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x757d1f183b90>
+natural_failure = True
+
+    @pytest.mark.parametrize('natural_failure', [False, True])
+    def test_retained_reader_uses_receipts_without_raw_or_model(tmp_path, monkeypatch, natural_failure):
+>       sample = sealed(tmp_path / 'evidence', monkeypatch, natural_failure=natural_failure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_retained_condition_v1.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_retained_condition_v1.py:17: in sealed
+    sample = fixture(root, natural_failure=natural_failure)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_family_condition_close_v4.py:56: in fixture
+    source = source_fixture(root)
+             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2648219-selected/test_retained_reader_uses_rece1/evidence')
+
+    def fixture(root):
+        root.mkdir()
+        sample = raw_fixture(root / 'fixture', include_source=True)
+        case = sample['case']
+        run_id = sample['source']['run_id']
+        case_root = root / '.pending' / case['case_id']
+        raw = case_root / '.raw' / run_id
+        raw.parent.mkdir(parents=True)
+        sample['source']['run_path'].rename(raw)
+        source = case_root / 'source'
+        (source / 'snapshots').mkdir(parents=True)
+        snapshot = source / 'snapshots/initial.snp'
+        sample['snapshot_path'].rename(snapshot)
+        sample['source']['run_path'] = raw
+        snapshot_descriptor = descriptor(
+            f"cases/{case['case_id']}/source/snapshots/initial.snp",
+            snapshot.read_bytes())
+        sample['snapshot_descriptor'] = snapshot_descriptor
+        sample['snapshot_path'] = snapshot
+        sample['evidence_root'] = root
+        request = _request(sample, 'source')
+        # Receipts live outside the raw run and are published by a separate process.
+        request.update(evidence_root=root, snapshot_reference=snapshot_descriptor)
+        command = [
+            sys.executable, str(ROOT / 'scripts/memory_family_raw_audit_v4.py'),
+            '--run', str(raw), '--receipt-root', str(sample['receipts']),
+            '--run-id', run_id, '--case-id', case['case_id'], '--operation', 'source',
+            '--source-identity-sha256', request['source_identity_sha256'],
+            '--evidence-root', str(root), '--source-snapshot',
+            json.dumps(snapshot_descriptor), '--deadline-seconds', '30',
+        ]
+        result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True,
+                                env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1089, in <module>
+E             main()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1077, in main
+E             result = audit_raw_run(
+E                      ^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1056, in audit_raw_run
+E             return _with_snapshot(_audit_raw_run, run_path, receipt_root, **values)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1036, in _with_snapshot
+E             result = function(run_path, receipt_root, **values,
+E                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 945, in _audit_raw_run
+E             receipt = _audit_candidate(run, **values)
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 749, in _audit_candidate
+E             source_identity = canonical_source_identity(source_identity_sha256)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 106, in canonical_source_identity
+E             behavior = compact.behavior_source_identities(REPO_ROOT)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_compact_v4.py", line 232, in behavior_source_identities
+E             raise ValueError(f"Behavior source differs: {expected['id']}")
+E         ValueError: Behavior source differs: engine
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '/home/utkarsh/Work/shraddha/palimps...\n    raise ValueError(f"Behavior source differs: {expected[\'id\']}")\nValueError: Behavior source differs: engine\n').returncode
+
+tests/test_memory_family_producer_v4.py:70: AssertionError
+___________ test_unqualified_reader_refuses_before_protected_access ____________
+
+tmp_path = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2648219-selected/test_unqualified_reader_refuse0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x757d1e781710>
+
+    def test_unqualified_reader_refuses_before_protected_access(tmp_path, monkeypatch):
+>       sample = sealed(tmp_path / 'evidence', monkeypatch)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_retained_condition_v1.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_retained_condition_v1.py:17: in sealed
+    sample = fixture(root, natural_failure=natural_failure)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_family_condition_close_v4.py:56: in fixture
+    source = source_fixture(root)
+             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2648219-selected/test_unqualified_reader_refuse0/evidence')
+
+    def fixture(root):
+        root.mkdir()
+        sample = raw_fixture(root / 'fixture', include_source=True)
+        case = sample['case']
+        run_id = sample['source']['run_id']
+        case_root = root / '.pending' / case['case_id']
+        raw = case_root / '.raw' / run_id
+        raw.parent.mkdir(parents=True)
+        sample['source']['run_path'].rename(raw)
+        source = case_root / 'source'
+        (source / 'snapshots').mkdir(parents=True)
+        snapshot = source / 'snapshots/initial.snp'
+        sample['snapshot_path'].rename(snapshot)
+        sample['source']['run_path'] = raw
+        snapshot_descriptor = descriptor(
+            f"cases/{case['case_id']}/source/snapshots/initial.snp",
+            snapshot.read_bytes())
+        sample['snapshot_descriptor'] = snapshot_descriptor
+        sample['snapshot_path'] = snapshot
+        sample['evidence_root'] = root
+        request = _request(sample, 'source')
+        # Receipts live outside the raw run and are published by a separate process.
+        request.update(evidence_root=root, snapshot_reference=snapshot_descriptor)
+        command = [
+            sys.executable, str(ROOT / 'scripts/memory_family_raw_audit_v4.py'),
+            '--run', str(raw), '--receipt-root', str(sample['receipts']),
+            '--run-id', run_id, '--case-id', case['case_id'], '--operation', 'source',
+            '--source-identity-sha256', request['source_identity_sha256'],
+            '--evidence-root', str(root), '--source-snapshot',
+            json.dumps(snapshot_descriptor), '--deadline-seconds', '30',
+        ]
+        result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True,
+                                env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1089, in <module>
+E             main()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1077, in main
+E             result = audit_raw_run(
+E                      ^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1056, in audit_raw_run
+E             return _with_snapshot(_audit_raw_run, run_path, receipt_root, **values)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1036, in _with_snapshot
+E             result = function(run_path, receipt_root, **values,
+E                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 945, in _audit_raw_run
+E             receipt = _audit_candidate(run, **values)
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 749, in _audit_candidate
+E             source_identity = canonical_source_identity(source_identity_sha256)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 106, in canonical_source_identity
+E             behavior = compact.behavior_source_identities(REPO_ROOT)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_compact_v4.py", line 232, in behavior_source_identities
+E             raise ValueError(f"Behavior source differs: {expected['id']}")
+E         ValueError: Behavior source differs: engine
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '/home/utkarsh/Work/shraddha/palimps...\n    raise ValueError(f"Behavior source differs: {expected[\'id\']}")\nValueError: Behavior source differs: engine\n').returncode
+
+tests/test_memory_family_producer_v4.py:70: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_retained_condition_v1.py::test_retained_reader_uses_receipts_without_raw_or_model[False]
+FAILED tests/test_memory_family_retained_condition_v1.py::test_retained_reader_uses_receipts_without_raw_or_model[True]
+FAILED tests/test_memory_family_retained_condition_v1.py::test_unqualified_reader_refuses_before_protected_access
+3 failed in 1.16s

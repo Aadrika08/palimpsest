@@ -12,6 +12,27 @@ It exits nonzero if any pass fails, and removes its temporary directories when i
 finishes. The README's `uv run --no-sync pytest -q` remains a quick fixture
 check; it does not reproduce this environment.
 
+Hosted fixture CI uses a digest-pinned Arch Linux container, executable `/tmp`
+tmpfs, the exact CPython 3.11.15 build recorded in
+[the download descriptor](../.github/python-downloads.json), and the locked
+simulation/lab dependencies. Several source fixtures deliberately bind the
+interpreter ELF, its fixed installation path and the system-library layout;
+selecting any Python 3.11 build on a generic runner is insufficient. The
+[hosted environment repair](reports/hosted-fixtures-2026-10-25.md) records the
+initial failures and verification scope. These fixture checks do not qualify an
+installed numerical runtime or a different host platform.
+
+The container runs the suite as an ordinary `fixture` user owning the checkout
+and fixture interpreter prefix. This preserves permission-denial tests and Git's
+ownership checks under the runner's clean environment. Docker's masked system
+paths are disabled for the disposable job so nested bubblewrap can mount its own
+`/proc`. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
+records the evidence and the short hosted preflight before the complete suite.
+The suite also needs an open-file limit of 65,536: existing held-runtime controls
+require at least 40,000 descriptors. CI declares the container ceiling and
+restores the soft limit after `runuser`, which otherwise resets it to 1,024.
+The preflight records the effective limits and includes an independent CPU audit.
+
 ## What the runner sets up, and why
 
 - **Interpreter.** It uses the main checkout's `.venv` (CPython 3.11.15). This is
@@ -71,6 +92,22 @@ check; it does not reproduce this environment.
 - **Opt-in heavier checks.** Set `PALIMPSEST_SIMULATION_TESTS=1` for real EGL
   world and scene cases. `PALIMPSEST_MALE_TORCH_CHECKS=1` and
   `PALIMPSEST_MALE_RUNTIME_TESTS=1` cover the MaleCNS runtime windows.
+  The clean environment forwards these explicit values, plus
+  `PALIMPSEST_TEST_PUCK_TORCH`, `PALIMPSEST_BUILD_NAMESPACE_TEST` and
+  `PALIMPSEST_INSTALL_FIXTURE` for their separately selected checks. They remain
+  disabled unless set to exactly `1`.
+  `PALIMPSEST_MALE_RUNTIME_OUTPUT` must name a new directory for retained actual
+  MaleCNS evidence; `PALIMPSEST_TEST_ASSETS` optionally selects its asset root.
+  These paths are also forwarded, including spaces. For example:
+
+  ```sh
+  PALIMPSEST_MALE_RUNTIME_TESTS=1 \
+    PALIMPSEST_MALE_RUNTIME_OUTPUT="$PWD/runs/male-runtime-new-session" \
+    scripts/run_tests.sh -- tests/test_male_runtime.py
+  ```
+
+  Choose a fresh output name for each session. Default fixture passes do not
+  establish that any opt-in runtime check ran.
 
 ## Frozen pins after integration
 
@@ -79,3 +116,9 @@ branch into `main` changed those files, so tests of those historical protocols
 are either checked against the pinned commit or skipped as historical, through
 `tests/frozen_pins.py`. See
 [frozen-source-pins-after-integration](plans/frozen-source-pins-after-integration.md).
+
+The [retained-condition source revision](plans/memory-retained-condition-v1.md)
+resumes memory-v4 checks against the integrated source with a separately named
+prospective profile. Its new tests do not use historical skips. Both earlier
+profiles remain checked against Git history; no old scientific evidence is
+rebound to the new source.

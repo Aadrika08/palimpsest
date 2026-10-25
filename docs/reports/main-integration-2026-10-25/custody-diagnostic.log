@@ -1,0 +1,113 @@
+CASE native-python
+CHILD 1  Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/puck-native-cache-1wp8j9e3/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/puck-native-cache-1wp8j9e3/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/puck-native-cache-1wp8j9e3/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+    provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/puck-native-cache-1wp8j9e3/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+    self._children.append(holder); return holder.__enter__()
+                                          ^^^^^^^^^^^^^^^^^^
+  File "/tmp/puck-native-cache-1wp8j9e3/source/src/palimpsest/puck_dependency_files.py", line 430, in __enter__
+    self._require_absent_imports(tuple(sorted(row['name'] for row in cache)), cache_creation=True)
+  File "/tmp/puck-native-cache-1wp8j9e3/source/src/palimpsest/puck_dependency_files.py", line 498, in _require_absent_imports
+    raise ValueError('Absent import has a physical package namespace alternative: ' + name)
+ValueError: Absent import has a physical package namespace alternative: native_cache_fixture
+
+PASS native-python
+CASE native-extension
+CHILD 1  Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/puck-native-cache-b8b_w2mq/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/puck-native-cache-b8b_w2mq/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/puck-native-cache-b8b_w2mq/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+    provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/puck-native-cache-b8b_w2mq/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+    self._children.append(holder); return holder.__enter__()
+                                          ^^^^^^^^^^^^^^^^^^
+  File "/tmp/puck-native-cache-b8b_w2mq/source/src/palimpsest/puck_dependency_files.py", line 430, in __enter__
+    self._require_absent_imports(tuple(sorted(row['name'] for row in cache)), cache_creation=True)
+  File "/tmp/puck-native-cache-b8b_w2mq/source/src/palimpsest/puck_dependency_files.py", line 498, in _require_absent_imports
+    raise ValueError('Absent import has a physical package namespace alternative: ' + name)
+ValueError: Absent import has a physical package namespace alternative: native_cache_fixture
+
+PASS native-extension
+CASE q4-v1
+CHILD 1  {"diagnostic_only":true,"elapsed_seconds":4.487999831326306e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+{"diagnostic_only":true,"elapsed_seconds":0.04309773199929623,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+{"diagnostic_only":true,"elapsed_seconds":0.0431244430001243,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-tmpfs-deps-mrs52plc/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-tmpfs-deps-mrs52plc/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/palimpsest-tmpfs-deps-mrs52plc/source/scripts/puck_worker_bootstrap.py", line 751, in __enter__
+    raise ValueError('Four-import qualification requires admitted v3 tmpfs dependency custody')
+ValueError: Four-import qualification requires admitted v3 tmpfs dependency custody
+
+PASS q4-v1
+CASE q4-v2
+CHILD 1  {"diagnostic_only":true,"elapsed_seconds":6.974001735216007e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+{"diagnostic_only":true,"elapsed_seconds":0.04312739700253587,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+{"diagnostic_only":true,"elapsed_seconds":0.043154619001143146,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-tmpfs-deps-bdry7m_0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-tmpfs-deps-bdry7m_0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/palimpsest-tmpfs-deps-bdry7m_0/source/scripts/puck_worker_bootstrap.py", line 751, in __enter__
+    raise ValueError('Four-import qualification requires admitted v3 tmpfs dependency custody')
+ValueError: Four-import qualification requires admitted v3 tmpfs dependency custody
+
+PASS q4-v2
+CASE q4-captured
+CHILD 1  {"diagnostic_only":true,"elapsed_seconds":4.548997821984813e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+{"diagnostic_only":true,"elapsed_seconds":0.0426262199980556,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+{"diagnostic_only":true,"elapsed_seconds":0.042653111999243265,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+{"diagnostic_only":true,"elapsed_seconds":0.9694096639977943,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+{"diagnostic_only":true,"elapsed_seconds":0.9835191109996231,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+{"diagnostic_only":true,"elapsed_seconds":0.9835533669975121,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+{"active":null,"context":"import.numpy.enter","diagnostic_only":true,"elapsed_nanoseconds":1025483958,"full":{"completed":76,"started":76},"kind":"puck-worker-guard-cost-v1","light":{"completed":1,"started":1},"nested_checks":0,"sections":{"bindings":{"nanoseconds":7969323,"visits":85},"cache":{"nanoseconds":1910356,"visits":77},"custody":{"nanoseconds":967545573,"visits":85},"images":{"nanoseconds":1408032,"visits":7}},"sequence":1,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":1.068250865999289,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+{"active":null,"context":"import.numpy.returned","diagnostic_only":true,"elapsed_nanoseconds":1034516174,"full":{"completed":76,"started":76},"kind":"puck-worker-guard-cost-v1","light":{"completed":13,"started":13},"nested_checks":0,"sections":{"bindings":{"nanoseconds":10723386,"visits":109},"cache":{"nanoseconds":2141356,"visits":89},"custody":{"nanoseconds":969465143,"visits":109},"images":{"nanoseconds":1408032,"visits":7}},"sequence":2,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":1.0772718399966834,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+{"active":null,"context":"import.torch.enter","diagnostic_only":true,"elapsed_nanoseconds":1062434425,"full":{"completed":78,"started":78},"kind":"puck-worker-guard-cost-v1","light":{"completed":13,"started":13},"nested_checks":0,"sections":{"bindings":{"nanoseconds":11347585,"visits":113},"cache":{"nanoseconds":2186963,"visits":91},"custody":{"nanoseconds":996064261,"visits":113},"images":{"nanoseconds":1809477,"visits":9}},"sequence":3,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":1.1051953319984023,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+{"active":null,"context":"import.torch.returned","diagnostic_only":true,"elapsed_nanoseconds":1064561036,"full":{"completed":78,"started":78},"kind":"puck-worker-guard-cost-v1","light":{"completed":16,"started":16},"nested_checks":0,"sections":{"bindings":{"nanoseconds":12133881,"visits":119},"cache":{"nanoseconds":2256545,"visits":94},"custody":{"nanoseconds":996562171,"visits":119},"images":{"nanoseconds":1809477,"visits":9}},"sequence":4,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":1.1073173839977244,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+{"active":null,"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1092446535,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":16,"started":16},"nested_checks":0,"sections":{"bindings":{"nanoseconds":12783349,"visits":123},"cache":{"nanoseconds":2304386,"visits":96},"custody":{"nanoseconds":1023116384,"visits":123},"images":{"nanoseconds":2206363,"visits":11}},"sequence":5,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":1.135207019997324,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+{"active":null,"context":"import.torchvision.returned","diagnostic_only":true,"elapsed_nanoseconds":1094631597,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":19,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":13592100,"visits":129},"cache":{"nanoseconds":2375330,"visits":99},"custody":{"nanoseconds":1023616576,"visits":129},"images":{"nanoseconds":2206363,"visits":11}},"sequence":6,"trigger":"checkpoint"}
+{"diagnostic_only":true,"elapsed_seconds":1.1373872939984722,"kind":"puck-worker-phase-v1","phase":"import.torchvision.returned","sequence":12}
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-tmpfs-deps-t8hxmsdn/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-tmpfs-deps-t8hxmsdn/source/scripts/puck_worker_bootstrap.py", line 1051, in main
+    receipt = admission.invoke()
+              ^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-tmpfs-deps-t8hxmsdn/source/scripts/puck_worker_bootstrap.py", line 1019, in invoke
+    self.recheck(); result = getattr(module, function)(self)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-tmpfs-deps-t8hxmsdn/source/src/palimpsest/puck_runtime_qualification.py", line 41, in qualify
+    raise ValueError('Runtime qualification version differs: '+name)
+ValueError: Runtime qualification version differs: torchvision
+
+PASS q4-captured
+CASE native-held
+CHILD 0 {"collection_authorized":false,"dependencies":{"claims":[],"collection_authorized":false,"executable":false,"exported_modules":[],"external_hardlink_names_covered":false,"file_count":5,"hostile_root_protection":false,"images":{"anonymous_code_qualified":false,"baseline_file_images":12,"held_file_images":[{"device":50,"inode":71107,"paths":["/tmp/palimpsest-native-diagnostic-mpinu3uf/dependency/fixture_dep/_native.cpython-311-x86_64-linux-gnu.so"]}],"native_closure_qualified":false,"transient_images_covered":false},"input_bytes":16187,"kind":"puck-worker-dependency-custody-v1","loaded_modules":[{"name":"fixture_dep","path":"fixture_dep/__init__.py"},{"name":"fixture_dep._native","path":"fixture_dep/_native.cpython-311-x86_64-linux-gnu.so"}],"module_dispatch_bindings":[{"delegate_attributes":[],"name":"fixture_dep","original_metadata_bound":false},{"delegate_attributes":[],"name":"fixture_dep._native","original_metadata_bound":false}],"native_origin_policies":{},"protection_modes":["linux_read_lease"],"registration_bytes":1215,"registration_sha256":"db4811d6336bdb7b050be070c2ed0ca0438f0adb331e96caa76a44ab21056509","reservation_authorized":false,"root_count":1,"runtime_qualified":false,"source_closure":false},"dependencies_qualified":false,"entry_result":{"answer":47},"environment_sha256":"277778f34d10dce3fa680bb0f8ca8ac799f51c79e3fbb7ea1ccafae4f87a2308","executable":false,"interpreter_object_bound":true,"kind":"puck-worker-source-bootstrap-receipt-v1","loaded_modules":[{"name":"_puck_held_file_bootstrap","path":"src/palimpsest/puck_execution_files.py","sha256":"35c183076aeb72702aa07712604dded3eeeee6c6e3f64261e7087ee7252d29f7"},{"name":"palimpsest","path":"src/palimpsest/__init__.py","sha256":"88b768b1c936b486324bff17f47c961d53130b16466105c71b96885bcb1c274e"},{"name":"palimpsest.puck_dependency_bindings","path":"src/palimpsest/puck_dependency_bindings.py","sha256":"f6d686bf28bfc23ce09faf63d5e95113d18c19ea6f5b2e7a059346046e529631"},{"name":"palimpsest.puck_dependency_files","path":"src/palimpsest/puck_dependency_files.py","sha256":"a2382959c5cc039dc3a169378760569c7a2533323104512f1fa4d5ca10fea02c"},{"name":"palimpsest.puck_dependency_imports","path":"src/palimpsest/puck_dependency_imports.py","sha256":"c157b3a897aa72ee456301eaa6724c5edb050ab8810ce1f40d94ac4b50080e2c"},{"name":"palimpsest.puck_execution_files","path":"src/palimpsest/puck_execution_files.py","sha256":"35c183076aeb72702aa07712604dded3eeeee6c6e3f64261e7087ee7252d29f7"},{"name":"palimpsest.puck_native_identity","path":"src/palimpsest/puck_native_identity.py","sha256":"6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb"},{"name":"palimpsest.puck_native_origins","path":"src/palimpsest/puck_native_origins.py","sha256":"e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1"},{"name":"palimpsest.puck_worker_preflight","path":"src/palimpsest/puck_worker_preflight.py","sha256":"79cc65b1de814c71c4425209c8c745bbb5ff8476ef9e6271059521d1eb64dc5d"}],"native_authorized":false,"parent":{"parent_pid":1020833,"pgid":1020833,"pid":1020834,"sid":1020833,"start_tick":5478874},"process":{"parent_pid":1020834,"pgid":1020878,"pid":1020878,"sid":1020878,"start_tick":5479455},"python_version":"3.11.15","qualification_claims":[],"registration_sha256":"b7bc0c0b9330f9576ec0c03beb29c48e57f8a3643a9ac2a38eb91fd7466b188a","runtime_qualified":false,"trusted_boundary":["CPython stdlib","interpreter ELF dependencies"],"version":1}
+ 
+PASS native-held

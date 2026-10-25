@@ -1,0 +1,72 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_ EnduranceProcessTests.test_inaccessible_live_process_still_raises_with_identity_context _
+
+self = <test_verification_scripts.EnduranceProcessTests testMethod=test_inaccessible_live_process_still_raises_with_identity_context>
+
+    def test_inaccessible_live_process_still_raises_with_identity_context(self):
+        with self.deny_fds(), self.assertRaises(PermissionError) as caught:
+            self.reader.process(self.child.pid)
+        notes = ' '.join(getattr(caught.exception, '__notes__', []))
+>       self.assertIn(str(self.child.pid), notes)
+E       AssertionError: '1129719' not found in ''
+
+tests/test_verification_scripts.py:80: AssertionError
+_ EnduranceProcessTests.test_observed_zombie_keeps_identity_without_fd_access __
+
+self = <test_verification_scripts.EnduranceProcessTests testMethod=test_observed_zombie_keeps_identity_without_fd_access>
+
+    def test_observed_zombie_keeps_identity_without_fd_access(self):
+        self.zombie()
+        with self.deny_fds():
+>           self.assert_zombie(self.reader.process(self.child.pid))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_verification_scripts.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/verify_endurance.py:72: in process
+    'threads': int(status['Threads']), 'fds': len(list((root / 'fd').iterdir())),
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/proc/1129720/fd')
+
+    def inspect(path):
+        if path == self.root / 'fd':
+            if transition:
+                transition()
+>           raise PermissionError(13, 'Authored procfs permission boundary', str(path))
+E           PermissionError: [Errno 13] Authored procfs permission boundary: '/proc/1129720/fd'
+
+tests/test_verification_scripts.py:63: PermissionError
+_ EnduranceProcessTests.test_permission_race_accepts_only_same_identity_now_zombie _
+
+self = <test_verification_scripts.EnduranceProcessTests testMethod=test_permission_race_accepts_only_same_identity_now_zombie>
+
+    def test_permission_race_accepts_only_same_identity_now_zombie(self):
+        with self.deny_fds(self.zombie):
+>           self.assert_zombie(self.reader.process(self.child.pid))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_verification_scripts.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/verify_endurance.py:72: in process
+    'threads': int(status['Threads']), 'fds': len(list((root / 'fd').iterdir())),
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/proc/1129721/fd')
+
+    def inspect(path):
+        if path == self.root / 'fd':
+            if transition:
+                transition()
+>           raise PermissionError(13, 'Authored procfs permission boundary', str(path))
+E           PermissionError: [Errno 13] Authored procfs permission boundary: '/proc/1129721/fd'
+
+tests/test_verification_scripts.py:63: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_verification_scripts.py::EnduranceProcessTests::test_inaccessible_live_process_still_raises_with_identity_context
+FAILED tests/test_verification_scripts.py::EnduranceProcessTests::test_observed_zombie_keeps_identity_without_fd_access
+FAILED tests/test_verification_scripts.py::EnduranceProcessTests::test_permission_race_accepts_only_same_identity_now_zombie
+3 failed, 1 passed in 0.30s

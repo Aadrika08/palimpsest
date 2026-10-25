@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "sessions": [
+    {
+      "name": "borrowed-body.svg",
+      "duration_seconds": 600.6923082269999,
+      "started_utc": "2026-10-22T11:17:14.688Z",
+      "ended_utc": "2026-10-22T11:27:15.380Z",
+      "probes": 599,
+      "frames_observed": 36043,
+      "max_probe_gap_seconds": 1.016990753000002,
+      "max_frame_gap_ms": 16.800000000046566,
+      "counts": {
+        "actual": [
+          376
+        ],
+        "expected": [
+          376
+        ]
+      },
+      "screenshots_sha256": {
+        "start": "4ab5a2ce3b1fbfd56b3f6d316b72cfbb632c8c8729ed6633a1d3baebfb240c17",
+        "end": "4ab5a2ce3b1fbfd56b3f6d316b72cfbb632c8c8729ed6633a1d3baebfb240c17"
+      }
+    },
+    {
+      "name": "one-map-many-lives.html",
+      "duration_seconds": 600.670919052,
+      "started_utc": "2026-10-22T11:17:14.709Z",
+      "ended_utc": "2026-10-22T11:27:15.380Z",
+      "probes": 599,
+      "frames_observed": 36042,
+      "max_probe_gap_seconds": 1.0182048959999992,
+      "max_frame_gap_ms": 16.800000000046566,
+      "counts": {
+        "actual": [
+          376,
+          8
+        ],
+        "expected": [
+          376,
+          8
+        ]
+      },
+      "screenshots_sha256": {
+        "start": "027cf6bcffcdc7a7178c90e9ee8b0e75b31ff27ed9cd87fb39d4db7db9eb254c",
+        "end": "027cf6bcffcdc7a7178c90e9ee8b0e75b31ff27ed9cd87fb39d4db7db9eb254c"
+      }
+    },
+    {
+      "name": "atlas.svg",
+      "duration_seconds": 600.566802764,
+      "started_utc": "2026-10-22T11:17:14.813Z",
+      "ended_utc": "2026-10-22T11:27:15.380Z",
+      "probes": 599,
+      "frames_observed": 36035,
+      "max_probe_gap_seconds": 1.0110896090000023,
+      "max_frame_gap_ms": 16.800000000046566,
+      "counts": {
+        "actual": [
+          135,
+          true
+        ],
+        "expected": [
+          135,
+          true
+        ],
+        "paths_total": 3295
+      },
+      "screenshots_sha256": {
+        "start": "71675a43a26f08003432a41cdd40cfd8ee1e79b889e1defc1811de1263d39bf8",
+        "end": "71675a43a26f08003432a41cdd40cfd8ee1e79b889e1defc1811de1263d39bf8"
+      }
+    },
+    {
+      "name": "space-between-two-flies.svg",
+      "duration_seconds": 600.6350007909999,
+      "started_utc": "2026-10-22T11:17:14.737Z",
+      "ended_utc": "2026-10-22T11:27:15.373Z",
+      "probes": 599,
+      "frames_observed": 36040,
+      "max_probe_gap_seconds": 1.0115853669999997,
+      "max_frame_gap_ms": 16.800000000046566,
+      "counts": {
+        "actual": [
+          15942,
+          21065
+        ],
+        "expected": [
+          15942,
+          21065
+        ]
+      },
+      "screenshots_sha256": {
+        "start": "7dee427895183486b1547acb63998d54dec5850b80e1421c446da80a787852e4",
+        "end": "7dee427895183486b1547acb63998d54dec5850b80e1421c446da80a787852e4"
+      }
+    }
+  ],
+  "all_extracted_members_match_pinned_zip": true,
+  "actual_executed_script_matches_committed_source": true,
+  "qualification_claims": [],
+  "limitations": [
+    "concurrent headless automation, not physical display or human attention",
+    "640-second watchdog covers presentation work, not startup or shutdown",
+    "no human artistic, independent operator or exhibition acceptance"
+  ]
+}

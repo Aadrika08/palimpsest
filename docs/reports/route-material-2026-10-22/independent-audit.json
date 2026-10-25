@@ -1,0 +1,166 @@
+{
+  "status": "passed",
+  "routes": {
+    "left": {
+      "run_id": "fceb1ae711ef455ebee50484ae47831c",
+      "start_tick": 0,
+      "intervals": 375,
+      "points": 376,
+      "simulation_seconds": 7.5,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7863963842391968,
+        "reason": "goal",
+        "steps": 375
+      }
+    },
+    "right": {
+      "run_id": "c068a4352868451ca712aed1cb8f39b0",
+      "start_tick": 100,
+      "intervals": 7,
+      "points": 8,
+      "simulation_seconds": 0.14,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7791039347648621,
+        "reason": "goal",
+        "steps": 107
+      }
+    }
+  },
+  "snapshot_id": "8266994da7704ddfa4fc7c3ce4d9cd6c",
+  "snapshot_sha256": "392e97fca1bf0eb21ab91b2bc29cac4b109e9c57aa9166a79e13435f07a463c6",
+  "branch_start_pose_matches_parent_tick_100": false,
+  "branch_start_minus_parent_pose": [
+    0.0018410682678222656,
+    -0.0017110705375671387,
+    0.0
+  ],
+  "pose_difference_reproduced_by_mj_forward_without_integrating": true,
+  "integration_state_preserved_at_restore_and_edit": true,
+  "controller_state_and_rng_preserved_at_restore": true,
+  "sole_edit": {
+    "change": {
+      "kind": "move_goal",
+      "new": {
+        "xy": [
+          0.0,
+          0.0
+        ]
+      },
+      "old": {
+        "xy": [
+          4.509548664093018,
+          -5.026264190673828
+        ]
+      },
+      "simulation_time": 2.0000000000000013
+    },
+    "episode": 0,
+    "episode_step": 100,
+    "id": "branch-edit-322dc7bf2c1a4ffdb1c8bcaebd6de7fa",
+    "kind": "intervention",
+    "run_id": "c068a4352868451ca712aed1cb8f39b0",
+    "sequence": 8,
+    "tick": 100
+  },
+  "source_files": {
+    "fceb1ae711ef455ebee50484ae47831c": [
+      {
+        "path": "recording/manifest.json",
+        "sha256": "5029a38ec1103d128c6cc29b4fa5d1dc43db2298431e7123799a448be239ee65",
+        "size_bytes": 3013
+      },
+      {
+        "path": "recording/events.jsonl",
+        "sha256": "424e84fde8a728aa7779e5c6975d15379f0b6689589e59c9321cd2a4f717c101",
+        "size_bytes": 128359
+      },
+      {
+        "path": "recording/chunks/000000.npz",
+        "sha256": "b7c96a7653e2e15939c2aebaeca0c49250ed8e04681a13e21f743f0cfdd0b6db",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000001.npz",
+        "sha256": "2c884dd7f4cad71eda5fae9750c4982e80ef6b2a54a34710a7e57c0981a93897",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000002.npz",
+        "sha256": "9b97592ca42afed7ab61b7ea7f025b1b0a19babfd37f242751f9a4689ff4d59c",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000003.npz",
+        "sha256": "81badcc0120754f821758c45eecde34289557d1e07b209a3be3077a35fd0d6f6",
+        "size_bytes": 868906
+      },
+      {
+        "path": "recording/chunks/000004.npz",
+        "sha256": "47984d547830103667106c3bd3ed6759c0570c1735078c54650a504ad0933eca",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000005.npz",
+        "sha256": "eb38e59b40ad89233e45e79becc7403e15e41f2963696602c17390e39bbde797",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000006.npz",
+        "sha256": "f0503d19704bcc2ab84d2fd740ae543ba05ea382265c41f70ff403ac287d4de8",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000007.npz",
+        "sha256": "7944fef07bb25667a5adde56a87cffd6a60cf897b631ac2090d9c8ce142d081a",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000008.npz",
+        "sha256": "2982ddce9293b2b83c318e84e245fbcb996a1054f60399d1b11617ae58e8e664",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000009.npz",
+        "sha256": "8909e467c2186b8247628e9dbe8832e3278f4ebbe2c42d73bd4183e094614ef0",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000010.npz",
+        "sha256": "ae2f070f4322a055032e5008307b7faa9f85ac044b3dc7fe240d1ed101bce6ba",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000011.npz",
+        "sha256": "ce10a2dd498bde3b86eea64608b81ccde9e2c15e542084cc9545fc3f85cacdd0",
+        "size_bytes": 6919538
+      },
+      {
+        "path": "recording/chunks/000012.npz",
+        "sha256": "4699cbcdfc39472ba2067898696fd5180a2244d6a18c27815c078b314d1fce98",
+        "size_bytes": 4110316
+      }
+    ],
+    "c068a4352868451ca712aed1cb8f39b0": [
+      {
+        "path": "recording/manifest.json",
+        "sha256": "66e5ab54925ad8efe3f35bcf5fa494d256bdfe2004b831e08b1e3e7b86401112",
+        "size_bytes": 3181
+      },
+      {
+        "path": "recording/events.jsonl",
+        "sha256": "32b2075ff37ee79dc86713ec67b98044200bcdfdc608e6258718db043e8ca9e5",
+        "size_bytes": 26083
+      },
+      {
+        "path": "recording/chunks/000000.npz",
+        "sha256": "a1700e3dafa1d0cee490758828521f5f913772ed2c093588dbedc1b40283d30c",
+        "size_bytes": 1517188
+      }
+    ]
+  },
+  "all_exported_coordinates_exact": true,
+  "source_pins_unchanged": true,
+  "qualification_claims": []
+}

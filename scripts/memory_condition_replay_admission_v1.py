@@ -21,7 +21,7 @@ from scripts.memory_family_replay_custody_v4 import HeldReplayFiles, _relative
 ROOT = Path(__file__).resolve().parents[1]
 MiB = 1024 ** 2
 TRUST_ANCHOR_PATH = 'scripts/memory_condition_qualification_pins_v1.py'
-EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-directory-census-v1-protocol.json'
+EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-retained-condition-v1-protocol.json'
 EXTENSION_SOURCES = (
     'docs/plans/memory-condition-seal-v1.md',
     'scripts/memory_condition_replay_admission_v1.py',

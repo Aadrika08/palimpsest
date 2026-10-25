@@ -1,0 +1,26 @@
+{
+  "parent_run_id": "99c9983184884b35a2a473293640550d",
+  "branch_run_id": "4fdd85003a4048778d3c8189c6dca725",
+  "snapshot_id": "46c9979f208143c281046cc83943e924",
+  "snapshot_sha256": "1dd643ddcde3776568062c42d33df492c3d96af543ace826c49acaee72f3b8c3",
+  "branch_tick": 100,
+  "intervention": {
+    "index": 0,
+    "kind": "move_obstacle",
+    "xy": [
+      0.75,
+      -0.75
+    ]
+  },
+  "matched_continuation_intervals": 275,
+  "branch_start_minus_parent_pose": [
+    0.0018410682678222656,
+    -0.0017110705375671387,
+    0.0
+  ],
+  "boundary_note": "Obstacle edit changes only its XY position, XY velocity and joint ranges, clears drawing caches, and refreshes derived positions via mj_forward. Recorded coordinates are retained without alignment.",
+  "files_sha256": {
+    "borrowed-body.svg": "bc4627aca5f7c17555d022024b9ccae656f664f3823a7cbacf49bd81c9e4ef8d",
+    "one-map-many-lives.html": "6a95036c448ade22b665262b14becb906f2a672b3fbc2e89b273b37a844c349b"
+  }
+}

@@ -1,0 +1,55 @@
+CASE native-held
+CONTROLLED sibling mkdir/rmdir /tmp/palimpsest-custody-interference-1020945
+CHILD 1  Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 720, in __enter__
+    self._registration = self._enter(Holder(str(Path(self._registration_path).parent),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+    self._children.append(holder); return holder.__enter__()
+                                          ^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/src/palimpsest/puck_execution_files.py", line 247, in __enter__
+    self._directory(root_key)
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/src/palimpsest/puck_execution_files.py", line 140, in _directory
+    parent = self._directory(key[:-1])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/src/palimpsest/puck_execution_files.py", line 148, in _directory
+    raise RuntimeError('Collection directory edge changed during open')
+RuntimeError: Collection directory edge changed during open
+Bootstrap holder close: Collection root or ancestor changed while held; DIAGNOSTIC {'path': '/tmp', 'fields': ('dev', 'ino', 'mode', 'size', 'mtime_ns', 'ctime_ns', 'nlink'), 'expected': (50, 1, 17407, 35580, 1792914579216963646, 1792914579216963646, 106), 'held': (50, 1, 17407, 35580, 1792914579221963766, 1792914579221963766, 106), 'named': (50, 1, 17407, 35580, 1792914579221963766, 1792914579221963766, 106)}
+
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/runs/main-integration-2026-10-25/custody_diagnostic.py", line 46, in <module>
+    try:deps.test_native_extension_initializes_from_held_file_and_is_observed(pathlib.Path(p));print('PASS native-held',flush=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/palimpsest/tests/test_puck_worker_dependencies.py", line 90, in test_native_extension_initializes_from_held_file_and_is_observed
+    assert result.returncode == 0, result.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+    with HeldWorkerBootstrap(payload, expected_sha256=expected,
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 720, in __enter__
+    self._registration = self._enter(Holder(str(Path(self._registration_path).parent),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+    self._children.append(holder); return holder.__enter__()
+                                          ^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/src/palimpsest/puck_execution_files.py", line 247, in __enter__
+    self._directory(root_key)
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/src/palimpsest/puck_execution_files.py", line 140, in _directory
+    parent = self._directory(key[:-1])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-native-diagnostic-_2el4a9a/source/src/palimpsest/puck_execution_files.py", line 148, in _directory
+    raise RuntimeError('Collection directory edge changed during open')
+RuntimeError: Collection directory edge changed during open
+Bootstrap holder close: Collection root or ancestor changed while held; DIAGNOSTIC {'path': '/tmp', 'fields': ('dev', 'ino', 'mode', 'size', 'mtime_ns', 'ctime_ns', 'nlink'), 'expected': (50, 1, 17407, 35580, 1792914579216963646, 1792914579216963646, 106), 'held': (50, 1, 17407, 35580, 1792914579221963766, 1792914579221963766, 106), 'named': (50, 1, 17407, 35580, 1792914579221963766, 1792914579221963766, 106)}
+

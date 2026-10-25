@@ -1,0 +1,93 @@
+{
+  "branch_final_state": {
+    "closed": false,
+    "controller": "flynn",
+    "episode": 0,
+    "episode_step": 107,
+    "eyes": {
+      "left": true,
+      "right": true
+    },
+    "last_outcome": {
+      "episode": 0,
+      "final_distance": 0.7791039347648621,
+      "reason": "goal",
+      "steps": 107
+    },
+    "metrics": {
+      "contact_ticks": 0,
+      "path_length": 2.299072635416127,
+      "reward": 3.6581091963896792
+    },
+    "parent_run_id": "fceb1ae711ef455ebee50484ae47831c",
+    "pending_commands": 0,
+    "phase": "terminated",
+    "revision": 103,
+    "run_id": "c068a4352868451ca712aed1cb8f39b0",
+    "scenario": "reproduction",
+    "simulation_time": 2.139999999999986,
+    "task": null,
+    "texture": "checker",
+    "total_tick": 107
+  },
+  "branch_run_id": "c068a4352868451ca712aed1cb8f39b0",
+  "branch_tick": 100,
+  "intervention": {
+    "kind": "move_goal",
+    "xy": [
+      0.0,
+      0.0
+    ]
+  },
+  "lab_workers_exited": true,
+  "parent_final_state": {
+    "closed": false,
+    "controller": "flynn",
+    "episode": 0,
+    "episode_step": 375,
+    "eyes": {
+      "left": true,
+      "right": true
+    },
+    "last_outcome": {
+      "episode": 0,
+      "final_distance": 0.7863963842391968,
+      "reason": "goal",
+      "steps": 375
+    },
+    "metrics": {
+      "contact_ticks": 0,
+      "path_length": 9.007070026214649,
+      "reward": 13.360694103322771
+    },
+    "parent_run_id": null,
+    "pending_commands": 0,
+    "phase": "terminated",
+    "revision": 102,
+    "run_id": "fceb1ae711ef455ebee50484ae47831c",
+    "scenario": "reproduction",
+    "simulation_time": 7.499999999999396,
+    "task": null,
+    "texture": "checker",
+    "total_tick": 375
+  },
+  "parent_run_id": "fceb1ae711ef455ebee50484ae47831c",
+  "qualification_claims": [],
+  "snapshot": {
+    "config": {
+      "controller": "flynn",
+      "device": "cpu",
+      "scenario": "reproduction",
+      "seed": 0,
+      "texture": "checker"
+    },
+    "episode": 0,
+    "filename": "8266994da7704ddfa4fc7c3ce4d9cd6c.snp",
+    "initial": false,
+    "revision": 100,
+    "sha256": "392e97fca1bf0eb21ab91b2bc29cac4b109e9c57aa9166a79e13435f07a463c6",
+    "snapshot_id": "8266994da7704ddfa4fc7c3ce4d9cd6c",
+    "tick": 100
+  },
+  "status": "passed"
+}

@@ -33,11 +33,12 @@ def cleanup(path):
 
 
 def escaped_code(path, *, seconds=10, memory=0, orphan=False):
+    # Publish the exact child identity before the RSS stimulus can trigger a stop.
     child=("import json,os,signal,time\n"
            "os.setsid();signal.signal(signal.SIGTERM,signal.SIG_IGN)\n"
-           f"payload=bytearray({memory})\n"
            "ticks=int(open('/proc/self/stat').read().rsplit(')',1)[1].split()[19])\n"
            f"open({str(path)!r},'w').write(json.dumps(dict(pid=os.getpid(),start_ticks=ticks,group=os.getpgrp())))\n"
+           f"payload=bytearray({memory})\n"
            f"time.sleep({seconds})\n")
     return ("import subprocess,sys,time\n"
             f"child=subprocess.Popen([sys.executable,'-c',{child!r}])\n"

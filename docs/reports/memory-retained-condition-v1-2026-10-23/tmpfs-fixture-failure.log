@@ -1,0 +1,97 @@
+.F............................................                           [100%]
+=================================== FAILURES ===================================
+________ test_retained_reader_uses_receipts_without_raw_or_model[True] _________
+
+tmp_path = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2667683-selected/test_retained_reader_uses_rece1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70189d3d9a10>
+natural_failure = True
+
+    @pytest.mark.parametrize('natural_failure', [False, True])
+    def test_retained_reader_uses_receipts_without_raw_or_model(tmp_path, monkeypatch, natural_failure):
+>       sample = sealed(tmp_path / 'evidence', monkeypatch, natural_failure=natural_failure)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_retained_condition_v1.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_retained_condition_v1.py:23: in sealed
+    sample = fixture(root, natural_failure=natural_failure)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/palimpsest-retained-condition-tests/palimpsest-2667683-selected/test_retained_reader_uses_rece1/evidence')
+
+    def fixture(root, *, natural_failure=False):
+        """Real independent raw audit/converter/pair; only cell/model seams are authored."""
+        source = source_fixture(root)
+        producer.seal_compact_source(**source_request(source))
+        case = source['sample']['case']
+        case_id = case['case_id']
+        case_path = root / '.pending' / case_id
+        condition = 'own'
+        run_id = source['sample']['condition']['run_id']
+        raw = case_path / '.raw' / run_id
+        # The original fixture's raw own selector predates v4 history descriptors.
+        # Build a new authored trace with v4's exact mapping before either raw audit.
+        sample = evidence(row=4)
+        application = snapshots.read_snapshot(source['snapshot'])['application']
+        histories = _histories(root, case)
+        selector, u, _ = _condition_values(condition, case, histories, application)
+        events, schedule, condition_world, last_outcome = _condition_events(
+            sample, condition, run_id, selector, u, application,
+            natural_failure=natural_failure)
+        writer = RunWriter(raw / 'recording', _manifest(
+            audit, case, run_id, 'condition', condition, source['contract']['snapshot']['sha256'],
+            parent_run_id=source['contract']['run_id'],
+            parent_event_prefix=application['event_prefix']),
+            max_bytes=audit.RAW_LIMITS['condition']['recording_max_bytes'])
+        _emit_trace(writer, events, sample['post_rows'])
+        total = sample['post_world_state']['last_tick'] + 1
+        _finish(writer, total, condition_world,
+                'failed' if natural_failure else 'paused', last_outcome)
+        _report(raw / 'worker-report.json', run_id=run_id, case=case,
+            operation='condition', condition=condition,
+            snapshot_sha256=source['contract']['snapshot']['sha256'],
+            source_snapshot_sha256=source['contract']['snapshot']['sha256'],
+            total_ticks=total, world_state=condition_world,
+            final_phase='failed' if natural_failure else 'paused')
+        receipts = root / 'condition-audits'
+        receipts.mkdir()
+        command = [sys.executable, str(ROOT / 'scripts/memory_family_raw_audit_v4.py'),
+            '--run', str(raw), '--receipt-root', str(receipts), '--run-id', run_id,
+            '--case-id', case_id, '--operation', 'condition', '--condition', condition,
+            '--source-run-id', source['contract']['run_id'],
+            '--source-snapshot-sha256', source['contract']['snapshot']['sha256'],
+            '--source-identity-sha256', source['contract']['owner_source_sha256'],
+            '--deadline-seconds', '30']
+        result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True,
+            env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1089, in <module>
+E             main()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1077, in main
+E             result = audit_raw_run(
+E                      ^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1056, in audit_raw_run
+E             return _with_snapshot(_audit_raw_run, run_path, receipt_root, **values)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 1052, in _with_snapshot
+E             return function(run_path, receipt_root, **values)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 945, in _audit_raw_run
+E             receipt = _audit_candidate(run, **values)
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 787, in _audit_candidate
+E             state, terminal_state = _terminal(
+E                                     ^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/scripts/memory_family_raw_audit_v4.py", line 448, in _terminal
+E             raise ValueError('Raw terminal cursor differs from retained failure status')
+E         ValueError: Raw terminal cursor differs from retained failure status
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '/home/utkarsh/Work/shraddha/palimps...ursor differs from retained failure status\')\nValueError: Raw terminal cursor differs from retained failure status\n').returncode
+
+tests/test_memory_family_condition_close_v4.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_retained_condition_v1.py::test_retained_reader_uses_receipts_without_raw_or_model[True]
+1 failed, 45 passed in 80.74s (0:01:20)

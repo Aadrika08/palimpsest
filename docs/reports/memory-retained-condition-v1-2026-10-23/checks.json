@@ -1,0 +1,93 @@
+{
+  "schema": "palimpsest-retained-condition-source-checks-v1",
+  "scope": "authored source evidence only; no model or study qualification",
+  "source_parent": "fb6879a2e565d1f9c2a8888782b0df49e862d354",
+  "btrfs_command": "PALIMPSEST_TEST_BASETEMP=\"$PWD/runs/retained-condition-tests\" scripts/run_tests.sh -- tests/test_memory_family_retained_condition_v1.py tests/test_memory_retained_condition_profile_v1.py tests/test_memory_family_compact_v4.py tests/test_memory_family_raw_audit_v4.py tests/test_memory_family_producer_v4.py tests/test_memory_family_retained_source_v4.py tests/test_memory_family_oracle_admission_v4.py tests/test_memory_staged_pair_v4.py tests/test_memory_family_condition_close_v4.py tests/test_memory_condition_replay_admission_v1.py tests/test_memory_directory_census_protocol_v1.py tests/test_records_background.py tests/test_held_provenance_engine.py tests/test_artifacts.py",
+  "tmpfs_command": "PALIMPSEST_TEST_BASETEMP=/tmp/palimpsest-retained-condition-tests scripts/run_tests.sh -- tests/test_memory_family_retained_condition_v1.py tests/test_memory_retained_condition_profile_v1.py",
+  "btrfs": {
+    "passed": 482,
+    "skipped": 0,
+    "warnings": 14,
+    "seconds": 482.55
+  },
+  "tmpfs": {
+    "passed": 56,
+    "seconds": 102.03
+  },
+  "historical_profiles_preserved": [
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-protocol.json",
+      "size_bytes": 16536,
+      "sha256": "cbdf034970963a847d42fabc879cc4596a99c8c1b58311561a6c678233e9c4fa"
+    },
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json",
+      "size_bytes": 17529,
+      "sha256": "434bd8bcdc6889a862f9c59e79f52cf9cf5d4cf7c07e15b0bf5c60eafb8c5947"
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-protocol.json",
+      "size_bytes": 2738,
+      "sha256": "fdbe24040c26d5e8572d42c7452591f9cf94702c31bea0823a2f8b9be23ea4df"
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-directory-census-v1-protocol.json",
+      "size_bytes": 3086,
+      "sha256": "a20a91b81423e0c2d6c81d854de49a3eacf5530e9f186eeaf54655d5922310ae"
+    }
+  ],
+  "new_profiles": [
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json",
+      "size_bytes": 18084,
+      "sha256": "e71fc7ea6185f7de769b9879d4b581458074b925255b4712f0f6578fb0556261"
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-retained-condition-v1-protocol.json",
+      "size_bytes": 3108,
+      "sha256": "ca8f148526c4ce33a28583a33c4d0dc474e7264aba66e89946c8d2fe3cc6f93f"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/initial-source-refusal.log",
+      "size_bytes": 16998,
+      "sha256": "3b1af2eb3e4580988d6000671a6ba1f2aac863c495e399739076d04ee56abcde"
+    },
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/tmpfs-fixture-failure.log",
+      "size_bytes": 6534,
+      "sha256": "70e2cc0545e32557c843ec3e7ceceae99b19b9719ba0fd9d6f55010b0a451307"
+    },
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/tmpfs-reader-pass.log",
+      "size_bytes": 111,
+      "sha256": "8d16f323404292601a1e4199a15b5d64d1ec91d362c6ce918a1613b52971b905"
+    },
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/btrfs-regression-pass.log",
+      "size_bytes": 3180,
+      "sha256": "0e450a09c6f63ef8741ce89b8fbf6d87e03966281f8d3596045aaed222958d21"
+    },
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/source-audit.json",
+      "size_bytes": 1491,
+      "sha256": "559572858f0f2216a94867bed745f1e74d3eab0e692ec29d5b8bd2f96e18f034"
+    },
+    {
+      "path": "docs/reports/memory-retained-condition-v1-2026-10-23/history-links-pass.log",
+      "size_bytes": 99,
+      "sha256": "e6396efe40cf15f574edb67564512af66a4c78f7447df731899bd83906e61134"
+    }
+  ],
+  "accepted_qualification": false,
+  "actual_raw_pruned": false,
+  "whole_case_published": false,
+  "study_executed": false,
+  "postcommit_history_links": {
+    "source_commit": "29b438e",
+    "passed": 19,
+    "seconds": 0.72,
+    "command": "PALIMPSEST_TEST_BASETEMP=/tmp/palimpsest-retained-condition-tests scripts/run_tests.sh -- tests/test_frozen_pins.py tests/test_requirements_evidence.py"
+  }
+}

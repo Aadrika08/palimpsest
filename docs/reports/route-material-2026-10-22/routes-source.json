@@ -1,0 +1,24 @@
+{
+  "parent_run_id": "fceb1ae711ef455ebee50484ae47831c",
+  "branch_run_id": "c068a4352868451ca712aed1cb8f39b0",
+  "snapshot_id": "8266994da7704ddfa4fc7c3ce4d9cd6c",
+  "snapshot_sha256": "392e97fca1bf0eb21ab91b2bc29cac4b109e9c57aa9166a79e13435f07a463c6",
+  "branch_tick": 100,
+  "intervention": {
+    "kind": "move_goal",
+    "xy": [
+      0.0,
+      0.0
+    ]
+  },
+  "branch_start_minus_parent_pose": [
+    0.0018410682678222656,
+    -0.0017110705375671387,
+    0.0
+  ],
+  "boundary_note": "Goal edit refreshes derived body position via mj_forward; integration state is unchanged. Recorded coordinates are retained without alignment.",
+  "files_sha256": {
+    "borrowed-body.svg": "e6f5694abc928f2cbe537454202a77e895fc2a19aea18418c2b62bedaaa08793",
+    "one-map-many-lives.html": "9168104ef56c043af6776e520a8013a53600882cbeb770016d98f17b5fbfdb46"
+  }
+}

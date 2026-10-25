@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "snapshots": {
+    "3adfee8646dc42c0a621c46d7078b56c": {
+      "snapshot_id": "3adfee8646dc42c0a621c46d7078b56c",
+      "filename": "initial.snp",
+      "initial": true,
+      "revision": 0,
+      "episode": 0,
+      "tick": 0,
+      "sha256": "0bb86fe617bb8a9247247755aac9441b7b04b171cb6e0a512d6703df419d5097",
+      "config": {
+        "scenario": "reproduction",
+        "texture": "checker",
+        "controller": "flynn",
+        "device": "cpu",
+        "seed": 0
+      }
+    },
+    "8266994da7704ddfa4fc7c3ce4d9cd6c": {
+      "snapshot_id": "8266994da7704ddfa4fc7c3ce4d9cd6c",
+      "filename": "8266994da7704ddfa4fc7c3ce4d9cd6c.snp",
+      "initial": false,
+      "revision": 100,
+      "episode": 0,
+      "tick": 100,
+      "sha256": "392e97fca1bf0eb21ab91b2bc29cac4b109e9c57aa9166a79e13435f07a463c6",
+      "config": {
+        "scenario": "reproduction",
+        "texture": "checker",
+        "controller": "flynn",
+        "device": "cpu",
+        "seed": 0
+      }
+    }
+  }
+}

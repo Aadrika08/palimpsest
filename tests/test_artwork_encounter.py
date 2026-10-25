@@ -36,7 +36,140 @@ class EncounterTests(unittest.TestCase):
         self.files = {name: b'synthetic derivative' for name in encounter.MEMBERS
                       if name != 'checksums.json'}
         self.files['afterimage.svg'] = self.svg()
+        self.files['counterfactual-choir.wav'] = self.wav()
         self.files['README.md'] = b'Fixture </script><script>alert(1)</script>'
+
+    def wav(self, *, compose=False, mutate=None):
+        count = 6000 if compose else 3
+        pcm = bytes(count * 960 * 2)
+        timing = {'control_interval_seconds': .02, 'episode': 0, 'start_tick': 0,
+                  'end_tick_inclusive': count - 1, 'sample_boundaries': [i * 960 for i in range(count + 1)]}
+        if compose:
+            timing.update(clock='concatenated simulation time', duration_seconds=120,
+                          selected_intervals=6000, final_episode_prefix=True,
+                          segments=[{'episode': i, 'start_tick': 0, 'end_tick_inclusive': 599,
+                                     'simulation_start_seconds': 0., 'simulation_end_seconds': 12.,
+                                     'output_start_sample': i * 576000,
+                                     'output_end_sample_exclusive': (i + 1) * 576000} for i in range(10)])
+        meta = {'version': 2 if compose else 1, 'artwork': 'counterfactual choir',
+                'pcm_sha256': hashlib.sha256(pcm).hexdigest(), 'timing': timing,
+                'mapping': {'sample_rate_hz': 48000, 'channels': 1, 'sample_width_bytes': 2,
+                            'voices': [{'population': 'visual_left'}]}}
+        if mutate:
+            mutate(meta)
+        def chunk(kind, payload):
+            return struct.pack('<4sI', kind, len(payload)) + payload + b'\0' * (len(payload) % 2)
+        body = b'WAVE' + chunk(b'fmt ', struct.pack('<HHIIHH', 1, 1, 48000, 96000, 2, 16))
+        body += chunk(b'data', pcm) + chunk(b'plmp', json.dumps(meta).encode())
+        return b'RIFF' + struct.pack('<I', len(body)) + body
+
+    def test_choir_duration_and_episode_boundaries_come_from_audio(self):
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Playback ends after 0.06 seconds', page)
+        self.assertNotIn('Playback ends after 25.34 seconds', page)
+        self.files['counterfactual-choir.wav'] = self.wav(compose=True)
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Playback ends after 120 seconds', page)
+        self.assertIn('Episode boundaries', page)
+        self.assertIn('Final episode uses a recorded prefix', page)
+        self.assertIn('<td>9</td><td>108–120</td><td>0–599</td>', page)
+        self.assertNotIn('autoplay', page)
+
+    def test_afterimage_presentation_requires_matched_camera_provenance(self):
+        times = [i / 10 for i in range(600)]
+        self.meta['stimulus']['manifest']['source_times_seconds'] = times
+        self.meta['stimulus']['manifest']['frame_file_sha256'] = 'a' * 64
+        self.meta['policy_identity'] = {'controller': 'male-original'}
+        self.meta['alignment'] = [dict(self.meta['alignment'][0], frame=i,
+            source_timestamp_seconds=t, model_time_seconds=(i + 1) * .02, frame_sha256='b' * 64)
+            for i, t in enumerate(times)]
+        self.files['afterimage.svg'] = self.svg()
+        source = {'schema_version': 1, 'camera': 'cam_left', 'source_controller': 'manual',
+                  'source_run_id': '0' * 32, 'selected_intervals': 3000, 'source_intervals': 3000,
+                  'clock': 'concatenated source time', 'presentation_seconds': 60,
+                  'frame_file_sha256': 'a' * 64,
+                  'frames': [{'frame': i, 'source_interval': i * 5, 'episode': i // 120,
+                              'tick': (i % 120) * 5, 'presentation_seconds': t, 'eyes': [True, True],
+                              'simulation_time_seconds': ((i % 120) * 5 + 1) * .02,
+                              'observation_time_seconds': (i % 120) * 5 * .02,
+                              'frame_sha256': 'b' * 64} for i, t in enumerate(times)]}
+        self.files['afterimage-source.json'] = json.dumps(source).encode()
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Play 60-second portrait', page)
+        self.assertIn('scripted manual-controller', page)
+        self.assertIn('59.9 source seconds', page)
+        self.assertNotIn('Insufficient for assessing sustained material', page)
+        png = b'\x89PNG\r\n\x1a\n' + struct.pack('>I', 13) + b'IHDR' + struct.pack('>IIBBBBB', 1280, 7680, 8, 2, 0, 0, 0) + bytes(4)
+        preview = {'schema_version': 1, 'columns': 10, 'rows': 60, 'width': 128, 'height': 128,
+                   'png_sha256': hashlib.sha256(png).hexdigest()}
+        self.files['afterimage-frames.json'] = json.dumps(preview).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        self.files['afterimage-frames.png'] = png
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('<details open>', page)
+        self.assertIn('Recorded left-camera frame', page)
+        self.assertIn('Small changes remain small', page)
+        preview['columns'] = 9
+        self.files['afterimage-frames.json'] = json.dumps(preview).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        preview['columns'] = 10
+        preview['png_sha256'] = '0' * 64
+        self.files['afterimage-frames.json'] = json.dumps(preview).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        del self.files['afterimage-frames.json'], self.files['afterimage-frames.png']
+        source['frames'][1]['frame_sha256'] = 'c' * 64
+        self.files['afterimage-source.json'] = json.dumps(source).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+
+    def test_route_captions_follow_validated_parent_and_branch_metadata(self):
+        import html
+        parent, branch, snapshot = '1' * 32, '2' * 32, '3' * 32
+        left = {'run_id': parent, 'provenance': {'controller': 'flynn', 'control_interval_seconds': .02},
+                'traces': [{'episode': 0, 'start_tick': 0, 'points': [[0., 0.]] * 601}]}
+        right = {'run_id': branch, 'provenance': {'controller': 'flynn', 'control_interval_seconds': .02,
+                 'parent_run_id': parent, 'source_snapshot_id': snapshot,
+                 'interventions': [{'kind': 'intervention', 'episode': 0, 'episode_step': 100,
+                                   'change': {'kind': 'move_goal', 'new': {'xy': [0., 0.]}}}]},
+                 'traces': [{'episode': 0, 'start_tick': 100, 'points': [[0., 0.]] * 501}]}
+        self.files['borrowed-body.svg'] = ('<svg xmlns="http://www.w3.org/2000/svg"><metadata>' + html.escape(json.dumps(left)) + '</metadata></svg>').encode()
+        self.files['one-map-many-lives.html'] = ('<pre id="comparison-metadata">' + html.escape(json.dumps({'comparison': {'left': left, 'right': right}})) + '</pre>').encode()
+        source = {'parent_run_id': parent, 'branch_run_id': branch, 'snapshot_id': snapshot,
+                  'branch_tick': 100, 'intervention': {'kind': 'move_goal', 'xy': [0., 0.]},
+                  'files_sha256': {n: hashlib.sha256(self.files[n]).hexdigest() for n in ('borrowed-body.svg', 'one-map-many-lives.html')}}
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('600 intervals, 601 points, 12 simulation seconds', page)
+        self.assertIn('500 intervals / 10 simulation seconds', page)
+        self.assertIn('branch at tick 100', page)
+        self.assertNotIn('two route sources have no parent relationship', page)
+        source['intervention'] = {'kind': 'move_obstacle', 'index': 0, 'xy': [.75, -.75]}
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+        right['provenance']['interventions'][0]['change'] = {
+            'kind': 'move_obstacle', 'index': 0, 'new': {'xy': [.75, -.75]}}
+        self.files['one-map-many-lives.html'] = ('<pre id="comparison-metadata">' + html.escape(json.dumps({'comparison': {'left': left, 'right': right}})) + '</pre>').encode()
+        source['files_sha256']['one-map-many-lives.html'] = hashlib.sha256(self.files['one-map-many-lives.html']).hexdigest()
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        page = encounter.encounter_html(self.files).decode()
+        self.assertIn('Obstacle 0 moved to [0.75, -0.75]; goal unchanged', page)
+        self.assertIn('Shared post-snapshot window: tick boundaries 100–600 (10 simulation seconds)', page)
+        source['snapshot_id'] = '4' * 32
+        self.files['routes-source.json'] = json.dumps(source).encode()
+        with self.assertRaises(ValueError): encounter.encounter_html(self.files)
+
+    def test_choir_rejects_malformed_audio_and_inconsistent_metadata(self):
+        for mutate in (lambda m: m.update(pcm_sha256='0' * 64),
+                       lambda m: m['timing'].update(duration_seconds=119),
+                       lambda m: m['timing']['segments'][1].update(output_start_sample=0),
+                       lambda m: m['timing']['segments'][-1].update(end_tick_inclusive=598),
+                       lambda m: m['timing']['segments'][1].update(episode='<script>'),
+                       lambda m: m['mapping']['voices'][0].update(population='<script>')):
+            with self.assertRaises(ValueError):
+                encounter.choir_details(self.wav(compose=True, mutate=mutate))
+        raw = self.wav()
+        for bad in (b'not audio', raw[:-1], raw + b'trailing'):
+            with self.assertRaises(ValueError):
+                encounter.choir_details(bad)
 
     def svg(self):
         import html
@@ -206,9 +339,10 @@ class EncounterTests(unittest.TestCase):
         page = encounter.encounter_html(self.files).decode()
         code = re.search(r'<script>(.*?)</script>', page, re.S).group(1)
         stub = '''const assert=(condition)=>{if(!condition)throw Error('control assertion failed');};
-const elements=Object.fromEntries(['previous','next','prefix','selected','frame-status','controls','stop-audio','alignment'].map(id=>[id,{hidden:true,handlers:{},attrs:{},addEventListener(e,f){this.handlers[e]=f;},setAttribute(k,v){this.attrs[k]=v;}}]));
+const elements=Object.fromEntries(['previous','next','prefix','selected','frame-status','response-value','controls','stop-audio','alignment'].map(id=>[id,{hidden:true,handlers:{},attrs:{},addEventListener(e,f){this.handlers[e]=f;},setAttribute(k,v){this.attrs[k]=v;}}]));
 const player={currentTime:4,paused:false,pause(){this.paused=true;}};
 globalThis.document={getElementById:id=>elements[id],querySelector:()=>player};
+elements['source-index']={textContent:'null'};
 elements.alignment.textContent=ROWS;
 '''.replace('ROWS', json.dumps(json.dumps(self.meta['alignment'])))
         checks = '''

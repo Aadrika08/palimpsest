@@ -1,0 +1,111 @@
+{
+  "failed_candidate": "3739b3add54d881fece748d7c7590c9eff120240",
+  "run_id": 40201506157,
+  "counts": {
+    "passed": 6394,
+    "failed": 12,
+    "skipped": 88
+  },
+  "log_uncompressed": {
+    "size_bytes": 80421,
+    "sha256": "5fa231d291e35adba33527a3b0b70391db8b383ad7d0093921c0cffb3df69e69"
+  },
+  "local_checks": {
+    "nofile_1024_red": {
+      "passed": 0,
+      "failed": 1,
+      "seconds": 0.19,
+      "exit_code": 1
+    },
+    "nofile_65536_green": {
+      "passed": 15,
+      "failed": 0,
+      "seconds": 7.67,
+      "exit_code": 0
+    },
+    "process_red": {
+      "passed": 1,
+      "failed": 3,
+      "seconds": 0.3,
+      "exit_code": 1
+    },
+    "process_green": {
+      "passed": 17,
+      "failed": 0,
+      "seconds": 2.37,
+      "exit_code": 0
+    },
+    "authored_65536": {
+      "passed": 5,
+      "failed": 0,
+      "seconds": 49.9,
+      "exit_code": 0
+    }
+  },
+  "artifacts": [
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/hosted-40201506157.log.gz",
+      "size_bytes": 11110,
+      "sha256": "d5eaa1b7774d3f3bd3fc8de08c94e541cf651361ce5b0064c6c35e9489033e71"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/nofile-1024-red.log",
+      "size_bytes": 1287,
+      "sha256": "6101c74f86c1763835a70b9104cd4e2c78ca9dd1990b7d94a8c08c529ecbbefd"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/nofile-65536-green.log",
+      "size_bytes": 99,
+      "sha256": "98967397ec35d0e5b3ae4491c8c614149bc7d63820ca38eb3760f6e53d4a3a89"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/endurance-process-red.log",
+      "size_bytes": 3833,
+      "sha256": "ae0b1675c0cf0255edbb6cd0f1624f631bda22eabe8418854c7f6d9c965503bb"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/endurance-process-green.log",
+      "size_bytes": 904,
+      "sha256": "12587129a152e2db7b9eb29641c4d9e69f85e082717a634ad9337263b7182e3e"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/nofile-65536-authored.log",
+      "size_bytes": 99,
+      "sha256": "2abd680b2c14eab9965329d3949571bcd4432980bcec252307ad1cddcbaef836"
+    },
+    {
+      "path": ".github/workflows/checks.yml",
+      "size_bytes": 5808,
+      "sha256": "571ab4ff0c367ec074ebbb81427ebd955140a2b2a92cf1d8a20687d6690a8de9"
+    },
+    {
+      "path": "scripts/verify_endurance.py",
+      "size_bytes": 32009,
+      "sha256": "6095d9af3118c6cc95522ffc6d7b767946b331df1c49982bac24a95dd739dc0c"
+    },
+    {
+      "path": "tests/test_verification_scripts.py",
+      "size_bytes": 18340,
+      "sha256": "c7193fdfdd5aaa2e48abfb7ea749b84ddf935c3e0f49d5b945c83340e37b4e87"
+    },
+    {
+      "path": "docs/reports/hosted-fixture-boundaries-2026-10-25/hosted-40201501954.log.gz",
+      "size_bytes": 11151,
+      "sha256": "edd0ed26940e1f050f49a61926e43f1aa64359c98aba53418937388269189952"
+    }
+  ],
+  "related_runs": [
+    {
+      "run_id": 40201501954,
+      "counts": {
+        "passed": 6394,
+        "failed": 12,
+        "skipped": 88
+      },
+      "log_uncompressed": {
+        "size_bytes": 80432,
+        "sha256": "a4eafe0f26753e516ad53d3eb48a77c2917f48c1850ead9b4905704da47ac23e"
+      }
+    }
+  ]
+}

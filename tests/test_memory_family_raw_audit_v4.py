@@ -21,7 +21,7 @@ from test_memory_family_oracle_v3 import _packet, evidence
 
 
 ROOT = Path(__file__).parents[1]
-PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json'
+PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json'
 CASE_ID = 'memory-family-v3-a54cb2f83098a2346a9cc46e-change'
 SOURCE_IDENTITY_SHA256 = memory.sha256({
     'schema': 'synthetic-owner-source-identity-v1',
@@ -118,8 +118,8 @@ def _prefix(writer):
             'size_bytes': len(payload), 'event_count': payload.count(b'\n')}
 
 
-def _register_source_snapshot(writer, application):
-    directory = writer.path.parent.parent / '.pending' / CASE_ID / 'source/snapshots'
+def _register_source_snapshot(writer, application, case_id=CASE_ID):
+    directory = writer.path.parent.parent / '.pending' / case_id / 'source/snapshots'
     directory.mkdir(parents=True)
     path = directory / 'initial.snp'
     snapshots.save_snapshot({'application': application}, path)
@@ -187,12 +187,13 @@ def _report(path, *, run_id, case, operation, condition, snapshot_sha256,
 
 
 def _fixture(root, pixel_shift=0, *, natural_failure=False,
-             include_source=False):
+             include_source=False, row=4, kind='change'):
     audit = _audit()
     root.mkdir(parents=True, exist_ok=True)
-    sample = evidence(row=4)
+    sample = evidence(row=row, kind=kind)
     case = sample['case']
-    assert case['case_id'] == CASE_ID
+    if row == 4 and kind == 'change':
+        assert case['case_id'] == CASE_ID
     source_id = sample['bindings']['source']['run_id']
     condition_id = sample['bindings']['post']['run_id']
 
@@ -208,7 +209,7 @@ def _fixture(root, pixel_shift=0, *, natural_failure=False,
                     pixel_shift)
         source_application['event_prefix'] = _prefix(source_writer)
         source_snapshot_sha256 = _register_source_snapshot(
-            source_writer, source_application)
+            source_writer, source_application, case['case_id'])
         _finish(source_writer, source_application['total_tick'],
                 source_application['world_task_state'])
         _report(
@@ -299,7 +300,7 @@ def _fixture(root, pixel_shift=0, *, natural_failure=False,
                       'source_snapshot_sha256': source_snapshot_sha256},
         'receipts': receipts,
         'evidence_root': root,
-        'snapshot_path': root / '.pending' / CASE_ID / 'source/snapshots/initial.snp',
+        'snapshot_path': root / '.pending' / case['case_id'] / 'source/snapshots/initial.snp',
     }
 
 
@@ -318,7 +319,7 @@ def _request(fixture, part, *, target=None):
     if part == 'source':
         snapshot = fixture['snapshot_path']
         result.update(evidence_root=fixture['evidence_root'], snapshot_reference={
-            'path': f'cases/{CASE_ID}/source/snapshots/initial.snp',
+            'path': f"cases/{fixture['case']['case_id']}/source/snapshots/initial.snp",
             'size_bytes': snapshot.stat().st_size, 'sha256': _sha(snapshot)})
     return result
 

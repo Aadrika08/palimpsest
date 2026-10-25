@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_prepare_then_separately_pinned_qualification_executes_real_held_worker __
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-pytest/palimpsest-1128489-selected/test_prepare_then_separately_p0')
+
+    def test_prepare_then_separately_pinned_qualification_executes_real_held_worker(tmp_path):
+        module,root,site,common,prepare=case(tmp_path)
+        prep=run(root,freeze_file(root,'prepare',prepare))
+>       assert prep.returncode==0,prep.stderr
+E       AssertionError: ValueError: Held-runtime FD limit below frozen floor
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...418d7a74125965ec5765441436'], returncode=1, stdout='', stderr='ValueError: Held-runtime FD limit below frozen floor\n').returncode
+
+tests/test_puck_held_runtime_parent.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_held_runtime_parent.py::test_prepare_then_separately_pinned_qualification_executes_real_held_worker
+1 failed in 0.19s

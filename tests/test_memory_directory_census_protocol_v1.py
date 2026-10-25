@@ -15,11 +15,10 @@ ORIGINAL_SHA='cbdf034970963a847d42fabc879cc4596a99c8c1b58311561a6c678233e9c4fa'
 
 
 def test_active_profile_preserves_original_and_all_scientific_fields():
-    assert compact.PROTOCOL_PATH == ROOT/ACTIVE
     payload=(ROOT/ORIGINAL).read_bytes()
     assert hashlib.sha256(payload).hexdigest() == ORIGINAL_SHA
     original=json.loads(payload)
-    active=copy.deepcopy(compact.PROTOCOL)
+    active=json.loads((ROOT/ACTIVE).read_bytes())
     assert set(active) == set(original) | {'source_revision'}
     assert {k:v for k,v in active.items() if k not in ('behavior_sources','source_revision')} == {
         k:v for k,v in original.items() if k != 'behavior_sources'}
@@ -28,7 +27,7 @@ def test_active_profile_preserves_original_and_all_scientific_fields():
     assert set(after)-set(before) == {'directory_census','directory_census_plan','directory_census_base_protocol'}
     changed={key for key in before if before[key] != after[key]}
     assert changed == {'compact_reader_converter','raw_audit','producer'}
-    assert compact.behavior_source_identities(ROOT) == active['behavior_sources']
+    # Historical source bytes are checked in test_frozen_pins, not rebound to main.
     parent=active['source_revision']['base_protocol']
     assert parent == {'path':ORIGINAL,'size_bytes':len(payload),'sha256':ORIGINAL_SHA}
     assert active['source_revision']['scientific_contract_changed'] is False
@@ -37,9 +36,10 @@ def test_active_profile_preserves_original_and_all_scientific_fields():
 def test_every_audit_and_admission_reference_uses_selected_protocol():
     from scripts import memory_family_raw_audit_v4 as audit
     from scripts import memory_condition_replay_admission_v1 as admission
-    expected={'path':ACTIVE,'size_bytes':len(compact.PROTOCOL_BYTES),'sha256':compact.PROTOCOL_SHA256}
+    selected=compact.PROTOCOL_PATH.relative_to(ROOT).as_posix()
+    expected={'path':selected,'size_bytes':len(compact.PROTOCOL_BYTES),'sha256':compact.PROTOCOL_SHA256}
     assert audit._protocol_descriptor() == expected
-    assert admission._base_sources()[ACTIVE] == expected
+    assert admission._base_sources()[selected] == expected
     assert admission._base_sources()[ORIGINAL]['sha256'] == ORIGINAL_SHA
     assert admission.TRUSTED_QUALIFICATION_PINS == ()
 
@@ -47,9 +47,9 @@ def test_every_audit_and_admission_reference_uses_selected_protocol():
 def test_selected_condition_extension_preserves_all_prior_contract_fields():
     from scripts import memory_family_condition_seal_v4 as sealer
     from scripts import memory_condition_replay_admission_v1 as admission
-    assert sealer.EXTENSION_PATH == admission.EXTENSION_PATH == EXTENSION
+    assert sealer.EXTENSION_PATH == admission.EXTENSION_PATH
     parent=json.loads((ROOT/OLD_EXTENSION).read_bytes())
-    payload=(ROOT/EXTENSION).read_bytes()
+    payload=(ROOT/sealer.EXTENSION_PATH).read_bytes()
     value=json.loads(payload)
     assert payload == json.dumps(value,sort_keys=True,separators=(',',':')).encode()
     assert set(value) == set(parent) | {'source_revision'}

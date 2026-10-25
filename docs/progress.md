@@ -4,7 +4,62 @@ Objective: implement the approved [full plan](implementation-plan.md), R0–R5 a
 
 Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP tools are not exposed in this session; this file is the recovery fallback, not a claim that the binding was updated.
 
-## Current state
+## Current completion work — 23 October 2026
+
+The [current completion checklist](plans/project-completion-2026-10-23.md)
+tracks the renewed simulation-first goal and delivery on remote main. The
+22 October artwork reports supersede earlier short-material limitations.
+Memory v1 is retired at 44/48; its four missing cells are not active backlog.
+The [retained-condition reader](reports/memory-retained-condition-v1-2026-10-23.md)
+now validates authored post-prune evidence for all nine conditions. A separate
+current-source profile restores its previously historical-skipped memory checks:
+482 affected checks passed on Btrfs and 56 new checks passed on tmpfs. Qualification,
+whole-case publication, actual pruning and scientific acceptance remain open.
+The historical recovery notes below remain evidence of earlier states.
+
+The [25 October integration report](reports/main-integration-2026-10-25.md)
+retains the initial full-suite failures, repaired authored host fixtures,
+custody-interference diagnosis and passing runner/actual-EGL checks. The complete
+four-pass canonical fixture suite then passes on `39a266f`: **6,372 passed,
+88 skipped, zero failures**. The indexed candidate log retains its exact command
+and hash. Setup and test instructions follow published main and the canonical
+runner. On 25 October the user authorized Aadrika08's workflow permission and all
+eight local commits through `f3645c2` were pushed. [PR #184](https://github.com/Aadrika08/palimpsest/pull/184)
+is ready for review. Its [hosted run](https://github.com/Aadrika08/palimpsest/actions/runs/40191242222)
+passed frontend and failed fixtures because the hosted environment did not meet
+the suite's runtime and system requirements. The [environment repair](reports/hosted-fixtures-2026-10-25.md)
+retains all 485 failures, pins the fixture container/interpreter and installs the
+declared dependencies; its five affected authored tests pass locally. Hosted
+candidate `510a750` then reports 6,376 passes, 30 failures and 88 skips in the PR
+run, with frontend passing. The [boundary repair](reports/hosted-fixture-boundaries-2026-10-25.md)
+retains both subsequent failure logs and fixes container ownership/namespace
+admission and four test-fixture assumptions. All 27 focused local checks pass.
+Candidate `3739b3a` then passes hosted preflight and frontend, but its complete PR
+suite reports 6,394 passes, 12 failures and 88 skips. Eleven failures trace to
+`runuser` lowering the descriptor limit; one occurs during process exit inspection.
+The follow-up restores the required limit and makes zombie observation preserve
+identity without excusing inaccessible live processes. Fifteen held-runtime,
+five authored CPU and seventeen process/manual-verification checks pass locally.
+Hosted validation of the follow-up remains required.
+Main stays `2814138` until checks pass and the merge
+is verified. Project-code/new-parameter
+licensing and human/operator decisions remain pending.
+
+The [staged retained-case reader](reports/memory-retained-case-v1-2026-10-25.md)
+is committed at `1ad4f8a`. It holds one source, all nine conditions and external
+dependencies through validation, derives retained cells, and checks shared
+identity, accounting and equality without claiming actual execution order.
+All 392 affected Btrfs checks pass; the 34 new checks also pass on tmpfs. Existing
+profiles remain unchanged and qualification pins remain empty. Next: specify
+the publication transaction and actual-order evidence, then implement final-path
+reading and the guarded case move. Actual pruning and research remain gated.
+
+The user's 25 October continuation resumed work in this turn. The goal service
+still reports `paused` and exposes no agent resume operation; automatic goal
+continuation has not been reactivated. This is separate from the user's renewed
+authorization to continue the implementation.
+
+## Historical recovery state
 
 Accepted memory comparison coverage is **44/48 development cells**. The final
 originally planned batch, [remaining-10](reports/m5-remaining-10-comparison.md),

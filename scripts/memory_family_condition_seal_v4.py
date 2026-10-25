@@ -27,7 +27,7 @@ from scripts.memory_directory_census_v1 import directory_names
 
 ROOT = Path(__file__).resolve().parents[1]
 MiB = compact.MiB
-EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-directory-census-v1-protocol.json'
+EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-retained-condition-v1-protocol.json'
 REGISTRATION_KEYS = {'schema', 'protocol_sha256', 'extension_sha256', 'case',
     'run_id', 'condition', 'source_run_id', 'owner_source_sha256', 'source',
     'raw_audit', 'owner_record', 'controls', 'history_bundles',
