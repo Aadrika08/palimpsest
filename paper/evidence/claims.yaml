@@ -35,7 +35,7 @@
       "source_revision": "818fd3e",
       "evidence_class": "runtime",
       "experimental_unit": "one 375-tick reference episode",
-      "value": "1.1920928955078125e-7",
+      "value": "1.1921e-7",
       "unit": "maximum absolute difference",
       "permitted_wording": "The pinned reference episode matched the upstream inference path within the declared 1e-6 tolerances.",
       "latex_macro": "FlynnParityMaxDifference",

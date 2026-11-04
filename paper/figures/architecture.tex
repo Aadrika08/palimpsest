@@ -1,0 +1,20 @@
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw,rounded corners,minimum width=2.35cm,minimum height=0.72cm,align=center},
+  arrow/.style={-{Latex[length=2mm]},thick},
+  node distance=0.55cm and 0.9cm
+]
+\node[box,fill=palblue!12] (client) {Browser / CLI\\untrusted presentation};
+\node[box,fill=palgold!15,right=of client] (queue) {Bounded command\\and receipt queues};
+\node[box,fill=palgreen!15,right=of queue] (owner) {Single runtime owner\\world + controller};
+\node[box,fill=palblue!10,below=of owner] (projector) {Observation projector\\allowlisted policy input};
+\node[box,fill=palblue!10,left=of projector] (policy) {Controller\\hidden state + action};
+\node[box,fill=palred!10,right=of projector] (record) {Recorder\\events + typed arrays};
+\draw[arrow] (client) -- node[above]{request} (queue);
+\draw[arrow] (queue) -- node[above]{apply at boundary} (owner);
+\draw[arrow] (owner) -- (projector);
+\draw[arrow] (projector) -- (policy);
+\draw[arrow] (policy) |- (owner);
+\draw[arrow] (owner) -- (record);
+\draw[arrow,dashed] (record) -| node[pos=0.25,below]{display / readback} (client);
+\end{tikzpicture}

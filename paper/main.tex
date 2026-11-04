@@ -1,0 +1,434 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.82in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,shapes.geometric}
+\usepackage{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{enumitem}
+\usepackage{url}
+
+\definecolor{palblue}{HTML}{245A7A}
+\definecolor{palgreen}{HTML}{2D7B64}
+\definecolor{palgold}{HTML}{B27A20}
+\definecolor{palred}{HTML}{9E3D38}
+\hypersetup{colorlinks=true,linkcolor=palblue,citecolor=palgreen,urlcolor=palblue}
+\setlist{nosep,leftmargin=*}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+
+\input{generated/claims.tex}
+
+\title{Palimpsest: Inspectable, Provenance-Preserving Experiments\\for Embodied Neural Controllers}
+\author{Anonymous authors\\\small Draft for venue selection; authorship and affiliations unresolved}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Embodied neural-controller experiments combine learned policies, physics,
+rendering, asynchronous user interfaces, and large recorded artifacts. A run
+that looks reproducible can still obscure which inputs reached the policy,
+whether a displayed intervention was applied, whether replay recomputed the
+policy, or whether a successful check exercised the scientific runtime.
+We present Palimpsest, a local experiment layer that makes these distinctions
+explicit. A single owner serializes mutable simulator and controller state;
+commands are applied at control boundaries; snapshots include physics,
+controller, wrapper, random, and pending-command state; and playback,
+recorded-action replay, and policy replay remain separate operations.
+Artifacts bind source and asset identities, retain failures, and are published
+under bounded, no-overwrite protocols.
+
+We evaluate the system around a pinned connectome-constrained FLYNN controller.
+One 375-tick reference episode matched the upstream inference path with maximum
+absolute discrepancy \FlynnParityMaxDifference{} under declared $10^{-6}$
+tolerances. The fixed policy reached \FlynnDevelopmentGoals{} goals on 30
+development episodes; these were not held out. A bounded 60-minute mixed
+session completed \MixedEnduranceResult{}, and a registered manual browser
+session measured \ManualBrowserCadence{}. We also report capability gates that
+failed without being tuned away: memory v1 showed \MemoryVOneOutcome{}, while
+balanced puck and augmented MaleCNS development gates achieved
+\BalancedPuckOutcome{} and \MaleCNSNavigationOutcome{}, respectively.
+These results support Palimpsest as an auditable experimental instrument; they
+do not establish biological validity, memory benefit, topology advantage,
+learned manipulation, human artistic acceptance, or physical deployment.
+\end{abstract}
+
+\section{Introduction}
+
+Interactive embodied experiments are unusually easy to overread. A browser can
+display a new obstacle before the simulator accepts it. A replay can show a
+trajectory without rerunning inference. A restored pose can omit recurrent
+state. A test suite can validate fixtures while the full model and renderer are
+absent. Conversely, a failed capability threshold can coexist with a sound
+experimental instrument. Treating these cases as equivalent weakens both
+engineering diagnosis and scientific inference.
+
+Palimpsest is a local laboratory for embodied neural controllers built around a
+stricter rule: every claim should name its authority boundary and evidence
+class. The system wraps a pinned upstream simulation and controller path rather
+than replacing it. It projects declared policy inputs from the richer simulator
+state, serializes commands through one mutable-runtime owner, records typed
+numeric arrays and authoritative events, captures resumable snapshots, and
+supports sequential branches and three explicitly different replay modes.
+Failures, timeouts, incomplete publication, source drift, and qualification
+refusals remain first-class outcomes.
+
+The design grew from reproducing FLYNN, a recurrent controller constrained by
+fly-brain topology, inside a MuJoCo environment. The resulting laboratory also
+hosts manual and analytical controllers, reduced MaleCNS-derived research
+models, memory interventions, body-response experiments, and offline artwork
+exporters. This breadth creates a temptation to present Palimpsest as a bundle
+of successful capabilities. We take the opposite approach: the paper's subject
+is the experiment layer, and the capability studies are bounded case studies,
+including null and failed development gates.
+
+This paper makes four contributions:
+
+\begin{enumerate}
+  \item an authority architecture separating simulator truth, declared policy
+  inputs, presentation state, and retained evidence;
+  \item full-state snapshots and validated boundary interventions supporting
+  sequential branches and distinct playback, action-replay, and policy-replay
+  semantics;
+  \item source- and asset-bound recording, custody checks, bounded publication,
+  and explicit refusal paths that preserve negative and failed outcomes; and
+  \item an evidence-scoped evaluation joining upstream parity, development
+  behavior, browser and endurance measurements, and deliberately unpromoted
+  capability failures.
+\end{enumerate}
+
+\section{Background and Related Work}
+
+\paragraph{Embodied fly simulation.}
+NeuroMechFly and FlyGym provide a neuromechanical Drosophila simulation with
+sensory feedback, terrain interaction, and task examples
+\citep{wangchen2024neuromechfly}. MuJoCo supplies the contact-rich rigid-body
+dynamics substrate \citep{todorov2012mujoco}. FLYNN trains a recurrent network
+whose sparse connectivity is constrained by a female FlyWire-derived graph for
+wheeled-robot navigation \citep{wang2026flynn}. Palimpsest does not claim these
+models, graphs, or environments as contributions. It pins and checks their
+effective execution path, then adds intervention, inspection, continuation,
+recording, and evidence boundaries around them.
+
+Connectome-constrained networks can provide useful inductive structure, but
+connectivity compatibility is not equivalent to biological fidelity or causal
+topology benefit. Work on the fly visual system combines measured connectivity,
+task optimization, and comparisons against neural recordings
+\citep{lappalainen2024connectome}. Palimpsest's controller studies lack that
+kind of biological validation; graph identity and tensor compatibility are
+reported only as provenance and runtime facts.
+
+\paragraph{Simulation interfaces.}
+Gymnasium standardizes environment interaction and termination semantics
+\citep{towers2024gymnasium}. Interactive experiment systems additionally need
+authority over commands, resets, rendering, and asynchronous clients.
+Palimpsest retains the upstream environment API while isolating mutable runtime
+state in one worker and making applied control boundaries observable.
+
+\paragraph{Record, replay, and reproducibility.}
+System-level record/replay tools such as rr reproduce user-space executions by
+capturing nondeterminism \citep{ocallahan2017rr}. Palimpsest is not a general
+instruction-level recorder. Its action and policy replays are domain-specific:
+they reconstruct a compatible simulator, validate source and snapshot
+provenance, and compare typed experiment records. ReproZip packages execution
+environments to support computational reproducibility
+\citep{chirigati2013reprozip}, while FAIR emphasizes machine-actionable and
+reusable research objects \citep{wilkinson2016fair}. Palimpsest complements
+environment packaging with experiment-level semantics: what was observed,
+which command was applied, which state was restored, and whether inference was
+executed.
+
+\section{System Design}
+
+\subsection{Authority and observation boundaries}
+
+Figure~\ref{fig:architecture} shows the authority split. One worker owns the
+MuJoCo state, controller state, renderer, wrapper counters, random generators,
+recorder, and pending commands. Browser and CLI clients send idempotent commands
+through bounded queues. A receipt distinguishes queued, applied, rejected, and
+failed commands; an applied intervention records its actual control tick.
+Display frames may be dropped, but authoritative events may not.
+
+The environment exposes more state than a controller should receive. Each
+controller profile therefore has an allowlisted projection from world state to
+policy input. The analytical teacher may read privileged goal geometry, but it
+is labeled as a reference rather than an equal-information baseline. Recorded
+events keep world truth, projected input, controller output, and presentation
+metadata distinct.
+
+\begin{figure}[t]
+  \centering
+  \input{figures/architecture.tex}
+  \caption{Authority boundaries. Only the runtime owner mutates simulator and
+  controller state. The observation projector constrains policy inputs; the
+  recorder receives authoritative events rather than browser state.}
+  \label{fig:architecture}
+\end{figure}
+
+\subsection{Snapshots, interventions, and branches}
+
+A snapshot is not a pose file. Palimpsest captures physics integration state,
+mutable world properties, controller hidden and retinal state, wrapper state,
+random generators, recorder position, and pending command state. Compatibility
+checks bind snapshot schema, source identity, assets, controller profile, and
+numeric records. A branch runs in a fresh worker and is sequential with its
+source and sibling branches; no shared mutable simulator state is permitted.
+
+World changes use preview and application as separate phases. A preview checks
+geometry and command shape but is not evidence that the world changed. At a
+control boundary the owner revalidates the command, applies it once, updates
+dependent caches and planners, and records the before/after state and tick.
+Figure~\ref{fig:lifecycle} summarizes the lifecycle.
+
+\begin{figure}[t]
+  \centering
+  \input{figures/lifecycle.tex}
+  \caption{Experiment lifecycle. A displayed preview has no scientific
+  authority. Branch and replay outputs are new retained objects and never
+  overwrite their source.}
+  \label{fig:lifecycle}
+\end{figure}
+
+\subsection{Three replay semantics}
+
+\textbf{Playback} reads recorded values and performs no simulation or inference.
+\textbf{Action replay} reconstructs compatible physics and advances it with
+recorded actions, bypassing the policy. \textbf{Policy replay} reconstructs both
+physics and controller and recomputes the policy from recorded inputs and
+snapshots. Completion is separate from agreement: action and policy replays
+compare typed arrays and events under fixed tolerances and report the first
+divergence.
+
+This separation prevents two common category errors. A visually faithful
+playback is not executable reproducibility, and a physics replay from recorded
+actions does not show that the controller recomputes the same outputs.
+
+\subsection{Recording, custody, and publication}
+
+Runs are written to fresh UUID-named directories. Manifests describe effective
+configuration and completion; events capture authority transitions; typed
+numeric chunks retain cameras, sensors, states, actions, and controller-specific
+arrays. Writers use bounded logs, byte and count quotas, free-space floors,
+temporary staging, and no-overwrite publication. Timeouts and partial runs retain
+their published prefix and diagnostics.
+
+Custody-sensitive readers recheck file identities before and after protected
+reads. Checks at and below a declared custody root include namespace and content;
+ancestors above that root retain edge identity without treating unrelated sibling
+activity as evidence mutation. The more ambitious whole-memory-case publication
+transaction is specified but not implemented or qualified; it is not counted as
+an evaluated contribution.
+
+\section{Evidence Protocol}
+
+Palimpsest uses an evidence ladder rather than a single ``tested'' label
+(Figure~\ref{fig:evidence-ladder}). Fixture evidence validates source contracts
+with authored inputs. Runtime evidence executes the relevant controller or
+simulator. Browser evidence additionally exercises the user-facing path.
+Development and held-out studies differ by preregistered access and tuning
+rules. Human artistic acceptance and physical deployment require their own
+records. Evidence does not automatically move upward.
+
+\begin{figure}[t]
+  \centering
+  \input{figures/evidence-ladder.tex}
+  \caption{Evidence scopes used in the repository and this paper. Arrows mean
+  ``requires additional evidence,'' not that one passing layer guarantees the
+  next.}
+  \label{fig:evidence-ladder}
+\end{figure}
+
+For this manuscript, a machine-readable claim ledger binds each central result
+to an evidence class, experimental unit, source revision, full source-file hash,
+and exact anchor or JSON pointer. Generation fails on missing or hash-drifted
+sources, duplicate active claims, invalid supersession, and qualification wording
+that exceeds the evidence class. The paper's numerical summary is generated from
+that ledger. This machinery prevents accidental transcription drift; it does not
+make the underlying study stronger.
+
+The experimental unit is stated per result. Ticks and repeated telemetry samples
+within an episode are not independent episodes. Conditions sharing a namespace,
+seed, or source history are not silently counted as independent. We report fixed
+counts and bounded observations without significance tests where the retained
+protocol does not support them.
+
+\section{Evaluation}
+
+\subsection{Questions and setup}
+
+The evaluation asks four questions:
+
+\begin{enumerate}
+  \item Does the wrapped FLYNN path agree with the pinned upstream reference?
+  \item Can Palimpsest retain and replay bounded interactive workloads while
+  preserving authority and resource limits?
+  \item Does the browser exercise the actual backend lifecycle at usable cadence?
+  \item When research capabilities fail their gates, does the evidence system
+  preserve that outcome without opening held-out data or changing thresholds?
+\end{enumerate}
+
+The reproduction host used Python 3.11.15, PyTorch 2.9.0, MuJoCo 3.3.6,
+float32 inference, two CPU threads, an NVIDIA RTX 4050 Laptop GPU, and a pinned
+upstream FLYNN checkout. Results are host- and profile-specific. The repository's
+hosted canonical fixture suite recorded \HostedFixtureResult{} on its tested
+candidate, but those authored fixtures are not substituted for model-runtime
+experiments.
+
+\begin{table}[t]
+  \centering
+  \small
+  \caption{Claim-ledger summary. Evidence class and experimental unit constrain
+  the interpretation of each value.}
+  \label{tab:results}
+  \resizebox{\linewidth}{!}{\input{generated/results-table.tex}}
+\end{table}
+
+\subsection{Upstream parity and development behavior}
+
+In one reference episode the teacher reached the goal in 366 ticks and FLYNN in
+375 ticks. Palimpsest compared camera conversion, effective neural input,
+unsanitized readout, action, hidden state, and retinal state at every FLYNN tick.
+The maximum measured absolute discrepancy was
+\FlynnParityMaxDifference{}, within the declared absolute and relative
+$10^{-6}$ tolerances. The experimental unit is the single reference episode;
+per-tick comparisons diagnose agreement but are not 375 independent trials.
+
+On seeds 0--29, the privileged teacher reached 30/30 goals and the fixed FLYNN
+policy reached \FlynnDevelopmentGoals{}. Initial physics states and policy
+inputs were paired exactly. These episodes were development smoke environments,
+not held-out evaluation, and the teacher had privileged geometry. The result
+supports correct bounded execution, not superiority or general navigation.
+
+\subsection{Endurance, replay, and browser operation}
+
+One mixed authenticated HTTP/WebSocket session ran for 3,600.000099 seconds. It
+completed 29 cycles (manual 10, teacher 10, CPU-FLYNN 9), including preview and
+application, masking, pause/step/reset, snapshot, sequential branch, playback,
+action replay, and policy replay. All 58 executable replays passed their declared
+checks. Peak finite samples remained within the preregistered RSS, descriptor,
+thread, output, and disk-floor budgets. This was a mixed workload with paused
+intervals and modest inference bursts, not one hour of continuous inference.
+
+The registered manual browser session exercised inspection, snapshot, two
+sequential branches, comparison, the three replay modes, export, disconnect, and
+reload recovery. Its measured eight-second cadence window delivered
+\ManualBrowserCadence{}. The hour-long browser segment also passed its declared
+cadence tolerance, while late-session drift remained recorded. This is one
+host/session result and not a cross-platform usability study.
+
+\begin{figure}[t]
+  \centering
+  \input{figures/results-summary.tex}
+  \caption{Selected bounded outcomes. Green denotes a passed declared gate;
+  amber denotes development-only evidence; red denotes a failed development
+  gate whose held-out stage remained closed. Bar lengths are categorical and do
+  not place unlike metrics on a shared quantitative scale.}
+  \label{fig:results-summary}
+\end{figure}
+
+\subsection{Negative case studies}
+
+\paragraph{Memory v1.}
+The accepted development readout covered 44 of 48 cells, 396 condition readouts,
+and 352 paired comparisons. Task comparisons tied, and no own-history artifact
+improved correction or goal timing. Repeated conditions and shared namespaces
+were not independent samples. Inspection of the mechanism found that the common
+route often exposed the changed passage without a decision that consumed the
+memory estimate. The study was retired as a structural null rather than extended
+to held-out evaluation. This is evidence about the v1 task design, not a general
+null for memory-mediated behavior.
+
+\paragraph{Learned puck control.}
+Three balanced-loss models each scored \BalancedPuckOutcome{} against an
+unchanged 3/4 development threshold. Held-out evaluation stayed locked. Passing
+model-loading and native-mechanism checks did not promote the learned capability.
+
+\paragraph{MaleCNS navigation.}
+All 24 fixed development runs completed. Old-corpus models scored 2/4, 1/4, and
+1/4 goals; all augmented-data models scored \MaleCNSNavigationOutcome{} against
+the 3/4 per-seed threshold. Both arms used the same original graph, so this was a
+training-data comparison, not a topology test. No second development run, refit,
+threshold change, or held-out access followed.
+
+Together these cases show a property of the experimental layer rather than a
+success of the controllers: operational completion, mechanism verification, and
+scientific capability are stored and reported separately.
+
+\section{Limitations and Threats to Validity}
+
+\textbf{No head-to-head systems baseline.} Palimpsest wraps an upstream runner,
+but the current evidence does not compare intervention or evidence-custody
+features against alternative embodied experiment platforms under a matched task.
+The paper therefore describes and verifies mechanisms rather than claiming lower
+overhead or greater reproducibility than another system.
+
+\textbf{Single-host concentration.} Most asset-backed results came from one Linux
+laptop. Hosted CI exercises CPU fixtures, not the downloaded full model and EGL
+path. Independent clean-machine reproduction remains a submission blocker.
+
+\textbf{Incomplete overhead decomposition.} Existing measurements include
+controller latency, memory, disk, and mixed-workload timing, but do not isolate
+the marginal cost of every recorder, custody, and replay check. We make no
+low-overhead claim.
+
+\textbf{Checkpoint provenance.} The supplied FLYNN checkpoint does not embed its
+original training graph or neuron ordering. Present graph/checkpoint structural
+compatibility and upstream-path parity do not reconstruct that lineage.
+
+\textbf{Numerical continuation.} Strict CPU continuation passed in reported
+profiles; a CUDA continuation path exhibited upstream sparse-operation variation.
+We report that limitation rather than relaxing equality into an undocumented
+pass.
+
+\textbf{Research outcomes.} Memory, puck, and MaleCNS results are development or
+retired-protocol outcomes. They do not support population, biological, topology,
+held-out, or general capability claims. Physical rover deployment and human
+artistic acceptance were not evaluated.
+
+\section{Ethics, Licensing, and Artifact Status}
+
+Palimpsest simulates controllers and uses public or distributed connectome/model
+artifacts; this paper reports no human-subject or live-animal experiment. The
+artwork package has no human acceptance record and is outside the paper's
+evaluation. A future study involving viewers or operators must make consent and
+data-retention decisions before collection.
+
+Third-party code and asset terms are tracked separately. The pinned upstream code
+is reported as MIT-licensed, while the distributed FlyWire-derived graph and
+FLYNN checkpoint carry CC BY-NC 4.0 terms. The repository does not yet contain a
+root licence for original Palimpsest code, and the licence for newly trained
+parameters remains an owner decision. Accordingly, this draft is not labelled
+submission-ready for public archival distribution.
+
+The artifact includes a locked Python environment, exact upstream gitlink,
+manifests and hashes, canonical fixture tests, paper claim ledger, generated
+tables, and build instructions. Bulk raw runs remain local and are referenced by
+retained inventories and hashes. A DOI, public archive readback, final author
+metadata, venue template, and independent reproduction remain open.
+
+\section{Conclusion}
+
+Palimpsest treats an embodied-controller run as more than a trajectory. It
+records who owned mutable state, what the controller could observe, when an
+intervention became authoritative, which state a branch inherited, what a replay
+recomputed, and which evidence class supports each conclusion. The evaluation
+shows upstream-path agreement, bounded interactive and endurance operation, and
+failure-preserving scientific gates on the reported profiles. Just as
+importantly, the system retains null and failed development outcomes without
+promoting them to held-out or biological claims. The result is an inspectable
+experimental instrument; stronger controller, memory, topology, human, or
+physical conclusions require their own prospective evidence.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
