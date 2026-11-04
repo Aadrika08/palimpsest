@@ -10,11 +10,11 @@
 \node[box,fill=palblue!10,below=of owner] (projector) {Observation projector\\allowlisted policy input};
 \node[box,fill=palblue!10,left=of projector] (policy) {Controller\\hidden state + action};
 \node[box,fill=palred!10,right=of projector] (record) {Recorder\\events + typed arrays};
-\draw[arrow] (client) -- node[above]{request} (queue);
-\draw[arrow] (queue) -- node[above]{apply at boundary} (owner);
+\draw[arrow] (client) -- (queue);
+\draw[arrow] (queue) -- (owner);
 \draw[arrow] (owner) -- (projector);
 \draw[arrow] (projector) -- (policy);
 \draw[arrow] (policy) |- (owner);
 \draw[arrow] (owner) -- (record);
-\draw[arrow,dashed] (record) -| node[pos=0.25,below]{display / readback} (client);
+\draw[arrow,dashed] (record.south) |- ([yshift=-0.35cm]policy.south) -| (client.south);
 \end{tikzpicture}

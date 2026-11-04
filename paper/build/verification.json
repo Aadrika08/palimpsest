@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "expected_text_present": true,
+    "generated_outputs_fresh": true,
+    "latex_log_clean": true,
+    "minimum_page_count": true
+  },
+  "compiler_version": "pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux)",
+  "dirty_state_note": "tracked changes present during verification",
+  "expected_text": [
+    "Introduction",
+    "System Design",
+    "Evidence Protocol",
+    "Evaluation",
+    "Limitations and Threats to Validity",
+    "Ethics, Licensing, and Artifact Status",
+    "Conclusion",
+    "References"
+  ],
+  "page_count": 7,
+  "pdf_bytes": 337262,
+  "pdf_sha256": "db479f7dde202f4b2e36cceb6264d35b7f2cb0465ec81fd8e505953b0b36e02f",
+  "poppler_pdfinfo_version": "pdfinfo version 26.10.0",
+  "schema_version": 1,
+  "source_commit": "f58aca0135f53d7b2d1269f927d2dae7bfa6d6a9",
+  "text_characters": 23580,
+  "text_sha256": "eef1c3459f1a7eb7559542b9c0e7ebb27e7158a14e3aafa313022dbde1ff2f6c"
+}

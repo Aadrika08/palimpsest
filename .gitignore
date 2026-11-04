@@ -16,6 +16,7 @@ ui/node_modules/
 ui/dist/
 test-results/
 playwright-report/
+!paper/build/
 paper/build/*
 !paper/build/palimpsest-systems-paper.pdf
 !paper/build/verification.json
