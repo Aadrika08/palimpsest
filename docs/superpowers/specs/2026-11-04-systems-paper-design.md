@@ -79,7 +79,7 @@ Four primary figures are planned:
 
 - `paper/evidence/claims.yaml` is the paper's claim ledger. Each entry names its
   scope, status, source file, source hash, source lines or machine-readable JSON
-  pointer, source revision, experimental unit, evidence class, and permitted
+  pointer, execution revision, report revision, experimental unit, evidence class, and permitted
   wording. Superseded claims identify their successor.
 - `paper/scripts/build_evidence.py` validates the ledger and generates LaTeX
   tables/macros under `paper/generated/`.
@@ -87,7 +87,8 @@ Four primary figures are planned:
   indexes. Historical raw runs may be cited by their retained hashes without
   being copied into Git.
 - Missing, hash-drifted, duplicate-active, or contradictory evidence fails
-  generation. Markdown evidence requires both a full-file hash and an anchor;
+  generation. Markdown evidence requires a full-file hash, an anchor, and an
+  exact source value distinct from its presentation-formatted display value;
   machine-readable JSON pointers are preferred where committed indexes exist.
   No generator may mutate existing reports or raw results.
 - Development episodes, ticks, intervals, seeds, and repeated measurements are

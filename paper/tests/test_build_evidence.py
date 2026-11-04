@@ -39,10 +39,12 @@ class EvidenceBuilderTests(unittest.TestCase):
             "anchor": "28 / 30 goals",
             "json_pointer": None,
             "expected_value": None,
-            "source_revision": "abc1234",
+            "execution_revision": "abc1234",
+            "report_revision": "def5678",
             "evidence_class": "development",
             "experimental_unit": "seeded episode",
-            "value": "28/30",
+            "value": "28 / 30",
+            "display_value": "28/30",
             "unit": "goal episodes",
             "permitted_wording": "FLYNN reached the goal in 28 of 30 development episodes.",
             "latex_macro": "FlynnDevelopmentGoals",
@@ -94,7 +96,7 @@ class EvidenceBuilderTests(unittest.TestCase):
         self.assertTrue(any("JSON pointer value mismatch" in error for error in errors))
 
     def test_duplicate_active_claim_key_with_conflicting_value_is_reported(self):
-        other = self.claim(id="flynn_goals_other", value="29/30", latex_macro="FlynnGoalsOther")
+        other = self.claim(id="flynn_goals_other", value="29 / 30", display_value="29/30", latex_macro="FlynnGoalsOther")
         claims = load_claims(self.write_ledger([self.claim(), other]))
         errors = validate_claims(self.repo, claims)
         self.assertTrue(any("conflicting active claim_key" in error for error in errors))
@@ -110,9 +112,27 @@ class EvidenceBuilderTests(unittest.TestCase):
         self.assertIn("flynn_development_goals: unknown evidence class scientific", validate_claims(self.repo, claims))
 
     def test_development_claim_cannot_use_qualification_wording(self):
-        claim = self.claim(permitted_wording="The controller is qualified and proves an advantage.")
+        claim = self.claim(permitted_wording="The controller is qualified.")
         errors = validate_claims(self.repo, load_claims(self.write_ledger([claim])))
         self.assertTrue(any("prohibited wording" in error for error in errors))
+
+    def test_fixture_claim_cannot_escalate_to_physical_readiness(self):
+        claim = self.claim(
+            evidence_class="fixture",
+            permitted_wording="The fixture establishes physical deployment readiness.",
+        )
+        errors = validate_claims(self.repo, load_claims(self.write_ledger([claim])))
+        self.assertTrue(any("prohibited wording" in error for error in errors))
+
+    def test_published_value_must_occur_in_bound_source(self):
+        claim = self.claim(value="300 / 30", display_value="300/30")
+        errors = validate_claims(self.repo, load_claims(self.write_ledger([claim])))
+        self.assertIn("flynn_development_goals: value not found in source", errors)
+
+    def test_duplicate_active_claim_key_is_rejected_even_when_values_match(self):
+        other = self.claim(id="flynn_goals_other", latex_macro="FlynnGoalsOther")
+        errors = validate_claims(self.repo, load_claims(self.write_ledger([self.claim(), other])))
+        self.assertTrue(any("duplicate active claim_key" in error for error in errors))
 
     def test_duplicate_latex_macro_is_reported(self):
         other = self.claim(

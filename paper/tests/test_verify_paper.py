@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 import tempfile
 import time
@@ -75,6 +76,80 @@ class PaperVerifierTests(unittest.TestCase):
             self.repo, self.pdf, self.log, [], [], ["Introduction"], 999
         )
         self.assertTrue(any("page count" in error for error in errors))
+
+    def test_blank_middle_page_is_reported(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            tex = root / "blank.tex"
+            tex.write_text(
+                r"\documentclass{article}\begin{document}First page"
+                r"\newpage\null\newpage Last page\end{document}",
+                encoding="utf-8",
+            )
+            subprocess.run(
+                ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "blank.tex"],
+                cwd=root,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            errors, _ = inspect_paper(
+                self.repo,
+                root / "blank.pdf",
+                root / "blank.log",
+                [],
+                [],
+                ["First page", "Last page"],
+                3,
+            )
+        self.assertIn("PDF page 2 is blank", errors)
+
+    def test_pdf_is_bound_to_all_build_input_hashes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            paper = repo / "paper"
+            paper.mkdir()
+            pdf = repo / "paper.pdf"
+            log = repo / "paper.log"
+            pdf.write_bytes(self.pdf.read_bytes())
+            log.write_text(self.log.read_text(encoding="utf-8", errors="replace"), encoding="utf-8")
+            inputs = [paper / "main.tex", paper / "references.bib"]
+            for source in inputs:
+                source.write_text(source.name, encoding="utf-8")
+                os.utime(source, (pdf.stat().st_mtime - 10, pdf.stat().st_mtime - 10))
+            errors, metadata = inspect_paper(
+                repo,
+                pdf,
+                log,
+                [],
+                [],
+                ["Introduction"],
+                1,
+                build_inputs=inputs,
+            )
+        self.assertEqual(errors, [])
+        self.assertEqual(
+            sorted(metadata["build_input_sha256"]),
+            ["paper/main.tex", "paper/references.bib"],
+        )
+
+    def test_pdf_older_than_build_input_is_reported(self):
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp) / "newer.tex"
+            source.write_text("changed")
+            future = self.pdf.stat().st_mtime + 10
+            os.utime(source, (future, future))
+            errors, _ = inspect_paper(
+                self.repo,
+                self.pdf,
+                self.log,
+                [],
+                [],
+                ["Introduction"],
+                1,
+                build_inputs=[source],
+            )
+        self.assertTrue(any("PDF older than build input" in error for error in errors))
 
     def test_success_metadata_is_deterministic(self):
         args = (

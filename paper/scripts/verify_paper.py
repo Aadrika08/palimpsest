@@ -42,9 +42,10 @@ def inspect_paper(
     generated_outputs: list[Path],
     expected_text: list[str],
     minimum_pages: int,
+    build_inputs: list[Path] | None = None,
 ) -> tuple[list[str], dict[str, object]]:
-    del repo  # Kept in the interface for future repository-relative checks.
     errors: list[str] = []
+    build_inputs = build_inputs or []
     if not pdf.is_file():
         return ["missing PDF"], {}
     if not log.is_file():
@@ -67,6 +68,19 @@ def inspect_paper(
                 )
                 break
 
+    build_input_sha256: dict[str, str] = {}
+    for build_input in build_inputs:
+        try:
+            key = build_input.resolve().relative_to(repo.resolve()).as_posix()
+        except ValueError:
+            key = str(build_input.resolve())
+        if not build_input.is_file():
+            errors.append(f"missing build input: {key}")
+            continue
+        build_input_sha256[key] = _sha256(build_input)
+        if build_input.stat().st_mtime_ns > pdf.stat().st_mtime_ns:
+            errors.append(f"PDF older than build input: {key}")
+
     try:
         info = _run("pdfinfo", str(pdf))
         text = _run("pdftotext", str(pdf), "-")
@@ -78,6 +92,22 @@ def inspect_paper(
     page_count = int(match.group(1)) if match else 0
     if page_count < minimum_pages:
         errors.append(f"page count {page_count} is below minimum {minimum_pages}")
+    blank_pages: list[int] = []
+    for page_number in range(1, page_count + 1):
+        try:
+            page_text = _run(
+                "pdftotext", "-f", str(page_number), "-l", str(page_number), str(pdf), "-"
+            )
+        except (OSError, subprocess.CalledProcessError) as exc:
+            errors.append(f"PDF page {page_number} inspection failed: {exc}")
+            continue
+        content_lines = [
+            line for line in page_text.replace("\f", "").splitlines()
+            if not re.fullmatch(r"\s*\d+\s*", line)
+        ]
+        if not "\n".join(content_lines).strip():
+            blank_pages.append(page_number)
+            errors.append(f"PDF page {page_number} is blank")
     for expected in expected_text:
         if expected not in text:
             errors.append(f"PDF missing expected text: {expected}")
@@ -90,11 +120,14 @@ def inspect_paper(
         "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
         "text_characters": len(text),
         "expected_text": expected_text,
+        "build_input_sha256": dict(sorted(build_input_sha256.items())),
         "checks": {
             "latex_log_clean": not any(message.startswith("LaTeX log") for message in errors),
             "generated_outputs_fresh": not any("generated output" in error for error in errors),
             "minimum_page_count": page_count >= minimum_pages,
             "expected_text_present": not any("missing expected text" in error for error in errors),
+            "build_inputs_bound": len(build_input_sha256) == len(build_inputs),
+            "no_blank_pages": not blank_pages,
         },
     }
     return errors, metadata
@@ -111,6 +144,17 @@ def main(argv: list[str] | None = None) -> int:
     log = paper / "build" / "main.log"
     sources = [paper / "evidence" / "claims.yaml"]
     generated = [paper / "generated" / "claims.tex", paper / "generated" / "results-table.tex"]
+    build_inputs = [
+        paper / "main.tex",
+        paper / "references.bib",
+        paper / "Makefile",
+        paper / "evidence" / "claims.yaml",
+        paper / "generated" / "claims.tex",
+        paper / "generated" / "results-table.tex",
+        paper / "scripts" / "build_evidence.py",
+        paper / "scripts" / "verify_paper.py",
+        *sorted((paper / "figures").glob("*.tex")),
+    ]
     expected = [
         "Introduction",
         "System Design",
@@ -121,7 +165,9 @@ def main(argv: list[str] | None = None) -> int:
         "Conclusion",
         "References",
     ]
-    errors, metadata = inspect_paper(repo, pdf, log, sources, generated, expected, 5)
+    errors, metadata = inspect_paper(
+        repo, pdf, log, sources, generated, expected, 5, build_inputs=build_inputs
+    )
     if errors:
         for error in errors:
             print(error, file=sys.stderr)

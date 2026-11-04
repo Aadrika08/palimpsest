@@ -32,9 +32,9 @@ the full controller assets.
 From the repository root with the prepared environment:
 
 ```sh
-make -C paper evidence PYTHON=.venv/bin/python
-make -C paper paper PYTHON=.venv/bin/python
-make -C paper verify PYTHON=.venv/bin/python
+make -C paper evidence PYTHON=python3
+make -C paper paper PYTHON=python3
+make -C paper verify PYTHON=python3
 ```
 
 Expected retained outputs:
