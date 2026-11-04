@@ -1,9 +1,25 @@
 {
+  "build_input_sha256": {
+    "paper/Makefile": "0a8f295a5b882a339923a9da339b6a6576b7017ff85eb1efdb871860fff5de6a",
+    "paper/evidence/claims.yaml": "4d74095c0e85d2a22aff402b6304e179d26eafc6cbfc33b4a384b8429f5e0251",
+    "paper/figures/architecture.tex": "12aee28dd32ee6061d03b4b9796e180505fc4f92471330e2eb0fd0a3a0882c78",
+    "paper/figures/evidence-ladder.tex": "5979f2b8b9d3be272088e443fad77b1eb57bd6fb6896b828b3c50320ad25f2ce",
+    "paper/figures/lifecycle.tex": "655dfa821cc671f20e76537762ee05c3abd38e8f1c59bd79fade4700e0905435",
+    "paper/figures/results-summary.tex": "98cac2314e7a9b6c7ca2b4ddcbb76c7a350f6fbbe5f5c8962a928e8db0217971",
+    "paper/generated/claims.tex": "61cf51f919102679a0ca78ae38d2292e61d39b5eb2a71b6f2732df37638434b6",
+    "paper/generated/results-table.tex": "3b8d5cb84f2adc1dc423f82b127db22f6a8c599de466952eb1e5de34ae0370bc",
+    "paper/main.tex": "75d9ed6feb5ea70a6ab12d47cc707f4f38726f35178c6430f84bd3b416e5840d",
+    "paper/references.bib": "13f69782fbd5a057b27106d197150e6dc9545483e4f5a4b2e8f5e70b085d983b",
+    "paper/scripts/build_evidence.py": "e7c42098fd178d1df10b595b11d123bfdb97908a94f677ef9ec4711f3445ebd8",
+    "paper/scripts/verify_paper.py": "40869f26177c447c613551d9ccaf760df85ff1e6960543453619c0fd5cb242ba"
+  },
   "checks": {
+    "build_inputs_bound": true,
     "expected_text_present": true,
     "generated_outputs_fresh": true,
     "latex_log_clean": true,
-    "minimum_page_count": true
+    "minimum_page_count": true,
+    "no_blank_pages": true
   },
   "compiler_version": "pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux)",
   "dirty_state_note": "tracked changes present during verification",
@@ -18,11 +34,11 @@
     "References"
   ],
   "page_count": 7,
-  "pdf_bytes": 337274,
-  "pdf_sha256": "3c26ccb693f167e92b631476a945cfa00351931b27a8abfa9e6913e1188dfddb",
+  "pdf_bytes": 337639,
+  "pdf_sha256": "4cd0c0ca55ec6d2c7ff64253090eb1dda2b88e94893b0ddb4f9dc4985706450f",
   "poppler_pdfinfo_version": "pdfinfo version 26.10.0",
   "schema_version": 1,
-  "source_commit": "c093e5ac259dc0e8024d8e3b363aadb54bc62b4c",
-  "text_characters": 23580,
-  "text_sha256": "c603508309ca4fbab730c7c81a99efd0f0e658263b9c6ae72a642b2a19baa91b"
+  "source_commit": "f162c3a3e50d42da9d5cbc94067d48301e600a56",
+  "text_characters": 23693,
+  "text_sha256": "6465ecffbaf6f56de67a7f48ff4a2b81d8516f6c726ebd25203499de68fc9865"
 }
