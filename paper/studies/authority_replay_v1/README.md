@@ -1,0 +1,101 @@
+# Authority-aware replay study v1
+
+The frozen protocol defines a CPU-only, sequential study. It contains 111
+accounting rows: 50 fault executions, 10 source/restored continuation pairs,
+5 source replay trajectories, 40 execution-overhead conditions (10 matched sets
+of four), 5 operation-cost units, and one same-host fresh-checkout run. Ticks and
+replay modes are paired measurements within their declared units.
+
+The protocol and executable implementation must be committed **before** the
+first result-producing run. Freeze one clean campaign commit after all drivers
+are implemented. Task 1's self-check validates contracts; it does not execute a
+study, qualify a runtime, or provide paper results.
+
+## Output ownership and failure retention
+
+Raw campaign output belongs under the ignored `runs/paper-authority-replay-v1/`
+root, with a fresh subdirectory for each driver. Drivers call
+`prepare_output_root` before creating output; a non-empty destination, including
+hidden files, is refused. Retained originals and the assets at
+`/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn` are read-only. Any fault
+copies must live under the campaign root. Never overwrite a source recording,
+snapshot, original asset, historical report, or failed repetition.
+
+Before execution, drivers prepare/verify the full FLYNN runtime and call
+`campaign_identity(repo, protocol, assets)`. It requires a clean Git checkout,
+hashes runtime/study Python and configuration sources, hashes the pinned FLYNN
+manifest, verifies its archive/checkpoint bytes, and verifies prepared graph
+edge/mapping bytes when preparation metadata exists. It does not prepare assets
+or infer that absent prepared metadata is a working runtime. Drivers must
+record their exact command and environment separately, recheck identity after
+each unit, and preserve before/after hashes. An identity recheck that fails is a
+retained failed unit, never permission to change a pin.
+
+`declared_units(protocol)` is the canonical ordered expansion for drivers. Each
+row contains its complete descriptor from that expansion, plus:
+
+- `schema_version: 1`, `study_id: "authority_replay_v1"`;
+- `identity`: the exact `campaign_identity` object;
+- `status`: `completed`, `failed`, `refused`, `timeout`, or `incomplete`;
+- `metrics`: a JSON object with finite numeric values; unavailable measurements
+  use `null` and a reason, never NaN or infinity;
+- command/environment/raw-output references and failure details as applicable.
+
+The row's optional Boolean flags `silent_acceptance`, `explicit_detection`,
+`correct_recovery`, and `benign_false_rejection` describe the semantic oracle.
+They are independent of execution status: an explicit refusal may be correct
+detection, and is never inferred to be successful recovery. A missing flag stays
+unreported rather than being counted as a negative observation. The sole
+declared benign control is C3; all other cases use `fault` and their same-trace
+naive acceptance predicate. Numbered sibling/payload/queue variants preserve
+the three distinct fixture units in the spec; driver implementation must fix
+their concrete small payloads before the campaign commit.
+
+`append_row` adds a single JSON line under an exclusive append lock, refuses a
+duplicate ID, and refuses malformed/truncated existing rows. The sequential
+campaign must retain one row for every declared unit, including failures,
+refusals, timeouts, and units left incomplete by a stop rule. Record an explicit
+reason for units stopped before starting. Do not retry or substitute a seed.
+This append contract makes no power-loss/crash-consistency claim.
+
+Stop new units at any 15-minute unit timeout, four-hour campaign limit, 512 MiB
+ordinary-unit cap, 2 GiB checkout-unit cap, 8 GiB raw campaign cap, or crossing
+the 6 GiB free-space reserve. Stopping never authorizes deletion or scope
+reduction. These are frozen limits consumed by the drivers, not measurements of
+acceptable overhead.
+
+## Commands and analysis
+
+Run from this worktree with the prepared main-checkout interpreter. `PYTHONPATH`
+must include this worktree so imports do not use another checkout's sources:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:src /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B -m pytest -q paper/studies/authority_replay_v1/tests
+/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B paper/studies/authority_replay_v1/analyze.py --protocol paper/studies/authority_replay_v1/protocol.json --self-check
+```
+
+After drivers have emitted all declared rows and saved the frozen identity:
+
+```sh
+/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B paper/studies/authority_replay_v1/analyze.py --protocol paper/studies/authority_replay_v1/protocol.json --identity runs/paper-authority-replay-v1/identity.json --rows runs/paper-authority-replay-v1/faults/rows.jsonl runs/paper-authority-replay-v1/continuation/rows.jsonl runs/paper-authority-replay-v1/replay/rows.jsonl runs/paper-authority-replay-v1/overhead/rows.jsonl runs/paper-authority-replay-v1/operations/rows.jsonl runs/paper-authority-replay-v1/offline/rows.jsonl --output runs/paper-authority-replay-v1/analysis
+```
+
+Analysis refuses missing/duplicate/undeclared units, descriptor or identity
+drift, undeclared retries, duplicate JSON keys, incomplete appends, and non-finite
+values. It writes deterministic `summary.json`, `rows.csv`, and `failures.json`.
+Every denominator includes every declared row. The raw paired values and
+failure details remain in the summary. Scalar statistics use completed eligible
+rows, median, minimum/maximum, and inclusive quartiles/IQR, with sample counts.
+Do not interpret the pooled execution-overhead statistics as a matched cost
+estimate: the overhead driver must validate all four conditions' action/tick/
+final-state agreement, set `timing_eligible: false` for unmatched sets, and
+derive condition-specific paired comparisons from the retained rows. The
+operation-cost driver consumes only the full background-plus-storage replay
+source, never a null-writer source. No significance test or cost pass threshold
+is preregistered.
+
+Only compact summaries, sanitized fault traces, identities, commands, failures,
+and raw-tree inventories are committed after source-bound verification.
+Generated LaTeX consumes that compact evidence separately. A fresh checkout on
+this host is **same-host clean-checkout evidence**. Independent machine/operator
+reproduction remains an external submission gate.
