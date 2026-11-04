@@ -32,6 +32,8 @@ def _validate_identity(identity: dict[str, object]) -> None:
 
 def _validate_rows(protocol: Protocol, rows: list[dict[str, object]], identity: dict[str, object]) -> list[dict[str, object]]:
     _validate_identity(identity)
+    require(identity["protocol_sha256"] == protocol._content_sha256,
+            "campaign identity does not match loaded protocol bytes")
     expected = {u["unit_id"]: u for u in declared_units(protocol)}
     indexed = {}
     for row in rows:

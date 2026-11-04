@@ -1,5 +1,6 @@
 """Whole-campaign acceptance must never silently omit a failed or altered unit."""
 import copy
+import hashlib
 import importlib
 import json
 from pathlib import Path
@@ -15,7 +16,7 @@ def campaign():
     common = importlib.import_module("paper.studies.authority_replay_v1.common")
     analyze = importlib.import_module("paper.studies.authority_replay_v1.analyze")
     protocol = common.load_protocol(ROOT / "protocol.json")
-    identity = {"commit": "a" * 40, "protocol_sha256": "b" * 64,
+    identity = {"commit": "a" * 40, "protocol_sha256": hashlib.sha256((ROOT / "protocol.json").read_bytes()).hexdigest(),
                 "runtime_source_sha256": {"src/runtime.py": "c" * 64},
                 "asset_manifest_sha256": {"model_manifests/flynn-full-vision.json": "d" * 64},
                 "asset_sha256": {"checkpoint": "e" * 64}}
@@ -39,6 +40,30 @@ def test_complete_rows_keep_failures_and_declared_order(campaign, tmp_path):
     assert [r["unit_id"] for r in loaded] == [r["unit_id"] for r in rows]
     assert loaded[0]["status"] == "failed"
     assert loaded[0]["error"] == "original failure"
+
+
+@pytest.mark.parametrize("entrypoint", ["load_complete_rows", "summarize"])
+@pytest.mark.parametrize("drift", ["foreign_identity", "changed_protocol_bytes"])
+def test_rejects_consistent_rows_bound_to_other_protocol_bytes(campaign, tmp_path, entrypoint, drift):
+    analyze, protocol, identity, rows = campaign
+    if drift == "foreign_identity":
+        identity["protocol_sha256"] = "0" * 64
+        for row in rows:
+            row["identity"] = copy.deepcopy(identity)
+    else:
+        # Identical parsed values, different exact bytes: canonical JSON hashing
+        # would silently miss this change to the frozen protocol artifact.
+        path = tmp_path / "changed-protocol.json"
+        path.write_bytes((ROOT / "protocol.json").read_bytes() + b" ")
+        common = importlib.import_module("paper.studies.authority_replay_v1.common")
+        protocol = common.load_protocol(path)
+    assert len(rows) == 111
+    assert all(row["identity"] == identity for row in rows)
+    with pytest.raises(ValueError, match="protocol"):
+        if entrypoint == "load_complete_rows":
+            analyze.load_complete_rows(protocol, [write_rows(tmp_path, rows)], identity)
+        else:
+            analyze.summarize(protocol, rows)
 
 
 @pytest.mark.parametrize("problem", ["duplicate", "missing", "undeclared", "descriptor", "status", "schema", "study", "nonfinite"])

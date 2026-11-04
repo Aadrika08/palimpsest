@@ -3,7 +3,7 @@
 This module does not execute experiments. A declared row is an accounting unit,
 including when its execution fails or is stopped before completion.
 """
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, field, fields
 import fcntl
 import hashlib
 import json
@@ -41,6 +41,8 @@ class Protocol:
     execution_overhead: dict[str, Any]
     operation_cost: dict[str, Any]
     offline_reproduction: dict[str, Any]
+    # Loader metadata, not part of the frozen JSON schema or constructor.
+    _content_sha256: str = field(init=False, repr=False, compare=False, default="")
 
 
 STATUSES = ("completed", "failed", "refused", "timeout", "incomplete")
@@ -93,8 +95,9 @@ def _seeds(value: object, expected: list[int], label: str) -> None:
 
 
 def load_protocol(path: Path) -> Protocol:
-    raw = parse_json(path.read_text())
-    _keys(raw, {f.name for f in fields(Protocol)}, "protocol")
+    content = path.read_bytes()
+    raw = parse_json(content.decode("utf-8"))
+    _keys(raw, {f.name for f in fields(Protocol) if f.init}, "protocol")
     require(type(raw["schema_version"]) is int and raw["schema_version"] == 1, "unsupported schema version")
     require(raw["study_id"] == "authority_replay_v1", "unsupported study ID")
     resources = raw["resources"]
@@ -179,7 +182,9 @@ def load_protocol(path: Path) -> Protocol:
             and offline["scope"] == "same-host clean-checkout" and offline["full_flynn"] is True
             and type(offline["duration_seconds"]) is int and offline["duration_seconds"] == 55
             and offline["setup"] is True and offline["independent_machine_reproduction"] is False, "invalid reproduction scope")
-    return Protocol(**{**raw, "fault_cases": tuple(cases)})
+    protocol = Protocol(**{**raw, "fault_cases": tuple(cases)})
+    object.__setattr__(protocol, "_content_sha256", hashlib.sha256(content).hexdigest())
+    return protocol
 
 
 def declared_units(protocol: Protocol) -> list[dict[str, object]]:
