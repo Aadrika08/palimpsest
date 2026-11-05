@@ -56,7 +56,7 @@ def naive_accepts(case_id, trace):
         'S1': lambda: flag('pose_restored') and flag('continued'),
         'S2': lambda: flag('snapshot_readable') and flag('process_progress'),
         'D1': lambda: flag('initial_setup_succeeded'),
-        'D2': lambda: flag('shape_matches') or flag('load_succeeded'),
+        'D2': lambda: flag('shape_matches'),
         'C1': lambda: flag('start_hash_matches'), 'C2': lambda: flag('exit_hash_matches'),
         'C3': lambda: flag('protected_content_unchanged'),
         'P1': lambda: flag('output_exists') or flag('some_bytes_parse'),
@@ -88,7 +88,9 @@ def first_divergence(expected, actual):
             a, b = np.asarray(left[field]), np.asarray(right[field])
             if a.shape != b.shape or a.dtype != b.dtype:
                 return {'field': field, 'tick': tick, 'reason': 'shape/dtype'}
-            same = np.allclose(a, b, atol=1e-6, rtol=1e-6, equal_nan=True) if a.dtype.kind == 'f' else np.array_equal(a, b)
+            if a.dtype.kind in 'fc' and (not np.isfinite(a).all() or not np.isfinite(b).all()):
+                return {'field': field, 'tick': tick, 'reason': 'nonfinite'}
+            same = np.allclose(a, b, atol=1e-6, rtol=1e-6) if a.dtype.kind in 'fc' else np.array_equal(a, b)
             if not same:
                 return {'field': field, 'tick': tick, 'reason': 'value'}
     if len(expected) != len(actual):
@@ -406,10 +408,9 @@ def _capture(engine):
 
 def _scientific_digest(engine):
     from palimpsest.snapshots import state_digest
-    # Excludes process-global RNG and destination recorder identity. Controller,
-    # native/model/environment, observation and authoritative application stay in.
+    # Normalize only destination recorder identity; include every seeded owner
+    # RNG (Python, NumPy, environment/spaces and Torch) in isolation checks.
     snapshot = _capture(engine)
-    snapshot.pop('rng')
     for name in ('source_run_id', 'event_prefix'):
         snapshot['application'].pop(name)
     return state_digest(snapshot)
@@ -424,10 +425,111 @@ def _open(repo, assets, run, seed):
 
 def _tick_state(engine):
     import numpy as np
-    return {'qpos': engine.env.data.qpos.copy(), 'qvel': engine.env.data.qvel.copy(),
+    result = {'qpos': engine.env.data.qpos.copy(), 'qvel': engine.env.data.qvel.copy(),
+            'control': engine.env.data.ctrl.copy(),
             'hidden': engine.policy.hidden.detach().cpu().numpy().copy(),
             'action': np.asarray(engine.last_transition['action']).copy(),
             'revision': np.array(engine.revision, np.int64)}
+    def retain(prefix, value):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                retain(prefix + '__' + key, item)
+        else:
+            result[prefix] = (np.array([], np.uint8) if value is None else value.detach().cpu().numpy().copy())
+    retain('left_retina', engine.policy.agent.state_vision_left)
+    retain('right_retina', engine.policy.agent.state_vision_right)
+    return result
+
+
+def validate_replay_claim(claimed_mode, facts):
+    """Study guard: validate a claim against observed execution, not API refusal."""
+    require(claimed_mode == facts['executed_mode'], f'{claimed_mode} claim disagrees with executed mode')
+    if claimed_mode == 'policy':
+        require(facts['inference_executed'] is True and facts['policy_invocations'] > 0,
+                'policy claim requires measured controller execution')
+    return True
+
+
+def _claim_guard(claimed_mode, executed_mode, inference_executed, policy_invocations):
+    facts = {'executed_mode': executed_mode, 'inference_executed': inference_executed,
+             'policy_invocations': policy_invocations}
+    try:
+        validate_replay_claim(claimed_mode, facts)
+    except ValueError as exc:
+        return {'scope': 'study_guard', 'claimed_mode': claimed_mode, 'facts': facts,
+                'rejected': True, 'error': str(exc)}
+    return {'scope': 'study_guard', 'claimed_mode': claimed_mode, 'facts': facts, 'rejected': False}
+
+
+def _continuation_comparisons(expected, pose, full):
+    scientific = lambda rows: [{k: v for k, v in row.items() if k != 'revision'} for row in rows]
+    application = lambda rows: [{k: v for k, v in row.items() if k == 'revision'} for row in rows]
+    return {'pose_first_divergence': first_divergence(expected, pose),
+            'full_first_divergence': first_divergence(expected, full),
+            'scientific_first_divergence': first_divergence(scientific(expected), scientific(pose)),
+            'application_first_divergence': first_divergence(application(expected), application(pose)),
+            'full_scientific_first_divergence': first_divergence(scientific(expected), scientific(full))}
+
+
+def recompute_continuation_evidence(path):
+    import numpy as np
+    with np.load(path, allow_pickle=False) as arrays:
+        rows = {label: [] for label in ('expected', 'pose', 'full')}
+        for label in rows:
+            for tick in range(int(arrays[label + '__ticks'])):
+                prefix = f'{label}__{tick}__'
+                rows[label].append({key[len(prefix):]: arrays[key].copy() for key in arrays.files if key.startswith(prefix)})
+    return _continuation_comparisons(rows['expected'], rows['pose'], rows['full'])
+
+
+def _continuation_evidence(expected, pose, full, output):
+    import numpy as np
+    arrays = {}
+    for label, rows in (('expected', expected), ('pose', pose), ('full', full)):
+        arrays[label + '__ticks'] = np.array(len(rows), np.int64)
+        for tick, row in enumerate(rows):
+            arrays.update({f'{label}__{tick}__{key}': value for key, value in row.items()})
+    path = output / 'continuation-pairs.npz'
+    np.savez(path, **arrays)
+    comparisons = recompute_continuation_evidence(path)
+    require(comparisons == _continuation_comparisons(expected, pose, full), 'retained continuation comparison mismatch')
+    scope = ('scientific' if comparisons['scientific_first_divergence'] else
+             'application_only' if comparisons['application_first_divergence'] else 'none')
+    return {**comparisons, 'comparisons': comparisons, 'divergence_scope': scope,
+            'arrays_path': path.name, 'arrays_sha256': sha256_file(path)}
+
+
+def _display_evidence(engine, output, boundary):
+    import numpy as np
+    from palimpsest.snapshots import state_digest
+    display = {key: value.copy() for key, value in engine.effective_cameras().items()}
+    path = output / f'display-boundary-{boundary}.npz'
+    np.savez(path, **display)
+    return {'run_id': engine.run_id, 'episode': engine.episode,
+            'observation_total_tick': engine.total_tick, 'last_transition_tick': engine.last_transition['tick'],
+            'display_sha256': state_digest(display), 'arrays_path': path.name, 'arrays_sha256': sha256_file(path)}
+
+
+def _delayed_recovered(states, initial_obstacles, terminal, applied, received_tick, final_obstacles):
+    expected_ticks = [received_tick + 1, received_tick + 2]
+    return (len(applied) == 1 and terminal.get('applied_tick') == received_tick + 2
+            and applied[0]['tick'] == terminal.get('applied_tick')
+            and final_obstacles != initial_obstacles and terminal['status'] == 'applied'
+            and [s['tick'] for s in states] == expected_ticks
+            and all(s['receipt'] == 'queued' and s['obstacles'] == initial_obstacles
+                    and s['display']['observation_total_tick'] == s['tick']
+                    and s['display']['last_transition_tick'] == s['tick'] - 1 for s in states))
+
+
+def _owner_facts(engine):
+    from palimpsest.snapshots import state_digest
+    return {'pid': os.getpid(), 'digest': _scientific_digest(engine),
+            'rng_sha256': state_digest(_capture(engine)['rng']),
+            'pose_sha256': state_digest({'qpos': engine.env.data.qpos.copy(), 'qvel': engine.env.data.qvel.copy()})}
+
+
+def _initial_poses_match(parent, branch, sibling):
+    return parent['pose_sha256'] == branch['pose_sha256'] == sibling['pose_sha256']
 
 
 def _branch_child(config):
@@ -436,7 +538,7 @@ def _branch_child(config):
     try:
         engine.restore_branch(read_snapshot(Path(config['snapshot'])))
         def reply():
-            print('FAULT_BRANCH ' + json.dumps({'pid': os.getpid(), 'digest': _scientific_digest(engine)}), flush=True)
+            print('FAULT_BRANCH ' + json.dumps(_owner_facts(engine)), flush=True)
         reply()
         for line in sys.stdin:
             operation = line.strip()
@@ -462,7 +564,7 @@ def _branches(engine, repo, assets, output, seed):
     from palimpsest.snapshots import save_snapshot
     snapshot = output / 'branch.snp'
     save_snapshot(_capture(engine), snapshot)
-    parent_before = _scientific_digest(engine)
+    parent_before = _owner_facts(engine)
     children = []
     try:
         for label in ('sibling-b', 'branch-a'):
@@ -484,14 +586,18 @@ def _branches(engine, repo, assets, output, seed):
         sibling = children[0]
         sibling.stdin.write('digest\n'); sibling.stdin.flush()
         sibling_after = _branch_response(sibling)
-        parent_after = _scientific_digest(engine)
-        unchanged = parent_before == parent_after and sibling_before['digest'] == sibling_after['digest']
+        parent_after = _owner_facts(engine)
+        unchanged = parent_before == parent_after and sibling_before == sibling_after
+        poses_match = _initial_poses_match(parent_before, branch_before, sibling_before)
         return {'owner_pids': [os.getpid(), branch_before['pid'], sibling_before['pid']],
-                'parent_before': parent_before, 'parent_after': parent_after,
+                'parent_before': parent_before['digest'], 'parent_after': parent_after['digest'],
                 'sibling_before': sibling_before['digest'], 'sibling_after': sibling_after['digest'],
                 'branch_before': branch_before['digest'], 'branch_after': branch_after['digest'],
-                'pose_copies_completed': True, 'semantic_invalid': True,
-                'semantic_outcome': 'recovered' if unchanged and branch_before['digest'] != branch_after['digest'] else 'accepted'}
+                'owner_states': {'parent_before': parent_before, 'parent_after': parent_after,
+                    'branch_before': branch_before, 'branch_after': branch_after,
+                    'sibling_before': sibling_before, 'sibling_after': sibling_after},
+                'pose_copies_completed': poses_match, 'semantic_invalid': True,
+                'semantic_outcome': 'recovered' if poses_match and unchanged and branch_before['digest'] != branch_after['digest'] else 'accepted'}
     finally:
         for child in children:
             if child.poll() is None:
@@ -570,7 +676,7 @@ def _substitute_same_shape(target, variant):
             stream.write(bytes([replacement]))
     after = _asset_schema(target, variant)
     return {'asset_schema_before': before, 'asset_schema_after': after,
-            'shape_matches': before == after, 'load_succeeded': True}
+            'shape_matches': before == after, 'schema_parsed': True}
 
 
 def _runtime(case, output, repo, assets):
@@ -603,22 +709,21 @@ def _runtime(case, output, repo, assets):
                 _command(engine, 'step', advance=False)
                 _command(engine, 'step', advance=False, revision=engine.revision + 1)
                 command, receipt = _command(engine, 'intervene', payload, advance=False, revision=engine.revision + 2)
-                display = {k: v.copy() for k, v in engine.effective_cameras().items()}
                 states = []
-                for _ in range(2):
+                for boundary in range(2):
                     engine.advance()
                     states.append({'tick': engine.total_tick, 'receipt': engine.receipts[command['id']]['status'],
-                                   'obstacles': engine.world()['obstacles']})
+                                   'obstacles': engine.world()['obstacles'],
+                                   'display': _display_evidence(engine, output, boundary)})
                 pending_before = engine.receipts[command['id']]['status']
                 engine.advance()
                 terminal = engine.receipts[command['id']]
                 engine.writer.flush()
                 events = [json.loads(line) for line in (run / 'recording/events.jsonl').read_text().splitlines()]
                 applied = [e for e in events if e['kind'] == 'command_applied' and e['id'] == command['id']]
-                recovered = (len(applied) == 1 and terminal.get('applied_tick') == receipt['received_tick'] + 2
-                             and engine.world()['obstacles'] != initial_world['obstacles'] and all(s['receipt'] == 'queued' and s['obstacles'] == initial_world['obstacles'] for s in states)
-                             and pending_before == 'queued' and terminal['status'] == 'applied')
-                trace.update(request_accepted=receipt['status'] == 'queued', display_sha256=state_digest(display),
+                recovered = _delayed_recovered(states, initial_world['obstacles'], terminal, applied,
+                                                receipt['received_tick'], engine.world()['obstacles']) and pending_before == 'queued'
+                trace.update(request_accepted=receipt['status'] == 'queued',
                              queued_boundaries=states, terminal_receipt=terminal,
                              authoritative_applications=len(applied), authoritative_ticks=[e['tick'] for e in applied],
                              semantic_invalid=True, semantic_outcome='recovered' if recovered else 'accepted')
@@ -662,9 +767,13 @@ def _runtime(case, output, repo, assets):
                 from palimpsest.artifacts import playback
                 before_replay = invocations
                 played = playback(run, episode=int(source_ticks[0]['episode']), tick=int(source_ticks[0]['tick']))
+                replayed_calls = invocations - before_replay
+                guard = _claim_guard('policy', played['mode'], replayed_calls > 0, replayed_calls)
                 trace.update(claimed_mode='policy', executed_mode='playback', viewable=bool(played),
-                             replay_inference_executed=False, replay_policy_invocations=invocations - before_replay,
-                             semantic_invalid=True, semantic_outcome='refused' if played.get('mode') == 'playback' and invocations == before_replay else 'accepted')
+                             replay_inference_executed=replayed_calls > 0, replay_policy_invocations=replayed_calls,
+                             claim_validation=guard, detection_scope='study_guard',
+                             production_outcome='playback_returned',
+                             semantic_invalid=True, semantic_outcome='refused' if guard['rejected'] else 'accepted')
             else:
                 destination = output / uuid.uuid4().hex
                 destination.mkdir()
@@ -699,10 +808,13 @@ def _runtime(case, output, repo, assets):
                 _json(output / 'observed-replay-report.json', report)
                 if case.id == 'R2':
                     matched = report['status'] == 'passed' and report['compared_ticks'] == len(source_ticks)
+                    guard = _claim_guard('policy', mode, report['inference_executed'], invocations - before_replay)
                     trace.update(claimed_mode='policy', executed_mode='actions', trajectory_matches=matched,
                                  replay_inference_executed=report['inference_executed'],
                                  replay_policy_invocations=invocations - before_replay, replay_report=report, semantic_invalid=True,
-                                 semantic_outcome='refused' if matched and not report['controller_reexecuted'] and invocations == before_replay else 'accepted')
+                                 claim_validation=guard, detection_scope='study_guard',
+                                 production_outcome='actions_replay_' + report['status'],
+                                 semantic_outcome='refused' if guard['rejected'] else 'accepted')
                 else:
                     trace.update(replay_ticks=report['compared_ticks'], replay_report=report, semantic_invalid=True,
                                  replay_policy_invocations=invocations - before_replay,
@@ -722,13 +834,14 @@ def _runtime(case, output, repo, assets):
                 pose_restored = np.array_equal(engine.env.data.qpos, np.asarray(snapshot['integration'])[1:1 + engine.env.model.nq])
                 _command(engine, 'step')
                 actual = [_tick_state(engine)]
-                divergence = first_divergence(expected, actual)
                 destination = output / uuid.uuid4().hex
                 engine.close()
                 engine = _open(repo, assets, destination, case.seeds[0])
                 engine.restore_branch(snapshot)
                 _command(engine, 'step')
-                full_divergence = first_divergence(expected, [_tick_state(engine)])
+                evidence = _continuation_evidence(expected, actual, [_tick_state(engine)], output)
+                divergence, full_divergence = evidence['pose_first_divergence'], evidence['full_first_divergence']
+                trace.update(evidence)
                 trace.update(pose_restored=pose_restored, continued=True, first_divergence=divergence,
                              comparison_origin_tick=snapshot['application']['total_tick'],
                              full_snapshot_first_divergence=full_divergence, semantic_invalid=True,
@@ -772,6 +885,7 @@ def _runtime(case, output, repo, assets):
                          semantic_outcome='detected' if before != after else 'accepted')
     finally:
         trace['policy_invocations'] = invocations
+        _json(output / 'runtime-trace.json', trace)
         engine.close()
         FlynnPolicy.act = act
     return trace
@@ -851,7 +965,10 @@ def run_fault_case(case: FaultCase, output: Path, identity: dict[str, object]) -
         require(shutil.disk_usage(output).free >= 6 * 1024**3, 'filesystem free-space reserve crossed')
         row.update(classify_outcome(trace, descriptor['condition']))
         row['retained_prefix_valid'] = trace['retained_prefix_valid']
-        row['palimpsest_outcome'] = trace['semantic_outcome']
+        row['outcome_scope'] = trace.get('detection_scope', 'production')
+        row['palimpsest_outcome'] = trace.get('production_outcome', trace['semantic_outcome'])
+        if row['outcome_scope'] == 'study_guard':
+            row['study_guard_outcome'] = trace['semantic_outcome']
         baseline = naive_accepts(case.id, trace)
         row['baseline_outcome'] = {'predicate': case.naive_predicate, 'accepted': baseline,
                                    'silent_acceptance': baseline and trace['semantic_invalid']}
@@ -860,16 +977,26 @@ def run_fault_case(case: FaultCase, output: Path, identity: dict[str, object]) -
     except Exception as exc:
         row.update(status='failed', error={'type': type(exc).__name__, 'message': str(exc)})
     finally:
-        if case.path == 'runtime' and CAMPAIGN_ROOT is not None and (CAMPAIGN_ROOT / 'runtime-base-identity.json').exists():
-            expected_base = json.loads((CAMPAIGN_ROOT / 'runtime-base-identity.json').read_text())
-            row['shared_base_unchanged'] = _base_hashes(CAMPAIGN_ROOT / 'runtime-base') == expected_base
-            row['shared_base_identity_after'] = sha256_file(CAMPAIGN_ROOT / 'runtime-base-identity.json')
-            if not row['shared_base_unchanged']:
-                row.update(status='failed', error={'type': 'SourceMutation', 'message': 'shared runtime base drift'})
-        after = _original_hashes(case.path == 'runtime')
-        row['source_hashes_after'] = after
-        if before != after:
-            row.update(status='failed', error={'type': 'SourceMutation', 'message': 'retained original identity drift'})
+        if not trace and (output / 'runtime-trace.json').is_file():
+            try:
+                trace = json.loads((output / 'runtime-trace.json').read_text())
+            except (OSError, ValueError) as exc:
+                row['partial_trace_error'] = str(exc)
+        try:
+            if case.path == 'runtime' and CAMPAIGN_ROOT is not None and 'shared_base_identity_before' in row:
+                expected_base = json.loads((CAMPAIGN_ROOT / 'runtime-base-identity.json').read_text())
+                row['shared_base_unchanged'] = _base_hashes(CAMPAIGN_ROOT / 'runtime-base') == expected_base
+                row['shared_base_identity_after'] = sha256_file(CAMPAIGN_ROOT / 'runtime-base-identity.json')
+                require(row['shared_base_unchanged'], 'shared runtime base drift')
+            after = _original_hashes(case.path == 'runtime')
+            row['source_hashes_after'] = after
+            require(before == after, 'retained original identity drift')
+        except (OSError, ValueError) as exc:
+            if 'error' in row:
+                row['prior_error'] = row['error']
+            row.update(status='failed', error={'type': 'SourceMutation', 'message': str(exc),
+                                               'identity_error_type': type(exc).__name__})
+            row.setdefault('source_hashes_after', None)
         row['metrics'] = {'elapsed_seconds': time.monotonic() - started, 'output_bytes': _size(output)}
         row['trace'] = trace
         _json(output / 'trace.json', trace)
