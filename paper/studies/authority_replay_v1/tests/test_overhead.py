@@ -370,13 +370,21 @@ def _operation_source_fixture(tmp_path):
     meta = {'run_path': str(owner), 'snapshot_path': str(owner / 'prefix.snp'), 'seed': 0,
             'condition': 'background_storage', 'recording_writer': 'background', 'storage_accounting': True,
             'prefix_ticks': 8, 'source_ticks': 100}
-    retained = {'application': {'source_run_id': owner.name, 'controller': 'flynn', 'scenario': 'vision-ablation',
+    retained = {'identity': {'torch': {'CUDA_VISIBLE_DEVICES': '', 'CUBLAS_WORKSPACE_CONFIG': None,
+                                      'NVIDIA_TF32_OVERRIDE': None},
+                             'renderer': {'requested_backend': 'egl', 'requested_egl_device': None}},
+                'application': {'source_run_id': owner.name, 'controller': 'flynn', 'scenario': 'vision-ablation',
                                'texture': 'checker', 'seed': 0, 'total_tick': 8, 'phase': 'paused',
                                'eyes': {'left': False, 'right': True}}}
     return recording, manifest, meta, retained
 
 
 def test_operation_capture_owner_uses_exact_retained_source_profile(tmp_path, monkeypatch):
+    for name in ('CUDA_VISIBLE_DEVICES', 'CUBLAS_WORKSPACE_CONFIG', 'NVIDIA_TF32_OVERRIDE', 'MUJOCO_GL', 'MUJOCO_EGL_DEVICE_ID'):
+        if name in o.os.environ:
+            monkeypatch.setenv(name, o.os.environ[name])
+        else:
+            monkeypatch.delenv(name, raising=False)
     from palimpsest.engine import Engine
     from palimpsest import snapshots
     recording, manifest, meta, retained = _operation_source_fixture(tmp_path)
@@ -422,3 +430,27 @@ def test_campaign_budget_loads_amended_protocol(tmp_path, monkeypatch):
     monkeypatch.setattr(o.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 100 * o.GiB})())
     budget = o._budget(tmp_path / 'unit', tmp_path)
     assert budget.campaign_budget.limits.max_bytes == 16 * o.GiB
+
+
+def test_operation_binds_retained_cpu_environment_before_owner_open(tmp_path, monkeypatch):
+    from palimpsest.engine import Engine
+    from palimpsest import snapshots
+    recording, manifest, meta, retained = _operation_source_fixture(tmp_path)
+    retained['identity'] = {'torch': {'CUDA_VISIBLE_DEVICES': '', 'CUBLAS_WORKSPACE_CONFIG': None,
+                                    'NVIDIA_TF32_OVERRIDE': None},
+                            'renderer': {'requested_backend': 'egl', 'requested_egl_device': None}}
+    inherited = {'CUDA_VISIBLE_DEVICES': '7', 'CUBLAS_WORKSPACE_CONFIG': 'unexpected',
+                 'NVIDIA_TF32_OVERRIDE': '1', 'MUJOCO_GL': 'osmesa', 'MUJOCO_EGL_DEVICE_ID': '9'}
+    for key, value in inherited.items():
+        monkeypatch.setenv(key, value)
+    monkeypatch.setattr(o, '_source', lambda *args: ({}, meta, recording))
+    monkeypatch.setattr(o, '_budget', lambda *args: None)
+    monkeypatch.setattr(snapshots, 'read_snapshot', lambda *args: retained)
+    def opened(*args, **kwargs):
+        assert {key: o.os.environ.get(key) for key in inherited} == {
+            'CUDA_VISIBLE_DEVICES': '', 'CUBLAS_WORKSPACE_CONFIG': None, 'NVIDIA_TF32_OVERRIDE': None,
+            'MUJOCO_GL': 'egl', 'MUJOCO_EGL_DEVICE_ID': None}
+        raise RuntimeError('fixture stops after compatible CPU environment')
+    monkeypatch.setattr(Engine, 'open', opened)
+    with pytest.raises(RuntimeError, match='compatible CPU environment'):
+        o._operation(0, tmp_path / 'source-row.json', tmp_path / 'output', tmp_path, tmp_path, tmp_path)

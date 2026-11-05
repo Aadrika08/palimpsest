@@ -313,6 +313,29 @@ def _operation_config(seed, meta, recording, retained):
     return config
 
 
+def _bind_operation_environment(retained):
+    """Recreate recorded CPU/render environment before constructing any owner."""
+    identity = retained.get('identity', {})
+    torch_profile, renderer = identity.get('torch'), identity.get('renderer')
+    require(isinstance(torch_profile, dict) and isinstance(renderer, dict), 'retained source runtime environment missing')
+    names = {'CUDA_VISIBLE_DEVICES': (torch_profile, 'CUDA_VISIBLE_DEVICES'),
+             'CUBLAS_WORKSPACE_CONFIG': (torch_profile, 'CUBLAS_WORKSPACE_CONFIG'),
+             'NVIDIA_TF32_OVERRIDE': (torch_profile, 'NVIDIA_TF32_OVERRIDE'),
+             'MUJOCO_GL': (renderer, 'requested_backend'),
+             'MUJOCO_EGL_DEVICE_ID': (renderer, 'requested_egl_device')}
+    environment = {}
+    for name, (profile, field) in names.items():
+        require(field in profile and (profile[field] is None or isinstance(profile[field], str)),
+                f'invalid retained source runtime environment: {name}')
+        environment[name] = profile[field]
+    for name, value in environment.items():
+        if value is None:
+            os.environ.pop(name, None)
+        else:
+            os.environ[name] = value
+    return environment
+
+
 def _operation(seed, source, output, repo, assets, campaign_root):
     from palimpsest.engine import Engine
     from palimpsest.snapshots import capture, read_snapshot, save_snapshot
@@ -329,6 +352,7 @@ def _operation(seed, source, output, repo, assets, campaign_root):
         return result
     retained = read_snapshot(Path(meta['snapshot_path']))
     capture_config = _operation_config(seed, meta, recording, retained)
+    capture_environment = _bind_operation_environment(retained)
     engine = Engine.open(repo, assets, output / 'capture-owner', **capture_config,
                          max_bytes=64 * MiB, storage_budget=budget)
     try:
@@ -356,7 +380,7 @@ def _operation(seed, source, output, repo, assets, campaign_root):
         require(reports[mode].get('status') == 'passed', f'{mode} replay did not match retained source')
         gc.collect()
     require(before == _hashes(recording.parent), 'retained replay source changed')
-    return {'metrics': metrics, 'source': meta, 'capture_owner_config': capture_config, 'source_row_sha256': sha256_file(Path(source)),
+    return {'metrics': metrics, 'source': meta, 'capture_owner_config': capture_config, 'capture_owner_environment': capture_environment, 'source_row_sha256': sha256_file(Path(source)),
             'source_hashes_before': before, 'source_hashes_after': _hashes(recording.parent),
             'playback_tick_count': ticks, 'replay_reports': reports,
             'operation_scopes': {'playback_seconds': 'validated stored tick-stream iteration; no policy/physics/rendering',
