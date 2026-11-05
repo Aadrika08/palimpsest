@@ -1,0 +1,15 @@
+{
+  "schema": "palimpsest-source-preservation-integration-review-v1",
+  "source_commit": "7625dd49706cb6d5f5957508dfe9b83f17f2b12b",
+  "reviewer": "source_release_review agent; source-only review",
+  "readme_sha256": "4111cd9071c8c2669dfbc21f9aabff40be9a2aeb27f2c5444e4bc8b2392bfd31",
+  "important_findings": [],
+  "scope": "claim map, exact compact contract and root integration summary",
+  "actual_raw_or_model_read": false,
+  "actual_conversion_tested": false,
+  "raw_deletion_authorized": false,
+  "limitations": [
+    "Independent software agent review, not human scientific/operator acceptance",
+    "Actual fidelity and eligibility remain unverified"
+  ]
+}

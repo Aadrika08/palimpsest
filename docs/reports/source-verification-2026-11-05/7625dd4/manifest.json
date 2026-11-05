@@ -1,0 +1,41 @@
+{
+  "source_commit": "7625dd49706cb6d5f5957508dfe9b83f17f2b12b",
+  "command_context": "same four-pass canonical runner; bwrap private 4GiB /tmp, dev-bind /dev; dedicated outside-repository basetemp; optional runtime flags unset",
+  "exit_code": 1,
+  "passed": 6577,
+  "failed": 8,
+  "skipped": 318,
+  "pass_counts": [
+    {
+      "pass": "ordinary",
+      "passed": 6534,
+      "failed": 8,
+      "skipped": 318,
+      "seconds": 1640.17
+    },
+    {
+      "pass": "process_isolated",
+      "passed": 7,
+      "failed": 0,
+      "seconds": 9.27
+    },
+    {
+      "pass": "runs_basetemp",
+      "passed": 5,
+      "failed": 0,
+      "seconds": 56.38
+    },
+    {
+      "pass": "tmpfs_basetemp",
+      "passed": 31,
+      "failed": 0,
+      "seconds": 22.25
+    }
+  ],
+  "log": {
+    "path": "full-source-7625dd4-20261105.log",
+    "size_bytes": 46513,
+    "sha256": "7f604ce078877b30e0c4be5f94152c6473eeabf8a2745988c1e54e985dfd75a4"
+  },
+  "scientific_result": false
+}

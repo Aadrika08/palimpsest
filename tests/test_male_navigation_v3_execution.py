@@ -316,16 +316,49 @@ class NavigationV3ExecutionTests(unittest.TestCase):
                           "handler", "handler"])
 
     def test_spawned_exec_has_unblocked_term_without_preexec_in_threads(self):
+        import time
         command = [sys.executable, "-B", "-c",
-                   "import signal,time; print(int(signal.SIGTERM in "
-                   "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)"]
-        process, identity, handoff = owner.spawn_contained(
-            command, ROOT, dict(os.environ), subprocess.PIPE, subprocess.PIPE)
-        owner.finish_spawn_handoff(process, handoff)
-        stdout, stderr = process.communicate(timeout=3)
-        self.assertEqual(process.returncode, 0, stderr.decode(errors="replace"))
-        self.assertEqual(stdout.strip(), b"0")
-        self.assertEqual(identity["group"], process.pid)
+                   "import signal,sys; print(int(signal.SIGTERM in "
+                   "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); "
+                   "assert sys.stdin.buffer.readline() == b'release\\n'"]
+        for delay in (0., .35):
+            with self.subTest(identity_read_delay=delay):
+                created = []
+                process = handoff = None
+                observed = []
+
+                def popen(*args, **kwargs):
+                    self.assertNotIn("preexec_fn", kwargs)
+                    child = subprocess.Popen(*args, stdin=subprocess.PIPE, **kwargs)
+                    created.append(child)
+                    return child
+
+                def identity_reader(pid):
+                    if not observed:
+                        time.sleep(delay)
+                    current = owner.process_identity(pid)
+                    observed.append(current)
+                    return current
+
+                try:
+                    process, identity, handoff = owner.spawn_contained(
+                        command, ROOT, dict(os.environ), subprocess.PIPE, subprocess.PIPE,
+                        popen=popen, identity_reader=identity_reader)
+                    owner.finish_spawn_handoff(process, handoff)
+                    handoff = None
+                    stdout, stderr = process.communicate(input=b"release\n", timeout=3)
+                    self.assertEqual(process.returncode, 0, stderr.decode(errors="replace"))
+                    self.assertEqual(stdout.strip(), b"0")
+                    self.assertEqual(identity["group"], process.pid)
+                finally:
+                    try:
+                        if handoff is not None:
+                            owner.finish_spawn_handoff(process, handoff, abort=True)
+                    finally:
+                        for child in created:
+                            if child.poll() is None:
+                                child.kill()
+                            child.communicate(timeout=3)
 
     def test_signal_after_spawn_return_waits_for_caller_owned_handoff(self):
         process = type("Process", (), {"pid": 50, "poll": lambda self: None})()

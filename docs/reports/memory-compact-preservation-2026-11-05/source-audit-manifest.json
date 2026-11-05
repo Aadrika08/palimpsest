@@ -1,0 +1,24 @@
+{
+  "schema": "palimpsest-compact-preservation-source-audits-v1",
+  "source_commit": "7625dd49706cb6d5f5957508dfe9b83f17f2b12b",
+  "scope": "source-only; no actual subject data/model/protected catalog read",
+  "raw_deletion_authorized": false,
+  "actual_preservation_demonstrated": false,
+  "files": [
+    {
+      "path": "paper-evidence-claims.md",
+      "size_bytes": 17262,
+      "sha256": "7c2d09d03f86c2a45c2f00796e078db79c37169abaf1ca97216e3fccddd4a018"
+    },
+    {
+      "path": "compact-preservation-red-team.md",
+      "size_bytes": 17851,
+      "sha256": "9190e005c03ef5f3a2e1fd1791201b7563b394023fd0826e0ff7845f1a75a240"
+    },
+    {
+      "path": "compact-preservation-contract.md",
+      "size_bytes": 41184,
+      "sha256": "6ea224e2edd3e8916ed07e230bf32c105744b721254b25f5007eed34d8c2161c"
+    }
+  ]
+}
