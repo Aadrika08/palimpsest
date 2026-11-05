@@ -15,33 +15,8 @@ pdfauthor={Anonymous Authors},pdfsubject={Experimental authority and reproducibi
 \setlist{nosep,leftmargin=*}
 \setlength{\parskip}{0.25em}
 \setlength{\parindent}{0pt}
-\newcommand{\pending}{\textbf{PENDING}}
-% Never fall back to historical claims.tex or development smoke measurements.
-\InputIfFileExists{generated/authority-claims.tex}{}{}
-\providecommand{\StudyCommit}{\pending}
-\providecommand{\ProtocolHash}{\pending}
-\providecommand{\StudyDeclaredUnits}{111}
-\providecommand{\StudyCompletedUnits}{\pending}
-\providecommand{\FaultDeclaredUnits}{50}
-\providecommand{\FaultCompletedUnits}{\pending}
-\providecommand{\FaultBaselineFalseAccepts}{\pending}
-\providecommand{\FaultBaselineKnownClaims}{\pending}
-\providecommand{\FaultBaselineUnknownClaims}{\pending}
-\providecommand{\FaultSystemSilentAccepts}{\pending}
-\providecommand{\FaultBenignFalseRejects}{\pending}
-\providecommand{\ContinuationPassed}{\pending}
-\providecommand{\ContinuationDeclared}{10}
-\providecommand{\ReplayPassed}{\pending}
-\providecommand{\ReplayDeclared}{5}
-\providecommand{\OverheadMatchedSeeds}{\pending}
-\providecommand{\OverheadDeclaredSeeds}{10}
-\providecommand{\SynchronousOverheadMedian}{\pending}
-\providecommand{\BackgroundOverheadMedian}{\pending}
-\providecommand{\StorageOverheadMedian}{\pending}
-\providecommand{\NullWallMedianMs}{\pending}
-\providecommand{\StorageWallMedianMs}{\pending}
-\providecommand{\OfflineStatus}{\pending}
-\newcommand{\studyinput}[1]{\InputIfFileExists{generated/#1.tex}{}{\par\fbox{\parbox{0.92\linewidth}{\pending: frozen campaign output #1 has not been bound to this draft.}}\par}}
+\input{generated/authority-claims.tex}
+\newcommand{\studyinput}[1]{\input{generated/#1.tex}}
 \title{Who Changed the World?\\Authority-Aware Replay for Interactive Embodied-AI Experiments}
 \author{Anonymous Authors}
 \date{}
@@ -51,14 +26,20 @@ pdfauthor={Anonymous Authors},pdfsubject={Experimental authority and reproducibi
 Interactive embodied-AI experiments require evidence of which interventions
 became authoritative, which state was restored, and which computation replay
 executed. Palimpsest connects applied-command receipts, controller-visible
-observations, complete continuation state, replay reports, and publication
-status through a common semantic contract. We evaluate this implemented
-integration through controlled conformance challenges, mechanism ablations,
-paired continuation/replay agreement, and cost measurement. The frozen CPU study contains 50 fault/challenge units, 10
-continuation pairs, five replay trajectories, 10 four-condition overhead sets,
-five operation-cost units, and one same-host fresh-checkout check. Diagnostic rules annotate unsupported inferences on the same traces, without
-serving as competing systems. The contract builds on established state/action
-replay semantics.
+observations, continuation state, replay reports, and publication status through
+a common semantic contract. A one-host CPU evaluation includes 50 controlled
+challenges, ten continuation pairs, five replay trajectories, and ten paired
+recording-cost sets. Complete continuation agreed on
+\ContinuationPassed{}/\ContinuationDeclared{} pairs and the declared branch and
+replay comparisons passed on \ReplayPassed{}/\ReplayDeclared{} source trajectories;
+pose-only restoration changed the first action on all three ablation seeds.
+Median recording overhead relative to a null writer was
+\SynchronousOverheadMedian{}\% for synchronous writing,
+\BackgroundOverheadMedian{}\% for background writing, and
+\StorageOverheadMedian{}\% with storage accounting, whose largest paired
+overhead reached \StorageOverheadMaximum{}\%. The contribution is a bounded
+implementation and evaluation of a common contract, building on established
+state/action replay semantics.
 \end{abstract}
 
 \section{Introduction}
@@ -306,9 +287,10 @@ isolated checkout and revision 3 within the original deadline and combined
 output cap; amendment details are in the artifact documentation.
 
 \paragraph{Result binding.}
-\textbf{PENDING RESULTS: recovery campaign evidence has not yet been bound to this draft.}
-Completed descriptors: \StudyCompletedUnits{}/\StudyDeclaredUnits{}.
-Generated tables supply results; the artifact retains execution/protocol identities.
+All \StudyDeclaredUnits{} descriptors are accounted for:
+\StudyCompletedUnits{} completed and one clean-checkout unit was not admitted
+under its aggregate output reservation. Generated tables retain that incomplete
+unit; the artifact binds execution/protocol identities and all prior attempts.
 
 \subsection{RQ1: Controlled conformance and mechanism ablations}
 The 50 units cover delayed/stale/duplicate intervention requests (A1--A3), replay
@@ -412,12 +394,15 @@ source-run/event-prefix identities also differ by construction. RNG,
 integration, controller, observation, application, solver, physics, and other
 serialized cache state remain in the match. This targeted normalization applies
 only to cost-state matching; snapshot restoration and replay validation are unchanged.
+An additional post-run audit of all 40 retained snapshot pairs verified finite
+exposed numeric state and reproduced every canonical digest, outside the timing
+windows.
 
 \begin{table}[t]
 \centering\small
 \caption{Matched execution cost. All four conditions for a seed enter or leave
 the timing summary together. Open and close costs are separate from measured
-tick time. No overhead pass threshold is imposed.}
+tick time. IQR (pp) is the interquartile range in percentage points.}
 \label{tab:overhead}\studyinput{overhead-table}
 \end{table}
 \begin{figure}[t]
@@ -434,6 +419,13 @@ The generated median overheads relative to null are
 conditions respectively. Null and storage-accounted median wall times per tick
 are \NullWallMedianMs{} and \StorageWallMedianMs{} ms. No cost acceptability
 threshold is imposed.
+
+Storage-accounted costs varied substantially: paired overhead reached
+\StorageOverheadMaximum{}\%, with an IQR of \StorageOverheadIQR{} percentage
+points. Recorded producer backpressure reached
+\StorageBackpressureMaximumSeconds{} s within a 200-tick window. The bounded
+retention mechanism therefore exposes producer stalls as well as a median cost;
+Figure~\ref{fig:overhead} retains these slow runs. All ten sets remained state-matched.
 
 Operation costs use the five retained full background-plus-storage source runs
 from RQ2. Each unit measures capture, save, read, restore/first-tick, playback,
@@ -453,11 +445,19 @@ measure different work.}
 \end{table}
 
 \subsection{RQ4: Fresh local checkout}
-One offline verifier invocation checks a clean checkout at the frozen source
-commit using full FLYNN assets and a bounded 55-second workflow, with setup
-included in the unit's resource accounting. Its status is \OfflineStatus{}.
-The check tests local packaging and workflow execution with the same host and
-asset availability; independent-machine reproduction remains separate.
+The declared clean-checkout unit has status \OfflineStatus{}. Admission required
+room for its full 10 GiB maximum, which exceeded the remaining aggregate cap;
+the workflow was not launched. This is an operational coverage gap rather than
+a runtime result. A same-host packaging check uses local Git objects, cached
+dependencies and shared FLYNN assets; independent-machine reproduction remains
+separate.
+
+A separately labeled operational follow-up used the same frozen runtime and
+actual cumulative-inventory monitoring within the original limits. It created
+the fresh checkout, but offline dependency installation stopped because the
+locked \texttt{torch==2.9.0} wheel was absent from the cache. No FLYNN execution
+occurred in that new environment. Its failed result is retained separately;
+fresh-environment reproduction remains unestablished.
 
 \section{Related Work}
 \paragraph{State playback and action replay already exist.}
@@ -531,10 +531,14 @@ and a public archive with reviewed redistribution permissions remain open; the
 artifact documentation tracks those gates.
 
 \section{Conclusion}
-Palimpsest connects intervention authority, complete continuation, declared
-replay computation, and publication through an implemented semantic contract.
-Controlled conformance, mechanism ablations, paired agreement, and cost evaluate
-that instrument separately from scientific conclusions drawn from its records.
+Palimpsest connects intervention authority, continuation state, declared replay
+computation, and publication through an implemented semantic contract.
+Pose-only restoration diverged immediately, while complete continuation agreed
+in the tested pairs. Replay reports distinguished recorded trajectories from
+policy re-execution. Background recording had a lower paired median than
+synchronous writing, while storage-accounted retention exposed long producer
+stalls. The resulting artifact makes application, continuation, computation,
+and publication claims separately inspectable.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

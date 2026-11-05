@@ -1,0 +1,298 @@
+{
+  "admission": "received_GO",
+  "command_record": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/continuation/command.json",
+  "ended_unix": 1793853246.7580817,
+  "guardian_command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "-B",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/paper/studies/authority_replay_v1/campaign.py",
+    "--supervise",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/continuation/command.json",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/continuation/supervisor.json",
+    "2853643",
+    "4"
+  ],
+  "guardian_pid": 2870496,
+  "guardian_returncode": 0,
+  "owned_descendants": [
+    {
+      "parent_pid": 2870496,
+      "pid": 2870497,
+      "provenance": "guardian_launched_phase",
+      "start_ticks": 28098765
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2870521,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28098809
+    },
+    {
+      "parent_pid": 2870521,
+      "parent_start_ticks": 28098809,
+      "pid": 2870524,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28098813
+    },
+    {
+      "parent_pid": 2870521,
+      "parent_start_ticks": 28098809,
+      "pid": 2870786,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28101176
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2870981,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28103556
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2871004,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28103593
+    },
+    {
+      "parent_pid": 2871004,
+      "parent_start_ticks": 28103593,
+      "pid": 2871007,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28103597
+    },
+    {
+      "parent_pid": 2871004,
+      "parent_start_ticks": 28103593,
+      "pid": 2871359,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28105954
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2871482,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28108280
+    },
+    {
+      "parent_pid": 2871482,
+      "parent_start_ticks": 28108280,
+      "pid": 2871485,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28108284
+    },
+    {
+      "parent_pid": 2871482,
+      "parent_start_ticks": 28108280,
+      "pid": 2871605,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28110577
+    },
+    {
+      "parent_pid": 2871605,
+      "parent_start_ticks": 28110577,
+      "pid": 2871616,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28110722
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2871767,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28112916
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2871790,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28112952
+    },
+    {
+      "parent_pid": 2871790,
+      "parent_start_ticks": 28112952,
+      "pid": 2871793,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28112956
+    },
+    {
+      "parent_pid": 2871793,
+      "parent_start_ticks": 28112956,
+      "pid": 2871826,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28113065
+    },
+    {
+      "parent_pid": 2871790,
+      "parent_start_ticks": 28112952,
+      "pid": 2871874,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28115244
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2871968,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28117538
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2871994,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28117574
+    },
+    {
+      "parent_pid": 2871994,
+      "parent_start_ticks": 28117574,
+      "pid": 2871997,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28117578
+    },
+    {
+      "parent_pid": 2871994,
+      "parent_start_ticks": 28117574,
+      "pid": 2872060,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28119841
+    },
+    {
+      "parent_pid": 2872060,
+      "parent_start_ticks": 28119841,
+      "pid": 2872066,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28119949
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2872257,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28122171
+    },
+    {
+      "parent_pid": 2872257,
+      "parent_start_ticks": 28122171,
+      "pid": 2872260,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28122176
+    },
+    {
+      "parent_pid": 2872257,
+      "parent_start_ticks": 28122171,
+      "pid": 2872467,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28124503
+    },
+    {
+      "parent_pid": 2872467,
+      "parent_start_ticks": 28124503,
+      "pid": 2872485,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28124650
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2872670,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28127128
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2872716,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28127165
+    },
+    {
+      "parent_pid": 2872716,
+      "parent_start_ticks": 28127165,
+      "pid": 2872719,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28127169
+    },
+    {
+      "parent_pid": 2872716,
+      "parent_start_ticks": 28127165,
+      "pid": 2872788,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28129447
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2872874,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28131673
+    },
+    {
+      "parent_pid": 2872874,
+      "parent_start_ticks": 28131673,
+      "pid": 2872877,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28131676
+    },
+    {
+      "parent_pid": 2872874,
+      "parent_start_ticks": 28131673,
+      "pid": 2872915,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28133989
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2873004,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28136344
+    },
+    {
+      "parent_pid": 2873004,
+      "parent_start_ticks": 28136344,
+      "pid": 2873007,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28136348
+    },
+    {
+      "parent_pid": 2873004,
+      "parent_start_ticks": 28136344,
+      "pid": 2873063,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28138636
+    },
+    {
+      "parent_pid": 2870497,
+      "parent_start_ticks": 28098765,
+      "pid": 2873160,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28141007
+    },
+    {
+      "parent_pid": 2873160,
+      "parent_start_ticks": 28141007,
+      "pid": 2873163,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28141010
+    },
+    {
+      "parent_pid": 2873160,
+      "parent_start_ticks": 28141007,
+      "pid": 2873341,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28143333
+    }
+  ],
+  "pid": 2870497,
+  "returncode": 0,
+  "started_unix": 1793852777.2008915,
+  "status": "exited",
+  "stderr": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/continuation/stderr.log",
+  "stdout": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/continuation/stdout.log",
+  "supervisor_record": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/continuation/supervisor.json"
+}

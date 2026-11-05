@@ -263,8 +263,8 @@ def number(value):
     return 'not reported' if value is None else f'{value:.3g}' if type(value) is float else str(value)
 
 
-def estimate(value, scale=1):
-    return 'not estimable' if value is None else number(value['median']*scale)
+def estimate(value, scale=1, key='median'):
+    return 'not estimable' if value is None else number(value[key]*scale)
 
 
 def _table(headers, rows, alignment=None):
@@ -370,6 +370,12 @@ def generate_outputs(result, hashes, trace_root=None):
                   SynchronousOverheadMedian=estimate(o['relative']['synchronous']), BackgroundOverheadMedian=estimate(o['relative']['background']),
                   StorageOverheadMedian=estimate(o['relative']['background_storage']), NullWallMedianMs=estimate(o['wall_ms']['null']),
                   StorageWallMedianMs=estimate(o['wall_ms']['background_storage']), OfflineStatus=result['offline']['status'])
+    blocking = [row['metrics']['writer_backpressure_seconds'] for group in o['raw'] if group['matched']
+                for row in group['rows'] if row['condition'] == 'background_storage'
+                and type(row['metrics'].get('writer_backpressure_seconds')) in (int,float)]
+    macros.update(StorageOverheadMaximum=estimate(o['relative']['background_storage'], key='maximum'),
+                  StorageOverheadIQR=estimate(o['relative']['background_storage'], key='iqr'),
+                  StorageBackpressureMaximumSeconds=number(max(blocking)) if blocking else 'not reported')
     header = '% Generated from retained evidence; do not edit.\n% Input SHA256: ' + json.dumps(hashes, sort_keys=True) + '\n'
     outputs = {'authority-claims.tex': '\n'.join('\\newcommand{\\'+k+'}{'+escape_latex(number(v))+'}' for k,v in macros.items())+'\n'}
     challenge_labels = {
@@ -398,7 +404,7 @@ def generate_outputs(result, hashes, trace_root=None):
         overhead_rows.append([c.replace('background_storage', 'storage'), f"{o['matched']}/10", estimate(wall), 'not estimable' if wall is None else f"{number(wall['minimum'])}--{number(wall['maximum'])}",
                               'not estimable' if wall is None else number(wall['iqr']), 'reference' if c == 'null' else estimate(relative),
                               'reference' if c == 'null' else 'not estimable' if relative is None else number(relative['iqr'])])
-    outputs['overhead-table.tex'] = _table(['Condition', 'n/N', 'ms/tick', 'range', 'IQR', 'delta (%)', 'delta IQR'], overhead_rows)
+    outputs['overhead-table.tex'] = _table(['Condition', 'n/N', 'ms/tick', 'range (ms)', 'IQR (ms)', 'delta (%)', 'IQR (pp)'], overhead_rows)
     outputs['overhead-table.tex'] += '\n\\par\\smallskip Raw per-seed ms/tick and paired differences (\\%).\\par\n'
     paired_rows = []
     for raw in o['raw']:
@@ -416,9 +422,10 @@ def generate_outputs(result, hashes, trace_root=None):
         'action_replay_seconds': 'Action replay: 100 ticks', 'policy_replay_seconds': 'Policy replay: 100 ticks',
     }
     for key, value in result['operations'].items():
-        operation_rows.append([operation_labels[key], 0 if value is None else value['n'], estimate(value,1000),
-                               'not estimable' if value is None else number(value['iqr']*1000)])
-    outputs['operation-table.tex'] = _table(['Operation', 'n/5 sources', 'median ms', 'IQR ms'], operation_rows)
+        scale, unit = (1, 's') if key in ('action_replay_seconds', 'policy_replay_seconds') else (1000, 'ms')
+        operation_rows.append([operation_labels[key], 0 if value is None else value['n'], estimate(value,scale),
+                               estimate(value,scale,key='iqr'), unit])
+    outputs['operation-table.tex'] = _table(['Operation', 'n/5 sources', 'median', 'IQR', 'unit'], operation_rows)
     # Numeric paired points, no categorical bars; plot extent includes every negative value.
     points = [(raw['seed'], c, raw['relative_percent'][c]) for raw in o['raw'] if raw['matched'] for c in CONDITIONS[1:]]
     if points:

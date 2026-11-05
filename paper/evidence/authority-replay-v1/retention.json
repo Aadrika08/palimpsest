@@ -1,0 +1,39 @@
+{
+  "execution_commit": "cc57edf9f70323926237d887d766627d8c9cdd42",
+  "protocol_sha256": "570a4afe8179425bb2b25b86364470af34052ecc4929b74f207c279076728860",
+  "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1",
+  "sha256": {
+    "campaign-clock.json": "cf5f8e12f0e0d512d3fd7dc2ce7fb649ea2e1d04d1640a968c1856c620392675",
+    "campaign-manifest.json": "c6f81f912c1fd88b892f854b5fc80d57d7261c35b6b0247282b14ddbb94c260d",
+    "commands/continuation/command.json": "2f21ae62547dc2370c443ba7eb1ebaa96de23def9a776ea35f2a1fd3d5bf8775",
+    "commands/continuation/process.json": "77a0db3ba3960cd4da3addbd9cbc1551229a516f188a7150dcbff4f702594b77",
+    "commands/continuation/supervisor.json": "bb516f70f11acbef6511b0da5cd2b349b8b317df018d2e47d7eefd0af7b10bcf",
+    "commands/execution_overhead/command.json": "715eafac5c5c200dc341c36647f586b697019d6ac408f6d90f27bc6256b2daf6",
+    "commands/execution_overhead/process.json": "dc07d76cc25c94260a7a7f1b57eac6d89a654ef3d662f4fa1d81eda3a7e11cbf",
+    "commands/execution_overhead/supervisor.json": "7aad0e5355f0660c09ed9f1d8130a4321700cbba71017cdc9638e2ed86cb5f11",
+    "commands/fault_matrix/command.json": "ae091ec52a60dd69f7955c5e990d1edac15e889105021b698e44160ac8e3ca7a",
+    "commands/fault_matrix/process.json": "e4a19f05bf9cd3633eec4ff1e216c04faf571446f8d7f2fb607af449bf2e18fe",
+    "commands/fault_matrix/supervisor.json": "fc3ffbd054b1fd4904e57566838d3d52fa7fb95bc96cee90dc168aba43932d63",
+    "commands/operation_cost/command.json": "7e427090c6fff4c4e021fc867dbae99c537c79e7ac94908f33d01a96c7ac680b",
+    "commands/operation_cost/process.json": "f926ef76d55273ac6c31ee161b99e4554b6aa4311ad749d05616a853c297356e",
+    "commands/operation_cost/supervisor.json": "3e43af668a37eb60096d36734637bfc94f985cb95e8532c1e5b70833861e452a",
+    "commands/replay/command.json": "8bb2abd30578505d08f6526630566e6caff18c4490ff50ae2d97978f3c43079c",
+    "commands/replay/process.json": "a3c7b029bb6de25d2d2f87cb47d8906db860458b4334dd7dc0bfde6ba71fcfa2",
+    "commands/replay/supervisor.json": "ec3dbbba151e5450de5200cf4b18dd3ac215605f8eb26944435693cda994ff97",
+    "failures.json": "3cf0d271a8c9c4b320c06306ce3491d8623aac76f08c52a689daac2f9f1c6cfc",
+    "fault-traces.jsonl": "2b19d242bfbb0355a7bb751d368f84ade46b70540c2a7449a5000da8a1f12540",
+    "identity.json": "b3ed102e8fd029128a6550e4cef695ddfa99a365fc2a85e237f8770515bb1275",
+    "preflight.json": "0917bd3679a29e902413d7a6220725b7be90c8c4cf555da8beb705306b9dc621",
+    "protocol.json": "570a4afe8179425bb2b25b86364470af34052ecc4929b74f207c279076728860",
+    "raw-inventory.json": "d959c96f2f686ee49ca440dba348725edddc4f9bd3cf11c6bb589f52345e9fc4",
+    "rows.csv": "fbfc7ec213ef6f7c971b01c3fc733f2a2ba12428c2a29d4a2cd74bd4eb2a4432",
+    "summary.json": "489960454a0b3c77688f159ac699a74fe798fe6b4509a8258f38d70a69fe24cc"
+  },
+  "status_counts": {
+    "completed": 110,
+    "failed": 0,
+    "incomplete": 1,
+    "refused": 0,
+    "timeout": 0
+  }
+}

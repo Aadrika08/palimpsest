@@ -1,0 +1,15 @@
+Cloning into '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout'...
+done.
+HEAD is now at cc57edf fix(study): isolate final execution under cumulative retained-output budget
+Cloning into '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout/upstream/fly-gym'...
+done.
+HEAD is now at 8d96459 Fix command formatting in README.md
+Using CPython 3.11.15
+Creating virtual environment at: .venv
+Resolved 92 packages in 3ms
+  × Failed to download `torch==2.9.0`
+  ╰─▶ Network connectivity is disabled, but the
+      requested data wasn't found in the cache for:
+      `https://files.pythonhosted.org/packages/05/cc/49566caaa218872ec9a2912456f470ff92649894a4bc2e5274aa9ef87c4a/torch-2.9.0-cp311-cp311-manylinux_2_28_x86_64.whl`
+  help: `torch` (v2.9.0) was included because `palimpsest[simulation]`
+        (v0.1.0.dev0) depends on `torch`

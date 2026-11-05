@@ -1,0 +1,85 @@
+{
+  "admission": "received_GO",
+  "guardian_pid": 2883440,
+  "owned_descendants": [
+    {
+      "parent_pid": 2883440,
+      "pid": 2883441,
+      "provenance": "guardian_launched_phase",
+      "start_ticks": 28385031
+    },
+    {
+      "parent_pid": 2883441,
+      "parent_start_ticks": 28385031,
+      "pid": 2883447,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385050
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883453,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385068
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883456,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385080
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883469,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385296
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883470,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385308
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883472,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385319
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883473,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385330
+    },
+    {
+      "parent_pid": 2883473,
+      "parent_start_ticks": 28385330,
+      "pid": 2883474,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385330
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883506,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385343
+    },
+    {
+      "parent_pid": 2883447,
+      "parent_start_ticks": 28385050,
+      "pid": 2883507,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28385354
+    }
+  ],
+  "pid": 2883441,
+  "returncode": 1,
+  "status": "exited"
+}

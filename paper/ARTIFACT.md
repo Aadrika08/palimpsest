@@ -99,6 +99,29 @@ hashes distinguish the exact inputs. The S1 table separately reports absolute
 velocity-command and heading-angle errors, preserving their coordinates rather
 than treating a combined numerical discrepancy as a physical distance.
 
+## Observed completion and checkout gap
+
+The final campaign accounted for all 111 descriptors: 110 completed, with the
+declared offline checkout unit incomplete. Its conservative aggregate admission
+required the full 10 GiB unit allowance in addition to existing output, exceeding
+the final campaign cap. No checkout worker was launched for that unit. All 40
+cost conditions matched; the separate retained-state audit passed all 40 pairs.
+
+`offline-followup/` preserves a separately supervised operational check using the
+same frozen runtime, original deadline, actual cumulative inventory monitoring
+and original 16 GiB total cap. It does not replace the incomplete scientific
+row. Fresh Git and pinned upstream checkouts succeeded. `uv sync --locked
+--offline` then failed because the exact `torch==2.9.0` PyPI wheel was not cached.
+The isolated network remained unavailable, and no new-environment FLYNN run
+occurred. Runtime identity and earlier campaign metadata stayed unchanged.
+This establishes the cache-dependent packaging gap, not a controller failure.
+The exact wheel URL is in the retained stderr and locked requirements.
+
+The next reproduction attempt needs the permitted locked dependency cache
+prepared first and a separately bounded fresh output directory. Do not relabel
+this failed follow-up or the incomplete original unit as successful. Independent
+machine/operator reproduction also remains open.
+
 Raw campaign outputs are local ignored artifacts. Compact evidence and the
 frozen protocol support review without silently redistributing third-party
 assets. Check `THIRD_PARTY_NOTICES.md` and source terms before public deposit of

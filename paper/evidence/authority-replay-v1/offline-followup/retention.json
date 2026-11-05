@@ -1,0 +1,16 @@
+{
+  "observed_failure": "Offline uv setup could not retrieve the uncached locked torch==2.9.0 wheel; no new-environment FLYNN execution occurred.",
+  "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup",
+  "scope": "Separate operational follow-up; does not replace scientific campaign row",
+  "sha256": {
+    "admission.json": "6da62e6bbc979020f005e0b5d544532b5f1c614070858cf8da3d5e4fdfe9e000",
+    "commands/offline_reproduction/command.json": "655b9f1a43c90301dd398c686e735c9db4293a8e1d4696c8da15a52555d77cd9",
+    "commands/offline_reproduction/process.json": "b6a722bff3b30899412fe220297d6fca2cd395b1d733ca45b5b5e2e785412a82",
+    "commands/offline_reproduction/supervisor.json": "863c79344778c8370b160d81e5afa5a45015cc7962ff631f060b73315c98acd9",
+    "offline_reproduction/network.json": "8ac4fcd362171b9c4526bbf3b0ad76e7ed84cd845df13335745d363a9375ad61",
+    "offline_reproduction/report.json": "3c71bdb01043f141635a97a998980ea0b3d92347690bae575cc2188052fb71b7",
+    "offline_reproduction/stderr.log": "3c93b8830a2a9a795d81b501ebf92f22d7b3d9a85a8b8aa324ae4dff2bd9702d",
+    "offline_reproduction/stdout.log": "8ebb89cf304e7b901de0631711622b8b04b02f154f0c22e40fd3ac7e59505bc9",
+    "operational-result.json": "d66a720af5dbdbd3aa531a9997a8284196c06c0cd6e3979b133f57af59f953cb"
+  }
+}

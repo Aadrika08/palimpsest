@@ -1,0 +1,567 @@
+{
+  "schema_version": 1,
+  "study_id": "authority_replay_v1",
+  "resources": {
+    "raw_output_root": "runs/paper-authority-replay-v1",
+    "sequential": true,
+    "cpu_only": true,
+    "unit_timeout_seconds": 900,
+    "campaign_timeout_seconds": 14400,
+    "ordinary_unit_max_output_bytes": 536870912,
+    "offline_unit_max_output_bytes": 10737418240,
+    "campaign_max_output_bytes": 12884901888,
+    "minimum_free_bytes": 6442450944,
+    "stop_rules": [
+      "Stop new units after any unit timeout.",
+      "Stop new units at four campaign hours.",
+      "Stop new units when any output cap or the free-space reserve is crossed.",
+      "Retain completed, failed, refused, timed-out and incomplete rows; never delete, replace, retry or reduce declared scope."
+    ]
+  },
+  "comparison_policy": {
+    "exact_fields": [
+      "integer",
+      "boolean",
+      "identity",
+      "shape",
+      "event",
+      "source_identity",
+      "asset_identity"
+    ],
+    "float_dtype": "float32",
+    "atol": 1e-06,
+    "rtol": 1e-06,
+    "identical_nan_positions": false,
+    "scope": "CPU/same-version/same-architecture",
+    "first_divergence": [
+      "field",
+      "tick"
+    ],
+    "freeze": "No changes after the campaign commit.",
+    "nonfinite_policy": "reject_nonfinite_scientific_arrays"
+  },
+  "fault_cases": [
+    {
+      "id": "A1",
+      "family": "authority",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Delay an accepted intervention for two control boundaries while retaining the newest display frame.",
+      "naive_predicate": "request accepted or obstacle visible means applied",
+      "semantic_oracle": "Receipt stays queued until one recorded applied tick; no pre-application world change.",
+      "expected_outcome": "correct_recovery",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "A2",
+      "family": "authority",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Submit a stale expected revision.",
+      "naive_predicate": "request parsed means applied",
+      "semantic_oracle": "Rejected receipt; world and application revision unchanged.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "A3",
+      "family": "authority",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Repeat an accepted command ID.",
+      "naive_predicate": "two accepted requests mean two applications",
+      "semantic_oracle": "Exactly one application and one authoritative tick.",
+      "expected_outcome": "correct_recovery",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "R1",
+      "family": "replay",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Label playback as policy replay.",
+      "naive_predicate": "viewable matching trajectory means policy reproduced",
+      "semantic_oracle": "Reject because no policy invocation occurred.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "R2",
+      "family": "replay",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Label action replay as policy replay.",
+      "naive_predicate": "matching trajectory or final state means policy reproduced",
+      "semantic_oracle": "Reject because the controller was bypassed.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "S1",
+      "family": "snapshot",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Restore pose/integration state but omit controller, RNG, and application state.",
+      "naive_predicate": "qpos/qvel restore plus continued execution means continuation succeeded",
+      "semantic_oracle": "Pose-only ablation diverges or is inadmissible; full snapshot continues under the frozen comparison policy.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "S2",
+      "family": "snapshot",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Remove recurrent hidden/retinal state from a copied snapshot.",
+      "naive_predicate": "readable snapshot and process progress mean continuation succeeded",
+      "semantic_oracle": "Refuse before destination mutation; source remains unchanged.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "D1",
+      "family": "identity",
+      "path": "runtime",
+      "seeds": [
+        0
+      ],
+      "variants": [
+        "source",
+        "lock",
+        "hash"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Change one copied runtime source identity after the source run.",
+      "naive_predicate": "initial setup succeeded, so replay may run",
+      "semantic_oracle": "Refuse before first replay step.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "D2",
+      "family": "identity",
+      "path": "runtime",
+      "seeds": [
+        0
+      ],
+      "variants": [
+        "graph",
+        "checkpoint",
+        "mapping"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Substitute one copied asset.",
+      "naive_predicate": "expected shapes or load success mean compatible",
+      "semantic_oracle": "Refuse before controller execution.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "C1",
+      "family": "custody",
+      "path": "fixture",
+      "seeds": [],
+      "variants": [
+        "same_byte_replace"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Same-byte replace a held file.",
+      "naive_predicate": "start-time content hash still matches",
+      "semantic_oracle": "Detect protected identity drift and poison context.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "C2",
+      "family": "custody",
+      "path": "fixture",
+      "seeds": [],
+      "variants": [
+        "edit_restore"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Edit and restore held bytes.",
+      "naive_predicate": "exit bytes match initial bytes",
+      "semantic_oracle": "Detect mutation at protected recheck.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "C3",
+      "family": "custody",
+      "path": "fixture",
+      "seeds": [],
+      "variants": [
+        "sibling_operation_1",
+        "sibling_operation_2",
+        "sibling_operation_3"
+      ],
+      "conditions": [
+        "benign_control"
+      ],
+      "injection_stage": "Create/remove unrelated siblings above custody root.",
+      "naive_predicate": "no protected content changed",
+      "semantic_oracle": "No false rejection.",
+      "expected_outcome": "benign_acceptance",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "P1",
+      "family": "publication",
+      "path": "fixture_subprocess",
+      "seeds": [],
+      "variants": [
+        "before_chunk_rename",
+        "after_rename_before_event",
+        "before_terminal_manifest"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Die before chunk rename, after rename/before event, and before terminal manifest.",
+      "naive_predicate": "output path exists or some bytes parse means publication succeeded",
+      "semantic_oracle": "No false terminal success; validated prefix retained; unpublished tail ignored.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "B1",
+      "family": "branch",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Mutate branch A after a common snapshot while observing parent and branch B.",
+      "naive_predicate": "sequential pose copies are independent",
+      "semantic_oracle": "Separate-owner branches leave parent/sibling digests unchanged.",
+      "expected_outcome": "correct_recovery",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "B2",
+      "family": "branch",
+      "path": "runtime",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "variants": [
+        "default"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Shared-owner pose-copy ablation.",
+      "naive_predicate": "reset plus pose copy is an independent branch",
+      "semantic_oracle": "Expose contamination through digest or continuation mismatch.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "E1",
+      "family": "resource",
+      "path": "fixture",
+      "seeds": [],
+      "variants": [
+        "payload_bound_1",
+        "payload_bound_2",
+        "payload_bound_3"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Quota one byte below required publication.",
+      "naive_predicate": "write attempted or prefix exists means run succeeded",
+      "semantic_oracle": "Refuse or fail terminally; retain valid prefix; write no bytes beyond cap.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "E2",
+      "family": "resource",
+      "path": "fixture",
+      "seeds": [],
+      "variants": [
+        "queue_bound_1",
+        "queue_bound_2",
+        "queue_bound_3"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Fill bounded background queue.",
+      "naive_predicate": "producer return means data retained",
+      "semantic_oracle": "Record bounded backpressure; silently drop no accepted item.",
+      "expected_outcome": "correct_recovery",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    },
+    {
+      "id": "E3",
+      "family": "resource",
+      "path": "fixture",
+      "seeds": [],
+      "variants": [
+        "write",
+        "flush",
+        "fsync"
+      ],
+      "conditions": [
+        "fault"
+      ],
+      "injection_stage": "Inject a writer failure.",
+      "naive_predicate": "process continuation or output existence means success",
+      "semantic_oracle": "Terminal writer error; no retry; valid prefix and resource release.",
+      "expected_outcome": "explicit_detection",
+      "timeout_seconds": 900,
+      "max_output_bytes": 536870912
+    }
+  ],
+  "continuation": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "prefix_ticks": 8,
+    "continuation_ticks": 100,
+    "path": "runtime",
+    "controller": "flynn",
+    "device": "cpu",
+    "experimental_unit": "seeded_source_restored_pair",
+    "metrics": [
+      "agreement",
+      "first_divergence",
+      "snapshot_bytes",
+      "snapshot_sha256",
+      "paired_raw_values"
+    ]
+  },
+  "replay": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "prefix_ticks": 8,
+    "source_ticks": 100,
+    "path": "runtime",
+    "controller": "flynn",
+    "device": "cpu",
+    "experimental_unit": "seeded_source_trajectory",
+    "conditions": [
+      "branch",
+      "playback",
+      "action_replay",
+      "policy_replay"
+    ],
+    "metrics": [
+      "agreement",
+      "first_divergence",
+      "executed_computation",
+      "validated_fields",
+      "paired_raw_values"
+    ]
+  },
+  "execution_overhead": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "conditions": [
+      "null",
+      "synchronous",
+      "background",
+      "background_storage"
+    ],
+    "order": "cyclic_rotation_by_seed_mod_4",
+    "fresh_process_per_condition": true,
+    "warmup_ticks": 20,
+    "measured_ticks": 200,
+    "exclude_open_time": true,
+    "cache_policy": "warm-cache; no OS page-cache flush; same-host",
+    "matched_fields": [
+      "actions_sha256",
+      "tick_count",
+      "final_state_sha256"
+    ],
+    "unmatched_policy": "Retain all four rows and mark seed unmatched; exclude all four from timing summaries.",
+    "metrics": [
+      "open_seconds",
+      "wall_seconds",
+      "wall_seconds_per_tick",
+      "policy_seconds",
+      "physics_seconds",
+      "camera_seconds",
+      "bytes_per_tick",
+      "peak_rss_bytes",
+      "descriptor_count",
+      "thread_count",
+      "writer_backpressure_seconds",
+      "storage_recount_seconds",
+      "storage_recount_count",
+      "reset_seconds"
+    ],
+    "covariates": [
+      "condition_ordinal",
+      "load_averages",
+      "available_memory_bytes",
+      "cpu_model",
+      "cpu_governor",
+      "competing_palimpsest_processes"
+    ],
+    "terminal_policy": "reset_same_seed"
+  },
+  "operation_cost": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "source": "replay",
+    "source_condition": "background_storage",
+    "metrics": [
+      "capture_seconds",
+      "save_seconds",
+      "read_seconds",
+      "restore_first_tick_seconds",
+      "playback_seconds",
+      "action_replay_seconds",
+      "policy_replay_seconds"
+    ],
+    "null_writer_replay_timings": false,
+    "pass_threshold": null
+  },
+  "offline_reproduction": {
+    "repetitions": 1,
+    "scope": "same-host clean-checkout",
+    "full_flynn": true,
+    "duration_seconds": 55,
+    "setup": true,
+    "independent_machine_reproduction": false,
+    "external_gate": "A second machine/operator reproduction remains a submission gate."
+  },
+  "protocol_revision": 3
+}
