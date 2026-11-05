@@ -191,6 +191,26 @@ class AuthorityEvidenceTests(unittest.TestCase):
             replay['paired_raw_values']['policy_replay']['raw'][field] = value
             with self.assertRaises(ValueError): module.analyze(summarize(p, broken['rows']), m, p)
 
+    def test_serialized_replay_field_order_preserves_success_but_refuses_duplicates(self):
+        from paper.studies.authority_replay_v1.repeatability import _paired
+        module = self.builder()
+        p,s,m = fixture()
+        for row in s['rows']:
+            if row['kind'] == 'replay' and row['status'] == 'completed':
+                row['verifier_report']['continuation']['max_abs_errors'] = {'tick': 0, 'episode': 0, 'action': 0}
+                row['paired_raw_values'] = _paired(row['verifier_report'],100)
+        for row in s['rows']:
+            if row['kind'] == 'operation_cost' and row['status'] == 'completed':
+                complete_operation(row,next(r for r in s['rows'] if r['kind'] == 'replay' and r['seed'] == row['seed']))
+        serialized = json.loads(json.dumps(summarize(p,s['rows']),sort_keys=True))
+        replay = next(r for r in serialized['rows'] if r['kind'] == 'replay')
+        self.assertEqual(list(replay['verifier_report']['continuation']['max_abs_errors']), ['action','episode','tick'])
+        self.assertEqual(replay['paired_raw_values']['branch']['validated_fields'], ['tick','episode','action'])
+        result = module.analyze(serialized,m,p)
+        self.assertEqual(result['replay']['passed'], 2)
+        replay['paired_raw_values']['branch']['validated_fields'].append('tick')
+        with self.assertRaises(ValueError): module.analyze(summarize(p,serialized['rows']),m,p)
+
     def test_rejects_replay_assertions_disagreeing_with_verifier_evidence(self):
         module = self.builder()
         for mutation in ('branch', 'playback_mode', 'playback_tick', 'failed_replay', 'other_source', 'raw_flags', 'numeric_flags'):

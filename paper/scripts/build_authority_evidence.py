@@ -95,6 +95,19 @@ def _replay_source(row, protocol):
     return source
 
 
+def _normalized_pairs(pairs):
+    normalized = {}
+    for mode, pair in pairs.items():
+        fields = pair.get('validated_fields')
+        if isinstance(fields, list):
+            require(all(isinstance(name, str) and name for name in fields)
+                    and len(fields) == len(set(fields)), 'duplicate or malformed validated field names')
+            # The producer builds this list from a dict before sorted JSON publication.
+            pair = dict(pair, validated_fields=sorted(fields))
+        normalized[mode] = pair
+    return normalized
+
+
 def _repeat(rows, protocol, kind):
     passed = 0
     section = getattr(protocol, kind)
@@ -125,7 +138,8 @@ def _repeat(rows, protocol, kind):
             playback = report.get('playback', {})
             require(playback.get('mode') == 'playback' and type(playback.get('first_tick')) is int
                     and playback['first_tick'] == section['prefix_ticks'], 'replay playback scope differs')
-            require(pairs == _paired(report, section['source_ticks']), 'asserted replay pairs differ from verifier evidence')
+            require(_normalized_pairs(pairs) == _normalized_pairs(_paired(report, section['source_ticks'])),
+                    'asserted replay pairs differ from verifier evidence')
             for name, pair in pairs.items():
                 require(pair.get('agreement') is True and pair.get('first_divergence') is None
                         and bool(pair.get('validated_fields')), 'passing replay mode inconsistent')
