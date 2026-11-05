@@ -185,11 +185,21 @@ cyclic Latin-square rotations selected by `seed mod 4`. No OS page-cache flush i
 performed, so results are warm-cache and same-host. Record condition ordinal,
 load averages, available memory, CPU model/governor when readable, and competing
 Palimpsest processes. Retain a seed only when actions, tick count, and final-state
-digest match across all four conditions.
+digest match across all four conditions. The execution-overhead match digest
+excludes recorder source-run/event-prefix identity and only MuJoCo
+`timer.duration` elapsed wall-clock telemetry. Canonicalize those durations to
+zero on a private decoded native-data copy and recompute its native hash; never
+modify the live engine or retained source snapshot. All seeded RNG, integration,
+controller, observation, application, physics, solver and other serialized cache
+fields remain in the match. Retain the original full snapshot, canonicalized
+snapshot, raw and matched native/final-state hashes, and explicit normalization
+descriptor. This telemetry exclusion applies only to execution-overhead matching;
+it does not change snapshot restore or replay validation.
 
 Record wall time, wall time per tick, existing policy/physics/camera timing,
 bytes per tick, peak RSS, descriptors/threads where available, writer
-backpressure, and storage recount work.
+backpressure, and storage recount work. Record close time separately from
+steady-state wall/tick, alongside open time.
 
 Operation cost is separate: for replay seeds 0--4, use the retained full
 background-writer-plus-storage source from RQ2 and record capture, save, read,

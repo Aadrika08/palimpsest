@@ -5,6 +5,7 @@ operation costs consume explicit retained replay row metadata, never null output
 """
 from __future__ import annotations
 import argparse
+import copy
 import gc
 import hashlib
 import json
@@ -185,12 +186,42 @@ def _budget(output, campaign_root):
     return unit
 
 
-def _final_digest(engine):
-    from palimpsest.snapshots import capture, state_digest
-    state = capture(engine.env, engine.observation, policy=engine.policy, application=engine.application_state())
-    # Normalize recorder identity only; every seeded RNG is continuation state.
+def _final_digest(engine, *, diagnostics=None, metadata=None):
+    import mujoco
+    from palimpsest.snapshots import capture, save_snapshot, state_digest
+    original = capture(engine.env, engine.observation, policy=engine.policy, application=engine.application_state())
+    state = copy.deepcopy(original)
+    # Recorder identity is not part of matched continuation state.
     for key in ('source_run_id', 'event_prefix'):
         state['application'].pop(key)
+    raw_final_digest = state_digest(state)
+    # Only elapsed wall-clock telemetry is canonicalized, on a PRIVATE decoder.
+    # All native physical/solver/cache state and seeded RNG remain in the digest.
+    native = mujoco.MjData.__new__(mujoco.MjData)
+    native.__setstate__(state['native_data'])
+    native.timer.duration[:] = 0.
+    state['native_data'] = native.__getstate__()
+    state['native_sha256'] = hashlib.sha256(state['native_data']).hexdigest()
+    details = {'raw_snapshot_state_sha256': state_digest(original),
+               'raw_final_state_sha256': raw_final_digest,
+               'raw_native_sha256': hashlib.sha256(original['native_data']).hexdigest(),
+               'matched_native_sha256': state['native_sha256'],
+               'final_state_normalization': {'recorder_fields': ['application.source_run_id', 'application.event_prefix'],
+                   'native_fields': ['timer.duration'], 'mujoco_version': mujoco.__version__,
+                   'mechanism': 'Zero elapsed timer durations on a private decoded MjData copy only; retain all other fields and RNG.'}}
+    if diagnostics is not None:
+        target, budget = diagnostics
+        raw_target = Path(target).parent / 'final-raw.snp'
+        save_snapshot(original, raw_target, storage_budget=budget)
+        save_snapshot(state, target, storage_budget=budget)
+        details.update(raw_snapshot_path=str(raw_target), matched_snapshot_path=str(target))
+        _json(Path(target).parent / 'final-component-digests.json',
+              {'development_only': os.environ.get('PALIMPSEST_OVERHEAD_DEVELOPMENT_DIAGNOSTICS') == '1',
+               'components': {key: state_digest(value) for key, value in state.items()},
+               'raw_components': {key: state_digest(value) for key, value in original.items()},
+               'rng': {key: state_digest(value) for key, value in state['rng'].items()}, **details})
+    if metadata is not None:
+        metadata.update(details)
     return state_digest(state)
 
 
@@ -224,7 +255,11 @@ def _execution(seed, condition, output, repo, assets, campaign_root):
         engine.env._render_camera = timed_render
     try:
         result = measure_ticks(engine, camera_counter=camera if render else None, budget=budget)
-        result['final_state_sha256'] = _final_digest(engine)
+        final_metadata = {}
+        result['final_state_sha256'] = _final_digest(engine,
+            diagnostics=(output / 'final-normalized.snp', _budget(output, campaign_root)), metadata=final_metadata)
+        result.update(final_metadata)
+        result['development_diagnostics'] = os.environ.get('PALIMPSEST_OVERHEAD_DEVELOPMENT_DIAGNOSTICS') == '1'
         result['metrics']['open_seconds'] = opened
         result['camera_timing_scope'] = 'env._render_camera; nested in physics_seconds' if render else 'unavailable: env._render_camera absent'
     finally:
@@ -430,16 +465,18 @@ def campaign_deadline(root, identity, override=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--kind', choices=['execution', 'operation'])
+    parser.add_argument('--kind', choices=['execution', 'operation', 'operations'])
     parser.add_argument('--protocol', type=Path)
     parser.add_argument('--assets', type=Path)
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--sources', type=Path, help='Replay root containing seed-{seed}/row.json')
+    parser.add_argument('--sources', '--replay-root', dest='sources', type=Path, help='Replay root containing seed-{seed}/row.json')
     parser.add_argument('--campaign-root', type=Path, help='Shared aggregate raw-output root')
     parser.add_argument('--campaign-deadline-epoch', type=float, help='Absolute global campaign deadline; shared manifest deadline also honored')
     parser.add_argument('--self-check', action='store_true')
     parser.add_argument('--worker', type=Path)
     args = parser.parse_args()
+    if args.kind == 'operations':
+        args.kind = 'operation'
     if args.worker:
         config = json.loads(args.worker.read_text())
         call = _execution if config['kind'] == 'execution_overhead' else _operation

@@ -133,7 +133,7 @@ def test_execution_fixture_real_writers(tmp_path, monkeypatch):
     def opened(repo, assets, output, **kwargs):
         return Fixture(records.RunWriter(output, {}, max_bytes=kwargs['max_bytes']))
     monkeypatch.setattr(Engine, 'open', opened)
-    monkeypatch.setattr(o, '_final_digest', lambda e: str(e.total_tick))
+    monkeypatch.setattr(o, '_final_digest', lambda e, **kwargs: str(e.total_tick))
     rows = []
     for condition in o.CONDITIONS:
         output = tmp_path / condition
@@ -186,6 +186,8 @@ def test_rng_divergence_excludes_entire_seed(monkeypatch, rng_field):
     from palimpsest import snapshots
     state = {'rng': {name: [1, 2, 3] for name in ['environment', 'spaces', 'python', 'numpy', 'torch_cpu']},
              'application': {'source_run_id': 'recorder', 'event_prefix': {}, 'tick': 220}, 'policy': [4, 5]}
+    native = _native_fixture()
+    state.update({key: native[key] for key in ('native_data', 'native_sha256')})
     monkeypatch.setattr(snapshots, 'capture', lambda *args, **kwargs: copy.deepcopy(state))
     engine = type('Engine', (), {'env': None, 'observation': None, 'policy': None, 'application_state': lambda _: {}})()
     original = o._final_digest(engine)
@@ -261,3 +263,96 @@ def test_cap_specific_failure_stops_remaining_declared_units(tmp_path, monkeypat
     assert len(rows) == 40
     assert all(row['status'] == 'incomplete' for row in rows[1:])
     assert all(not row['timing_eligible'] for row in rows)
+
+
+def test_development_diagnostics_preserve_complete_normalized_state(tmp_path, monkeypatch):
+    from palimpsest import snapshots
+    import json
+    state = {'rng': {'python': [1, 2, 3], 'environment': {'state': 5}},
+             'application': {'source_run_id': 'recorder', 'event_prefix': {}, 'tick': 220}, 'policy': [4, 5]}
+    native = _native_fixture(timer=3.)
+    state.update({key: native[key] for key in ('native_data', 'native_sha256')})
+    monkeypatch.setattr(snapshots, 'capture', lambda *args, **kwargs: copy.deepcopy(state))
+    engine = type('Engine', (), {'env': None, 'observation': None, 'policy': None, 'application_state': lambda _: {}})()
+    expected = o._final_digest(engine)
+    snapshot = tmp_path / 'final-normalized.snp'
+    metadata = {}
+    actual = o._final_digest(engine, diagnostics=(snapshot, None), metadata=metadata)
+    restored = snapshots.read_snapshot(snapshot)
+    assert restored['rng'] == state['rng']
+    assert restored['policy'] == state['policy']
+    assert restored['application'] == {'tick': 220}
+    assert actual == expected == snapshots.state_digest(restored)
+    digests = json.loads((tmp_path / 'final-component-digests.json').read_text())
+    assert digests['rng']['environment'] == snapshots.state_digest(state['rng']['environment'])
+    assert set(digests['components']) == set(restored)
+    raw = snapshots.read_snapshot(tmp_path / 'final-raw.snp')
+    assert raw['application'] == state['application']
+    assert raw['native_data'] == state['native_data']
+    assert metadata['raw_native_sha256'] != metadata['matched_native_sha256']
+    assert metadata['final_state_normalization']['native_fields'] == ['timer.duration']
+    assert raw['rng'] == restored['rng']
+
+
+def _native_fixture(timer=0., native_cache=0.):
+    import hashlib
+    import mujoco
+    import numpy as np
+    model = mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom type="sphere" size=".1" mass="1"/></body></worldbody></mujoco>')
+    data = mujoco.MjData(model)
+    data.timer.duration[:] = timer
+    data.qacc[0] = native_cache
+    native = data.__getstate__()
+    return {'native_data': native, 'native_sha256': hashlib.sha256(native).hexdigest(),
+            'integration': np.array([0., 0.]), 'policy': np.array([1., 2.]), 'rng': {'python': [1, 2, 3]},
+            'application': {'source_run_id': 'recorder', 'event_prefix': {}, 'tick': 220}}
+
+
+def test_timer_durations_only_normalize_on_private_native_copy(monkeypatch):
+    from palimpsest import snapshots
+    state = _native_fixture(timer=1.)
+    before = copy.deepcopy(state)
+    monkeypatch.setattr(snapshots, 'capture', lambda *args, **kwargs: copy.deepcopy(state))
+    engine = type('Engine', (), {'env': None, 'observation': None, 'policy': None, 'application_state': lambda _: {}})()
+    first = o._final_digest(engine)
+    state = _native_fixture(timer=2.)
+    assert before['native_data'] != state['native_data']
+    assert o._final_digest(engine) == first
+    assert state['native_data'] == _native_fixture(timer=2.)['native_data']
+
+
+@pytest.mark.parametrize('field', ['integration', 'policy', 'rng', 'native_cache'])
+def test_non_timer_continuation_state_remains_in_match(monkeypatch, field):
+    from palimpsest import snapshots
+    state = _native_fixture(timer=1.)
+    monkeypatch.setattr(snapshots, 'capture', lambda *args, **kwargs: copy.deepcopy(state))
+    engine = type('Engine', (), {'env': None, 'observation': None, 'policy': None, 'application_state': lambda _: {}})()
+    first = o._final_digest(engine)
+    if field in ('integration', 'policy'):
+        state[field][0] += 1
+    elif field == 'rng':
+        state['rng']['python'][0] += 1
+    else:
+        state = _native_fixture(timer=1., native_cache=1.)
+    assert o._final_digest(engine) != first
+
+
+def test_planned_operations_cli_uses_actual_repeatability_seed_paths(tmp_path, monkeypatch):
+    from paper.studies.authority_replay_v1.common import read_rows
+    sources = tmp_path / 'replay'
+    output = tmp_path / 'operations'
+    identity = {'commit': 'fixture-only'}
+    calls = []
+    def completed(seed, source, **kwargs):
+        calls.append((seed, source))
+        return {'schema_version': 1, 'study_id': 'authority_replay_v1', 'kind': 'operation_cost', 'seed': seed,
+                'unit_id': f'operation_cost/{seed}', 'identity': identity, 'status': 'completed',
+                'timing_eligible': True, 'metrics': {}}
+    monkeypatch.setattr(o, 'run_operation_cost_unit', completed)
+    monkeypatch.setattr(o, 'campaign_identity', lambda *args: identity)
+    monkeypatch.setattr(o.sys, 'argv', ['overhead.py', '--kind', 'operations', '--protocol',
+                        str(o.REPO / 'paper/studies/authority_replay_v1/protocol.json'), '--assets', str(tmp_path),
+                        '--output', str(output), '--replay-root', str(sources)])
+    assert o.main() == 0
+    assert calls == [(seed, sources / f'seed-{seed}' / 'row.json') for seed in range(5)]
+    assert len(read_rows(output / 'rows.jsonl')) == 5

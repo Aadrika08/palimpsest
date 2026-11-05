@@ -89,10 +89,29 @@ rows, median, minimum/maximum, and inclusive quartiles/IQR, with sample counts.
 Do not interpret the pooled execution-overhead statistics as a matched cost
 estimate: the overhead driver must validate all four conditions' action/tick/
 final-state agreement, set `timing_eligible: false` for unmatched sets, and
-derive condition-specific paired comparisons from the retained rows. The
-operation-cost driver consumes only the full background-plus-storage replay
+derive condition-specific paired comparisons from the retained rows.
+
+Execution-overhead final-state matching excludes recorder source-run/event-prefix
+identity and only MuJoCo `timer.duration` elapsed wall-clock telemetry. It decodes
+a private native-data copy, zeros only those durations and recomputes the native
+hash. All RNG, integration, controller, observation, application, physics, solver
+and other serialized cache state remain included. The live engine and original
+full snapshot are unchanged. Each condition retains `final-raw.snp`,
+`final-normalized.snp`, raw/matched native and final-state hashes, component/RNG
+digests and an explicit normalization descriptor. These files are written after
+the measured tick window, within the same output budget. This comparison rule
+is specific to execution overhead and does not alter snapshot/replay validation.
+Open and close times are reported separately from steady-state wall/tick.
+
+The operation-cost driver consumes only the full background-plus-storage replay
 source, never a null-writer source. No significance test or cost pass threshold
 is preregistered.
+
+The planned operation-cost invocation uses `overhead.py --kind operations
+--replay-root REPLAY_ROOT`; `--kind operation --sources REPLAY_ROOT` remains an
+alias. Both read the completed replay descriptors at
+`REPLAY_ROOT/seed-{seed}/row.json`, matching the repeatability driver's actual
+unit directories.
 
 Only compact summaries, sanitized fault traces, identities, commands, failures,
 and raw-tree inventories are committed after source-bound verification.
