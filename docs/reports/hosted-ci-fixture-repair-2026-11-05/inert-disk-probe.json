@@ -1,0 +1,19 @@
+[
+  {
+    "probe": "low-six-gib",
+    "synthetic_free_bytes": 6442450944,
+    "status": "refused",
+    "runner_calls": 0,
+    "error": {
+      "type": "ValueError",
+      "message": "insufficient free-space reserve for unit admission"
+    }
+  },
+  {
+    "probe": "high-seven-gib",
+    "synthetic_free_bytes": 7516192768,
+    "status": "completed",
+    "runner_calls": 1,
+    "error": null
+  }
+]

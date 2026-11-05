@@ -1,0 +1,42 @@
+{
+  "actual_runtime_qualified": false,
+  "files": {
+    "authored-synthetic-capacity.log": {
+      "bytes": 99,
+      "sha256": "22099236653d90c197556440e986c18fa25ae481a00827d679a83271bdfed4dc"
+    },
+    "diagnosis.md": {
+      "bytes": 7830,
+      "sha256": "f6e291cd5840634ada49a9960783d3deac9c26b25d4a8f28d2eb5c6e843ff3b2"
+    },
+    "hosted-failure-42063786498.log": {
+      "bytes": 138078,
+      "sha256": "8384fcbac8122d6fd707385ddd25c7442d1913e557517c13bcd326c04e548885"
+    },
+    "independent-review.md": {
+      "bytes": 5388,
+      "sha256": "8cf477c175feff1fe8db0976d3847a9c5addafc4c44f25d6c1cca98f163a7735"
+    },
+    "inert-disk-probe.json": {
+      "bytes": 395,
+      "sha256": "9c31440db3c5c9c27437b777d9b4499ddac9090ba352936d71690fc851b5d8eb"
+    },
+    "ownership-nested.log": {
+      "bytes": 181,
+      "sha256": "c0d82e60aed8f8d7d5b9defcc47febc2dded4216b144693b8dea8d04462319f5"
+    },
+    "ownership-wrapper.log": {
+      "bytes": 99,
+      "sha256": "a6b2106cee1271429dd06e9915b2e95ff79ab392dcf9e18a5eeeeaf5f414d808"
+    },
+    "rejected-limit-scaling.log": {
+      "bytes": 28887,
+      "sha256": "ddd12640553a97ea1c2b75301e1b539d4e0669aa5483b78c68f9a7a8dfe6d611"
+    }
+  },
+  "hosted_failed_run": 42063786498,
+  "hosted_failed_source": "b7e364a943ff94d752605f6818d325be5bd2a8a8",
+  "hosted_green": false,
+  "research_execution": false,
+  "tested_source": "570438c3e9fe7c0cef49405cfbd4afd634ff78e9"
+}
