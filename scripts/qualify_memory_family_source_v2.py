@@ -7,9 +7,10 @@ for authored software tests; the real CLI always uses the fixed source/audit job
 from __future__ import annotations
 
 import argparse
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 import copy
 import hashlib
+from functools import partial
 import json
 import math
 import os
@@ -196,6 +197,7 @@ def verify_freeze(path, expected_sha256):
     if cgroup is None:
         blockers.append('Whole-runtime enforced memory cgroup missing')
     blockers.append('External full-parent lifetime supervision OS/receipt interface is not implemented')
+    blockers.append('External pre-import load-environment/exec isolation binding is not implemented')
     if value['lifetime_contract'] is None:
         blockers.append('External parent process-lifetime accounting contract missing')
     if any(item is None for item in prior.values()):
@@ -218,66 +220,135 @@ def _closed_accounting(value):
     return value
 
 
+@contextmanager
+def _hold_file(item):
+    path = owner._safe_path(item['path'])
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        before = os.fstat(fd)
+        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+            raise ValueError('Pinned input is nonregular or aliased')
+        def check():
+            current = os.fstat(fd)
+            named = path.stat(follow_symlinks=False)
+            identity = lambda row: (row.st_dev, row.st_ino, row.st_size, row.st_mtime_ns, row.st_ctime_ns, row.st_nlink)
+            os.lseek(fd, 0, os.SEEK_SET)
+            with os.fdopen(fd, 'rb', closefd=False) as stream:
+                digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+            if (identity(before) != identity(current) or identity(current) != identity(named)
+                    or identity(current) != identity(os.fstat(fd))
+                    or current.st_size != item['size_bytes'] or digest != item['sha256']):
+                raise ValueError('Held runtime/input changed')
+        check()
+        yield check
+        check()
+    finally:
+        os.close(fd)
+
+
+def _runtime_census(roots):
+    """Census files AND directories; later additions cannot join the closure."""
+    files, directories = [], []
+    for root in roots:
+        for parent, children, names in os.walk(owner._safe_path(root), followlinks=False):
+            directory = owner._safe_path(parent)
+            row = directory.stat(follow_symlinks=False)
+            directories.append((str(directory), row.st_dev, row.st_ino, row.st_mode,
+                row.st_mtime_ns, row.st_ctime_ns))
+            for name in children:
+                owner._safe_path(directory / name)
+            for name in names:
+                path = owner._safe_path(directory / name)
+                if path.suffix in ('.pyc', '.pyo'):
+                    raise ValueError('Selected runtime prefix contains old bytecode')
+                row = path.stat(follow_symlinks=False)
+                if not stat.S_ISREG(row.st_mode) or row.st_nlink != 1:
+                    raise ValueError('Runtime namespace contains an aliased/nonregular file')
+                files.append((str(path), row.st_dev, row.st_ino, row.st_mode))
+            if len(files) > 4096 or len(files) + len(directories) > 8192:
+                raise ValueError('Complete runtime namespace exceeds bounded owner closure')
+    if not files:
+        raise ValueError('Runtime namespace is empty')
+    return sorted(files), sorted(directories)
+
+
+def _alias_identity(job):
+    alias = Path(job['immutable']['python_alias'])
+    if alias.resolve(strict=True) != Path(job['immutable']['python_elf']['path']):
+        raise ValueError('Executable venv alias differs from frozen ELF')
+    chain, seen, current = [], set(), alias
+    while True:
+        if current in seen or len(seen) > 40:
+            raise ValueError('Executable alias chain is cyclic or too long')
+        seen.add(current)
+        row = current.lstat()
+        link = os.readlink(current) if stat.S_ISLNK(row.st_mode) else None
+        chain.append((str(current), row.st_dev, row.st_ino, row.st_mode,
+            row.st_mtime_ns, row.st_ctime_ns, link))
+        if link is None:
+            break
+        current = Path(os.path.normpath(link if os.path.isabs(link) else current.parent / link))
+    return chain
+
+
+def _bind_runtime_namespace(value):
+    """Prepared rechecks; trusted outer isolation must precede interpreter import."""
+    job = value['job']
+    alias_before = _alias_identity(job)
+    before = _runtime_census(value['runtime_roots'])
+    roster = {row['path'] for row in [job['immutable']['owner_source'], *job['immutable']['closure']]}
+    if not {row[0] for row in before[0]}.issubset(roster):
+        raise ValueError('Runtime/dependency closure omits selected prefix bytes')
+    def recheck():
+        if _alias_identity(job) != alias_before:
+            raise ValueError('Executable alias identity changed after admission')
+        if _runtime_census(value['runtime_roots']) != before:
+            raise ValueError('Runtime import namespace changed after admission')
+    return recheck
+
+
+def _monitor_stage(sample, *, parent_pid, phase_cpu_before, deadline, prior_cpu,
+                   budget, output, clock=time.monotonic):
+    """Fork-supervisor samples only; final parent/outer accounting is separate.
+
+    Supervisor SELF starts at fork; supplied worker sampling excludes that SELF.
+    Parent CPU accrued while waiting and sampling error remain outside this live
+    estimate. It is containment, never a proof of a hard aggregate CPU ceiling.
+    """
+    if os.getpid() == parent_pid:
+        raise ValueError('Stage monitor must execute in its forked supervisor')
+    if clock() >= deadline:
+        raise TimeoutError('Whole qualification deadline includes cleanup')
+    supervisor = resource.getrusage(resource.RUSAGE_SELF)
+    observed = (_number(phase_cpu_before, 'Parent phase before launch')
+        + _number(supervisor.ru_utime + supervisor.ru_stime, 'Fork supervisor SELF CPU')
+        + _number(sample.get('sampled_worker_cpu_seconds'), 'Sampled worker CPU'))
+    if (observed > ALLOCATION['cpu_seconds']
+            or observed + prior_cpu['project_seconds'] > 24*3600
+            or observed + prior_cpu['memory_seconds'] > 12*3600):
+        raise TimeoutError('Sampled stage CPU containment threshold reached')
+    budget.check(0, path=output)
+
+
 def _bind_inputs(value, lifetime):
     """Hold selected immutable bytes through the last recheck; execution only."""
-    from contextlib import contextmanager
     from scripts import memory_family_allocation_v3 as allocation
     # The existing canonical coverage gate refuses before any external root or
     # runtime/model descriptor is opened; labels cannot resolve missing exports.
     coverage_contract = allocation._coverage_contract()
 
-    @contextmanager
-    def hold(item):
-        path = owner._safe_path(item['path'])
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
-        try:
-            before = os.fstat(fd)
-            if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
-                raise ValueError('Pinned input is nonregular or aliased')
-            def check():
-                current = os.fstat(fd)
-                named = path.stat(follow_symlinks=False)
-                identity = lambda row: (row.st_dev, row.st_ino, row.st_size, row.st_mtime_ns, row.st_ctime_ns, row.st_nlink)
-                os.lseek(fd, 0, os.SEEK_SET)
-                with os.fdopen(fd, 'rb', closefd=False) as stream:
-                    digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-                if (identity(before) != identity(current) or identity(current) != identity(named)
-                        or identity(current) != identity(os.fstat(fd))
-                        or current.st_size != item['size_bytes'] or digest != item['sha256']):
-                    raise ValueError('Held runtime/input changed')
-            check()
-            yield check
-            check()
-        finally:
-            os.close(fd)
     job = value['job']
     checks = []
     descriptors = [job['immutable']['python_elf'], job['immutable']['owner_source'],
         *job['immutable']['closure'], *value['namespace_projections'].values(),
         value['lifetime_contract']]
     for item in descriptors:
-        checks.append(lifetime.enter_context(hold(item)))
+        checks.append(lifetime.enter_context(_hold_file(item)))
     owner._check_identity(job)
     roster = {row['path'] for row in [job['immutable']['owner_source'], *job['immutable']['closure']]}
-    # A fresh cache prefix prevents stale pyc selection without deleting history.
-    # Runtime roots are a clean selected installation, not the mixed old venv.
-    found = set()
-    for root in value['runtime_roots']:
-        for parent, directories, files in os.walk(owner._safe_path(root), followlinks=False):
-            for name in directories:
-                if (Path(parent) / name).is_symlink():
-                    raise ValueError('Runtime prefix contains a symlink directory')
-            for name in files:
-                path = owner._safe_path(Path(parent) / name)
-                if path.suffix in ('.pyc', '.pyo') or path.name == 'pyvenv.cfg':
-                    # pyvenv.cfg controls prefix selection and must be pinned too.
-                    if path.name != 'pyvenv.cfg':
-                        raise ValueError('Selected runtime prefix contains old bytecode')
-                found.add(str(path))
-                if len(found) > 4096:
-                    raise ValueError('Complete runtime closure exceeds current owner contract')
-    if not found.issubset(roster) or not found:
-        raise ValueError('Runtime/dependency closure omits selected prefix bytes')
+    runtime_check = _bind_runtime_namespace(value)
+    checks.append(runtime_check)
+    lifetime.callback(runtime_check)
     if str(Path(__file__).resolve()) not in roster:
         raise ValueError('Executing parent source missing from frozen closure')
     required = [ROOT / 'src', ROOT / 'scripts', ROOT / 'paper/studies/change_audit_v1',
@@ -318,6 +389,7 @@ def _bind_inputs(value, lifetime):
             or job['case']['seed'] in sets['training_seeds']):
         raise ValueError('Selected source collides with historical/training namespace')
     checks.append(namespace_recheck)
+    lifetime.callback(namespace_recheck)
     return checks
 
 
@@ -393,11 +465,11 @@ def _owner_entry(job_path, digest, outcome_path):
         raise SystemExit(1)
 
 
-def _commands(job, control, snapshot, deadline):
+def _commands(job, control, snapshot, deadline, *, job_descriptor):
     alias = job['immutable']['python_alias']  # Never resolve this argv element.
     outcome = control / 'owner-outcome.json'
     job_path = control / 'job.json'
-    digest = hashlib.sha256(job_path.read_bytes()).hexdigest()
+    digest = job_descriptor['sha256']
     owner_command = [alias, '-B', '-c',
         'from scripts.qualify_memory_family_source_v2 import _owner_entry; import sys; _owner_entry(*sys.argv[1:])',
         str(job_path), digest, str(outcome)]
@@ -432,6 +504,7 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
              _admit=_execute_admission, _budget_factory=_make_budget,
              _clock=time.monotonic, _cpu_meter=_cpu):
     """Private authored fixtures may replace supervision/admission, never CLI."""
+    coordinator_pid = os.getpid()
     started, cpu_started = _clock(), _cpu_meter()
     deadline = started + ALLOCATION['wall_seconds']
     job = copy.deepcopy(value['job'])
@@ -452,6 +525,8 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
                 'case_id': job['case']['case_id'], 'run_id': job['run_id'],
                 'error_type': type(error).__name__, 'claims': copy.deepcopy(owner.PROTOCOL['claims'])}, budget)
     def check():
+        if os.getpid() != coordinator_pid:
+            raise ValueError('Parent phase accounting cannot run in a forked supervisor')
         if _clock() >= deadline:
             raise TimeoutError('Whole qualification deadline includes final receipt')
         used = _number(_cpu_meter() - cpu_started, 'Whole parent CPU')
@@ -461,10 +536,32 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
             raise TimeoutError('Whole qualification CPU/lane ceiling exceeded')
         budget.check(0, path=output)
         return used
-    with budget.lock(), ExitStack() as lifetime:
+    with budget.lock():
+        lifetime = ExitStack()
+        checks, pins = [], {}
+        def pin_file(path, expected=None):
+            path = Path(path)
+            descriptor = expected or _descriptor(path, output)
+            absolute = {**descriptor, 'path': str(path)}
+            checks.append(lifetime.enter_context(_hold_file(absolute)))
+            pins[path] = {**descriptor, 'path': str(path.relative_to(output))}
+            return pins[path]
+        def pin_value(path, value):
+            payload = memory.canonical_bytes(value)
+            expected = {'path': str(path.relative_to(output)), 'size_bytes': len(payload),
+                'sha256': hashlib.sha256(payload).hexdigest()}
+            return pin_file(path, expected)
+        def emit(path, value):
+            # Freeze validated bytes BEFORE invoking the exclusive writer. A later
+            # rehash must never authorize a rewritten job/supervisor/cleanup.
+            original = copy.deepcopy(value)
+            _write(path, value, budget)
+            return pin_value(path, original)
         try:
-            _write(control / 'freeze.json', value, budget)
-            checks = _admit(value, freeze_sha, lifetime)
+            checks.append(lifetime.enter_context(_hold_file({'path': str(freeze_path),
+                'size_bytes': Path(freeze_path).stat().st_size, 'sha256': freeze_sha})))
+            emit(control / 'freeze.json', value)
+            checks.extend(_admit(value, freeze_sha, lifetime))
             def recheck():
                 check()
                 if _read(freeze_path, freeze_sha) != value:
@@ -484,19 +581,21 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
                 'allocation_sha256': memory.sha256(value['allocation']),
                 'deadline_monotonic': min(deadline - 10, _clock() + 360)}
             owner.validate_source_job(job)
-            _write(control / 'job.json', job, budget)
+            emit(control / 'job.json', job)
             def launch(role, command, seconds):
                 recheck()
                 remaining = deadline - _clock() - 10
                 if remaining <= seconds:
                     raise TimeoutError('Insufficient wall for fixed job plus cleanup/publication')
-                remaining_cpu = ALLOCATION['cpu_seconds'] - check()
+                phase_before = check()
+                remaining_cpu = ALLOCATION['cpu_seconds'] - phase_before
                 record = {'role': role, 'command': command, 'environment': value['environment'],
                     'wall_seconds': seconds, 'cpu_seconds': remaining_cpu,
                     'accounting': None}
-                _write(control / (role + '-launch.json'), record, budget)
-                def monitor(sample):
-                    check()
+                emit(control / (role + '-launch.json'), record)
+                monitor = partial(_monitor_stage, parent_pid=coordinator_pid,
+                    phase_cpu_before=phase_before, deadline=deadline, prior_cpu=value['prior_cpu'],
+                    budget=budget, output=output, clock=_clock)
                 try:
                     accounting = _runner(command, cwd=str(ROOT), env=value['environment'],
                         stdout_path=control / (role + '.stdout'), stderr_path=control / (role + '.stderr'),
@@ -516,16 +615,18 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
                         'raw_result_repr': repr(accounting)[:2048]}
                 record['accounting'] = accounting
                 report['jobs'].append(record)
-                _write(control / (role + '-supervisor.json'), record, budget)
+                emit(control / (role + '-supervisor.json'), record)
                 try:
                     _closed_accounting(accounting)
                 except ValueError:
                     report['accounting_complete'] = False
                     raise
+                pin_file(control / (role + '.stdout'))
+                pin_file(control / (role + '.stderr'))
                 recheck()
                 return record
             # Snapshot descriptor is meaningful only after the closed owner.
-            owner_command, _ = _commands(job, control, {}, deadline)
+            owner_command, _ = _commands(job, control, {}, deadline, job_descriptor=pins[control / 'job.json'])
             owner_record = launch('owner', owner_command, 360)
             outcome = _read(control / 'owner-outcome.json')
             _fields(outcome, {'schema', 'status', 'run_id', 'report', 'error_path', 'qualification_claims'}, 'Owner outcome')
@@ -535,42 +636,52 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
                     or type(outcome['report']) is not dict
                     or _read(Path(job['paths']['raw']) / 'worker-report.json') != outcome['report']):
                 raise ValueError('Failed/missing closed owner outcome forbids raw audit')
+            pin_value(control / 'owner-outcome.json', outcome)
+            pin_value(Path(job['paths']['raw']) / 'worker-report.json', outcome['report'])
             case_id = job['case']['case_id']
-            snapshot = _descriptor(Path(job['paths']['snapshot']), output,
-                logical=f'cases/{case_id}/source/snapshots/initial.snp')
+            snapshot_path = Path(job['paths']['snapshot'])
+            snapshot = {**pin_file(snapshot_path, {'path': str(snapshot_path.relative_to(output)),
+                'size_bytes': snapshot_path.stat().st_size, 'sha256': outcome['report']['snapshot_sha256']}),
+                'path': f'cases/{case_id}/source/snapshots/initial.snp'}
+            owner_descriptor = pin_value(Path(job['paths']['owner']), {
+                'schema': 'memory-family-source-owner-v4', 'case_id': case_id,
+                'run_id': job['run_id'], 'owner_source_sha256': job['source_identity_sha256'],
+                'claims': copy.deepcopy(owner.PROTOCOL['claims'])})
             from scripts import memory_family_raw_audit_v4 as audit
             from scripts import memory_family_producer_v4 as producer
             raw = Path(job['paths']['raw'])
             before = audit._inventory(raw, 'source', deadline)
             (control / 'audit').mkdir(exist_ok=False)
-            _, audit_command = _commands(job, control, snapshot, deadline)
+            _, audit_command = _commands(job, control, snapshot, deadline, job_descriptor=pins[control / 'job.json'])
             audit_record = launch('audit', audit_command, min(180, deadline - _clock() - 20))
             public_result = _read(control / 'audit.stdout')
             raw_audit = Path(public_result['path'])
             if raw_audit != control / 'audit' / (job['run_id'] + '.raw-audit.json'):
                 raise ValueError('Independent raw auditor returned another attempt')
+            pin_file(raw_audit, {'path': str(raw_audit.relative_to(output)),
+                'size_bytes': public_result['bytes'], 'sha256': public_result['sha256']})
             cleanup = {'schema': 'memory-family-source-cleanup-v2', 'run_id': job['run_id'],
-                'owner_supervisor': _descriptor(control / 'owner-supervisor.json', output),
-                'owner_outcome': _descriptor(control / 'owner-outcome.json', output),
-                'audit_supervisor': _descriptor(control / 'audit-supervisor.json', output),
+                'owner_supervisor': pins[control / 'owner-supervisor.json'],
+                'owner_outcome': pins[control / 'owner-outcome.json'],
+                'audit_supervisor': pins[control / 'audit-supervisor.json'],
                 'tree_drained': True, 'accounting_complete': True,
                 'measurement_scope': 'owner and independent audit, including supervisor/reap/drain'}
-            _write(control / 'cleanup.json', cleanup, budget)
+            emit(control / 'cleanup.json', cleanup)
             recheck()
             if audit._inventory(raw, 'source', deadline) != before:
                 raise ValueError('Raw bytes changed during independent audit')
             roles = {'job': 'job.json', 'supervisor': 'owner-supervisor.json',
                 'stdout': 'owner.stdout', 'stderr': 'owner.stderr', 'cleanup': 'cleanup.json'}
-            controls = {k: _descriptor(control / name, output) for k, name in roles.items()}
-            controls['audit'] = _descriptor(raw_audit, output)
+            controls = {k: pins[control / name] for k, name in roles.items()}
+            controls['audit'] = pins[raw_audit]
             registration = {'schema': 'memory-family-source-finalization-registration-v4',
                 'protocol_sha256': owner.PROTOCOL_SHA256, 'case': job['case'], 'run_id': job['run_id'],
                 'owner_source_sha256': job['source_identity_sha256'], 'snapshot': snapshot,
-                'raw_audit': controls['audit'], 'owner_record': _descriptor(Path(job['paths']['owner']),
-                    output, logical=f'cases/{case_id}/source/owner.json'),
+                'raw_audit': controls['audit'], 'owner_record': {**owner_descriptor,
+                    'path': f'cases/{case_id}/source/owner.json'},
                 'controls': controls, 'claims': copy.deepcopy(owner.PROTOCOL['claims'])}
-            _write(control / 'terminal-export.json', registration, budget)
-            registration_descriptor = _descriptor(control / 'terminal-export.json', output)
+            emit(control / 'terminal-export.json', registration)
+            registration_descriptor = pins[control / 'terminal-export.json']
             request = dict(evidence_root=output, registration=registration_descriptor,
                            case_id=case_id, deadline=min(deadline - 10, time.monotonic() + 299))
             recheck()
@@ -591,8 +702,17 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
             report['error'] = {'type': type(exc).__name__, 'message': str(exc)[:2048]}
             quarantine_published(exc)
         finally:
-            # Like pilot.py, the receipt explicitly excludes its own write and
-            # lease release. Only the externally pinned lifetime owner can close it.
+            try:
+                lifetime.close()
+            except BaseException as exc:
+                report['status'] = 'stopped'
+                report['teardown_error'] = {'type': type(exc).__name__, 'message': str(exc)[:2048]}
+                if report['error'] is None:
+                    report['error'] = copy.deepcopy(report['teardown_error'])
+                quarantine_published(exc)
+            # Input/control teardown is already reconciled under the lease. The
+            # terminal write, lease release and process return still need outer
+            # lifetime accounting; no success-shaped terminal precedes teardown.
             try:
                 check()
             except BaseException as exc:
@@ -602,7 +722,7 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
             report['phase_cpu_seconds_observed'] = _cpu_meter() - cpu_started
             report['phase_cpu_seconds'] = report['phase_cpu_seconds_observed'] if report['accounting_complete'] else None
             report['elapsed_seconds'] = _clock() - started
-            report['unmetered_tail'] = 'terminal serialization/write/fsync, input release, lease release and process return; external lifetime reconciliation required'
+            report['unmetered_tail'] = 'terminal serialization/write/fsync, lease release and process return; external lifetime reconciliation required'
             try:
                 _write(control / 'parent-terminal.json', report, budget)
                 check()

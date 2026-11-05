@@ -66,8 +66,16 @@ def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
             # Native array fixtures can leave library threads in pytest. The
             # accountant itself must start in a fresh single-threaded process.
             serial = {k: str(v) if isinstance(v, Path) else v for k, v in kwargs.items() if k != 'monitor'}
-            helper = 'import json,sys; from paper.studies.change_audit_v1.process import run_accounted; print(json.dumps(run_accounted(json.loads(sys.argv[1]), **json.loads(sys.argv[2]))))'
-            child = subprocess.run([sys.executable, '-B', '-c', helper, json.dumps(command), json.dumps(serial)],
+            contract = {k: str(v) if isinstance(v, Path) else v for k, v in kwargs['monitor'].keywords.items()
+                if k not in ('budget', 'clock')}
+            helper = ('import json,sys,os; from functools import partial; '
+                'from palimpsest.storage import StorageBudget,StorageLimits; '
+                'from scripts import qualify_memory_family_source_v2 as p; '
+                'kw=json.loads(sys.argv[2]); m=json.loads(sys.argv[3]); m["parent_pid"]=os.getpid(); '
+                'm["budget"]=StorageBudget([m["output"]],StorageLimits(max_bytes=p.ALLOCATION["max_bytes"],min_free_bytes=0),headroom_bytes=p.ALLOCATION["headroom_bytes"]); '
+                'kw["monitor"]=partial(p._monitor_stage,**m); '
+                'print(json.dumps(p.run_accounted(json.loads(sys.argv[1]), **kw)))')
+            child = subprocess.run([sys.executable, '-B', '-c', helper, json.dumps(command), json.dumps(serial), json.dumps(contract)],
                 cwd=ROOT, env=kwargs['env'], capture_output=True, text=True, timeout=30)
             assert child.returncode == 0, child.stderr
             return json.loads(child.stdout)
@@ -127,7 +135,7 @@ def test_verify_mode_cannot_launch(tmp_path, monkeypatch):
     monkeypatch.setattr(os, 'open', safe_open)
     result = p.verify_freeze(path, digest)
     assert result['worker_invocations'] == 0 and result['payloads_opened'] is False
-    assert result['execution_authorized'] is False and len(result['blockers']) == 5
+    assert result['execution_authorized'] is False and len(result['blockers']) == 6
     assert not evidence.exists()
 
 
@@ -377,3 +385,163 @@ def test_go_is_external_and_binds_exact_freeze_job_scope_no_retry(tmp_path, monk
     go_sha = hashlib.sha256(go_path.read_bytes()).hexdigest()
     with pytest.raises(PermissionError, match='scope'):
         p._validate_go(go_path, go_sha, digest, freeze['job'])
+
+
+def test_real_accountant_monitor_uses_supervisor_domain_after_parent_prior_cpu(tmp_path, monkeypatch):
+    freeze, path, digest = write_freeze(tmp_path, monkeypatch, complete=True)
+    helper = r'''
+import json, os, sys, time
+from pathlib import Path
+from palimpsest.storage import StorageBudget, StorageLimits
+from scripts import qualify_memory_family_source_v2 as p
+freeze_path, sha = sys.argv[1:]
+value = p._read(freeze_path, sha)
+# Positive parent CPU predating the fork must not be subtracted in its child.
+burn = time.process_time() + .15
+while time.process_time() < burn:
+    pass
+def budget(output):
+    return StorageBudget([output], StorageLimits(max_bytes=p.ALLOCATION['max_bytes'], min_free_bytes=0), headroom_bytes=p.ALLOCATION['headroom_bytes'])
+def runner(command, **kwargs):
+    monitor = kwargs['monitor']
+    sample_path = Path(value['job']['paths']['control_root']) / 'authored-monitor-samples.jsonl'
+    def observed(sample):
+        result = monitor(sample)
+        with sample_path.open('a') as stream:
+            stream.write(json.dumps(sample)+'\n')
+        return result
+    kwargs['monitor'] = observed
+    # Fixed authored stdlib worker; no native owner or model is launched.
+    return p.run_accounted([sys.executable, '-B', '-c', 'import time; end=time.process_time()+.08\nwhile time.process_time()<end: pass'], **kwargs)
+result = p._execute(value, Path(freeze_path), sha, _runner=runner,
+    _admit=lambda *a: [], _budget_factory=budget)
+print(json.dumps(result))
+'''
+    child = subprocess.run([sys.executable, '-B', '-c', helper, str(path), digest],
+        cwd=ROOT, env={**os.environ, 'PYTHONPATH': str(ROOT / 'src')+':'+str(ROOT)},
+        capture_output=True, text=True, timeout=30)
+    assert child.returncode == 0, child.stderr
+    result = json.loads(child.stdout)
+    assert result['jobs'][0]['accounting']['status'] == 'completed', result
+    assert result['jobs'][0]['accounting']['errors'] == []
+    samples = Path(freeze['job']['paths']['control_root']) / 'authored-monitor-samples.jsonl'
+    observed = [json.loads(line) for line in samples.read_text().splitlines()]
+    assert any(row['sampled_worker_cpu_seconds'] > 0 for row in observed)
+    assert result['status'] == 'stopped'  # Authored worker intentionally has no source outcome.
+
+
+@pytest.mark.parametrize('role', ['owner-supervisor.json', 'job.json', 'cleanup.json'])
+def test_rewritten_control_cannot_be_rebound_into_export(tmp_path, monkeypatch, role):
+    p = parent()
+    original = p._write
+    def rewrite(path, value, budget):
+        original(path, value, budget)
+        if path.name == role or (role == 'job.json' and path.name == 'owner-supervisor.json'):
+            target = path.parent / role
+            if role == 'job.json' and path.name == 'job.json':
+                return  # Corrupt only after the owner consumed its original job.
+            control = p._read(target)
+            control['schema' if role != 'owner-supervisor.json' else 'accounting'] = 'AUTHORED REWRITTEN CONTROL'
+            target.write_bytes(memory.canonical_bytes(control))
+    monkeypatch.setattr(p, '_write', rewrite)
+    freeze, result, calls = harness(tmp_path, monkeypatch)
+    assert result['status'] == 'stopped', result
+    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+    assert not (Path(freeze['job']['paths']['control_root']) / 'terminal-export.json').exists()
+
+
+def test_held_input_exit_failure_is_quarantined_before_terminal(tmp_path, monkeypatch):
+    p = parent()
+    execute = p._execute
+    def intercepted(value, path, sha, **kwargs):
+        admit = kwargs['_admit']
+        def with_exit_failure(value, sha, lifetime):
+            checks = admit(value, sha, lifetime)
+            def exit_failure():
+                raise ValueError('AUTHORED HELD INPUT TEARDOWN FAILURE')
+            lifetime.callback(exit_failure)
+            return checks
+        kwargs['_admit'] = with_exit_failure
+        return execute(value, path, sha, **kwargs)
+    monkeypatch.setattr(p, '_execute', intercepted)
+    freeze, result, calls = harness(tmp_path, monkeypatch)
+    assert result['status'] == 'stopped'
+    assert 'TEARDOWN' in result['teardown_error']['message']
+    control = Path(freeze['job']['paths']['control_root'])
+    assert p._read(control / 'parent-terminal.json')['status'] == 'stopped'
+    source = Path(freeze['job']['paths']['owner']).parent
+    assert (source / 'commit.json').exists() and (source.parent / 'quarantine.json').exists()
+
+
+@pytest.mark.parametrize('defect', ['alias-target', 'alias-replaced', 'added-module', 'added-empty-namespace'])
+def test_prepared_runtime_rechecks_alias_and_complete_import_namespace(tmp_path, defect):
+    p = parent()
+    prefix = tmp_path / 'authored-prefix'
+    prefix.mkdir()
+    module = prefix / 'authored.py'
+    module.write_text('AUTHORED_SOURCE = True\n')
+    elf = tmp_path / 'authored-elf'
+    elf.write_bytes(b'authored nonexecutable ELF placeholder')
+    alias = tmp_path / 'authored-python'
+    alias.symlink_to(elf)
+    value = {'job': {'immutable': {'python_alias': str(alias), 'python_elf': {'path': str(elf)},
+        'owner_source': {'path': str(module)}, 'closure': []}}, 'runtime_roots': [str(prefix)]}
+    recheck = p._bind_runtime_namespace(value)
+    recheck()
+    if defect == 'alias-target':
+        other = tmp_path / 'authored-other-elf'
+        other.write_bytes(b'authored other executable placeholder')
+        alias.unlink()
+        alias.symlink_to(other)
+    elif defect == 'alias-replaced':
+        alias.unlink()
+        alias.symlink_to(elf)
+    elif defect == 'added-module':
+        (prefix / 'new_import.py').write_text('AUTHORED_ADDITION = True\n')
+    else:
+        (prefix / 'new_namespace').mkdir()
+    with pytest.raises(ValueError, match='alias|namespace'):
+        recheck()
+
+
+@pytest.mark.parametrize('role', ['owner-supervisor.json', 'job.json'])
+def test_controls_remain_bound_after_creation_until_export(tmp_path, monkeypatch, role):
+    p = parent()
+    original = p._write
+    def rewrite_after_validated_controls(path, value, budget):
+        original(path, value, budget)
+        if path.name == 'cleanup.json':
+            target = path.parent / role
+            changed = p._read(target)
+            changed['schema' if role == 'job.json' else 'accounting'] = 'AUTHORED LATE REBIND'
+            target.write_bytes(memory.canonical_bytes(changed))
+            # Rehashing these bytes would produce a valid descriptor for the
+            # wrong controls. Creation-time pin must remain authoritative.
+            assert p._descriptor(target, target.parent)['sha256'] == hashlib.sha256(target.read_bytes()).hexdigest()
+    monkeypatch.setattr(p, '_write', rewrite_after_validated_controls)
+    freeze, result, calls = harness(tmp_path, monkeypatch)
+    assert result['status'] == 'stopped'
+    assert not (Path(freeze['job']['paths']['control_root']) / 'terminal-export.json').exists()
+    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+
+
+def test_original_freeze_teardown_drift_is_caught_under_lease(tmp_path, monkeypatch):
+    p = parent()
+    # A custom authored context is sufficient to place the mutation at this exact
+    # boundary; the parent must then close/check all remaining held descriptors.
+    execute = p._execute
+    def intercepted(value, path, sha, **kwargs):
+        admit = kwargs['_admit']
+        def delayed_mutation(value, sha, lifetime):
+            checks = admit(value, sha, lifetime)
+            lifetime.callback(lambda: path.write_bytes(path.read_bytes()+b' '))
+            return checks
+        kwargs['_admit'] = delayed_mutation
+        return execute(value, path, sha, **kwargs)
+    monkeypatch.setattr(p, '_execute', intercepted)
+    freeze, result, calls = harness(tmp_path, monkeypatch)
+    assert result['status'] == 'stopped'
+    assert result['teardown_error']['type'] == 'ValueError'
+    assert p._read(Path(freeze['job']['paths']['control_root'])/'parent-terminal.json')['status'] == 'stopped'
+    source = Path(freeze['job']['paths']['owner']).parent
+    assert (source.parent/'quarantine.json').exists()

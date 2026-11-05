@@ -141,8 +141,9 @@ missing-cell or donor proof is inferred here.
 ## Accounting boundary and completion gate
 
 As in the existing `pilot.py` contract, the terminal receipt reports CPU through
-its preparation and explicitly excludes its own serialization/write/fsync, input
-release, lease release and process return. A process cannot observe its own exact
+its preparation and explicitly excludes its own serialization/write/fsync,
+lease release and process return. Held-input release is checked before that
+terminal receipt while the writer lease remains held. A process cannot observe its own exact
 post-exit accounting. Therefore a passing source path is reported as
 `preserved-awaiting-lifetime-reconciliation`, with `actual_source_qualified=false`
 and `parent_lifetime_reconciled=false`. The externally pinned lifetime supervisor
@@ -163,3 +164,37 @@ exit and return. A source-level contract descriptor is not a live outer receipt.
 This binding is deliberately left as an INCOMPLETE load-bearing interface for
 the root's next concrete runtime amendment. Private authored integration may
 exercise the prepared source/preservation core; it cannot authorize real data.
+
+## Prepared-core review fixes
+
+Parent phase CPU is measured only in the original coordinator. The callback in
+`run_accounted`'s forked supervisor uses the prelaunch phase snapshot, that
+supervisor's own SELF CPU since fork, and the helper's supplied live/reaped-worker
+sample. It never subtracts a coordinator baseline from a forked child's counters
+or adds an inclusive subtree to its worker a second time. This live estimate
+omits coordinator CPU accrued while waiting and inherits sampling uncertainty;
+it is containment, not proof of a hard aggregate bound. Closed parent/outer
+accounting still gates acceptance. No cleanup/polling reserve arithmetic or
+assumed administration upper charge is promoted to a proof.
+
+Prepared runtime rechecks now retain the executable alias chain identity and
+census all selected files and directories, including empty import namespaces.
+Alias retarget/replacement and namespace additions refuse. These checks run
+between phases and at held-input teardown. They do not prove which bytes were
+already imported before a later disk hash or atomically close the interval
+between checking an alias and executing it. The trusted external launcher must
+establish the frozen load environment and immutable namespace before interpreter
+startup and preserve that binding through exec. This remains an explicit,
+unimplemented actual-execution blocker.
+
+Created job, launch, supervisor, cleanup and terminal-export controls bind the
+canonical bytes supplied by the validated parent state. Expected descriptors are
+retained from that creation, then held and rechecked through finalization;
+export cannot accept a rewritten control by freshly hashing it. Closed-owner
+outcome/report, source owner metadata, sole snapshot and independent raw-audit
+receipt are also bound to their validated values. Closed logs are pinned when
+first observed after complete reap/drain. All source/control descriptor teardown
+checks finish under the writer lease before the provisional terminal is written.
+A teardown failure records `status:stopped` and `teardown_error` and quarantines
+any retained source marker; the marker, raw, SNP and controls remain. Terminal
+write, lease release and process return still require external lifetime closure.
