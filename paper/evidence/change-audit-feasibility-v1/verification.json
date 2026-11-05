@@ -1,0 +1,26 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "paper/studies/change_audit_feasibility_v1",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.31482289801351726,
+  "initial_test_run": {
+    "passed": 4,
+    "failed": 1,
+    "reason": "mistyped test decimal reference; corrected to known analytic reference; analysis formula unchanged"
+  },
+  "final_tests_passed": 5,
+  "paper_pdf_sha256": "7555c4b9c868f75901a15108c2f50fe5841a571e3a6865f869054eb13022a267",
+  "paper_pdf_unchanged": true,
+  "original_summary_sha256": "489960454a0b3c77688f159ac699a74fe798fe6b4509a8258f38d70a69fe24cc",
+  "independent_math_review": "No Important mathematical flaw in one-sided finite-candidate formulas under declared fixed-family/fresh-sampling premises; fixed-scale limiting floor must be separate from fixed-horizon sample count. No simulation or Lean execution by reviewer."
+}

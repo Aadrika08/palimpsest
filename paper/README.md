@@ -54,3 +54,7 @@ symbolic, and the replay matrix describes this system's execution/validation
 semantics. Neither is a measured performance plot or a competitor comparison.
 `make -C paper figures PYTHON="$(pwd)/.venv/bin/python"` also exports all three
 figures as standalone vector PDFs under `paper/build/standalone-figures/`.
+
+## Bounded research follow-up
+
+The [change-audit feasibility report](evidence/change-audit-feasibility-v1/REPORT.md) reconstructs upstream numerical records, checks theorem assumptions and calculates sample requirements. It is a separate exploratory investigation; no new controller-improvement result or Lean-certified claim has been added to this manuscript.

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "study_id": "change_audit_feasibility_v1",
+  "status": "prospective_plumbing_pilot_not_launch_ready",
+  "purpose": "Validate change identity, full-state branch pairing, separate policy execution and bounded whole-scenario loss accounting; no population-improvement claim.",
+  "baseline": {
+    "controller": "flynn",
+    "forward_gain": 1,
+    "assets": "Must pin existing permitted checkpoint/manifest hashes before launch"
+  },
+  "candidates": [
+    {
+      "id": "v050",
+      "forward_gain": 0.5
+    },
+    {
+      "id": "v075",
+      "forward_gain": 0.75
+    },
+    {
+      "id": "v125",
+      "forward_gain": 1.25
+    }
+  ],
+  "transform": "Scale only the finite outgoing velocity before existing environment actuation; retain native heading. Pin exact clipping semantics and state serialization in adapter source before launch. No extra privileged observations.",
+  "sampling": {
+    "scenario_count": 4,
+    "unit": "one whole fresh developmental scenario with all four conditions",
+    "distribution": "Not yet pinned; must freeze factory config and a draw mechanism independent of pilot outcomes, with protected held-out banks excluded.",
+    "pairing": "Create one full initial snapshot per scenario; restore identical simulator/controller/RNG/application state for each separately executed policy condition. Baseline and candidates must actually invoke FLYNN."
+  },
+  "loss": {
+    "range": [
+      0,
+      1
+    ],
+    "definition": "For plumbing only: 0 if the declared goal predicate is reached within64ticks,1 otherwise. Infrastructure/integrity failure is a separate failed unit, never silently dropped or counted as task loss.",
+    "certification_eligible": false
+  },
+  "resources": {
+    "cpu_only": true,
+    "sequential": true,
+    "max_conditions": 16,
+    "max_ticks_per_condition": 64,
+    "max_wall_seconds": 1800,
+    "max_condition_seconds": 120,
+    "max_new_runtime_output_bytes": 536870912,
+    "minimum_free_disk_bytes": 6442450944,
+    "training_allowed": false,
+    "paid_compute_allowed": false
+  },
+  "launch_gates": [
+    "Pin adapter source and serialization including gain and native actuation clipping",
+    "Pin all runtime/model/asset identities and permissible use",
+    "Freeze developmental scenario factory/draw identity; exclude protected held-out datasets",
+    "Verify fresh-state pairing and separate policy execution without replay substitution",
+    "Verify current free space and all output reservations before every unit"
+  ],
+  "stopping": "Stop after first timeout, identity/sampling violation or cap breach. Preserve all failures and partials. No retries or extra seeds under this protocol.",
+  "next_research_audit": "Separate protocol required after pilot review. Freeze candidate family and baseline, target distribution, bounded full-episode loss, alpha, fixed horizon or fixed betting scale, exclusions and finite allocation before any audit outcomes. Pilot is never counted as held-out audit data.",
+  "confidence_planning": {
+    "K": 3,
+    "one_sided_family_alpha": 0.05,
+    "design_horizon": 128,
+    "actual_audit_launched": false
+  }
+}

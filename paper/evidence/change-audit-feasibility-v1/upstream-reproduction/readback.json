@@ -1,0 +1,54 @@
+{
+  "readback_files_checked": 19,
+  "readback_all_sha256_match": true,
+  "raw_total_regular_bytes": 12874376,
+  "batteries": [
+    {
+      "name": "w_sr_battery_20260824",
+      "paired_mean_checks": 100,
+      "radius_checks": 100,
+      "min_n_stop": 32768,
+      "max_n_stop": 32768,
+      "keys": [
+        "t",
+        "a",
+        "b",
+        "n_stop",
+        "delta_hat",
+        "L",
+        "U",
+        "delta_hat_hex",
+        "L_hex",
+        "U_hex",
+        "r_raw_hex",
+        "width",
+        "scale",
+        "alpha_side"
+      ]
+    },
+    {
+      "name": "w2_spi_battery_20260824",
+      "paired_mean_checks": 100,
+      "radius_checks": 0,
+      "min_n_stop": 32768,
+      "max_n_stop": 32768,
+      "keys": [
+        "t",
+        "parent",
+        "successor",
+        "n_stop",
+        "delta_hat",
+        "L",
+        "U",
+        "width",
+        "scale",
+        "alpha_side",
+        "checkpoint_means",
+        "checkpoint_widths"
+      ]
+    }
+  ],
+  "input_total_bytes": 12833025,
+  "all_six_lean_source_hashes_match": true,
+  "lean_compiled": false
+}
