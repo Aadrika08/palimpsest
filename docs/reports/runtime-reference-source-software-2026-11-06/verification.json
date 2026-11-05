@@ -1,0 +1,79 @@
+{
+  "actual_preservation_verified": false,
+  "actual_source_qualified": false,
+  "approved_research_cpu_prior_seconds": 1222.455497,
+  "artifact_copy_exit_code": 0,
+  "artifacts": {
+    "canonical.log": {
+      "sha256": "8f9999e65a261c3a527acf4d034d5234981b2c26bd745e92625def5820a8f569",
+      "size_bytes": 16796
+    },
+    "run.sh": {
+      "sha256": "e6b7e3c08c166d1c62fd2b7a1edd206e506cd5d30ef119e9986958ce9813b1c3",
+      "size_bytes": 1519
+    },
+    "snapshot_sources.py": {
+      "sha256": "f49f6f66c2d0a1708978f2ed047b0d64faa0d16e4cc774d1f8160a7de13497f0",
+      "size_bytes": 2441
+    },
+    "source-config-after.json": {
+      "sha256": "c78608dc7d0d08ec5168a4a0900fd24e3a8ee3dce97c032be75c3e95df7c51eb",
+      "size_bytes": 3737
+    },
+    "source-config-before.json": {
+      "sha256": "c78608dc7d0d08ec5168a4a0900fd24e3a8ee3dce97c032be75c3e95df7c51eb",
+      "size_bytes": 3737
+    },
+    "tmpfs-authored-fixtures.tar": {
+      "sha256": "249833b458cc5dbd063bda600e61eb9d0243ec22d87a6682a7b0a23a797f8941",
+      "size_bytes": 10588160
+    },
+    "tmpfs-software-fixtures-list.txt": {
+      "sha256": "7c4625343fde59a03045ed582e9c9219828b84ff5842f9bbcb8fa66f16f7d89f",
+      "size_bytes": 254179
+    }
+  },
+  "canonical_passes": [
+    {
+      "deselected": 69,
+      "passed": 7035,
+      "seconds": 1956.1,
+      "skipped": 318,
+      "warnings": 105
+    },
+    {
+      "deselected": 7415,
+      "passed": 7,
+      "seconds": 10.4,
+      "skipped": 0,
+      "warnings": 2
+    },
+    {
+      "deselected": 7417,
+      "passed": 5,
+      "seconds": 59.19,
+      "skipped": 0,
+      "warnings": 2
+    },
+    {
+      "deselected": 7365,
+      "passed": 57,
+      "seconds": 53.26,
+      "skipped": 0,
+      "warnings": 2
+    }
+  ],
+  "exit_code": 0,
+  "failed": 0,
+  "fixture_preservation": "Runner cleanup suppressed only in parent shell; remaining private /tmp software fixtures archived with sparse tar before namespace exit; archive stays local",
+  "head": "afacfbfc3d2ffbfa1af0dca3a70fb5e0940be207",
+  "named_source_config_changed": [],
+  "named_source_config_files_continuity_checked": 21,
+  "raw_deletion_enabled": false,
+  "research_execution_launched": false,
+  "runtime_profile_adopted": false,
+  "schema": "runtime-reference-source-software-verification-v1",
+  "scope": "21 explicitly named source/config files only; no all-tracked or installed runtime/model/data payload inventory hashes",
+  "total_passed": 7104,
+  "total_skipped": 318
+}

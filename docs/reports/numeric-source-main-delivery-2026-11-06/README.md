@@ -15,8 +15,9 @@ retained as main-postmerge-42113003331.log/json. The ordinary pass reports
 105 warnings; each later pass reports two dependency/escape warnings. These
 are retained rather than described as warning-free validation.
 
-This delivers the numeric source software only. Local CPU-compatibility and
-runtime-reference prototype work is later, unpushed and outside this result.
+This delivers the numeric source software only. CPU-compatibility and
+runtime-reference prototype work is a later candidate outside this result;
+subsequent verification/delivery must be read separately.
 Actual source preservation/qualification, all research cohorts/capability gates,
 human/operator acceptance, licensing and paper/archive completion remain open.
 Raw deletion remains disabled. The earlier verification-snapshot scope error

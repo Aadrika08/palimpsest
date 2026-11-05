@@ -1,0 +1,201 @@
+2026-11-05T22:48:51Z
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+....................s.................sss....................s.......... [  5%]
+...............................................s............s........... [  6%]
+....................s..................ss..........s..s................. [  7%]
+.....................................s.................................. [  8%]
+.............................s.......................................... [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+..................ss.........................................sssssssssss [ 15%]
+sssssssssssssssssssss................................................... [ 16%]
+........................................................................ [ 17%]
+.......................sssssssssssssssssssssssssssssssssssssssssssssssss [ 18%]
+ssssssssssssssssssssssssssssssssss...................................... [ 19%]
+................sssssssssssssssssssssssssssssssssssssssssssssss..ssss... [ 20%]
+.......................s...........................ss....ss............. [ 21%]
+........................................................................ [ 22%]
+...........................................................sssssssssssss [ 23%]
+sssssssssss............................................................. [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+.....................................sssssssssssssss...s................ [ 29%]
+............................s........................................... [ 30%]
+........................................................................ [ 31%]
+........................................................................ [ 32%]
+.............................................................ss......... [ 33%]
+........................................................................ [ 34%]
+................................................................ssssssss [ 35%]
+sssssssssss............................................................. [ 36%]
+.......................................sss.............................. [ 37%]
+........................................................................ [ 38%]
+....................s................................................... [ 39%]
+.......................s.s.sssssssssssssss.............................. [ 40%]
+.....................................................................sss [ 41%]
+s.sssss.s............................................................... [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+...........s............................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+....................ssssss.............................................. [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+..........s...........ss................................................ [ 72%]
+........................................................................ [ 73%]
+............................................s..ss..ss..s......s..s...... [ 74%]
+....s..ss............................................................... [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+..........s............................................................. [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+..........................sssssss..s.................................... [ 94%]
+.........................................ssss........................... [ 95%]
+................s..........sss.......................................... [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+.........                                                                [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_artwork_encounter.py::EncounterTests::test_missing_unexpected_duplicate_and_escaping_members_rejected
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'afterimage.svg'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+tests/test_flynn.py: 17 warnings
+tests/test_memory_family_cell_replay_v4.py: 25 warnings
+tests/test_snapshots.py: 5 warnings
+tests/test_velocity_gain_flynn.py: 9 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_family_cell_replay_v4.py::test_actual_upstream_cell_matches_recorded_policy_without_retina[source]
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_puck_episode_profile_candidate.py: 30 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/derive_puck_episode_profile.py:176: DeprecationWarning: invalid escape sequence '\$'
+    """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+7035 passed, 318 skipped, 69 deselected, 105 warnings in 1956.10s (0:32:36)
+.......                                                                  [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+7 passed, 7415 deselected, 2 warnings in 10.40s
+.....                                                                    [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 7417 deselected, 2 warnings in 59.19s
+.........................................................                [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+57 passed, 7365 deselected, 2 warnings in 53.26s
+2026-11-05T23:23:37Z

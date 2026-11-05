@@ -3,7 +3,8 @@
 The three source tasks are implemented and individually reviewed through
 `a75a4c2cbc7f21e8ccf53479b7eae65eba434c54`. Whole-migration review and
 the single consolidated fix rereview passed. The current combined canonical
-suite and exact-head hosted checks remain pending; no actual qualification follows.
+suite passed7,104 checks with318 skips at afacfbf; exact-head hosted verification
+is tracked separately. No actual qualification follows.
 
 Task 1 passed 46 focused checks after its two independently reproduced findings
 were fixed. Task 2 passed 149 focused checks. Task 3 passed the five named
