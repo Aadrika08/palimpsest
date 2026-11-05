@@ -81,6 +81,24 @@ RNG/scientific state remains in the match, and replay validation is unchanged.
 An unmatched seed retains all four rows and is excluded as a whole from timing
 summaries. Open/close costs are separate from steady-state tick time.
 
+The separate post-run `scripts/audit_authority_state.py` checks retained raw and
+normalized cost snapshots against the raw inventory and reported state digests.
+It scans numeric container arrays/scalars and exposed native MuJoCo/model views
+for finite values, then independently reproduces the recorder-field removal
+and timer-only normalization. This establishes evidence about retained states;
+it does not add a benchmark-time guard. Run after the campaign finishes:
+
+```sh
+python -B paper/scripts/audit_authority_state.py \
+  --summary RAW_ROOT/analysis/summary.json --raw-root RAW_ROOT \
+  --output paper/evidence/authority-replay-v1/cost-state-audit.json
+```
+
+The output is exclusive: an existing audit is retained. Its summary and inventory
+hashes distinguish the exact inputs. The S1 table separately reports absolute
+velocity-command and heading-angle errors, preserving their coordinates rather
+than treating a combined numerical discrepancy as a physical distance.
+
 Raw campaign outputs are local ignored artifacts. Compact evidence and the
 frozen protocol support review without silently redistributing third-party
 assets. Check `THIRD_PARTY_NOTICES.md` and source terms before public deposit of

@@ -166,6 +166,7 @@ def main(argv: list[str] | None = None) -> int:
         *sources,
         *generated,
         paper / "scripts" / "build_authority_evidence.py",
+        paper / "scripts" / "audit_authority_state.py",
         paper / "scripts" / "verify_paper.py",
         *sorted((paper / "figures").glob("*.tex")),
         *sorted(path for path in evidence.rglob("*") if path.is_file() and path not in sources),
