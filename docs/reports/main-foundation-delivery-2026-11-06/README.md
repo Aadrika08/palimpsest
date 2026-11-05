@@ -23,3 +23,5 @@ prove the entire project, actual research/runtime qualification, licensing,
 human acceptance or paper/archive release complete. Raw deletion remains
 disabled. Automatic post-merge main checks are tracked separately and are not
 assumed green from tree equivalence alone.
+
+The separate [post-merge run42095442284](https://github.com/Aadrika08/palimpsest/actions/runs/42095442284) subsequently passed at exact main `530ffe6`: 6,585 passed, 318 skipped, zero failures, 48 preflight checks and frontend. Its original log and API result are retained and manifest-bound here. This directly verifies that main head; it does not validate the newer numeric-source tree.
