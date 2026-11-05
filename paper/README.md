@@ -1,9 +1,9 @@
 # Authority-aware replay manuscript
 
 The venue-neutral paper is `main.tex`. It replaces the historical feature and
-capability inventory with one semantic-contract argument and RQ1–RQ4. The target
-is 7–9 pages including figures and references; final pagination must be checked
-with the real generated tables and plot.
+capability inventory with one semantic-contract argument and RQ1–RQ4. The
+venue-neutral layout includes the evaluation tables, three figures and references;
+a submission venue determines the final template and length.
 
 The execution study is `studies/authority_replay_v1/`. Its predeclared protocol
 was committed and then frozen before the result-producing campaign. This is not
@@ -13,11 +13,18 @@ are not held out.
 
 ## Build and evidence binding
 
-Use `make -C paper paper` after the evidence-generation owner has installed the
-focused build interface and bound the retained campaign summary. Use
-`make -C paper verify` for the integrated verification flow. Consult the Makefile
-and study README for the exact current command and source options; this document
-does not authorize launching or repeating a campaign.
+Build from the repository root using the locked lab dependencies, TeX Live
+(`pdflatex` and `bibtex`), and Poppler (`pdfinfo` and `pdftotext`):
+
+```sh
+uv sync --locked --extra simulation --extra lab
+make -C paper verify PYTHON="$(pwd)/.venv/bin/python"
+```
+
+`make -C paper paper` builds the PDF without writing verification metadata.
+The build reads retained evidence and never launches experiments. This host's
+prepared interpreter is `/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python`.
+See `ARTIFACT.md` for execution identities, retained attempts and post-run audits.
 
 The manuscript consumes only these focused generated inputs:
 
@@ -29,11 +36,11 @@ The manuscript consumes only these focused generated inputs:
 - `generated/overhead-plot.tex`
 - `generated/snapshot-ablation.tex`
 
-Missing inputs display explicit PENDING text. The paper never substitutes the
-historical `claims.tex`, old capability outcomes, smoke measurements, or expected
-fault responses for new results. Generated files must come from verified compact
-campaign evidence. Real result interpretation, final PDF rendering and every-page
-visual inspection remain necessary before claiming the rewrite is complete.
+Generation refuses missing or inconsistent evidence. The historical
+`claims.tex`, development smoke measurements and expected fault responses do not
+supply results. Verification checks exact generation, input hashes, citations,
+overflow, missing sections and unresolved placeholders. Every final PDF page
+also requires visual inspection.
 
 The two static figures are vector TikZ/table sources. Authority ticks are
 symbolic, and the replay matrix describes this system's execution/validation
