@@ -168,6 +168,10 @@ def main(argv: list[str] | None = None) -> int:
         paper / "scripts" / "build_authority_evidence.py",
         paper / "scripts" / "audit_authority_state.py",
         paper / "scripts" / "verify_paper.py",
+        repo / "pyproject.toml",
+        repo / "uv.lock",
+        repo / "src" / "palimpsest" / "snapshots.py",
+        *sorted((paper / "studies" / "authority_replay_v1").glob("*.py")),
         *sorted((paper / "figures").glob("*.tex")),
         *sorted(path for path in evidence.rglob("*") if path.is_file() and path not in sources),
     ]
