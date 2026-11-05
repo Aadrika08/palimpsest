@@ -142,6 +142,7 @@ def test_execution_fixture_real_writers(tmp_path, monkeypatch):
         rows.append({'seed': 0, 'condition': condition, 'status': 'completed', **result})
         assert result['tick_count'] == 220
         assert result['metrics']['open_seconds'] >= 0
+        assert result['metrics']['close_seconds'] >= 0
         assert result['metrics']['camera_seconds'] >= 0
         assert (result['metrics']['bytes_per_tick'] == 0) == (condition == 'null')
     assert o.match_seed(rows)
@@ -178,3 +179,85 @@ def test_persisted_campaign_clock_cannot_extend(tmp_path, monkeypatch):
     assert o.campaign_deadline(tmp_path, identity, 2000.) == 2000.
     with pytest.raises(ValueError, match='identity drift'):
         o.campaign_deadline(tmp_path, {'commit': 'different'})
+
+
+@pytest.mark.parametrize('rng_field', ['environment', 'spaces', 'python', 'numpy', 'torch_cpu'])
+def test_rng_divergence_excludes_entire_seed(monkeypatch, rng_field):
+    from palimpsest import snapshots
+    state = {'rng': {name: [1, 2, 3] for name in ['environment', 'spaces', 'python', 'numpy', 'torch_cpu']},
+             'application': {'source_run_id': 'recorder', 'event_prefix': {}, 'tick': 220}, 'policy': [4, 5]}
+    monkeypatch.setattr(snapshots, 'capture', lambda *args, **kwargs: copy.deepcopy(state))
+    engine = type('Engine', (), {'env': None, 'observation': None, 'policy': None, 'application_state': lambda _: {}})()
+    original = o._final_digest(engine)
+    state['rng'][rng_field][-1] += 1
+    divergent = o._final_digest(engine)
+    rows = [dict(seed=0, condition=c, status='completed', metrics={}, actions_sha256='a', tick_count=220,
+                 final_state_sha256=divergent if i == 3 else original) for i, c in enumerate(o.CONDITIONS)]
+    assert not o.match_seed(rows)
+    assert all(r['timing_eligible'] is False for r in rows)
+
+
+@pytest.mark.parametrize('boundary', ['unit_bytes', 'campaign_bytes', 'free_space', 'campaign_deadline', 'unit_timeout'])
+def test_fast_successful_child_must_pass_final_boundaries(tmp_path, monkeypatch, boundary):
+    import io
+    import json
+    from collections import namedtuple
+    disk = namedtuple('disk', 'total used free')
+    launched = False
+    output = tmp_path / 'unit'
+    def size(path):
+        if launched and boundary == 'unit_bytes' and Path(path) == output:
+            return 512 * o.MiB + 1
+        if launched and boundary == 'campaign_bytes' and Path(path) == tmp_path:
+            return 8 * o.GiB + 1
+        return 0
+    def free(path):
+        return disk(100 * o.GiB, 0, 5 * o.GiB if launched and boundary == 'free_space' else 100 * o.GiB)
+    class FastChild:
+        def __init__(self, *args, **kwargs):
+            nonlocal launched
+            launched = True
+            self.args, self.returncode = args, 0
+            self.stdout, self.stderr = io.BytesIO(), io.BytesIO()
+            (output / 'worker-result.json').write_text(json.dumps({'metrics': {'wall_seconds': 1.}}))
+        def poll(self):
+            return 0
+    monkeypatch.setattr(o, '_size', size)
+    monkeypatch.setattr(o.shutil, 'disk_usage', free)
+    monkeypatch.setattr(o.subprocess, 'Popen', FastChild)
+    monkeypatch.setattr(o.time, 'time', lambda: 2000. if launched and boundary == 'campaign_deadline' else 1000.)
+    times = iter([0., 901. if boundary == 'unit_timeout' else 1.])
+    monkeypatch.setattr(o.time, 'monotonic', lambda: next(times))
+    row = o.run_execution_overhead_unit(0, 'null', output=output, assets=tmp_path,
+                                         campaign_root=tmp_path, campaign_deadline_epoch=None if boundary == 'unit_timeout' else 1500.)
+    assert launched
+    assert row['status'] in ('failed', 'timeout')
+    assert row['timing_eligible'] is False
+    assert row.get('error')
+    if boundary in ('unit_bytes', 'campaign_bytes', 'free_space'):
+        assert row['error']['resource_limit'] == boundary
+
+
+def test_cap_specific_failure_stops_remaining_declared_units(tmp_path, monkeypatch):
+    from paper.studies.authority_replay_v1.common import read_rows
+    calls = []
+    identity = {'commit': 'fixture-only'}
+    def failed(seed, condition, **kwargs):
+        calls.append((seed, condition))
+        return {'schema_version': 1, 'study_id': 'authority_replay_v1', 'kind': 'execution_overhead',
+                'seed': seed, 'condition': condition, 'condition_ordinal': o.condition_order(seed).index(condition),
+                'unit_id': f'overhead/{seed}/{condition}', 'identity': identity, 'status': 'failed',
+                'timing_eligible': False, 'metrics': {},
+                'error': {'type': 'ResourceBoundaryError', 'resource_limit': 'unit_bytes', 'message': 'unit output cap crossed'}}
+    monkeypatch.setattr(o, 'run_execution_overhead_unit', failed)
+    monkeypatch.setattr(o, 'campaign_identity', lambda *args: identity)
+    output = tmp_path / 'overhead'
+    monkeypatch.setattr(o.sys, 'argv', ['overhead.py', '--kind', 'execution', '--protocol',
+                        str(o.REPO / 'paper/studies/authority_replay_v1/protocol.json'), '--assets', str(tmp_path),
+                        '--output', str(output), '--campaign-root', str(tmp_path)])
+    assert o.main() == 1
+    rows = read_rows(output / 'rows.jsonl')
+    assert len(calls) == 1
+    assert len(rows) == 40
+    assert all(row['status'] == 'incomplete' for row in rows[1:])
+    assert all(not row['timing_eligible'] for row in rows)

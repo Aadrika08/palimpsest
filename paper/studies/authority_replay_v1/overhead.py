@@ -188,8 +188,7 @@ def _budget(output, campaign_root):
 def _final_digest(engine):
     from palimpsest.snapshots import capture, state_digest
     state = capture(engine.env, engine.observation, policy=engine.policy, application=engine.application_state())
-    # Recorder identity and process-global RNG are not runtime continuation state.
-    state.pop('rng')
+    # Normalize recorder identity only; every seeded RNG is continuation state.
     for key in ('source_run_id', 'event_prefix'):
         state['application'].pop(key)
     return state_digest(state)
@@ -229,7 +228,10 @@ def _execution(seed, condition, output, repo, assets, campaign_root):
         result['metrics']['open_seconds'] = opened
         result['camera_timing_scope'] = 'env._render_camera; nested in physics_seconds' if render else 'unavailable: env._render_camera absent'
     finally:
+        closing = time.perf_counter()
         engine.close()
+        close_seconds = time.perf_counter() - closing
+    result['metrics']['close_seconds'] = close_seconds
     result['metrics']['output_bytes'] = _size(output)
     return result
 
@@ -300,6 +302,23 @@ def _operation(seed, source, output, repo, assets, campaign_root):
                                  'policy_replay_seconds': 'production policy replay including open/close'}}
 
 
+class ResourceBoundaryError(ValueError):
+    def __init__(self, limit, message):
+        super().__init__(message)
+        self.resource_limit = limit
+
+
+def _resource_boundary(condition, limit, message):
+    if not condition:
+        raise ResourceBoundaryError(limit, message)
+
+
+def _validate_output_resources(output, campaign_root):
+    _resource_boundary(_size(output) <= 512 * MiB, 'unit_bytes', 'unit output cap crossed')
+    _resource_boundary(_size(campaign_root) <= 8 * GiB, 'campaign_bytes', 'campaign output cap crossed')
+    _resource_boundary(shutil.disk_usage(output).free >= 6 * GiB, 'free_space', 'free-space reserve crossed')
+
+
 def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, condition=None, source=None, campaign_deadline_epoch=None):
     require(type(seed) is int and seed in range(10 if kind == 'execution_overhead' else 5), 'undeclared seed')
     if condition is not None:
@@ -317,8 +336,8 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
     campaign_root = Path(campaign_root)
     try:
         require(Path(output).resolve().is_relative_to(campaign_root.resolve()), 'unit must be below campaign root')
-        require(shutil.disk_usage(output).free - 512 * MiB >= 6 * GiB, 'free-space reserve prevents unit admission')
-        require(_size(campaign_root) + 512 * MiB <= 8 * GiB, 'campaign output cap prevents unit admission')
+        _resource_boundary(shutil.disk_usage(output).free - 512 * MiB >= 6 * GiB, 'free_space', 'free-space reserve prevents unit admission')
+        _resource_boundary(_size(campaign_root) + 512 * MiB <= 8 * GiB, 'campaign_bytes', 'campaign output cap prevents unit admission')
         require(campaign_deadline_epoch is None or time.time() < campaign_deadline_epoch, 'campaign deadline prevents unit admission')
         timeout = min(900., max(0., campaign_deadline_epoch - time.time())) if campaign_deadline_epoch else 900.
         config = {'kind': kind, 'seed': seed, 'condition': condition, 'source': str(source) if source else None,
@@ -348,8 +367,7 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
                     if time.monotonic() - start >= timeout:
                         raise subprocess.TimeoutExpired(child.args, timeout)
                     require(not overflow.is_set(), 'native log cap crossed')
-                    require(_size(output) < 512 * MiB and _size(campaign_root) < 8 * GiB, 'output cap crossed')
-                    require(shutil.disk_usage(output).free >= 6 * GiB, 'free-space reserve crossed')
+                    _validate_output_resources(output, campaign_root)
                     time.sleep(.1)
             finally:
                 if child.poll() is None:
@@ -359,13 +377,22 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
                     drain.join()
         require(not overflow.is_set(), 'native log cap crossed')
         require(child.returncode == 0, f'worker failed ({child.returncode}); see stderr.log')
-        row.update(json.loads((output / 'worker-result.json').read_text()), status='completed')
+        result = json.loads((output / 'worker-result.json').read_text())
+        # A fast child can exit between monitor polls; final acceptance includes
+        # drained logs and the retained result, not just observed running state.
+        _validate_output_resources(output, campaign_root)
+        if time.monotonic() - start >= timeout or (campaign_deadline_epoch is not None and time.time() >= campaign_deadline_epoch):
+            raise subprocess.TimeoutExpired(child.args, timeout)
+        row.update(result, status='completed')
         if kind == 'operation_cost':
             row['timing_eligible'] = True
     except subprocess.TimeoutExpired as exc:
         row.update(status='timeout', error={'type': type(exc).__name__, 'message': str(exc)})
     except Exception as exc:
-        row.update(status='failed', error={'type': type(exc).__name__, 'message': str(exc)})
+        error = {'type': type(exc).__name__, 'message': str(exc)}
+        if isinstance(exc, ResourceBoundaryError):
+            error['resource_limit'] = exc.resource_limit
+        row.update(status='failed', error=error)
     row['metrics']['output_bytes'] = _size(output)
     validate_finite(row)
     return row
@@ -464,7 +491,7 @@ def main():
                 except Exception as exc:
                     row.update(status='failed', timing_eligible=False, error={'type': 'SourceMutation', 'message': str(exc)})
                     stopped = str(exc)
-                if row['status'] == 'timeout' or row.get('error', {}).get('type') == 'ValueError':
+                if row['status'] == 'timeout' or row.get('error', {}).get('type') == 'ValueError' or row.get('error', {}).get('resource_limit'):
                     stopped = 'unit hard cap or admission failure; no further units'
             rows.append(row)
         if kind == 'execution_overhead':
