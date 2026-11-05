@@ -4,6 +4,8 @@ import importlib
 import os
 from pathlib import Path
 import time
+import errno
+import tempfile
 import pytest
 from palimpsest import memory
 
@@ -218,4 +220,141 @@ def test_dependency_teardown_failure_quarantines_while_case_fd_is_held(tmp_path,
             dependencies=[{'root':str(dep),'entries':[row]}]) as held:
             held.write_case_files(payloads);held.publish()
     assert (root/'cases'/case/'quarantine.json').exists()
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+def test_retained_mutation_during_dependency_teardown_never_returns_success(tmp_path,monkeypatch):
+    root=tmp_path/'evidence';case,entries,payloads=fixture(root);m=module()
+    dep=tmp_path/'external';dep.mkdir();(dep/'receipt').write_bytes(b'x')
+    row={'path':'receipt','size_bytes':1,'sha256':hashlib.sha256(b'x').hexdigest()}
+    original=m.custody.HeldReplayFiles.__exit__
+    def exit_and_mutate_case(self,*args):
+        result=original(self,*args)
+        if self.root==dep:
+            relative=entries[0]['path'][len(f'.pending/{case}/'):]
+            (root/'cases'/case/relative).write_bytes(b'mutated during teardown')
+        return result
+    monkeypatch.setattr(m.custody.HeldReplayFiles,'__exit__',exit_and_mutate_case)
+    before=len(os.listdir('/proc/self/fd'))
+    with pytest.raises(m.CasePublicationIndeterminate):
+        with m._CasePublication(root,case,entries,time.monotonic()+30,
+            dependencies=[{'root':str(dep),'entries':[row]}]) as held:
+            held.write_case_files(payloads);held.publish()
+    assert (root/'cases'/case/'quarantine.json').exists()
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+@pytest.mark.parametrize('count',[418,419])
+def test_exact_retained_entry_boundary_including_short_cases(tmp_path,count):
+    root=tmp_path/'evidence';case,entries,payloads=fixture(root);m=module()
+    for i in range(count-len(entries)):
+        path=f'.pending/{case}/source/recording/chunks/extra-{i:04d}'
+        (root/path).write_bytes(b'x')
+        entries.append({'path':path,'size_bytes':1,'sha256':hashlib.sha256(b'x').hexdigest()})
+    entries.sort(key=lambda row:row['path'])
+    if count==419:
+        with pytest.raises(ValueError,match='retained-file bound'):
+            m._CasePublication(root,case,entries,time.monotonic()+30)
+        assert not (root/'.pending'/case/'manifest.json').exists()
+    else:
+        with m._CasePublication(root,case,entries,time.monotonic()+30) as held:
+            held.write_case_files(payloads);held.publish()
+        final=root/'cases'/case
+        assert len(list(final.rglob('*')))+1==454
+
+
+@pytest.mark.parametrize('parent',['.pending','cases'])
+def test_missing_parent_is_not_created_and_descriptors_do_not_leak(tmp_path,parent):
+    root=tmp_path/'evidence';case,entries,payloads=fixture(root);m=module()
+    (root/parent).rename(root/(parent+'-saved'))
+    before=len(os.listdir('/proc/self/fd'))
+    with pytest.raises((ValueError,OSError)):
+        with m._CasePublication(root,case,entries,time.monotonic()+30):
+            pytest.fail('A missing durable parent cannot be admitted')
+    assert not (root/parent).exists()
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+def test_real_cross_device_rename_has_no_copy_or_replace_fallback(tmp_path):
+    m=module();repo=Path(__file__).resolve().parents[1]
+    if os.stat(tmp_path).st_dev==os.stat('/dev/shm').st_dev:
+        peer=Path(tempfile.mkdtemp(prefix='case-cross-device-',dir=repo/'.pytest_cache'))
+    else:
+        peer=Path(tempfile.mkdtemp(prefix='palimpsest-case-cross-device-',dir='/dev/shm'))
+    assert os.stat(tmp_path).st_dev!=os.stat(peer).st_dev
+    source=tmp_path/'from';destination=peer/'to';source.mkdir();destination.mkdir()
+    (source/'case').mkdir();(source/'case'/'original').write_bytes(b'keep')
+    old=os.open(source,os.O_RDONLY|os.O_DIRECTORY)
+    new=os.open(destination,os.O_RDONLY|os.O_DIRECTORY)
+    try:
+        with pytest.raises(OSError) as raised:m._rename_case_noreplace(old,'case',new)
+        assert raised.value.errno==errno.EXDEV
+        assert (source/'case'/'original').read_bytes()==b'keep'
+        assert not (destination/'case').exists()
+    finally:
+        os.close(old);os.close(new)
+
+
+def test_observed_cross_device_parents_refuse_before_creation(tmp_path,monkeypatch):
+    root=tmp_path/'evidence';case,entries,payloads=fixture(root);m=module()
+    capability=m._CasePublication(root,case,entries,time.monotonic()+30)
+    observed={};directory=m.custody.HeldReplayFiles._directory;fstat=m.os.fstat
+    def capture(self,parts):
+        fd=directory(self,parts)
+        if parts==capability._cases_key:observed['fd']=fd
+        return fd
+    class OtherDevice:
+        def __init__(self,actual):self.actual=actual;self.st_dev=actual.st_dev+1
+        def __getattr__(self,name):return getattr(self.actual,name)
+    def device(fd):
+        actual=fstat(fd)
+        return OtherDevice(actual) if fd==observed.get('fd') else actual
+    monkeypatch.setattr(m.custody.HeldReplayFiles,'_directory',capture)
+    monkeypatch.setattr(m.os,'fstat',device)
+    before=len(os.listdir('/proc/self/fd'))
+    with pytest.raises(ValueError,match='one filesystem'):
+        with capability:pytest.fail('Cross-device parents cannot be admitted')
+    assert not (root/'.pending'/case/'manifest.json').exists()
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+@pytest.mark.parametrize('phase',['manifest.json','close.json','.commit.tmp','marker-rename',
+    'case-rename','source-fsync','destination-fsync'])
+@pytest.mark.parametrize('defect',['retained-file','retained-directory'])
+def test_hostile_retained_mutation_at_each_publication_transition(tmp_path,monkeypatch,phase,defect):
+    root=tmp_path/'evidence';case,entries,payloads=fixture(root);m=module()
+    def mutate():
+        base=(root/'.pending'/case) if (root/'.pending'/case).exists() else root/'cases'/case
+        relative=entries[0]['path'][len(f'.pending/{case}/'):]
+        target=base/relative
+        if defect=='retained-file':target.write_bytes(b'hostile bytes')
+        else:
+            parent=target.parent;parent.rename(parent.with_name(parent.name+'-replaced'));parent.mkdir()
+    if phase in ('manifest.json','close.json','.commit.tmp'):
+        original=m._CasePublication._write
+        def after_write(self,name,payload):
+            result=original(self,name,payload)
+            if name==phase:mutate()
+            return result
+        monkeypatch.setattr(m._CasePublication,'_write',after_write)
+    elif phase in ('marker-rename','case-rename'):
+        target=m.source if phase=='marker-rename' else m
+        name='_rename_noreplace' if phase=='marker-rename' else '_rename_case_noreplace'
+        original=getattr(target,name)
+        def after_rename(*args):
+            result=original(*args);mutate();return result
+        monkeypatch.setattr(target,name,after_rename)
+    else:
+        original=m._CasePublication._fsync_parent
+        def after_fsync(self,name):
+            result=original(self,name)
+            if phase==name+'-fsync':mutate()
+            return result
+        monkeypatch.setattr(m._CasePublication,'_fsync_parent',after_fsync)
+    before=len(os.listdir('/proc/self/fd'))
+    with pytest.raises(m.CasePublicationIndeterminate):
+        with m._CasePublication(root,case,entries,time.monotonic()+30) as held:
+            held.write_case_files(payloads);held.publish()
+    final=(root/'cases'/case) if (root/'cases'/case).exists() else root/'.pending'/case
+    assert (final/'quarantine.json').exists()
     assert len(os.listdir('/proc/self/fd'))==before

@@ -83,6 +83,43 @@ def test_public_final_reader_recomputes_rebound_candidate(admitted,target):
         publication.read_retained_published_case(**admitted,case_commit=expected)
 
 
+@pytest.mark.parametrize('target',['duplicate-key','malformed-json','cross-case'])
+def test_public_final_reader_rejects_rebound_root_encoding_and_case(admitted,monkeypatch,target):
+    published=publication.publish_retained_case(**admitted)
+    root=admitted['evidence_root'];case_id=admitted['case_slot']['case_id']
+    path=f'cases/{case_id}/commit.json';marker=artifacts._json((root/path).read_bytes())
+    if target=='duplicate-key':
+        raw=memory.canonical_bytes(marker)
+        payload=raw[:-1]+b',"schema":"memory-family-case-commit-v1"}'
+    elif target=='malformed-json':payload=b'{'
+    else:
+        foreign=f'cases/another-{case_id}/manifest.json'
+        marker['manifest']['path']=foreign
+        payload=memory.canonical_bytes(marker)
+        original=seal._bind
+        def forbid_foreign(lifetime,root,value,*args,**kwargs):
+            if value['path']==foreign:raise AssertionError('Foreign case leaf was accessed')
+            return original(lifetime,root,value,*args,**kwargs)
+        monkeypatch.setattr(seal,'_bind',forbid_foreign)
+    (root/path).write_bytes(payload)
+    with pytest.raises(ValueError):
+        publication.read_retained_published_case(**admitted,case_commit=source._descriptor(path,payload))
+
+
+def test_final_reader_all_qualification_pins_precede_profile_and_case_reads(admitted,monkeypatch):
+    published=publication.publish_retained_case(**admitted)
+    policy_reader=publication._read_acceptance_policy
+    def missing(*args):
+        value=policy_reader(*args)
+        value['TRUSTED_QUALIFICATION_PINS']=value['TRUSTED_QUALIFICATION_PINS'][:-1]
+        return value
+    def forbidden(*args,**kwargs):raise AssertionError('Protected read before all nine pins')
+    monkeypatch.setattr(publication,'_read_acceptance_policy',missing)
+    monkeypatch.setattr(publication,'_publication_profile',forbidden)
+    with pytest.raises(PermissionError):
+        publication.read_retained_published_case(**admitted,case_commit=published['case_commit'])
+
+
 @pytest.fixture(scope='module')
 def prospective_case(tmp_path_factory):
     root=tmp_path_factory.mktemp('authored-prospective-order')/'evidence'

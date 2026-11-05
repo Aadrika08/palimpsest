@@ -1,7 +1,8 @@
-"""Pure accepted supervisor-attestation validation; no publication or execution.
+"""Retained-case order validation, durable publication and independent reading.
 
-Callers supply already validated terminal contracts and continuously held control
-bytes. This function neither opens evidence nor grants custody/qualification.
+The order validator consumes held control bytes. Writer and reader require
+independent execution/qualification trust before protected reads. Returned
+summaries confer no live custody or permission to launch an owner.
 """
 from __future__ import annotations
 import copy

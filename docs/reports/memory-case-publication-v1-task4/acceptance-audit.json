@@ -1,0 +1,41 @@
+{
+  "status": "final local source acceptance passed; independent whole-diff review and hosted/main delivery pending",
+  "earlier_snapshot_results": [
+    "373 passed, 188 historical skips on canonical runner",
+    "160 passed, 2 historical skips on tmpfs with unchanged source hashes"
+  ],
+  "new_counterexample": {
+    "test": "test_retained_mutation_during_dependency_teardown_never_returns_success",
+    "actual_red": "DID NOT RAISE CasePublicationIndeterminate",
+    "retained_fixture_root": ".pytest_cache/publication-teardown-mutation-red-20261105-a",
+    "cause": "A successful external dependency teardown could mutate a retained case leaf after the prior case check",
+    "fix": "Recheck still-held case after dependency drain and before quarantine/own descriptor close",
+    "scope": "Does not revalidate released external dependencies or promise universal filesystem immutability; final reader must rebind all hashes"
+  },
+  "latest_focused_results": [
+    "44 private custody tests passed in 3.10s",
+    "28 public reader/profile tests passed with 2 historical skips in 81.13s before final docstring-only refresh"
+  ],
+  "additional_boundary_coverage": [
+    "Exact418/419 retained-file and454-entry boundary",
+    "Missing durable source/destination parents without publisher writes or FD leaks",
+    "Real kernel EXDEV refusal without copy/replace fallback",
+    "Authored cross-device observation rejected before output creation",
+    "Retained file/directory substitutions after every named write/rename/parent-fsync transition",
+    "Duplicate-key and malformed JSON with rebound candidate descriptors",
+    "Cross-case descriptor refusal before foreign leaf access",
+    "All nine qualification policy pins before reader profile/case access"
+  ],
+  "final_validation_session": 13453,
+  "final_receipts_expected": [
+    "prospective-canonical-final.json",
+    "prospective-tmpfs-final.json"
+  ],
+  "real_qualification_or_execution_acceptance": false,
+  "research_execution_cpu_seconds": 0,
+  "final_results": {
+    "canonical": "398 passed, 188 historical skips in444.42s",
+    "tmpfs": "185 passed, 2 historical skips in98.53s",
+    "both_sources_unchanged": true
+  }
+}

@@ -286,6 +286,12 @@ class _CasePublication:
         except BaseException as failure:
             if primary is None:primary=failure
             else:primary.add_note('Dependency teardown also failed: '+str(failure))
+        # Closing an external validating context can itself expose a late
+        # retained-file mutation. Validate the still-held case once more before
+        # closing its descriptors or returning a registerable marker.
+        if primary is None:
+            try:self.recheck()
+            except BaseException as failure:primary=failure
         if primary is not None and self._mutated:
             try:self._quarantine(primary)
             except BaseException as cleanup:primary.add_note('Quarantine durability indeterminate: '+str(cleanup))

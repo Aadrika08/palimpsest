@@ -37,7 +37,10 @@ def receipt():
                  'scripts/memory_family_condition_seal_v4.py',
                  module().EXTENSION_PATH,
                  'docs/plans/memory-condition-seal-v1.md'):
-        paths[path] = descriptor(path)
+        # A current behavior closure may already bind this dependency's real
+        # bytes. Do not replace that binding with extra historical-provenance
+        # placeholder metadata in an authored receipt.
+        paths.setdefault(path, descriptor(path))
     active_path = compact.PROTOCOL_PATH.relative_to(compact.ROOT).as_posix()
     paths[active_path] = descriptor(active_path, compact.PROTOCOL_BYTES)
     edge = 'graph/connections_princeton.csv'
