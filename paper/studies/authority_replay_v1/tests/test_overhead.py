@@ -356,3 +356,63 @@ def test_planned_operations_cli_uses_actual_repeatability_seed_paths(tmp_path, m
     assert o.main() == 0
     assert calls == [(seed, sources / f'seed-{seed}' / 'row.json') for seed in range(5)]
     assert len(read_rows(output / 'rows.jsonl')) == 5
+
+
+def _operation_source_fixture(tmp_path):
+    import json
+    owner = tmp_path / ('a' * 32)
+    recording = owner / 'recording'
+    recording.mkdir(parents=True)
+    manifest = {'status': 'completed', 'run_id': owner.name, 'controller': 'flynn', 'profile': 'flynn',
+                'requested_device': 'cpu', 'seed': 0, 'texture': 'checker',
+                'scenario': {'id': 'vision-ablation', 'controller': 'flynn', 'texture': 'checker'}}
+    (recording / 'manifest.json').write_text(json.dumps(manifest))
+    meta = {'run_path': str(owner), 'snapshot_path': str(owner / 'prefix.snp'), 'seed': 0,
+            'condition': 'background_storage', 'recording_writer': 'background', 'storage_accounting': True,
+            'prefix_ticks': 8, 'source_ticks': 100}
+    retained = {'application': {'source_run_id': owner.name, 'controller': 'flynn', 'scenario': 'vision-ablation',
+                               'texture': 'checker', 'seed': 0, 'total_tick': 8, 'phase': 'paused',
+                               'eyes': {'left': False, 'right': True}}}
+    return recording, manifest, meta, retained
+
+
+def test_operation_capture_owner_uses_exact_retained_source_profile(tmp_path, monkeypatch):
+    from palimpsest.engine import Engine
+    from palimpsest import snapshots
+    recording, manifest, meta, retained = _operation_source_fixture(tmp_path)
+    monkeypatch.setattr(o, '_source', lambda *args: ({}, meta, recording))
+    monkeypatch.setattr(o, '_budget', lambda *args: None)
+    monkeypatch.setattr(snapshots, 'read_snapshot', lambda *args: retained)
+    def opened(repo, assets, output, **config):
+        assert {key: config[key] for key in ('controller', 'scenario', 'texture', 'seed', 'device')} == {
+            'controller': 'flynn', 'scenario': 'vision-ablation', 'texture': 'checker', 'seed': 0, 'device': 'cpu'}
+        raise RuntimeError('fixture stops after compatible owner config')
+    monkeypatch.setattr(Engine, 'open', opened)
+    with pytest.raises(RuntimeError, match='fixture stops'):
+        o._operation(0, tmp_path / 'source-row.json', tmp_path / 'output', tmp_path, tmp_path, tmp_path)
+
+
+@pytest.mark.parametrize('field,value', [('scenario', 'sparse-navigation'), ('controller', 'manual'),
+                                        ('texture', 'realistic'), ('seed', 1), ('source_run_id', 'b' * 32)])
+def test_operation_rejects_incompatible_snapshot_before_owner(tmp_path, monkeypatch, field, value):
+    from palimpsest.engine import Engine
+    from palimpsest import snapshots
+    recording, manifest, meta, retained = _operation_source_fixture(tmp_path)
+    retained['application'][field] = value
+    monkeypatch.setattr(o, '_source', lambda *args: ({}, meta, recording))
+    monkeypatch.setattr(o, '_budget', lambda *args: None)
+    monkeypatch.setattr(snapshots, 'read_snapshot', lambda *args: retained)
+    monkeypatch.setattr(Engine, 'open', lambda *args, **kwargs: pytest.fail('incompatible source must refuse before owner open'))
+    with pytest.raises(ValueError, match='source.*config|snapshot.*config|snapshot.*identity'):
+        o._operation(0, tmp_path / 'source-row.json', tmp_path / 'output', tmp_path, tmp_path, tmp_path)
+
+
+@pytest.mark.parametrize('field,value', [('seed', 1), ('profile', 'manual'), ('requested_device', 'cuda'),
+                                        ('controller', 'manual'), ('texture', 'realistic')])
+def test_operation_config_rejects_inconsistent_manifest_profile(tmp_path, field, value):
+    import json
+    recording, manifest, meta, retained = _operation_source_fixture(tmp_path)
+    manifest[field] = value
+    (recording / 'manifest.json').write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match='source config mismatch'):
+        o._operation_config(0, meta, recording, retained)

@@ -286,6 +286,31 @@ def _source(seed, source):
     return row, meta, path
 
 
+def _operation_config(seed, meta, recording, retained):
+    """Bind the fresh capture owner to the retained manifest and prefix snapshot."""
+    manifest = json.loads((recording / 'manifest.json').read_text())
+    profile = manifest.get('scenario')
+    require(isinstance(profile, dict), 'retained source config requires a scenario profile')
+    config = {'controller': manifest.get('controller'), 'scenario': profile.get('id'),
+              'texture': manifest.get('texture'), 'seed': manifest.get('seed'),
+              'device': manifest.get('requested_device')}
+    require(config['controller'] == 'flynn' and config['device'] == 'cpu'
+            and type(config['seed']) is int and config['seed'] == seed == meta['seed']
+            and isinstance(config['scenario'], str) and bool(config['scenario'])
+            and isinstance(config['texture'], str) and bool(config['texture'])
+            and profile.get('controller') == config['controller']
+            and profile.get('texture') == config['texture']
+            and manifest.get('profile') == config['controller'], 'retained source config mismatch')
+    application = retained.get('application', {})
+    require(all(application.get(key) == config[key] for key in ('controller', 'scenario', 'texture', 'seed'))
+            and type(application.get('seed')) is int
+            and application.get('total_tick') == meta['prefix_ticks']
+            and application.get('phase') == 'paused', 'retained snapshot config differs from source config')
+    require(application.get('source_run_id') == manifest.get('run_id') == recording.parent.name,
+            'retained snapshot source identity mismatch')
+    return config
+
+
 def _operation(seed, source, output, repo, assets, campaign_root):
     from palimpsest.engine import Engine
     from palimpsest.snapshots import capture, read_snapshot, save_snapshot
@@ -301,8 +326,9 @@ def _operation(seed, source, output, repo, assets, campaign_root):
         metrics[name] = time.perf_counter() - start
         return result
     retained = read_snapshot(Path(meta['snapshot_path']))
-    engine = Engine.open(repo, assets, output / 'capture-owner', controller='flynn', device='cpu', seed=seed,
-                         scenario='sparse-navigation', max_bytes=64 * MiB, storage_budget=budget)
+    capture_config = _operation_config(seed, meta, recording, retained)
+    engine = Engine.open(repo, assets, output / 'capture-owner', **capture_config,
+                         max_bytes=64 * MiB, storage_budget=budget)
     try:
         def restore_tick():
             engine.restore_branch(retained)
@@ -328,7 +354,7 @@ def _operation(seed, source, output, repo, assets, campaign_root):
         require(reports[mode].get('status') == 'passed', f'{mode} replay did not match retained source')
         gc.collect()
     require(before == _hashes(recording.parent), 'retained replay source changed')
-    return {'metrics': metrics, 'source': meta, 'source_row_sha256': sha256_file(Path(source)),
+    return {'metrics': metrics, 'source': meta, 'capture_owner_config': capture_config, 'source_row_sha256': sha256_file(Path(source)),
             'source_hashes_before': before, 'source_hashes_after': _hashes(recording.parent),
             'playback_tick_count': ticks, 'replay_reports': reports,
             'operation_scopes': {'playback_seconds': 'validated stored tick-stream iteration; no policy/physics/rendering',
