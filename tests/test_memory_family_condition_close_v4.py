@@ -55,10 +55,10 @@ def tree(root):
 
 
 def fixture(root, *, natural_failure=False, condition='own', source=None, prior_own=None,
-            row=4, kind='change'):
+            row=4, kind='change', control_factory=None):
     """Real independent raw audit/converter/pair; only cell/model seams are authored."""
     if source is None:
-        source = source_fixture(root, row=row, kind=kind)
+        source = source_fixture(root, row=row, kind=kind, control_factory=control_factory)
         producer.seal_compact_source(**source_request(source))
     case = source['sample']['case']
     case_id = case['case_id']
@@ -122,6 +122,10 @@ def fixture(root, *, natural_failure=False, condition='own', source=None, prior_
     controls = {role: write(root, f'{prefix}condition-controls/{role}.json',
         b'' if role in ('stdout', 'stderr') else {'closed': True})
         for role in ('job', 'supervisor', 'stdout', 'stderr', 'cleanup')}
+    if control_factory is not None:
+        for role, payload in control_factory(case, run_id, 'condition', condition, controls).items():
+            assert role in ('supervisor', 'cleanup')
+            controls[role] = write(root, controls[role]['path'], payload)
     controls['audit'] = raw_audit
     qualification = write(root, prefix + 'qualification.json', {'authored': True})
     extension = ROOT / module().EXTENSION_PATH

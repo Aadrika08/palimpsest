@@ -187,3 +187,402 @@ def validate_execution_audit(audit, *, case_slot, source_commit, condition_commi
         _equal(cleanup,expected,'Prospective cleanup')
     _require_execution_pin(audit)
     return copy.deepcopy(audit)
+
+
+# Policy files are independently read, held and rechecked. Neither belongs to
+# the accepted audit's behavior-source closure.
+EXECUTION_POLICY_PATH = 'scripts/memory_case_execution_pins_v1.py'
+QUALIFICATION_POLICY_PATH = 'scripts/memory_condition_qualification_pins_v1.py'
+PUBLICATION_PATH = 'docs/plans/memory-case-publication-v1-protocol.json'
+
+
+def _policy_assignment(payload, name):
+    """Read one constant assignment without executing policy source bytes."""
+    import ast
+    tree = ast.parse(payload)
+    matches = [node.value for node in tree.body if isinstance(node, ast.Assign)
+               and any(isinstance(target, ast.Name) and target.id == name
+                       for target in node.targets)]
+    if len(matches) != 1:
+        raise ValueError('Acceptance policy must have one named assignment')
+    value = matches[0]
+    if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name)
+            and value.func.id == 'frozenset' and not value.keywords
+            and len(value.args) <= 1):
+        return frozenset() if not value.args else frozenset(ast.literal_eval(value.args[0]))
+    return ast.literal_eval(value)
+
+
+def _read_acceptance_policy(lifetime, audit, deadline):
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts import memory_family_producer_v4 as source
+    values = {}
+    for path, name in ((EXECUTION_POLICY_PATH, 'ACCEPTED_EXECUTION_AUDIT_SHA256'),
+                       (QUALIFICATION_POLICY_PATH, 'TRUSTED_QUALIFICATION_PINS')):
+        payload = artifacts._read(compact.ROOT / path, compact.MiB)
+        descriptor = source._descriptor(path, payload)
+        _, held, check = seal._bind(lifetime, compact.ROOT, descriptor, compact.MiB, deadline)
+        values[name] = _policy_assignment(held, name)
+        lifetime.callback(check)
+    digest = hashlib.sha256(memory.canonical_bytes(audit)).hexdigest()
+    if digest not in values['ACCEPTED_EXECUTION_AUDIT_SHA256']:
+        raise PermissionError('No independently accepted execution policy pin')
+    return values
+
+
+def publish_retained_case(evidence_root, registrations, *, case_slot,
+                          condition_commits, execution_audit, deadline):
+    """Publish one admitted retained case; empty real anchors refuse all writes.
+
+    The final marker is registerable only after successful durable publication
+    and descriptor teardown. Returned retained values confer no future custody.
+    """
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts import memory_family_producer_v4 as source
+    source.audit._public_deadline(deadline)
+    execution_audit = copy.deepcopy(execution_audit)
+    _require_execution_pin(execution_audit)
+    with seal._ValidatingStack() as policy_lifetime:
+        policy = _read_acceptance_policy(policy_lifetime, execution_audit, deadline)
+        # Protected caller objects and all case files follow both policy gates.
+        registrations, slot, commits = copy.deepcopy((registrations, case_slot, condition_commits))
+        return _publish_admitted_case(evidence_root, registrations, slot, commits,
+                                      execution_audit, deadline, policy, policy_lifetime)
+
+
+MANIFEST_KEYS = set('analysis_cells case_id claims condition_run_ids protocol_sha256 run_receipts schema snapshot source_run_id'.split())
+CLOSE_KEYS = set('schema protocol_sha256 publication_protocol_sha256 case_id manifest execution_audit retained_inventory retained_directories retained_bytes claims'.split())
+COMMIT_KEYS = set('schema protocol_sha256 publication_protocol_sha256 case_id manifest close claims'.split())
+PUBLICATION_BOUNDS = dict(retained_files=418, retained_directories=33,
+                          case_files=3, case_file_bytes=MAX_BYTES, final_entries=454)
+PUBLICATION_SCHEMAS = {
+    'manifest': {'schema': 'memory-family-compact-case-v1', 'keys': sorted(MANIFEST_KEYS)},
+    'close': {'schema': 'memory-family-case-close-v1', 'keys': sorted(CLOSE_KEYS)},
+    'commit': {'schema': 'memory-family-case-commit-v1', 'keys': sorted(COMMIT_KEYS)},
+    'execution_audit': {'schema': 'memory-family-case-execution-audit-v1', 'keys': sorted(AUDIT_KEYS)},
+    'observer': {'keys': sorted(OBSERVER_KEYS)},
+    'owner': {'keys': sorted(OWNER_KEYS)},
+    'supervisor': {'schema': 'memory-family-order-supervisor-v1', 'keys': sorted(SUPERVISOR_KEYS)},
+    'cleanup': {'schema': 'memory-family-order-cleanup-v1', 'keys': sorted(CLEANUP_KEYS)},
+}
+
+
+def _publication_profile(lifetime, deadline):
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts import memory_family_producer_v4 as source
+    payload = artifacts._read(compact.ROOT / PUBLICATION_PATH, compact.MiB)
+    descriptor = source._descriptor(PUBLICATION_PATH, payload)
+    _, payload, _ = seal._bind(lifetime, compact.ROOT, descriptor, compact.MiB, deadline)
+    value = source._canonical(payload, {'schema', 'base_protocol', 'condition_extension',
+        'schemas', 'bounds', 'source_pins', 'claims'}, 'Publication extension')
+    base = source._descriptor(compact.PROTOCOL_PATH.relative_to(compact.ROOT).as_posix(),
+                              memory.canonical_bytes(compact.PROTOCOL))
+    extension_bytes = artifacts._read(compact.ROOT / seal.EXTENSION_PATH, compact.MiB)
+    extension = source._descriptor(seal.EXTENSION_PATH, extension_bytes)
+    if (value['schema'] != 'memory-case-publication-v1-protocol'
+            or value['base_protocol'] != base or value['condition_extension'] != extension
+            or value['schemas'] != PUBLICATION_SCHEMAS or value['bounds'] != PUBLICATION_BOUNDS
+            or value['claims'] != compact.PROTOCOL['claims']):
+        raise ValueError('Publication extension contract differs')
+    rows = value['source_pins']
+    if type(rows) is not list or not rows or len(rows) > 512:
+        raise ValueError('Publication source closure bound differs')
+    for row in rows: _descriptor(row)
+    paths = [row['path'] for row in rows]
+    if (paths != sorted(set(paths))
+            or {EXECUTION_POLICY_PATH, QUALIFICATION_POLICY_PATH} & set(paths)
+            or not {'scripts/memory_family_case_publication_v1.py',
+                        'scripts/memory_family_case_custody_v1.py',
+                        'scripts/memory_family_retained_case_v1.py'} <= set(paths)):
+        raise ValueError('Publication source closure differs')
+    for row in [base, extension, *rows]:
+        seal._bind(lifetime, compact.ROOT, row, 2 * compact.MiB, deadline)
+    return descriptor, [descriptor, base, extension, *rows]
+
+
+def _unique_descriptors(rows):
+    values = {}
+    for row in rows:
+        _descriptor(row)
+        if row['path'] in values and values[row['path']] != row:
+            raise ValueError('Conflicting dependency descriptors: '+row['path'])
+        values[row['path']] = copy.deepcopy(row)
+    return sorted(values.values(), key=lambda row: row['path'])
+
+
+def _check_policy_membership(policy, audit, contracts):
+    _require_execution_pin(audit)
+    if hashlib.sha256(memory.canonical_bytes(audit)).hexdigest() not in policy['ACCEPTED_EXECUTION_AUDIT_SHA256']:
+        raise PermissionError('Execution acceptance was revoked')
+    from scripts import memory_family_condition_seal_v4 as seal
+    for contract in contracts.values():
+        if 'qualification' not in contract: continue
+        descriptor = contract['qualification']
+        identity = tuple(descriptor[key] for key in ('path','size_bytes','sha256'))
+        if identity not in policy['TRUSTED_QUALIFICATION_PINS']:
+            raise PermissionError('No independently accepted exact qualification policy pin')
+        seal._require_qualification_pin(descriptor)
+
+
+def _publish_admitted_case(evidence_root, registrations, slot, commits, audit,
+                           deadline, policy, policy_lifetime):
+    from pathlib import PurePosixPath
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts import memory_family_producer_v4 as source
+    from scripts import memory_family_retained_case_v1 as cases
+    from scripts.memory_family_case_custody_v1 import _CasePublication
+    root = artifacts._safe_path(evidence_root)
+    _fields(slot, {'case_id','case_sha256','source_run_id','condition_run_ids'}, 'Case slot')
+    _fields(registrations, CONDITIONS, 'Condition registrations')
+    _fields(commits, CONDITIONS, 'Condition commits')
+    case_id = slot['case_id']; memory._id(case_id)
+    contracts = {}; external = []; code = []
+    with seal._ValidatingStack() as discovery:
+        # Terminal exports are unprotected admission headers. Require every
+        # qualification before source/snapshot/history/retained-file reads.
+        for condition in CONDITIONS:
+            registration = registrations[condition]; _descriptor(registration)
+            if registration['path'].startswith(('cases/','.pending/')):
+                raise ValueError('Terminal export must be external')
+            _, payload, _ = seal._bind(discovery, root, registration, compact.MiB, deadline)
+            contract = source._canonical(payload, seal.REGISTRATION_KEYS, 'Condition terminal export')
+            contracts[condition] = contract
+            _check_policy_membership(policy, audit, {condition:contract})
+        profile, profile_rows = _publication_profile(discovery, deadline)
+        code.extend(profile_rows)
+        for condition in CONDITIONS:
+            contract, _, _ = seal._registration(root, registrations[condition],
+                case_id, condition, deadline, discovery)
+            if contract != contracts[condition]: raise ValueError('Terminal export changed')
+            external.extend([registrations[condition], *contract['controls'].values(),
+                *contract['history_bundles'].values(), contract['qualification']])
+            extension = artifacts._json(artifacts._read(compact.ROOT / seal.EXTENSION_PATH, compact.MiB))
+            code.extend(extension['source_pins'])
+            _, receipt_bytes, _ = seal._bind(discovery, root, contract['qualification'], compact.MiB, deadline)
+            receipt = source._canonical(receipt_bytes, cases.retained.qualification.RECEIPT_KEYS,
+                                        'Case qualification receipt')
+            cases.retained.qualification._validate_receipt(receipt)
+            # The receipt's historical extra source/assets/runtime rosters are
+            # provenance. Hold the selected consumer's actual closure below;
+            # never reopen historical model or runtime inputs.
+        common = contracts['own']
+        source_registration = common['source']['registration']
+        values = source._inputs(root, source_registration, case_id, deadline, discovery)
+        contracts['source'] = source_contract = values[0]
+        external.extend([source_registration, *source_contract['controls'].values()])
+        source_commit = common['source']['commit']
+        entries = cases._inventory(root, case_id, source_commit, None, discovery, deadline)
+        for condition in CONDITIONS:
+            entries.extend(cases._inventory(root, case_id, commits[condition], condition, discovery, deadline))
+        entries = _unique_descriptors(entries)
+        code.extend({key:row[key] for key in ('path','size_bytes','sha256')}
+                    for row in compact.PROTOCOL['behavior_sources'])
+        # Acceptance source bytes are independently held, not audit subject pins.
+        for path in (EXECUTION_POLICY_PATH, QUALIFICATION_POLICY_PATH):
+            code.append(source._descriptor(path, artifacts._read(compact.ROOT / path, compact.MiB)))
+        dependencies = [{'root': str(root), 'entries': _unique_descriptors(external)},
+                        {'root': str(compact.ROOT), 'entries': _unique_descriptors(code)}]
+        # Enter the independent full hold before closing discovery custody.
+        with _CasePublication(root, case_id, entries, deadline, dependencies=dependencies,
+                recheck_acceptance=lambda:_check_policy_membership(policy,audit,contracts)) as publication:
+            retained = cases.read_retained_staged_case(root, registrations, case_slot=slot,
+                                                       condition_commits=commits, deadline=deadline)
+            controls = {}
+            for name, contract in contracts.items():
+                registration = source_registration if name=='source' else registrations[name]
+                for descriptor in [registration, contract['owner_record'], *contract['controls'].values()]:
+                    _, payload, _ = seal._bind(discovery, root, descriptor, compact.MiB, deadline,
+                        case_id=case_id, allow_empty=descriptor['size_bytes']==0)
+                    controls[descriptor['path']] = payload
+            validate_execution_audit(audit, case_slot=slot, source_commit=retained['source_commit'],
+                condition_commits=commits, contracts=contracts, control_payloads=controls,
+                publication_protocol_sha256=profile['sha256'])
+            final_entries = [{**row,'path':'cases/'+row['path'][len('.pending/'):]} for row in entries]
+            directories = sorted({parent.as_posix() for row in final_entries
+                for parent in PurePosixPath(row['path']).parents
+                if parent.as_posix().startswith(f'cases/{case_id}')})
+            manifest = dict(schema='memory-family-compact-case-v1', protocol_sha256=compact.PROTOCOL_SHA256,
+                analysis_cells=retained['retained_cells'], case_id=case_id, claims=copy.deepcopy(compact.PROTOCOL['claims']),
+                condition_run_ids=retained['condition_run_ids'], source_run_id=retained['source_run_id'],
+                run_receipts={'source':retained['source_commit'],'conditions':commits},snapshot=retained['snapshot'])
+            manifest_bytes = memory.canonical_bytes(manifest)
+            base = f'cases/{case_id}/'
+            manifest_descriptor = source._descriptor(base+'manifest.json',manifest_bytes)
+            close = dict(schema='memory-family-case-close-v1', protocol_sha256=compact.PROTOCOL_SHA256,
+                publication_protocol_sha256=profile['sha256'],case_id=case_id,manifest=manifest_descriptor,
+                execution_audit=audit,retained_inventory=final_entries,retained_directories=directories,
+                retained_bytes=sum(row['size_bytes'] for row in entries),claims=copy.deepcopy(compact.PROTOCOL['claims']))
+            close_bytes = memory.canonical_bytes(close)
+            close_descriptor = source._descriptor(base+'close.json',close_bytes)
+            marker = dict(schema='memory-family-case-commit-v1', protocol_sha256=compact.PROTOCOL_SHA256,
+                publication_protocol_sha256=profile['sha256'],case_id=case_id,manifest=manifest_descriptor,
+                close=close_descriptor,claims=copy.deepcopy(compact.PROTOCOL['claims']))
+            marker_bytes = memory.canonical_bytes(marker)
+            payloads={'manifest.json':manifest_bytes,'close.json':close_bytes,'commit.json':marker_bytes}
+            # Drain nested staged-only contexts while the independent capability
+            # retains every input. No staged path is reopened after publication.
+            discovery.close()
+            _check_policy_membership(policy,audit,contracts);publication.recheck()
+            publication.write_case_files(payloads)
+            _check_policy_membership(policy,audit,contracts);publication.recheck()
+            publication.publish()
+            _check_policy_membership(policy,audit,contracts)
+            policy_lifetime.close()
+            publication.recheck()
+            result = copy.deepcopy({'case_commit': source._descriptor(base+'commit.json',marker_bytes),
+                      'retained': retained, 'order_evidence':'accepted-supervisor-attestation'})
+            source.audit._deadline(deadline)
+    return result
+
+
+from scripts.memory_family_case_custody_v1 import CasePublicationIndeterminate
+
+
+def read_retained_published_case(evidence_root, registrations, *, case_slot,
+                                condition_commits, execution_audit, case_commit, deadline):
+    """Read an externally registered final marker under independent trust."""
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts import memory_family_producer_v4 as source
+    source.audit._public_deadline(deadline)
+    audit = copy.deepcopy(execution_audit)
+    _require_execution_pin(audit)
+    with seal._ValidatingStack() as policy_lifetime:
+        policy = _read_acceptance_policy(policy_lifetime, audit, deadline)
+        registrations, slot, commits, expected = copy.deepcopy(
+            (registrations, case_slot, condition_commits, case_commit))
+        result = _read_admitted_published_case(evidence_root, registrations, slot,
+            commits, audit, expected, deadline, policy)
+    source.audit._deadline(deadline)
+    return result
+
+
+def _read_admitted_published_case(evidence_root, registrations, slot, commits,
+                                  audit, expected, deadline, policy):
+    from pathlib import PurePosixPath
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts import memory_family_producer_v4 as source
+    from scripts import memory_family_retained_case_v1 as cases
+    from scripts.memory_family_replay_custody_v4 import HeldReplayFiles
+    root = artifacts._safe_path(evidence_root)
+    _fields(slot, {'case_id','case_sha256','source_run_id','condition_run_ids'}, 'Case slot')
+    _fields(registrations, CONDITIONS, 'Condition registrations')
+    _fields(commits, CONDITIONS, 'Condition commits')
+    case_id = slot['case_id']; memory._id(case_id)
+    if not compact._PATH_COMPONENT.fullmatch(case_id):
+        raise ValueError('Invalid published case identifier')
+    base = f'cases/{case_id}/'
+    _descriptor(expected)
+    if expected['path'] != base+'commit.json' or expected['size_bytes'] > MAX_BYTES:
+        raise ValueError('Expected case commit differs from the registered case')
+    contracts = {}; external = []; code = []
+    with seal._ValidatingStack() as lifetime:
+        # External terminal exports are admission headers; every qualification
+        # is admitted before opening any protected final-case leaf.
+        for condition in CONDITIONS:
+            registration = registrations[condition]; _descriptor(registration)
+            if registration['path'].startswith(('cases/', '.pending/')):
+                raise ValueError('Terminal export must be external')
+            _, payload, _ = seal._bind(lifetime, root, registration, compact.MiB, deadline)
+            contract = source._canonical(payload, seal.REGISTRATION_KEYS, 'Condition terminal export')
+            contracts[condition] = contract
+            _check_policy_membership(policy, audit, {condition:contract})
+        profile, profile_rows = _publication_profile(lifetime, deadline)
+        code.extend(profile_rows)
+        _, marker_bytes, _ = seal._bind(lifetime, root, expected, MAX_BYTES,
+            deadline, case_id=case_id, location='published')
+        marker = source._canonical(marker_bytes, COMMIT_KEYS, 'Published case commit')
+
+        def identity(value, schema):
+            if value['schema'] != schema or value['case_id'] != case_id:
+                raise ValueError('Published case receipt identity differs')
+            _equal(value['protocol_sha256'], compact.PROTOCOL_SHA256, 'Published base protocol')
+            _equal(value['publication_protocol_sha256'], profile['sha256'], 'Published publication protocol')
+            _equal(value['claims'], compact.PROTOCOL['claims'], 'Published claims')
+
+        identity(marker, 'memory-family-case-commit-v1')
+        files = {'commit.json':expected, 'manifest.json':marker['manifest'], 'close.json':marker['close']}
+        for name, descriptor in files.items():
+            _descriptor(descriptor)
+            if descriptor['path'] != base+name:
+                raise ValueError('Published root descriptor crosses a case')
+        if sum(row['size_bytes'] for row in files.values()) > MAX_BYTES:
+            raise ValueError('Published root files exceed combined allowance')
+        _, close_bytes, _ = seal._bind(lifetime, root, files['close.json'], MAX_BYTES,
+            deadline, case_id=case_id, location='published')
+        close = source._canonical(close_bytes, CLOSE_KEYS, 'Published case close')
+        identity(close, 'memory-family-case-close-v1')
+        _equal(close['manifest'], files['manifest.json'], 'Published close manifest')
+        _equal(close['execution_audit'], audit, 'Published accepted execution audit')
+        _, manifest_bytes, _ = seal._bind(lifetime, root, files['manifest.json'], MAX_BYTES,
+            deadline, case_id=case_id, location='published')
+        source._canonical(manifest_bytes, MANIFEST_KEYS, 'Published case manifest')
+        for condition in CONDITIONS:
+            contract, _, _ = seal._registration(root, registrations[condition], case_id,
+                condition, deadline, lifetime, location='published')
+            if contract != contracts[condition]:
+                raise ValueError('Terminal export changed')
+            external.extend([registrations[condition], *contract['controls'].values(),
+                *contract['history_bundles'].values(), contract['qualification']])
+            extension = artifacts._json(artifacts._read(compact.ROOT / seal.EXTENSION_PATH, compact.MiB))
+            code.extend(extension['source_pins'])
+            _, receipt_bytes, _ = seal._bind(lifetime, root, contract['qualification'], compact.MiB, deadline)
+            receipt = source._canonical(receipt_bytes, cases.retained.qualification.RECEIPT_KEYS,
+                'Case qualification receipt')
+            cases.retained.qualification._validate_receipt(receipt)
+        common = contracts['own']; source_registration = common['source']['registration']
+        values = source._inputs(root, source_registration, case_id, deadline, lifetime, location='published')
+        contracts['source'] = source_contract = values[0]
+        external.extend([source_registration, *source_contract['controls'].values()])
+        entries = cases._inventory(root, case_id, common['source']['commit'], None,
+            lifetime, deadline, location='published')
+        for condition in CONDITIONS:
+            entries.extend(cases._inventory(root, case_id, commits[condition], condition,
+                lifetime, deadline, location='published'))
+        entries = _unique_descriptors(entries)
+        directories = sorted({parent.as_posix() for row in entries
+            for parent in PurePosixPath(row['path']).parents
+            if parent.as_posix().startswith(f'cases/{case_id}')})
+        total_bytes = sum(row['size_bytes'] for row in entries)
+        if (len(entries) > 418 or len(directories) != 33 or len(entries)+len(directories)+3 > 454
+                or total_bytes > (32+16+1+9*(25+1))*compact.MiB):
+            raise ValueError('Published inventory exceeds inherited bounds')
+        _equal(close['retained_inventory'], entries, 'Published derived inventory')
+        _equal(close['retained_directories'], directories, 'Published derived directories')
+        _equal(close['retained_bytes'], total_bytes, 'Published retained bytes')
+        code.extend({key:row[key] for key in ('path','size_bytes','sha256')}
+            for row in compact.PROTOCOL['behavior_sources'])
+        # Historical extra qualification rosters are provenance. Hold the actual
+        # consumer closure; never reopen the historical numerical model/runtime.
+        for path in (EXECUTION_POLICY_PATH, QUALIFICATION_POLICY_PATH):
+            code.append(source._descriptor(path, artifacts._read(compact.ROOT / path, compact.MiB)))
+        internal = lifetime.enter_context(HeldReplayFiles(root,
+            _unique_descriptors([*entries, *files.values()]), deadline,
+            exact_subtrees=(f'cases/{case_id}',)))
+        external_hold = lifetime.enter_context(HeldReplayFiles(root, _unique_descriptors(external), deadline))
+        code_hold = lifetime.enter_context(HeldReplayFiles(compact.ROOT, _unique_descriptors(code), deadline))
+        retained = cases._read_retained_case(root, registrations, case_slot=slot,
+            condition_commits=commits, deadline=deadline, location='published', case_files=files)
+        controls = {}
+        for name, contract in contracts.items():
+            registration = source_registration if name == 'source' else registrations[name]
+            for descriptor in [registration, contract['owner_record'], *contract['controls'].values()]:
+                _, payload, _ = seal._bind(lifetime, root, descriptor, compact.MiB, deadline,
+                    case_id=case_id, location='published', allow_empty=descriptor['size_bytes']==0)
+                controls[descriptor['path']] = payload
+        validate_execution_audit(audit, case_slot=slot, source_commit=retained['source_commit'],
+            condition_commits=commits, contracts=contracts, control_payloads=controls,
+            publication_protocol_sha256=profile['sha256'])
+        derived_manifest = dict(schema='memory-family-compact-case-v1',
+            protocol_sha256=compact.PROTOCOL_SHA256, analysis_cells=retained['retained_cells'],
+            case_id=case_id, claims=copy.deepcopy(compact.PROTOCOL['claims']),
+            condition_run_ids=retained['condition_run_ids'], source_run_id=retained['source_run_id'],
+            run_receipts={'source':retained['source_commit'], 'conditions':commits}, snapshot=retained['snapshot'])
+        if manifest_bytes != memory.canonical_bytes(derived_manifest):
+            raise ValueError('Published manifest differs from independently derived semantics')
+        _check_policy_membership(policy, audit, contracts)
+        for held in (internal, external_hold, code_hold):
+            held.recheck()
+        result = copy.deepcopy({'case_commit':expected, 'retained':retained,
+            'order_evidence':'accepted-supervisor-attestation'})
+    source.audit._deadline(deadline)
+    return result

@@ -298,3 +298,18 @@ def test_historical_profile_bytes_remain_unchanged():
     root=Path(__file__).resolve().parents[1]
     payload=(root/'docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json').read_bytes()
     assert hashlib.sha256(payload).hexdigest()=='e71fc7ea6185f7de769b9879d4b581458074b925255b4712f0f6578fb0556261'
+
+
+def test_public_writer_empty_execution_anchor_refuses_before_evidence_access(tmp_path, monkeypatch):
+    import time
+    from scripts import memory_family_case_publication_v1 as publication
+    from scripts import memory_case_execution_pins_v1 as execution_pins
+    assert execution_pins.ACCEPTED_EXECUTION_AUDIT_SHA256 == frozenset()
+    class Protected(dict):
+        def __deepcopy__(self, memo):
+            raise AssertionError('protected input copied before empty trust gate')
+    with pytest.raises(PermissionError, match='accepted'):
+        publication.publish_retained_case(tmp_path / 'absent-evidence', Protected(),
+            case_slot=Protected(), condition_commits=Protected(), execution_audit={},
+            deadline=time.monotonic()+30)
+    assert not (tmp_path / 'absent-evidence').exists()

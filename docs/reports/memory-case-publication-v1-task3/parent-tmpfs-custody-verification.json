@@ -1,0 +1,16 @@
+{
+  "scope": "parent host execution of source-only mutable/read-only custody tests on tmpfs; no empirical qualification",
+  "command": "PYTHONPATH=tests:src:. /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_memory_family_case_custody_v1.py tests/test_memory_family_replay_custody_v4.py --basetemp /dev/shm/palimpsest-case-publication-v1-custody-20261105-a --maxfail=1",
+  "exit_code": 0,
+  "result": "79 passed in 1.38s",
+  "filesystem": "tmpfs",
+  "test_root": "/dev/shm/palimpsest-case-publication-v1-custody-20261105-a",
+  "source_sha256": {
+    "scripts/memory_family_case_custody_v1.py": "8b8cb1d71e2007e93825b11563ddb2a80c608e2890134fd607501d27bdcb7423",
+    "scripts/memory_family_replay_custody_v4.py": "0e312091eb9954e0a59116387a7a184a95eab74e71436dc6deef7e701b03ee2c",
+    "tests/test_memory_family_case_custody_v1.py": "04d1bae26ca87d1dc8b086a81efc5ff2e907957097ce0fda2e4127c6177166eb",
+    "tests/test_memory_family_replay_custody_v4.py": "737784c5fb38cb793666d61eb934c39ec6b21e6d94c7b38112e14cf85fb3e4e6"
+  },
+  "tmp_original_failure": "Agent original /tmp attempt failed EDQUOT; this does not relabel that attempt as passed",
+  "research_execution": false
+}

@@ -32,13 +32,13 @@ def module():
     return importlib.import_module(NAME)
 
 
-def build_case(root, *, natural_failure=True, row=0, kind='change'):
+def build_case(root, *, natural_failure=True, row=0, kind='change', control_factory=None):
     samples = {}
     with pytest.MonkeyPatch.context() as patch:
         for condition in CONDITIONS:
             own = samples.get('own')
             sample = fixture(root, row=row, kind=kind, condition=condition,
-                natural_failure=natural_failure,
+                natural_failure=natural_failure, control_factory=control_factory,
                 source=None if own is None else own['source'],
                 prior_own=own if condition == 'oracle' else None)
             seal_authored(sample, patch)

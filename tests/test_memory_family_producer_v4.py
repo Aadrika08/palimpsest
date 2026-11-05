@@ -37,7 +37,7 @@ def inventory(root):
             for path in root.rglob('*') if path.is_file()}
 
 
-def fixture(root, *, row=4, kind='change'):
+def fixture(root, *, row=4, kind='change', control_factory=None):
     root.mkdir()
     sample = raw_fixture(root / 'fixture', include_source=True, row=row, kind=kind)
     case = sample['case']
@@ -83,6 +83,12 @@ def fixture(root, *, row=4, kind='change'):
         control = root / f'{role}.json'
         control.write_bytes(b'' if role in ('stdout', 'stderr') else memory.canonical_bytes({'closed': True}))
         controls[role] = descriptor(control.name, control.read_bytes())
+    if control_factory is not None:
+        for role, payload in control_factory(case, run_id, 'source', None, controls).items():
+            assert role in ('supervisor', 'cleanup')
+            control = root / controls[role]['path']
+            control.write_bytes(memory.canonical_bytes(payload))
+            controls[role] = descriptor(control.name, control.read_bytes())
     controls['audit'] = descriptor(Path(raw_receipt['path']).relative_to(root), Path(raw_receipt['path']).read_bytes())
     registration = {
         'schema': 'memory-family-source-finalization-registration-v4',

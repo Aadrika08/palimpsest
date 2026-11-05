@@ -1,0 +1,8 @@
+{
+  "reviewer": "independent pacbayes_numerical_repro agent",
+  "scope": "Earlier full-source inspection plus exact updated dependency-teardown excerpt; sandbox prevented independent final-source reread/hash",
+  "finding": "Dependency-teardown error learned before own descriptor close must trigger quarantine while case descriptor remains held",
+  "resolution": "Fixed by draining all dependency holds before quarantine and ownclose; regression exercised by parent tmpfs matrix",
+  "other_concrete_blocking_findings": [],
+  "limits": "No scientific qualification, accepted execution audit or actual retained-case publication; own-FD close errors remain indeterminate and may make quarantine impossible"
+}
