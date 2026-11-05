@@ -1,0 +1,12 @@
+{
+  "accounting_core_paths_patched": false,
+  "installed_binary_binding_verified": false,
+  "patch_matches_pkgbuild_sha512": true,
+  "patched_paths": [
+    "meson.build",
+    "meson_options.txt",
+    "rules.d/50-udev-default.rules.in",
+    "sysusers.d/basic.conf.in"
+  ],
+  "pkgbuild_tag_and_commit_bytes_equal": true
+}

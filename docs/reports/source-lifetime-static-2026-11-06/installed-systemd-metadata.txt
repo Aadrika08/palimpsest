@@ -1,0 +1,38 @@
+Name            : systemd
+Version         : 262.1-1
+Description     : system and service manager
+Architecture    : x86_64
+URL             : https://www.github.com/systemd/systemd
+Licenses        : LGPL-2.1-or-later  CC0-1.0  GPL-2.0-or-later  MIT-0
+Groups          : None
+Provides        : nss-myhostname  systemd-tools=262.1  udev=262.1
+Depends On      : systemd-libs=262.1  acl  bash  cryptsetup  dbus  dbus-units  glibc  kbd  kmod  hwdata  libgcrypt  libxcrypt  libidn2  lz4  pam  libelf  libgcc  libseccomp  util-linux  xz  pcre2  audit  openssl
+Optional Deps   : apparmor: additional security features [installed]
+                  curl: systemd-journal-upload, machinectl pull-tar and pull-raw [installed]
+                  gnutls: systemd-journal-gatewayd and systemd-journal-remote [installed]
+                  iptables: firewall features [installed]
+                  libarchive: convert DDIs to tarballs [installed]
+                  libbpf: support BPF programs [installed]
+                  libfido2: unlocking LUKS2 volumes with FIDO2 token [installed]
+                  libmicrohttpd: systemd-journal-gatewayd and systemd-journal-remote
+                  libp11-kit: support PKCS#11 [installed]
+                  libpwquality: check password quality [installed]
+                  polkit: allow administration as unprivileged user [installed]
+                  qemu-base: systemd-vmspawn [installed]
+                  qrencode: show QR codes [installed]
+                  quota-tools: kernel-level quota management
+                  systemd-sysvcompat: symlink package to provide sysvinit binaries [installed]
+                  systemd-ukify: combine kernel and initrd into a signed Unified Kernel Image
+                  tpm2-tss: unlocking LUKS2 volumes with TPM2 [installed]
+Required By     : base  bolt  chromium  cups  fcitx5  gvfs  mdadm  media-player-info  mkinitcpio  pacman  plocate  polkit  systemd-sysvcompat  vte3  xdg-desktop-portal  zram-generator
+Optional For    : None
+Conflicts With  : nss-myhostname  systemd-tools  udev
+Replaces        : nss-myhostname  systemd-tools  udev
+Installed Size  : 40.57 MiB
+Packager        : Christian Hesse <eworm@archlinux.org>
+Build Date      : Sat Oct 17 14:16:56 2026
+Install Date    : Sat Oct 24 11:33:58 2026
+Install Reason  : Installed as a dependency for another package
+Install Script  : Yes
+Validated By    : Signature
+
