@@ -1,0 +1,47 @@
+{
+  "schema": "palimpsest-source-review-v1",
+  "scope": "Engineering-only fixed four-root, sixteen-condition pilot implementation; no actual pilot",
+  "reviewer": "/root/source_release_review",
+  "important_findings_remaining": 0,
+  "source_sha256": {
+    "process.py": "9c095d0fa314fa16bcfa183ac86720a60a78a60ffcea877591a01e3a46e344cf",
+    "pilot.py": "f8a22145015d4dc520993670ee257448e6633731c1b8d9c02f038ecd2a89faf3",
+    "pilot_worker.py": "1e803af4fef16b80a7535f7d2da3cb991219c19dc647fb6bb51bc633b2f93c3c",
+    "prepare_inputs.py": "b07d63ba0781f7839412fd7c3b2d7df5d6e3c36615971fc137cb087e9e9f59ec"
+  },
+  "reviewed_boundaries": [
+    "Pinned ownership before command execution, descendant draining and wait4 CPU without double charging",
+    "Externally pinned input/config/anchor descriptors and correct source-module locations",
+    "Four zero-forward preparations before freezing the full sixteen-condition manifest",
+    "154MiB complete preparation reserve, then measured preparations plus 468MiB future reserve under unchanged 512MiB cap and 6GiB free floor",
+    "No retries, replacement roots or successful partial block",
+    "Terminal receipts under writer lease; external lifetime CPU reconciliation required",
+    "Public seed-ID projection only, explicit input files and no dependency-completeness assertion"
+  ],
+  "root_verification": {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B -m pytest -q tests/test_audit_process_accounting.py tests/test_authority_replay_process_ownership.py tests/test_pilot_supervisor.py tests/test_pilot_worker.py tests/test_audit_pilot_inputs.py tests/test_velocity_gain.py tests/test_velocity_gain_snapshot.py --basetemp=.pytest_cache/audit-integration-root-20261105-d",
+    "exit_code": 0,
+    "passed": 151,
+    "elapsed_seconds": 16.68,
+    "nested_accounting_checks_passed": 23,
+    "nested_replay_checks_passed": 101,
+    "counts_note": "Nested checks are separate subprocess checks, not additional outer pytest cases."
+  },
+  "independent_verification": {
+    "process_isolated_checks_passed": 23,
+    "final_parent_and_preparer_checks_passed": 67,
+    "initial_combined_process_admission_refusals": 4,
+    "initial_refusal_note": "Combining numerical imports with process tests violated the deliberate single-thread/no-preexisting-child preflight. The isolated rerun passed; refusal was retained, not ignored."
+  },
+  "actual_research_execution_cpu_seconds": 0,
+  "sampling_eligibility_verified": false,
+  "certified_improvement": false,
+  "runtime_qualification": false,
+  "remaining_before_actual_pilot": [
+    "Freeze clean source commit and explicit actual source/model/dependency roster",
+    "Independently review public namespace projection and selected input completeness",
+    "Externally account entire input-preparation and pilot process lifetimes, including failed prerequisites",
+    "Perform measured resource admission; retain a refusal or failure without automatic retry"
+  ],
+  "hosted_checks_and_main_integration": "pending"
+}

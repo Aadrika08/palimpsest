@@ -14,6 +14,8 @@ Memory publication Tasks 1–2 are committed (`dbadf42`, `b9d6ccc`); The durable
 
 The isolated audit adapter and gain-only snapshot derivation are committed as `a9cb51f`. Their 52 software checks pass, including a tiny authored FLYNN graph; this is not pretrained-model or native snapshot qualification. The [runtime pilot contract](plans/change-audit-runtime-pilot-v1.md) records the next audit engineering step. Available project storage remains below the compact memory study's full one-block admission minimum. Capability, research, fresh-runtime, human/operator, licensing, paper and delivery gates remain open.
 
+Process cleanup fixes are committed as `0139379`: independently reviewed retained ownership and pre-execution admission replace unsafe raw PID/group cleanup. The fixed engineering pilot, worker and explicit input preparer now pass 151 focused root checks, including isolated subprocess regression suites. Independent review found no remaining Important issue in those source contracts; see the [source review receipt](reports/change-audit-pilot-source-review-2026-11-05.json). This is authored-fixture verification. Actual input hashes, namespace/input-completeness review, lifetime CPU accounting and native restoration/inference remain the next execution gates. No pretrained-model research has run; the 24-hour research allocation is still unused. Latest available disk is 50,665,648,128 bytes, below the 63,786,975,232-byte compact memory admission minimum. No evidence was deleted. Hosted CI allowance for this private repository is unverified; no workflow-triggering push or PR has been made.
+
 ## Current completion work — 25 October 2026
 
 The [current completion checklist](plans/project-completion-2026-10-23.md)
