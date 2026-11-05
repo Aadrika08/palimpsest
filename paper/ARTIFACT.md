@@ -79,7 +79,7 @@ source/event-prefix identity and canonicalizes MuJoCo `timer.duration` on
 private decoded copies. Original snapshots and raw hashes remain retained, all
 RNG/scientific state remains in the match, and replay validation is unchanged.
 An unmatched seed retains all four rows and is excluded as a whole from timing
-summaries. Open/close costs are separate from steady-state tick time.
+summaries. Open/close costs are separate from measured execution tick time.
 
 The separate post-run `scripts/audit_authority_state.py` checks retained raw and
 normalized cost snapshots against the raw inventory and reported state digests.

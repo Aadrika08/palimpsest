@@ -390,7 +390,7 @@ def generate_outputs(result, hashes, trace_root=None):
     outputs['fault-matrix.tex'] += '% Diagnostic counts do not establish automatic production refusal; raw outcome_scope is retained in metadata.\n'
     outputs['fault-matrix.tex'] += _table(['Case', 'Challenge', 'Done/N', 'I/D/L', 'Recovery/rep.', 'Benign FR'], fault_rows, 'llrrrr')
     outputs['replay-table.tex'] = _table(['Comparison', 'Pass/declared', 'Completed'],
-        [[label, f"{result[k]['passed']}/{result[k]['declared']}", result[k]['completed']] for label,k in [('Continuation (100 ticks)', 'continuation'), ('All four replay modes (100 source ticks)', 'replay')]])
+        [[label, f"{result[k]['passed']}/{result[k]['declared']}", result[k]['completed']] for label,k in [('Continuation (100 ticks)', 'continuation'), ('Four paired conditions (100 source ticks)', 'replay')]])
     overhead_rows = []
     for c in CONDITIONS:
         wall, relative = o['wall_ms'][c], o['relative'].get(c)
