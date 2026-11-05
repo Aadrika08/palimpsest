@@ -368,6 +368,7 @@ def _finish(protocol, output, identity, phases, records, stopped):
 
 
 def run(protocol_path, assets, output):
+    require(not Path(output).is_symlink(), 'campaign requires a fresh nonsymlink output root')
     protocol_path, assets, output = map(lambda p: Path(p).resolve(), (protocol_path, assets, output))
     require(not output.exists() and not output.is_symlink(), 'campaign requires a fresh nonexistent output root')
     protocol = load_protocol(protocol_path)

@@ -386,3 +386,12 @@ def test_inconsistent_unit_snapshot_fails_analysis(setup, monkeypatch):
     assert c.run(STUDY / 'protocol.json', output.parent, output) == 1
     manifest = json.loads((output / 'analysis/campaign-manifest.json').read_text())
     assert 'inconsistent' in manifest['analysis_error']
+
+
+def test_broken_output_symlink_refused_before_identity(setup, monkeypatch):
+    c, identity, output = setup
+    output.symlink_to(output.parent / 'missing-target')
+    monkeypatch.setattr(c, 'campaign_identity', lambda *a: pytest.fail('symlink must be refused before identity verification'))
+    with pytest.raises(ValueError, match='fresh'):
+        c.run(STUDY / 'protocol.json', output.parent, output)
+    assert not (output.parent / 'missing-target').exists()
