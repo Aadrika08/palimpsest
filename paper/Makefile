@@ -11,7 +11,7 @@ all: paper
 evidence:
 	$(PYTHON) scripts/build_evidence.py
 
-paper: evidence
+paper: authority-evidence
 	mkdir -p $(BUILD)
 	$(PDFLATEX) -interaction=nonstopmode -halt-on-error -output-directory=$(BUILD) main.tex
 	cp references.bib $(BUILD)/references.bib
@@ -21,7 +21,7 @@ paper: evidence
 	cp $(BUILD)/main.pdf $(PDF)
 
 verify: paper
-	$(PYTHON) scripts/build_evidence.py --check
+	$(PYTHON) -B scripts/build_authority_evidence.py $(AUTHORITY_ARGS) --check
 	$(PYTHON) scripts/verify_paper.py --write
 
 clean:

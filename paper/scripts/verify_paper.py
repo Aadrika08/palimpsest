@@ -111,6 +111,8 @@ def inspect_paper(
     for expected in expected_text:
         if expected not in text:
             errors.append(f"PDF missing expected text: {expected}")
+    if re.search(r"\bPENDING\b|\bTODO\b|\bFIXME\b", text):
+        errors.append("PDF contains unresolved placeholders")
 
     metadata: dict[str, object] = {
         "schema_version": 1,
@@ -142,26 +144,37 @@ def main(argv: list[str] | None = None) -> int:
     paper = repo / "paper"
     pdf = paper / "build" / "palimpsest-systems-paper.pdf"
     log = paper / "build" / "main.log"
-    sources = [paper / "evidence" / "claims.yaml"]
-    generated = [paper / "generated" / "claims.tex", paper / "generated" / "results-table.tex"]
+    evidence = paper / "evidence" / "authority-replay-v1"
+    sources = [evidence / "summary.json", evidence / "campaign-manifest.json",
+               paper / "studies" / "authority_replay_v1" / "protocol.json"]
+    generated = [paper / "generated" / name for name in (
+        "authority-claims.tex", "fault-matrix.tex", "replay-table.tex",
+        "overhead-table.tex", "operation-table.tex", "overhead-plot.tex")]
+    validation = subprocess.run([
+        sys.executable, "-B", str(paper / "scripts" / "build_authority_evidence.py"),
+        "--summary", str(sources[0]), "--manifest", str(sources[1]),
+        "--protocol", str(sources[2]), "--output", str(paper / "generated"), "--check",
+    ], capture_output=True, text=True)
+    if validation.returncode:
+        print(validation.stderr or validation.stdout, file=sys.stderr)
+        return 1
     build_inputs = [
         paper / "main.tex",
         paper / "references.bib",
         paper / "Makefile",
-        paper / "evidence" / "claims.yaml",
-        paper / "generated" / "claims.tex",
-        paper / "generated" / "results-table.tex",
-        paper / "scripts" / "build_evidence.py",
+        *sources,
+        *generated,
+        paper / "scripts" / "build_authority_evidence.py",
         paper / "scripts" / "verify_paper.py",
         *sorted((paper / "figures").glob("*.tex")),
+        *sorted(path for path in evidence.rglob("*") if path.is_file() and path not in sources),
     ]
     expected = [
         "Introduction",
-        "System Design",
-        "Evidence Protocol",
+        "Failure Model and Semantic Contract",
+        "Design and Implementation",
         "Evaluation",
-        "Limitations and Threats to Validity",
-        "Ethics, Licensing, and Artifact Status",
+        "Lessons and Limitations",
         "Conclusion",
         "References",
     ]

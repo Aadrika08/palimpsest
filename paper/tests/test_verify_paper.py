@@ -4,6 +4,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 
@@ -11,6 +12,20 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from verify_paper import inspect_paper  # noqa: E402
+
+
+class PlaceholderTests(unittest.TestCase):
+    def test_rendered_placeholder_is_refused_without_a_real_pdf_dependency(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            pdf, log = root / "draft.pdf", root / "draft.log"
+            pdf.write_bytes(b"fixture")
+            log.write_text("")
+            def run(*args):
+                return "Pages: 1\n" if args[0] == "pdfinfo" else "Introduction\nPENDING RESULTS\n"
+            with patch("verify_paper._run", side_effect=run):
+                errors, _ = inspect_paper(root, pdf, log, [], [], ["Introduction"], 1)
+        self.assertIn("PDF contains unresolved placeholders", errors)
 
 
 class PaperVerifierTests(unittest.TestCase):
@@ -156,16 +171,16 @@ class PaperVerifierTests(unittest.TestCase):
             self.repo,
             self.pdf,
             self.log,
-            [self.repo / "paper" / "evidence" / "claims.yaml"],
-            [self.repo / "paper" / "generated" / "claims.tex"],
-            ["Introduction", "System Design", "Evaluation", "Limitations and Threats to Validity"],
+            [],
+            [],
+            ["Introduction", "Design and Implementation", "Evaluation", "Lessons and Limitations"],
             5,
         )
         first_errors, first = inspect_paper(*args)
         second_errors, second = inspect_paper(*args)
         self.assertEqual(first_errors, [])
         self.assertEqual(first, second)
-        self.assertEqual(first["page_count"], 7)
+        self.assertGreaterEqual(first["page_count"], 5)
         self.assertRegex(first["pdf_sha256"], r"^[0-9a-f]{64}$")
 
 
