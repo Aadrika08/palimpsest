@@ -1,0 +1,88 @@
+{
+  "admission": "received_GO",
+  "command_record": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/operation_cost/command.json",
+  "ended_unix": 1793855108.8544848,
+  "guardian_command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "-B",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/paper/studies/authority_replay_v1/campaign.py",
+    "--supervise",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/operation_cost/command.json",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/operation_cost/supervisor.json",
+    "2853643",
+    "4"
+  ],
+  "guardian_pid": 2880125,
+  "guardian_returncode": 0,
+  "owned_descendants": [
+    {
+      "parent_pid": 2880125,
+      "pid": 2880126,
+      "provenance": "guardian_launched_phase",
+      "start_ticks": 28298638
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2880127,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28298645
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2880150,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28298686
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2880417,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28305311
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2880698,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28312029
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2880882,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28318528
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2881045,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28324968
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2881068,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28325008
+    },
+    {
+      "parent_pid": 2880126,
+      "parent_start_ticks": 28298638,
+      "pid": 2881216,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 28331865
+    }
+  ],
+  "pid": 2880126,
+  "returncode": 0,
+  "started_unix": 1793854775.9297242,
+  "status": "exited",
+  "stderr": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/operation_cost/stderr.log",
+  "stdout": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/operation_cost/stdout.log",
+  "supervisor_record": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/commands/operation_cost/supervisor.json"
+}

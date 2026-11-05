@@ -1,0 +1,206 @@
+{
+  "started_at": "2026-11-05T09:42:06.419412+00:00",
+  "baseline_combined_logical_bytes": 6855720756,
+  "max_incremental_bytes": 4294967296,
+  "minimum_free_bytes": 6442450944,
+  "manifest_sha256": "025a37495525f88f8a380917e725a98c41d4e1cb620c958ad3ad78443fae7978",
+  "target_modules": 19,
+  "scope": "Serial exact pinned transitive imports only; same original corrective wave cumulative allocation",
+  "usage_measure": "native du --summarize --bytes --count-links; includes directory logical sizes conservatively above original file-sum baseline",
+  "steps": [
+    {
+      "module": "Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus",
+      "archive": "/home/utkarsh/.cache/mathlib/6c6d43f8aedf6a38.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "deb26b7d4f228ba7b0a702a44f2a85dd9a1924e3fcd36dd815541cb4921aebef",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Integral.BoundedContinuousFunction",
+      "archive": "/home/utkarsh/.cache/mathlib/699cf6b7afdb8fca.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "efb9887db1dd11a0b4f9fc5a7f5b06d74109c527efb24f45f47e1f2d39dc5b46",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv",
+      "archive": "/home/utkarsh/.cache/mathlib/f0c7a01f253f2531.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "0a4ea807ad985cb9ab886d2bf143655dcbf8544f403939dd3799801733ebe63b",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Complex.Convex",
+      "archive": "/home/utkarsh/.cache/mathlib/45c7e5aff807ce59.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "3656695f4c718ed2ce7d4f396bd13194f2696d22737532012d9fd58b0b216a6a",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.LinearAlgebra.Orientation",
+      "archive": "/home/utkarsh/.cache/mathlib/9f49be3a1a6cff51.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "60c3ba1c83c48e96d55064e97bb31e0eb3c0f65b5aeebb18ca2e1152ec592f97",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Topology.Algebra.Group.Compact",
+      "archive": "/home/utkarsh/.cache/mathlib/9703be9dacba15f8.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "5871bf413d9f18aa6bce6b92614424e5f1dc5a5445b51f7b79ea710b51701d05",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Calculus.TangentCone.Prod",
+      "archive": "/home/utkarsh/.cache/mathlib/1b1cb4ae83524648.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "e42341b40b25e8b3764b4f82d1ece820fcc96cd82bf65cb342eb4008757af161",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.HasOuterApproxClosed",
+      "archive": "/home/utkarsh/.cache/mathlib/3c3794340cb46716.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "4fce533c482373881ec4b086fd605d918b6dbb43ca96f0648594991595f4be32",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Meromorphic.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/7595381a98de0b72.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "0f56a28d053496d354092df7cc26f21c974f569aa3e6702f0dc573cd47b7c946",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Group.FundamentalDomain",
+      "archive": "/home/utkarsh/.cache/mathlib/4e2ef54e0b341a9f.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "683610546e052b9fd93d30ec28075029f243a117668cc9de25d7eb3f87d720fe",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Function.JacobianOneDim",
+      "archive": "/home/utkarsh/.cache/mathlib/eb16761260e6d265.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "f811f28cbd2348973aae9e70a1f066e5b4d5a2be87ff6b0a32b4cda263ec4c20",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/908f45fc625c192b.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "0b144b6258d8601e1cb7e688d81493679e7c1f095153afe1064ce2bb3fa87868",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Complex.ReImTopology",
+      "archive": "/home/utkarsh/.cache/mathlib/751aff8496f3d8fb.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "79631dbdc6e5e9c98797d6e766089fbbe05ced9353409884519f32930166093f",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.LinearAlgebra.AffineSpace.Slope",
+      "archive": "/home/utkarsh/.cache/mathlib/8076b20c1f5f25df.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "80acbc3f49fe9ef39db40767c1c3d55c3f73ca3552083342258c58cfff341418",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Complex.RealDeriv",
+      "archive": "/home/utkarsh/.cache/mathlib/6d108c415b571eb7.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "d27d37a7e1ad970062e2416fdf4c70d2e024d9718d0e1618b7863a51f858a052",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Integral.Marginal",
+      "archive": "/home/utkarsh/.cache/mathlib/1ebb62290a380705.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "617134ff4611151339df72d47e1c5b9e1ba6c1fd7830199b6bf31c02b8981a71",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Calculus.Deriv.CompMul",
+      "archive": "/home/utkarsh/.cache/mathlib/01cd28bd180a7e5d.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "c670fdffa48087420f38e81d02f1c67f0ccdd3c88a7f8dd412e0d215446cd151",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Topology.Order.Rolle",
+      "archive": "/home/utkarsh/.cache/mathlib/718654e85947630d.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "cd4962096fad0799cb068eaca7df3275954e4ba08aae38949d707f3886f1a6b7",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Topology.Algebra.Module.PerfectSpace",
+      "archive": "/home/utkarsh/.cache/mathlib/fb2152e9adbf0fdd.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "792aa85db261e018108264872eb23d1287e48124f906fa6f4d3ac85cd6c9bdd2",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    }
+  ],
+  "combined_logical_bytes": 7261653617,
+  "incremental_logical_bytes": 405932861,
+  "free_bytes": 50860994560,
+  "status": "completed"
+}

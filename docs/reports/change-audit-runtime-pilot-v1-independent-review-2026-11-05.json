@@ -1,0 +1,20 @@
+{
+  "schema": "palimpsest-evidence-review-v1",
+  "reviewer": "/root/source_release_review",
+  "important_findings_remaining": 0,
+  "scope": "Copied metadata, report claims and source-contract readback; no raw recording/model rehash or native rerun",
+  "report_sha256": "65fc140d32409c9ea8589ec38d05b612f773e430a297acdb1e7d8261d0ee4817",
+  "copied_metadata_manifest_sha256": "cda19d48423a8d23876c8af0cee2291a11cba2e6158d14bb2f1d3faf00150cc4",
+  "copied_files_verified": 42,
+  "copied_bytes_verified": 612711,
+  "accepted_jobs": 20,
+  "recorded_condition_ticks": 1024,
+  "instrumented_condition_forward_attempts": 1024,
+  "aggregate_supervised_research_cpu_seconds": 1222.455497,
+  "interpretation": "All sixteen short contact observations are zero; no improvement or scientific null inference follows.",
+  "sampling_eligibility_verified": false,
+  "certified_improvement": false,
+  "runtime_qualification": false,
+  "raw_public_delivery": "pending",
+  "overall_project_complete": false
+}

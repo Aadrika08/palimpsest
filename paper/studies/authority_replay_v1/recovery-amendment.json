@@ -1,0 +1,45 @@
+{
+  "protocol_revision": 3,
+  "initial_source_commit": "d8658dda3fca37bb43b6dafc909114279f706f11",
+  "initial_protocol_sha256": "7a985038bffa2f55ea2eeb6f75815c96ce179e0e5a74ee9e45db0aa1b1c03b35",
+  "initial_summary_sha256": "b9f7c43b1c5ba9015a2f45361671eaec7a31065220d004871b83a8bc3b8679e9",
+  "initial_accounting": {
+    "declared": 111,
+    "completed": 69,
+    "failed": 1,
+    "incomplete": 41
+  },
+  "failure": "Seed1 synchronous overhead reached goal at global tick199. Benchmark lacked explicit terminal reset and generic ValueError was classified as a resource stop.",
+  "original_deadline_epoch": 1793860506.2223496,
+  "retained_initial_bytes": 3076227528,
+  "initial_root": "../paper-systems/runs/paper-authority-replay-v1",
+  "recovery_campaign_max_output_bytes": 12884901888,
+  "combined_original_budget_bytes": 17179869184,
+  "terminal_policy": "reset_same_seed",
+  "reset_accounting": "20warmup +200measured steps; same declared seed on each normal terminated/truncated episode; measured resets included in wall time and recorded separately. Failed/stopped owners are not reset.",
+  "failure_policy": "Ordinary scientific failures retained and subsequent units continue. Resource/time/admission/source-identity boundaries stop.",
+  "unchanged": [
+    "controller",
+    "CPU",
+    "seeds",
+    "condition order",
+    "20warmup ticks",
+    "200measured ticks",
+    "111declared units",
+    "comparison tolerance",
+    "admission oracles",
+    "900seconds/unit",
+    "6GiB actual free reserve",
+    "512MiB ordinary unit cap",
+    "10GiB offline unit cap"
+  ],
+  "custody": "Initial source and entire raw attempt remain unchanged. Recovery uses a fresh worktree/output root and newly frozen source/protocol identity; no row replacement.",
+  "interrupted_recovery": {
+    "source_commit": "6c129516742d240075a95565bcd308ef1d313bb0",
+    "reason": "A late worker patch changed source during execution; identity guard stopped the attempt. All outputs retained; excluded from scientific result aggregation.",
+    "retained_bytes": 461457713,
+    "raw_root": "../authority-study-recovery/runs/paper-authority-replay-v1",
+    "manifest_sha256": "f7fc7b00335f1383d1b88e29f7616d099f4906fb2d04c425ddb78ff8bb237367"
+  },
+  "budget_proof": "Original3076227528 + interrupted461457713 + final12GiB < original16GiB; same original absolute deadline."
+}

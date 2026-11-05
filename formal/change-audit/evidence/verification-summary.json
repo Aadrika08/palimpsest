@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-05T09:59:09.882298+00:00",
+  "status": "verified_with_independent_build_recheck",
+  "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "source_sha256": {
+    "ChangeAudit/Anytime.lean": "5e3694948904a7f6174a2f9e8c7b853dd91aecfa2e79ff7db7910eb4438e357f",
+    "ChangeAudit/Audit.lean": "c39a98d107887fd2208147f05d4f11079fce9ce1eadad7b89b0297b407792af8",
+    "ChangeAudit/Contrast.lean": "b632efaef25276b84114f9e710d6665a799b8c9bb3c9203fbf1f015bbfcea538",
+    "ChangeAudit/Exponential.lean": "b63f418ec5774da1427909c91d4c7a39c55261962edf90462934806074638448",
+    "ChangeAudit/FixedHorizon.lean": "14db35a486430052473d0690745684ba8448a4b9e7c1f85144169386ea006f2e",
+    "ChangeAudit/FreshBounded.lean": "ea350c8d8405aa7a49f8467ace5bec388694f1b07d20a097094a15e69bdf2339",
+    "ChangeAudit/Numerical.lean": "a7c7208150c9f93c22cc4799e40c5ddacf626219355231e63e1ae465b9b9cd75",
+    "ChangeAudit/Targets.lean": "c06ea3d8ff368c55c1fe3b93c7ce7b8a547dda859a477a4e3f6a21d22690ba7d",
+    "ChangeAudit/Ville.lean": "565760e1086d1cbbb0b82791dbe062e0072663d0405b6f37ad68e8e924905c0e",
+    "ChangeAudit.lean": "fc7e0b2e12951efae5c31a3b14c7f6236eeee1f05c41d8c4d7643d8828559172",
+    "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "lakefile.toml": "691476013b4f365131cc8cf1b8f798c3cceebc6b351cc3711606026038ff395c",
+    "lake-manifest.json": "2c357e316d10df71f33cab00bcbff56a20c9a8927c330ab8bc200ab0ad7fc354"
+  },
+  "full_serial_source_build": "evidence/build-full-verification-02.json",
+  "lake_build": "evidence/serial-lake-verification-01.json",
+  "own_source_modules": 9,
+  "lake_commands": 19,
+  "exported_axiom_reports": {
+    "ChangeAudit.contrast_mem_Icc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.contrast_subgaussian": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.FreshBounded.conditional_mgf": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.FreshBounded.toConditionalMGF": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.exponential_supermartingale": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "MeasureTheory.Supermartingale.measure_ville_le_div": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.anytime_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.finite_anytime_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.fixed_horizon_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.fixed_horizon_sqrt_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.freshOfContrasts": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.prefix_target_identity": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.rational_log_enclosure": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.rational_family_log_enclosure": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.finite_false_acceptance_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.finite_false_strict_acceptance_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ChangeAudit.example_log_enclosure": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "axiom_allowlist": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "all_exported_reports_pass_allowlist": true,
+  "full_pass_and_lake_maximum_rss_kib": 3327220,
+  "dependency_current_combined_logical_bytes": 7287619846,
+  "corrective_original_baseline_bytes": 6855720756,
+  "corrective_current_incremental_logical_bytes": 431899090,
+  "original_dependency_cap_breached": true,
+  "original_breach_record": "evidence/dependency-cap-breach.json",
+  "research_runtime_or_training_executed": false,
+  "limitations": [
+    "Conditional sampling/MGF premises are mathematical assumptions, not inferred from runtime hashes.",
+    "Python parsing and receipt authenticity are not formally verified.",
+    "No empirical improvement certificate or simulation study executed.",
+    "Parent independent build/kernel/axiom recheck passed; validation of empirical sampling premises remains external to this package."
+  ],
+  "parent_independent_recheck": "evidence/parent-independent-verification.json",
+  "independent_recheck_source_hashes_match": true
+}

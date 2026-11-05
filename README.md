@@ -9,6 +9,17 @@ The [completion checklist](docs/plans/project-completion-2026-10-23.md) tracks r
 The [architecture guide](docs/architecture.md) maps live control, snapshots,
 recordings and research extensions to their implementation and evidence boundaries.
 
+## Research paper draft
+
+The [systems-paper package](paper/README.md) presents Palimpsest as an
+inspectable, provenance-preserving experiment layer for embodied neural
+controllers. Its generated claim ledger preserves the distinction between
+fixture, runtime, browser, development and held-out evidence. The draft does not
+claim memory benefit, connectome-topology advantage, learned puck capability,
+human artistic acceptance or physical qualification. Final authorship, venue,
+project licensing, archival DOI and independent reproduction remain explicit
+submission gates.
+
 ## Setup
 
 Use Linux, Git, and [uv](https://docs.astral.sh/uv/getting-started/installation/). Python 3.11 and package versions are recorded in `.python-version` and `uv.lock`.

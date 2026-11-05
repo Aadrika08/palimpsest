@@ -1,0 +1,38 @@
+{
+  "schema": "palimpsest-source-fixture-repair-checks-v1",
+  "failed_baseline_commit": "7625dd49706cb6d5f5957508dfe9b83f17f2b12b",
+  "production_changes": false,
+  "tests": [
+    {
+      "path": "tests/test_puck_published_exports.py",
+      "sha256": "3cc0234dd144682da1840128441222ec0bef373639f5941b510e997dccc5e6ab",
+      "passed": 29,
+      "skipped": 0,
+      "seconds": 32.03,
+      "mechanism": "All cases require native raw-dev/inode tmpfs identity; module routes to tmpfs. Negative checks inspect final exception, excluding early tmpfs refusal."
+    },
+    {
+      "path": "tests/test_male_navigation_v3_execution.py",
+      "sha256": "f39020aa1e77406d356ce7ff0793119b691313724440e849ea1f47294e30ff9d",
+      "passed": 19,
+      "skipped": 3,
+      "seconds": 0.66,
+      "mechanism": "Explicit stdin release barrier retains live child through identity handoff; immediate and 0.35-second delayed identity read; production guard unchanged."
+    }
+  ],
+  "logs": [
+    {
+      "path": "root-puck-published-exports-20261105.log",
+      "size_bytes": 100,
+      "sha256": "1eafef4793ec4ed00b21ed9a9224f0e2d968e2e13b94196db98d24564c06dbf1"
+    },
+    {
+      "path": "root-navigation-spawn-20261105.log",
+      "size_bytes": 110,
+      "sha256": "1583e4753fb5374c4b0826fe08ea3608af15d892e5d40952a95792437d36d0a6"
+    }
+  ],
+  "canonical_suite_green": false,
+  "research_cpu_charge_seconds": 0,
+  "research_cpu_charge_reason": "ordinary authored software checks excluded by approved research accounting contract"
+}

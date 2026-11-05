@@ -1,0 +1,141 @@
+{
+  "upstream_commit": "862dcb02c0dffeefd6955293345770f726d8ef95",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 12281,
+      "git_blob_sha1": "8d55c36325fdcd55e523b13db6102df1ab4fe1e2",
+      "sha256": "18b3d567ca2dd8d4e83da306a77245a5fc58001a2d678d2a90a239436a7a9da4",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/README.md"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11342,
+      "git_blob_sha1": "8823b541e8451d912caba7ef1554c7a98bf70ea6",
+      "sha256": "5b6129fb7aa51ffcf261bdf6adec2147a38f20eb1338564ed93cd553cd9a20b4",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/LICENSE"
+    },
+    {
+      "path": "scripts/reproduce_headline.py",
+      "bytes": 4399,
+      "git_blob_sha1": "c8b22496d0536df3da46a69b434b60eb6b48e0bc",
+      "sha256": "22ae77cd7a212027e8ad7d2f45a98633f12e771bd313fb3cc44b3e678d223a28",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/scripts/reproduce_headline.py"
+    },
+    {
+      "path": "data/w_sr_battery_20260824/results/loss_table.f64",
+      "bytes": 2580480,
+      "git_blob_sha1": "396a56e9b48964318ce953789d4c718423c962fc",
+      "sha256": "f274bdc53373776237b97e4d652d164bcd2714c66b278b3b5c5ebd52f7e58475",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w_sr_battery_20260824/results/loss_table.f64"
+    },
+    {
+      "path": "data/w_sr_battery_20260824/results/draw_streams.bin",
+      "bytes": 6553600,
+      "git_blob_sha1": "16cd54c94117f00b2b08d025da02499c7fed8430",
+      "sha256": "89e9cfd8ced96550ebe66db875e3a129e7ef52fd15d7d13afc23c327878669c6",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w_sr_battery_20260824/results/draw_streams.bin"
+    },
+    {
+      "path": "data/w_sr_battery_20260824/results/records.json",
+      "bytes": 38398,
+      "git_blob_sha1": "9dbab9216f9e5bfe605d8e03d411fa153368ed4e",
+      "sha256": "7868b620d4f4bfa85f7b5c28cfcb4da494b5eac106d4cf8006c8660cf4af24db",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w_sr_battery_20260824/results/records.json"
+    },
+    {
+      "path": "data/w_sr_battery_20260824/results/primary.tsv",
+      "bytes": 464,
+      "git_blob_sha1": "45596711408f1ab04e3f4ab04064fba4d8b297b8",
+      "sha256": "0d90c72b71b7c47b682e24dacb85a659bccd8e3c5b799db6866f1a83ba2427af",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w_sr_battery_20260824/results/primary.tsv"
+    },
+    {
+      "path": "data/w_sr_battery_20260824/results/certificate.json",
+      "bytes": 84630,
+      "git_blob_sha1": "fb33b6b86d3d105313102e04e39a77467a93cfd1",
+      "sha256": "56b078a35060acd5362029436ba557f61d2e624c775980c03b380133cef8dbc6",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w_sr_battery_20260824/results/certificate.json"
+    },
+    {
+      "path": "data/w2_spi_battery_20260824/results/loss_table.f64",
+      "bytes": 28616,
+      "git_blob_sha1": "e56063e9d95687caf37a36248300c86171ffa862",
+      "sha256": "285ec319b9f34c2229d9469b63889aee1e9d2359b03dd3be12a3e451bb0572c0",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w2_spi_battery_20260824/results/loss_table.f64"
+    },
+    {
+      "path": "data/w2_spi_battery_20260824/results/draw_streams.bin",
+      "bytes": 3276800,
+      "git_blob_sha1": "de699d47bcacd8ecc0f716a7a7c2466cb713d6e8",
+      "sha256": "8cd59d19718f7f939773e0d0c63934a5d8ff2889c2fca9864511fff4d0c77799",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w2_spi_battery_20260824/results/draw_streams.bin"
+    },
+    {
+      "path": "data/w2_spi_battery_20260824/results/records.json",
+      "bytes": 47805,
+      "git_blob_sha1": "89fc501e8407c2de681ee723437699fd385bb42f",
+      "sha256": "472703d24f0c58f27fa210bbbd647172fb3ef1f52c2b78a7b8f4085e6a9c1ca0",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w2_spi_battery_20260824/results/records.json"
+    },
+    {
+      "path": "data/w2_spi_battery_20260824/results/primary.tsv",
+      "bytes": 6421,
+      "git_blob_sha1": "ed2a31451e251de34ca192986ac93d202acdbdb4",
+      "sha256": "865e67e304a4663fc7497da59b05e142bfd2c1f98455ba2a24ac59a1199f530c",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w2_spi_battery_20260824/results/primary.tsv"
+    },
+    {
+      "path": "data/w2_spi_battery_20260824/results/certificate.json",
+      "bytes": 107581,
+      "git_blob_sha1": "b3b9e08212877043c48660078088a155319b4dc3",
+      "sha256": "daf326b46e3876afbd063b3a0baf957e1cccf599fc59c9a9191481f9a5a50356",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/data/w2_spi_battery_20260824/results/certificate.json"
+    },
+    {
+      "path": "lean/E_star_export/lean/CertifiedPolicyTheory/Core/AnytimePACBayes.lean",
+      "bytes": 30285,
+      "git_blob_sha1": "fff7dd222b9b1dc72731acc62e0f76ebb596fda1",
+      "sha256": "b461810afd1798c9055403bcb40eaeaca44fa655674a31a662e64d5507b1454c",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/CertifiedPolicyTheory/Core/AnytimePACBayes.lean"
+    },
+    {
+      "path": "lean/E_star_export/lean/CertifiedPolicyTheory/Core/PositiveFiniteLaw.lean",
+      "bytes": 11974,
+      "git_blob_sha1": "6794677906905dd7e5dbad554cdf1f77183612f9",
+      "sha256": "31c128f88bb4b3325cd1ff073127260fdfea81f8eab548c32685d9972f527bbb",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/CertifiedPolicyTheory/Core/PositiveFiniteLaw.lean"
+    },
+    {
+      "path": "lean/E_star_export/lean/CertifiedPolicyTheory/Core/PairedPACBayes.lean",
+      "bytes": 5223,
+      "git_blob_sha1": "cf31527bbc3524e5514d4b41b127f3589afb54f7",
+      "sha256": "ded872c5cfb32e37fde098ac51fcbe5335665aff6c0326f0a38262788f248a05",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/CertifiedPolicyTheory/Core/PairedPACBayes.lean"
+    },
+    {
+      "path": "lean/E_star_export/lean/CertifiedPolicyTheory/Core/StochasticLifting.lean",
+      "bytes": 11845,
+      "git_blob_sha1": "95756b3e597c79d16ae84f62b69e4865460fd81e",
+      "sha256": "5805dc9c5994cb2d9a1e945062989f10ef07f5748ceccaf69174785f258fd8d1",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/CertifiedPolicyTheory/Core/StochasticLifting.lean"
+    },
+    {
+      "path": "lean/E_star_export/lean/CertifiedPolicyThesis/ConfidenceBridge.lean",
+      "bytes": 14154,
+      "git_blob_sha1": "0aaa4285c4f312ffcb9d78cc201a75f5be48dca4",
+      "sha256": "0fe3ad5a31df9959b8f52aded29994f79cb955aa60d0cb8674e0285b718c3db5",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/CertifiedPolicyThesis/ConfidenceBridge.lean"
+    },
+    {
+      "path": "lean/E_star_export/lean/CertifiedPolicyThesis/RewriteIndependence.lean",
+      "bytes": 6727,
+      "git_blob_sha1": "429b248a75b395470833f4036941beb7e2158d95",
+      "sha256": "ca083c8fbed951d6d066ba9e929cecff9e4ac700743f6bb1aa1961c6d0fc2499",
+      "url": "https://raw.githubusercontent.com/noumenal-ai/anytime-anywhere-pac-bayes/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/CertifiedPolicyThesis/RewriteIndependence.lean"
+    }
+  ],
+  "total_bytes": 12833025,
+  "numerical_execution_input_bytes": 12752817,
+  "scope": "13 numerical reproduction/source/license inputs plus six read-only audited Lean sources; Lean sources not compiled"
+}

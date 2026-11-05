@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "862dcb02c0dffeefd6955293345770f726d8ef95",
+  "command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "scripts/reproduce_headline.py"
+  ],
+  "working_directory": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/evidence/change-audit-feasibility-v1/upstream-reproduction/upstream",
+  "exit_code": 0,
+  "execution_wall_seconds": 0.3314153809915297,
+  "download_and_execution_wall_seconds": 12.56457736401353,
+  "python": "3.11.15 (main, Jun 23 2026, 15:19:43) [Clang 22.1.3 ]",
+  "numpy": "2.2.5",
+  "input_total_bytes": 12752817,
+  "disk_free_bytes_after": 12638511104,
+  "scope": "Unmodified upstream numerical reconstruction from released loss tables, draw streams and records. No original model execution, training, Lean compilation, theorem verification or Palimpsest runtime experiment.",
+  "prior_failures": [
+    {
+      "operation": "sandbox initialization before initial clone",
+      "exit_code": 101,
+      "reason": "bubblewrap synthetic mount /tmp/.git: Quota exceeded; no command started"
+    },
+    {
+      "path": "/tmp/palimpsest-pacbayes-feasibility-20261105/upstream",
+      "operation": "git clone --depth 1",
+      "exit_code": 128,
+      "reason": "Disk quota exceeded copying Git template hook; partial directory retained"
+    },
+    {
+      "path": "/tmp/palimpsest-pacbayes-feasibility-20261105/write-probe.txt",
+      "operation": "14-byte write probe",
+      "exit_code": 1,
+      "reason": "Disk quota exceeded; partial file retained"
+    }
+  ],
+  "recorded_at_utc": "2026-11-05T07:35:36.855607+00:00",
+  "clock_note": "Recorded UTC timestamp was collected after execution; exact start UTC was not retained. Wall durations use monotonic clock.",
+  "assertion_counts": {
+    "paired_means_remote": 100,
+    "paired_means_walsh": 100,
+    "radii_remote": 100,
+    "radii_walsh": 0
+  }
+}

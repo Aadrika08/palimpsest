@@ -11,6 +11,9 @@ import time
 
 import pytest
 
+# Explicit authored current-profile semantics; no real qualification authority.
+from memory_publication_authored_profiles import authored_current_profile
+
 from palimpsest import artifacts, memory
 from scripts import memory_condition_replay_admission_v1 as qualification
 from scripts import memory_family_compact_v4 as compact
@@ -29,13 +32,13 @@ def module():
     return importlib.import_module(NAME)
 
 
-def build_case(root, *, natural_failure=True, row=0, kind='change'):
+def build_case(root, *, natural_failure=True, row=0, kind='change', control_factory=None):
     samples = {}
     with pytest.MonkeyPatch.context() as patch:
         for condition in CONDITIONS:
             own = samples.get('own')
             sample = fixture(root, row=row, kind=kind, condition=condition,
-                natural_failure=natural_failure,
+                natural_failure=natural_failure, control_factory=control_factory,
                 source=None if own is None else own['source'],
                 prior_own=own if condition == 'oracle' else None)
             seal_authored(sample, patch)

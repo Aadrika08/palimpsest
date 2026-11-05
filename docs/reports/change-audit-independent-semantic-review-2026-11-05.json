@@ -1,0 +1,29 @@
+{
+  "reviewer": "independent pacbayes_numerical_repro agent",
+  "review_mode": "read-only source inspection; no new Lean processes or tests",
+  "reviewed_commit": "9cca071",
+  "modules": [
+    "Targets",
+    "FreshBounded",
+    "Exponential",
+    "Anytime",
+    "FixedHorizon",
+    "Numerical",
+    "Audit"
+  ],
+  "important_findings": [],
+  "observations": [
+    "Strict false-acceptance theorem includes true-null equality while requiring strict negative endpoint.",
+    "Rational log bridge uses 1/(alpha/K).",
+    "Fixed-horizon optimized scale requires declared horizon and all-positive-scale MGF premise; no anytime retuning claim.",
+    "Fresh-bounded constructor derives MGF and supermartingale rather than assuming tail conclusion.",
+    "Target is prefix mean of potentially different position means."
+  ],
+  "remaining_obligations": [
+    "Actual sampling/independence law",
+    "Almost-everywhere bounded losses",
+    "Model and data identity",
+    "Runtime parser and observation binding",
+    "Actual empirical study eligibility and outcomes"
+  ]
+}

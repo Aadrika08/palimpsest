@@ -23,7 +23,7 @@ from palimpsest import artifacts, memory, snapshots
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json'
+PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-case-publication-v1-protocol.json'
 MiB = 1024**2
 CHUNK_ROWS = 32
 CAMERAS = ('cam_left', 'cam_right', 'raw_cam_left', 'raw_cam_right')
@@ -125,6 +125,14 @@ def _descriptor(path, payload):
     }
 
 
+def _behavior_relative(value):
+    """Source-only Python initializer exception; evidence paths stay strict."""
+    if type(value) is str and value.endswith('/__init__.py'):
+        _relative(value[:-len('/__init__.py')], 'behavior source parent')
+        return value
+    return _relative(value, 'behavior source path')
+
+
 def _check_descriptor(value, path, payload):
     _fields(value, DESCRIPTOR_FIELDS, 'Payload descriptor')
     if (type(value['path']) is not str
@@ -222,7 +230,7 @@ def behavior_source_identities(repo_root):
     for expected in PROTOCOL['behavior_sources']:
         _fields(expected, {'id', 'path', 'size_bytes', 'sha256'},
                 'Behavior source identity')
-        relative = _relative(expected['path'], 'behavior source path')
+        relative = _behavior_relative(expected['path'])
         path = artifacts._safe_path(root / relative)
         if not path.is_relative_to(root) or not path.is_file():
             raise ValueError('Behavior source is missing or outside the repository')
@@ -430,7 +438,12 @@ def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
                   staged=True, allow_empty=False, raw_run=None):
     """Hold file and ancestor descriptors; sibling writes cannot replace edges."""
     _fields(descriptor, DESCRIPTOR_FIELDS, 'Bound payload descriptor')
-    relative = _relative(descriptor['path'], 'bound payload path')
+    is_behavior = (source_case is None and raw_run is None
+        and artifacts._safe_path(root) == ROOT
+        and any({key:row[key] for key in DESCRIPTOR_FIELDS} == descriptor
+                for row in PROTOCOL['behavior_sources']))
+    relative = (_behavior_relative(descriptor['path']) if is_behavior
+                else _relative(descriptor['path'], 'bound payload path'))
     minimum = 0 if allow_empty else 1
     if type(descriptor['size_bytes']) is not int or not minimum <= descriptor['size_bytes'] <= maximum:
         raise ValueError('Bound payload size exceeds its frozen limit')

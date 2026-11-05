@@ -1,0 +1,70 @@
+{
+  "scope": "ordinary software tests using authored policy doubles and a tiny 12-neuron FLYNN graph; no pretrained assets or research experiment",
+  "source_sha256": {
+    "src/palimpsest/velocity_gain.py": "5121dd73b9dd4502af7850033df4a34f85b66ce5d0ab5c810ad30e2b0312582e",
+    "src/palimpsest/velocity_gain_snapshot.py": "9a616b265eabef6dba04c94202b64495230c42608fe8229f87ca8f90ee9b33ee",
+    "tests/test_velocity_gain.py": "f2553b64c8630f4a088efbaa96130c8f184e9720bc71b9649c67346ba32d3773",
+    "tests/test_velocity_gain_snapshot.py": "2a5a5e537e7a0fd13b7f1ee8071b42746fcfcb7a16276f0ffaa3f3475b29a7d6",
+    "tests/test_velocity_gain_flynn.py": "a585c2428263bb28f5f3608273baf0d77dda365d04bbdaada974c1646c488c70"
+  },
+  "actual_tdd": [
+    {
+      "test": "tests/test_velocity_gain.py",
+      "red": "missing module import; pytest exit2",
+      "green": "19 passed in 0.13s"
+    },
+    {
+      "test": "tests/test_velocity_gain_snapshot.py",
+      "red": "missing module import; pytest exit2",
+      "green": "combined33 passed in 0.17s"
+    },
+    {
+      "test": "gain-one derivation changed_paths precision",
+      "red": "gain-one case failed: claimed changed path despite unchanged value",
+      "green": "corrected before final combined suite"
+    }
+  ],
+  "final_verification": {
+    "result": "52 passed, 27 warnings in 2.82s",
+    "exit_code": 0,
+    "modules": [
+      "test_velocity_gain",
+      "test_velocity_gain_snapshot",
+      "test_velocity_gain_flynn",
+      "test_flynn"
+    ],
+    "warnings": "Pinned upstream tensor-copy warnings and sparse-CSR beta warning",
+    "python": "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "OMP_NUM_THREADS": 1,
+    "OPENBLAS_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "bytecode_disabled": true
+  },
+  "dependency_setup": {
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+    "method": "Local clone of exact main-checkout submodule; no network/model download",
+    "initial_attempt": "Git refused local file transport; preserved tool result; scoped protocol.file.allow=always enabled only for explicit trusted local clone command",
+    "main_source_untouched": true
+  },
+  "independent_review": {
+    "agent": "pacbayes_assumptions",
+    "scope": "pasted implementation excerpts; child sandbox blocked full-file reads",
+    "blocking_findings": [],
+    "limitation": "Exactly one delegated act call; parity=True executes a second reference pass. Pilot must freeze parity=False."
+  },
+  "native_snapshot_restoration_verified": false,
+  "pretrained_runtime_qualification": false,
+  "sampling_eligibility_verified": false,
+  "certified_improvement": false,
+  "research_execution_cpu_seconds": 0,
+  "snapshot_algorithm_review": {
+    "reviewer": "independent pacbayes_assumptions agent",
+    "scope": "supplied exact algorithm description; sandbox prevented full source inspection or rerun",
+    "blocking_findings": [],
+    "requirements": [
+      "External identity is typed state_digest, separately bind snapshot ZIP checksum",
+      "Normal restore with replace_controller=False",
+      "Record source/derived identities and derivation receipt together"
+    ]
+  }
+}

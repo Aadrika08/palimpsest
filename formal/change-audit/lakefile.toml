@@ -1,0 +1,12 @@
+name = "palimpsest-change-audit"
+version = "0.1.0"
+defaultTargets = ["ChangeAudit"]
+
+[[lean_lib]]
+name = "ChangeAudit"
+moreLeanArgs = ["-j1", "-M4096"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"

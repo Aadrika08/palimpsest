@@ -1,0 +1,40 @@
+{
+  "scope": "source-only authored attestation validator; no real observer or execution acceptance",
+  "command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_memory_family_case_publication_v1.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.7326807079953142,
+  "files_sha256": {
+    "scripts/memory_case_execution_pins_v1.py": "9d44bdcfc662ae55d129cbf3487609bff500b2ba637cfae1eb21c293d59e9e0f",
+    "scripts/memory_family_case_publication_v1.py": "f560567b117296e8a809d4c94d95d295e6e4a6cb428ba571b522c3969c4d23ca",
+    "tests/test_memory_family_case_publication_v1.py": "3cd80c7df4bdb7f9edad35dbbbfe48b48dc42ba4e7dc814ca599497afa7fc2ea"
+  },
+  "prior_red": "missing module observed, then implementation made tests pass",
+  "combined_regression": {
+    "modules": [
+      "tests/test_memory_family_case_publication_v1.py",
+      "tests/test_memory_family_analysis_v3.py"
+    ],
+    "passed": 72,
+    "elapsed_seconds": 25.5,
+    "evidence": "tool session1044 completed exit0; output was not redirected to a file",
+    "temporary_root": ".pytest_cache/memory-case-publication-cb3848dc931044fcb35baff1332e2fcf"
+  },
+  "retained_failure": {
+    "scope": "initial combined test command",
+    "passed": 71,
+    "failed": 1,
+    "reason": "existing analysis CLI fixture could not write /tmp due to Disk quota exceeded",
+    "path": "/tmp/pytest-of-utkarsh/pytest-25/test_cli_accepts_only_bounded_0",
+    "result": "preserved; project-disk rerun passed"
+  },
+  "qualification_claims": []
+}

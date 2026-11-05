@@ -1,0 +1,30 @@
+{
+  "authored_scope": "AUTHORED fixture only; synthetic capacity samples, no production resource qualification",
+  "returncode": 1,
+  "parent_error": "CPU prepare worker failed; retained logs are authoritative",
+  "parent_error_type": "ValueError",
+  "supervision": {
+    "failure": "free-space floor",
+    "finished_monotonic": 331889.024817472,
+    "matching_survivors": [],
+    "pid": null,
+    "returncode": null,
+    "rss_sampling_seconds": 0.05,
+    "sampled_peak_rss_bytes": 42151936,
+    "status": "failed"
+  },
+  "admission": {
+    "disk_available_bytes": 8589934592,
+    "mem_available_bytes": 4716392448,
+    "tmpfs_available_bytes": 8589934592
+  },
+  "configured_disk_floor_bytes": 4294967296,
+  "synthetic_monitor_free_bytes": 3221225472,
+  "production_and_archive_sha256_unchanged": {
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/scripts/qualify_puck_cpu_held_runtime.py": "c7ba576238c42cc07dfe7a68d037c0de5fa0673dd73bfcf77613480199649b6e",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/src/palimpsest/bounded_qualification.py": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/docs/reports/puck-cpu-held-preparation-01/controls/scripts/audit_puck_cpu_held_runtime.py": "19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9"
+  },
+  "staged_worker_launched": false,
+  "stage_directory_entries": []
+}

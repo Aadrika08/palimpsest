@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_memory_family_case_publication_v1.py::test_private_published_case_core_matches_staged_and_old_route_rejects",
+    "tests/test_memory_family_case_publication_v1.py::test_unpatched_historical_profile_rejects_changed_behavior",
+    "tests/test_memory_family_case_publication_v1.py::test_historical_profile_bytes_remain_unchanged",
+    "--basetemp",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.pytest_cache/parent-task2-20a7c5a3f00d405c8691595fcb49675a"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 19.292064510984346,
+  "source_sha256": {
+    "scripts/memory_family_retained_case_v1.py": "ef3cc47905b05dfd593481ab3b0d188125648db68c8637b8c6a9a2d7e5027baa",
+    "scripts/memory_family_retained_condition_v1.py": "5076a7473584b1239c31c787a713066ef6596ab50b1efea4143fb900fb128e93",
+    "scripts/memory_family_producer_v4.py": "fe18320d9f0f8580f2ee77f920f2f97839107b834b871a618326dd413bff9095",
+    "scripts/memory_family_condition_seal_v4.py": "3d6b8fde082de0a58bbfceb66c37123e4d40a858baa61c25a70777e12d2d86fa",
+    "scripts/memory_family_oracle_admission_v4.py": "abce471ef7098ce38bf65893941d85939a3c3bd2f657be6aa08a998805c90b28"
+  },
+  "sources_unchanged": true,
+  "scope": "Parent independent source-only focused check; no runtime qualification"
+}

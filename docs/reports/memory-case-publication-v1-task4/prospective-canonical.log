@@ -1,0 +1,66 @@
+.........................................E
+==================================== ERRORS ====================================
+_ ERROR at setup of test_private_published_case_core_matches_staged_and_old_route_rejects _
+
+tmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/....ospective-canonical-20261105-a/authority-paper-rewrite-3048978-selected'), _retention_count=3, _retention_policy='all')
+request = <SubRequest 'published_template' for <Function test_private_published_case_core_matches_staged_and_old_route_rejects>>
+
+    @pytest.fixture(scope='module')
+    def published_template(tmp_path_factory, request):
+        import os,time
+        from scripts import memory_family_retained_case_v1 as cases
+        from scripts import memory_family_condition_seal_v4 as seal
+        from test_memory_family_retained_case_v1 import build_case
+        patch=pytest.MonkeyPatch();request.addfinalizer(patch.undo)
+        tmp_path=tmp_path_factory.mktemp('published-case-template')
+        _authored_current_profile(tmp_path,patch,request)
+        root=tmp_path/'evidence'; sample=build_case(root)
+        patch.setattr(seal,'_require_qualification_pin',lambda value:None)
+>       expected=cases.read_retained_staged_case(**sample,deadline=time.monotonic()+90)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_case_publication_v1.py:204: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_retained_case_v1.py:108: in read_retained_staged_case
+    return _read_retained_case(evidence_root, registrations, case_slot=case_slot,
+scripts/memory_family_retained_case_v1.py:163: in _read_retained_case
+    retained.qualification._validate_receipt(seal._canonical(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'audit': {'freeze': {'path': 'freeze.json', 'sha256': '8eb2211685308fc1f3214d95c14c7fb94370fc3a60250070e8273619019ba8... 'size_bytes': 3566}, ...], 'root': '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite'}}, ...}
+
+    def _validate_receipt(value):
+        """Validate prospective metadata only; passing this function grants nothing."""
+        _fields(value, RECEIPT_KEYS, 'Qualification admission receipt')
+        cell_source = next(row for row in compact.PROTOCOL['behavior_sources']
+                           if row['id'] == 'cell_replay')
+        if (value['schema'] != 'memory-condition-cell-qualification-admission-v1'
+                or value['status'] != 'accepted'
+                or value['scope'] != 'three-historical-traces-full-model-encoded-cell-only'
+                or value['protocol_sha256'] != compact.PROTOCOL_SHA256
+                or value['replay_consumer_sha256'] != cell_source['sha256']
+                or memory.canonical_bytes(value['claims']) != memory.canonical_bytes(compact.PROTOCOL['claims'])):
+            raise ValueError('Qualification scope, consumer, protocol or claims differs')
+        _fields(value['inputs'], {'sources', 'assets', 'runtime'}, 'Qualification input roles')
+        for section in value['inputs'].values():
+            _fields(section, {'root', 'files'}, 'Qualification input section')
+            # Constructor checks canonical roots, fixed descriptor order and all bounds without I/O.
+            HeldReplayFiles(section['root'], section['files'], time.monotonic() + 1)
+            for row in section['files']:
+                _descriptor(row, 1024 * MiB)
+        sources = value['inputs']['sources']
+        if sources['root'] != str(ROOT):
+            raise ValueError('Qualification sources belong to another checkout')
+        source_files = {row['path']: row for row in sources['files']}
+        if TRUST_ANCHOR_PATH in source_files:
+            raise ValueError('Qualification trust anchor must remain outside receipt source custody')
+        if (any(source_files.get(path) != row for path, row in _base_sources().items())
+                or not set((*EXTENSION_SOURCES, EXTENSION_PATH)) <= set(source_files)):
+>           raise ValueError('Qualification source closure is incomplete or rebound')
+E           ValueError: Qualification source closure is incomplete or rebound
+
+scripts/memory_condition_replay_admission_v1.py:106: ValueError
+=========================== short test summary info ============================
+ERROR tests/test_memory_family_case_publication_v1.py::test_private_published_case_core_matches_staged_and_old_route_rejects
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+41 passed, 1 error in 15.00s

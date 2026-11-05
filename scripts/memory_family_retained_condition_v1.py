@@ -18,11 +18,18 @@ def read_retained_sealed_condition(evidence_root, registration, *, case_id,
     The expected commit must be independently registered, not self-derived from
     the marker under inspection. No returned object retains live file custody.
     """
+    return _read_retained_sealed_condition(evidence_root, registration, case_id=case_id,
+        condition=condition, condition_commit=condition_commit, deadline=deadline,
+        location='staged', case_files={})
+
+
+def _read_retained_sealed_condition(evidence_root, registration, *, case_id,
+                                   condition, condition_commit, deadline, location, case_files):
     registration = copy.deepcopy(registration)
     condition_commit = copy.deepcopy(condition_commit)
     with seal._ValidatingStack() as lifetime:
         contract, checks, control_bytes = seal._registration(
-            evidence_root, registration, case_id, condition, deadline, lifetime)
+            evidence_root, registration, case_id, condition, deadline, lifetime, location=location)
         base = f'cases/{case_id}/conditions/{condition}'
         if pair._descriptor(condition_commit, 'Retained condition commit')['path'] != base + '/commit.json':
             raise ValueError('Retained condition commit is outside its canonical path')
@@ -32,18 +39,18 @@ def read_retained_sealed_condition(evidence_root, registration, *, case_id,
                                   'Retained qualification receipt')
         qualification._validate_receipt(receipt)
         checks.append(check)
-        lifetime.enter_context(pair._staged_namespace(evidence_root, case_id))
-        anchor = seal._Anchor(evidence_root, case_id, condition)
+        lifetime.enter_context(pair._case_namespace(evidence_root, case_id, location=location, case_files=case_files, deadline=deadline))
+        anchor = seal._Anchor(evidence_root, case_id, condition, location=location)
         lifetime.callback(anchor.close)
         source_fd, case_fd, check = lifetime.enter_context(
-            source._source_directory(evidence_root, case_id))
+            source._source_directory(evidence_root, case_id, location=location))
         checks.append(check)
         source._retained_source_namespace(lifetime, source_fd, case_fd,
-                                         contract['source_run_id'], None)
+                                         contract['source_run_id'], None, case_files=case_files)
         source_bundle, source_conversion, _, source_checks = seal._load_source(
-            evidence_root, contract, deadline, lifetime)
+            evidence_root, contract, deadline, lifetime, location=location)
         checks.extend(source_checks)
-        owner, check = seal._owner(evidence_root, contract, deadline, lifetime)
+        owner, check = seal._owner(evidence_root, contract, deadline, lifetime, location=location)
         checks.append(check)
         bundle, support = seal._bundle(anchor, lifetime, deadline,
                                         {'pair-admission.json', 'commit.json'})
@@ -88,7 +95,9 @@ def read_retained_sealed_condition(evidence_root, registration, *, case_id,
         if support['recording/conversion.json'] != conversion_bytes:
             raise ValueError('Retained condition conversion inventory differs')
         conversion_descriptor = source._descriptor(base + '/recording/conversion.json', conversion_bytes)
-        pair_result = pair.admit_staged_compact_pair(source_commit=contract['source']['commit'],
+        admit = pair.admit_staged_compact_pair if location == 'staged' else pair._admit_retained_compact_pair
+        extra = {} if location == 'staged' else {'location': location, 'case_files': case_files}
+        pair_result = admit(**extra, source_commit=contract['source']['commit'],
             evidence_root=evidence_root, case=contract['case'], source_bundle=source_bundle,
             condition_bundle=bundle, source_run_id=contract['source_run_id'],
             condition_run_id=contract['run_id'], condition=condition,

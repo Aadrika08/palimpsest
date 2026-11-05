@@ -1,0 +1,118 @@
+{
+  "start_module": "Numerical",
+  "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "mathlib_revision": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "started_at": "2026-11-05T09:49:50.248713+00:00",
+  "source_sha256": {
+    "ChangeAudit/Anytime.lean": "5ef96aaa924a9daed81cf7c3ceedb6bd69966c0306b9b9f02e73beb0ad7d2cf5",
+    "ChangeAudit/Audit.lean": "c39a98d107887fd2208147f05d4f11079fce9ce1eadad7b89b0297b407792af8",
+    "ChangeAudit/Contrast.lean": "b632efaef25276b84114f9e710d6665a799b8c9bb3c9203fbf1f015bbfcea538",
+    "ChangeAudit/Exponential.lean": "6d3425f5e9a50df6badc4b0161bcc13c3fe3f122b39ce7782bcb57fcc787a381",
+    "ChangeAudit/FixedHorizon.lean": "14db35a486430052473d0690745684ba8448a4b9e7c1f85144169386ea006f2e",
+    "ChangeAudit/FreshBounded.lean": "5208fe36d07f16ee7739c3c9124ac6eb0f5d425871f09856079cdaf5b7dc5aa5",
+    "ChangeAudit/Numerical.lean": "a7c7208150c9f93c22cc4799e40c5ddacf626219355231e63e1ae465b9b9cd75",
+    "ChangeAudit/Targets.lean": "858a67e54f07a8025226deec105c43a52d164677b2cde3b4b5ad04663d3ccf51",
+    "ChangeAudit/Ville.lean": "565760e1086d1cbbb0b82791dbe062e0072663d0405b6f37ad68e8e924905c0e",
+    "ChangeAudit.lean": "fc7e0b2e12951efae5c31a3b14c7f6236eeee1f05c41d8c4d7643d8828559172",
+    "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "lakefile.toml": "23dae93d1b92ea39a4dc96cd1d1264590e5d1c0522b9a0565147d8906a25d274",
+    "lake-manifest.json": "2c357e316d10df71f33cab00bcbff56a20c9a8927c330ab8bc200ab0ad7fc354"
+  },
+  "ram_admission_floor_bytes": 5905580032,
+  "disk_free_floor_bytes": 6442450944,
+  "scope": "Serial own-source lean compilation only, no automatic dependency build or acquisition",
+  "commands": [
+    {
+      "module": "Numerical",
+      "mem_available_before_bytes": 6370140160,
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/evidence/build-kernel-pass-11-Numerical.resources",
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-M4096",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/build/lib/lean/ChangeAudit/Numerical.olean",
+        "ChangeAudit/Numerical.lean"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.191608859982807,
+      "log": "evidence/build-kernel-pass-11-Numerical.log",
+      "resources": "evidence/build-kernel-pass-11-Numerical.resources"
+    },
+    {
+      "module": "Targets",
+      "mem_available_before_bytes": 6410440704,
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/evidence/build-kernel-pass-11-Targets.resources",
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-M4096",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/build/lib/lean/ChangeAudit/Targets.olean",
+        "ChangeAudit/Targets.lean"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.4047648049890995,
+      "log": "evidence/build-kernel-pass-11-Targets.log",
+      "resources": "evidence/build-kernel-pass-11-Targets.resources"
+    },
+    {
+      "module": "FixedHorizon",
+      "mem_available_before_bytes": 6416105472,
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/evidence/build-kernel-pass-11-FixedHorizon.resources",
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-M4096",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/build/lib/lean/ChangeAudit/FixedHorizon.olean",
+        "ChangeAudit/FixedHorizon.lean"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.5637877479894087,
+      "log": "evidence/build-kernel-pass-11-FixedHorizon.log",
+      "resources": "evidence/build-kernel-pass-11-FixedHorizon.resources"
+    },
+    {
+      "module": "Audit",
+      "mem_available_before_bytes": 6400483328,
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/evidence/build-kernel-pass-11-Audit.resources",
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-M4096",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/build/lib/lean/ChangeAudit/Audit.olean",
+        "ChangeAudit/Audit.lean"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.10570875601843,
+      "log": "evidence/build-kernel-pass-11-Audit.log",
+      "resources": "evidence/build-kernel-pass-11-Audit.resources"
+    }
+  ],
+  "last_mem_available_bytes": 6400483328,
+  "status": "compiled",
+  "elapsed_seconds": 13.267482748953626,
+  "sources_unchanged": true
+}

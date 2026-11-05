@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "path": "namespace-setup-failure.log",
+      "sha256": "ada3b4c4e4bb1641d59c7b011b8b34e6f75db1441d702e556ae140c1d2ede54c",
+      "size_bytes": 604,
+      "source_path": "runs/full-source-e729d87-20261105.log"
+    },
+    {
+      "path": "canonical-failed.log",
+      "sha256": "b36a36bf7f04a3c3fd2a66dfb181cf85bd2c36e87847148f7793144efe89854a",
+      "size_bytes": 117082,
+      "source_path": "runs/full-source-e729d87-20261105-device-corrected.log"
+    },
+    {
+      "path": "metadata-repair-targeted.log",
+      "sha256": "ffe4085f62b6c8e4069c38d742fe62a8c233cf9bb9758e4e8344ca470b851957",
+      "size_bytes": 111,
+      "source_path": "runs/fixture-repair-root-e729d87-20261105.log"
+    },
+    {
+      "path": "final-affected-targeted.log",
+      "sha256": "448785df59a45e1e747ab18144d6b42f343c94b90d19963982468a847e908c3e",
+      "size_bytes": 192,
+      "source_path": "runs/source-fixture-final-targeted-20261105.log"
+    }
+  ],
+  "raw_whitespace_preserved": true,
+  "schema": "palimpsest-source-check-log-manifest-v1",
+  "tested_commit": "e729d8772851a500ab9ce9077b0db57fc4b12a27"
+}

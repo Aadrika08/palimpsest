@@ -1,0 +1,543 @@
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+....................s.................sss....................s.......... [  6%]
+...............................................s............s........... [  7%]
+....................s..................ss.........Fs..s................. [  8%]
+.....................................s.................................. [  9%]
+.............................s.......................................... [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 15%]
+..................ss.........................................sssssssssss [ 16%]
+sssssssssssssssssssss.................ssssssssssssssssssssssssssssssssss [ 17%]
+sssssssssssssssssssssssssssssssssssssssssssssssss....................... [ 18%]
+...............................sssssssssssssssssssssssssssssssssssssssss [ 19%]
+ssssss..ssss..........................s...........................ss.... [ 20%]
+ss...................................................................... [ 22%]
+........................................................................ [ 23%]
+..ssssssssssssssssssssssss.............................................. [ 24%]
+.........................sssssssssssssss...s............................ [ 25%]
+................s....................................................... [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+.................................................ss..................... [ 29%]
+.................................................sssssssssssssssssss.... [ 30%]
+........................................................................ [ 31%]
+........................sss............................................. [ 32%]
+........................................................................ [ 33%]
+.....s.................................................................. [ 34%]
+........s.s.sssssssssssssss............................................. [ 35%]
+......................................................ssss.sssss.s...... [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+....................................................................s... [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+.....ssssss............................................................. [ 67%]
+........................................................................ [ 68%]
+...................................................................s.... [ 69%]
+.......ss............................................................... [ 70%]
+........................................................................ [ 71%]
+.............................s..ss..ss..s......s..s..........s..ss...... [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+...........................................F....FFFFFF.................. [ 78%]
+.....................s.................................................. [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+.....................................sssssss..s......................... [ 94%]
+....................................................ssss................ [ 95%]
+...........................s..........sss............................... [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+....................                                                     [100%]
+=================================== FAILURES ===================================
+_ NavigationV3ExecutionTests.test_spawned_exec_has_unblocked_term_without_preexec_in_threads _
+
+self = <test_male_navigation_v3_execution.NavigationV3ExecutionTests testMethod=test_spawned_exec_has_unblocked_term_without_preexec_in_threads>
+
+    def test_spawned_exec_has_unblocked_term_without_preexec_in_threads(self):
+        command = [sys.executable, "-B", "-c",
+                   "import signal,time; print(int(signal.SIGTERM in "
+                   "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)"]
+>       process, identity, handoff = owner.spawn_contained(
+            command, ROOT, dict(os.environ), subprocess.PIPE, subprocess.PIPE)
+
+tests/test_male_navigation_v3_execution.py:322: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+command = ['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-B', '-c', 'import signal,time; print(int(signal.SIGTERM in signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)']
+cwd = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+environment = {'CUDA_VISIBLE_DEVICES': '', 'HOME': '/home/utkarsh', 'LANG': 'C.UTF-8', 'LC_ALL': 'C.UTF-8', ...}
+stdout = -1, stderr = -1
+
+    def spawn_contained(command, cwd, environment, stdout, stderr, *,
+                        popen=subprocess.Popen, identity_reader=process_identity,
+                        install_handler=signal.signal, cleanup=cleanup_spawn_group):
+        """Return ownership plus live defer state for caller-side handoff."""
+        handoff = {"deferred": [], "previous": {}, "remaining": [],
+                   "install_handler": install_handler, "cleanup": cleanup,
+                   "cleaned": False}
+        process = None
+    
+        def defer(number, frame):
+            handoff["deferred"].append(number)
+    
+        try:
+            for number in (signal.SIGINT, signal.SIGTERM):
+                handoff["previous"][number] = install_handler(number, defer)
+                handoff["remaining"].append(number)
+            process = popen(command, cwd=cwd, env=environment, stdout=stdout, stderr=stderr,
+                            start_new_session=True, restore_signals=True)
+            current = None
+            for _ in range(100):
+                current = identity_reader(process.pid)
+                if current is not None:
+                    break
+                if process.poll() is not None:
+                    break
+                time.sleep(.01)
+            if (current is None or current.get("pid") != process.pid or
+                    current.get("ppid") != os.getpid() or current.get("group") != process.pid or
+                    current.get("argv") != command):
+>               raise ValueError("Spawned trainer PID/start/group/argv identity differs")
+E               ValueError: Spawned trainer PID/start/group/argv identity differs
+
+scripts/run_male_navigation_v3_training.py:803: ValueError
+______ test_declared_growth_cannot_replace_a_previously_captured_delegate ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0')
+
+    def test_declared_growth_cannot_replace_a_previously_captured_delegate(tmp_path):
+        producer=PREFIX+PUBLISH+GUARD_ONE+'def late(): return 53\nchild.late=late\nchild.answer=late\n'+GUARD_TWO
+>       refused(run(tmp_path,producer=producer,delegates=['answer','late']))
+
+tests/test_puck_published_exports.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_declared_growth_cannot_re0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5e8b70d60>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+_ test_nested_initializer_cannot_supply_the_publishers_late_dispatch[creator-close] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0')
+nested_guard = False
+
+    @pytest.mark.parametrize('nested_guard',[False,True],ids=['creator-close','nested-guard'])
+    def test_nested_initializer_cannot_supply_the_publishers_late_dispatch(tmp_path,nested_guard):
+        helper=('import sys\nowner=sys.modules["'+PRODUCER+'"]\n'
+            'def late(): return 53\nowner.child.late=late\n'+(GUARD_TWO if nested_guard else ''))
+>       refused(run(tmp_path,delegates=['answer','late'],first_helper=helper))
+
+tests/test_puck_published_exports.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5e8b71fc0>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+_ test_nested_initializer_cannot_supply_the_publishers_late_dispatch[nested-guard] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1')
+nested_guard = True
+
+    @pytest.mark.parametrize('nested_guard',[False,True],ids=['creator-close','nested-guard'])
+    def test_nested_initializer_cannot_supply_the_publishers_late_dispatch(tmp_path,nested_guard):
+        helper=('import sys\nowner=sys.modules["'+PRODUCER+'"]\n'
+            'def late(): return 53\nowner.child.late=late\n'+(GUARD_TWO if nested_guard else ''))
+>       refused(run(tmp_path,delegates=['answer','late'],first_helper=helper))
+
+tests/test_puck_published_exports.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_nested_initializer_cannot1/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5e8bbb760>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+_________ test_module_created_by_an_earlier_initializer_is_preexisting _________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0')
+
+    def test_module_created_by_an_earlier_initializer_is_preexisting(tmp_path):
+>       refused(run(tmp_path,defect='preexisting'))
+
+tests/test_puck_published_exports.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_module_created_by_an_earl0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5e8b93680>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+_____ test_terminal_receipt_requires_the_declared_creator_to_run_and_close _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0')
+
+    def test_terminal_receipt_requires_the_declared_creator_to_run_and_close(tmp_path):
+>       refused(run(tmp_path,body='return {}'))
+
+tests/test_puck_published_exports.py:177: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_terminal_receipt_requires0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5da7574c0>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+____ test_creator_cannot_close_without_publishing_its_required_cache_entry _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0')
+
+    def test_creator_cannot_close_without_publishing_its_required_cache_entry(tmp_path):
+>       refused(run(tmp_path,producer=PREFIX+GUARD_ONE))
+
+tests/test_puck_published_exports.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_cannot_close_with0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5e8b93920>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+________ test_creator_close_requires_the_complete_declared_delegate_set ________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0')
+
+    def test_creator_close_requires_the_complete_declared_delegate_set(tmp_path):
+>       refused(run(tmp_path,delegates=['answer','late']))
+
+tests/test_puck_published_exports.py:185: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,s...tmpfs; observed f_type=\' + hex(buffer[0]))\nValueError: Native identity requires tmpfs; observed f_type=0x9123683e\n')
+
+    def refused(result):
+        assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+        assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
+>       assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0/source/scripts/puck_worker_bootstrap.py", line 1058, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0/source/scripts/puck_worker_bootstrap.py", line 1049, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0/source/scripts/puck_worker_bootstrap.py", line 742, in __enter__
+E             provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0/source/scripts/puck_worker_bootstrap.py", line 652, in _enter
+E             self._children.append(holder); return holder.__enter__()
+E                                                   ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0/source/src/palimpsest/puck_dependency_files.py", line 422, in __enter__
+E             if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-7625dd4/authority-paper-rewrite-3114386/test_creator_close_requires_th0/source/src/palimpsest/puck_native_identity.py", line 64, in require_tmpfs_descriptor
+E             raise ValueError('Native identity requires tmpfs; observed f_type=' + hex(buffer[0]))
+E         ValueError: Native identity requires tmpfs; observed f_type=0x9123683e
+E         
+E       assert False
+E        +  where False = any(<generator object refused.<locals>.<genexpr> at 0x7fa5e8bba6c0>)
+
+tests/test_puck_published_exports.py:76: AssertionError
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_artwork_encounter.py::EncounterTests::test_missing_unexpected_duplicate_and_escaping_members_rejected
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'afterimage.svg'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+tests/test_flynn.py: 17 warnings
+tests/test_memory_family_cell_replay_v4.py: 25 warnings
+tests/test_snapshots.py: 5 warnings
+tests/test_velocity_gain_flynn.py: 9 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_family_cell_replay_v4.py::test_actual_upstream_cell_matches_recorded_policy_without_retina[source]
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_puck_episode_profile_candidate.py: 30 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/derive_puck_episode_profile.py:176: DeprecationWarning: invalid escape sequence '\$'
+    """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_male_navigation_v3_execution.py::NavigationV3ExecutionTests::test_spawned_exec_has_unblocked_term_without_preexec_in_threads
+FAILED tests/test_puck_published_exports.py::test_declared_growth_cannot_replace_a_previously_captured_delegate
+FAILED tests/test_puck_published_exports.py::test_nested_initializer_cannot_supply_the_publishers_late_dispatch[creator-close]
+FAILED tests/test_puck_published_exports.py::test_nested_initializer_cannot_supply_the_publishers_late_dispatch[nested-guard]
+FAILED tests/test_puck_published_exports.py::test_module_created_by_an_earlier_initializer_is_preexisting
+FAILED tests/test_puck_published_exports.py::test_terminal_receipt_requires_the_declared_creator_to_run_and_close
+FAILED tests/test_puck_published_exports.py::test_creator_cannot_close_without_publishing_its_required_cache_entry
+FAILED tests/test_puck_published_exports.py::test_creator_close_requires_the_complete_declared_delegate_set
+8 failed, 6534 passed, 318 skipped, 43 deselected, 105 warnings in 1640.17s (0:27:20)
+.......                                                                  [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+7 passed, 6896 deselected, 2 warnings in 9.27s
+.....                                                                    [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 6898 deselected, 2 warnings in 56.38s
+...............................                                          [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+31 passed, 6872 deselected, 2 warnings in 22.25s

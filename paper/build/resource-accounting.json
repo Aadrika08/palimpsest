@@ -1,0 +1,44 @@
+{
+  "last_operational_end_unix": 1793855645.4603422,
+  "last_workflow_ended_before_original_deadline": true,
+  "original_cap_bytes": 17179869184,
+  "original_deadline_unix": 1793860506.2223496,
+  "roots": [
+    {
+      "inventory_files_rechecked": 2264,
+      "inventory_sha256": "e146614eb086ef8310fef975461c572ff11ee0f481b3dfa1e01bb472dfb70430",
+      "inventory_unchanged": true,
+      "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/runs/paper-authority-replay-v1",
+      "regular_file_logical_bytes": 3076227528
+    },
+    {
+      "inventory_files_rechecked": 280,
+      "inventory_sha256": "7a9aab5eb68f200c86fbfb4901484774c47d0acb41453a4e23a6f251477085e1",
+      "inventory_unchanged": true,
+      "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-recovery/runs/paper-authority-replay-v1",
+      "regular_file_logical_bytes": 461457713
+    },
+    {
+      "inventory_files_rechecked": 2938,
+      "inventory_sha256": "d959c96f2f686ee49ca440dba348725edddc4f9bd3cf11c6bb589f52345e9fc4",
+      "inventory_unchanged": true,
+      "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1",
+      "regular_file_logical_bytes": 4636054831
+    },
+    {
+      "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup",
+      "regular_file_logical_bytes": 551041794
+    }
+  ],
+  "scientific_status_counts": {
+    "completed": 110,
+    "failed": 0,
+    "incomplete": 1,
+    "refused": 0,
+    "timeout": 0
+  },
+  "scope": "Regular-file logical bytes in all retained output roots; symlink targets excluded, matching campaign accounting.",
+  "separate_operational_followup_status": "failed: missing cached locked Torch wheel; no fresh-environment FLYNN run",
+  "total_bytes": 8724781866,
+  "within_original_cap": true
+}

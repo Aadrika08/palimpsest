@@ -1,0 +1,97 @@
+{
+  "lean_source": "import ChangeAudit.Numerical\n\n-- Closed numerical witness only; no sampling or runtime theorem application.\nnoncomputable section\nnamespace ChangeAudit.Generated.Certificate_2b22237ff06907372dc1da6e311bf054cf00bb1cf7049415ad9e9dafa9ba5a9d_ad50df0a26bd287adba2cc646c4ee321b7f2c7056ebc83ba30b6c3e41453601b\n\ndef protocolSha256 : String := \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\ndef specSha256 : String := \"2b22237ff06907372dc1da6e311bf054cf00bb1cf7049415ad9e9dafa9ba5a9d\"\ndef observationsSha256 : String := \"ad50df0a26bd287adba2cc646c4ee321b7f2c7056ebc83ba30b6c3e41453601b\"\ndef referencedProofReceiptSha256 : String := \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"\ndef familyCount : \u2115 := 16\ndef contrastCount : \u2115 := 2\ndef taylorTerms : \u2115 := 16\ndef alpha : \u211a := ((1 : \u211a) / 10)\ndef upperLog : \u211a := ((4 : \u211a) / 1)\ndef scale : \u211a := ((1 : \u211a) / 2)\n\ntheorem log_budget_enclosure :\n    Real.log (1 / ((alpha : \u211d) / (contrastCount : \u211d))) \u2264 (upperLog : \u211d) := by\n  exact ChangeAudit.rational_family_log_enclosure contrastCount alpha upperLog taylorTerms\n    (by norm_num [contrastCount])\n    (by norm_num [alpha])\n    (by norm_num [upperLog])\n    (by norm_num [contrastCount, alpha, upperLog, taylorTerms,\n      Finset.sum_range_succ, Nat.factorial])\n\ndef losses_0 : List \u211a := [((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1)]\ndef mean_0 : \u211a := losses_0.sum / (familyCount : \u211a)\n\ntheorem losses_0_count : losses_0.length = familyCount := by\n  norm_num [losses_0, familyCount]\n\ntheorem mean_0_exact : mean_0 = ((0 : \u211a) / 1) := by\n  norm_num [mean_0, losses_0, familyCount]\n\ntheorem upper_0_exact :\n    (mean_0 : \u211d) + ChangeAudit.conservativeRadius (upperLog : \u211d) (scale : \u211d) familyCount = (((3 : \u211a) / 4) : \u211d) := by\n  norm_num [mean_0, losses_0, familyCount, upperLog, scale,\n    ChangeAudit.conservativeRadius]\n\ntheorem upper_0_nonnegative : 0 \u2264 (mean_0 : \u211d) + ChangeAudit.conservativeRadius (upperLog : \u211d) (scale : \u211d) familyCount := by\n  rw [upper_0_exact]\n  norm_num\n\ndef losses_1 : List \u211a := [((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1), ((0 : \u211a) / 1)]\ndef mean_1 : \u211a := losses_1.sum / (familyCount : \u211a)\n\ntheorem losses_1_count : losses_1.length = familyCount := by\n  norm_num [losses_1, familyCount]\n\ntheorem mean_1_exact : mean_1 = ((0 : \u211a) / 1) := by\n  norm_num [mean_1, losses_1, familyCount]\n\ntheorem upper_1_exact :\n    (mean_1 : \u211d) + ChangeAudit.conservativeRadius (upperLog : \u211d) (scale : \u211d) familyCount = (((3 : \u211a) / 4) : \u211d) := by\n  norm_num [mean_1, losses_1, familyCount, upperLog, scale,\n    ChangeAudit.conservativeRadius]\n\ntheorem upper_1_nonnegative : 0 \u2264 (mean_1 : \u211d) + ChangeAudit.conservativeRadius (upperLog : \u211d) (scale : \u211d) familyCount := by\n  rw [upper_1_exact]\n  norm_num\n\nend ChangeAudit.Generated.Certificate_2b22237ff06907372dc1da6e311bf054cf00bb1cf7049415ad9e9dafa9ba5a9d_ad50df0a26bd287adba2cc646c4ee321b7f2c7056ebc83ba30b6c3e41453601b\n",
+  "metadata": {
+    "schema": "change-audit-generated-numerical-witness-v1",
+    "source_status": "generated_uncompiled_numerical_witness",
+    "protocol_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "spec_sha256": "2b22237ff06907372dc1da6e311bf054cf00bb1cf7049415ad9e9dafa9ba5a9d",
+    "observations_sha256": "ad50df0a26bd287adba2cc646c4ee321b7f2c7056ebc83ba30b6c3e41453601b",
+    "lean_source_sha256": "df1cfacc3f3f26a21fce020de5ee315e240c19349f4fc72f69d88add23f71a13",
+    "family_ids": [
+      "family-0",
+      "family-1",
+      "family-2",
+      "family-3",
+      "family-4",
+      "family-5",
+      "family-6",
+      "family-7",
+      "family-8",
+      "family-9",
+      "family-10",
+      "family-11",
+      "family-12",
+      "family-13",
+      "family-14",
+      "family-15"
+    ],
+    "contrast_ids": [
+      "candidate-a",
+      "candidate-b"
+    ],
+    "row_encoding": "exact rational values reduced and ordered by registered family within each contrast",
+    "proof_receipt_reference_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "numerical_result": {
+      "schema": "change-audit-numerical-enclosure-v1",
+      "protocol_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "spec_sha256": "2b22237ff06907372dc1da6e311bf054cf00bb1cf7049415ad9e9dafa9ba5a9d",
+      "observations_sha256": "ad50df0a26bd287adba2cc646c4ee321b7f2c7056ebc83ba30b6c3e41453601b",
+      "contrasts": [
+        {
+          "contrast_id": "candidate-a",
+          "family_count": 16,
+          "mean": {
+            "numerator": 0,
+            "denominator": 1
+          },
+          "upper_endpoint": {
+            "numerator": 3,
+            "denominator": 4
+          },
+          "numerical_improvement": false
+        },
+        {
+          "contrast_id": "candidate-b",
+          "family_count": 16,
+          "mean": {
+            "numerator": 0,
+            "denominator": 1
+          },
+          "upper_endpoint": {
+            "numerator": 3,
+            "denominator": 4
+          },
+          "numerical_improvement": false
+        }
+      ],
+      "log_evidence": {
+        "method": "exp-taylor-lower-v1",
+        "terms": 16,
+        "exp_lower": {
+          "numerator": 2681650091,
+          "denominator": 49116375
+        },
+        "threshold": {
+          "numerator": 20,
+          "denominator": 1
+        },
+        "proof_receipt_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "numerical_log_enclosure_verified": true
+      },
+      "sampling_eligibility_verified": false,
+      "theorem_receipt_verified": false,
+      "certified_improvement": false
+    },
+    "sampling_eligibility_verified": false,
+    "theorem_application_verified": false,
+    "theorem_receipt_verified": false,
+    "certified_improvement": false,
+    "source_compiled": false,
+    "limits": {
+      "families": 128,
+      "contrasts": 8,
+      "taylor_terms": 32,
+      "total_certificate_bytes": 262144
+    }
+  }
+}

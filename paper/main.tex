@@ -1,0 +1,567 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.82in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,booktabs,array,tabularx,graphicx,xcolor,tikz,amsmath}
+\usetikzlibrary{arrows.meta,positioning,fit,plotmarks}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{enumitem,url,hyperref}
+\definecolor{palblue}{HTML}{245A7A}
+\definecolor{palgreen}{HTML}{2D7B64}
+\definecolor{palgold}{HTML}{B27A20}
+\definecolor{palred}{HTML}{9E3D38}
+\hypersetup{colorlinks=true,linkcolor=palblue,citecolor=palgreen,urlcolor=palblue,
+pdftitle={Who Changed the World? Authority-Aware Replay for Interactive Embodied-AI Experiments},
+pdfauthor={Anonymous Authors},pdfsubject={Experimental authority and reproducibility}}
+\setlist{nosep,leftmargin=*}
+\setlength{\parskip}{0.25em}
+\setlength{\parindent}{0pt}
+\input{generated/authority-claims.tex}
+\newcommand{\studyinput}[1]{\input{generated/#1.tex}}
+\title{Who Changed the World?\\Authority-Aware Replay for Interactive Embodied-AI Experiments}
+\author{Anonymous Authors}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+Interactive embodied-AI experiments require evidence of which interventions
+became authoritative, which state was restored, and which computation replay
+executed. Palimpsest connects applied-command receipts, controller-visible
+observations, continuation state, replay reports, and publication status through
+a common semantic contract. A one-host CPU evaluation includes 50 controlled
+challenges, ten continuation pairs, five replay trajectories, and ten paired
+recording-cost sets. Complete continuation agreed on
+\ContinuationPassed{}/\ContinuationDeclared{} pairs and the declared branch and
+replay comparisons passed on \ReplayPassed{}/\ReplayDeclared{} source trajectories;
+pose-only restoration changed the first action on all three ablation seeds.
+Median recording overhead relative to a null writer was
+\SynchronousOverheadMedian{}\% for synchronous writing,
+\BackgroundOverheadMedian{}\% for background writing, and
+\StorageOverheadMedian{}\% with storage accounting, whose largest paired
+overhead reached \StorageOverheadMaximum{}\%. The contribution is a bounded
+implementation and evaluation of a common contract, building on established
+state/action replay semantics.
+\end{abstract}
+
+\section{Introduction}
+Suppose an experimenter adds an obstacle while a recurrent controller navigates
+a simulated world. The browser can draw a preview while the server accepts the request
+for application at a later control boundary.
+A saved trajectory subsequently plays without error. Had the intervention been
+applied before this action, and did replay reproduce its computation? Request acceptance
+and visual similarity cannot answer either question. The replay might display saved values from before application. This
+hypothetical interpretation error motivates controlled injections, not a
+measured account of user behavior.
+
+Timing and input provenance are necessary premises for interpreting a response;
+they do not identify the intervention's causal effect.
+
+Existing systems already distinguish important parts of this problem.
+robomimic provides recorded-observation visualization, simulator-state playback,
+and open-loop action playback; ManiSkill distinguishes action replay from
+state-based playback and documents nondeterminism
+\citep{robomimicplayback,maniskillreplay}. MuJoCo documents the state needed for
+continuation and its reproducibility scope \citep{mujococomputation}.
+Palimpsest wraps a pinned MuJoCo/FLYNN path to connect these boundaries. An
+intervention record identifies application, a snapshot binds continuation state,
+and a replay report names executed computation and comparison. Publication
+status determines which records a reader can admit. The contribution is their
+implemented integration, evaluated through conformance, ablation, paired
+agreement, and cost. Simple acceptance rules annotate unsupported inferences;
+they are not competing software systems.
+
+The paper makes three contributions:
+\begin{enumerate}
+\item A semantic contract joining applied intervention authority, continuation
+state, replay execution, and terminal evidence, with explicit failure boundaries.
+\item An implementation of that contract using boundary receipts, observation
+projection, complete snapshots, independent branch owners, and bounded staged
+publication.
+\item A predeclared evaluation of controlled conformance, mechanism ablations,
+paired executable agreement, execution/operation cost, and fresh-checkout feasibility.
+\end{enumerate}
+
+\section{Failure Model and Semantic Contract}
+\label{sec:contract}
+\subsection{What must a trace distinguish?}
+Write the whole continuation state as $z_t=(x_t,h_t,w_t,r_t,q_t)$:
+physics/world state $x_t$, recurrent controller state $h_t$, wrapper/application
+state $w_t$, random-generator state $r_t$, and pending-command state $q_t$.
+At a boundary the owner first processes eligible commands, producing
+$\bar z_t=C(z_t)$. For an applied intervention this means mutating the world,
+refreshing its observation, then recording the revision and receipt. From the
+refreshed observation it projects the permitted input $o_t=P(\bar z_t)$ and computes
+\[
+ (a_t,h_{t+1},r'_t)=\pi(o_t,\bar h_t,\bar r_t),\qquad
+ z_{t+1}=F(\bar z_t,a_t,h_{t+1},r'_t).
+\]
+$F$ includes physics advancement, wrapper updates, and any further random-state
+changes; deterministic components simply preserve their RNG state. The tick
+record follows the environment step. This order places command commitment
+before policy execution. A browser display $d$ runs at a separate cadence and
+has no authority to substitute for $C$ or the projected observation.
+
+A command $c$ has an identity, expected revision, and payload. Acceptance
+acknowledges queue admission; an applied receipt names its actual control tick
+and revision. Rejection and failure are distinct outcomes. Delay is permitted,
+duplicate application is not. Interruption can leave an unresolved accepted
+command, which a retained prefix must not convert into terminal success.
+
+Equal $qpos$/$qvel$ need not imply equal continuation: hidden/retinal state,
+wrapper counters, RNG or pending commands can differ. Branch independence also
+requires that mutating a child leave its parent and siblings unchanged;
+sequential scheduling alone cannot isolate shared mutable state.
+
+Replay has two orthogonal dimensions: what executes and what is compared.
+Playback reads retained values; action replay advances physics under recorded
+actions; policy replay recomputes controller outputs. A trajectory match cannot
+establish an unexecuted computation, and execution alone cannot establish
+agreement. Figure~\ref{fig:matrix} names representative compared fields.
+
+\subsection{Three obligations}
+\textbf{I1: application has an authority boundary.}
+Only one owner mutates the live simulator/controller state. An application
+has one authoritative receipt and control tick. Expected revisions are checked
+at application, and duplicate identities cannot apply twice. Normal command
+completion resolves admission into an applied, rejected, or failed outcome;
+interruption does not acquire a success meaning by default.
+
+\textbf{I2: continuation binds transition-relevant state and identity.}
+Restore requires a compatible schema, source and asset identity, physics state,
+controller state, wrapper state, random state, and pending application state.
+Missing or incompatible required components must be refused before mutating the
+destination. Branches instantiate separate mutable owners and preserve their
+source object. Equal initial pose is an insufficient acceptance condition.
+
+\textbf{I3: evidence names its computation and publication status.}
+Every replay declares its mode, whether inference executed, its comparison
+fields and tolerances, and agreement or first divergence. Outputs use a new
+destination. Readers distinguish a validated published prefix from terminal
+completion; the presence of an output directory never establishes the latter.
+The implementation links the application tick/revision to snapshot provenance,
+declared replay, and admitted publication. This is a bounded integration
+contract, not a compositional theorem or exhaustive combined-fault guarantee.
+
+\subsection{Threat boundary}
+The faults cover admission/application timing, stale/duplicate commands,
+incomplete state, source/asset drift, shared branches, publication interruption,
+and resource/writer failure. Runtime cases exercise CPU controller execution;
+storage cases use production interfaces with controlled payloads. The host OS
+and experiment code are trusted.
+
+\section{Design and Implementation}
+\subsection{Receipts at control boundaries}
+Browser and CLI commands enter a bounded queue. The owner holds the simulator,
+controller, renderer, recorder, and command state. It revalidates previewed
+geometry and command shape at application, then
+calls \texttt{apply\_intervention}, refreshes \texttt{observation} through
+\texttt{env.\_get\_obs()}, then increments the revision and emits the applied
+receipt. The next tick projects those refreshed inputs, invokes the policy,
+steps the environment, and records the transition. A stale preview cannot
+authorize mutation against a new revision.
+
+\begin{figure}[t]
+\centering\input{figures/authority-sequence.tex}
+\caption{Successful application of a queued intervention. The requested change
+remains unapplied while execution can continue. At illustrative tick $t+2$,
+mutation and observation refresh precede the receipt, which reports application
+revision $v_a$, and the subsequent policy/physics transition. The receipt identifies
+an application boundary rather than a causal effect.}
+\label{fig:authority}
+\end{figure}
+
+Idempotent identities prevent retry duplication. Presentation frames can be
+dropped; authoritative events cannot. Serializing mutation trades throughput
+for a well-defined boundary: a snapshot belongs before or after a recorded
+application, rather than inside an unrecorded concurrent change.
+
+\subsection{Observation projection records the information boundary}
+A simulator typically exposes more information than a policy should consume.
+Palimpsest projects declared policy inputs from the authoritative world and
+keeps projected observations separate from world truth and display metadata.
+Inspector-visible goal geometry and displayed obstacles need not have reached
+the policy input.
+
+Typed input/output and physical records help locate whether disagreement begins in
+observation, controller response, or dynamics. This is an inspectable boundary,
+not an information-flow proof. New controllers require explicit projections and
+state adapters.
+
+\subsection{Snapshots capture a continuation, not a picture}
+Snapshots combine native physics state and mutable world properties with
+controller hidden/retinal state, wrapper counters, random-generator state,
+recorder position, and pending commands. Source and asset fingerprints bind the
+snapshot to the implementation and graph/checkpoint/mapping identities that
+interpret it. Shape compatibility alone is inadequate: a different checkpoint
+can load while changing the transition function.
+
+MuJoCo documents integration and warm-start state \citep{mujococomputation};
+Palimpsest adds application and recurrent-controller state. Restore validates
+payloads and identities before destination mutation. Each branch restores into
+a separate owner and new run, preserving its source. Sequential branches limit
+contention at the cost of parallel exploration. Complete snapshots trade size
+and version sensitivity for checkable continuation; new components need adapters
+identifying their next transition's dependencies.
+
+\subsection{Replay declares execution and comparison}
+\begin{figure}[t]
+\centering\input{figures/replay-matrix.tex}
+\caption{Replay modes differ in computation as well as validation. A physical
+match under recorded actions leaves policy recomputation untested. The matrix specifies Palimpsest's modes.}
+\label{fig:matrix}
+\end{figure}
+Executable replay checks source/asset/snapshot compatibility, creates a new
+destination, restores state, and advances the declared computation. Action replay
+loads compatible controller state but bypasses inference; policy replay executes
+it. Reports retain mode, inference execution, agreement, and first divergent
+field/tick. New run IDs and measurement latencies are excluded from scientific
+equality while provenance remains inspectable.
+
+The study's R1/R2 challenges deliberately relabel playback or action replay as
+policy reproduction and apply an execution-label guard. That guard is a
+\emph{study-level claim-admission check}. Production source, asset, and snapshot compatibility refusals exercise a
+different path; R1/R2 do not measure production refusal of a mislabeled operation.
+
+\subsection{A valid prefix is not terminal publication}
+The recorder writes typed numeric chunks and ordered events under bounded byte,
+count, queue, and free-space policies. Staging and no-overwrite publication
+separate prepared bytes from admitted objects. A reader follows the published
+record rather than treating every file left in the directory as valid data.
+An interruption can therefore leave a useful validated prefix and an ignored
+unpublished tail, without a terminal-success claim.
+
+A bounded background writer applies backpressure rather than discarding
+accepted items; writer errors cause terminal failure and resource release.
+Synchronous writing simplifies completion but places more work on the control
+path. RQ3 measures this tradeoff.
+
+Protected readers also recheck file identities around guarded reads. At and
+below a declared custody root, namespace and content participate in the check;
+above that root, parent-edge identity is retained without interpreting unrelated
+sibling churn as a mutation of protected evidence. This keeps benign sibling activity from invalidating an unchanged source.
+
+\section{Evaluation}
+\label{sec:evaluation}
+\subsection{Protocol and interpretation}
+The protocol was committed and frozen, not independently preregistered. Seed 0
+appeared in disclosed development checks; fixed seeds are engineering repetitions,
+not held-out evaluation. The study asks four questions: (RQ1) which injected evidence errors the
+contract exposes; (RQ2) whether complete continuation and declared replay agree;
+(RQ3) what execution and operation costs the mechanisms incur; and (RQ4) whether
+a fresh checkout on the same host can execute the focused workflow.
+The scope is one host and pinned CPU FLYNN/MuJoCo execution, with runtime and
+production-interface fixture evidence. FLYNN is a recurrent navigation model
+constrained by fly-brain topology \citep{wang2026flynn}. Controller quality, human
+interpretation, and competing-system performance are outside this study.
+
+\paragraph{Execution configuration.}
+The host ran Linux x86-64 on an AMD Ryzen 7 7735HS in the performance governor.
+The recorded environment used Python 3.11.15, NumPy 2.2.5, MuJoCo 3.3.6 and
+PyTorch \texttt{2.9.0+cu128}, with float32 policy execution on CPU, two intra-op
+threads and eight inter-op threads; deterministic-algorithms mode was off.
+EGL cameras produced $128\times128$ images at a 20 ms control interval.
+Continuation/replay used the 20-obstacle vision-ablation preset with a scripted
+goal edit and left-eye mask; throughput used five-obstacle sparse navigation.
+Both used checker texture. The artifact binds exact graph, checkpoint, mapping
+and runtime identities.
+
+The protocol declares 111 invocation descriptors: 50 fault/challenge units,
+10 continuation pairs, five replay trajectories, 40 execution-overhead
+invocations forming 10 four-condition matched sets, five operation units, and
+one offline check. Continuation pairs and replay trajectories are their
+respective units; ticks are repeated measurements. Fault units are
+specified case/condition/repetition executions, including deterministic fixture
+variants. Failures, refusals, timeouts, and incomplete units remain in declared
+denominators for their attempt; revised execution is identified separately.
+
+Sequential execution stops new work on frozen resource/time limits, retaining
+completed and partial records; artifact documentation provides details.
+
+\paragraph{Frozen comparison policy.}
+Scientific arrays must be finite: NaN and infinity are rejected, even at matching
+positions. Float32 physics/controller arrays use absolute and relative tolerances
+of $10^{-6}$; integer, Boolean, identity, shape, and event fields follow the
+frozen exact comparison policy. Source/asset identities must match exactly.
+First divergence names a field and tick. The study-level finite/exact checks
+supplement production replay reporting; the claim is about their evaluated
+composition. Scope is CPU, same version, same architecture.
+
+\paragraph{Disclosed benchmark amendment.}
+The first campaign completed 69/111 descriptors, failed one, and left 41
+incomplete. A step after normal goal termination exposed a missing benchmark
+reset, initially misclassified as a resource failure. The amended protocol
+resets normally ended episodes with the same seed, preserves 20 warm-up/200
+measured ticks, includes reset cost in wall time, and records reset counts/events. Engine, controller, seeds, oracles,
+and tolerances are unchanged. A recovery launch stopped on source-identity
+drift. Both attempts are hash-retained separately. Final execution uses an
+isolated checkout and revision 3 within the original deadline and combined
+output cap; amendment details are in the artifact documentation.
+
+\paragraph{Result binding.}
+All \StudyDeclaredUnits{} descriptors are accounted for:
+\StudyCompletedUnits{} completed and one clean-checkout unit was not admitted
+under its aggregate output reservation. Generated tables retain that incomplete
+unit; the artifact binds execution/protocol identities and all prior attempts.
+
+\subsection{RQ1: Controlled conformance and mechanism ablations}
+The 50 units cover delayed/stale/duplicate intervention requests (A1--A3), replay
+mislabeling (R1--R2), incomplete snapshots (S1--S2), source/asset substitutions
+(D1--D2), protected custody and benign sibling churn (C1--C3), interrupted
+publication (P1), independent/shared-owner branches (B1--B2), and quota, queue,
+and writer failures (E1--E3). Runtime cases traverse the actual CPU FLYNN/lab
+path; custody, publication and resource cases use production interfaces with
+small deterministic fixtures. The table keeps those evidence paths visible.
+
+\begin{table}[t]
+\centering\small
+\caption{Controlled conformance and ablations. R: CPU FLYNN; F: interface fixture;
+F+: fixture with subprocess interruption. I/D/L counts interface detections,
+diagnostic comparisons (S1/B2), and study label guards (R1/R2). Recovery reports
+successful recoveries/reported flags; C3 alone measures benign false rejection.
+Diagnostic divergence is not automatic runtime refusal. Full predicate/truth
+and family accounting remain in the artifact.}
+\label{tab:fault}\studyinput{fault-matrix}
+\end{table}
+
+Outcomes are explicit detection/refusal, correct recovery, silent invalid
+acceptance, and benign false rejection against declared oracles. Pose-only and
+shared-owner ablations remove state or isolation mechanisms; diagnostic rules
+annotate unsupported inferences on the same traces.
+
+Acceptance differs from a false claim. Records name each claim, temporal scope,
+and observed true/false/unknown truth. B1's separate-owner branch and E2's bounded
+queue can succeed legitimately; unknown truth is not a measured false claim.
+C3 controls for benign false rejection.
+
+The result counters are \FaultCompletedUnits{}/\FaultDeclaredUnits{} completed
+units, \FaultBaselineKnownClaims{} claims with known truth and
+\FaultBaselineUnknownClaims{} with unknown truth, \FaultBaselineFalseAccepts{}
+measured false acceptances under the weak predicates,
+\FaultSystemSilentAccepts{} silent system acceptances, and
+\FaultBenignFalseRejects{} benign false rejections. Detection requires the
+named trace and semantic oracle; an unrelated crash is not semantic success.
+
+\begin{table}[t]
+\centering\small
+\caption{S1's first continuation action after the eight-tick prefix. Absolute
+component errors are recomputed from retained paired arrays: velocity command
+and relative heading angle. Pose-only
+restoration jointly omits continuation state; this ablation does not identify
+the contribution of an individual omitted component.}
+\label{tab:snapshot-ablation}\studyinput{snapshot-ablation}
+\end{table}
+Table~\ref{tab:snapshot-ablation} exposes the magnitude behind the first-action
+divergence, alongside complete-state restoration on the same three seeds.
+
+\subsection{RQ2: Complete continuation and declared replay}
+Ten seeds each execute an eight-tick prefix followed by a 100-tick
+source/restored continuation comparison. The retained data include paired raw
+values, snapshot size and digest, and first divergence. Agreement is \ContinuationPassed{}/\ContinuationDeclared{}
+under the frozen policy.
+
+Five additional source trajectories each use an eight-tick prefix and 100 source
+ticks, followed by branch, playback, action replay, and policy replay conditions.
+Branch continuation compares the remaining 92 ticks; action and policy replay
+each compare all 100 source ticks.
+Conditions share a source and are paired, with computation/validation defined
+in Figure~\ref{fig:matrix}.
+The trajectory-level result is \ReplayPassed{}/\ReplayDeclared{}.
+
+\paragraph{A retained join across the contract.}
+For seed 0, source run \texttt{ddb94d30} applied goal-edit command \texttt{edit}
+at control tick 0, revision 1. Snapshot \texttt{53e4d9cf}, captured at tick 8,
+contains that receipt and a digest of 30 source events; its separate branch
+matched 92 continuation ticks. Action and policy replay instead restored
+initial snapshot \texttt{605a9e6f}. Both reports bind the same source and compare
+100 ticks, with policy execution false and true respectively. The completed
+source publication contains 100 readable ticks. The artifact retains full IDs,
+hashes, receipts, snapshots, event prefix, manifest and verifier reports;
+displayed IDs are prefixes. This positive join illustrates the integration
+without testing all combined faults.
+
+\begin{table}[t]
+\centering\small
+\caption{Continuation and replay outcomes under the frozen comparison policy.
+Counts refer to source/restored pairs or source trajectories, never individual
+ticks. Executed computation constrains the interpretation of agreement.}
+\label{tab:replay}\studyinput{replay-table}
+\end{table}
+
+\subsection{RQ3: Execution overhead and operation cost}
+Ten seeds run four conditions in fresh processes: a benchmark-only null writer,
+a synchronous writer, a background writer, and a background writer plus actual
+bounded storage accounting. Each uses 20 warm-up ticks and 200 measured ticks.
+This measures sustained execution throughput across normal episode boundaries,
+including any required resets, rather than navigation success or time to goal.
+The null writer isolates recording cost.
+Condition order rotates cyclically by seed modulo four to reduce order
+effects; ten seeds do not fully balance all four rotations.
+Caches are warm and the OS page cache is not flushed.
+
+Actions, tick count and final-state match are required across all four
+conditions. A mismatched seed retains all four observations and is excluded as
+a whole from timing summaries, with its unmatched status reported. Open and
+close costs are recorded separately from measured execution wall time per tick.
+Instrumentation also records policy/physics/camera time, bytes per tick, peak
+RSS, descriptor/thread counts where available, queue backpressure, and storage
+recount work. Load, available memory, condition ordinal, readable CPU/governor
+identity, and competing Palimpsest processes are retained as covariates.
+
+\paragraph{State matching excludes one identified telemetry field.}
+Native MuJoCo state contains elapsed-time telemetry that can differ even when
+scientific state agrees. For execution-overhead matching only, the driver zeros
+\texttt{timer.duration} on private decoded copies and recomputes the native
+hash. Live engine state and retained original snapshots are unchanged. Raw and
+matched hashes and the normalization descriptor are retained. Recorder
+source-run/event-prefix identities also differ by construction. RNG,
+integration, controller, observation, application, solver, physics, and other
+serialized cache state remain in the match. This targeted normalization applies
+only to cost-state matching; snapshot restoration and replay validation are unchanged.
+An additional post-run audit of all 40 retained snapshot pairs verified finite
+exposed numeric state and reproduced every canonical digest, outside the timing
+windows.
+
+\begin{table}[t]
+\centering\small
+\caption{Matched execution cost. All four conditions for a seed enter or leave
+the timing summary together. Open and close costs are separate from measured
+tick time. IQR (pp) is the interquartile range in percentage points.}
+\label{tab:overhead}\studyinput{overhead-table}
+\end{table}
+\begin{figure}[t]
+\centering\studyinput{overhead-plot}
+\caption{Paired execution costs by seed and condition. Shared seed identity
+supports within-set comparison; plotted samples are not independent ticks.}
+\label{fig:overhead}
+\end{figure}
+
+The matched-set count is \OverheadMatchedSeeds{}/\OverheadDeclaredSeeds{}.
+The generated median overheads relative to null are
+\SynchronousOverheadMedian{}\%, \BackgroundOverheadMedian{}\%, and
+\StorageOverheadMedian{}\% for synchronous, background, and storage-accounted
+conditions respectively. Null and storage-accounted median wall times per tick
+are \NullWallMedianMs{} and \StorageWallMedianMs{} ms. No cost acceptability
+threshold is imposed.
+
+Storage-accounted costs varied substantially: paired overhead reached
+\StorageOverheadMaximum{}\%, with an IQR of \StorageOverheadIQR{} percentage
+points. Recorded producer backpressure reached
+\StorageBackpressureMaximumSeconds{} s within a 200-tick window. The bounded
+retention mechanism therefore exposes producer stalls as well as a median cost;
+Figure~\ref{fig:overhead} retains these slow runs.
+
+Operation costs use the five retained full background-plus-storage source runs
+from RQ2. Each unit measures capture, save, read, restore/first-tick, playback,
+action replay, and policy replay. Their different computational work is explicit:
+capture and restore/first-tick timing use an already-open owner, excluding owner
+construction. The recorded-tick timing decodes 100 records without display.
+Action/policy replay timings include startup, execution, comparison and output
+recording for 100 source ticks. Null-writer runs produce no replay timings.
+Summaries are descriptive, without significance tests or cost thresholds.
+
+\begin{table}[t]
+\centering\small
+\caption{Operation costs on retained RQ2 source runs. Each seed contributes one
+operation unit; capture, serialization, restore, and the replay computations
+measure different work.}
+\label{tab:operation}\studyinput{operation-table}
+\end{table}
+
+\subsection{RQ4: Fresh local checkout}
+The declared clean-checkout unit has status \OfflineStatus{}. Admission required
+room for its full 10 GiB maximum, which exceeded the remaining aggregate cap;
+the workflow was not launched. This is an operational coverage gap rather than
+a runtime result. A same-host packaging check uses local Git objects, cached
+dependencies and shared FLYNN assets; independent-machine reproduction remains
+separate.
+
+A separately labeled operational follow-up used the same frozen runtime and
+actual cumulative-inventory monitoring within the original limits. It created
+the fresh checkout, but offline dependency installation stopped because the
+locked \texttt{torch==2.9.0} wheel was absent from the cache. No FLYNN execution
+occurred in that new environment. Its failed result is retained separately;
+fresh-environment reproduction remains unestablished.
+
+\section{Related Work}
+\paragraph{State playback and action replay already exist.}
+The closest semantic precedents are robomimic and ManiSkill. Their broader
+research contributions include reproducible demonstration-learning workflows
+\citep{mandlekar2022robomimic} and integrated simulation/rendering infrastructure
+for embodied learning \citep{tao2025maniskill3}.
+robomimic's playback script visualizes saved observations, restores simulator
+states, or loads an initial state and applies recorded actions open loop
+\citep{robomimicplayback}. ManiSkill defaults to action replay and supports
+state-based playback, documenting nondeterminism and CPU/GPU replay differences
+\citep{maniskillreplay}. These sources already establish that state and action
+replay are different operations. Our design adds no priority claim for that
+taxonomy. Its focus is a composed contract connecting live applied-command
+receipts to recurrent continuation, policy recomputation, and admission of
+retained claims. The evaluation compares named predicates and narrow ablations;
+it does not benchmark these projects or infer missing features from their docs.
+
+\paragraph{Recording at middleware and simulation layers.}
+rosbag2 records and republishes middleware messages \citep{rosbag2}.
+CARLA's recorder reenacts actors from recorded states and events
+\citep{carlarecorder}. Gazebo logs server information and entity poses,
+insertion and deletion; it also supports resource recording and a default that
+avoids overwriting an existing log path \citep{gazebologging}.
+These guarantees operate at middleware or simulation-state layers. Palimpsest
+adds an experiment report linking their computational scope to controller
+execution. Recording and no-overwrite techniques are established precedents.
+
+\paragraph{Physics continuation and process replay.}
+MuJoCo explains integration-state restoration, warm-start requirements, and
+same-version/architecture limits \citep{mujococomputation}. Palimpsest relies on
+that substrate and captures the surrounding recurrent-controller and application
+state. At a different layer, rr captures execution nondeterminism for replay of
+user-space processes \citep{ocallahan2017rr}. Process re-execution addresses a different boundary from declaring that an
+application action replay bypassed inference.
+
+\paragraph{Environment provenance and the controller substrate.}
+ReproZip captures dependencies and configuration through system-call provenance
+and packages experiments \citep{chirigati2013reprozip}. Such packaging addresses
+whether a compatible environment can be reconstructed. Palimpsest's semantic
+contract asks what an execution in that environment actually applied, restored,
+and recomputed. Packaging and application semantics address complementary evidence needs.
+FLYNN provides the controller substrate \citep{wang2026flynn}.
+
+\section{Lessons and Limitations}
+\label{sec:limits}
+The practical lesson is to match claims to their evidence boundary: admission,
+application, state agreement, executed computation, and publication are separate
+facts. Their integration is tested through conformance, ablation, paired
+agreement, and cost, not proved by specification.
+
+\textbf{Coverage and independence.}
+One host, controller/runtime, and fixed engineering seeds limit coverage.
+The fault families do not exhaust combined faults or estimate field prevalence
+or user mistakes. Shared implementation/study assumptions require independent
+trace review and machine/operator reproduction.
+
+\textbf{Portability and cost.}
+Agreement is scoped to CPU, same-version, same-architecture execution and a
+frozen finite-only tolerance policy. Complete state adapters are required for
+new controllers or wrappers. GPU continuation, cross-version numerical
+portability, multi-owner parallel branching, and hostile-host protection are
+outside this evaluation. Timing/input provenance does not identify causal
+effects. Warm-cache local costs cannot predict distributed deployment.
+
+\textbf{Retention and availability.}
+Protected rechecks can detect specified identity/content changes, not every
+transient mutation or a hostile OS. Staged publication and injected process/writer
+failures do not establish power-loss recovery. Independent-machine reproduction
+and a public archive with reviewed redistribution permissions remain open; the
+artifact documentation tracks those gates.
+
+\section{Conclusion}
+Palimpsest connects intervention authority, continuation state, declared replay
+computation, and publication through an implemented semantic contract.
+Pose-only restoration diverged immediately, while complete continuation agreed
+in the tested pairs. Replay reports distinguished recorded trajectories from
+policy re-execution. Background recording had a lower paired median than
+synchronous writing, while storage-accounted retention exposed long producer
+stalls. The resulting artifact makes application, continuation, computation,
+and publication claims separately inspectable.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

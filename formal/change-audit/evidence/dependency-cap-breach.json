@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-11-05T08:47:40.964558+00:00",
+  "phase": "proof-dependency-acquisition",
+  "declared_maximum_bytes": 4294967296,
+  "minimum_free_bytes": 6442450944,
+  "observed_lake_logical_bytes": 6401305872,
+  "observed_lake_allocated_bytes": 6718468096,
+  "observed_disk_free_bytes": 6732644352,
+  "cap_breached": true,
+  "action": "Parent confirmed live cache PID2943741 and lake PID2941060; sent SIGTERM to both after oversized automatic lake-update cache fetch. No cache/evidence deletion.",
+  "termination_call_exit_code": 0,
+  "initial_breach_logical_bytes": 5941134350,
+  "initial_breach_allocated_bytes": 6247641088,
+  "research_execution_cpu_seconds": 0,
+  "limitations": "The monitor did not enforce the cap before crossing. Stored size is post-stop measurement, not peak accounting. No further dependency acquisition authorized in this build wave."
+}

@@ -1,0 +1,10 @@
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}l c c X@{}}
+\toprule
+Operation & Run physics & Run policy & Representative records and validation\\
+\midrule
+Playback & No & No & Display recorded cameras, poses, actions and available controller records; no physics or policy recomputation.\\
+Action replay & Yes & No & Compare cameras/sensors, actions/control, pose/next pose, reward, simulation time and revision. Controller records are not recomputed.\\
+Policy replay & Yes & Yes & Recompute and compare physical fields and controller encoded input/raw output; report first divergent field/tick under declared tolerances.\\
+\bottomrule
+\end{tabularx}

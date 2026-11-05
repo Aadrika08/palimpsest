@@ -1,0 +1,40 @@
+{
+  "command": [
+    "scripts/run_tests.sh",
+    "--",
+    "tests/test_memory_family_case_publication_v1.py",
+    "tests/test_memory_family_retained_case_v1.py",
+    "tests/test_memory_family_retained_condition_v1.py",
+    "tests/test_memory_family_retained_source_v4.py",
+    "tests/test_memory_family_producer_v4.py",
+    "tests/test_memory_family_condition_close_v4.py",
+    "tests/test_memory_family_oracle_admission_v4.py",
+    "tests/test_memory_family_replay_custody_v4.py",
+    "--maxfail=1"
+  ],
+  "environment_overrides": {
+    "PALIMPSEST_PYTHON": "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "PALIMPSEST_TEST_BASETEMP": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.pytest_cache/task2-canonical-d0e236ca0b9d45b8b4dc77526f054e1c"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 292.93345326400595,
+  "files_sha256": {
+    "scripts/memory_family_condition_seal_v4.py": "3d6b8fde082de0a58bbfceb66c37123e4d40a858baa61c25a70777e12d2d86fa",
+    "scripts/memory_family_oracle_admission_v4.py": "abce471ef7098ce38bf65893941d85939a3c3bd2f657be6aa08a998805c90b28",
+    "scripts/memory_family_producer_v4.py": "fe18320d9f0f8580f2ee77f920f2f97839107b834b871a618326dd413bff9095",
+    "scripts/memory_family_retained_case_v1.py": "ef3cc47905b05dfd593481ab3b0d188125648db68c8637b8c6a9a2d7e5027baa",
+    "scripts/memory_family_retained_condition_v1.py": "5076a7473584b1239c31c787a713066ef6596ab50b1efea4143fb900fb128e93",
+    "tests/test_memory_family_case_publication_v1.py": "a1112eea9200905c39b5f8f6ad4c824ba35715e5d9bb2669c69d8c66984a516a",
+    "tests/test_memory_family_retained_case_v1.py": "b3b4f0bd73a1f714e602c317bcb3c7b7951fc807016f74b8417d21272bb5aa3f",
+    "tests/test_memory_family_retained_condition_v1.py": "6285d697cab0c812c6821c0ecb5785d3f224370d9ce040cfbf858e8636721dd1",
+    "tests/test_memory_family_retained_source_v4.py": "31973855deb3617745a1296b55ef49cee93ebdb70462c88124b05b7dad4f8239",
+    "tests/test_memory_family_producer_v4.py": "59d8b472ad176de2bd0803d70163dcfd7222fd30b2898ce4a636395688ee6697",
+    "tests/test_memory_family_condition_close_v4.py": "052fbbf322a9da5480b757e99a18ac71489c28b3a73bd9771fa788edf4de5fdf",
+    "tests/test_memory_family_oracle_admission_v4.py": "e98d0bdf8327490dc97be2bb93e8748cac2739ca66eeb0ef0023166e1da5cabb",
+    "tests/test_memory_family_replay_custody_v4.py": "737784c5fb38cb793666d61eb934c39ec6b21e6d94c7b38112e14cf85fb3e4e6",
+    "tests/memory_publication_authored_profiles.py": "875205224fc0ad3f202c878fe62b8c6c51ed235ef1fe08647d3554d377b4a218"
+  },
+  "source_unchanged_during_run": true,
+  "scope": "Normal canonical selected source-test command with explicit test-owned prospective-profile fixtures; no external plugin flag. This is source-only authored semantics, not actual runtime/observer/scientific qualification.",
+  "qualification_claims": []
+}

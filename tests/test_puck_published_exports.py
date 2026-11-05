@@ -9,6 +9,11 @@ from test_puck_worker_bootstrap import descriptor
 from test_puck_worker_dependencies import dependency_fixture
 
 
+# Every case declares the v3 raw-dev/inode identity, including refusal cases.
+# Route the complete module to the canonical tmpfs pass before publication runs.
+pytestmark = pytest.mark.tmpfs_basetemp
+
+
 NAME='fixture_dep.published_child'
 PRODUCER='fixture_dep.producer'
 PHASE='module_exec_publish'
@@ -72,11 +77,13 @@ def run(tmp_path,*,producer=None,body=BODY,delegates=None,defect=None,first_help
 
 def refused(result):
     assert result.returncode!=0 and result.stdout=='',result.stdout+result.stderr
+    assert 'Native identity requires tmpfs' not in result.stderr,result.stderr
     assert 'OWNER_HOOK_RAN' not in result.stderr and 'CHILD_HOOK_RAN' not in result.stderr,result.stderr
-    assert any(word in result.stderr.lower() for word in ('export','publication','published','profile','binding','cache')),result.stderr
+    reason = result.stderr.splitlines()[-1].lower()
+    assert (any(word in reason for word in ('export','publication','published','profile','binding','cache'))
+        or reason == 'runtimeerror: held dependency module dispatch changed'),result.stderr
 
 
-@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadata(tmp_path):
     metadata=('import importlib.machinery\nchild.__file__=__file__\n'
         'child.__spec__=importlib.machinery.ModuleSpec("'+NAME+'",__loader__,origin=__file__)\n'
@@ -93,7 +100,6 @@ def test_first_publication_survives_reentrant_guard_and_binds_legitimate_metadat
     assert receipt['native_authorized'] is receipt['dependencies_qualified'] is False
 
 
-@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_declared_delegate_growth_is_captured_between_two_reentrant_guards(tmp_path):
     producer=PREFIX+PUBLISH+GUARD_ONE+'def late(): return 53\nchild.late=late\n'+GUARD_TWO
     body='import fixture_dep.producer as p\nreturn {"answer":p.child.answer(),"late":p.child.late()}'
@@ -105,7 +111,6 @@ def test_declared_delegate_growth_is_captured_between_two_reentrant_guards(tmp_p
         dict(name=NAME,producer=PRODUCER,phase=PHASE,attributes=['child'],delegate_attributes=['answer','late'])]
 
 
-@pytest.mark.tmpfs_basetemp  # held file identities need a tmpfs basetemp (see docs/testing.md)
 def test_ordinary_module_exec_export_cannot_authorize_early_cache_publication(tmp_path):
     result=run(tmp_path,defect='ordinary-phase')
     refused(result)

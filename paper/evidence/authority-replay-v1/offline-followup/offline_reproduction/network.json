@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "status": "failed",
+  "host_net": "net:[4026531833]",
+  "host_user": "user:[4026531837]",
+  "child_net": "net:[4026533049]",
+  "child_user": "user:[4026532831]",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction",
+      "started_unix": 1793855640.2881777,
+      "returncode": 0,
+      "wall_seconds": 0.11190688598435372
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "cc57edf9f70323926237d887d766627d8c9cdd42"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout",
+      "started_unix": 1793855640.4061544,
+      "returncode": 0,
+      "wall_seconds": 2.1509340660413727
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "submodule.upstream/fly-gym.url",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/upstream/fly-gym"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout",
+      "started_unix": 1793855642.567803,
+      "returncode": 0,
+      "wall_seconds": 0.11193870496936142
+    },
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/upstream/fly-gym",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout/upstream/fly-gym"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout",
+      "started_unix": 1793855642.680845,
+      "returncode": 0,
+      "wall_seconds": 0.11114406801061705
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "8d964599119b420de67ee259434d273651a1a76d"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout/upstream/fly-gym",
+      "started_unix": 1793855642.7931142,
+      "returncode": 0,
+      "wall_seconds": 0.11290662898682058
+    },
+    {
+      "argv": [
+        "git",
+        "submodule",
+        "status"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout",
+      "started_unix": 1793855642.9069574,
+      "returncode": 0,
+      "wall_seconds": 0.11221284203929827
+    },
+    {
+      "argv": [
+        "uv",
+        "--version"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout",
+      "started_unix": 1793855643.0302582,
+      "returncode": 0,
+      "wall_seconds": 0.11425511102424935
+    },
+    {
+      "argv": [
+        "uv",
+        "sync",
+        "--locked",
+        "--offline",
+        "--extra",
+        "simulation",
+        "--extra",
+        "lab"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction/checkout",
+      "started_unix": 1793855643.145709,
+      "returncode": 1,
+      "wall_seconds": 0.11262782395351678
+    }
+  ],
+  "uid_map": [
+    "0",
+    "1000",
+    "1"
+  ],
+  "network_owned_by_child_user": true,
+  "interfaces": [
+    {
+      "ifindex": 1,
+      "ifname": "lo",
+      "flags": [
+        "LOOPBACK",
+        "UP",
+        "LOWER_UP"
+      ],
+      "mtu": 65536,
+      "qdisc": "noqueue",
+      "operstate": "UNKNOWN",
+      "group": "default",
+      "txqlen": 1000,
+      "link_type": "loopback",
+      "address": "00:00:00:00:00:00",
+      "broadcast": "00:00:00:00:00:00",
+      "addr_info": [
+        {
+          "family": "inet",
+          "local": "127.0.0.1",
+          "prefixlen": 8,
+          "scope": "host",
+          "label": "lo",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        },
+        {
+          "family": "inet6",
+          "local": "::1",
+          "prefixlen": 128,
+          "scope": "host",
+          "protocol": "kernel_lo",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        }
+      ]
+    }
+  ],
+  "routes_v4": [
+    {
+      "type": "local",
+      "dst": "127.0.0.0/8",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "scope": "host",
+      "prefsrc": "127.0.0.1",
+      "flags": []
+    },
+    {
+      "type": "local",
+      "dst": "127.0.0.1",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "scope": "host",
+      "prefsrc": "127.0.0.1",
+      "flags": []
+    },
+    {
+      "type": "broadcast",
+      "dst": "127.255.255.255",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "scope": "link",
+      "prefsrc": "127.0.0.1",
+      "flags": []
+    },
+    {
+      "type": "local",
+      "dst": "::1",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "metric": 0,
+      "flags": [],
+      "pref": "medium"
+    }
+  ],
+  "routes_v6": [
+    {
+      "type": "local",
+      "dst": "::1",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "metric": 0,
+      "flags": [],
+      "pref": "medium"
+    }
+  ],
+  "external_connects": [
+    {
+      "address": "1.1.1.1",
+      "errno": 101,
+      "message": "[Errno 101] Network is unreachable"
+    },
+    {
+      "address": "2606:4700:4700::1111",
+      "errno": 101,
+      "message": "[Errno 101] Network is unreachable"
+    }
+  ],
+  "error": {
+    "type": "CalledProcessError",
+    "message": "Command '['uv', 'sync', '--locked', '--offline', '--extra', 'simulation', '--extra', 'lab']' returned non-zero exit status 1."
+  }
+}

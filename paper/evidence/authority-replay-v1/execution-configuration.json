@@ -1,0 +1,220 @@
+{
+  "continuation_replay_scenario": {
+    "arena": 7.0,
+    "control_interval_seconds": 0.02,
+    "controller": "flynn",
+    "description": "Disable either eye or both; goal and contact cues remain available.",
+    "height": 128,
+    "id": "vision-ablation",
+    "label": "Vision ablation",
+    "logging": "lossless-inputs-actions-world-v1",
+    "max_steps": 600,
+    "n_obstacles": 20,
+    "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+    "task": "navigation",
+    "teacher_privileged": false,
+    "texture": "checker",
+    "version": 1,
+    "width": 128
+  },
+  "host": {
+    "cpu_governor": "performance",
+    "cpu_model": "AMD Ryzen 7 7735HS with Radeon Graphics"
+  },
+  "retained_identity": {
+    "byteorder": "little",
+    "environment_class": "environment.mujoco_two_cam_env_random_obstacles.MuJoCoTwoCamEnv",
+    "environment_planner": {
+      "class": "core.astar.AStarGridPlanner",
+      "spec": {
+        "arena_half_extent": 7.0,
+        "cell_size": 0.2,
+        "obstacle_inflate": 0.2
+      }
+    },
+    "environment_profile": {
+      "absent": [],
+      "values": {
+        "H": 128,
+        "W": 128,
+        "_action_scale": 2.0,
+        "arena": 7.0,
+        "contact_penalty": 0.0,
+        "ctrl_penalty": 0.001,
+        "end_on_collision": false,
+        "explore_binsize": 0.2,
+        "frame_skip": 10,
+        "goal_bonus": 0.0,
+        "goal_radius": 0.8,
+        "k_nearest": 5,
+        "max_steps": 600,
+        "n_obstacles": 20,
+        "prog_scale": 10.0,
+        "render_mode": null,
+        "stall_limit": 50,
+        "stall_threshold": 0.002,
+        "texture_mode": "checker",
+        "time_penalty": 0.01
+      }
+    },
+    "machine": "x86_64",
+    "model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "platform": "linux",
+    "pointer_bits": 64,
+    "policy": {
+      "class": "palimpsest.flynn.FlynnPolicy",
+      "device": "cpu",
+      "dtype": "torch.float32",
+      "provenance": {
+        "checkpoint_sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+        "checkpoint_structural_buffers": [
+          "grid_L1_left",
+          "grid_L2_left",
+          "grid_L3_left",
+          "grid_L1_right",
+          "grid_L2_right",
+          "grid_L3_right",
+          "cell.W_crow_indices",
+          "cell.W_col_indices",
+          "cell.W_size",
+          "cell.W_coo_rows",
+          "cell.input_nodes",
+          "cell.output_nodes",
+          "cell.neuron_type_ids"
+        ],
+        "device": "cpu",
+        "dtype": "torch.float32",
+        "edge_sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+        "mapping_ids_not_in_graph": {
+          "JO-C_and_JO-E.csv": {
+            "count": 4,
+            "ids_sha256": "24511aefd850062f4c7a529fdf939fd031f92687a8762febc3add194bc82e4ab",
+            "sample": [
+              720575940612841330,
+              720575940621032513,
+              720575940623325993,
+              720575940631406944
+            ]
+          },
+          "consolidated_cell_types.csv": {
+            "count": 560,
+            "ids_sha256": "3b6fee36b16485a8a75dfd8d5ab19df3279a3e9b3cd2583717dc0d28cf19041b",
+            "sample": [
+              720575940604705481,
+              720575940604810668,
+              720575940605400032,
+              720575940605634220,
+              720575940606007280,
+              720575940606022128,
+              720575940606180896,
+              720575940606292326,
+              720575940606292582,
+              720575940606630590
+            ]
+          },
+          "descending_neurons.csv": {
+            "count": 15,
+            "ids_sha256": "46dc327a2df88a76ea5fda716559caa9ecb18a58e5be4c04d40dcfdbd593c343",
+            "sample": [
+              720575940606756309,
+              720575940612429743,
+              720575940617035449,
+              720575940617873201,
+              720575940618548244,
+              720575940618863553,
+              720575940619434587,
+              720575940621082111,
+              720575940621294218,
+              720575940622681864
+            ]
+          },
+          "head_bristles_left.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "head_bristles_right.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "visual_column_L1_L2_L3_rear_view_left.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "visual_column_L1_L2_L3_rear_view_right.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          }
+        },
+        "neuron_count": 138584,
+        "ordered_neuron_ids_encoding": "decimal ID followed by LF, ascending tensor index",
+        "ordered_neuron_ids_sha256": "719ee4899cf005efc4b5e772e484a59a0df1f964d906265027118eca264e5806",
+        "provenance_limit": "Buffers bind graph structure and mappings; legacy checkpoint contains no original training neuron IDs or training lineage.",
+        "requested_device": "cpu",
+        "seed": 0,
+        "unknown_cell_type_count": 1467,
+        "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+      }
+    },
+    "python": [
+      3,
+      11,
+      15
+    ],
+    "renderer": {
+      "context_class": "mujoco.egl.GLContext",
+      "height": 128,
+      "requested_backend": "egl",
+      "requested_egl_device": null,
+      "width": 128
+    },
+    "teacher": null,
+    "torch": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "CUDA_VISIBLE_DEVICES": "",
+      "NVIDIA_TF32_OVERRIDE": null,
+      "cuda_runtime": "12.8",
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": false,
+      "cudnn_tf32": true,
+      "cudnn_version": 91002,
+      "deterministic": false,
+      "deterministic_warn_only": false,
+      "initialized_cuda_devices": [],
+      "interop_threads": 8,
+      "matmul_precision": "highest",
+      "matmul_tf32": false,
+      "threads": 2,
+      "version": "2.9.0+cu128"
+    }
+  },
+  "source_snapshot_sha256": "85658a34b3a0aacb8c01381d8f297b774b882e70a134de48a11991b8b3604e6d",
+  "source_unit_ids": [
+    "replay/0",
+    "overhead/0/null",
+    "overhead/0/synchronous"
+  ],
+  "throughput_scenario": {
+    "arena": 7.0,
+    "control_interval_seconds": 0.02,
+    "controller": "flynn",
+    "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+    "height": 128,
+    "id": "sparse-navigation",
+    "label": "Sparse navigation",
+    "logging": "lossless-inputs-actions-world-v1",
+    "max_steps": 600,
+    "n_obstacles": 5,
+    "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+    "task": "navigation",
+    "teacher_privileged": false,
+    "texture": "checker",
+    "version": 1,
+    "width": 128
+  }
+}

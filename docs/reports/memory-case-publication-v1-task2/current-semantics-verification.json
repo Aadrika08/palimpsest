@@ -1,0 +1,21 @@
+{
+  "command": [
+    "scripts/run_tests.sh",
+    "--",
+    "tests/test_memory_publication_current_semantics_v1.py",
+    "--maxfail=1"
+  ],
+  "environment_overrides": {
+    "PALIMPSEST_PYTHON": "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "PALIMPSEST_TEST_BASETEMP": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.pytest_cache/task2-current-9e93159a2b2c4e29bfb07c3d66567598"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 90.97803979297169,
+  "files_sha256": {
+    "tests/test_memory_publication_current_semantics_v1.py": "fa54c82762937aa35c53fab8dd8ba4266b6d947a78390dc616d2a8bff67c2c12",
+    "tests/memory_publication_authored_profiles.py": "875205224fc0ad3f202c878fe62b8c6c51ed235ef1fe08647d3554d377b4a218"
+  },
+  "scope": "NEW current-profile source-only regression IDs reuse unchanged prior assertion functions/parameter matrices. Historical IDs/JSON/pins remain unmodified and unaccepted. No model/physics owner.",
+  "source_unchanged_during_run": true,
+  "qualification_claims": []
+}

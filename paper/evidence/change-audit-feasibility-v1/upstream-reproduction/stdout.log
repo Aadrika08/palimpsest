@@ -1,0 +1,7 @@
+w_sr_battery_20260824: 100/100 rounds reproduce the released values exactly
+w2_spi_battery_20260824: 100/100 rounds reproduce the released values exactly
+remote sensing:    1.4744% -> 1.3587% -> 0.4141%
+Walsh acquisition: 0.1819% -> 0.2880% -> 0.4605%
+The substrates run in opposite directions. Held-out error is normalized over the
+held-out set, whose size grows with the budget, so the two series are not a
+like-for-like trend and are not read against one another.

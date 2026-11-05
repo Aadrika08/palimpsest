@@ -1,0 +1,32 @@
+{
+  "scope": "Offline pinned-source compile with documented -j1 -M2048; no network",
+  "records": [
+    {
+      "module": "Mathlib.Probability.Kernel.Defs",
+      "exit_code": 1,
+      "output": ".lake/packages/mathlib/Mathlib/Probability/Kernel/Defs.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/MeasureTheory/Measure/GiryMonad.olean' of module Mathlib.MeasureTheory.Measure.GiryMonad does not exist\n"
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.GiryMonad",
+      "exit_code": 1,
+      "output": ".lake/packages/mathlib/Mathlib/MeasureTheory/Measure/GiryMonad.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Analysis/Normed/Group/Basic.olean' of module Mathlib.Analysis.Normed.Group.Basic does not exist\n"
+    },
+    {
+      "module": "Mathlib.Analysis.Normed.Group.Basic",
+      "exit_code": 1,
+      "output": ".lake/packages/mathlib/Mathlib/Analysis/Normed/Group/Basic.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Analysis/Normed/Group/Defs.olean' of module Mathlib.Analysis.Normed.Group.Defs does not exist\n"
+    },
+    {
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "exit_code": 1,
+      "output": ".lake/packages/mathlib/Mathlib/Analysis/Normed/Group/Defs.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Main.olean' of module Aesop.Main does not exist\n"
+    }
+  ],
+  "pending": [
+    "Mathlib.Probability.Kernel.Defs",
+    "Mathlib.MeasureTheory.Measure.GiryMonad",
+    "Mathlib.Analysis.Normed.Group.Basic",
+    "Mathlib.Analysis.Normed.Group.Defs"
+  ],
+  "elapsed_seconds": 3.629864981980063
+}

@@ -1,0 +1,482 @@
+[
+  {
+    "row": 0,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 1,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 2,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 3,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 4,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 5,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 6,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 7,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 8,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 9,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 10,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 11,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 12,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 13,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 14,
+    "cost_stratum": "south",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 15,
+    "cost_stratum": "south",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 16,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 17,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 18,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 19,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 20,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 21,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 22,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 23,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 24,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 25,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 26,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 27,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 28,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 29,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 30,
+    "cost_stratum": "north",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 31,
+    "cost_stratum": "north",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 32,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 33,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 34,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 35,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 1
+  },
+  {
+    "row": 36,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 37,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 38,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 39,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 0,
+    "route_first_side": 0,
+    "schedule_index": 0
+  },
+  {
+    "row": 40,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 41,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 42,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 43,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 1,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 0
+  },
+  {
+    "row": 44,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 45,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 0,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 46,
+    "cost_stratum": "tie",
+    "regime": "local_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 1
+  },
+  {
+    "row": 47,
+    "cost_stratum": "tie",
+    "regime": "paired_cue",
+    "relation_side": 1,
+    "fact_first_side": 0,
+    "subject_first_side": 1,
+    "route_first_side": 1,
+    "schedule_index": 1
+  }
+]

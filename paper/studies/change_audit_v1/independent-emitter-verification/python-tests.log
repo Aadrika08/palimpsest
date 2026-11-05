@@ -1,0 +1,36 @@
+test_duplicate_family_contrast_is_rejected (test_check.AuditChecks.test_duplicate_family_contrast_is_rejected) ... ok
+test_duplicate_planned_family_and_contrast_are_rejected (test_check.AuditChecks.test_duplicate_planned_family_and_contrast_are_rejected) ... ok
+test_exact_negative_upper_endpoint_accepts_only_numerically (test_check.AuditChecks.test_exact_negative_upper_endpoint_accepts_only_numerically) ... ok
+test_extra_or_unknown_identity_is_rejected (test_check.AuditChecks.test_extra_or_unknown_identity_is_rejected) ... ok
+test_float_and_boolean_spec_parameters_are_rejected (test_check.AuditChecks.test_float_and_boolean_spec_parameters_are_rejected) ... ok
+test_float_boolean_and_nonfinite_observations_are_rejected (test_check.AuditChecks.test_float_boolean_and_nonfinite_observations_are_rejected) ... ok
+test_incomplete_and_refused_rows_are_rejected (test_check.AuditChecks.test_incomplete_and_refused_rows_are_rejected) ... ok
+test_insufficient_log_budget_is_rejected (test_check.AuditChecks.test_insufficient_log_budget_is_rejected) ... ok
+test_insufficient_taylor_terms_are_rejected (test_check.AuditChecks.test_insufficient_taylor_terms_are_rejected) ... ok
+test_loss_outside_closed_range_is_rejected (test_check.AuditChecks.test_loss_outside_closed_range_is_rejected) ... ok
+test_missing_row_is_not_counted_as_smaller_sample (test_check.AuditChecks.test_missing_row_is_not_counted_as_smaller_sample) ... ok
+test_negative_or_boolean_count_is_rejected (test_check.AuditChecks.test_negative_or_boolean_count_is_rejected) ... ok
+test_protocol_drift_is_rejected (test_check.AuditChecks.test_protocol_drift_is_rejected) ... ok
+test_receipt_identity_must_be_a_hash (test_check.AuditChecks.test_receipt_identity_must_be_a_hash) ... ok
+test_spec_identity_drift_is_rejected (test_check.AuditChecks.test_spec_identity_drift_is_rejected) ... ok
+test_taylor_denominator_growth_is_bounded_before_output (test_check.AuditChecks.test_taylor_denominator_growth_is_bounded_before_output) ... ok
+test_term_and_operand_resource_guards (test_check.AuditChecks.test_term_and_operand_resource_guards) ... ok
+test_unrecognized_proof_boolean_is_not_a_guarantee (test_check.AuditChecks.test_unrecognized_proof_boolean_is_not_a_guarantee) ... ok
+test_zero_denominator_and_invalid_probabilities_are_rejected (test_check.AuditChecks.test_zero_denominator_and_invalid_probabilities_are_rejected) ... ok
+test_zero_endpoint_is_inconclusive (test_check.AuditChecks.test_zero_endpoint_is_inconclusive) ... ok
+test_zero_mean_has_no_numerical_improvement (test_check.AuditChecks.test_zero_mean_has_no_numerical_improvement) ... ok
+test_closed_negative_example_binds_exact_arithmetic_and_identity (test_emit.EmissionChecks.test_closed_negative_example_binds_exact_arithmetic_and_identity) ... ok
+test_codegen_family_contrast_and_term_limits (test_emit.EmissionChecks.test_codegen_family_contrast_and_term_limits) ... ok
+test_deterministic_and_input_preserving (test_emit.EmissionChecks.test_deterministic_and_input_preserving) ... ok
+test_malicious_ids_and_partial_grid_refuse (test_emit.EmissionChecks.test_malicious_ids_and_partial_grid_refuse) ... ok
+test_nonnegative_endpoint_has_no_negative_theorem_or_false_certificate (test_emit.EmissionChecks.test_nonnegative_endpoint_has_no_negative_theorem_or_false_certificate) ... ok
+test_protocol_and_spec_drift_refuse (test_emit.EmissionChecks.test_protocol_and_spec_drift_refuse) ... ok
+test_rows_encoded_in_declared_family_order_not_input_order (test_emit.EmissionChecks.test_rows_encoded_in_declared_family_order_not_input_order) ... ok
+test_total_certificate_byte_limit_is_fail_closed (test_emit.EmissionChecks.test_total_certificate_byte_limit_is_fail_closed) ... ok
+test_valid_but_code_like_ids_never_enter_lean_source (test_emit.EmissionChecks.test_valid_but_code_like_ids_never_enter_lean_source) ... ok
+test_zero_endpoint_generates_nonnegative_witness (test_emit.EmissionChecks.test_zero_endpoint_generates_nonnegative_witness) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.017s
+
+OK

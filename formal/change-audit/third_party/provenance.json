@@ -1,0 +1,13 @@
+{
+  "upstream_repository": "https://github.com/noumenal-ai/anytime-anywhere-pac-bayes",
+  "upstream_revision": "862dcb02c0dffeefd6955293345770f726d8ef95",
+  "source_path": "lean/E_star_export/lean/FLT_Proofs/PureMath/Ville.lean",
+  "source_url": "https://github.com/noumenal-ai/anytime-anywhere-pac-bayes/blob/862dcb02c0dffeefd6955293345770f726d8ef95/lean/E_star_export/lean/FLT_Proofs/PureMath/Ville.lean",
+  "git_blob_sha1": "bb4069c8a87780e75d0104c2ee04d8aee11fedc0",
+  "original_sha256": "50d979b784c189a83ee743601387a000c3a2e77b563f81775d9590daf26035ab",
+  "adapted_sha256": "565760e1086d1cbbb0b82791dbe062e0072663d0405b6f37ad68e8e924905c0e",
+  "license": "Apache-2.0; complete upstream LICENSE retained",
+  "changes": "Only the introductory documentation changed: removed unrelated Metis narrative and added explicit attribution. Mathematical proof body is byte-identical after removing block comments.",
+  "proof_body_unchanged": true,
+  "license_sha256": "5b6129fb7aa51ffcf261bdf6adec2147a38f20eb1338564ed93cd553cd9a20b4"
+}

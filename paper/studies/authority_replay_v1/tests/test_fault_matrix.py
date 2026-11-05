@@ -1,0 +1,634 @@
+"""The matrix must exercise real interfaces, preserve input identity, and retain refusals."""
+import dataclasses
+import importlib
+import json
+import os
+from pathlib import Path
+import sys
+
+import pytest
+
+REPO = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(REPO))
+from paper.studies.authority_replay_v1.common import declared_units, load_protocol, sha256_file
+
+PROTOCOL = load_protocol(REPO / 'paper/studies/authority_replay_v1/protocol.json')
+CASES = {case.id: case for case in PROTOCOL.fault_cases}
+IDENTITY = {'commit': 'a' * 40, 'protocol_sha256': PROTOCOL._content_sha256,
+            'runtime_source_sha256': {'src/palimpsest/engine.py': 'b' * 64},
+            'asset_manifest_sha256': {'model_manifests/flynn-full-vision.json': 'c' * 64},
+            'asset_sha256': {'checkpoint': 'd' * 64}}
+FIXTURES = [u for u in declared_units(PROTOCOL) if u['kind'] == 'fault' and CASES[u['case_id']].path != 'runtime']
+RUNTIME = [u for u in declared_units(PROTOCOL) if u['kind'] == 'fault' and CASES[u['case_id']].path == 'runtime' and u['seed'] == 0]
+
+
+def module():
+    return importlib.import_module('paper.studies.authority_replay_v1.fault_matrix')
+
+
+def narrow(unit):
+    return dataclasses.replace(CASES[unit['case_id']], seeds=[] if unit['seed'] is None else [unit['seed']],
+                               variants=[unit['variant']], conditions=[unit['condition']])
+
+
+def assert_row(row, unit, root):
+    assert all(row[k] == v for k, v in unit.items())
+    assert row['identity'] == IDENTITY
+    assert row['status'] == 'completed', row
+    assert row['metrics']['elapsed_seconds'] >= 0
+    assert row['retained_prefix_valid'] is True
+    assert row['silent_acceptance'] is False
+    assert row['benign_false_rejection'] is False
+    assert (root / 'trace.json').is_file()
+    trace = json.loads((root / 'trace.json').read_text())
+    assert row['baseline_outcome']['accepted'] == module().naive_accepts(unit['case_id'], trace)
+    assert row['source_hashes_before'] == row['source_hashes_after']
+    if unit['condition'] == 'benign_control':
+        assert not row['explicit_detection'] and not row['correct_recovery']
+    else:
+        assert row[CASES[unit['case_id']].expected_outcome] is True, row
+
+
+@pytest.mark.parametrize('unit', FIXTURES, ids=lambda u: u['unit_id'])
+def test_every_fixture_fault_and_benign_control_uses_production_interfaces(tmp_path, unit):
+    row = module().run_fault_case(narrow(unit), tmp_path / 'unit', IDENTITY)
+    assert_row(row, unit, tmp_path / 'unit')
+    assert row['execution_path'] == 'fixture-production-interfaces'
+    if unit['case_id'] == 'P1':
+        assert row['trace']['child_returncode'] == 23
+        assert row['trace']['terminal_success'] is False
+        assert row['trace']['published_ticks'] == (64 if unit['variant'] == 'before_terminal_manifest' else 32)
+        assert row['trace']['direct_writer_accepted'] is True
+        assert row['trace']['direct_writer_ticks'] == 64
+        direct_ticks = [json.loads(line) for line in (tmp_path / 'unit/direct-writer.jsonl').read_text().splitlines()]
+        assert [t['tick'] for t in direct_ticks] == list(range(64))
+    if unit['case_id'] == 'E1':
+        assert row['trace']['used_bytes'] <= row['trace']['cap_bytes']
+        assert row['trace']['required_bytes'] == row['trace']['cap_bytes'] + 1
+    if unit['case_id'] == 'E2':
+        assert row['trace']['accepted_items'] == row['trace']['retained_items']
+        assert row['trace']['stats']['backpressure_events'] >= 1
+        assert row['trace']['stats']['max_queued_items'] <= row['trace']['queue_bound']
+    if unit['case_id'] == 'E3':
+        assert row['trace']['failure_calls'] == 1
+        assert row['trace']['closed'] is True
+        assert row['trace']['late_rejected'] is True
+
+
+@pytest.mark.simulation
+@pytest.mark.assets
+@pytest.mark.parametrize('unit', RUNTIME, ids=lambda u: u['unit_id'])
+def test_every_runtime_fault_uses_full_flynn_and_real_semantics(tmp_path, unit):
+    if os.environ.get('PALIMPSEST_SIMULATION_TESTS') != '1':
+        pytest.skip('actual FLYNN integration is opt in')
+    row = module().run_fault_case(narrow(unit), tmp_path / 'unit', IDENTITY)
+    assert_row(row, unit, tmp_path / 'unit')
+    assert row['execution_path'] == 'cpu-flynn-runtime'
+    assert row['trace']['controller'] == 'flynn'
+    assert row['trace']['policy_loaded'] is True
+    assert row['trace']['policy_invocations'] > 0
+    if unit['case_id'].startswith('R'):
+        assert row['trace']['claimed_mode'] == 'policy'
+        assert row['trace']['replay_inference_executed'] is False
+        assert row['trace']['replay_policy_invocations'] == 0
+        assert row['trace']['claim_validation']['rejected'] is True
+        assert row['trace']['claim_validation']['scope'] == 'study_guard'
+        assert row['trace']['claim_validation']['facts']['policy_invocations'] == 0
+        assert row['outcome_scope'] == 'study_guard'
+        assert row['study_guard_outcome'] == 'refused'
+        assert row['palimpsest_outcome'] != 'refused'
+    if unit['case_id'] == 'A1':
+        assert row['trace']['authoritative_ticks'] == [row['trace']['terminal_receipt']['applied_tick']]
+        for boundary in row['trace']['queued_boundaries']:
+            display = boundary['display']
+            assert display['observation_total_tick'] == boundary['tick']
+            assert display['last_transition_tick'] == boundary['tick'] - 1
+            assert sha256_file(tmp_path / 'unit' / display['arrays_path']) == display['arrays_sha256']
+    if unit['case_id'] == 'S1':
+        path = tmp_path / 'unit' / row['trace']['arrays_path']
+        assert sha256_file(path) == row['trace']['arrays_sha256']
+        assert module().recompute_continuation_evidence(path) == row['trace']['comparisons']
+        assert row['trace']['divergence_scope'] in ('scientific', 'application_only')
+    if unit['case_id'].startswith('D'):
+        assert row['trace']['replay_ticks'] == 0
+        assert row['trace']['replay_policy_invocations'] == 0
+        assert row['trace']['copied_target_sha256_before'] != row['trace']['copied_target_sha256_after']
+    if unit['case_id'] == 'D2':
+        assert row['trace']['asset_schema_before'] == row['trace']['asset_schema_after']
+        assert row['trace']['shape_matches'] is True and row['trace']['schema_parsed'] is True
+    if unit['case_id'] == 'S2':
+        assert row['trace']['destination_unchanged'] is True
+    if unit['case_id'] == 'B1':
+        assert len(set(row['trace']['owner_pids'])) == 3
+        states = row['trace']['owner_states']
+        assert states['parent_before'] == states['parent_after']
+        assert states['sibling_before'] == states['sibling_after']
+        assert module()._initial_poses_match(states['parent_before'], states['branch_before'], states['sibling_before'])
+
+
+@pytest.mark.parametrize('case_id,trace,accepted', [
+    ('A1', {'request_accepted': True}, True), ('A1', {'request_accepted': False}, False),
+    ('A2', {'request_parsed': True}, True), ('A3', {'accepted_requests': 1}, False),
+    ('R1', {'viewable': True}, True), ('R2', {'trajectory_matches': False, 'final_state_matches': False}, False),
+    ('S1', {'pose_restored': True, 'continued': True}, True),
+    ('S2', {'snapshot_readable': True, 'process_progress': False}, False),
+    ('D1', {'initial_setup_succeeded': True}, True), ('D2', {'shape_matches': True}, True),
+    ('C1', {'start_hash_matches': True}, True), ('C2', {'exit_hash_matches': False}, False),
+    ('C3', {'protected_content_unchanged': True}, True),
+    ('P1', {'output_exists': True}, True), ('B1', {'pose_copies_completed': True}, True),
+    ('B2', {'reset_pose_copy_completed': True}, True), ('E1', {'write_attempted': True}, True),
+    ('E2', {'producer_returned': True}, True), ('E3', {'output_exists': False, 'process_continued': False}, False),
+])
+def test_naive_predicate_is_computed_from_same_observed_trace(case_id, trace, accepted):
+    assert module().naive_accepts(case_id, trace) is accepted
+
+
+def test_refusal_is_not_successful_recovery():
+    classify = module().classify_outcome
+    refused = classify({'semantic_outcome': 'refused', 'semantic_invalid': True}, 'fault')
+    assert refused == {'silent_acceptance': False, 'explicit_detection': True,
+                       'correct_recovery': False, 'benign_false_rejection': False}
+    recovered = classify({'semantic_outcome': 'recovered', 'semantic_invalid': True}, 'fault')
+    assert recovered['correct_recovery'] and not recovered['explicit_detection']
+    assert classify({'semantic_outcome': 'refused', 'semantic_invalid': False}, 'benign')['benign_false_rejection']
+    assert classify({'semantic_outcome': 'accepted', 'semantic_invalid': True}, 'fault')['silent_acceptance']
+
+
+def test_first_divergence_uses_frozen_policy_and_deterministic_order():
+    import numpy as np
+    compare = module().first_divergence
+    left = [{'z': np.array([0.], np.float32), 'a': np.array([1], np.int32)}]
+    right = [{'z': np.array([1.], np.float32), 'a': np.array([2], np.int32)}]
+    assert compare(left, right) == {'field': 'a', 'tick': 0, 'reason': 'value'}
+    assert compare([{'x': np.array([float('nan'), 1.], np.float32)}],
+                   [{'x': np.array([float('nan'), 1.0000001], np.float32)}]) == {'field': 'x', 'tick': 0, 'reason': 'nonfinite'}
+    assert compare([{'x': np.array([float('nan')], np.float32)}],
+                   [{'x': np.array([0.], np.float32)}])['field'] == 'x'
+
+
+@pytest.mark.parametrize('variant', ['graph', 'mapping', 'checkpoint'])
+def test_asset_substitution_is_independently_parseable_and_preserves_observed_schema(tmp_path, variant):
+    if variant == 'checkpoint':
+        import torch
+        target = tmp_path / 'checkpoint.pt'
+        torch.save({'weight': torch.tensor([[1., 2.]], dtype=torch.float32),
+                    'ids': torch.tensor([2, 3], dtype=torch.int64)}, target)
+    else:
+        target = tmp_path / 'asset.csv'
+        target.write_text('pre_root_id,post_root_id,neuropil,syn_count,nt_type\n1,2,ME_L,12,GABA\n'
+                          if variant == 'graph' else 'root_id,flow,super_class\n1,efferent,descending\n')
+    before = sha256_file(target)
+    observed = module()._substitute_same_shape(target, variant)
+    assert sha256_file(target) != before
+    assert observed['asset_schema_before'] == observed['asset_schema_after']
+    assert observed['shape_matches'] is True and observed['schema_parsed'] is True
+    assert module()._asset_schema(target, variant) == observed['asset_schema_after']
+
+
+def test_output_is_exclusive_and_multiunit_case_is_refused(tmp_path):
+    root = tmp_path / 'out'
+    root.mkdir()
+    (root / 'untouched').write_text('original')
+    with pytest.raises(ValueError, match='empty|non-empty'):
+        module().run_fault_case(CASES['C1'], root, IDENTITY)
+    assert (root / 'untouched').read_text() == 'original'
+    with pytest.raises(ValueError, match='single|narrow'):
+        module().run_fault_case(CASES['A1'], tmp_path / 'multi', IDENTITY)
+
+
+def test_fixture_source_is_copied_and_original_hash_rechecked(tmp_path, monkeypatch):
+    source = tmp_path / 'source.txt'
+    source.write_text('never mutate this fixture')
+    before = sha256_file(source)
+    monkeypatch.setattr(module(), 'FIXTURE_SOURCE', source)
+    row = module().run_fault_case(CASES['C1'], tmp_path / 'out', IDENTITY)
+    assert sha256_file(source) == before
+    assert row['source_hashes_before'] == row['source_hashes_after'] == {str(source): before}
+
+
+def test_fixture_dry_campaign_preserves_declared_denominator_and_analyzer_accepts(tmp_path):
+    from paper.studies.authority_replay_v1.analyze import summarize
+    output = tmp_path / 'dry'
+    rows = module().run_campaign(PROTOCOL, output, IDENTITY, fixture_only=True)
+    faults = [r for r in rows if r['kind'] == 'fault']
+    assert len(faults) == 50
+    assert {r['unit_id'] for r in faults} == {u['unit_id'] for u in declared_units(PROTOCOL) if u['kind'] == 'fault'}
+    for row in faults:
+        if CASES[row['case_id']].path == 'runtime':
+            assert row['status'] == 'incomplete' and row['dry_run'] is True
+        else:
+            assert row['status'] == 'completed', row
+    summary = summarize(PROTOCOL, rows)
+    assert summary['declared_units'] == len(declared_units(PROTOCOL))
+    assert summary['by_kind']['fault']['denominator'] == 50
+
+
+def test_unit_admission_preserves_six_gib_reserve(tmp_path, monkeypatch):
+    import collections
+    disk = collections.namedtuple('disk', 'total used free')
+    monkeypatch.setattr(module().shutil, 'disk_usage', lambda path: disk(20 * 1024**3, 15 * 1024**3, 5 * 1024**3))
+    with pytest.raises(ValueError, match='free-space reserve'):
+        module().run_fault_case(CASES['C1'], tmp_path / 'out', IDENTITY)
+
+
+def test_campaign_retains_failed_units_and_stops_after_timeout(tmp_path, monkeypatch):
+    import dataclasses
+    calls = []
+    def timed_out(case, output, identity):
+        calls.append(case.id)
+        return {'schema_version': 1, 'study_id': PROTOCOL.study_id, **module()._descriptor(case),
+                'identity': identity, 'status': 'timeout', 'metrics': {'output_bytes': 0}}
+    monkeypatch.setattr(module(), 'run_fault_case', timed_out)
+    rows = module().run_campaign(PROTOCOL, tmp_path / 'campaign', IDENTITY, fixture_only=True)
+    assert calls == ['C1']
+    assert next(r for r in rows if r.get('case_id') == 'C1')['status'] == 'timeout'
+    assert all(r['status'] == 'incomplete' for r in rows if r.get('case_id') != 'C1')
+    assert len(rows) == len(declared_units(PROTOCOL))
+
+
+def test_campaign_rechecks_frozen_identity_and_preserves_drift_failure(tmp_path, monkeypatch):
+    checks, calls = [], []
+    def identity_check(*args):
+        checks.append(True)
+        return IDENTITY if len(checks) == 1 else {**IDENTITY, 'commit': 'f' * 40}
+    def completed(case, output, identity):
+        calls.append(case.id)
+        return {'schema_version': 1, 'study_id': PROTOCOL.study_id, **module()._descriptor(case),
+                'identity': identity, 'status': 'completed', 'metrics': {'output_bytes': 0}}
+    monkeypatch.setattr(module(), 'campaign_identity', identity_check)
+    monkeypatch.setattr(module(), 'run_fault_case', completed)
+    rows = module().run_campaign(PROTOCOL, tmp_path / 'campaign', IDENTITY)
+    assert calls == ['A1']
+    assert rows[0]['status'] == 'failed'
+    assert rows[0]['error']['type'] == 'SourceMutation'
+    assert all(r['status'] == 'incomplete' for r in rows[1:])
+
+
+def test_campaign_keeps_denominator_when_unit_admission_refuses(tmp_path, monkeypatch):
+    monkeypatch.setattr(module(), 'campaign_identity', lambda *args: IDENTITY)
+    def refuse(*args):
+        raise ValueError('filesystem free-space reserve insufficient for unit admission')
+    monkeypatch.setattr(module(), 'run_fault_case', refuse)
+    rows = module().run_campaign(PROTOCOL, tmp_path / 'campaign', IDENTITY)
+    assert len(rows) == 50
+    assert all(r['status'] == 'incomplete' for r in rows)
+    assert 'free-space reserve' in rows[0]['reason']
+
+
+def test_campaign_counts_other_drivers_in_shared_root(tmp_path, monkeypatch):
+    root = tmp_path / 'paper-authority-replay-v1'
+    root.mkdir()
+    (root / 'other-driver.bin').write_bytes(b'x' * 2048)
+    limited = dataclasses.replace(PROTOCOL, resources={**PROTOCOL.resources, 'campaign_max_output_bytes': 1024})
+    monkeypatch.setattr(module(), 'campaign_identity', lambda *args: IDENTITY)
+    monkeypatch.setattr(module(), 'run_fault_case', lambda *args: pytest.fail('shared cap must prevent execution'))
+    rows = module().run_campaign(limited, root / 'faults', IDENTITY, campaign_root=root)
+    assert len(rows) == 50 and all(r['status'] == 'incomplete' for r in rows)
+    assert 'output cap' in rows[0]['reason']
+
+
+def test_campaign_preserves_a_shared_cap_crossing_as_a_failed_unit(tmp_path, monkeypatch):
+    root = tmp_path / 'campaign'
+    root.mkdir()
+    limited = dataclasses.replace(PROTOCOL, resources={**PROTOCOL.resources,
+        'campaign_max_output_bytes': 65536, 'ordinary_unit_max_output_bytes': 1})
+    monkeypatch.setattr(module(), 'campaign_identity', lambda *args: IDENTITY)
+    calls = []
+    def cross(case, output, identity):
+        calls.append(case.id)
+        (root / 'other-driver.bin').write_bytes(b'x' * 65537)
+        return {'schema_version': 1, 'study_id': PROTOCOL.study_id, **module()._descriptor(case),
+                'identity': identity, 'status': 'completed', 'metrics': {'output_bytes': 0}}
+    monkeypatch.setattr(module(), 'run_fault_case', cross)
+    rows = module().run_campaign(limited, root / 'faults', IDENTITY, campaign_root=root)
+    assert calls == ['A1'] and rows[0]['status'] == 'failed'
+    assert rows[0]['error']['type'] == 'CampaignOutputCap'
+    assert all(r['status'] == 'incomplete' for r in rows[1:])
+
+
+def test_campaign_shared_deadline_stops_before_any_unit(tmp_path, monkeypatch):
+    import time
+    monkeypatch.setattr(module(), 'campaign_identity', lambda *args: IDENTITY)
+    monkeypatch.setattr(module(), 'run_fault_case', lambda *args: pytest.fail('expired deadline must prevent execution'))
+    rows = module().run_campaign(PROTOCOL, tmp_path / 'faults', IDENTITY,
+                                 campaign_deadline_epoch=time.time() - 1)
+    assert len(rows) == 50 and all(r['status'] == 'incomplete' for r in rows)
+    assert 'wall-clock' in rows[0]['reason']
+
+
+def test_standard_campaign_subroots_share_parent_accounting(tmp_path):
+    root = tmp_path / 'paper-authority-replay-v1'
+    assert module()._campaign_resource_root(root / 'faults', None) == root.resolve()
+    assert module()._campaign_resource_root(tmp_path / 'isolated-dry', None) == (tmp_path / 'isolated-dry').resolve()
+
+
+def test_runtime_child_wait_is_bounded_by_shared_deadline(tmp_path, monkeypatch):
+    import subprocess
+    import time
+    monkeypatch.setattr(module(), 'CAMPAIGN_DEADLINE_EPOCH', time.time() + .25)
+    start = time.monotonic()
+    with (tmp_path / 'stdout').open('w') as stdout, (tmp_path / 'stderr').open('w') as stderr:
+        with pytest.raises(subprocess.TimeoutExpired):
+            module()._runtime_process([sys.executable, '-c', 'import time; time.sleep(30)'], stdout, stderr, 30)
+    assert time.monotonic() - start < 3
+
+
+def test_persisted_campaign_clock_cannot_be_extended_and_binds_identity(tmp_path):
+    import time
+    root = tmp_path / 'campaign'
+    root.mkdir()
+    now = time.time()
+    clock = {'identity': IDENTITY, 'started_unix': now - 100, 'deadline_unix': now - 1}
+    (root / 'campaign-clock.json').write_text(json.dumps(clock))
+    assert module()._campaign_deadline(root, IDENTITY, 14400, now + 1000) == clock['deadline_unix']
+    assert module()._campaign_deadline(root, IDENTITY, 14400, now - 10) == now - 10
+    with pytest.raises(ValueError, match='identity drift'):
+        module()._campaign_deadline(root, {**IDENTITY, 'commit': 'f' * 40}, 14400, None)
+
+
+def test_campaign_base_is_shared_readonly_and_drift_copies_are_private(tmp_path, monkeypatch):
+    campaign = tmp_path / 'campaign'
+    campaign.mkdir()
+    monkeypatch.setattr(module(), 'CAMPAIGN_ROOT', campaign)
+    copies = []
+    def copy_runtime(root):
+        copies.append(root)
+        repo, assets = root / 'copied-repo', root / 'copied-assets'
+        (repo / 'src/palimpsest').mkdir(parents=True)
+        (repo / 'src/palimpsest/engine.py').write_text('original source')
+        assets.mkdir()
+        (assets / 'checkpoint').write_bytes(b'original asset')
+        return repo, assets
+    monkeypatch.setattr(module(), '_copy_runtime', copy_runtime)
+    def unit(name):
+        root = campaign / name
+        root.mkdir()
+        return root
+    first = module()._runtime_inputs(narrow(RUNTIME[0]), unit('first'))
+    second = module()._runtime_inputs(narrow(RUNTIME[1]), unit('second'))
+    assert first == second and len(copies) == 1
+    assert first[0].stat().st_mode & 0o222 == 0
+    source_unit = {'case_id': 'D1', 'seed': 0, 'variant': 'source', 'condition': 'fault'}
+    source_repo, source_assets = module()._runtime_inputs(narrow(source_unit), unit('drift-source'))
+    assert source_repo != first[0] and source_assets == first[1]
+    asset_unit = {'case_id': 'D2', 'seed': 0, 'variant': 'checkpoint', 'condition': 'fault'}
+    asset_repo, private_assets = module()._runtime_inputs(narrow(asset_unit), unit('drift-asset'))
+    assert asset_repo == first[0] and private_assets != first[1]
+    target = private_assets / 'checkpoint'
+    target.chmod(0o600)
+    target.write_bytes(b'changed asset')
+    assert (first[1] / 'checkpoint').read_bytes() == b'original asset'
+
+
+def test_runtime_timeout_kills_the_entire_owner_process_group(tmp_path):
+    import subprocess
+    import time
+    pid_file = tmp_path / 'descendant.pid'
+    code = "import subprocess,sys,time; from pathlib import Path; child=subprocess.Popen([sys.executable,'-c','import time; time.sleep(30)']); Path(sys.argv[1]).write_text(str(child.pid)); time.sleep(30)"
+    with (tmp_path / 'stdout').open('w') as stdout, (tmp_path / 'stderr').open('w') as stderr:
+        with pytest.raises(subprocess.TimeoutExpired):
+            module()._runtime_process([sys.executable, '-c', code, str(pid_file)], stdout, stderr, 1.0)
+    pid = int(pid_file.read_text())
+    deadline = time.monotonic() + 3
+    while time.monotonic() < deadline:
+        stat = Path(f'/proc/{pid}/stat')
+        try:
+            state = stat.read_text().split()[2]
+        except (FileNotFoundError, ProcessLookupError):
+            break  # The descendant can be reaped between lookup and read.
+        if state == 'Z':
+            break
+        time.sleep(.01)
+    else:
+        pytest.fail('timed-out runtime left a live descendant owner')
+
+
+@pytest.mark.simulation
+@pytest.mark.assets
+def test_actual_flynn_can_execute_against_readonly_campaign_base(tmp_path, monkeypatch):
+    if os.environ.get('PALIMPSEST_SIMULATION_TESTS') != '1':
+        pytest.skip('actual FLYNN integration is opt in')
+    root = tmp_path / 'implementation-verification'
+    root.mkdir()
+    monkeypatch.setattr(module(), 'CAMPAIGN_ROOT', root)
+    unit = next(u for u in RUNTIME if u['case_id'] == 'A1')
+    row = module().run_fault_case(narrow(unit), root / 'unit', IDENTITY)
+    assert_row(row, unit, root / 'unit')
+    assert row['shared_base_unchanged'] is True
+    assert row['shared_base_identity_before'] == row['shared_base_identity_after']
+
+
+@pytest.mark.parametrize('value', [float('nan'), float('inf'), -float('inf')])
+def test_first_divergence_rejects_nonfinite_with_json_safe_diagnostic(value):
+    import numpy as np
+    result = module().first_divergence([{'x': np.asarray([value], np.float32)}],
+                                       [{'x': np.asarray([value], np.float32)}])
+    assert result == {'field': 'x', 'tick': 0, 'reason': 'nonfinite'}
+    json.dumps(result, allow_nan=False)
+
+
+@pytest.mark.parametrize('executed,inference,calls', [('playback', False, 0), ('actions', False, 0)])
+def test_replay_claim_guard_actually_rejects_false_policy_claim(executed, inference, calls):
+    facts = {'executed_mode': executed, 'inference_executed': inference, 'policy_invocations': calls}
+    with pytest.raises(ValueError, match='policy'):
+        module().validate_replay_claim('policy', facts)
+    assert module().validate_replay_claim(executed, facts) is True
+    assert module().validate_replay_claim('policy', {'executed_mode': 'policy',
+        'inference_executed': True, 'policy_invocations': 3}) is True
+
+
+def test_s1_retained_arrays_distinguish_application_only_and_recompute(tmp_path):
+    import numpy as np
+    expected = [{'action': np.array([1.], np.float32), 'qpos': np.array([0.]), 'revision': np.array(1)}]
+    pose = [{**expected[0], 'revision': np.array(2)}]
+    evidence = module()._continuation_evidence(expected, pose, expected, tmp_path)
+    assert evidence['divergence_scope'] == 'application_only'
+    assert evidence['scientific_first_divergence'] is None
+    assert evidence['application_first_divergence']['field'] == 'revision'
+    assert module().recompute_continuation_evidence(tmp_path / evidence['arrays_path']) == evidence['comparisons']
+    pose[0]['action'] = np.array([2.], np.float32)
+    other = tmp_path / 'scientific'
+    other.mkdir()
+    evidence = module()._continuation_evidence(expected, pose, expected, other)
+    assert evidence['divergence_scope'] == 'scientific'
+    assert evidence['scientific_first_divergence']['field'] == 'action'
+    assert module().recompute_continuation_evidence(other / evidence['arrays_path']) == evidence['comparisons']
+
+
+def test_owner_digest_detects_rng_only_changes_and_pose_equality_is_measured(monkeypatch):
+    import copy
+    snapshot = {'rng': {'python': [1, 2]}, 'application': {'source_run_id': 'a', 'event_prefix': 'b'},
+                'integration': [0., 1.]}
+    monkeypatch.setattr(module(), '_capture', lambda engine: copy.deepcopy(snapshot))
+    before = module()._scientific_digest(None)
+    snapshot['rng']['python'][0] += 1
+    assert module()._scientific_digest(None) != before
+    assert not module()._initial_poses_match({'pose_sha256': 'a'}, {'pose_sha256': 'a'}, {'pose_sha256': 'b'})
+    assert module()._initial_poses_match(*[{'pose_sha256': 'a'}] * 3)
+
+
+def test_a1_requires_latest_boundary_display_and_event_receipt_tick_agreement():
+    states = [{'tick': tick, 'receipt': 'queued', 'obstacles': [[0, 0]],
+               'display': {'observation_total_tick': tick, 'last_transition_tick': tick - 1}}
+              for tick in (9, 10)]
+    terminal = {'status': 'applied', 'applied_tick': 10}
+    assert module()._delayed_recovered(states, [[0, 0]], terminal, [{'tick': 10}], 8, [[1, 0]])
+    assert not module()._delayed_recovered(states, [[0, 0]], terminal, [{'tick': 9}], 8, [[1, 0]])
+    states[1]['display']['observation_total_tick'] = 8
+    assert not module()._delayed_recovered(states, [[0, 0]], terminal, [{'tick': 10}], 8, [[1, 0]])
+
+
+def test_final_source_disappearance_retains_failed_row_trace_and_stops_campaign(tmp_path, monkeypatch):
+    root = tmp_path / 'campaign'
+    calls = []
+    def hashes(runtime):
+        calls.append(True)
+        if len(calls) > 1:
+            raise FileNotFoundError('original fixture disappeared')
+        return {'source': 'a' * 64}
+    monkeypatch.setattr(module(), '_original_hashes', hashes)
+    monkeypatch.setattr(module(), 'campaign_identity', lambda *args: IDENTITY)
+    rows = module().run_campaign(PROTOCOL, root, IDENTITY, fixture_only=True)
+    row = next(r for r in rows if r.get('case_id') == 'C1')
+    assert row['status'] == 'failed' and row['error']['type'] == 'SourceMutation'
+    assert row['trace']['context_poisoned_or_closed'] is True
+    retained = root / row['unit_id'].replace('/', '__')
+    assert json.loads((retained / 'row.json').read_text())['error']['type'] == 'SourceMutation'
+    assert json.loads((retained / 'trace.json').read_text()) == row['trace']
+    assert all(r['status'] == 'incomplete' for r in rows if r.get('case_id') != 'C1')
+
+
+@pytest.mark.parametrize('change,calls', [({'status': 'failed', 'compared_ticks': 0}, 0),
+    ({'compared_ticks': 2}, 0), ({'mode': 'policy'}, 0), ({'source_run_id': 'other'}, 0),
+    ({'source_snapshot_sha256': 'wrong'}, 0), ({'controller_reexecuted': True}, 0),
+    ({'inference_executed': True}, 0), ({}, 1)])
+def test_r2_unsuccessful_or_wrong_source_replay_cannot_count_as_detection(tmp_path, monkeypatch, change, calls):
+    source = {'source_run_id': 'source', 'source_snapshot_id': 'snapshot', 'source_snapshot_sha256': 'a' * 64}
+    report = {**source, 'mode': 'actions', 'status': 'passed', 'compared_ticks': 3,
+              'controller_reexecuted': False, 'inference_executed': False, 'errors': [], 'first_divergence': None,
+              **change}
+    def invalid_replay(case, output):
+        (output / 'runtime-trace.json').write_text(json.dumps({'replay_report': report}))
+        return module()._r2_evaluation(report, source, 3, calls)
+    monkeypatch.setattr(module(), '_custody', invalid_replay)
+    row = module().run_fault_case(CASES['C1'], tmp_path / 'unit', IDENTITY)
+    assert row['status'] == 'failed', row
+    assert row['error']['type'] == 'ValueError'
+    assert not row.get('explicit_detection', False)
+    assert row['trace']['replay_report'] == report
+
+
+def test_r2_guard_receives_only_observed_successful_replay_facts():
+    source = {'source_run_id': 'source', 'source_snapshot_id': 'snapshot', 'source_snapshot_sha256': 'a' * 64}
+    report = {**source, 'mode': 'actions', 'status': 'passed', 'compared_ticks': 3,
+              'controller_reexecuted': False, 'inference_executed': False, 'errors': [], 'first_divergence': None}
+    trace = module()._r2_evaluation(report, source, 3, 0)
+    assert trace['semantic_outcome'] == 'refused'
+    assert trace['trajectory_matches'] is True
+    assert trace['claim_validation']['facts'] == {'executed_mode': 'actions',
+        'inference_executed': False, 'policy_invocations': 0}
+
+
+def _independent_owner_probe():
+    def owner(pid, digest, pose='pose'):
+        return {'pid': pid, 'digest': digest, 'rng_sha256': 'rng-' + digest, 'pose_sha256': pose}
+    parent, sibling, branch = owner(1, 'parent'), owner(2, 'sibling'), owner(3, 'branch')
+    return {'semantic_invalid': True, 'semantic_outcome': 'recovered', 'retained_prefix_valid': True,
+            'pose_copies_completed': True, 'owner_states': {'parent_before': parent, 'parent_after': dict(parent),
+                'sibling_before': sibling, 'sibling_after': dict(sibling), 'branch_before': branch,
+                'branch_after': owner(3, 'mutated', 'different-pose')}}
+
+
+@pytest.mark.parametrize('seed', [0, 1, 2])
+def test_b1_successful_independence_is_not_a_false_baseline_conclusion(tmp_path, monkeypatch, seed):
+    # Row-pipeline fixture only; actual FLYNN integration retains separate tests.
+    import types
+    trace = _independent_owner_probe()
+    monkeypatch.setattr(module(), '_original_hashes', lambda runtime: {'source': 'a' * 64})
+    monkeypatch.setattr(module(), '_runtime_inputs', lambda case, output: (output, output))
+    def runtime(command, stdout, stderr, timeout):
+        config = json.loads(Path(command[-1]).read_text())
+        (Path(config['output']) / 'runtime-trace.json').write_text(json.dumps(trace))
+        return types.SimpleNamespace(returncode=0)
+    monkeypatch.setattr(module(), '_runtime_process', runtime)
+    unit = next(u for u in declared_units(PROTOCOL) if u.get('case_id') == 'B1' and u['seed'] == seed)
+    row = module().run_fault_case(narrow(unit), tmp_path / 'unit', IDENTITY)
+    assert row['correct_recovery'] is True
+    assert row['baseline_outcome']['accepted'] is True
+    assert row['baseline_outcome']['silent_acceptance'] is False
+    assert row['baseline_outcome']['claim_truth'] is True
+
+
+@pytest.mark.parametrize('unit', [u for u in FIXTURES if u['case_id'] == 'E2'], ids=lambda u: u['variant'])
+def test_e2_successful_ordered_retention_is_not_a_false_baseline_conclusion(tmp_path, unit):
+    row = module().run_fault_case(narrow(unit), tmp_path / 'unit', IDENTITY)
+    assert row['correct_recovery'] is True
+    assert row['baseline_outcome']['accepted'] is True
+    assert row['baseline_outcome']['silent_acceptance'] is False
+    assert row['baseline_outcome']['claim_truth'] is True
+
+
+def test_baseline_unknown_truth_is_never_counted_as_false_acceptance():
+    baseline = module()._baseline_outcome('B1', {'pose_copies_completed': True, 'semantic_invalid': True})
+    assert baseline['accepted'] is True and baseline['claim_truth'] == 'unknown'
+    assert baseline['silent_acceptance'] is False
+
+
+@pytest.mark.parametrize('change', [{'truth': 1}, {'truth': None}, {'truth': 'false'},
+    {'evidence': {'nonfinite': float('nan')}}, {'temporal_scope': {'phase': 'probe', 'ticks': [True]}},
+    {'temporal_scope': {'phase': '', 'ticks': []}}, {'temporal_scope': None}])
+def test_baseline_claim_truth_and_json_scope_are_validated(change):
+    claim = {'claim': 'observed independence', 'truth': True, 'evidence': {'probe': True},
+             'temporal_scope': {'phase': 'branch_probe', 'ticks': []}, **change}
+    with pytest.raises(ValueError):
+        module().validate_baseline_claim(claim)
+
+
+@pytest.mark.parametrize('case,trace,truth', [
+    ('A1', {'queued_boundaries': [{'tick': 9, 'receipt': 'queued'}], 'terminal_receipt': {'status': 'applied', 'applied_tick': 10}}, False),
+    ('A2', {'terminal_receipt': {'status': 'rejected'}, 'world_unchanged': True}, False),
+    ('A2', {'terminal_receipt': {'status': 'applied'}, 'world_unchanged': False}, True),
+    ('A3', {'accepted_requests': 2, 'authoritative_applications': 1}, False),
+    ('A3', {'accepted_requests': 2, 'authoritative_applications': 2}, True),
+    ('R1', {'executed_mode': 'playback', 'replay_inference_executed': False, 'replay_policy_invocations': 0}, False),
+    ('R2', {'executed_mode': 'actions', 'replay_inference_executed': False, 'replay_policy_invocations': 0}, False),
+    ('S1', {'scientific_first_divergence': None, 'application_first_divergence': {'field': 'revision'}}, False),
+    ('S1', {'scientific_first_divergence': None, 'application_first_divergence': None}, True),
+    ('S1', {'first_divergence': {'field': 'revision'}}, 'unknown'),
+    ('S2', {'error': 'missing recurrent state', 'destination_unchanged': True}, False),
+    ('D1', {'copied_target_sha256_before': 'a' * 64, 'copied_target_sha256_after': 'b' * 64}, False),
+    ('D2', {'copied_target_sha256_before': 'a' * 64, 'copied_target_sha256_after': 'a' * 64, 'shape_matches': True}, True),
+    ('C1', {'protected_identity_before': {'inode': 1}, 'protected_identity_after': {'inode': 2}, 'protected_content_unchanged': True}, False),
+    ('C2', {'protected_identity_before': {'ctime': 1}, 'protected_identity_after': {'ctime': 2}, 'protected_content_unchanged': True}, False),
+    ('C3', {'protected_identity_before': {'inode': 1}, 'protected_identity_after': {'inode': 1}, 'protected_content_unchanged': True}, True),
+    ('P1', {'terminal_success': False, 'retained_prefix_valid': True}, False),
+    ('P1', {'terminal_success': True, 'retained_prefix_valid': True}, True),
+    ('B2', {'sibling_before': 'before', 'sibling_after': 'after'}, False),
+    ('E1', {'error': 'quota', 'required_bytes': 2, 'cap_bytes': 1, 'used_bytes': 0}, False),
+    ('E2', {'accepted_items': 2, 'retained_items': 2, 'accepted_item_order': [0, 1], 'retained_item_order': [1, 0]}, False),
+    ('E2', {'accepted_items': 2, 'retained_items': 2}, 'unknown'),
+    ('E3', {'failure_calls': 1, 'closed': True, 'late_rejected': True}, False),
+])
+def test_baseline_truth_is_derived_from_observations_not_fault_intent(case, trace, truth):
+    left = module()._baseline_claim(case, {**trace, 'semantic_invalid': True})
+    right = module()._baseline_claim(case, {**trace, 'semantic_invalid': False})
+    assert left == right
+    assert left['truth'] == truth
+    module().validate_baseline_claim(left)
+    if case == 'A1':
+        assert left['temporal_scope']['phase'] == 'queued_boundaries_before_application'
+        assert left['temporal_scope']['ticks'] == [9]
+    if case == 'P1':
+        assert left['claim'] == 'terminal publication completed'
+        assert left['evidence']['validated_prefix_claim_truth'] is True
+
+
+def test_branch_contamination_is_false_but_unprobed_independence_unknown():
+    import copy
+    trace = _independent_owner_probe()
+    contaminated = copy.deepcopy(trace)
+    contaminated['owner_states']['parent_after']['digest'] = 'contaminated'
+    assert module()._baseline_outcome('B1', contaminated)['silent_acceptance'] is True
+    trace['owner_states']['branch_after'] = trace['owner_states']['branch_before']
+    baseline = module()._baseline_outcome('B1', trace)
+    assert baseline['claim_truth'] == 'unknown' and baseline['silent_acceptance'] is False

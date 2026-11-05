@@ -1,0 +1,20 @@
+ℹ [3089/3091] Replayed ChangeAudit.Audit
+info: ChangeAudit/Audit.lean:19:0: 'ChangeAudit.contrast_mem_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:20:0: 'ChangeAudit.contrast_subgaussian' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:21:0: 'ChangeAudit.FreshBounded.conditional_mgf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:22:0: 'ChangeAudit.FreshBounded.toConditionalMGF' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:23:0: 'ChangeAudit.exponential_supermartingale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:24:0: 'MeasureTheory.Supermartingale.measure_ville_le_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:25:0: 'ChangeAudit.anytime_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:26:0: 'ChangeAudit.finite_anytime_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:27:0: 'ChangeAudit.fixed_horizon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:28:0: 'ChangeAudit.fixed_horizon_sqrt_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:29:0: 'ChangeAudit.freshOfContrasts' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:30:0: 'ChangeAudit.prefix_target_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:31:0: 'ChangeAudit.rational_log_enclosure' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:32:0: 'ChangeAudit.rational_family_log_enclosure' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:33:0: 'ChangeAudit.finite_false_acceptance_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:34:0: 'ChangeAudit.finite_false_strict_acceptance_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ChangeAudit/Audit.lean:35:0: 'ChangeAudit.example_log_enclosure' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3090/3091] Built ChangeAudit (2.0s)
+Build completed successfully (3091 jobs).

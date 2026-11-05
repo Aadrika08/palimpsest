@@ -1,0 +1,36 @@
+{
+  "schema": "palimpsest-source-correction-v1",
+  "discovered_before_first_pilot_worker": true,
+  "problem": "Resolving the virtualenv Python launcher before exec changes sys.prefix and removes virtualenv dependency access.",
+  "repair": "Preserve the original absolute sys.executable alias for execution; keep canonical ELF identity separately pinned.",
+  "independent_review": {"reviewer": "/root/source_release_review", "important_findings_remaining": 0, "actual_stdlib_venv_regression_passed": 1},
+  "red_green": "An actual stdlib-only symlinked-venv subprocess with authored dependency metadata failed on the original command with PackageNotFoundError, then passed after the repair.",
+  "root_verification": {
+    "passed": 152,
+    "elapsed_seconds": 17.35,
+    "exit_code": 0,
+    "command": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B -m pytest -q tests/test_audit_process_accounting.py tests/test_authority_replay_process_ownership.py tests/test_pilot_supervisor.py tests/test_pilot_worker.py tests/test_audit_pilot_inputs.py tests/test_velocity_gain.py tests/test_velocity_gain_snapshot.py --basetemp=.pytest_cache/audit-integration-root-20261105-e"
+  },
+  "pilot_source_sha256": "0792593a1b4869983d506eea94e7624753e99383e232bdb51ff5db004a546803",
+  "parent_test_sha256": "fd13b20a07a79646ce8cb5e57e71eae0168453c2b1326baaef498251d3521cd6",
+  "historical_successful_preparation": {
+    "source_commit": "9e6d5cf73c56cad9e760b65c3da27301688d89b1",
+    "retained_bundle": "runs/change-audit-pilot-v1-20261105-source9e6d5cf",
+    "accounting_complete": true,
+    "tree_drained": true,
+    "charged_research_cpu_seconds": 2.9233529999999996,
+    "roster_entries": 257,
+    "actual_input_bytes": 1027767684,
+    "status": "Retained and superseded before inference after prospective source repair; never silently repinned."
+  },
+  "actual_pilot_worker_invocations": 0,
+  "sampling_eligibility_verified": false,
+  "certified_improvement": false,
+  "runtime_qualification": false,
+  "next_packet_requirements": [
+    "Fresh clean exact source commit and input roster",
+    "Retain requested venv launcher alias and resolved ELF identity separately",
+    "Pin actual pyvenv.cfg as an explicit runtime input",
+    "Carry prior successful preparation CPU charge into all further admission"
+  ]
+}

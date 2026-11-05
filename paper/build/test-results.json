@@ -1,0 +1,18 @@
+{
+  "build_check": "Successive make -C paper verify figures invocations passed after fixing output namespace; final source also rebuilt and verified.",
+  "final_paper_recheck": {
+    "command": "python -B -m pytest -q paper/tests",
+    "passed": 58,
+    "seconds": 3.05,
+    "skipped": 0,
+    "source_commit": "2b766233e8c4b2602cf02105c9f3d7c8672c81fe"
+  },
+  "integrated": {
+    "command": "python -B -m pytest -q paper/studies/authority_replay_v1/tests paper/tests --basetemp runs/final-integrated-paper-tests",
+    "passed": 370,
+    "seconds": 13.96,
+    "skipped": 16,
+    "source_commit": "a6f505b680688f86db6cc03dcdab8b6156565c2c"
+  },
+  "scope": "Selected study/paper suites; not the full repository canonical qualification suite."
+}

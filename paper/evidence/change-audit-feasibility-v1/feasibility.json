@@ -1,0 +1,86 @@
+{
+  "admissibility": {
+    "existing_data_eligible_for_new_population_improvement_claim": false,
+    "lean_certified": false,
+    "new_simulation_executed": false,
+    "reason": "Selected engineering seeds and repeated ticks are not fresh independent draws from a declared task distribution. Continuation/replay agreement measures identity, not task loss.",
+    "source_binding_check_scope": "Compact row identity and recorded action/normalized-state digests only; no new raw-runtime validation."
+  },
+  "planning": {
+    "candidates_excluding_fixed_baseline": 3,
+    "contrast_range": [
+      -1,
+      1
+    ],
+    "decision": "Conditional go for a new small plumbing pilot after freezing actual policy adapters and the sampling/asset path; no-go for claiming certified improvement from existing campaign or running a large certification campaign now.",
+    "familywise_one_sided_alpha": 0.05,
+    "fixed_horizon_counts_for_target_radius": {
+      "0.05": 3276,
+      "0.1": 819,
+      "0.2": 205
+    },
+    "formulas": {
+      "anytime_fixed_scale": "log(K/alpha)/(lambda*n)+lambda/2",
+      "assumptions": "Fixed candidate family and baseline; fixed target distribution and bounded whole-scenario loss; fresh independent scenario draws (or validated conditional MGF); no audit-driven prior/family/scale change.",
+      "fixed": "sqrt(2*log(K/alpha)/n)"
+    },
+    "individual_loss_range": [
+      0,
+      1
+    ],
+    "interpretation": "These are worst-case confidence radii, not observed effects, power calculations, or guarantees of certification. Improvement requires an observed upper endpoint strictly below zero. Two-sided intervals must split alpha between tails. The fixed-horizon radius is not valid for arbitrary early stopping.",
+    "radii": [
+      {
+        "anytime_fixed_scale": 1.745224486847046,
+        "fixed_horizon": 0.9049137596723901,
+        "independent_scenarios": 10
+      },
+      {
+        "anytime_fixed_scale": 0.6323277126257412,
+        "fixed_horizon": 0.505862170100593,
+        "independent_scenarios": 32
+      },
+      {
+        "anytime_fixed_scale": 0.37939662757544473,
+        "fixed_horizon": 0.3576985708238721,
+        "independent_scenarios": 64
+      },
+      {
+        "anytime_fixed_scale": 0.2529310850502965,
+        "fixed_horizon": 0.2529310850502965,
+        "independent_scenarios": 128
+      },
+      {
+        "anytime_fixed_scale": 0.1580819281564353,
+        "fixed_horizon": 0.12646554252514824,
+        "independent_scenarios": 512
+      }
+    ],
+    "scale": 0.2529310850502965,
+    "scale_fixed_before_audit_at_design_horizon": 128
+  },
+  "retained_campaign": {
+    "descriptors": 111,
+    "matched_execution_cost_sets": 10,
+    "statuses": {
+      "completed": 110,
+      "incomplete": 1
+    },
+    "units_by_kind": {
+      "continuation": 10,
+      "execution_overhead": 40,
+      "fault": 50,
+      "offline_reproduction": 1,
+      "operation_cost": 5,
+      "replay": 5
+    }
+  },
+  "schema_version": 1,
+  "scope": "Planning arithmetic and compact recorded-metadata consistency; no new task execution or statistical certificate.",
+  "source": {
+    "path": "paper/evidence/authority-replay-v1/summary.json",
+    "protocol_sha256": "570a4afe8179425bb2b25b86364470af34052ecc4929b74f207c279076728860",
+    "runtime_commit": "cc57edf9f70323926237d887d766627d8c9cdd42",
+    "sha256": "489960454a0b3c77688f159ac699a74fe798fe6b4509a8258f38d70a69fe24cc"
+  }
+}

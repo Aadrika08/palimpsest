@@ -1,0 +1,22 @@
+\begin{tikzpicture}[
+  font=\small,
+  stage/.style={draw,rounded corners,minimum width=1.55cm,minimum height=0.7cm,align=center},
+  arrow/.style={-{Latex[length=2mm]},thick},
+  node distance=0.35cm
+]
+\node[stage,fill=palgold!14] (preview) {Preview\\no authority};
+\node[stage,fill=palgreen!14,right=of preview] (apply) {Revalidate\\apply at tick};
+\node[stage,fill=palblue!12,right=of apply] (snap) {Full-state\\snapshot};
+\node[stage,fill=palblue!12,right=of snap] (branch) {Fresh sequential\\branch};
+\node[stage,fill=palred!10,right=of branch] (publish) {Bounded\\publication};
+\draw[arrow] (preview) -- (apply);
+\draw[arrow] (apply) -- (snap);
+\draw[arrow] (snap) -- (branch);
+\draw[arrow] (branch) -- (publish);
+\node[stage,fill=gray!12,below=0.65cm of snap,xshift=-1.8cm] (play) {Playback\\read only};
+\node[stage,fill=gray!12,right=of play] (actions) {Action replay\\physics only};
+\node[stage,fill=gray!12,right=of actions] (policy) {Policy replay\\recompute};
+\draw[arrow,dashed] (snap) -- (play);
+\draw[arrow,dashed] (snap) -- (actions);
+\draw[arrow,dashed] (snap) -- (policy);
+\end{tikzpicture}

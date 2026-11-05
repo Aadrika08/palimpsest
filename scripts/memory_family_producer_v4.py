@@ -40,7 +40,8 @@ def _canonical(payload, fields, label):
     return value
 
 
-def _inputs(root, descriptor, case_id, deadline, lifetime):
+def _inputs(root, descriptor, case_id, deadline, lifetime, *, location='staged'):
+    staged = pair._case_prefix(location) == '.pending'
     audit._public_deadline(deadline)
     _, payload, check = lifetime.enter_context(compact.bound_payload(
         root, descriptor, MiB, deadline))
@@ -76,7 +77,7 @@ def _inputs(root, descriptor, case_id, deadline, lifetime):
     if owner_descriptor['path'] != f'cases/{case_id}/source/owner.json':
         raise ValueError('Owner record is outside its sole staged source path')
     _, owner_bytes, check = lifetime.enter_context(compact.bound_payload(
-        root, owner_descriptor, MiB, deadline, source_case=case_id))
+        root, owner_descriptor, MiB, deadline, source_case=case_id, staged=staged))
     checks.append(check)
     owner = _canonical(owner_bytes, {'schema', 'case_id', 'run_id',
                                      'owner_source_sha256', 'claims'}, 'Source owner record')
@@ -89,7 +90,7 @@ def _inputs(root, descriptor, case_id, deadline, lifetime):
     if snapshot['path'] != f'cases/{case_id}/source/snapshots/initial.snp':
         raise ValueError('Snapshot is outside its sole staged source path')
     snapshot_fd, snapshot_bytes, check = lifetime.enter_context(compact.bound_payload(
-        root, snapshot, compact.SNAPSHOT_MAX_BYTES, deadline, source_case=case_id))
+        root, snapshot, compact.SNAPSHOT_MAX_BYTES, deadline, source_case=case_id, staged=staged))
     checks.append(check)
     _, raw_bytes, check = lifetime.enter_context(compact.bound_payload(
         root, contract['raw_audit'], audit.RAW_CONTRACT['receipt_max_bytes'], deadline))
@@ -102,12 +103,12 @@ def _inputs(root, descriptor, case_id, deadline, lifetime):
 
 
 @contextmanager
-def _source_directory(root, case_id, *, check_exit=True, publication=None):
+def _source_directory(root, case_id, *, check_exit=True, publication=None, location='staged'):
     memory._id(case_id)
     if not compact._PATH_COMPONENT.fullmatch(case_id):
         raise ValueError('Invalid registered source case')
     root = artifacts._safe_path(root)
-    parts = ('.pending', case_id, 'source')
+    parts = (pair._case_prefix(location), case_id, 'source')
     opened = []
     identities = []
     def identity(value):
@@ -573,15 +574,18 @@ def seal_compact_source(evidence_root, registration, *, case_id, deadline):
                     raise SealIndeterminate('Source quarantine durability is indeterminate') from quarantine_error
             raise
 
-def _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id):
+def _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id, *, case_files=None):
+    case_files = {} if case_files is None else case_files
     names = set(directory_names(case_fd, max_entries=64))
-    if 'source' not in names or names - {'source', '.raw', 'conditions'}:
+    if 'source' not in names or names - {'source', '.raw', 'conditions', *case_files}:
         raise ValueError('Retained source stage contains unaccounted case entries')
     if condition_run_id is not None:
         pair._run_id(condition_run_id)
         if condition_run_id == run_id or '.raw' not in names:
             raise ValueError('Retained reader requires a different explicit raw owner')
-    for name in names - {'source'}:
+    if case_files and ('.raw' in names or condition_run_id is not None):
+        raise ValueError('Published case cannot contain raw residues')
+    for name in names - {'source', *case_files}:
         fd = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=case_fd)
         _hold_directory(lifetime, case_fd, name, fd)
         entries = set(directory_names(fd, max_entries=64))
@@ -619,22 +623,32 @@ def read_retained_sealed_source(evidence_root, registration, *, case_id,
     pair._descriptor(source_commit, 'Retained source commit')
     if source_commit['path'] != f'cases/{case_id}/source/commit.json':
         raise ValueError('Retained source commit is outside its canonical case path')
-    with pair._staged_namespace(evidence_root, case_id):
+    return _read_retained_sealed_source(evidence_root, registration, case_id=case_id,
+        source_commit=source_commit, deadline=deadline, condition_run_id=condition_run_id,
+        location='staged', case_files={})
+
+
+def _read_retained_sealed_source(evidence_root, registration, *, case_id,
+                                source_commit, deadline, location, case_files,
+                                condition_run_id=None):
+    with pair._case_namespace(evidence_root, case_id, location=location,
+                             case_files=case_files, deadline=deadline):
         return _read_sealed_source(evidence_root, registration, case_id=case_id,
-            deadline=deadline, source_commit=source_commit, condition_run_id=condition_run_id)
+            deadline=deadline, source_commit=source_commit, condition_run_id=condition_run_id,
+            location=location, case_files=case_files)
 
 
 def _read_sealed_source(evidence_root, registration, *, case_id, deadline,
-                        source_commit=None, condition_run_id=None):
+                        source_commit=None, condition_run_id=None, location='staged', case_files=None):
     with ExitStack() as lifetime:
         contract, case, run_id, receipt, raw_bytes, _, checks, control_bytes = _inputs(
-            evidence_root, registration, case_id, deadline, lifetime)
-        source_fd, case_fd, output_check = lifetime.enter_context(_source_directory(evidence_root, case_id))
+            evidence_root, registration, case_id, deadline, lifetime, location=location)
+        source_fd, case_fd, output_check = lifetime.enter_context(_source_directory(evidence_root, case_id, location=location))
         if source_commit is None:
             _readonly_source_namespace(lifetime, source_fd, case_fd, run_id)
             _case_tree(case_fd, run_id)
         else:
-            _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id)
+            _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id, case_files=case_files)
         if 'quarantine.json' in directory_names(case_fd, max_entries=64, deadline=deadline):
             raise ValueError('Source is quarantined')
         marker_bytes = _read_file(source_fd, 'commit.json', MiB, lifetime=lifetime, deadline=deadline)
@@ -686,7 +700,7 @@ def _read_sealed_source(evidence_root, registration, *, case_id, deadline,
             raw_data = legacy._read_run({'run_id': run_id, 'run': raw_request['run_path']}, deadline)
             _prove(raw_data, bundle, receipt)
         else:
-            staged = pair._StagedRoot(Path(evidence_root), case_id)
+            staged = pair._StagedRoot(Path(evidence_root), case_id) if location == 'staged' else Path(evidence_root)
             pair._raw_receipt(staged, contract['raw_audit'], 'source', run_id,
                 case_id, None, audit.canonical_source_identity(contract['owner_source_sha256']),
                 deadline, lifetime)

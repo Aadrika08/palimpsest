@@ -11,9 +11,6 @@ import time
 
 import pytest
 
-ROOT=Path(__file__).parents[1]
-
-
 def module():
     name='scripts.qualify_puck_original_bundles_v1'
     assert importlib.util.find_spec(name) is not None,'Original bundle qualification runner absent'
@@ -21,31 +18,61 @@ def module():
 
 
 def candidate():
-    m=module()
+    m=module();root=m.ROOT
     from palimpsest import puck_bundle_provenance as p
-    report=json.loads((ROOT/'docs/reports/m6-puck-training-v2.json').read_bytes())
+    report=json.loads((root/'docs/reports/m6-puck-training-v2.json').read_bytes())
     def descriptor(name,raw):
         return {'path':name,'size_bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
-    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
-    history=ROOT/'docs/prerequisites/puck-original-producer-v1'
+    sources=[descriptor(name,(root/name).read_bytes()) for name in m.source_paths()]
+    history=root/'docs/prerequisites/puck-original-producer-v1'
     historical=[descriptor(name,(history/name).read_bytes()) for name in sorted(p.HISTORICAL_SOURCES)]
     bundles=[]
     for row in report['models']:
         for name,value in sorted(row['files'].items()):
             bundles.append({'path':f"seed-{row['seed']}/{name}",
                 'size_bytes':value['bytes'],'sha256':value['sha256']})
-    return copy.deepcopy({'schema':m.SCHEMA,'attempt':1,'attempts':1,'repo_root':str(ROOT),
+    return copy.deepcopy({'schema':m.SCHEMA,'attempt':1,'attempts':1,'repo_root':str(root),
         'python_executable':m.PYTHON,'environment':m.ENVIRONMENT,
-        'output':str(ROOT/'runs/puck-original-bundle-qualification-v1-attempt-01'),
+        'output':str(root/'runs/puck-original-bundle-qualification-v1-attempt-01'),
         'seeds':[21,22,23],'model_calls':3,'native_owners':0,'physics_steps':0,
         'limits':m.LIMITS,'claims':m.CLAIMS,'inputs':{
-            'sources':{'root':str(ROOT),'files':sources},
+            'sources':{'root':str(root),'files':sources},
             'historical':{'root':str(history),'files':historical},
             'bundles':{'root':m.BUNDLE_ROOT,'files':bundles},
             'runtime':{'root':m.RUNTIME_ROOT,'files':[m.RUNTIME_PIN]}}})
 
 
-def test_exact_public_freeze_validates_without_opening_actual_bundle_or_runtime(tmp_path):
+@pytest.fixture
+def authored_source_root(tmp_path,monkeypatch):
+    """Actual validators on an authored current namespace plus pinned public bytes."""
+    m=module()
+    from palimpsest import puck_bundle_provenance as p
+    checkout=m.ROOT
+    root=tmp_path/'qualification-source';root.mkdir()
+    for name in ('src/palimpsest/authored.py','scripts/authored.py',m.PLAN,'pyproject.toml','uv.lock'):
+        target=root/name;target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes(b'# Authored metadata-freeze fixture; never executed.\n')
+    # These two immutable PUBLIC documents bind artifact descriptors only.
+    # No actual model bundle, interpreter binary or protected catalog is read.
+    for name in (m.INDEX,m.REPORT):
+        target=root/name;target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes((checkout/name).read_bytes())
+    for name in p.HISTORICAL_SOURCES:
+        target=root/m.HISTORY/name;target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes((checkout/m.HISTORY/name).read_bytes())
+    monkeypatch.setattr(m,'ROOT',root)
+    return root
+
+
+def positive_baseline(tmp_path):
+    """Every mutation must first pass the unchanged current read_freeze guard."""
+    m=module();value=candidate();raw=m.canonical(value)
+    path=tmp_path/'baseline-freeze.json';path.write_bytes(raw)
+    assert m.read_freeze(path,hashlib.sha256(raw).hexdigest())==value
+    return value
+
+
+def test_exact_public_freeze_validates_without_opening_actual_bundle_or_runtime(tmp_path,authored_source_root):
     m=module();value=candidate();path=tmp_path/'freeze.json';raw=m.canonical(value)
     path.write_bytes(raw)
     assert m.read_freeze(path,hashlib.sha256(raw).hexdigest())==value
@@ -55,17 +82,17 @@ def test_exact_public_freeze_validates_without_opening_actual_bundle_or_runtime(
 @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
     ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
     ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
-def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
-    m=module();sample=candidate();sample[field]=value
+def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,authored_source_root,field,value):
+    m=module();sample=positive_baseline(tmp_path);sample[field]=value
     raw=m.canonical(sample);path=tmp_path/'freeze.json';path.write_bytes(raw)
-    with pytest.raises(ValueError):m.read_freeze(path,hashlib.sha256(raw).hexdigest())
+    with pytest.raises(ValueError,match=field+' differs'):m.read_freeze(path,hashlib.sha256(raw).hexdigest())
 
 
 @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
     'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
     'output','interpreter','extra-field','freeze-pin','noncanonical'])
-def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
-    m=module();sample=candidate()
+def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,authored_source_root,defect):
+    m=module();sample=positive_baseline(tmp_path)
     if defect=='source-missing':sample['inputs']['sources']['files'].pop()
     elif defect=='source-extra':sample['inputs']['sources']['files'].append(
         {'path':'foreign.py','size_bytes':0,'sha256':'0'*64})
@@ -81,11 +108,36 @@ def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
     elif defect=='output':sample['output']=sample['inputs']['bundles']['root']+'/overlap'
     elif defect=='interpreter':sample['python_executable']='/other/python'
     elif defect=='extra-field':sample['retry']=True
+    for role in ('sources','historical'):
+        sample['inputs'][role]['files'].sort(key=lambda row:row['path'])
     raw=m.canonical(sample)
     if defect=='noncanonical':raw+=b' '
     path=tmp_path/'freeze.json';path.write_bytes(raw)
     digest='0'*64 if defect=='freeze-pin' else hashlib.sha256(raw).hexdigest()
-    with pytest.raises(ValueError):m.read_freeze(path,digest)
+    expected={
+        'source-missing':'Source roster differs','source-extra':'Source roster differs',
+        'bundle-size':'Original bundles differs','bundle-pin':'Original bundles differs',
+        'bundle-root':'Original bundles differs','history-pin':'Historical source pins differs',
+        'history-extra':'Historical source pins differs','runtime-size':'Original runtime differs',
+        'runtime-pin':'Original runtime differs','runtime-root':'Original runtime differs',
+        'output':'output differs','interpreter':'python_executable differs',
+        'extra-field':'Exact canonical qualification freeze required',
+        'freeze-pin':'Collection input file bytes or size differ','noncanonical':'Exact canonical qualification freeze required',
+    }
+    with pytest.raises(ValueError,match=expected[defect]):m.read_freeze(path,digest)
+
+
+@pytest.mark.parametrize('kind',['standalone-pyc','cache-directory'])
+def test_unbound_bytecode_refuses_under_authored_current_root(tmp_path,authored_source_root,kind):
+    m=module();sample=positive_baseline(tmp_path)
+    raw=m.canonical(sample);path=tmp_path/'freeze.json';path.write_bytes(raw)
+    if kind=='standalone-pyc':
+        (authored_source_root/'scripts/unbound.pyc').write_bytes(b'authored unbound bytecode')
+    else:
+        cache=authored_source_root/'src/palimpsest/__pycache__';cache.mkdir()
+        (cache/'authored.cpython-311.pyc').write_bytes(b'authored unbound bytecode')
+    with pytest.raises(ValueError,match='Qualification source inventory has a link or bytecode'):
+        m.read_freeze(path,hashlib.sha256(raw).hexdigest())
 
 
 @pytest.mark.parametrize('seed',[21,22,23])

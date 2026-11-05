@@ -1,0 +1,20 @@
+{
+  "execution_commit": "d8658dda3fca37bb43b6dafc909114279f706f11",
+  "original_absolute_deadline_unix": 1793860506.2223496,
+  "original_raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/runs/paper-authority-replay-v1",
+  "reason": "Seed1 reached the goal at199 ticks; benchmark did not reset terminal episodes. Original attempt retained without replacement.",
+  "sha256": {
+    "campaign-manifest.json": "860551d1095afe3ecf32bf339399640b003e1b410e656a1605bf7b67b80eb633",
+    "failures.json": "dc9e3b4081bd5ba30d8080ac8fa713b7f0104b704aeb1ba4f55a1b4a2e3317ae",
+    "fault-traces.jsonl": "2b19d242bfbb0355a7bb751d368f84ade46b70540c2a7449a5000da8a1f12540",
+    "overhead-seed1-stderr.log": "aef6f869670d4dfa47f1af94eb97441d4f742bc82cc98dd14b4831bb78e7df33",
+    "protocol.json": "7a985038bffa2f55ea2eeb6f75815c96ce179e0e5a74ee9e45db0aa1b1c03b35",
+    "raw-inventory.json": "e146614eb086ef8310fef975461c572ff11ee0f481b3dfa1e01bb472dfb70430",
+    "summary.json": "b9f7c43b1c5ba9015a2f45361671eaec7a31065220d004871b83a8bc3b8679e9"
+  },
+  "status_counts": {
+    "completed": 69,
+    "failed": 1,
+    "incomplete": 41
+  }
+}

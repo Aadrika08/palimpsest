@@ -1,0 +1,32 @@
+........................................................................ [ 18%]
+.......................................................................s [ 36%]
+sssssssssssssssssssssss....sssssssssssssssssssssssssssssssssssssssssssss [ 54%]
+ss...ssssssssssssssssssssssssssssssssF
+=================================== FAILURES ===================================
+_______ test_protocol_promotes_pair_admission_and_freezes_nested_shapes ________
+
+    def test_protocol_promotes_pair_admission_and_freezes_nested_shapes():
+        admission = _admission()
+        protocol = artifacts._json(PROTOCOL_PATH.read_bytes())
+        pair = next(row for row in protocol['behavior_sources']
+                    if row['id'] == 'pair_admission')
+        payload = (ROOT / pair['path']).read_bytes()
+>       assert pair == {
+            'id': 'pair_admission',
+            'path': 'scripts/memory_family_oracle_admission_v4.py',
+            'size_bytes': len(payload),
+            'sha256': hashlib.sha256(payload).hexdigest(),
+        }
+E       AssertionError: assert {'id': 'pair_...bytes': 55904} == {'id': 'pair_...bytes': 58377}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'sha256': '12557a862d9594f2ae07d8e6f9ea1dd9bab2492ba5f1ebd1ce0d9a91b39489ad'} != {'sha256': 'abce471ef7098ce38bf65893941d85939a3c3bd2f657be6aa08a998805c90b28'}
+E         {'size_bytes': 55904} != {'size_bytes': 58377}
+E         Use -v to get more diff
+
+tests/test_memory_family_oracle_admission_v4.py:610: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_oracle_admission_v4.py::test_protocol_promotes_pair_admission_and_freezes_nested_shapes
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 150 passed, 103 skipped in 305.91s (0:05:05)

@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_memory_family_case_publication_v1.py",
+    "tests/test_memory_family_case_custody_v1.py",
+    "tests/test_memory_family_case_publisher_v1.py",
+    "tests/test_memory_family_replay_custody_v4.py",
+    "tests/test_memory_publication_current_semantics_v1.py",
+    "--basetemp",
+    ".pytest_cache/case-publication-task4-matrix-20261105-a",
+    "--maxfail=1"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 169.80413466802565,
+  "source_before": {
+    "scripts/memory_family_case_publication_v1.py": "c13ded0b54f4132a5a8393747d83a79d97d07802dcda3b16e92c060b703e1640",
+    "scripts/memory_family_case_custody_v1.py": "8b8cb1d71e2007e93825b11563ddb2a80c608e2890134fd607501d27bdcb7423",
+    "tests/test_memory_family_case_publication_v1.py": "839524da9617be3000c92d4413f23b8e57b973309c5318e54ee6fea540a019fc",
+    "tests/test_memory_family_case_custody_v1.py": "04d1bae26ca87d1dc8b086a81efc5ff2e907957097ce0fda2e4127c6177166eb",
+    "tests/test_memory_family_case_publisher_v1.py": "5e89aeb10df231ff1844b369bd6181a298e9958bbf5226ec5996dd94caf8ba3b",
+    "tests/test_memory_family_replay_custody_v4.py": "737784c5fb38cb793666d61eb934c39ec6b21e6d94c7b38112e14cf85fb3e4e6",
+    "tests/test_memory_publication_current_semantics_v1.py": "fa54c82762937aa35c53fab8dd8ba4266b6d947a78390dc616d2a8bff67c2c12"
+  },
+  "source_after": {
+    "scripts/memory_family_case_publication_v1.py": "c13ded0b54f4132a5a8393747d83a79d97d07802dcda3b16e92c060b703e1640",
+    "scripts/memory_family_case_custody_v1.py": "8b8cb1d71e2007e93825b11563ddb2a80c608e2890134fd607501d27bdcb7423",
+    "tests/test_memory_family_case_publication_v1.py": "839524da9617be3000c92d4413f23b8e57b973309c5318e54ee6fea540a019fc",
+    "tests/test_memory_family_case_custody_v1.py": "04d1bae26ca87d1dc8b086a81efc5ff2e907957097ce0fda2e4127c6177166eb",
+    "tests/test_memory_family_case_publisher_v1.py": "5e89aeb10df231ff1844b369bd6181a298e9958bbf5226ec5996dd94caf8ba3b",
+    "tests/test_memory_family_replay_custody_v4.py": "737784c5fb38cb793666d61eb934c39ec6b21e6d94c7b38112e14cf85fb3e4e6",
+    "tests/test_memory_publication_current_semantics_v1.py": "fa54c82762937aa35c53fab8dd8ba4266b6d947a78390dc616d2a8bff67c2c12"
+  },
+  "sources_unchanged": true,
+  "scope": "source-only authored-fixture matrix; historical profiles and production anchors unchanged; no scientific qualification"
+}

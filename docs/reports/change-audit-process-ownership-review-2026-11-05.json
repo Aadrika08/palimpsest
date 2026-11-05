@@ -1,0 +1,42 @@
+{
+  "schema": "palimpsest-source-review-v1",
+  "scope": "Trusted Linux research-process ownership and accounting; fixture verification only",
+  "baseline_commit": "341c1bd9c2eb4d826b1319ff7142c9c8b648ba7c",
+  "independent_reviewer": "/root/source_release_review",
+  "findings": [
+    {
+      "severity": "P1",
+      "status": "resolved",
+      "problem": "A reaped leader PID could be reused before raw process-group cleanup.",
+      "repair": "Retained pidfds, direct-child identity checks, private guardian and wait-before-release ownership."
+    },
+    {
+      "severity": "P2",
+      "status": "resolved",
+      "problem": "An inner command could start before ownership pinning succeeded.",
+      "repair": "Both guardian and inner command wait for explicit admission after ownership pinning."
+    }
+  ],
+  "reviewed_source_sha256": "556939f27c634d9c797720819a5e8fe7ab06ca81e6a8e3e0d2b645605e93d61a",
+  "ownership_tests_sha256": "dc2fe10b147ce1bf1517a8d91aa8d2e46fa7fb6fe7871ebf1df2d61c4c90385d",
+  "independent_verification": {
+    "ownership_checks_passed": 13,
+    "scope": "Focused review of exact cleanup code; original thresholds retained, including post-exit checks."
+  },
+  "root_verification": {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B -m pytest -q tests/test_audit_process_accounting.py tests/test_authority_replay_process_ownership.py tests/test_pilot_worker.py tests/test_velocity_gain.py tests/test_velocity_gain_snapshot.py --basetemp=.pytest_cache/audit-integration-root-20261105-b",
+    "exit_code": 0,
+    "passed": 84,
+    "elapsed_seconds": 10.91,
+    "nested_replay_regressions_passed": 101,
+    "nested_new_accounting_regressions_passed": 23,
+    "note": "Nested subprocess checks are not added again to the outer pytest count."
+  },
+  "limitations": [
+    "No pretrained model, native research pilot, training or heldout evaluation ran.",
+    "Historical source-pinned protocols and results were not rewritten; new execution needs prospective source qualification.",
+    "Linux trusted-job ownership is not an adversarial sandbox.",
+    "Hosted checks and main integration remain pending."
+  ],
+  "research_execution_cpu_seconds": 0
+}

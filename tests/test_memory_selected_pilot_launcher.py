@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
+import time
 from types import SimpleNamespace
 
 import pytest
@@ -220,6 +221,23 @@ def test_pilot_control_refuses_reentry_before_supervised_launch(tmp_path,monkeyp
     assert calls==[]
 
 
+def _matching_live(record):
+    import os
+    try:
+        fields=Path(f"/proc/{record['pid']}/stat").read_text().rsplit(')',1)[1].split()
+        return (int(fields[19]),os.getpgid(record['pid']))==(record['starttime'],record['pgid']) and fields[0]!='Z'
+    except (FileNotFoundError,ProcessLookupError):return False
+
+
+def _observe_pipeline_exit(records, *, deadline):
+    # Reaping GNU timeout does not synchronously reap its SIGKILL recipients.
+    while True:
+        live={role:row for role,row in records.items() if _matching_live(row)}
+        remaining=deadline-time.monotonic()
+        if not live or remaining<=0:return live
+        time.sleep(min(.005,remaining))
+
+
 def test_ancestor_hard_timeout_leaves_no_selected_pipeline_process(tmp_path):
     """Real supervisor lifecycle; its only worker is a harmless exact-ID sleeper."""
     import os
@@ -262,12 +280,8 @@ def harmless_run(path):
 module.m.run=harmless_run
 raise SystemExit(runner.main(sys.argv[1:]))
 ''')
-    def matching_live(record):
-        try:
-            fields=Path(f"/proc/{record['pid']}/stat").read_text().rsplit(')',1)[1].split()
-            return (int(fields[19]),os.getpgid(record['pid']))==(record['starttime'],record['pgid']) and fields[0]!='Z'
-        except (FileNotFoundError,ProcessLookupError):return False
     try:
+        hard_timeout_started=time.monotonic()
         with (repo/'harness.log').open('wb') as log:
             result=subprocess.run(['timeout','--signal=KILL','5s',sys.executable,str(script)],
                 cwd=repo,stdout=log,stderr=log,start_new_session=True,timeout=12)
@@ -275,12 +289,40 @@ raise SystemExit(runner.main(sys.argv[1:]))
         assert (repo/'pipeline-ready.json').exists(),(repo/'harness.log').read_text()
         records={role:json.loads((repo/(role+'.json')).read_text())
                  for role in ('controller','supervised','pipeline')}
-        assert not {role:row for role,row in records.items() if matching_live(row)}
+        deadline=min(time.monotonic()+1.,hard_timeout_started+12.)
+        assert not _observe_pipeline_exit(records,deadline=deadline)
     finally:
         for role in ('pipeline-ready','pipeline','supervised','controller'):
             path=repo/(role+'.json')
             if path.exists():
                 row=json.loads(path.read_text())
-                if matching_live(row):
+                if _matching_live(row):
                     try:os.kill(row['pid'],signal.SIGKILL)
                     except ProcessLookupError:pass
+
+
+def test_post_timeout_exit_observation_returns_on_matching_identity_exit(monkeypatch):
+    clock=[0.];observations=iter([True,False]);record={'pid':123,'starttime':4,'pgid':7}
+    monkeypatch.setitem(globals(),'_matching_live',lambda row:next(observations))
+    monkeypatch.setattr(time,'monotonic',lambda:clock[0])
+    monkeypatch.setattr(time,'sleep',lambda duration:clock.__setitem__(0,clock[0]+duration))
+    assert _observe_pipeline_exit({'controller':record},deadline=1.)=={}
+    assert 0.<clock[0]<1.
+
+
+def test_post_timeout_exit_observation_retains_permanent_survivor(monkeypatch):
+    clock=[0.];record={'pid':123,'starttime':4,'pgid':7}
+    monkeypatch.setitem(globals(),'_matching_live',lambda row:True)
+    monkeypatch.setattr(time,'monotonic',lambda:clock[0])
+    monkeypatch.setattr(time,'sleep',lambda duration:clock.__setitem__(0,clock[0]+duration))
+    assert _observe_pipeline_exit({'pipeline':record},deadline=1.)=={'pipeline':record}
+    assert clock[0]==1.
+
+
+@pytest.mark.parametrize('starttime,pgid,state,expected',[(4,7,'S',True),(5,7,'S',False),(4,8,'S',False),(4,7,'Z',False)])
+def test_exit_identity_checks_pid_reuse_group_and_zombie(monkeypatch,starttime,pgid,state,expected):
+    import os
+    payload='123 (authored) '+' '.join([state,*(['0']*18),str(starttime)])
+    monkeypatch.setattr(Path,'read_text',lambda self:payload)
+    monkeypatch.setattr(os,'getpgid',lambda pid:pgid)
+    assert _matching_live({'pid':123,'starttime':4,'pgid':7}) is expected

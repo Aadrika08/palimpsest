@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/paper/studies/authority_replay_v1/repeatability.py",
+    "--protocol",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/paper/studies/authority_replay_v1/protocol.json",
+    "--assets",
+    "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+    "--output",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1/replay",
+    "--campaign-root",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/paper-authority-replay-v1",
+    "--campaign-deadline-epoch",
+    "1793860506.2223496",
+    "--kind",
+    "replay"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final",
+  "deadline_unix": 1793860506.2223496
+}

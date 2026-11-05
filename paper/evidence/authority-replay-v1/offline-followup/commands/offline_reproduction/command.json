@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/scripts/verify_offline.py",
+    "--repo",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final",
+    "--assets",
+    "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+    "--output",
+    "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs/offline-operational-followup/offline_reproduction",
+    "--setup",
+    "--full-flynn",
+    "--duration",
+    "55"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final",
+  "deadline_unix": 1793856538.968557
+}

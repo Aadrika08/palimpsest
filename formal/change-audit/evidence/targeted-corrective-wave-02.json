@@ -1,0 +1,23 @@
+{
+  "started_at": "2026-11-05T09:07:13.225682+00:00",
+  "baseline_combined_logical_bytes": 6855720756,
+  "max_incremental_bytes": 4294967296,
+  "minimum_free_bytes": 6442450944,
+  "reserve_before_each_serial_step": 268435456,
+  "scope": "Only exact-pinned cache archives for actual missing imports. Serial extraction/download. No full lake update.",
+  "steps": [
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    }
+  ],
+  "current_combined_logical_bytes": 6864769979,
+  "incremental_logical_bytes": 9049223,
+  "disk_free_bytes": 52180897792,
+  "status": "stopped",
+  "reason": "curl: (6) Could not resolve host: lakecache.blob.core.windows.net\n"
+}

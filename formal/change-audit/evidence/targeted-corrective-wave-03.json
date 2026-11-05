@@ -1,0 +1,447 @@
+{
+  "started_at": "2026-11-05T09:08:41.426946+00:00",
+  "baseline_combined_logical_bytes": 6855720756,
+  "max_incremental_bytes": 4294967296,
+  "minimum_free_bytes": 6442450944,
+  "reserve_before_each_serial_step": 268435456,
+  "scope": "Only exact-pinned cache archives for actual missing imports. Serial extraction/download. No full lake update.",
+  "steps": [
+    {
+      "module": "Aesop.Util.Tactic.Unfold",
+      "archive": "/home/utkarsh/.cache/mathlib/c22074c951092045.ltar",
+      "lookup": "Aesop.Util.Tactic.Unfold: /home/utkarsh/.cache/mathlib/c22074c951092045.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/c22074c951092045.ltar]:\n/home/utkarsh/.cache/mathlib/c22074c951092045.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Forward.State.ApplyGoalDiff",
+      "archive": "/home/utkarsh/.cache/mathlib/bf9b00b580228296.ltar",
+      "lookup": "Aesop.Forward.State.ApplyGoalDiff: /home/utkarsh/.cache/mathlib/bf9b00b580228296.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/bf9b00b580228296.ltar]:\n/home/utkarsh/.cache/mathlib/bf9b00b580228296.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Frontend.Extension",
+      "archive": "/home/utkarsh/.cache/mathlib/8f6bcb8dc5f5da99.ltar",
+      "lookup": "Aesop.Frontend.Extension: /home/utkarsh/.cache/mathlib/8f6bcb8dc5f5da99.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/8f6bcb8dc5f5da99.ltar]:\n/home/utkarsh/.cache/mathlib/8f6bcb8dc5f5da99.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Frontend.Extension.Init",
+      "archive": "/home/utkarsh/.cache/mathlib/a6dcdaa9b845a2fb.ltar",
+      "lookup": "Aesop.Frontend.Extension.Init: /home/utkarsh/.cache/mathlib/a6dcdaa9b845a2fb.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/a6dcdaa9b845a2fb.ltar]:\n/home/utkarsh/.cache/mathlib/a6dcdaa9b845a2fb.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Tree.Free",
+      "archive": "/home/utkarsh/.cache/mathlib/cde95dd867bd975d.ltar",
+      "lookup": "Aesop.Tree.Free: /home/utkarsh/.cache/mathlib/cde95dd867bd975d.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/cde95dd867bd975d.ltar]:\n/home/utkarsh/.cache/mathlib/cde95dd867bd975d.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Frontend.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/6105e5002f28447e.ltar",
+      "lookup": "Aesop.Frontend.Basic: /home/utkarsh/.cache/mathlib/6105e5002f28447e.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/6105e5002f28447e.ltar]:\n/home/utkarsh/.cache/mathlib/6105e5002f28447e.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.BuiltinRules.Split",
+      "archive": "/home/utkarsh/.cache/mathlib/ae0acc51d38e80ca.ltar",
+      "lookup": "Aesop.BuiltinRules.Split: /home/utkarsh/.cache/mathlib/ae0acc51d38e80ca.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/ae0acc51d38e80ca.ltar]:\n/home/utkarsh/.cache/mathlib/ae0acc51d38e80ca.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Notation.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/6e6392c9063469c9.ltar",
+      "lookup": "Mathlib.Algebra.Notation.Defs: /home/utkarsh/.cache/mathlib/6e6392c9063469c9.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/6e6392c9063469c9.ltar]:\n/home/utkarsh/.cache/mathlib/6e6392c9063469c9.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.Header",
+      "archive": "/home/utkarsh/.cache/mathlib/20c3cb2f1fda703e.ltar",
+      "lookup": "Mathlib.Tactic.Linter.Header: /home/utkarsh/.cache/mathlib/20c3cb2f1fda703e.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/20c3cb2f1fda703e.ltar]:\n/home/utkarsh/.cache/mathlib/20c3cb2f1fda703e.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.DirectoryDependency",
+      "archive": "/home/utkarsh/.cache/mathlib/4faa23d489c35ef8.ltar",
+      "lookup": "Mathlib.Tactic.Linter.DirectoryDependency: /home/utkarsh/.cache/mathlib/4faa23d489c35ef8.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/4faa23d489c35ef8.ltar]:\n/home/utkarsh/.cache/mathlib/4faa23d489c35ef8.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.FlexibleLinter",
+      "archive": "/home/utkarsh/.cache/mathlib/2e396064cf819f96.ltar",
+      "lookup": "Mathlib.Tactic.Linter.FlexibleLinter: /home/utkarsh/.cache/mathlib/2e396064cf819f96.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/2e396064cf819f96.ltar]:\n/home/utkarsh/.cache/mathlib/2e396064cf819f96.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.UnusedInstancesInType",
+      "archive": "/home/utkarsh/.cache/mathlib/c79093afc5ae0699.ltar",
+      "lookup": "Mathlib.Tactic.Linter.UnusedInstancesInType: /home/utkarsh/.cache/mathlib/c79093afc5ae0699.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/c79093afc5ae0699.ltar]:\n/home/utkarsh/.cache/mathlib/c79093afc5ae0699.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.UnusedTacticExtension",
+      "archive": "/home/utkarsh/.cache/mathlib/b197dcdda1b1c07f.ltar",
+      "lookup": "Mathlib.Tactic.Linter.UnusedTacticExtension: /home/utkarsh/.cache/mathlib/b197dcdda1b1c07f.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/b197dcdda1b1c07f.ltar]:\n/home/utkarsh/.cache/mathlib/b197dcdda1b1c07f.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.Whitespace",
+      "archive": "/home/utkarsh/.cache/mathlib/1e6f655944568700.ltar",
+      "lookup": "Mathlib.Tactic.Linter.Whitespace: /home/utkarsh/.cache/mathlib/1e6f655944568700.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/1e6f655944568700.ltar]:\n/home/utkarsh/.cache/mathlib/1e6f655944568700.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Batteries.Lean.NameMapAttribute",
+      "archive": "/home/utkarsh/.cache/mathlib/30a4f6c10086a0b7.ltar",
+      "lookup": "Batteries.Lean.NameMapAttribute: /home/utkarsh/.cache/mathlib/30a4f6c10086a0b7.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/30a4f6c10086a0b7.ltar]:\n/home/utkarsh/.cache/mathlib/30a4f6c10086a0b7.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Translate.Attributes",
+      "archive": "/home/utkarsh/.cache/mathlib/c53cf60106af49d4.ltar",
+      "lookup": "Mathlib.Tactic.Translate.Attributes: /home/utkarsh/.cache/mathlib/c53cf60106af49d4.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/c53cf60106af49d4.ltar]:\n/home/utkarsh/.cache/mathlib/c53cf60106af49d4.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.String.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/521c2b1dee7cd841.ltar",
+      "lookup": "Mathlib.Data.String.Defs: /home/utkarsh/.cache/mathlib/521c2b1dee7cd841.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/521c2b1dee7cd841.ltar]:\n/home/utkarsh/.cache/mathlib/521c2b1dee7cd841.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Translate.UnfoldBoundary",
+      "archive": "/home/utkarsh/.cache/mathlib/efbd8a4a06ed8138.ltar",
+      "lookup": "Mathlib.Tactic.Translate.UnfoldBoundary: /home/utkarsh/.cache/mathlib/efbd8a4a06ed8138.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/efbd8a4a06ed8138.ltar]:\n/home/utkarsh/.cache/mathlib/efbd8a4a06ed8138.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.Nat.Notation",
+      "archive": "/home/utkarsh/.cache/mathlib/01a1eba6e1d76863.ltar",
+      "lookup": "Mathlib.Data.Nat.Notation: /home/utkarsh/.cache/mathlib/01a1eba6e1d76863.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/01a1eba6e1d76863.ltar]:\n/home/utkarsh/.cache/mathlib/01a1eba6e1d76863.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Simps.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/55189f2aa8bcbac7.ltar",
+      "lookup": "Mathlib.Tactic.Simps.Basic: /home/utkarsh/.cache/mathlib/55189f2aa8bcbac7.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/55189f2aa8bcbac7.ltar]:\n/home/utkarsh/.cache/mathlib/55189f2aa8bcbac7.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Logic.Function.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/83c825ae643ebf16.ltar",
+      "lookup": "Mathlib.Logic.Function.Basic: /home/utkarsh/.cache/mathlib/83c825ae643ebf16.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/83c825ae643ebf16.ltar]:\n/home/utkarsh/.cache/mathlib/83c825ae643ebf16.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Attr.Register",
+      "archive": "/home/utkarsh/.cache/mathlib/c3567d2819647d84.ltar",
+      "lookup": "Mathlib.Tactic.Attr.Register: /home/utkarsh/.cache/mathlib/c3567d2819647d84.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/c3567d2819647d84.ltar]:\n/home/utkarsh/.cache/mathlib/c3567d2819647d84.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Logic.ExistsUnique",
+      "archive": "/home/utkarsh/.cache/mathlib/2a1da826c024a749.ltar",
+      "lookup": "Mathlib.Logic.ExistsUnique: /home/utkarsh/.cache/mathlib/2a1da826c024a749.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/2a1da826c024a749.ltar]:\n/home/utkarsh/.cache/mathlib/2a1da826c024a749.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Push.Attr",
+      "archive": "/home/utkarsh/.cache/mathlib/3626cf7bd1c82fa3.ltar",
+      "lookup": "Mathlib.Tactic.Push.Attr: /home/utkarsh/.cache/mathlib/3626cf7bd1c82fa3.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/3626cf7bd1c82fa3.ltar]:\n/home/utkarsh/.cache/mathlib/3626cf7bd1c82fa3.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.SimpRw",
+      "archive": "/home/utkarsh/.cache/mathlib/077b04665d2d9473.ltar",
+      "lookup": "Mathlib.Tactic.SimpRw: /home/utkarsh/.cache/mathlib/077b04665d2d9473.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/077b04665d2d9473.ltar]:\n/home/utkarsh/.cache/mathlib/077b04665d2d9473.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Group.Pi.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/84a083bd31b07e2c.ltar",
+      "lookup": "Mathlib.Algebra.Group.Pi.Basic: /home/utkarsh/.cache/mathlib/84a083bd31b07e2c.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/84a083bd31b07e2c.ltar]:\n/home/utkarsh/.cache/mathlib/84a083bd31b07e2c.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Logic.Relation",
+      "archive": "/home/utkarsh/.cache/mathlib/cac0a92153942323.ltar",
+      "lookup": "Mathlib.Logic.Relation: /home/utkarsh/.cache/mathlib/cac0a92153942323.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/cac0a92153942323.ltar]:\n/home/utkarsh/.cache/mathlib/cac0a92153942323.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Lean.PrettyPrinter.Delaborator",
+      "archive": "/home/utkarsh/.cache/mathlib/bfb046ad2627cf7b.ltar",
+      "lookup": "Mathlib.Lean.PrettyPrinter.Delaborator: /home/utkarsh/.cache/mathlib/bfb046ad2627cf7b.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/bfb046ad2627cf7b.ltar]:\n/home/utkarsh/.cache/mathlib/bfb046ad2627cf7b.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Lean.Elab.Term",
+      "archive": "/home/utkarsh/.cache/mathlib/ba18c453c754c6fa.ltar",
+      "lookup": "Mathlib.Lean.Elab.Term: /home/utkarsh/.cache/mathlib/ba18c453c754c6fa.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/ba18c453c754c6fa.ltar]:\n/home/utkarsh/.cache/mathlib/ba18c453c754c6fa.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Group.Opposite",
+      "archive": "/home/utkarsh/.cache/mathlib/8d7a9a7382d7ec12.ltar",
+      "lookup": "Mathlib.Algebra.Group.Opposite: /home/utkarsh/.cache/mathlib/8d7a9a7382d7ec12.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/8d7a9a7382d7ec12.ltar]:\n/home/utkarsh/.cache/mathlib/8d7a9a7382d7ec12.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.GroupWithZero.InjSurj",
+      "archive": "/home/utkarsh/.cache/mathlib/3c25a7e1aa007aa8.ltar",
+      "lookup": "Mathlib.Algebra.GroupWithZero.InjSurj: /home/utkarsh/.cache/mathlib/3c25a7e1aa007aa8.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/3c25a7e1aa007aa8.ltar]:\n/home/utkarsh/.cache/mathlib/3c25a7e1aa007aa8.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Group.Equiv.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/2f8c07f57cc7f68e.ltar",
+      "lookup": "Mathlib.Algebra.Group.Equiv.Defs: /home/utkarsh/.cache/mathlib/2f8c07f57cc7f68e.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/2f8c07f57cc7f68e.ltar]:\n/home/utkarsh/.cache/mathlib/2f8c07f57cc7f68e.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.CongrExclamation",
+      "archive": "/home/utkarsh/.cache/mathlib/78fdda6126c522ef.ltar",
+      "lookup": "Mathlib.Tactic.CongrExclamation: /home/utkarsh/.cache/mathlib/78fdda6126c522ef.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/78fdda6126c522ef.ltar]:\n/home/utkarsh/.cache/mathlib/78fdda6126c522ef.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Lift",
+      "archive": "/home/utkarsh/.cache/mathlib/9333d9d4d6b78e32.ltar",
+      "lookup": "Mathlib.Tactic.Lift: /home/utkarsh/.cache/mathlib/9333d9d4d6b78e32.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/9333d9d4d6b78e32.ltar]:\n/home/utkarsh/.cache/mathlib/9333d9d4d6b78e32.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Push",
+      "archive": "/home/utkarsh/.cache/mathlib/5d209f82cfb487f3.ltar",
+      "lookup": "Mathlib.Tactic.Push: /home/utkarsh/.cache/mathlib/5d209f82cfb487f3.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/5d209f82cfb487f3.ltar]:\n/home/utkarsh/.cache/mathlib/5d209f82cfb487f3.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Coe",
+      "archive": "/home/utkarsh/.cache/mathlib/05fd816aa3af73ff.ltar",
+      "lookup": "Mathlib.Tactic.Coe: /home/utkarsh/.cache/mathlib/05fd816aa3af73ff.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/05fd816aa3af73ff.ltar]:\n/home/utkarsh/.cache/mathlib/05fd816aa3af73ff.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Qq.Typ",
+      "archive": "/home/utkarsh/.cache/mathlib/87fba0be2c2ed4f5.ltar",
+      "lookup": "Qq.Typ: /home/utkarsh/.cache/mathlib/87fba0be2c2ed4f5.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/87fba0be2c2ed4f5.ltar]:\n/home/utkarsh/.cache/mathlib/87fba0be2c2ed4f5.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Qq.ForLean.Do",
+      "archive": "/home/utkarsh/.cache/mathlib/1b322cba040f7243.ltar",
+      "lookup": "Qq.ForLean.Do: /home/utkarsh/.cache/mathlib/1b322cba040f7243.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/1b322cba040f7243.ltar]:\n/home/utkarsh/.cache/mathlib/1b322cba040f7243.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Qq.SortLocalDecls",
+      "archive": "/home/utkarsh/.cache/mathlib/d561a8ab078bd383.ltar",
+      "lookup": "Qq.SortLocalDecls: /home/utkarsh/.cache/mathlib/d561a8ab078bd383.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/d561a8ab078bd383.ltar]:\n/home/utkarsh/.cache/mathlib/d561a8ab078bd383.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Group.Nat.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/be884aaf7ff564bf.ltar",
+      "lookup": "Mathlib.Algebra.Group.Nat.Defs: /home/utkarsh/.cache/mathlib/be884aaf7ff564bf.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/be884aaf7ff564bf.ltar]:\n/home/utkarsh/.cache/mathlib/be884aaf7ff564bf.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Plausible.Attr",
+      "archive": "/home/utkarsh/.cache/mathlib/846b99ada671c119.ltar",
+      "lookup": "Plausible.Attr: /home/utkarsh/.cache/mathlib/846b99ada671c119.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/846b99ada671c119.ltar]:\n/home/utkarsh/.cache/mathlib/846b99ada671c119.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Batteries.CodeAction",
+      "archive": "/home/utkarsh/.cache/mathlib/a992401b545c8399.ltar",
+      "lookup": "Batteries.CodeAction: /home/utkarsh/.cache/mathlib/a992401b545c8399.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/a992401b545c8399.ltar]:\n/home/utkarsh/.cache/mathlib/a992401b545c8399.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.PPWithUniv",
+      "archive": "/home/utkarsh/.cache/mathlib/9c052fda3c5e77ee.ltar",
+      "lookup": "Mathlib.Tactic.PPWithUniv: /home/utkarsh/.cache/mathlib/9c052fda3c5e77ee.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/9c052fda3c5e77ee.ltar]:\n/home/utkarsh/.cache/mathlib/9c052fda3c5e77ee.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.ByCases",
+      "archive": "/home/utkarsh/.cache/mathlib/34dae589cf2c0eb4.ltar",
+      "lookup": "Mathlib.Tactic.ByCases: /home/utkarsh/.cache/mathlib/34dae589cf2c0eb4.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/34dae589cf2c0eb4.ltar]:\n/home/utkarsh/.cache/mathlib/34dae589cf2c0eb4.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Check",
+      "archive": "/home/utkarsh/.cache/mathlib/a20ed8283f22b2e3.ltar",
+      "lookup": "Mathlib.Tactic.Check: /home/utkarsh/.cache/mathlib/a20ed8283f22b2e3.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/a20ed8283f22b2e3.ltar]:\n/home/utkarsh/.cache/mathlib/a20ed8283f22b2e3.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.ClearExcept",
+      "archive": "/home/utkarsh/.cache/mathlib/d96ef5e12c351e6d.ltar",
+      "lookup": "Mathlib.Tactic.ClearExcept: /home/utkarsh/.cache/mathlib/d96ef5e12c351e6d.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/d96ef5e12c351e6d.ltar]:\n/home/utkarsh/.cache/mathlib/d96ef5e12c351e6d.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.DefEqTransformations",
+      "archive": "/home/utkarsh/.cache/mathlib/8b512f4ba9339335.ltar",
+      "lookup": "Mathlib.Tactic.DefEqTransformations: /home/utkarsh/.cache/mathlib/8b512f4ba9339335.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/8b512f4ba9339335.ltar]:\n/home/utkarsh/.cache/mathlib/8b512f4ba9339335.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.FunProp.ToBatteries",
+      "archive": "/home/utkarsh/.cache/mathlib/929bc768cedf5cce.ltar",
+      "lookup": "Mathlib.Tactic.FunProp.ToBatteries: /home/utkarsh/.cache/mathlib/929bc768cedf5cce.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/929bc768cedf5cce.ltar]:\n/home/utkarsh/.cache/mathlib/929bc768cedf5cce.ltar not found\n\n",
+      "download_exit": 0,
+      "extraction_base": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    }
+  ],
+  "current_combined_logical_bytes": 6933775223,
+  "incremental_logical_bytes": 78054467,
+  "disk_free_bytes": 52105396224,
+  "status": "stopped",
+  "reason": "terminated by signal 15"
+}

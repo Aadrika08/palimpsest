@@ -1,0 +1,12 @@
+{
+  "scope": "parent independent source-only authored-fixture public-writer tests; no production trust admission",
+  "result": "6 passed in 28.97s",
+  "exit_code": 0,
+  "command": "PYTHONPATH=tests:src:. /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_memory_family_case_publisher_v1.py --basetemp .pytest_cache/parent-case-publisher-v1-20261105-a --maxfail=1",
+  "source_sha256": {
+    "scripts/memory_family_case_publication_v1.py": "2046533d717ec6e65be555951034a4a6d1926a5c7ca54f943525aa4dcb4dee09",
+    "scripts/memory_family_case_custody_v1.py": "8b8cb1d71e2007e93825b11563ddb2a80c608e2890134fd607501d27bdcb7423",
+    "tests/test_memory_family_case_publisher_v1.py": "5fa1e2358abdd628b5791849f58ed194a03d46bf18d90968ad975cda6aebcce2"
+  },
+  "empirical_or_qualification_claim": false
+}

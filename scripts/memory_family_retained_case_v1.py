@@ -18,20 +18,20 @@ from scripts.memory_family_replay_custody_v4 import HeldReplayFiles
 CONDITIONS = tuple(compact.PROTOCOL['analysis_contract']['conditions'])
 
 
-def _inventory(root, case_id, marker_descriptor, condition, lifetime, deadline):
+def _inventory(root, case_id, marker_descriptor, condition, lifetime, deadline, *, location='staged'):
     """Derive held leaves from expected markers, not a self-authenticating scan."""
     base = f'cases/{case_id}/' + ('source' if condition is None else f'conditions/{condition}')
     fields = compact.PROTOCOL['source_finalization']['marker_keys'] if condition is None else seal.MARKER_KEYS
     if pair._descriptor(marker_descriptor, 'Case owner marker')['path'] != base + '/commit.json':
         raise ValueError('Case owner marker is outside its canonical path')
     _, payload, _ = seal._bind(lifetime, root, marker_descriptor, compact.MiB,
-                               deadline, case_id=case_id)
+                               deadline, case_id=case_id, location=location)
     marker = seal._canonical(payload, fields, 'Case owner marker')
     conversion_descriptor = marker['conversion']
     if pair._descriptor(conversion_descriptor, 'Case conversion')['path'] != base + '/recording/conversion.json':
         raise ValueError('Case conversion is outside its canonical path')
     _, payload, _ = seal._bind(lifetime, root, conversion_descriptor, compact.MiB,
-                               deadline, case_id=case_id)
+                               deadline, case_id=case_id, location=location)
     conversion = seal._canonical(payload, compact.PROTOCOL['schemas']['conversion']['exact_keys'],
                                   'Case conversion')
     entries = [marker_descriptor, conversion_descriptor]
@@ -57,7 +57,7 @@ def _inventory(root, case_id, marker_descriptor, condition, lifetime, deadline):
     ceiling = compact.PROTOCOL['recordings']['source' if condition is None else 'condition']['ceiling_bytes']
     if sum(row['size_bytes'] for row in entries if row['path'].startswith(base + '/recording/')) > ceiling:
         raise ValueError('Case owner recording exceeds its byte bound')
-    return [{**row, 'path': '.pending/' + row['path'][len('cases/'):]} for row in entries]
+    return [{**row, 'path': pair._case_prefix(location) + '/' + row['path'][len('cases/'):]} for row in entries]
 
 
 def _cell(result, case, snapshot):
@@ -105,6 +105,18 @@ def read_retained_staged_case(evidence_root, registrations, *, case_slot,
     execution-order assertions are not accepted. The real qualification gate is
     still closed, and this reader never grants publication or study authority.
     """
+    return _read_retained_case(evidence_root, registrations, case_slot=case_slot,
+        condition_commits=condition_commits, deadline=deadline, location='staged', case_files={})
+
+
+def _read_retained_case(evidence_root, registrations, *, case_slot,
+                         condition_commits, deadline, location, case_files):
+    prefix_name = pair._case_prefix(location)
+    case_files = copy.deepcopy(case_files)
+    if location == 'staged' and case_files:
+        raise ValueError('Staged semantic reads accept no case-root files')
+    if location == 'published':
+        pair._fields(case_files, {'manifest.json','close.json','commit.json'}, 'Published case files')
     source.audit._public_deadline(deadline)
     registrations, slot, commits = copy.deepcopy((registrations, case_slot, condition_commits))
     pair._fields(slot, {'case_id', 'case_sha256', 'source_run_id', 'condition_run_ids'}, 'Case slot')
@@ -113,6 +125,11 @@ def read_retained_staged_case(evidence_root, registrations, *, case_slot,
     case_id = slot['case_id']
     memory._id(case_id)
     compact._digest(slot['case_sha256'])
+    for name, value in case_files.items():
+        if pair._descriptor(value, 'Published case file')['path'] != f'cases/{case_id}/{name}':
+            raise ValueError('Published case file differs from expected case path')
+    if sum(value['size_bytes'] for value in case_files.values()) > 32 * compact.MiB:
+        raise ValueError('Published case files exceed combined 32 MiB allowance')
     run_ids = [pair._run_id(value) for value in [slot['source_run_id'], *slot['condition_run_ids'].values()]]
     if len(set(run_ids)) != 10:
         raise ValueError('Case source and condition run IDs must be distinct')
@@ -130,7 +147,7 @@ def read_retained_staged_case(evidence_root, registrations, *, case_slot,
         contracts, checks = {}, []
         for condition in CONDITIONS:
             contract, bound_checks, _ = seal._registration(
-                root, registrations[condition], case_id, condition, deadline, lifetime)
+                root, registrations[condition], case_id, condition, deadline, lifetime, location=location)
             if (contract['case']['case_sha256'] != slot['case_sha256']
                     or contract['case']['block'] != compact.PROTOCOL['analysis_contract']['block']
                     or contract['source_run_id'] != slot['source_run_id']
@@ -153,7 +170,7 @@ def read_retained_staged_case(evidence_root, registrations, *, case_slot,
             raise ValueError('Oracle prior-own receipt is outside this case')
 
         # Source inputs and behavior closure stay held across all nine readers.
-        values = source._inputs(root, common['source']['registration'], case_id, deadline, lifetime)
+        values = source._inputs(root, common['source']['registration'], case_id, deadline, lifetime, location=location)
         source_contract, source_case, run_id, _, _, snapshot_fd, source_checks, _ = values
         if (source_case != case or run_id != slot['source_run_id']
                 or source_contract['snapshot'] != common['source']['snapshot']
@@ -168,27 +185,30 @@ def read_retained_staged_case(evidence_root, registrations, *, case_slot,
             'sha256': compact.PROTOCOL_SHA256, 'size_bytes': len(memory.canonical_bytes(compact.PROTOCOL))}
         checks.append(seal._bind(lifetime, compact.ROOT, protocol_descriptor, compact.MiB, deadline)[2])
 
-        entries = _inventory(root, case_id, common['source']['commit'], None, lifetime, deadline)
+        entries = _inventory(root, case_id, common['source']['commit'], None, lifetime, deadline, location=location)
         for condition in CONDITIONS:
-            entries.extend(_inventory(root, case_id, commits[condition], condition, lifetime, deadline))
+            entries.extend(_inventory(root, case_id, commits[condition], condition, lifetime, deadline, location=location))
         paths = [entry['path'] for entry in entries]
         directories = {parent.as_posix() for path in paths for parent in PurePosixPath(path).parents
-                       if parent.as_posix().startswith(f'.pending/{case_id}')}
+                       if parent.as_posix().startswith(f'{prefix_name}/{case_id}')}
         total_bytes = sum(entry['size_bytes'] for entry in entries)
         if (len(paths) != len(set(paths)) or len(paths) > 418 or len(directories) != 33
                 or total_bytes > (32 + 16 + 1 + 9 * (25 + 1)) * compact.MiB):
             raise ValueError('Retained case inventory exceeds its exact namespace or byte bounds')
         held = lifetime.enter_context(HeldReplayFiles(root,
-            sorted(entries, key=lambda row: row['path']), deadline,
-            exact_subtrees=(f'.pending/{case_id}',)))
-        lifetime.enter_context(pair._staged_namespace(root, case_id))
-        source.read_retained_sealed_source(root, common['source']['registration'], case_id=case_id,
-            source_commit=common['source']['commit'], deadline=deadline)
+            sorted([*entries, *case_files.values()], key=lambda row: row['path']), deadline,
+            exact_subtrees=(f'{prefix_name}/{case_id}',)))
+        lifetime.enter_context(pair._case_namespace(root, case_id, location=location, case_files=case_files, deadline=deadline))
+        source_reader = source.read_retained_sealed_source if location == 'staged' else source._read_retained_sealed_source
+        extra = {} if location == 'staged' else {'location': location, 'case_files': case_files}
+        source_reader(root, common['source']['registration'], case_id=case_id,
+            source_commit=common['source']['commit'], deadline=deadline, **extra)
         snapshot = snapshots.read_snapshot(Path(f'/proc/self/fd/{snapshot_fd}'))
         cells = {}
         for condition in order:
-            result = retained.read_retained_sealed_condition(root, registrations[condition],
-                case_id=case_id, condition=condition, condition_commit=commits[condition], deadline=deadline)
+            reader = retained.read_retained_sealed_condition if location == 'staged' else retained._read_retained_sealed_condition
+            result = reader(root, registrations[condition],
+                case_id=case_id, condition=condition, condition_commit=commits[condition], deadline=deadline, **extra)
             cells[condition] = _cell(result, case, snapshot)
             del result
             held.recheck()

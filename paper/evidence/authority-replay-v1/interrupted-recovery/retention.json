@@ -1,0 +1,17 @@
+{
+  "original_deadline_unix": 1793860506.2223496,
+  "raw_root": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-recovery/runs/paper-authority-replay-v1",
+  "retained_bytes": 461457713,
+  "sha256": {
+    "analysis/campaign-manifest.json": "f7fc7b00335f1383d1b88e29f7616d099f4906fb2d04c425ddb78ff8bb237367",
+    "analysis/raw-inventory.json": "7a9aab5eb68f200c86fbfb4901484774c47d0acb41453a4e23a6f251477085e1",
+    "campaign-clock.json": "6e5a0c0a8518d1b7bdf4d9420ff129cee4022606bf64541fd535843629b93650",
+    "commands/fault_matrix/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "commands/fault_matrix/supervisor.json": "76f13eca31f09c64ed78e1d50571944c9a7792f0eac886292bcc79fb2ac2eb81",
+    "fault_matrix/rows.jsonl": "aa63352e3922b583ac36d04248113ec81d7b06a2548ca546d784e71f9b814e7a",
+    "identity.json": "dd045e6883479e10a55daae5c14f2783c0e393b5a5e831f5fa1ca9de70864714",
+    "preflight.json": "ec9afd89ea59b07bbdc1cdbee25bf02d184dc40cdc03e7e956680050704b7ff7",
+    "unexecuted.jsonl": "a1854b4d9506e81eb698d617d17f788efd09c1520b5f30d4ee8946d20cf50b85"
+  },
+  "status": "excluded_source_identity_drift"
+}

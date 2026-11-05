@@ -1,0 +1,18 @@
+{
+  "scope": "Offline existing-cache dependency recovery; no network acquisition; original cap breach remains",
+  "initial_build_logical_bytes": 5432811822,
+  "final_build_logical_bytes": 5432811822,
+  "elapsed_seconds": 4.988807634974364,
+  "records": [
+    {
+      "operation": "compile Contrast",
+      "exit_code": 1,
+      "output": "ChangeAudit/Contrast.lean:1:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/Kernel/Defs.olean' of module Mathlib.Probability.Kernel.Defs does not exist\n"
+    },
+    {
+      "stop": "required archive not locally cached",
+      "module": "Mathlib.Probability.Kernel.Defs",
+      "lookup": "Mathlib.Probability.Kernel.Defs: /home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar]:\n/home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar not found\n\n"
+    }
+  ]
+}
