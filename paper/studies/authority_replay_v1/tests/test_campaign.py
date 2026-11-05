@@ -129,7 +129,10 @@ def test_guard_refuses_drift_and_bounds(setup, monkeypatch, cause):
     else:
         monkeypatch.setattr(c.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 0})())
     with pytest.raises((ValueError, TimeoutError)):
-        guard.check()
+        if cause in ('identity', 'protocol'):
+            guard.check_identity()
+        else:
+            guard.check()
 
 
 def test_offline_admission_requires_full_source_and_report(setup):
@@ -395,3 +398,155 @@ def test_broken_output_symlink_refused_before_identity(setup, monkeypatch):
     with pytest.raises(ValueError, match='fresh'):
         c.run(STUDY / 'protocol.json', output.parent, output)
     assert not (output.parent / 'missing-target').exists()
+
+
+def test_hot_monitor_does_not_hash_sources_or_assets(setup, monkeypatch):
+    c, identity, output = setup
+    output.mkdir()
+    guard = c.Guard(output, STUDY / 'protocol.json', output.parent, identity, time.time() + 30)
+    monkeypatch.setattr(c, 'campaign_identity', lambda *a: pytest.fail('hot poll rehashed identity'))
+    guard.check()
+
+
+def test_census_tolerates_rename_between_listing_and_lstat(setup, monkeypatch):
+    c, identity, output = setup
+    output.mkdir()
+    (output / 'stable').write_bytes(b'123')
+    vanished = output / 'temporary'
+    vanished.write_bytes(b'12345')
+    original = Path.lstat
+    def lstat(path, *args, **kwargs):
+        if path == vanished:
+            vanished.unlink(missing_ok=True)
+            raise FileNotFoundError('publication rename')
+        return original(path, *args, **kwargs)
+    monkeypatch.setattr(Path, 'lstat', lstat)
+    assert c.tree_size(output) == 3
+
+
+def test_semantic_snapshot_difference_fails_analysis(setup, monkeypatch):
+    c, identity, output = setup
+    first = common.declared_units(common.load_protocol(STUDY / 'protocol.json'))[0]
+    def fake(phase, **kwargs):
+        emit(c, identity, phase, 'timeout')
+        path = phase.output / 'rows.jsonl'
+        rows = common.read_rows(path)
+        rows[0]['explicit_detection'] = True
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        unit = phase.output / first['unit_id'].replace('/', '__')
+        unit.mkdir()
+        (unit / 'row.json').write_text(json.dumps({**rows[0], 'explicit_detection': False}))
+        return {'status': 'exited', 'returncode': 0}
+    monkeypatch.setattr(c, 'run_phase', fake)
+    assert c.run(STUDY / 'protocol.json', output.parent, output) == 1
+    manifest = json.loads((output / 'analysis/campaign-manifest.json').read_text())
+    assert 'inconsistent' in manifest['analysis_error']
+
+
+def test_monitor_failure_does_not_kill_unrelated_coordinator_child(setup):
+    c, identity, output = setup
+    output.mkdir()
+    unrelated = []
+    class Guard:
+        def check(self):
+            unrelated.append(subprocess.Popen([sys.executable, '-c', 'import time;time.sleep(60)']))
+            raise RuntimeError('monitor failure with unrelated child')
+    phase = c.Phase('ownership', 'fault', output / 'unit', [sys.executable, '-c', 'import time;time.sleep(60)'])
+    try:
+        c.run_phase(phase, root=output, deadline=time.time() + 5, guard=Guard())
+        assert unrelated[0].poll() is None
+    finally:
+        for child in unrelated:
+            if child.poll() is None:
+                child.kill()
+            child.wait()
+
+
+def test_cleanup_does_not_signal_reused_leader_pid(setup, monkeypatch):
+    c, identity, output = setup
+    sent = []
+    class Child:
+        pid = 123456
+        def wait(self):
+            return 0
+    monkeypatch.setattr(c, '_processes', lambda: {123456: (os.getpid(), 999, 'S')})
+    monkeypatch.setattr(c.os, 'killpg', lambda *a: sent.append(a))
+    monkeypatch.setattr(c.os, 'kill', lambda *a: sent.append(a))
+    c._cleanup(Child(), {}, {123456})
+    assert sent == []
+
+
+def test_phase_identity_only_at_entry_exit(setup, monkeypatch):
+    c, identity, output = setup
+    checks = []
+    monkeypatch.setattr(c, 'campaign_identity', lambda *a: checks.append('identity') or identity)
+    def fake(phase, **kwargs):
+        for _ in range(10):
+            kwargs['guard'].check()
+        if phase.kind != 'offline_reproduction':
+            emit(c, identity, phase)
+        else:
+            phase.output.mkdir()
+        return {'status': 'exited', 'returncode': 0}
+    monkeypatch.setattr(c, 'run_phase', fake)
+    c.run(STUDY / 'protocol.json', output.parent, output)
+    assert len(checks) == 13  # Initial admission plus six entry/exit pairs.
+
+
+def test_pidfd_signal_rechecks_retained_start_identity(setup, monkeypatch):
+    c, identity, output = setup
+    sent, closed = [], []
+    monkeypatch.setattr(c, '_open_pidfd', lambda pid: 17)
+    monkeypatch.setattr(c, '_processes', lambda: {123: (os.getpid(), 999, 'S')})
+    monkeypatch.setattr(c, '_send_pidfd', lambda *a: sent.append(a))
+    monkeypatch.setattr(c.os, 'close', lambda fd: closed.append(fd))
+    c._signal_owned(123, 100, 9)
+    assert sent == [] and closed == [17]
+
+
+def test_monitor_failure_cleans_launched_detached_descendant(setup):
+    c, identity, output = setup
+    output.mkdir()
+    pidfile = output / 'descendant.pid'
+    script = ('import subprocess,sys,pathlib,time; '
+              'p=subprocess.Popen([sys.executable,"-c","import time;time.sleep(60)"],start_new_session=True); '
+              f'pathlib.Path({str(pidfile)!r}).write_text(str(p.pid));time.sleep(60)')
+    phase = c.Phase('stop-descendant', 'fault', output / 'unit', [sys.executable, '-c', script])
+    class Guard:
+        def check(self):
+            if pidfile.exists():
+                raise RuntimeError('monitor failure after descendant launch')
+    record = c.run_phase(phase, root=output, deadline=time.time() + 5, guard=Guard())
+    assert record['status'] == 'failed' and 'monitor failure after' in record['reason']
+    assert not Path('/proc', str(int(pidfile.read_text()))).exists()
+    assert any(item['provenance'] in ('private_guardian_adoption', 'observed_phase_ancestry')
+               for item in record['owned_descendants'])
+
+
+def test_guardian_stop_during_launch_still_reaps_owned_phase(setup):
+    c, identity, output = setup
+    output.mkdir()
+    command = output / 'command.json'
+    result = output / 'supervisor.json'
+    launched = output / 'launched.json'
+    command.write_text(json.dumps({'argv': [sys.executable, '-c', 'import time;time.sleep(60)'], 'cwd': str(output)}))
+    script = f'''import json,os,signal
+from pathlib import Path
+from paper.studies.authority_replay_v1 import campaign as c
+original=c.subprocess.Popen
+def launch(*args,**kwargs):
+    child=original(*args,**kwargs)
+    current=c._processes()[child.pid]
+    Path({str(launched)!r}).write_text(json.dumps({{'pid':child.pid,'start':current[1]}}))
+    os.kill(os.getpid(),signal.SIGTERM)
+    return child
+c.subprocess.Popen=launch
+c._supervise(Path({str(command)!r}),Path({str(result)!r}),os.getppid())
+'''
+    subprocess.run([sys.executable, '-B', '-c', script], check=True, env={**os.environ, 'PYTHONPATH': f'{c.REPO}:{c.REPO}/src:{c.REPO}/scripts'})
+    owned = json.loads(launched.read_text())
+    try:
+        assert not Path('/proc', str(owned['pid'])).exists()
+        assert json.loads(result.read_text())['status'] == 'failed'
+    finally:
+        c._signal_owned(owned['pid'], owned['start'], 9)

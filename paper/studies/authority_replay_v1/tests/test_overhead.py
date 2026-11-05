@@ -454,3 +454,17 @@ def test_operation_binds_retained_cpu_environment_before_owner_open(tmp_path, mo
     monkeypatch.setattr(Engine, 'open', opened)
     with pytest.raises(RuntimeError, match='compatible CPU environment'):
         o._operation(0, tmp_path / 'source-row.json', tmp_path / 'output', tmp_path, tmp_path, tmp_path)
+
+
+def test_size_tolerates_atomic_publication_rename(tmp_path, monkeypatch):
+    (tmp_path / 'stable').write_bytes(b'123')
+    temporary = tmp_path / 'temporary'
+    temporary.write_bytes(b'12345')
+    original = Path.lstat
+    def lstat(path, *args, **kwargs):
+        if path == temporary:
+            temporary.unlink(missing_ok=True)
+            raise FileNotFoundError('publication rename')
+        return original(path, *args, **kwargs)
+    monkeypatch.setattr(Path, 'lstat', lstat)
+    assert o._size(tmp_path) == 3

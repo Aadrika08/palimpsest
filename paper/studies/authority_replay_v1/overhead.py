@@ -14,6 +14,7 @@ from pathlib import Path
 import resource
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -159,7 +160,16 @@ def _json(path, value):
 
 
 def _size(root):
-    return sum(p.stat().st_size for p in Path(root).rglob('*') if p.is_file() and not p.is_symlink())
+    total = 0
+    for directory, _, names in os.walk(root, followlinks=False):
+        for name in names:
+            try:
+                entry = (Path(directory) / name).lstat()
+            except FileNotFoundError:
+                continue  # Native/atomic publication can rename a listed file.
+            if stat.S_ISREG(entry.st_mode):
+                total += entry.st_size
+    return total
 
 
 def _hashes(root):

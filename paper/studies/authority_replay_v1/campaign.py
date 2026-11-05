@@ -5,6 +5,7 @@ not a strict filesystem quota. Results remain under output/analysis for review.
 """
 import argparse
 import csv
+import errno
 import ctypes
 import hashlib
 from dataclasses import dataclass
@@ -14,6 +15,7 @@ from pathlib import Path
 import shlex
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -74,7 +76,16 @@ def files(root):
 
 
 def tree_size(root):
-    return sum(p.stat().st_size for p in files(root))
+    total = 0
+    for directory, _, names in os.walk(root, followlinks=False):
+        for name in names:
+            try:
+                entry = (Path(directory) / name).lstat()
+            except FileNotFoundError:
+                continue  # An atomic publication renamed this temporary file.
+            if stat.S_ISREG(entry.st_mode):
+                total += entry.st_size
+    return total
 
 
 def boundary(row):
@@ -95,11 +106,13 @@ class Guard:
         self.identity, self.deadline = identity, deadline
         self.resources = load_protocol(protocol).resources
 
+    def check_identity(self):
+        require(campaign_identity(REPO, self.protocol, self.assets) == self.identity, 'campaign identity drift')
+
     def check(self):
         require(time.time() < self.deadline, 'campaign deadline reached')
         require(tree_size(self.root) <= self.resources['campaign_max_output_bytes'], 'campaign output cap crossed')
         require(shutil.disk_usage(self.root).free >= self.resources['minimum_free_bytes'], 'filesystem free reserve crossed')
-        require(campaign_identity(REPO, self.protocol, self.assets) == self.identity, 'campaign identity drift')
         # Unit directories are assigned by existing driver CLIs. Shared runtime-base
         # belongs to the aggregate budget, never to a single ordinary unit.
         for phase in plan(self.protocol, self.assets, self.root, self.deadline):
@@ -136,100 +149,218 @@ def _processes():
     return result
 
 
-def _remember(child, known, baseline):
+def _remember(child, known, guardian_pid=None):
     current = _processes()
-    # A Linux subreaper adopts descendants whose intermediate owner exited,
-    # including descendants which called setsid before our first monitor poll.
-    known.update({pid: values[1] for pid, values in current.items()
-                  if values[0] == os.getpid() and pid != child.pid and pid not in baseline})
-    parents = {child.pid, *known}
+    # This adoption proof is available only inside the private guardian, a new
+    # process which enables subreaping and launches exactly one phase child.
+    # Kernel adoption there implies descent from that phase. The coordinator
+    # never uses new/direct-child status as ownership evidence.
+    if guardian_pid is not None:
+        require(guardian_pid == os.getpid(), 'guardian provenance is local only')
+        for pid, values in current.items():
+            if values[0] == guardian_pid and pid != child.pid and pid not in known:
+                known[pid] = {'start_ticks': values[1], 'provenance': 'private_guardian_adoption',
+                              'parent_pid': guardian_pid}
     while True:
-        found = {pid: values[1] for pid, values in current.items() if values[0] in parents and pid not in parents}
+        found = {}
+        for pid, values in current.items():
+            parent = values[0]
+            if pid in known or parent not in known or parent not in current:
+                continue
+            if current[parent][1] == known[parent]['start_ticks']:
+                found[pid] = {'start_ticks': values[1], 'provenance': 'observed_phase_ancestry',
+                              'parent_pid': parent, 'parent_start_ticks': current[parent][1]}
         if not found:
             break
         known.update(found)
-        parents.update(found)
 
 
-def _cleanup(child, known, baseline):
-    _remember(child, known, baseline)
-    # The child is session leader and cannot reuse its PID until wait() reaps it.
+def _open_pidfd(pid):
+    libc = ctypes.CDLL(None, use_errno=True)
+    descriptor = libc.pidfd_open(pid, 0)
+    if descriptor < 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error))
+    return descriptor
+
+
+def _send_pidfd(descriptor, number):
+    # This prepared CPython omits both optional pidfd wrappers. glibc
+    # supplies the same pinned-kernel-process operation.
+    libc = ctypes.CDLL(None, use_errno=True)
+    if libc.pidfd_send_signal(descriptor, number, None, 0) != 0:
+        error = ctypes.get_errno()
+        if error != errno.ESRCH:
+            raise OSError(error, os.strerror(error))
+
+
+def _signal_owned(pid, start_ticks, number):
+    """Pin the kernel process before checking its retained start identity."""
     try:
-        os.killpg(child.pid, signal.SIGKILL)
+        descriptor = _open_pidfd(pid)
     except ProcessLookupError:
-        pass
-    current = _processes()
-    for pid, start in known.items():
-        if pid in current and current[pid][1] == start:
+        return
+    try:
+        current = _processes().get(pid)
+        if current is not None and current[1] == start_ticks:
             try:
-                os.kill(pid, signal.SIGKILL)
+                _send_pidfd(descriptor, number)
             except ProcessLookupError:
                 pass
-    child.wait()
-    # Once intermediate parents die, adopted children can be reaped by PID.
+    finally:
+        os.close(descriptor)
+
+
+def _cleanup(child, known, guardian_pid=None):
+    # No killpg: every signal uses a pinned, start-verified owned PID, including
+    # the leader. Reaping the leader therefore cannot authorize a reused PGID.
+    if not isinstance(guardian_pid, int):
+        guardian_pid = None
     end = time.monotonic() + 2
-    pending = set(known)
-    while pending and time.monotonic() < end:
-        for pid in list(pending):
+    while True:
+        _remember(child, known, guardian_pid)
+        for pid, evidence in list(known.items()):
+            _signal_owned(pid, evidence['start_ticks'], signal.SIGKILL)
+        if child.pid in known:
+            child.wait()
+        current = _processes()
+        pending = []
+        for pid, evidence in list(known.items()):
+            if pid == child.pid:
+                continue
+            if pid in current and current[pid][1] == evidence['start_ticks']:
+                try:
+                    os.waitpid(pid, os.WNOHANG)
+                except ChildProcessError:
+                    pass
+                fresh = _processes().get(pid)
+                if fresh is not None and fresh[1] == evidence['start_ticks']:
+                    pending.append(pid)
+        # Killing the leader may have just adopted formerly detached children.
+        _remember(child, known, guardian_pid)
+        current = _processes()
+        pending = [pid for pid, item in known.items() if pid != child.pid
+                   and pid in current and current[pid][1] == item['start_ticks']]
+        if not pending:
+            break
+        require(time.monotonic() < end, f'owned descendants not reaped: {sorted(pending)}')
+        time.sleep(.01)
+
+
+def _supervise(command_path, result_path, coordinator_pid):
+    """Private ownership guardian; never launches any non-phase subprocess."""
+    libc = ctypes.CDLL(None, use_errno=True)
+    result, child, known = {'status': 'failed', 'guardian_pid': os.getpid()}, None, {}
+    stop_signals = []
+    def interrupted(number, frame):
+        stop_signals.append(number)  # Never lose Popen's child handle mid-launch.
+    try:
+        for number in (signal.SIGTERM, signal.SIGINT):
+            signal.signal(number, interrupted)
+        require(libc.prctl(36, 1, 0, 0, 0) == 0, 'cannot enable private child subreaper')
+        require(libc.prctl(1, signal.SIGTERM, 0, 0, 0) == 0, 'cannot bind guardian parent death signal')
+        require(os.getppid() == coordinator_pid, 'coordinator exited before guardian admission')
+        config = parse_json(command_path.read_text())
+        require(not stop_signals, 'guardian stopped before phase launch')
+        child = subprocess.Popen(config['argv'], cwd=config['cwd'], start_new_session=True)
+        initial = _processes().get(child.pid)
+        require(initial is not None, 'phase leader identity unavailable')
+        known[child.pid] = {'start_ticks': initial[1], 'provenance': 'guardian_launched_phase',
+                            'parent_pid': os.getpid()}
+        result['pid'] = child.pid
+        # WNOWAIT preserves the exited leader's kernel identity until cleanup;
+        # poll()/wait() here would reap it before descendant discovery finishes.
+        while os.waitid(os.P_PID, child.pid, os.WEXITED | os.WNOHANG | os.WNOWAIT) is None:
+            if stop_signals:
+                raise InterruptedError(f'guardian signal {stop_signals[0]}')
+            _remember(child, known, os.getpid())
+            time.sleep(.05)
+        if stop_signals:
+            raise InterruptedError(f'guardian signal {stop_signals[0]}')
+        result.update(status='exited')
+    except Exception as exc:
+        result.update(reason=str(exc), error_type=type(exc).__name__)
+    finally:
+        # A repeated stop signal must not interrupt ownership cleanup itself.
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        if child is not None:
             try:
-                reaped, _ = os.waitpid(pid, os.WNOHANG)
-                if reaped:
-                    pending.remove(pid)
-            except ChildProcessError:
-                if pid not in _processes():
-                    pending.remove(pid)
-        if pending:
-            time.sleep(.01)
-    require(not pending, f'owned descendants not reaped: {sorted(pending)}')
+                _cleanup(child, known, os.getpid())
+            except Exception as exc:
+                result.update(status='failed', cleanup_error=str(exc))
+            result['returncode'] = child.returncode
+        result['owned_descendants'] = [{'pid': pid, **evidence} for pid, evidence in sorted(known.items())]
+        write_json(result_path, result)
+    return 0 if result['status'] == 'exited' else 1
 
 
 def run_phase(phase, *, root, deadline, guard):
     log = root / 'commands' / phase.name
     log.mkdir(parents=True, exist_ok=False)
-    write_json(log / 'command.json', {'argv': phase.command, 'cwd': str(REPO), 'deadline_unix': deadline})
-    record = {'command_record': str(log / 'command.json'), 'stdout': str(log / 'stdout.log'),
-              'stderr': str(log / 'stderr.log'), 'status': 'failed', 'started_unix': time.time()}
+    command_path, result_path = log / 'command.json', log / 'supervisor.json'
+    write_json(command_path, {'argv': phase.command, 'cwd': str(REPO), 'deadline_unix': deadline})
+    record = {'command_record': str(command_path), 'supervisor_record': str(result_path),
+              'stdout': str(log / 'stdout.log'), 'stderr': str(log / 'stderr.log'),
+              'status': 'failed', 'started_unix': time.time()}
     env = {**os.environ, 'PYTHONPATH': os.pathsep.join(map(str, (REPO, REPO / 'src', REPO / 'scripts'))),
            'MUJOCO_GL': 'egl', 'MPLBACKEND': 'Agg', 'OMP_NUM_THREADS': '2', 'CUDA_VISIBLE_DEVICES': ''}
-    child, known = None, {}
-    baseline = set(_processes())
-    libc = ctypes.CDLL(None, use_errno=True)
-    prior_subreaper = ctypes.c_int()
-    require(libc.prctl(37, ctypes.byref(prior_subreaper), 0, 0, 0) == 0, 'cannot read child-subreaper state')
-    require(libc.prctl(36, 1, 0, 0, 0) == 0, 'cannot enable child-subreaper cleanup')
-    previous = {}
+    guardian_command = [sys.executable, '-B', str(Path(__file__).resolve()), '--supervise',
+                        str(command_path), str(result_path), str(os.getpid())]
+    record['guardian_command'] = guardian_command
+    child, descriptor, previous, failure = None, None, {}, None
+    stop_signals = []
     def interrupted(number, frame):
-        raise InterruptedError(f'coordinator signal {number}')
+        stop_signals.append(number)
     try:
-        for sig in (signal.SIGINT, signal.SIGTERM):
-            previous[sig] = signal.signal(sig, interrupted)
+        for number in (signal.SIGINT, signal.SIGTERM):
+            previous[number] = signal.signal(number, interrupted)
         with (log / 'stdout.log').open('xb') as stdout, (log / 'stderr.log').open('xb') as stderr:
-            child = subprocess.Popen(phase.command, cwd=REPO, env=env, stdout=stdout, stderr=stderr, start_new_session=True)
+            child = subprocess.Popen(guardian_command, cwd=REPO, env=env, stdout=stdout, stderr=stderr)
+            descriptor = _open_pidfd(child.pid)
+            record['guardian_pid'] = child.pid
             record['pid'] = child.pid
             timeout = min(deadline, record['started_unix'] + 900) if phase.kind == 'offline_reproduction' else deadline
             while child.poll() is None:
-                _remember(child, known, baseline)
+                if stop_signals:
+                    raise InterruptedError(f'coordinator signal {stop_signals[0]}')
                 guard.check()
                 require(time.time() < timeout, 'offline unit timeout' if phase.kind == 'offline_reproduction' else 'campaign deadline')
                 time.sleep(.1)
-            # Fast native writes can finish between polls.
-            guard.check()
+            if stop_signals:
+                raise InterruptedError(f'coordinator signal {stop_signals[0]}')
+            guard.check()  # Include fast native publication between monitor polls.
             require(time.time() < timeout, 'phase deadline crossed at exit')
-            record.update(status='exited', returncode=child.returncode)
     except Exception as exc:
-        record.update(reason=str(exc), error_type=type(exc).__name__)
+        failure = {'status': 'failed', 'reason': str(exc), 'error_type': type(exc).__name__}
     finally:
+        for number in previous:
+            signal.signal(number, signal.SIG_IGN)
         if child is not None:
+            if child.poll() is None:
+                try:
+                    _send_pidfd(descriptor, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
             try:
-                _cleanup(child, known, baseline)
-            except Exception as exc:
-                record.update(status='failed', cleanup_error=str(exc))
-            record.setdefault('returncode', child.returncode)
-        libc.prctl(36, prior_subreaper.value, 0, 0, 0)
-        for sig, handler in previous.items():
-            signal.signal(sig, handler)
+                child.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                # Only the owned guardian is addressed through its pinned fd.
+                _send_pidfd(descriptor, signal.SIGKILL)
+                child.wait()
+                failure = {'status': 'failed', 'reason': 'private guardian failed to finish cleanup'}
+            if result_path.exists():
+                record.update(parse_json(result_path.read_text()))
+            else:
+                record.update(status='failed', reason='guardian exited before its process record')
+            record['guardian_returncode'] = child.returncode
+        if descriptor is not None:
+            os.close(descriptor)
+        if failure:
+            record.update(failure)
+        for number, handler in previous.items():
+            signal.signal(number, handler)
         record['ended_unix'] = time.time()
-        record['owned_descendants'] = [{'pid': pid, 'start_ticks': start} for pid, start in sorted(known.items())]
         write_json(log / 'process.json', record)
     return record
 
@@ -302,8 +433,11 @@ def _finish(protocol, output, identity, phases, records, stopped):
                         f'inconsistent unit snapshot descriptor: {snapshot}')
                 matches = [r for r in raw_rows if r['unit_id'] == unit['unit_id']]
                 if matches:
-                    keys = (*unit, 'identity', 'status', 'metrics', 'schema_version', 'study_id')
-                    require(all(row.get(k) == matches[0].get(k) for k in keys),
+                    # Fault CLI appends dry_run after its per-unit snapshot. It
+                    # is the sole non-scientific annotation excluded here.
+                    annotations = {'dry_run'}
+                    scientific = lambda r: {k: v for k, v in r.items() if k not in annotations}
+                    require(scientific(row) == scientific(matches[0]),
                             f'inconsistent emitted unit snapshot: {snapshot}')
                 else:
                     append_row(recovered, row)
@@ -394,6 +528,7 @@ def run(protocol_path, assets, output):
                   'process_record': str(output / 'commands' / phase.name / 'process.json')}
         if not stopped:
             try:
+                guard.check_identity()
                 guard.check()
                 allowance = protocol.resources['offline_unit_max_output_bytes'] if phase.kind == 'offline_reproduction' else protocol.resources['ordinary_unit_max_output_bytes']
                 require(tree_size(output) + allowance <= protocol.resources['campaign_max_output_bytes'], 'campaign output admission cap')
@@ -401,6 +536,7 @@ def run(protocol_path, assets, output):
                 require(shutil.disk_usage(output).free - headroom >= protocol.resources['minimum_free_bytes'], 'free reserve insufficient for unit admission')
                 process = run_phase(phase, root=output, deadline=deadline, guard=guard)
                 record['process'] = process
+                guard.check_identity()
                 if phase.kind == 'offline_reproduction':
                     phase.output.mkdir(exist_ok=True)
                     row = offline_row(phase.output, identity)
@@ -427,6 +563,9 @@ def run(protocol_path, assets, output):
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if len(argv) == 4 and argv[0] == '--supervise':
+        return _supervise(Path(argv[1]), Path(argv[2]), int(argv[3]))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol', type=Path, required=True)
     parser.add_argument('--assets', type=Path, required=True)
