@@ -38,9 +38,12 @@ ALLOCATION = {'wall_seconds': 900, 'cpu_seconds': 1800,
     'atomic_max_bytes': 8 * MiB, 'headroom_bytes': 64 * MiB}
 FREEZE_FIELDS = {'schema', 'state', 'job', 'allocation', 'environment',
     'runtime_roots', 'namespace_projections',
-    'prior_cpu', 'peak_bytes', 'runtime_cgroup', 'lifetime_contract'}
+    'prior_cpu', 'peak_bytes', 'runtime_cgroup', 'lifetime_contract', 'numeric_profile'}
 LOGICAL_SOURCES = ('pre-heldout-development-history', 'training-namespace')
 MAX_JSON = 1024 * 1024
+PARENT_TERMINAL_MAX_BYTES = 65536
+PUBLIC_ROOT = Path(__file__).resolve().parents[1]
+NUMERIC_PROFILE = 'docs/plans/memory-family-numeric-compact-v2-protocol.json'
 
 
 def _fields(value, keys, label):
@@ -91,8 +94,11 @@ def _read(path, expected=None, maximum=MAX_JSON):
 
 def _write(path, value, budget):
     payload = memory.canonical_bytes(value)
-    if len(payload) > MAX_JSON:
-        raise ValueError('Control exceeds one MiB')
+    maximum = {'parent-terminal.json': PARENT_TERMINAL_MAX_BYTES,
+               'quarantine.json': 8 * 1024}.get(Path(path).name, MAX_JSON)
+    if len(payload) > maximum:
+        raise ValueError('Parent terminal exceeds 65536 bytes' if maximum == PARENT_TERMINAL_MAX_BYTES
+                         else 'Control exceeds bounded metadata bytes')
     budget.check(len(payload), path=path)
     path = owner._safe_path(path)
     with path.open('xb') as stream:
@@ -128,13 +134,39 @@ def _environment(job):
         'OPENBLAS_NUM_THREADS': '1', 'MKL_NUM_THREADS': '1', 'NUMEXPR_NUM_THREADS': '1'}
 
 
+def _numeric_profile(value):
+    """Public metadata gate before helper import, runtime admission or output.
+
+    Only the new immutable on-disk profile is admitted. The external freeze pins
+    its actual bytes; an already imported Python constant cannot replace that read.
+    """
+    _fields(value, FREEZE_FIELDS, 'Source freeze')
+    if value['schema'] != 'memory-family-source-freeze-v3' or value['state'] != 'prepared':
+        raise ValueError('Closed or unknown source freeze; V3 is mandatory')
+    item = value['numeric_profile']
+    _fields(item, {'path', 'size_bytes', 'sha256'}, 'Numeric profile descriptor')
+    if (item['path'] != NUMERIC_PROFILE or type(item['size_bytes']) is not int
+            or not 1 <= item['size_bytes'] <= MAX_JSON):
+        raise ValueError('Mandatory public numeric profile descriptor differs')
+    memory._digest(item['sha256'])
+    absolute = {**item, 'path': str(PUBLIC_ROOT / NUMERIC_PROFILE)}
+    profile = _read(absolute['path'], item['sha256'])
+    if len(memory.canonical_bytes(profile)) != item['size_bytes']:
+        raise ValueError('Numeric profile size differs')
+    # Import only after the bounded public metadata bytes have been checked.
+    from scripts import memory_family_source_seal_v2 as numeric_source
+    if (numeric_source._protocol() != item
+            or memory.canonical_bytes(profile) != numeric_source.numeric.PROTOCOL_BYTES
+            or numeric_source.RESERVES['future_parent_terminal'] != PARENT_TERMINAL_MAX_BYTES):
+        raise ValueError('Public numeric profile differs from implementing helper')
+    return absolute
+
+
 def verify_freeze(path, expected_sha256):
     """Read pinned metadata/public source contracts; no runtime/namespace/GO opens."""
     memory._digest(expected_sha256)
     value = _read(path, expected_sha256)
-    _fields(value, FREEZE_FIELDS, 'Source freeze')
-    if value['schema'] != 'memory-family-source-freeze-v2' or value['state'] != 'prepared':
-        raise ValueError('Closed or unknown source freeze')
+    _numeric_profile(value)
     job = owner.validate_source_template(value['job'])
     if value['allocation'] != ALLOCATION or any(type(value['allocation'][k]) is not int for k in ALLOCATION):
         raise ValueError('Qualification allocation differs; no silent limit increase')
@@ -197,12 +229,13 @@ def verify_freeze(path, expected_sha256):
     if cgroup is None:
         blockers.append('Whole-runtime enforced memory cgroup missing')
     blockers.append('External full-parent lifetime supervision OS/receipt interface is not implemented')
+    blockers.append('Actual clean native dependency closure/resource freeze and prior charges require independent review')
     blockers.append('External pre-import load-environment/exec isolation binding is not implemented')
     if value['lifetime_contract'] is None:
         blockers.append('External parent process-lifetime accounting contract missing')
     if any(item is None for item in prior.values()):
         blockers.append('Prior aggregate/memory-lane CPU reconciliation missing')
-    return {'schema': 'memory-family-source-preparation-v2', 'status': 'metadata-verified',
+    return {'schema': 'memory-family-source-preparation-v3', 'status': 'metadata-verified',
         'freeze_sha256': expected_sha256, 'freeze': value, 'blockers': blockers,
         'payloads_opened': False, 'worker_invocations': 0, 'output_created': False,
         'qualification_claims': False, 'execution_authorized': False}
@@ -226,8 +259,9 @@ def _hold_file(item):
     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
     try:
         before = os.fstat(fd)
-        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
-            raise ValueError('Pinned input is nonregular or aliased')
+        if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                or before.st_size != item['size_bytes']):
+            raise ValueError('Pinned input is nonregular, aliased or differs in size')
         def check():
             current = os.fstat(fd)
             named = path.stat(follow_symlinks=False)
@@ -349,8 +383,12 @@ def _bind_inputs(value, lifetime):
     runtime_check = _bind_runtime_namespace(value)
     checks.append(runtime_check)
     lifetime.callback(runtime_check)
-    if str(Path(__file__).resolve()) not in roster:
-        raise ValueError('Executing parent source missing from frozen closure')
+    numeric_helpers = {str(PUBLIC_ROOT / name) for name in (
+        'scripts/memory_family_source_seal_v2.py',
+        'scripts/memory_family_numeric_preservation_v2.py',
+        'scripts/memory_directory_census_v1.py')}
+    if str(Path(__file__).resolve()) not in roster or not numeric_helpers.issubset(roster):
+        raise ValueError('Executing parent/new numeric helper sources missing from frozen closure')
     required = [ROOT / 'src', ROOT / 'scripts', ROOT / 'paper/studies/change_audit_v1',
         Path(sys.prefix) / f'lib/python{sys.version_info.major}.{sys.version_info.minor}/site-packages',
         Path(sys.base_prefix) / f'lib/python{sys.version_info.major}.{sys.version_info.minor}']
@@ -500,7 +538,83 @@ def execute_freeze(path, expected_sha256, *, go_path=None, expected_go_sha256=No
             go_path=go_path, go_sha=expected_go_sha256))
 
 
+def _scan_files(root, evidence_root, *, maximum=None):
+    """Bounded complete regular-file census, including empty directories."""
+    files, directories = [], []
+    seen = set()
+    for parent, children, names in os.walk(owner._safe_path(root), followlinks=False):
+        directory = owner._safe_path(parent)
+        row = directory.stat(follow_symlinks=False)
+        directories.append((str(directory.relative_to(evidence_root)), row.st_dev,
+            row.st_ino, row.st_mode, row.st_mtime_ns, row.st_ctime_ns))
+        for name in children:
+            owner._safe_path(directory / name)
+        for name in names:
+            path = owner._safe_path(directory / name)
+            row = path.stat(follow_symlinks=False)
+            identity = (row.st_dev, row.st_ino)
+            if not stat.S_ISREG(row.st_mode) or row.st_nlink != 1 or identity in seen:
+                raise ValueError('Output census contains an alias or nonregular file')
+            if maximum is not None and row.st_size > maximum:
+                raise ValueError('Parent control exceeds bounded metadata size')
+            seen.add(identity)
+            files.append(_descriptor(path, evidence_root))
+        if len(files) + len(directories) > 8192:
+            raise ValueError('Complete output census exceeds bounded roster')
+    return sorted(files, key=lambda d: d['path']), sorted(directories)
+
+
+def _output_census(output, expected):
+    observed, directories = _scan_files(output, output)
+    if observed != [expected[key] for key in sorted(expected)]:
+        raise ValueError('Complete output census differs from frozen registered roster')
+    allowed = {'.'}
+    for path in expected:
+        allowed.update(str(parent) for parent in Path(path).parents)
+    if any(row[0] not in allowed and row[0] != 'controls' and not row[0].startswith('controls/')
+           for row in directories):
+        raise ValueError('Complete output census contains an unregistered directory')
+    return observed, directories
+
+
+def _numeric_output_descriptors(sealed):
+    domains = sealed['byte_ledger']['physical_domains']
+    values = [*domains['raw'], domains['snapshot'], *domains['registered_external'],
+              *domains['bundle'], sealed['marker']['conversion'], sealed['commit']]
+    result = {}
+    for item in values:
+        if item['path'] in result and item != result[item['path']]:
+            raise ValueError('Conflicting physical path in numeric output ledger')
+        result[item['path']] = item
+    return result
+
+
 def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
+             _admit=_execute_admission, _budget_factory=_make_budget,
+             _clock=time.monotonic, _cpu_meter=_cpu):
+    # No fresh output, admission, or owner call before mandatory public metadata.
+    profile = _numeric_profile(value)
+    attempt = {}
+    with ExitStack() as lifetime:
+        lifetime.enter_context(_hold_file(profile))
+        try:
+            return _execute_core(value, freeze_path, freeze_sha, _lifetime=lifetime, _attempt=attempt,
+                _runner=_runner, _admit=_admit, _budget_factory=_budget_factory,
+                _clock=_clock, _cpu_meter=_cpu_meter)
+        except BaseException as error:
+            # Also covers writer-lease __exit__ after provisional terminal write.
+            output = Path(value['job']['paths']['evidence_root'])
+            candidate = output / 'numeric-v2' / value['job']['case']['case_id'] / value['job']['run_id']
+            if attempt.get('created') and (candidate / 'commit.json').exists() and not (candidate / 'quarantine.json').exists():
+                _write(candidate / 'quarantine.json', {
+                    'schema': 'memory-family-numeric-source-quarantine-v2',
+                    'case_id': value['job']['case']['case_id'], 'run_id': value['job']['run_id'],
+                    'error_type': type(error).__name__, 'actual_source_qualified': False,
+                    'claims': copy.deepcopy(owner.PROTOCOL['claims'])}, _budget_factory(output))
+            raise
+
+
+def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runner=run_accounted,
              _admit=_execute_admission, _budget_factory=_make_budget,
              _clock=time.monotonic, _cpu_meter=_cpu):
     """Private authored fixtures may replace supervision/admission, never CLI."""
@@ -508,22 +622,34 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
     started, cpu_started = _clock(), _cpu_meter()
     deadline = started + ALLOCATION['wall_seconds']
     job = copy.deepcopy(value['job'])
+    if value['environment'] != _environment(job):
+        raise ValueError('Frozen source environment differs before output preparation')
     output = _fresh_output(job['paths']['evidence_root'])
     output.mkdir(exist_ok=False)
+    _attempt['created'] = True
     budget = _budget_factory(output)
-    report = {'schema': 'memory-family-source-parent-result-v2', 'status': 'stopped',
+    report = {'schema': 'memory-family-source-parent-result-v3', 'status': 'stopped',
         'qualification_claims': False, 'science_qualified': False, 'pruning_authorized': False,
         'actual_source_qualified': False, 'jobs': [], 'error': None,
         'parent_lifetime_reconciled': False, 'accounting_complete': True}
     control = Path(job['paths']['control_root'])
     control.mkdir(parents=True, exist_ok=False)
+    # The real frozen HOME is fresh too: lock() creates .cache without parents.
+    # These two verified, derived directories belong to the controlled prefix
+    # and join its complete identity census after child closure.
+    for name in ('HOME', 'MPLCONFIGDIR'):
+        directory = owner._safe_path(value['environment'][name])
+        if not directory.is_relative_to(output / 'controls'):
+            raise ValueError('Frozen control environment escapes fresh output')
+        directory.mkdir(mode=0o700, exist_ok=False)
     def quarantine_published(error):
-        source = Path(job['paths']['owner']).parent
-        quarantine = source.parent / 'quarantine.json'
+        source = output / 'numeric-v2' / job['case']['case_id'] / job['run_id']
+        quarantine = source / 'quarantine.json'
         if (source / 'commit.json').exists() and not quarantine.exists():
-            _write(quarantine, {'schema': 'memory-family-source-quarantine-v1',
+            _write(quarantine, {'schema': 'memory-family-numeric-source-quarantine-v2',
                 'case_id': job['case']['case_id'], 'run_id': job['run_id'],
-                'error_type': type(error).__name__, 'claims': copy.deepcopy(owner.PROTOCOL['claims'])}, budget)
+                'error_type': type(error).__name__, 'actual_source_qualified': False,
+                'claims': copy.deepcopy(owner.PROTOCOL['claims'])}, budget)
     def check():
         if os.getpid() != coordinator_pid:
             raise ValueError('Parent phase accounting cannot run in a forked supervisor')
@@ -537,7 +663,7 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
         budget.check(0, path=output)
         return used
     with budget.lock():
-        lifetime = ExitStack()
+        lifetime = _lifetime
         checks, pins = [], {}
         def pin_file(path, expected=None):
             path = Path(path)
@@ -557,6 +683,44 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
             original = copy.deepcopy(value)
             _write(path, value, budget)
             return pin_value(path, original)
+        def census_controls():
+            # The controlled prefix includes HOME/MPLCONFIGDIR outside run controls.
+            descriptors, directories = _scan_files(output / 'controls', output, maximum=MAX_JSON)
+            lease_paths = {output / '.palimpsest-storage.lock',
+                Path.home() / '.cache/palimpsest/writer.lock',
+                Path(value['environment']['HOME']) / '.cache/palimpsest/writer.lock'}
+            leases, extras = [], []
+            for path in sorted(lease_paths):
+                if not path.exists():
+                    continue
+                descriptor = _descriptor(path, output if path.is_relative_to(output) else path.parent,
+                    logical=str(path.relative_to(output)) if path.is_relative_to(output) else str(path))
+                if descriptor['size_bytes'] != 0:
+                    raise ValueError('Named ephemeral writer lease must be zero bytes')
+                checks.append(lifetime.enter_context(_hold_file({**descriptor, 'path': str(path)})))
+                leases.append(descriptor)
+            ephemeral = {str(path.relative_to(output)) for path in lease_paths if path.is_relative_to(output)}
+            for descriptor in descriptors:
+                if descriptor['path'] in ephemeral:
+                    continue
+                path = output / descriptor['path']
+                # Already validated controls retain their creation-time descriptor.
+                expected = pins.get(path)
+                if expected is not None:
+                    if descriptor != expected:
+                        raise ValueError('Validated control changed before full census')
+                else:
+                    expected = pin_file(path, descriptor)  # Accounting-only first observation.
+                extras.append(expected)
+            if sum(d['size_bytes'] for d in descriptors) > ALLOCATION['control_max_bytes']:
+                raise ValueError('Complete controls prefix exceeds frozen allowance')
+            def controls_check():
+                if _scan_files(output / 'controls', output, maximum=MAX_JSON) != (descriptors, directories):
+                    raise ValueError('Complete parent control census changed')
+            checks.append(controls_check)
+            lifetime.callback(controls_check)
+            return sorted(extras, key=lambda d: d['path']), leases
+        expected_outputs = None
         try:
             checks.append(lifetime.enter_context(_hold_file({'path': str(freeze_path),
                 'size_bytes': Path(freeze_path).stat().st_size, 'sha256': freeze_sha})))
@@ -648,9 +812,18 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
                 'run_id': job['run_id'], 'owner_source_sha256': job['source_identity_sha256'],
                 'claims': copy.deepcopy(owner.PROTOCOL['claims'])})
             from scripts import memory_family_raw_audit_v4 as audit
-            from scripts import memory_family_producer_v4 as producer
+            from scripts import memory_family_source_seal_v2 as producer
             raw = Path(job['paths']['raw'])
             before = audit._inventory(raw, 'source', deadline)
+            for item in before:
+                path = raw / item['path']
+                pin_file(path, {**item, 'path': str(path.relative_to(output))})
+            raw_namespace = _scan_files(raw, output)
+            def raw_check():
+                if _scan_files(raw, output) != raw_namespace:
+                    raise ValueError('Held raw namespace changed between parent phases')
+            checks.append(raw_check)
+            lifetime.callback(raw_check)
             (control / 'audit').mkdir(exist_ok=False)
             _, audit_command = _commands(job, control, snapshot, deadline, job_descriptor=pins[control / 'job.json'])
             audit_record = launch('audit', audit_command, min(180, deadline - _clock() - 20))
@@ -682,21 +855,53 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
                 'controls': controls, 'claims': copy.deepcopy(owner.PROTOCOL['claims'])}
             emit(control / 'terminal-export.json', registration)
             registration_descriptor = pins[control / 'terminal-export.json']
-            request = dict(evidence_root=output, registration=registration_descriptor,
+            extras, leases = census_controls()
+            pre_outputs = {item['path']: item for item in pins.values()}
+            pre_outputs.update({str(raw.relative_to(output) / item['path']): {**item,
+                'path': str(raw.relative_to(output) / item['path'])} for item in before})
+            pre_outputs.update({item['path']: item for item in leases if not Path(item['path']).is_absolute()})
+            _output_census(output, pre_outputs)
+            request = dict(evidence_root=output, registration=registration_descriptor, additional_controls=extras,
                            case_id=case_id, deadline=min(deadline - 10, time.monotonic() + 299))
             recheck()
-            producer.seal_compact_source(**request)
+            producer.seal_numeric_source_v2(**request)
             recheck()
-            sealed = producer.read_sealed_source(**request)
+            sealed = producer.read_numeric_source_v2(**request)
             recheck()
             if audit._inventory(raw, 'source', deadline) != before:
                 raise ValueError('Raw bytes changed during preservation')
+            expected_outputs = _numeric_output_descriptors(sealed)
+            for descriptor in expected_outputs.values():
+                pin_file(output / descriptor['path'], descriptor)
+            expected_outputs.update({item['path']: item for item in leases if Path(item['path']).is_absolute() is False})
+            output_snapshot = _output_census(output, expected_outputs)
+            def output_check():
+                if _output_census(output, expected_outputs) != output_snapshot:
+                    raise ValueError('Complete controlled output namespace changed')
+            checks.append(output_check)
+            lifetime.callback(output_check)
+            recheck()
+            observed = sum(item['size_bytes'] for item in expected_outputs.values())
+            reserved = (PARENT_TERMINAL_MAX_BYTES + producer.RESERVES['atomic_commit']
+                        + producer.RESERVES['quarantine'])
+            if observed + reserved + ALLOCATION['headroom_bytes'] > ALLOCATION['max_bytes']:
+                raise ValueError('Complete output census and final atomic/terminal peak exceed 640 MiB')
             report.update(status='preserved-awaiting-lifetime-reconciliation',
-                registration=registration_descriptor,
-                preservation={'stored_fields': list(__import__('scripts.memory_family_compact_v4', fromlist=['RETAINED']).RETAINED),
-                    'original_row_commitments_equal': sealed['conversion']['compact_trace_digest'] == sealed['conversion']['legacy_trace_digest'],
-                    'omissions': 'Full cameras, latency and step_latency are not all retained compact fields; raw remains authoritative',
-                    'raw_inventory_unchanged': True, 'source_raw_nonempty': bool(before)})
+                registration=registration_descriptor, candidate_path=sealed['candidate_path'],
+                publication_outcome_verified=False, independent_finalization_required=True,
+                preservation={**sealed['preservation'], 'raw_inventory_unchanged': True,
+                    'source_raw_nonempty': bool(before)},
+                output_accounting={'scoped_storage_verified': True, 'stage_peak_accounted': False,
+                    'scope': 'closed complete output census plus bounded terminal/atomic reserve; no whole-lifetime peak proof',
+                    'physical_paths_counted_once': True, 'snapshot_count': 1,
+                    'serialized_bytes_before_terminal': observed,
+                    'file_count_before_terminal': len(expected_outputs),
+                    'inventory_sha256': memory.sha256([expected_outputs[k] for k in sorted(expected_outputs)]),
+                    'future_terminal_max_bytes': PARENT_TERMINAL_MAX_BYTES,
+                    'atomic_and_failure_reserve_bytes': reserved - PARENT_TERMINAL_MAX_BYTES,
+                    'reserved_peak_with_headroom_bytes': observed + reserved + ALLOCATION['headroom_bytes'],
+                    'zero_byte_ephemeral_leases': leases,
+                    'filesystem_free_floor_is_separate': True})
         except BaseException as exc:
             report['status'] = 'stopped'
             report['error'] = {'type': type(exc).__name__, 'message': str(exc)[:2048]}
@@ -724,7 +929,16 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
             report['elapsed_seconds'] = _clock() - started
             report['unmetered_tail'] = 'terminal serialization/write/fsync, lease release and process return; external lifetime reconciliation required'
             try:
-                _write(control / 'parent-terminal.json', report, budget)
+                terminal = control / 'parent-terminal.json'
+                payload = memory.canonical_bytes(report)
+                _write(terminal, report, budget)
+                if expected_outputs is not None and report['status'] != 'stopped':
+                    expected_after = {**expected_outputs, str(terminal.relative_to(output)): {
+                        'path': str(terminal.relative_to(output)), 'size_bytes': len(payload),
+                        'sha256': hashlib.sha256(payload).hexdigest()}}
+                    _output_census(output, expected_after)
+                    if terminal.stat().st_size > PARENT_TERMINAL_MAX_BYTES:
+                        raise ValueError('Actual parent terminal exceeds 65536 bytes')
                 check()
             except BaseException as exc:
                 quarantine_published(exc)

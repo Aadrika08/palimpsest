@@ -1,6 +1,8 @@
-# Single source preservation parent v2
+# Single source preservation parent (V2 entry, V3 freeze)
 
-Task 2 is INCOMPLETE at the actual namespace and external lifetime gates.
+The actual source stage remains INCOMPLETE at the namespace and external lifetime gates.
+The numeric codec, public source API and parent integration are authored software,
+not an actual preservation result or execution grant.
 This is source implementation and authored software verification only. No actual
 native owner, model, graph, checkpoint, retained SNP or protected catalog was
 opened. No trusted qualification pin changes. Actual source qualification,
@@ -25,8 +27,17 @@ opens projections, GO, lifetime records or protected catalogs, creates output, o
 starts a subprocess. `validate_source_job` still requires a matching live parent
 assertion; verification never creates a successful-looking placeholder admission.
 
-The freeze schema is `memory-family-source-freeze-v2`, with exact keys declared in
-`FREEZE_FIELDS`. It binds the template, environment, source/runtime file roster,
+The freeze schema is `memory-family-source-freeze-v3`, with exact keys declared in
+`FREEZE_FIELDS`. The mandatory `numeric_profile` descriptor is exactly the
+relative public path `docs/plans/memory-family-numeric-compact-v2-protocol.json`,
+its actual byte size and SHA256. Bounded on-disk public metadata is checked before
+loading the new helper, owner admission or creating any output; the original
+profile descriptor is held through parent finalization. Missing, changed, wrong
+profiles and old V2 prepared freezes refuse; there is no fallback. Preparation and
+parent-result schemas are also V3. The script/API names, existing owner-job V2,
+closed-owner export V4 and all existing V1/V4 profiles and trust pins stay unchanged.
+
+The freeze binds the template, environment, source/runtime file roster,
 clean selected installation roots, namespace-only projection descriptors, prior
 CPU charges, maximum concurrent storage, output, established cgroup, external
 prospective lifetime contract. GO is a separate operator-supplied document,
@@ -56,7 +67,11 @@ prepared or qualified here. Execution holds the externally selected byte roster,
 checks the pinned owner/runtime identity and enumerates the selected clean prefix
 against that roster. The existing source owner caps closure at 4096 entries; a
 larger real dependency tree is a blocker, not permission to raise the cap or omit
-files. Verification of namespace metadata does not establish authorization,
+files. The executing parent and new `memory_family_source_seal_v2.py`,
+`memory_family_numeric_preservation_v2.py` and `memory_directory_census_v1.py`
+must explicitly appear in that roster. This adds closure obligations; it supplies
+no clean real installation, complete native package or qualified freeze.
+Verification of namespace metadata does not establish authorization,
 namespace coverage or dependency completeness. Those require the real supplied
 package and independent review. No actual execution freeze is delivered by these
 software fixtures.
@@ -72,8 +87,12 @@ Independent raw audit uses at most 180 seconds; public preservation/read deadlin
 stay within their existing 300-second entry cap. No bound is silently raised.
 
 The prospective simultaneous storage reservation is raw512 + SNP16 + compact32 +
-controls8 + atomic8 + headroom64 MiB = 640 MiB. The SNP is one exclusive serialized
-container; the public raw auditor's temporary receipt and sealer's small marker
+controls8 + atomic8 + headroom64 MiB = 640 MiB. The sole candidate is derived as
+`ROOT/runs/memory-family-source-v2-*/numeric-v2/<case_id>/<run_id>/` before any
+conversion. The 32MiB candidate reservation covers this numeric composite; no
+separate public V1 artifact is first written. The SNP is one exclusive serialized
+container at its original staged path; the public raw auditor's temporary receipt
+and sealer's small marker
 are separately included in atomic space. Compact source itself retains its 32 MiB
 protocol ceiling. Already-written control bytes count within the controls
 allowance rather than being charged again as future allocation. Real raw/SNP,
@@ -105,7 +124,11 @@ Execution refuses any existing output, uses a fresh
 `.pending/<case>/source/owner.json`. Inputs are disjoint from outputs. File writes
 are exclusive, fsynced and never replacements; the existing storage writer lease
 is reused. Tests use a private temporary HOME so they do not take the user's
-writer lease.
+writer lease. The parent creates only the verified frozen HOME and MPLCONFIGDIR
+inside its fresh `controls/` prefix before acquiring the lease, so the unchanged
+lease can create `.cache` without relying on preexisting output. These directories
+join the full namespace census. This private/frozen-HOME lease behavior does not
+establish a qualified global per-user lease across independent actual runs.
 
 The actual interpreter argument is the frozen venv alias, never its resolved ELF
 path. The parent separately checks `/proc/self/exe` and alias-to-ELF identity.
@@ -126,17 +149,71 @@ Only a genuinely successful closed owner reaches the separate raw-auditor child.
 That child invokes the unchanged public `memory_family_raw_audit_v4` CLI against
 the one acquired SNP. Before sealing, terminal export binds actual job,
 supervisor, stdout, stderr, cleanup and independently published audit bytes from
-this same attempt. The public `seal_compact_source` and `read_sealed_source` then
-operate on the same closed raw tree, with immutable raw inventory comparison
-before and after. No synthetic converter/private preparer, retained-only reader,
+this same attempt. The public `seal_numeric_source_v2` and `read_numeric_source_v2` then
+operate on the same closed V4 export and raw tree, with immutable raw inventory
+comparison before and after. They create only the derived numeric candidate;
+the original staged source owner/SNP remain in place, and no V1 public seal is a
+prerequisite. Each original base chunk has its mandatory numeric companion. All
+latency, step_latency and full `(3,4)` population values are compared by dtype,
+shape and bytes against retained raw at every tick. Population ordering remains
+source provenance rather than an independent label authentication. No synthetic
+converter/private preparer, retained-only reader,
 final publisher or raw pruning is an admission shortcut.
 
-The preservation report separates compact stored-field preservation, matching
-original-row commitments, and omissions (including cameras not fully retained and
-latency fields). Original nonempty raw and the sole SNP remain authoritative and
+The preservation report separates raw-compared stored-field equality, matching
+original-row commitments and omitted camera pixels. The three numeric fields
+are retained; commitments cannot reconstruct other omitted camera values. Original
+nonempty raw and the sole SNP remain authoritative and
 retained. Natural early/zero-row conditions keep score900 semantics, but actual
 condition stages require a separately versioned evidence-admission design. No
 missing-cell or donor proof is inferred here.
+
+## Complete controls and output accounting
+
+After owner and independent auditor reap/drain, the parent censuses the complete
+`controls/` prefix, including frozen metadata, both launches, supervisor records,
+closed stdout/stderr, outcome, cleanup, audit files, export, HOME/MPLCONFIGDIR
+ancillary metadata outside the per-run control directory and empty namespaces.
+All ordinary metadata descriptors are sorted and passed identically to both
+public calls as `additional_controls`. Already validated controls keep their
+creation-time pins; an altered control cannot be trusted by rehashing it.
+Ancillary cache metadata is held on first observation for accounting only and
+supplies no authority. Later additions, replacement, mutation/restore or aliases
+refuse. The public API's strict path guards remain unchanged; unsupported hidden
+ancillary paths refuse instead of disappearing from the census.
+
+The specifically named root `.palimpsest-storage.lock` and private HOME
+`.cache/palimpsest/writer.lock` files are explicitly recorded as zero-byte
+ephemeral leases and held by identity. A nonzero, aliased or unexpected lease is
+not silently excluded. Tests use a private HOME outside their owned output; the
+actual frozen child HOME is inside `controls/`, and both cases are accounted.
+
+Before conversion and after public reread, an independent complete output census
+must equal the derived raw, sole SNP, source owner, all controls, candidate files,
+conversion and marker roster. Physical paths count once, including worker metadata
+already inside raw; equal hashes do not deduplicate real copies. Unexpected files
+and directories outside the controlled prefix refuse. The census and files stay
+held through input teardown, and actual output bytes are checked again after the
+parent terminal is written. Logical serialized byte accounting and the unchanged
+physical filesystem free-space floor are separate checks.
+
+Public compact accounting retains the combined 1MiB metadata bound for registered
+and additional controls, compact/container metadata and fixed positive reserves;
+there is no old extra support/control MiB. Raw 512MiB and SNP 16MiB remain separate,
+with one SNP count. Parent terminal 64KiB, atomic marker 16KiB and quarantine 8KiB
+remain reserved within the unchanged enclosing 640MiB ceiling. The canonical
+parent terminal is refused before writing above 65536 bytes, and its actual bytes
+and complete post-write output census are checked. A failure retains bytes and
+quarantines a numeric marker. No pruning is enabled.
+
+The terminal's `output_accounting.scoped_storage_verified` describes the complete
+closed census plus bounded tail reservations. Both the public ledger and parent
+keep `stage_peak_accounted:false`: neither observation proves the entire running
+process peak or external lifetime. Source/model/physics/scientific qualification
+remain false. After `SealIndeterminate` the parent stays stopped, retains that
+external error and never uses a later successful read to resume the failed writer.
+A reader can prove only current bytes; `publication_outcome_verified:false` and
+`independent_finalization_required:true` remain explicit.
 
 ## Accounting boundary and completion gate
 
@@ -154,7 +231,7 @@ study qualification is issued by this script before that external reconciliation
 
 Actual input projection bytes, clean install/complete native closure, live
 whole-runtime enforcement, complete parent lifetime reconciliation, independent
-Task 2/whole-feature review and exact-stage operator GO remain explicit gates.
+actual-stage/whole-feature review and exact-stage operator GO remain explicit gates.
 CI and authored fixtures satisfy none of those execution authorities.
 
 The real `execute` entry explicitly refuses while the external full-parent
@@ -196,5 +273,13 @@ receipt are also bound to their validated values. Closed logs are pinned when
 first observed after complete reap/drain. All source/control descriptor teardown
 checks finish under the writer lease before the provisional terminal is written.
 A teardown failure records `status:stopped` and `teardown_error` and quarantines
-any retained source marker; the marker, raw, SNP and controls remain. Terminal
+any retained numeric candidate marker; the marker, raw, SNP and controls remain. Terminal
 write, lease release and process return still require external lifetime closure.
+
+A writer-lease exit failure after terminal write also propagates as a failed parent
+and quarantines its retained numeric candidate; no attempt is retried or resumed.
+Terminal/quarantine writes can themselves fail, so unavailable durable failure
+recording requires external outcome custody. No successful return can replace
+that external lifetime acceptance. All actual namespace, pre-import/exec isolation,
+clean native closure/resource freeze/prior charge reconciliation and separate
+exact-stage GO gates remain closed after this software integration.

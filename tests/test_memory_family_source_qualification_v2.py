@@ -29,7 +29,8 @@ def write_freeze(tmp_path, monkeypatch, *, complete=False):
     monkeypatch.setenv('HOME', str(tmp_path))
     allocation = copy.deepcopy(p.ALLOCATION)
     descriptor = {'path': str(tmp_path / 'not-opened'), 'size_bytes': 1, 'sha256': 'a'*64}
-    freeze = {'schema': 'memory-family-source-freeze-v2', 'state': 'prepared',
+    freeze = {'schema': 'memory-family-source-freeze-v3', 'state': 'prepared',
+        'numeric_profile': p._descriptor(ROOT / 'docs/plans/memory-family-numeric-compact-v2-protocol.json', ROOT),
         'job': value, 'allocation': allocation, 'environment': p._environment(value),
         'runtime_roots': [str(tmp_path / 'authored-install')],
         'namespace_projections': {name: copy.deepcopy(descriptor) if complete else None for name in p.LOGICAL_SOURCES},
@@ -50,9 +51,19 @@ def _accounting():
 
 
 def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
-            accounting_defect=None, final_check=False):
+            accounting_defect=None, final_check=False, controlled_home=False):
     p = parent()
     freeze, path, digest = write_freeze(tmp_path, monkeypatch, complete=True)
+    if controlled_home:
+        monkeypatch.setenv('HOME', freeze['environment']['HOME'])
+    import test_memory_family_raw_audit_v4 as authored_raw
+    from test_memory_family_numeric_preservation_v2 import numeric_values
+    original_policy = authored_raw._policy_row
+    def full_numeric(row, run_id, pixel_shift=0):
+        event, arrays = original_policy(row, run_id, pixel_shift)
+        arrays.update(numeric_values(row['tick']))
+        return event, arrays
+    monkeypatch.setattr(authored_raw, '_policy_row', full_numeric)
     calls = []
     def budget(output):
         from palimpsest.storage import StorageBudget, StorageLimits
@@ -129,13 +140,13 @@ def test_verify_mode_cannot_launch(tmp_path, monkeypatch):
     original_open = os.open
     def safe_open(name, *args, **kwargs):
         public_source = Path(name).suffix == '.py' and any(Path(name).is_relative_to(ROOT / folder) for folder in ('scripts', 'src', 'paper'))
-        public_protocol = Path(name) == ROOT / 'docs/plans/memory-family-allocation-admission-v3-protocol.json'
+        public_protocol = Path(name) in {ROOT / 'docs/plans/memory-family-allocation-admission-v3-protocol.json', ROOT / 'docs/plans/memory-family-numeric-compact-v2-protocol.json'}
         assert Path(name) == path or public_source or public_protocol, 'verification opened a runtime/catalog/GO payload'
         return original_open(name, *args, **kwargs)
     monkeypatch.setattr(os, 'open', safe_open)
     result = p.verify_freeze(path, digest)
     assert result['worker_invocations'] == 0 and result['payloads_opened'] is False
-    assert result['execution_authorized'] is False and len(result['blockers']) == 6
+    assert result['execution_authorized'] is False and len(result['blockers']) == 7
     assert not evidence.exists()
 
 
@@ -213,7 +224,7 @@ def test_raw_and_snapshot_remain_after_pass_or_failure(tmp_path, monkeypatch, fa
         assert result['preservation']['raw_inventory_unchanged'] is True
         assert result['actual_source_qualified'] is False
         assert result['parent_lifetime_reconciled'] is False
-        assert Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+        assert numeric_candidate(freeze).joinpath('commit.json').exists()
     assert result['qualification_claims'] is False and result['pruning_authorized'] is False
 
 
@@ -259,7 +270,7 @@ def test_independent_auditor_rejects_corrupt_authored_source(tmp_path, monkeypat
     freeze, result, calls = harness(tmp_path, monkeypatch, corrupt=corrupt)
     assert result['status'] == 'stopped', result
     assert not (Path(freeze['job']['paths']['control_root']) / 'terminal-export.json').exists()
-    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+    assert not numeric_candidate(freeze).joinpath('commit.json').exists()
     assert Path(freeze['job']['paths']['raw']).exists()
     assert Path(freeze['job']['paths']['snapshot']).exists()
 
@@ -281,7 +292,7 @@ def test_terminal_export_control_identity_corruption_prevents_seal(tmp_path, mon
     monkeypatch.setattr(p, '_write', corrupt)
     freeze, result, calls = harness(tmp_path, monkeypatch)
     assert result['status'] == 'stopped', result
-    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+    assert not numeric_candidate(freeze).joinpath('commit.json').exists()
     assert Path(freeze['job']['paths']['snapshot']).exists()
 
 
@@ -295,14 +306,14 @@ def test_parent_keeps_venv_alias_and_independent_audit_command(tmp_path, monkeyp
 
 
 def test_postseal_final_read_failure_quarantines_without_deletion(tmp_path, monkeypatch):
-    from scripts import memory_family_producer_v4 as producer
-    read = producer.read_sealed_source
-    monkeypatch.setattr(producer, 'read_sealed_source', lambda **kw: (_ for _ in ()).throw(ValueError('authored final read failure')))
+    from scripts import memory_family_source_seal_v2 as producer
+    read = producer.read_numeric_source_v2
+    monkeypatch.setattr(producer, 'read_numeric_source_v2', lambda **kw: (_ for _ in ()).throw(ValueError('authored final read failure')))
     freeze, result, calls = harness(tmp_path, monkeypatch)
     assert result['status'] == 'stopped'
-    source = Path(freeze['job']['paths']['owner']).parent
+    source = numeric_candidate(freeze)
     assert (source / 'commit.json').is_file()  # Failed publication bytes remain.
-    assert (source.parent / 'quarantine.json').is_file()
+    assert (source / 'quarantine.json').is_file()
     descriptor = parent()._descriptor(Path(freeze['job']['paths']['control_root']) / 'terminal-export.json',
         Path(freeze['job']['paths']['evidence_root']))
     with pytest.raises(ValueError):
@@ -446,7 +457,7 @@ def test_rewritten_control_cannot_be_rebound_into_export(tmp_path, monkeypatch, 
     monkeypatch.setattr(p, '_write', rewrite)
     freeze, result, calls = harness(tmp_path, monkeypatch)
     assert result['status'] == 'stopped', result
-    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+    assert not numeric_candidate(freeze).joinpath('commit.json').exists()
     assert not (Path(freeze['job']['paths']['control_root']) / 'terminal-export.json').exists()
 
 
@@ -469,8 +480,8 @@ def test_held_input_exit_failure_is_quarantined_before_terminal(tmp_path, monkey
     assert 'TEARDOWN' in result['teardown_error']['message']
     control = Path(freeze['job']['paths']['control_root'])
     assert p._read(control / 'parent-terminal.json')['status'] == 'stopped'
-    source = Path(freeze['job']['paths']['owner']).parent
-    assert (source / 'commit.json').exists() and (source.parent / 'quarantine.json').exists()
+    source = numeric_candidate(freeze)
+    assert (source / 'commit.json').exists() and (source / 'quarantine.json').exists()
 
 
 @pytest.mark.parametrize('defect', ['alias-target', 'alias-replaced', 'added-module', 'added-empty-namespace'])
@@ -522,7 +533,7 @@ def test_controls_remain_bound_after_creation_until_export(tmp_path, monkeypatch
     freeze, result, calls = harness(tmp_path, monkeypatch)
     assert result['status'] == 'stopped'
     assert not (Path(freeze['job']['paths']['control_root']) / 'terminal-export.json').exists()
-    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+    assert not numeric_candidate(freeze).joinpath('commit.json').exists()
 
 
 def test_original_freeze_teardown_drift_is_caught_under_lease(tmp_path, monkeypatch):
@@ -543,5 +554,262 @@ def test_original_freeze_teardown_drift_is_caught_under_lease(tmp_path, monkeypa
     assert result['status'] == 'stopped'
     assert result['teardown_error']['type'] == 'ValueError'
     assert p._read(Path(freeze['job']['paths']['control_root'])/'parent-terminal.json')['status'] == 'stopped'
-    source = Path(freeze['job']['paths']['owner']).parent
-    assert (source.parent/'quarantine.json').exists()
+    source = numeric_candidate(freeze)
+    assert (source/'quarantine.json').exists()
+
+
+def numeric_candidate(freeze):
+    job = freeze['job']
+    return Path(job['paths']['evidence_root']) / 'numeric-v2' / job['case']['case_id'] / job['run_id']
+
+def test_parent_calls_real_public_numeric_writer_and_rereader(tmp_path, monkeypatch):
+    from scripts import memory_family_source_seal_v2 as public
+    from test_memory_family_numeric_preservation_v2 import numeric_values
+    seen = []
+    for name in ('seal_numeric_source_v2', 'read_numeric_source_v2'):
+        original = getattr(public, name)
+        def observe(*args, _name=name, _original=original, **kwargs):
+            result = _original(*args, **kwargs)
+            seen.append((_name, result, copy.deepcopy(kwargs['additional_controls'])))
+            return result
+        monkeypatch.setattr(public, name, observe)
+    freeze, result, calls = harness(tmp_path, monkeypatch)
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    assert [row[0] for row in seen] == ['seal_numeric_source_v2', 'read_numeric_source_v2']
+    assert calls == ['owner', 'audit']
+    assert seen[0][2] == seen[1][2]
+    for row in seen[1][1]['read']['rows']:
+        for name, expected in numeric_values(row['tick']).items():
+            assert row[name].dtype.str == expected.dtype.str
+            assert row[name].shape == expected.shape
+            assert row[name].tobytes() == expected.tobytes()
+    assert result['schema'] == 'memory-family-source-parent-result-v3'
+    assert result['actual_source_qualified'] is False
+    assert result['parent_lifetime_reconciled'] is False
+    assert result['output_accounting']['scoped_storage_verified'] is True
+    assert result['output_accounting']['stage_peak_accounted'] is False
+    assert seen[1][1]['byte_ledger']['stage_peak_accounted'] is False
+    assert not Path(freeze['job']['paths']['owner']).parent.joinpath('commit.json').exists()
+    assert len(list(Path(freeze['job']['paths']['evidence_root']).rglob('*.snp'))) == 1
+    paths = [d['path'] for d in seen[0][2]]
+    for name in ('freeze.json','owner-launch.json','audit-launch.json','audit-supervisor.json',
+                 'owner-outcome.json','audit.stdout','audit.stderr','terminal-export.json'):
+        assert str(Path(freeze['job']['paths']['control_root']).relative_to(freeze['job']['paths']['evidence_root']) / name) in paths
+
+@pytest.mark.parametrize('defect', ['missing', 'wrong', 'mutated', 'old-schema'])
+def test_numeric_profile_is_mandatory_before_any_output_or_admission(tmp_path, monkeypatch, defect):
+    p = parent()
+    freeze, path, digest = write_freeze(tmp_path, monkeypatch)
+    if defect == 'missing':
+        freeze.pop('numeric_profile')
+    elif defect == 'wrong':
+        freeze['numeric_profile']['path'] = 'docs/plans/memory-family-compact-v4-protocol.json'
+    elif defect == 'mutated':
+        freeze['numeric_profile']['sha256'] = '0'*64
+    else:
+        freeze['schema'] = 'memory-family-source-freeze-v2'
+    path.write_bytes(memory.canonical_bytes(freeze))
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    with pytest.raises((ValueError, KeyError)):
+        p._execute(freeze, path, digest, _admit=lambda *a: pytest.fail('profile gate reached owner admission'))
+    assert not Path(freeze['job']['paths']['evidence_root']).exists()
+
+def test_parent_terminal_enforces_public_64k_bound_before_write(tmp_path):
+    from palimpsest.storage import StorageBudget, StorageLimits
+    target = tmp_path / 'parent-terminal.json'
+    with pytest.raises(ValueError, match='64|65536|terminal'):
+        parent()._write(target, {'authored': 'x'*65536}, StorageBudget([tmp_path], StorageLimits(min_free_bytes=0)))
+    assert not target.exists()
+
+
+def test_parent_censuses_ancillary_control_prefix_and_zero_leases(tmp_path, monkeypatch):
+    from scripts import memory_family_source_seal_v2 as public
+    observed = []
+    original = public.seal_numeric_source_v2
+    def seal(**kwargs):
+        observed.extend(kwargs['additional_controls'])
+        return original(**kwargs)
+    monkeypatch.setattr(public, 'seal_numeric_source_v2', seal)
+    def ancillary(job):
+        prefix = Path(job['paths']['evidence_root']) / 'controls'
+        (prefix / 'matplotlib').mkdir(exist_ok=True)
+        (prefix / 'matplotlib/fontlist.json').write_bytes(b'{"authored":true}')
+        lease = prefix / 'home/.cache/palimpsest/writer.lock'
+        lease.parent.mkdir(parents=True)
+        lease.write_bytes(b'')
+    freeze, result, calls = harness(tmp_path, monkeypatch, corrupt=ancillary)
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    assert any(d['path'] == 'controls/matplotlib/fontlist.json' for d in observed)
+    assert not any('/.cache/' in d['path'] for d in observed)
+    leases = result['output_accounting']['zero_byte_ephemeral_leases']
+    assert any(d['path'] == 'controls/home/.cache/palimpsest/writer.lock' for d in leases)
+    assert any(d['path'] == '.palimpsest-storage.lock' for d in leases)
+    output = Path(freeze['job']['paths']['evidence_root'])
+    total = sum(p.stat().st_size for p in output.rglob('*') if p.is_file())
+    terminal = Path(freeze['job']['paths']['control_root']) / 'parent-terminal.json'
+    assert total == result['output_accounting']['serialized_bytes_before_terminal'] + terminal.stat().st_size
+
+@pytest.mark.parametrize('kind', ['oversize', 'compound-overhead', 'nonzero-lease', 'aliased-lease', 'controlled-nonzero-lease', 'unregistered-output', 'unregistered-empty'])
+def test_parent_complete_census_refuses_unaccounted_or_oversize_outputs(tmp_path, monkeypatch, kind):
+    def ancillary(job):
+        output = Path(job['paths']['evidence_root'])
+        target = output / 'controls/auxiliary.json'
+        if kind == 'oversize':
+            target.write_bytes(b'x' * (1024**2 + 1))
+        elif kind == 'compound-overhead':
+            target.write_bytes(b'x' * (950*1024))
+        elif kind == 'nonzero-lease':
+            (output / '.palimpsest-storage.lock').write_bytes(b'not zero')
+        elif kind == 'aliased-lease':
+            os.link(output / '.palimpsest-storage.lock', output / 'controls/lease-alias')
+        elif kind == 'controlled-nonzero-lease':
+            (Path(job['paths']['evidence_root']) / 'controls/home/.cache/palimpsest/writer.lock').write_bytes(b'not zero')
+        elif kind == 'unregistered-output':
+            (output / 'unlisted.json').write_bytes(b'authored')
+        else:
+            (output / 'unlisted-empty').mkdir()
+    freeze, result, calls = harness(tmp_path, monkeypatch, corrupt=ancillary,
+        controlled_home=kind == 'controlled-nonzero-lease')
+    assert result['status'] == 'stopped', result
+    assert not (numeric_candidate(freeze) / 'commit.json').exists()
+    assert Path(freeze['job']['paths']['snapshot']).is_file()
+    assert Path(freeze['job']['paths']['raw'], 'worker-report.json').is_file()
+
+@pytest.mark.parametrize('kind', ['unlisted', 'change-and-restore', 'raw-change-and-restore'])
+def test_control_census_stays_held_across_real_numeric_publication(tmp_path, monkeypatch, kind):
+    from scripts import memory_family_source_seal_v2 as public
+    original = public.seal_numeric_source_v2
+    def seal(**kwargs):
+        result = original(**kwargs)
+        control = Path(kwargs['evidence_root']) / 'controls'
+        if kind == 'unlisted':
+            (control / 'unlisted-after-census.json').write_bytes(b'authored late addition')
+        else:
+            path = (next((Path(kwargs['evidence_root']) / '.pending').rglob('chunks/*.npz'))
+                    if kind == 'raw-change-and-restore' else control / 'auxiliary.json')
+            payload = path.read_bytes()
+            path.write_bytes(payload + b'changed')
+            path.write_bytes(payload)
+        return result
+    monkeypatch.setattr(public, 'seal_numeric_source_v2', seal)
+    def ancillary(job):
+        (Path(job['paths']['evidence_root']) / 'controls/auxiliary.json').write_bytes(b'authored auxiliary metadata')
+    freeze, result, calls = harness(tmp_path, monkeypatch, corrupt=ancillary)
+    assert result['status'] == 'stopped', result
+    assert (numeric_candidate(freeze) / 'commit.json').is_file()
+    assert (numeric_candidate(freeze) / 'quarantine.json').is_file()
+
+@pytest.mark.parametrize('kind', ['oversize-before-write', 'mutated-after-write', 'unlisted-after-write'])
+def test_terminal_failure_quarantines_numeric_candidate(tmp_path, monkeypatch, kind):
+    p = parent()
+    original = p._write
+    terminals = []
+    def write(path, value, budget):
+        if path.name == 'parent-terminal.json':
+            terminals.append(path)
+            if kind == 'oversize-before-write':
+                value = {**value, 'authored_padding': 'x'*65536}
+        original(path, value, budget)
+        if path.name == 'parent-terminal.json':
+            if kind == 'mutated-after-write':
+                with path.open('ab') as stream:
+                    stream.write(b' '*65536)
+            elif kind == 'unlisted-after-write':
+                (path.parents[1] / 'late.json').write_bytes(b'authored late metadata')
+    monkeypatch.setattr(p, '_write', write)
+    with pytest.raises(ValueError, match='65536|census'):
+        harness(tmp_path, monkeypatch)
+    output = terminals[0].parents[2]
+    assert len(list((output / 'numeric-v2').rglob('quarantine.json'))) == 1
+    assert len(list(output.rglob('initial.snp'))) == 1
+    if kind == 'oversize-before-write':
+        assert not terminals[0].exists()
+
+
+def test_indeterminate_public_writer_is_stopped_and_never_resumed_by_reader(tmp_path, monkeypatch):
+    from scripts import memory_family_source_seal_v2 as public
+    rename = public._rename_noreplace
+    def failed_after_rename(fd):
+        rename(fd)
+        raise OSError('authored failure after actual numeric marker rename')
+    monkeypatch.setattr(public, '_rename_noreplace', failed_after_rename)
+    monkeypatch.setattr(public, '_quarantine', lambda *a: (_ for _ in ()).throw(OSError('authored unavailable public quarantine')))
+    monkeypatch.setattr(public, 'read_numeric_source_v2', lambda **kw: pytest.fail('failed writer was resumed by reader'))
+    freeze, result, calls = harness(tmp_path, monkeypatch)
+    assert result['status'] == 'stopped'
+    assert result['error']['type'] == 'SealIndeterminate'
+    assert result['actual_source_qualified'] is False
+    assert (numeric_candidate(freeze) / 'commit.json').exists()
+    assert (numeric_candidate(freeze) / 'quarantine.json').exists()
+
+
+def test_writer_lease_teardown_error_is_not_a_successful_parent(tmp_path, monkeypatch):
+    from contextlib import contextmanager
+    p = parent()
+    execute = p._execute
+    paths = []
+    def intercepted(value, path, sha, **kwargs):
+        factory = kwargs['_budget_factory']
+        paths.append(numeric_candidate(value))
+        def budget(output):
+            result = factory(output)
+            lock = result.lock
+            @contextmanager
+            def failed_exit():
+                with lock():
+                    yield result
+                raise OSError('AUTHORED WRITER LEASE TEARDOWN FAILURE')
+            result.lock = failed_exit
+            return result
+        kwargs['_budget_factory'] = budget
+        return execute(value, path, sha, **kwargs)
+    monkeypatch.setattr(p, '_execute', intercepted)
+    with pytest.raises(OSError, match='WRITER LEASE'):
+        harness(tmp_path, monkeypatch)
+    assert (paths[0] / 'commit.json').exists()
+    assert (paths[0] / 'quarantine.json').exists()
+
+
+@pytest.mark.parametrize('late', [False, True])
+def test_actual_new_profile_file_bytes_are_checked_and_held(tmp_path, monkeypatch, late):
+    p = parent()
+    public_root = tmp_path / 'authored-public-metadata'
+    profile = public_root / p.NUMERIC_PROFILE
+    profile.parent.mkdir(parents=True)
+    profile.write_bytes((ROOT / p.NUMERIC_PROFILE).read_bytes())
+    monkeypatch.setattr(p, 'PUBLIC_ROOT', public_root)
+    if not late:
+        freeze, path, digest = write_freeze(tmp_path, monkeypatch)
+        profile.write_bytes(profile.read_bytes() + b' ')
+        with pytest.raises(ValueError, match='Pinned'):
+            p._execute(freeze, path, digest, _admit=lambda *a: pytest.fail('profile drift reached owner'))
+        assert not Path(freeze['job']['paths']['evidence_root']).exists()
+    else:
+        from scripts import memory_family_source_seal_v2 as public
+        original = public.read_numeric_source_v2
+        def read(**kwargs):
+            result = original(**kwargs)
+            payload = profile.read_bytes()
+            profile.write_bytes(payload + b' ')
+            profile.write_bytes(payload)
+            return result
+        monkeypatch.setattr(public, 'read_numeric_source_v2', read)
+        freeze, result, calls = harness(tmp_path, monkeypatch)
+        assert result['status'] == 'stopped'
+        assert result['teardown_error']['type'] == 'ValueError'
+        assert (numeric_candidate(freeze) / 'quarantine.json').exists()
+
+
+def test_fresh_controlled_home_bootstraps_before_parent_lease(tmp_path, monkeypatch):
+    freeze, result, calls = harness(tmp_path, monkeypatch, controlled_home=True)
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    assert calls == ['owner', 'audit']
+    output = Path(freeze['job']['paths']['evidence_root'])
+    assert Path(freeze['environment']['HOME']).is_relative_to(output)
+    assert Path(freeze['environment']['MPLCONFIGDIR']).is_dir()
+    leases = result['output_accounting']['zero_byte_ephemeral_leases']
+    assert {d['path'] for d in leases} == {'.palimpsest-storage.lock',
+        'controls/home/.cache/palimpsest/writer.lock'}
+    assert all(d['size_bytes'] == 0 for d in leases)
+    assert result['actual_source_qualified'] is False
+    assert result['parent_lifetime_reconciled'] is False
