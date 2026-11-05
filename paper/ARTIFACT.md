@@ -1,90 +1,61 @@
-# Palimpsest systems paper artifact
+# Authority-aware replay artifact
 
-## Scope
+The artifact tests a domain-semantic contract, not controller quality. Its
+predeclared, committed-then-frozen protocol lives at
+`studies/authority_replay_v1/protocol.json`; drivers and pure analysis live next
+to it. See the study README for commands and output schemas.
 
-The minimal artifact supports the paper's systems/reproducibility claims:
+## What the units mean
 
-- source and asset manifests;
-- fixture tests and operating documentation;
-- retained Markdown/JSON evidence indexes used by the paper;
-- the hash-bound paper claim ledger and generator;
-- LaTeX manuscript, bibliography and vector figures;
-- final PDF and machine-readable verification record.
+| Evidence | Declared units | Scope |
+| --- | ---: | --- |
+| Fault/challenge matrix | 50 | Actual CPU FLYNN/lab faults plus production-interface custody/publication/resource fixtures |
+| Continuation | 10 | Seeded source/restored pairs, 8-prefix + 100 continuation ticks |
+| Replay | 5 | Seeded trajectories with branch/playback/action/policy conditions |
+| Execution overhead | 40 invocations / 10 sets | Null/synchronous/background/background+storage, fresh process per condition |
+| Operation cost | 5 | Full retained RQ2 sources; capture/save/read/restore and replay costs |
+| Offline workflow | 1 | Full FLYNN, same-host clean checkout; no second-machine claim |
 
-It does not package the full local `runs/` directory, downloaded restricted
-assets, model-hosting credentials, held-out data, unfinished studies, or artwork
-inputs whose public redistribution has not been approved.
+Ticks are repeated observations within a unit. Fixed seeds are engineering
+repetitions; seed 0 appeared in disclosed development checks. No held-out or
+population inference follows. All failed/refused/timed-out/incomplete units stay
+in declared denominators; the protocol does not allow replacing them.
 
-## Build environment
+## Evidence custody and analysis
 
-- Python 3.11 or newer; paper scripts use only the standard library.
-- GNU Make.
-- TeX Live with `pdflatex`, `bibtex`, `tikz`, `booktabs`, `natbib`, `microtype`
-  and `hyperref`.
-- Poppler tools `pdfinfo`, `pdftotext` and `pdftoppm` for verification.
+Retain the frozen execution commit, protocol hash, effective configuration,
+commands, source/asset identities, raw-tree inventories and hashes, compact
+rows, sanitized fault traces, and analysis output. The report commit may differ
+from the execution commit and must not replace it in provenance.
 
-The project runtime itself remains pinned by `.python-version`, `uv.lock`, the
-upstream gitlink and asset manifests. A paper build does not download or execute
-the full controller assets.
+A weak predicate accepting a trace is not automatically a false claim. Inspect
+the named claim, observed true/false/unknown truth, evidence and temporal scope.
+B1 and E2 can be successful valid challenges. R1/R2 are study-level replay-label
+guards; they are not production mislabel-refusal measurements.
 
-## Reproduce the paper
+Scientific-array comparisons require finite values and the protocol's frozen
+exact/tolerance rules. Execution-overhead matching alone excludes recorder
+source/event-prefix identity and canonicalizes MuJoCo `timer.duration` on
+private decoded copies. Original snapshots and raw hashes remain retained, all
+RNG/scientific state remains in the match, and replay validation is unchanged.
+An unmatched seed retains all four rows and is excluded as a whole from timing
+summaries. Open/close costs are separate from steady-state tick time.
 
-From the repository root with the prepared environment:
+Raw campaign outputs are local ignored artifacts. Compact evidence and the
+frozen protocol support review without silently redistributing third-party
+assets. Check `THIRD_PARTY_NOTICES.md` and source terms before public deposit of
+checkpoints, graphs, snapshots, or derived arrays. No public archive or permissive
+redistribution status is implied by local availability.
 
-```sh
-make -C paper evidence PYTHON=python3
-make -C paper paper PYTHON=python3
-make -C paper verify PYTHON=python3
-```
+## Verification and remaining gates
 
-Expected retained outputs:
+The integrated generator must reject identity/hash drift, missing/duplicate
+rows and non-finite results rather than supplying expected values. Rebuild the
+paper, check generated-file freshness and citations, inspect all PDF pages, and
+check claim wording against the actual compact summary. A successful source
+build is not a rendered-output or scientific-evidence review.
 
-- `paper/generated/claims.tex`
-- `paper/generated/results-table.tex`
-- `paper/build/palimpsest-systems-paper.pdf`
-- `paper/build/verification.json`
-
-The evidence generator exits nonzero when a source path is absent, a complete
-source-file hash changes, an anchor or JSON pointer does not resolve, active
-claims conflict, supersession is invalid, or wording exceeds its evidence class.
-Generated LaTeX must be byte-identical under `--check`.
-
-## Evidence locations
-
-The claim ledger references compact retained reports under `docs/reports/`.
-Those reports bind historical source revisions, execution records, raw ledgers
-and hashes. The largest raw-run tree is intentionally local: at the time of paper
-construction, `runs/` was approximately 12 GiB. Copying it into Git would neither
-grant redistribution rights nor provide a usable minimal artifact.
-
-The paper uses these evidence categories:
-
-| Category | What it supports | What it does not support |
-| --- | --- | --- |
-| Fixture | Source contracts and authored fault cases | Full model/runtime or scientific outcome |
-| Runtime | Named simulator/controller execution | Browser usability, held-out inference or physical behavior |
-| Browser | Named end-to-end UI session | Human artistic acceptance or cross-platform usability |
-| Development | Frozen development protocol outcomes | Held-out generalization or population claims |
-| Held-out | Only a prospectively protected evaluation | Biological validity without an appropriate study |
-| Human/physical | Separate acceptance or deployment records | Nothing is promoted from simulation automatically |
-
-## Local-only and third-party material
-
-The FLYNN graph and checkpoint are distributed under terms recorded in
-`THIRD_PARTY_NOTICES.md` and are not copied into this paper package. Raw runs may
-contain derived arrays from those assets and require a licence review before
-public deposit. The paper's compact tables report aggregate values and provenance
-without redistributing those assets.
-
-## Independent reproduction
-
-Independent clean-machine reproduction has not yet been performed. The eventual
-archive review must record:
-
-1. archive checksum and exact commit;
-2. OS, Python, TeX and Poppler versions;
-3. evidence, build and verify command exits;
-4. generated-file and final-PDF hashes;
-5. any permitted deviations from the documented environment.
-
-A successful local developer build is not a substitute for this gate.
+Second-machine/operator reproduction, public archive/checksum readback,
+licensing, final authorship/disclosures, venue formatting and submission remain
+separate gates. Controlled subprocess interruption and writer failures do not
+establish power-loss recovery or hostile-host security.

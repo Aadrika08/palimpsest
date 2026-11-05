@@ -1,63 +1,41 @@
-# Palimpsest systems paper submission checklist
+# Authority-aware replay submission checklist
 
-This checklist separates a verified draft from a submission-ready or
-camera-ready artifact. An unchecked item must not be silently inferred from the
-repository.
+Unchecked items remain open even if an earlier draft checked a different gate.
 
-## Manuscript and evidence
+## Scientific and manuscript verification
 
-- [x] Venue-neutral manuscript exists and compiles.
-- [x] Central quantitative claims are generated from a hash-bound claim ledger.
-- [x] Development, held-out, fixture, runtime, browser, human and physical scopes
-  are distinguished.
-- [x] Negative memory, puck and MaleCNS development outcomes are retained without
-  threshold changes or held-out promotion.
-- [x] Prospective whole-memory-case publication is labelled unimplemented.
-- [ ] Independent scientific reviewer has checked claim framing and related work.
-- [ ] Target venue and page/format requirements are selected.
-- [ ] Manuscript is converted to and checked under the target venue template.
+- [x] Focused contract argument, RQ1–RQ4 and static vector figures drafted.
+- [x] Nearest robomimic/ManiSkill replay precedents explicitly credited.
+- [x] Hypothetical interpretation errors distinguished from controlled injections.
+- [x] Weak predicates distinguished from competing systems and observed false claims.
+- [x] Same-host checkout distinguished from second-machine reproduction.
+- [ ] All 111 frozen descriptors accounted for, including failures and partial units.
+- [ ] Compact evidence/source/protocol hashes verified against retained raw inventory.
+- [ ] Generated tables/plot/macros bound exclusively to actual campaign evidence.
+- [ ] Actual results interpreted; all PENDING text removed or explicitly unresolved.
+- [ ] B1/E2 true challenges and unknown claim truth preserved in denominators.
+- [ ] R1/R2 study guards distinguished from production compatibility refusals.
+- [ ] Integrated paper/evidence checks run and recorded on the final report commit.
+- [ ] Final PDF rebuilt, every page visually inspected, and target length checked.
+- [ ] Independent reviewer checks claims against primary traces and protocol.
 
-## Authors and disclosures - owner decisions required
+## External reproduction and archive
 
-- [ ] Final author list and order are approved by every author.
-- [ ] Affiliations and corresponding author are supplied.
-- [ ] Contribution statement is approved.
-- [ ] Conflicts of interest and funding statements are supplied.
-- [ ] Tool-assisted authoring disclosure is written for the selected venue.
-- [ ] Acknowledgements and upstream contributor credit are approved.
+- [ ] Second machine/operator reproduces the focused workflow.
+- [ ] Root code licence and relevant parameter redistribution terms resolved.
+- [ ] Third-party assets/derived arrays reviewed individually before deposit.
+- [ ] Permitted artifact subset archived at the exact report commit.
+- [ ] Archive checksums and public permissions verified by readback.
+- [ ] Archive URL/DOI and citation metadata finalized.
+- [ ] Clean archive extraction reproduces the documented build.
 
-## Licensing and permissions - submission blocker
+## Author and venue decisions
 
-- [ ] A root licence for original Palimpsest project code is selected and added.
-- [ ] Licence/redistribution terms for newly trained parameters are selected.
-- [x] Third-party notices separate upstream MIT code from CC BY-NC 4.0 graph and
-  checkpoint assets.
-- [ ] Every artifact proposed for public deposit is checked against its source
-  licence and redistribution terms.
-- [ ] Artwork inputs are excluded unless their permissions and intended use are
-  separately approved.
+- [ ] Author order, affiliations, contributions and acknowledgements approved.
+- [ ] Funding, conflicts and tool-assisted authoring disclosures supplied.
+- [ ] Venue selected and manuscript checked in its required template.
+- [ ] PDF metadata, anonymity, links and supplementary-material rules checked.
+- [ ] Final PDF checksum recorded and submission portal readback verified.
 
-## Reproducibility and archive - submission blocker
-
-- [x] Paper evidence generation uses the Python standard library.
-- [x] Deterministic LaTeX build commands are documented.
-- [x] Bulk local runs are excluded from Git and identified by retained hashes and
-  report inventories.
-- [ ] A second machine or independent operator reproduces the minimal artifact.
-- [ ] The exact paper commit and permitted artifact subset are deposited in a
-  durable archive.
-- [ ] DOI and archive URL are inserted into the manuscript and citation metadata.
-- [ ] Public archive permissions and checksum readback are independently checked.
-- [ ] Clean-clone build is repeated from the archived release rather than a
-  developer worktree.
-
-## Submission
-
-- [ ] PDF metadata, anonymization and supplementary-file rules match the venue.
-- [ ] All hyperlinks and references resolve in the submitted PDF.
-- [ ] Final PDF hash is recorded after the venue-template build.
-- [ ] Submission portal upload/readback is verified.
-
-The current package is a complete venue-neutral draft. It is not labelled
-submitted, accepted, camera-ready, independently reproduced, or publicly
-archived while the items above remain open.
+This checklist is a review record, not authorization for external publication,
+asset redistribution, or a new compute campaign.

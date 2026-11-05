@@ -1,0 +1,10 @@
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}l c c X@{}}
+\toprule
+Declared operation & Advance physics & Run policy & Validation / supported statement\\
+\midrule
+Playback & No & No & Read retained values; inspect the recorded trajectory.\\
+Action replay & Yes & No & Compare physical records under recorded actions; policy agreement is untested.\\
+Policy replay & Yes & Yes & Compare physical and controller records; report first divergence under declared tolerances.\\
+\bottomrule
+\end{tabularx}
