@@ -1,0 +1,18 @@
+test_balanced_fake_roster_fails_external_digest (test_memory_family_order_v4.StaticOrderChecks.test_balanced_fake_roster_fails_external_digest) ... ok
+test_boolean_or_out_of_range_shift_is_rejected (test_memory_family_order_v4.StaticOrderChecks.test_boolean_or_out_of_range_shift_is_rejected) ... ok
+test_bounded_solver_metadata_rejects_huge_integer_as_value_error (test_memory_family_order_v4.StaticOrderChecks.test_bounded_solver_metadata_rejects_huge_integer_as_value_error) ... ok
+test_candidate_cannot_grant_scientific_admission (test_memory_family_order_v4.StaticOrderChecks.test_candidate_cannot_grant_scientific_admission) ... ok
+test_canonical_unique_complete_family_rows_required (test_memory_family_order_v4.StaticOrderChecks.test_canonical_unique_complete_family_rows_required) ... ok
+test_claim_flags_do_not_substitute_for_recomputed_counts (test_memory_family_order_v4.StaticOrderChecks.test_claim_flags_do_not_substitute_for_recomputed_counts) ... ok
+test_existing_candidate_recomputes_static_counts (test_memory_family_order_v4.StaticOrderChecks.test_existing_candidate_recomputes_static_counts) ... ok
+test_inputs_are_unchanged_and_output_has_no_aliases (test_memory_family_order_v4.StaticOrderChecks.test_inputs_are_unchanged_and_output_has_no_aliases) ... ok
+test_invalid_factor_and_row_types_are_rejected (test_memory_family_order_v4.StaticOrderChecks.test_invalid_factor_and_row_types_are_rejected) ... ok
+test_mutated_candidate_or_source_digest_refuses (test_memory_family_order_v4.StaticOrderChecks.test_mutated_candidate_or_source_digest_refuses) ... ok
+test_naive_row_mod_eight_has_hidden_aliasing (test_memory_family_order_v4.StaticOrderChecks.test_naive_row_mod_eight_has_hidden_aliasing) ... ok
+test_partial_or_extra_shift_list_is_rejected (test_memory_family_order_v4.StaticOrderChecks.test_partial_or_extra_shift_list_is_rejected) ... ok
+test_strata_must_have_sixteen_canonical_rows (test_memory_family_order_v4.StaticOrderChecks.test_strata_must_have_sixteen_canonical_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.096s
+
+OK
