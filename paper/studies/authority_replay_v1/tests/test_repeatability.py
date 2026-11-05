@@ -27,16 +27,23 @@ def fixture_runner(command, output, **limits):
     options = dict(zip(command[2::2], command[3::2]))
     (output / 'continuation.snapshot').write_bytes(b'fixture snapshot')
     replay = 'verify_lab.py' in command[1]
-    report = {'status': 'passed', 'snapshot_sha256': 'b' * 64, 'snapshot_bytes': 16,
+    report = {'status': 'passed', 'finite_scientific_arrays': True, 'snapshot_sha256': 'b' * 64, 'snapshot_bytes': 16,
               'prefix_ticks': int(options['--prefix']), 'continuation_ticks': int(options['--continuation']),
               'first_divergence': None, 'max_abs_errors': {'action': 0.0},
               'random_draws_match': True, 'source_event_prefix_unchanged': True,
               'branch_identity_distinct': True, 'queued_command_idempotency': True}
     if replay:
-        report.update(continuation={'status': 'passed', 'divergences': [], 'max_abs_errors': {'action': 0.0}},
+        source = output / 'runs/source'
+        (source / 'recording').mkdir(parents=True)
+        (source / 'recording/manifest.json').write_text(json.dumps(
+            {'run_id': 'source', 'status': 'completed', 'recorded_ticks': 100, 'controller': 'flynn', 'requested_device': 'cpu'}))
+        report['source'] = {'run_path': str(source), 'snapshot_path': str(output / 'continuation.snapshot'),
+                            'condition': 'background_storage', 'recording_writer': 'background',
+                            'storage_accounting': True, 'seed': int(options['--seed']), 'prefix_ticks': 8, 'source_ticks': 100}
+        report.update(source_run_id='source', continuation={'status': 'passed', 'divergences': [], 'max_abs_errors': {'action': 0.0}},
                       playback={'mode': 'playback', 'first_tick': 8},
                       replays={m: {'run_id': m, 'report': {'status': 'passed', 'first_divergence': None,
-                          'compared_ticks': 100, 'compared_events': 2, 'comparison': {'fields': 'all'},
+                          'mode': m, 'source_run_id': 'source', 'compared_ticks': 100, 'compared_events': 2, 'comparison': {'fields': 'all'},
                           'controller_reexecuted': m == 'policy', 'inference_executed': m == 'policy'}}
                                for m in ('actions', 'policy')},
                       timings={'branch_seconds': .1, 'playback_seconds': .2, 'action_replay_seconds': .3,
@@ -281,3 +288,148 @@ def test_nonfinite_report_is_retained_as_failed_row(tmp_path):
     row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=nonfinite)
     assert row['status'] == 'failed'
     assert json.loads((tmp_path / 'unit/row.json').read_text()) == row
+
+
+@pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+                                         ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+    m = driver()
+    def forged(command, output, **limits):
+        result = fixture_runner(command, output, **limits)
+        report = json.loads((output / 'verification.json').read_text())
+        raw = report['replays'][mode]['report']
+        raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+            'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+        (output / 'verification.json').write_text(json.dumps(report))
+        return result
+    row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+    assert row['status'] == 'failed'
+    assert row['metrics']['agreement'] is not True
+
+
+def test_structured_storage_failure_stops_subsequent_seeds(tmp_path, monkeypatch):
+    m = driver()
+    calls = []
+    def unit(kind, seed, output, identity, **kwargs):
+        calls.append(seed)
+        return {'schema_version': 1, 'study_id': PROTOCOL.study_id, 'kind': kind, 'seed': seed,
+                'unit_id': f'{kind}/{seed}', 'identity': identity, 'status': 'failed', 'metrics': {},
+                'verifier_report': {'resource_boundary': {'type': 'StorageLimitError', 'message': 'quota'}}}
+    monkeypatch.setattr(m, '_unit', unit)
+    monkeypatch.setattr(m, 'campaign_identity', lambda *a: IDENTITY)
+    rows = m.run_campaign('continuation', PROTOCOL, tmp_path / 'continuation', IDENTITY)
+    assert calls == [0]
+    assert all(row['status'] == 'incomplete' for row in rows[1:])
+
+
+def test_inventory_tolerates_atomic_file_disappearance(tmp_path, monkeypatch):
+    m = driver()
+    item = tmp_path / 'staging'
+    item.write_bytes(b'payload')
+    original = Path.stat
+    calls = 0
+    def disappearing(path, **kwargs):
+        nonlocal calls
+        if path == item:
+            calls += 1
+            if calls > 1:
+                raise FileNotFoundError(str(path))
+        return original(path, **kwargs)
+    monkeypatch.setattr(Path, 'stat', disappearing)
+    assert m._size(tmp_path) in (0, 7)
+
+
+def test_monitor_failure_unconditionally_reaps_child(tmp_path, monkeypatch):
+    import sys
+    m = driver()
+    children = []
+    original = m.subprocess.Popen
+    def spawn(*args, **kwargs):
+        child = original(*args, **kwargs)
+        children.append(child)
+        return child
+    monkeypatch.setattr(m.subprocess, 'Popen', spawn)
+    monkeypatch.setattr(m, '_size', lambda *a: (_ for _ in ()).throw(OSError('inventory failure')))
+    try:
+        result = m._process([sys.executable, '-c', 'import time;time.sleep(10)'], tmp_path / 'raw',
+                             timeout=2, max_bytes=1024, minimum_free_bytes=0)
+        assert result['status'] == 'failed' and result['error']['type'] == 'OSError'
+        assert children[0].poll() is not None
+    finally:
+        for child in children:
+            if child.poll() is None:
+                m._kill_tree(child)
+                child.wait()
+
+
+def test_replay_binds_reports_to_recorded_source_manifest(tmp_path):
+    m = driver()
+    def forged(command, output, **limits):
+        result = fixture_runner(command, output, **limits)
+        manifest = output / 'runs/source/recording/manifest.json'
+        raw = json.loads(manifest.read_text())
+        raw['run_id'] = 'different-source'
+        manifest.write_text(json.dumps(raw))
+        return result
+    row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+    assert row['status'] == 'failed' and row['metrics']['agreement'] is not True
+
+
+def test_final_output_inventory_cannot_hide_cap_crossing(tmp_path, monkeypatch):
+    m = driver()
+    monkeypatch.setattr(m, '_size', lambda root: PROTOCOL.resources['ordinary_unit_max_output_bytes'] + 1)
+    row = m.run_continuation_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=fixture_runner)
+    assert row['status'] == 'failed'
+    assert row['resource_boundary']['type'] == 'OutputCap'
+
+
+def test_unit_retains_row_after_monitor_inventory_failure(tmp_path, monkeypatch):
+    import sys
+    m = driver()
+    monkeypatch.setattr(m, '_size', lambda *a: (_ for _ in ()).throw(OSError('inventory failure')))
+    def monitored(command, output, **limits):
+        return m._process([sys.executable, '-c', 'import time;time.sleep(10)'], output, **limits)
+    row = m.run_continuation_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=monitored)
+    assert row['status'] == 'failed'
+    assert row['process']['stop_reason'] == 'monitor failure'
+    assert json.loads((tmp_path / 'unit/row.json').read_text()) == row
+
+
+def test_passing_report_requires_finite_scientific_validation(tmp_path):
+    m = driver()
+    def unvalidated(command, output, **limits):
+        result = fixture_runner(command, output, **limits)
+        report = json.loads((output / 'verification.json').read_text())
+        report.pop('finite_scientific_arrays', None)
+        (output / 'verification.json').write_text(json.dumps(report))
+        return result
+    row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=unvalidated)
+    assert row['status'] == 'failed'
+
+
+def test_finally_kills_owner_group_even_after_leader_exits(tmp_path):
+    import os
+    import sys
+    import time
+    m = driver()
+    pidfile = tmp_path / 'worker.pid'
+    worker = 'import time; time.sleep(10)'
+    code = ('import subprocess,sys,time,pathlib; '
+            f'p=subprocess.Popen([sys.executable,"-c",{worker!r}]); '
+            f'pathlib.Path({str(pidfile)!r}).write_text(str(p.pid)); time.sleep(.1)')
+    result = m._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=2,
+                        max_bytes=1024**2, minimum_free_bytes=0)
+    pid = int(pidfile.read_text())
+    def alive():
+        try:
+            return Path(f'/proc/{pid}/stat').read_text().split()[2] != 'Z'
+        except (FileNotFoundError, ProcessLookupError):
+            return False
+    try:
+        deadline = time.monotonic() + 1
+        while alive() and time.monotonic() < deadline:
+            time.sleep(.01)
+        assert not alive()
+    finally:
+        if alive():
+            os.kill(pid, 9)

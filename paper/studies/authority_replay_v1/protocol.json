@@ -31,13 +31,14 @@
     "float_dtype": "float32",
     "atol": 1e-06,
     "rtol": 1e-06,
-    "identical_nan_positions": true,
+    "identical_nan_positions": false,
     "scope": "CPU/same-version/same-architecture",
     "first_divergence": [
       "field",
       "tick"
     ],
-    "freeze": "No changes after the campaign commit."
+    "freeze": "No changes after the campaign commit.",
+    "nonfinite_policy": "reject_nonfinite_scientific_arrays"
   },
   "fault_cases": [
     {

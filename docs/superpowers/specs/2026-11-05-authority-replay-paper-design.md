@@ -159,8 +159,9 @@ named competing system.
 - Full replay: seeds 0--4, one source trajectory per seed, fixed prefix 8 and 100
   source ticks, followed by branch, playback, action replay, and policy replay.
 - Compare integer, Boolean, identity, shape, and event fields exactly. Compare
-  float32 physics/controller arrays with `atol=1e-6`, `rtol=1e-6`, and identical
-  NaN positions. Compare source/asset identities exactly and report the first
+  float32 physics/controller arrays with `atol=1e-6`, `rtol=1e-6`, and finite
+  scientific arrays only. Reject any NaN or infinity explicitly; matching NaN
+  positions are not accepted. Compare source/asset identities exactly and report the first
   divergent field/tick. This policy is CPU/same-version/same-architecture only
   and may not change after the campaign commit.
 

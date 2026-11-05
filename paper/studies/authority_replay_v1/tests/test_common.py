@@ -88,7 +88,8 @@ def test_protocol_resource_and_comparison_bounds(protocol):
     assert protocol.resources["minimum_free_bytes"] == 6442450944
     assert protocol.comparison_policy["atol"] == 1e-6
     assert protocol.comparison_policy["rtol"] == 1e-6
-    assert protocol.comparison_policy["identical_nan_positions"] is True
+    assert protocol.comparison_policy["identical_nan_positions"] is False
+    assert protocol.comparison_policy["nonfinite_policy"] == "reject_nonfinite_scientific_arrays"
     assert protocol.execution_overhead["warmup_ticks"] == 20
     assert protocol.execution_overhead["measured_ticks"] == 200
 

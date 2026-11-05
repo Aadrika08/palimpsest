@@ -9,7 +9,7 @@ import time
 from palimpsest.artifacts import compare_runs, export_run, playback
 from palimpsest.lab import LabSupervisor
 from palimpsest.records import iter_ticks
-from verify_execution import compare_array
+from verify_execution import compare_array, resource_boundary, validate_scientific_rows
 
 
 def parameters(args):
@@ -42,7 +42,10 @@ def verify(args):
         while time.monotonic() < deadline:
             view = supervisor.describe(identifier)
             if view['status'] == 'failed' and not allow_failed:
-                raise ValueError(f'Owner failed: {view.get("failure") or view.get("replay")}')
+                detail = view.get('failure') or view.get('replay')
+                report['resource_boundary'] = resource_boundary(detail)
+                report['owner_failure'] = detail
+                raise ValueError(f'Owner failed: {detail}')
             if predicate(view):
                 return view
             time.sleep(.02)
@@ -89,6 +92,8 @@ def verify(args):
             command(source, f'continuation-{tick}', 'step')
         supervisor.close(source)
         source_path = supervisor.path(source)
+        if study:
+            validate_scientific_rows(iter_ticks(source_path / 'recording'))
 
         report['source'] = {'run_path': str(source_path), 'snapshot_path': str(snapshot_path),
                             'condition': 'background_storage', 'recording_writer': 'background',
@@ -159,7 +164,16 @@ def verify(args):
             view = wait(identifier, lambda v: v['status'] in ('closed', 'failed'), allow_failed=study)
             supervisor.close(identifier)  # Reap before loading the next full model.
             result = view.get('replay') or {'status': 'failed', 'failure': view.get('failure')}
+            if study and result.get('status') == 'passed':
+                try:
+                    validate_scientific_rows(iter_ticks(supervisor.path(identifier) / 'recording'))
+                except ValueError as error:
+                    result = {**result, 'status': 'failed',
+                              'scientific_validation_error': {'type': type(error).__name__, 'message': str(error)[:4096]}}
             report['replays'][mode] = {'run_id': identifier, 'report': result}
+            boundary = resource_boundary(result) or resource_boundary(view.get('failure'))
+            if boundary:
+                report['resource_boundary'] = boundary
             report['timings'][('action' if mode == 'actions' else 'policy') + '_replay_seconds'] = time.monotonic() - replay_started
             if result['status'] != 'passed' and not study:
                 raise ValueError(f'{mode} replay did not agree: {result}')
@@ -170,8 +184,12 @@ def verify(args):
                 report['exports'][kind] = {'path': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
                                            'size_bytes': path.stat().st_size}
         report['status'] = 'passed' if all(r['report']['status'] == 'passed' for r in report['replays'].values()) else 'failed'
+        if study:
+            report['finite_scientific_arrays'] = report['status'] == 'passed'
     except Exception as error:
-        report.update(status='failed', error={'type': type(error).__name__, 'message': str(error)})
+        detail = {'type': type(error).__name__, 'message': str(error)[:4096]}
+        report.update(status='failed', error=detail)
+        report['resource_boundary'] = report.get('resource_boundary') or resource_boundary(detail)
     finally:
         supervisor.shutdown()
         report['wall_seconds'] = time.monotonic() - started

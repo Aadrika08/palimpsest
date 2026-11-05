@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -18,7 +19,7 @@ REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO))
 from paper.studies.authority_replay_v1.common import (
     append_row, campaign_identity, declared_units, load_protocol, prepare_output_root,
-    require, validate_finite, parse_json,
+    require, validate_finite, parse_json, sha256_file,
 )
 
 PROTOCOL = REPO / 'paper/studies/authority_replay_v1/protocol.json'
@@ -32,7 +33,15 @@ def _json(path, value):
 
 
 def _size(root):
-    return sum(p.stat().st_size for p in root.rglob('*') if p.is_file() and not p.is_symlink())
+    total = 0
+    for path in root.rglob('*'):
+        try:
+            info = path.lstat()
+        except (FileNotFoundError, ProcessLookupError):
+            continue  # Owner atomically renamed/removed an unpublished staging file.
+        if stat.S_ISREG(info.st_mode):
+            total += info.st_size
+    return total
 
 
 def _descendants(pid):
@@ -52,7 +61,12 @@ def _descendants(pid):
 def _kill_tree(child):
     descendants = _descendants(child.pid)
     # Capture before killing the leader, which reparents isolated worker sessions.
-    for pid in [child.pid, *descendants]:
+    # The process group may outlive a leader already reaped by poll().
+    try:
+        os.killpg(child.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    for pid in descendants:
         try:
             if os.getpgid(pid) == pid:
                 os.killpg(pid, signal.SIGKILL)
@@ -76,25 +90,33 @@ def _process(command, output, *, timeout, max_bytes, minimum_free_bytes):
     # Verifiers require a fresh destination, so logs live in its parent.
     with (output.parent / 'stdout.log').open('wb') as stdout, (output.parent / 'stderr.log').open('wb') as stderr:
         child = subprocess.Popen(command, env=env, stdout=stdout, stderr=stderr, start_new_session=True)
-        status, reason = 'completed', None
-        while child.poll() is None:
-            if time.monotonic() - started >= timeout:
-                status, reason = 'timeout', 'unit wall-clock cap'
-            elif _size(output.parent) >= max_bytes:
-                status, reason = 'failed', 'unit output cap'
-            elif shutil.disk_usage(output.parent).free < minimum_free_bytes:
-                status, reason = 'failed', 'filesystem free-space reserve'
-            if reason:
+        status, reason, error = 'completed', None, None
+        try:
+            while child.poll() is None:
+                if time.monotonic() - started >= timeout:
+                    status, reason = 'timeout', 'unit wall-clock cap'
+                elif _size(output.parent) >= max_bytes:
+                    status, reason = 'failed', 'unit output cap'
+                elif shutil.disk_usage(output.parent).free < minimum_free_bytes:
+                    status, reason = 'failed', 'filesystem free-space reserve'
+                if reason:
+                    break
+                time.sleep(.05)
+        except Exception as exc:
+            status, reason = 'failed', 'monitor failure'
+            error = {'type': type(exc).__name__, 'message': str(exc)[:4096]}
+        finally:
+            try:
                 _kill_tree(child)
-                break
-            time.sleep(.05)
-        code = child.wait()
+            finally:
+                code = child.wait()
+
     if code and status == 'completed':
         status = 'failed'
-    return {'status': status, 'returncode': code, 'stop_reason': reason}
+    return {'status': status, 'returncode': code, 'stop_reason': reason, 'error': error}
 
 
-def _paired(report):
+def _paired(report, expected_ticks):
     continuation = report.get('continuation', {})
     pairs = {'branch': {'agreement': continuation.get('status') == 'passed',
                         'first_divergence': next(iter(continuation.get('divergences', [])), None),
@@ -107,6 +129,10 @@ def _paired(report):
     for mode, label in (('actions', 'action_replay'), ('policy', 'policy_replay')):
         raw = report.get('replays', {}).get(mode, {}).get('report', {})
         pairs[label] = {'agreement': raw.get('status') == 'passed'
+                        and raw.get('mode') == mode
+                        and type(raw.get('compared_ticks')) is int and raw['compared_ticks'] == expected_ticks
+                        and isinstance(report.get('source_run_id'), str)
+                        and raw.get('source_run_id') == report['source_run_id']
                         and raw.get('controller_reexecuted') is (mode == 'policy')
                         and raw.get('inference_executed') is (mode == 'policy'),
                         'first_divergence': raw.get('first_divergence'),
@@ -153,7 +179,10 @@ def _unit(kind, seed, output, identity, *, protocol=None, repo=REPO, assets=None
         report_path = output / 'raw/verification.json'
         report = parse_json(report_path.read_text()) if report_path.exists() else {}
         row['verifier_report'] = report
+        row['resource_boundary'] = report.get('resource_boundary')
         if report:
+            if report.get('status') == 'passed':
+                require(report.get('finite_scientific_arrays') is True, 'finite scientific validation missing')
             row['metrics'].update(snapshot_bytes=report.get('snapshot_bytes'),
                                   snapshot_sha256=report.get('snapshot_sha256'))
             if row['metrics']['snapshot_bytes'] is None and (output / 'raw/continuation.snapshot').exists():
@@ -164,7 +193,18 @@ def _unit(kind, seed, output, identity, *, protocol=None, repo=REPO, assets=None
                     isinstance(report.get('snapshot_sha256'), str) and len(report['snapshot_sha256']) == 64,
                     'snapshot identity incomplete')
             if kind == 'replay':
-                row['paired_raw_values'] = _paired(report)
+                source = report.get('source', {})
+                source_path = Path(source.get('run_path', '')).resolve()
+                require(source_path.is_relative_to(output / 'raw'), 'source must belong to this fresh unit')
+                manifest_path = source_path / 'recording/manifest.json'
+                manifest = parse_json(manifest_path.read_text())
+                require(manifest.get('run_id') == report.get('source_run_id') == source_path.name,
+                        'recorded replay source identity differs')
+                require(manifest.get('status') == 'completed' and manifest.get('recorded_ticks') == section['source_ticks']
+                        and manifest.get('controller') == 'flynn' and manifest.get('requested_device') == 'cpu',
+                        'recorded replay source scope differs')
+                row['source_manifest_sha256'] = sha256_file(manifest_path)
+                row['paired_raw_values'] = _paired(report, section['source_ticks'])
                 row['source'] = report.get('source')
                 complete = all(p['validated_fields'] and p['executed_computation'] is not None
                                for p in row['paired_raw_values'].values())
@@ -197,13 +237,23 @@ def _unit(kind, seed, output, identity, *, protocol=None, repo=REPO, assets=None
             'field': raw_divergence.get('field', raw_divergence.get('component')),
             'tick': raw_divergence.get('tick')}
     row['metrics']['elapsed_seconds'] = time.monotonic() - started
-    row['metrics']['output_bytes'] = _size(output)
+    try:
+        row['metrics']['output_bytes'] = _size(output)
+    except OSError as exc:
+        row.update(status='failed', error={'type': type(exc).__name__, 'message': str(exc)[:4096]})
+        row['metrics']['output_bytes'] = None
     for _ in range(4):
         _json(output / 'row.json', row)
-        measured = _size(output)
+        try:
+            measured = _size(output)
+        except OSError:
+            break
         if measured == row['metrics']['output_bytes']:
             break
         row['metrics']['output_bytes'] = measured
+    if (row['metrics']['output_bytes'] is not None and
+            row['metrics']['output_bytes'] > protocol.resources['ordinary_unit_max_output_bytes']):
+        row.update(status='failed', resource_boundary={'type': 'OutputCap', 'message': 'final unit inventory exceeded cap'})
     _json(output / 'row.json', row)
     return row
 
@@ -259,7 +309,8 @@ def run_campaign(kind, protocol, output, identity, *, repo=REPO, assets=None, pr
             except Exception as exc:
                 row.update(status='failed', error={'type': 'IdentityDrift', 'message': str(exc)})
                 stopped = 'campaign identity drift'
-            if row['status'] in ('timeout', 'refused') or row.get('process', {}).get('stop_reason'):
+            if (row['status'] in ('timeout', 'refused') or row.get('process', {}).get('stop_reason')
+                    or row.get('resource_boundary') or row.get('verifier_report', {}).get('resource_boundary')):
                 stopped = 'previous unit reached resource boundary'
         unit_row_path = output / f"seed-{unit['seed']}" / 'row.json'
         if unit_row_path.exists():

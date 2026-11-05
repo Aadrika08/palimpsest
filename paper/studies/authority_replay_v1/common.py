@@ -114,10 +114,11 @@ def load_protocol(path: Path) -> Protocol:
     require(isinstance(resources["stop_rules"], list) and len(resources["stop_rules"]) == 4
             and all(isinstance(x, str) and x for x in resources["stop_rules"]), "missing stop rules")
     comparison = raw["comparison_policy"]
-    _keys(comparison, {"exact_fields", "float_dtype", "atol", "rtol", "identical_nan_positions", "scope", "first_divergence", "freeze"}, "comparison")
+    _keys(comparison, {"exact_fields", "float_dtype", "atol", "rtol", "identical_nan_positions", "nonfinite_policy", "scope", "first_divergence", "freeze"}, "comparison")
     require(comparison["exact_fields"] == ["integer", "boolean", "identity", "shape", "event", "source_identity", "asset_identity"]
             and comparison["float_dtype"] == "float32" and comparison["atol"] == 1e-6
-            and comparison["rtol"] == 1e-6 and comparison["identical_nan_positions"] is True
+            and comparison["rtol"] == 1e-6 and comparison["identical_nan_positions"] is False
+            and comparison["nonfinite_policy"] == "reject_nonfinite_scientific_arrays"
             and comparison["scope"] == "CPU/same-version/same-architecture"
             and comparison["first_divergence"] == ["field", "tick"], "invalid frozen comparison policy")
     require(isinstance(raw["fault_cases"], list), "fault_cases must be a list")

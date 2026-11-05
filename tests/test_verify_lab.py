@@ -86,3 +86,17 @@ def test_study_owner_flow_uses_exact_lengths_and_keeps_pair_reports(tmp_path, mo
     assert set(result['timings']) == {'capture_save_seconds', 'branch_seconds', 'playback_seconds',
                                       'action_replay_seconds', 'policy_replay_seconds'}
     assert all(value >= 0 for value in result['timings'].values())
+
+
+def test_owner_storage_failure_remains_structured(tmp_path, monkeypatch):
+    class Supervisor:
+        def __init__(self, *args, **kwargs): pass
+        def start(self, config): return 'source'
+        def describe(self, identifier):
+            return {'status': 'failed', 'failure': {'type': 'StorageLimitError', 'message': 'owner quota'}}
+        def shutdown(self): pass
+    monkeypatch.setattr(verify_lab, 'LabSupervisor', Supervisor)
+    report = verify_lab.verify(Namespace(repo=tmp_path, assets=tmp_path, output=tmp_path / 'out',
+                                        controller='flynn', seed=0, prefix=8, continuation=92, study=True))
+    assert report['status'] == 'failed'
+    assert report['resource_boundary'] == {'type': 'StorageLimitError', 'message': 'owner quota'}
