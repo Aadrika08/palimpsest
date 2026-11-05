@@ -1,20 +1,20 @@
 \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,font=\small]
 \node[font=\bfseries] at (0,0) {Client / display};
 \node[font=\bfseries] at (5,0) {Runtime owner};
-\node[font=\bfseries] at (10.5,0) {Retained evidence};
-\foreach \x in {0,5,10.5} \draw[gray!50] (\x,-0.35)--(\x,-5.9);
+\node[font=\bfseries] at (11,0) {Retained evidence};
+\foreach \x in {0,5,11} \draw[gray!50] (\x,-0.35)--(\x,-7.2);
 \draw[->,thick,palblue] (0,-0.65)--node[above,font=\scriptsize]{request $c$, expected revision $v$}(5,-0.65);
 \draw[->,palblue] (5,-1.2)--node[above,font=\scriptsize]{accepted / queued}(0,-1.2);
 \node[anchor=west,font=\scriptsize,text=palgold] at (0.12,-1.7) {preview may already be visible};
-\node[fill=white,font=\scriptsize,align=center] at (5,-1.8) {$t$, $t+1$: world unchanged};
+\node[fill=white,font=\scriptsize,align=center] at (5,-2.15) {$t$, $t+1$: world unchanged};
 \node[draw=palgreen,fill=palgreen!7,rounded corners,align=center,
-      text width=3.7cm,font=\scriptsize] at (5,-2.65)
-      {$t+2$: apply intervention to world\\refresh observation via \texttt{\_get\_obs()}\\increment revision to $v+1$};
-\draw[->,thick,palgreen] (5,-3.4)--node[above,font=\scriptsize]{emit applied receipt: $c$, $t+2$, $v+1$}(10.5,-3.4);
+      text width=4.8cm,font=\scriptsize] at (5,-3.15)
+      {$t+2$: apply intervention\\refresh observation\\increment revision to $v+1$};
+\draw[->,thick,palgreen] (5,-4.1)--node[above,font=\scriptsize]{applied receipt: $c$, $t+2$, $v+1$}(11,-4.1);
 \node[draw=palblue,fill=palblue!5,rounded corners,align=center,
-      text width=3.7cm,font=\scriptsize] at (5,-4.35)
-      {project refreshed policy inputs\\policy + recurrent/RNG state $\to$ action\\environment step + RNG/wrapper updates};
-\draw[->,thick,palblue] (5,-5.2)--node[above,font=\scriptsize]{record inputs, action, resulting transition}(10.5,-5.2);
-\node[anchor=west,font=\scriptsize,align=left] at (0,-5.85)
+      text width=4.8cm,font=\scriptsize] at (5,-5.3)
+      {project policy inputs\\run policy $\to$ action\\advance physics\\update state and RNG};
+\draw[->,thick,palblue] (5,-6.45)--node[above,font=\scriptsize]{inputs, action, resulting transition}(11,-6.45);
+\node[anchor=west,font=\scriptsize,align=left] at (0,-7.1)
       {Snapshots preserve the whole continuation state, including RNG and pending commands.};
 \end{tikzpicture}

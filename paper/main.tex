@@ -342,7 +342,10 @@ episodes with the same seed while preserving 20 warm-up and 200 measured ticks;
 reset cost stays within measured wall time, with reset counts/events retained.
 Engine, controller, seeds, oracles, and tolerances are unchanged. The complete
 initial attempt is retained with hashes. The amended full campaign retains the
-original deadline and combined 16 GiB cap; its completion is not assumed here.
+original deadline and combined 16 GiB cap. A recovery launch stopped on source
+identity drift during a late worker patch; its records remain separate. Final
+execution uses an isolated checkout and protocol revision 3, which preserves the
+reset semantics and tightens its output cap to account for both retained attempts.
 
 \paragraph{Result binding.}
 \textbf{PENDING RESULTS: recovery campaign evidence has not yet been bound to this draft.}
@@ -363,7 +366,9 @@ small deterministic fixtures. The table keeps those evidence paths visible.
 \centering\small
 \caption{Frozen fault/challenge matrix. Each weak predicate is a stated
 acceptance assumption evaluated on the same trace, not a competitor. Acceptance
-and observed claim truth must be interpreted separately.}
+and observed claim truth must be interpreted separately. Detection columns split
+production-interface outcomes, diagnostic comparisons (S1/B2), and study replay-label
+guards (R1/R2); diagnostic divergence is not automatic runtime refusal.}
 \label{tab:fault}\studyinput{fault-matrix}
 \end{table}
 
