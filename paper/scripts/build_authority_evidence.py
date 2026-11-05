@@ -422,9 +422,10 @@ def generate_outputs(result, hashes, trace_root=None):
             if raw['matched']:
                 values = [0, *raw['relative_percent'].values()]
                 plot.append(rf'\draw[gray!40] ({raw["seed"]},{y(min(values)):.6f}) -- ({raw["seed"]},{y(max(values)):.6f});')
-        for c, color, label in zip(CONDITIONS[1:], ('blue','red','black'), ('sync','background','storage')):
+        for c, color, mark, label in zip(CONDITIONS[1:], ('blue','red','black'), ('+','x','o'),
+                                         (r'$+$ sync', r'$\times$ background', r'$\circ$ storage')):
             coords = ' '.join(f'({seed},{y(value):.6f})' for seed,condition,value in points if condition == c)
-            plot.append(rf'\draw[{color}] plot[only marks,mark=+] coordinates {{{coords}}};')
+            plot.append(rf'\draw[{color}] plot[only marks,mark={mark}] coordinates {{{coords}}};')
             plot.append(rf'\node[{color},anchor=west] at (0,{4.1+CONDITIONS.index(c)*0.25:.2f}) {{{label}}};')
         plot.append(r'\end{tikzpicture}')
         outputs['overhead-plot.tex'] = '\n'.join(plot)+'\n'
