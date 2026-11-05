@@ -1,0 +1,29 @@
+{
+  "actual_memory_study_cost_measured": false,
+  "full_study_cpu_admitted": false,
+  "input": {
+    "path": "parent-report.json",
+    "sha256": "f65bc5aec434d7b64f3e47c07b728262a00faca8727a75bdcd8e0dc717ac47f8",
+    "size_bytes": 149160,
+    "source_path": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/runs/change-audit-pilot-v1-20261105-source3c17cfd/pilot/parent-report.json"
+  },
+  "observed_mean_seconds": "25.155666500000000",
+  "observed_zero_tick_anchor_worker_cpu_seconds": [
+    "25.857122",
+    "25.122614000000002",
+    "24.673455999999998",
+    "24.969474"
+  ],
+  "required_next_evidence": "Use the already planned separately admitted single source and own qualification for real cost calibration; no extra owner or automatic retry; retain caps and full cohorts.",
+  "scenario": {
+    "assumption": "Both blocks each48families x3kinds, eachcase1freshsource+9freshcondition workers, allusingthe historicalzero-tick-workermean. This is an explicit transfer assumption, not a lower bound or prediction.",
+    "fresh_worker_count": 2880,
+    "includes_new_ticks": false,
+    "includes_supervisors_audits_and_preparation": false,
+    "memory_lane_cap_seconds": 43200,
+    "worker_only_cpu_hours": "20.124533200000000",
+    "worker_only_cpu_seconds": "72448.319520000000000"
+  },
+  "schema": "historical-receipt-budget-planning-scenario-v1",
+  "scope": "metadata-only historical receipt arithmetic; no new runtime measurement or calibration"
+}

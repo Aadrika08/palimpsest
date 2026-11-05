@@ -1,0 +1,6 @@
+{
+  "scope": "same-attempt read-only follow-up after admin refusal",
+  "worker_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/palimpsest-memory-lifetime-probe-20261105-source-02.service",
+  "cgroup_exists": false,
+  "original_admin_result_unchanged": true
+}

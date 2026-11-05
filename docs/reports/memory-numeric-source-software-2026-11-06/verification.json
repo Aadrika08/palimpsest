@@ -1,0 +1,66 @@
+{
+  "actual_preservation_verified": false,
+  "actual_source_qualified": false,
+  "approved_research_cpu_prior_seconds": 1222.455497,
+  "artifact_preservation": "parent-only rm suppression, sparse tar copy of private tmpfs before namespace exit; all testcommands unchanged",
+  "artifacts": {
+    "canonical.log": {
+      "sha256": "956372f0103b36238c1f6730ea5cf485e466de6759d5206c5e3b983b30f53911",
+      "size_bytes": 16556
+    },
+    "snapshot-scope-observation.json": {
+      "sha256": "b1072e382f23ddb2549a095632bb15564fe5d995700c3353dd323fff82cb9b92",
+      "size_bytes": 4861
+    },
+    "source-config-after.json": {
+      "sha256": "d02abf4de6595a3d4fe1c122c0952798342b3e7ffb359c8d7240064c99ab5672",
+      "size_bytes": 284653
+    },
+    "tmpfs-authored-fixtures-list.txt": {
+      "sha256": "f989a0490d3f652c7ff27cb1e0aea09cf1e9a4fdf84c7467ba60cf2052ccff56",
+      "size_bytes": 254179
+    },
+    "tmpfs-authored-fixtures.tar": {
+      "sha256": "474beacb6aa934a65c3d5ff4e762a90b012570416c8db1f5d2cd358b01f4fada",
+      "size_bytes": 10588160
+    }
+  },
+  "canonical_passes": [
+    {
+      "deselected": 69,
+      "passed": 6866,
+      "seconds": 1910.88,
+      "skipped": 318
+    },
+    {
+      "deselected": 7246,
+      "passed": 7,
+      "seconds": 10.01,
+      "skipped": 0
+    },
+    {
+      "deselected": 7248,
+      "passed": 5,
+      "seconds": 59.21,
+      "skipped": 0
+    },
+    {
+      "deselected": 7196,
+      "passed": 57,
+      "seconds": 53.69,
+      "skipped": 0
+    }
+  ],
+  "environment": "canonical runner clean pytest env, sharedCPython3.11.15alias, private4GiB tmpfs; research opt-ins unset",
+  "exit_code": 0,
+  "failed": 0,
+  "head": "53ab035f6e0082dd3430490067cb6b0ac4c8dc5a",
+  "raw_deletion_enabled": false,
+  "research_execution_launched": false,
+  "schema": "numeric-source-software-verification-v1",
+  "scope_error": "Initial and intermediate broad snapshots hashed57trackedmodel/data artifacts unnecessarily. No inference or data parsing. Final continuity restricted to source/config. These snapshots are not payload-free evidence.",
+  "source_config_changed": [],
+  "source_config_files_continuity_checked": 1986,
+  "total_passed": 6935,
+  "total_skipped": 318
+}
