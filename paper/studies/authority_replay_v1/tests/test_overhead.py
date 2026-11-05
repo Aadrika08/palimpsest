@@ -382,6 +382,15 @@ def test_unclassified_native_crash_stops_admission(tmp_path, monkeypatch):
     assert row['error']['resource_limit'] == 'unclassified_worker_failure'
 
 
+def test_direct_writer_quota_and_chained_resource_errors_stop():
+    assert o._is_resource_failure(RuntimeError('Recording quota exceeded before publication'))
+    assert o._is_resource_failure(RuntimeError('Background recording write failed'))
+    assert not o._is_resource_failure(ValueError('scientific mismatch'))
+    error = RuntimeError('wrapped writer error')
+    error.__cause__ = OSError(28, 'disk full')
+    assert o._is_resource_failure(error)
+
+
 def test_development_diagnostics_preserve_complete_normalized_state(tmp_path, monkeypatch):
     from palimpsest import snapshots
     import json

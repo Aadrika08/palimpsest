@@ -451,6 +451,19 @@ class WorkerExecutionError(RuntimeError):
         self.error_type = error_type
 
 
+def _is_resource_failure(exc):
+    from palimpsest.storage import StorageLimitError
+    seen = set()
+    while exc is not None and id(exc) not in seen:
+        seen.add(id(exc))
+        if (isinstance(exc, (ResourceBoundaryError, StorageLimitError, MemoryError))
+                or isinstance(exc, OSError) and exc.errno in (12, 24, 28, 122)
+                or str(exc) in ('Recording quota exceeded before publication', 'Background recording write failed')):
+            return True
+        exc = exc.__cause__ or exc.__context__
+    return False
+
+
 def _resource_boundary(condition, limit, message):
     if not condition:
         raise ResourceBoundaryError(limit, message)
@@ -605,9 +618,7 @@ def main():
             result = call(config['seed'], config['condition'] if call is _execution else Path(config['source']),
                           Path(config['output']), Path(config['repo']), Path(config['assets']), Path(config['campaign_root']))
         except Exception as exc:
-            from palimpsest.storage import StorageLimitError
-            boundary = isinstance(exc, (ResourceBoundaryError, StorageLimitError, MemoryError)) or (
-                isinstance(exc, OSError) and exc.errno in (12, 24, 28, 122))
+            boundary = _is_resource_failure(exc)
             error = {'error_type': getattr(exc, 'error_type', type(exc).__name__), 'message': str(exc), 'resource_boundary': boundary}
             if boundary:
                 error['resource_limit'] = getattr(exc, 'resource_limit', 'worker_resource')
