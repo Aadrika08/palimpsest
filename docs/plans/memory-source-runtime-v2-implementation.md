@@ -43,9 +43,11 @@ Admission failure must precede model import and writes; acquired state must be c
 
 ## Task 2: Accounted parent, terminal export and preservation invocation
 
-**Files:** Create `scripts/qualify_memory_family_source_v2.py`, `tests/test_memory_family_source_qualification_v2.py`, and `docs/plans/memory-source-preservation-v2.md`. Reuse `paper/studies/change_audit_v1/process.py::run_accounted` without weakening it.
+**Files:** Create `scripts/qualify_memory_family_source_v2.py`, `tests/test_memory_family_source_qualification_v2.py`, and `docs/plans/memory-source-preservation-v2.md`. Modify Task1's module/tests only to expose the pure template-validation interface below. Reuse `paper/studies/change_audit_v1/process.py::run_accounted` without weakening it.
 
 **Interfaces:** The parent has a preparation/verification mode that cannot open actual protected/model payloads, and an explicit execution entry consuming `--freeze PATH --expected-freeze-sha256 SHA`. The actual worker command, environment, source/runtime roster, unique output and limits are frozen; no arbitrary command/loader callback is available from the real CLI. `run_source` from Task1 supplies the closed owner outcome; the parent supplies real launch/reap/drain and CPU/control records.
+
+Add `validate_source_template(value: dict) -> dict`: it accepts the same exact job metadata only with `parent_admission=None`, performs common metadata validation, and cannot authorize `run_source`. Keep `validate_source_job` strict and its existing return shape unchanged. Actual admission is attached only after execution admission, with the existing non-circular job hash. Preparation must not invent or publish an `admitted=True` placeholder to reuse the live validator.
 
 - [ ] Write red tests `test_verify_mode_cannot_launch`, `test_closed_or_changed_freeze_refuses_before_owner`, `test_unknown_cpu_or_non_drained_owner_prevents_raw_audit`, `test_duplicate_output_is_not_a_new_attempt`, `test_deadline_covers_cleanup_and_final_receipt`, and `test_raw_and_snapshot_remain_after_pass_or_failure`.
 - [ ] Freeze the complete selected input/resource contract and validate real namespace-only coverage for the two existing logical sources before native admission. Missing independently authorized projections remain a concrete input blocker; do not inspect a mixed held-out catalog to manufacture them. Clean installation/source-prefix and exact dependency closure must be prepared without deleting old bytecode or evidence.
