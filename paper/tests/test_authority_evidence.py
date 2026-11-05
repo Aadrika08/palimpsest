@@ -3,6 +3,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -194,6 +195,19 @@ class AuthorityEvidenceTests(unittest.TestCase):
         output = self.builder().generate_outputs(result, {})
         self.assertIn(r'\newcommand{\NullWallMedianMs}{not estimable}', output['authority-claims.tex'])
         self.assertIn('not estimable', output['overhead-plot.tex'])
+
+    def test_plot_tick_labels_stay_separated_with_small_negative_and_large_tail(self):
+        p,s,m = fixture()
+        for row in s['rows']:
+            if row['kind'] == 'execution_overhead':
+                row['metrics']['wall_seconds_per_tick'] = {
+                    'null':1., 'synchronous':1.68, 'background':.985, 'background_storage':2.86,
+                }[row['condition']]
+        module = self.builder()
+        plot = module.generate_outputs(module.analyze(summarize(p,s['rows']),m,p),{})['overhead-plot.tex']
+        ticks = sorted(float(y) for y in re.findall(r'\\node\[left\] at \(-0\.5,([0-9.]+)\)',plot))
+        self.assertGreaterEqual(len(ticks),2)
+        self.assertGreater(min(b-a for a,b in zip(ticks,ticks[1:])),.3)
 
     def test_passing_comparisons_require_exact_scope_and_no_divergence(self):
         module = self.builder()

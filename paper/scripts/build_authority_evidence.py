@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import io
 import json
+import math
 from pathlib import Path
 import statistics
 import sys
@@ -422,12 +423,19 @@ def generate_outputs(result, hashes, trace_root=None):
     points = [(raw['seed'], c, raw['relative_percent'][c]) for raw in o['raw'] if raw['matched'] for c in CONDITIONS[1:]]
     if points:
         low = min(0, *(p[2] for p in points)); high = max(0, *(p[2] for p in points))
-        span = max(high-low, 1)
+        target = max(high-low, 1) / 4
+        magnitude = 10 ** math.floor(math.log10(target))
+        step = next(n*magnitude for n in (1,2,5,10) if n*magnitude >= target)
+        low, high = math.floor(low/step)*step, math.ceil(high/step)*step
+        if high == low:
+            high += step
+        span = high-low
+        ticks = [low+i*step for i in range(round(span/step)+1)]
         y = lambda value: 0.25+3*(value-low)/span
         plot = [r'\begin{tikzpicture}[x=0.48cm,y=1cm]', rf'\draw[->] (-0.5,0) -- (10,0) node[right] {{seed}};',
                 rf'\draw[->] (-0.5,0) -- (-0.5,3.7) node[above] {{paired delta (\%)}};',
                 rf'\draw[dashed] (-0.5,{y(0):.6f}) -- (9.5,{y(0):.6f});']
-        for value in dict.fromkeys((low,0,high)):
+        for value in ticks:
             plot.append(rf'\node[left] at (-0.5,{y(value):.6f}) {{{number(value)}}};')
         for seed in range(10): plot.append(rf'\node[below] at ({seed},0) {{{seed}}};')
         for raw in o['raw']:
