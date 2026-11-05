@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from paper.studies.authority_replay_v1.analyze import summarize
 from paper.studies.authority_replay_v1.common import load_protocol, parse_json, require, validate_finite
+from paper.studies.authority_replay_v1.repeatability import _paired
 
 STUDY_COMMIT = 'd8658dda3fca37bb43b6dafc909114279f706f11'
 PROTOCOL_SHA256 = '7a985038bffa2f55ea2eeb6f75815c96ce179e0e5a74ee9e45db0aa1b1c03b35'
@@ -57,6 +58,43 @@ def _faults(rows):
                 study_guard_detection=sum(r.get('explicit_detection') is True and r.get('outcome_scope') == 'study_guard' for r in rows))
 
 
+def _digest(value):
+    return isinstance(value, str) and len(value) == 64 and all(c in '0123456789abcdef' for c in value)
+
+
+def _replay_mode(raw, mode, source, ticks):
+    require(isinstance(raw, dict) and raw.get('status') == 'passed'
+            and raw.get('mode') == mode and raw.get('source_run_id') == source
+            and type(raw.get('compared_ticks')) is int and raw['compared_ticks'] == ticks
+            and raw.get('first_divergence') is None and raw.get('errors') == []
+            and bool(raw.get('comparison'))
+            and all(raw.get(k) is (mode == 'policy') for k in ('controller_reexecuted', 'inference_executed')),
+            'replay raw source/mode/ticks/computation differs')
+
+
+def _replay_source(row, protocol):
+    report, meta = row.get('verifier_report', {}), row.get('source', {})
+    source = report.get('source_run_id')
+    require(isinstance(source, str) and bool(source) and meta == report.get('source')
+            and type(meta.get('seed')) is int and meta['seed'] == row['seed']
+            and meta.get('condition') == 'background_storage' and meta.get('recording_writer') == 'background'
+            and meta.get('storage_accounting') is True
+            and meta.get('prefix_ticks') == protocol.replay['prefix_ticks']
+            and meta.get('source_ticks') == protocol.replay['source_ticks']
+            and isinstance(meta.get('run_path'), str) and Path(meta['run_path']).name == source,
+            'retained replay source metadata differs')
+    snapshot = meta.get('snapshot_path')
+    require(isinstance(snapshot, str) and snapshot == report.get('snapshot_path')
+            and Path(snapshot).is_relative_to(Path(meta['run_path']) / 'snapshots')
+            and _digest(row.get('source_manifest_sha256'))
+            and _digest(report.get('snapshot_sha256'))
+            and report['snapshot_sha256'] == row['metrics'].get('snapshot_sha256')
+            and type(report.get('snapshot_bytes')) is int and report['snapshot_bytes'] > 0
+            and report['snapshot_bytes'] == row['metrics'].get('snapshot_bytes'),
+            'retained replay snapshot/manifest identity differs')
+    return source
+
+
 def _repeat(rows, protocol, kind):
     passed = 0
     section = getattr(protocol, kind)
@@ -80,9 +118,14 @@ def _repeat(rows, protocol, kind):
         else:
             pairs = row.get('paired_raw_values', {})
             require(set(pairs) == set(section['conditions']), 'replay requires all four paired modes')
-            require(isinstance(report.get('source_run_id'), str) and bool(report['source_run_id'])
-                    and isinstance(row.get('source_manifest_sha256'), str) and len(row['source_manifest_sha256']) == 64,
-                    'replay source identity missing')
+            source = _replay_source(row, protocol)
+            continuation = report.get('continuation', {})
+            require(continuation.get('status') == 'passed' and continuation.get('divergences') == []
+                    and bool(continuation.get('max_abs_errors')), 'replay branch comparison diverged or missing')
+            playback = report.get('playback', {})
+            require(playback.get('mode') == 'playback' and type(playback.get('first_tick')) is int
+                    and playback['first_tick'] == section['prefix_ticks'], 'replay playback scope differs')
+            require(pairs == _paired(report, section['source_ticks']), 'asserted replay pairs differ from verifier evidence')
             for name, pair in pairs.items():
                 require(pair.get('agreement') is True and pair.get('first_divergence') is None
                         and bool(pair.get('validated_fields')), 'passing replay mode inconsistent')
@@ -91,14 +134,35 @@ def _repeat(rows, protocol, kind):
                 require(all(computation.get(k) is expected for k in ('controller_reexecuted', 'inference_executed')),
                         'replay computation scope differs')
                 if name in ('action_replay', 'policy_replay'):
-                    raw = pair.get('raw', {})
-                    require(raw.get('status') == 'passed' and raw.get('first_divergence') is None
-                            and raw.get('errors') == [] and raw.get('source_run_id') == report['source_run_id']
-                            and raw.get('compared_ticks') == section['source_ticks']
-                            and raw.get('mode') == ('actions' if name == 'action_replay' else 'policy'),
-                            'replay raw source/tick comparison differs')
+                    mode = 'actions' if name == 'action_replay' else 'policy'
+                    _replay_mode(pair.get('raw', {}), mode, source, section['source_ticks'])
+                    _replay_mode(report.get('replays', {}).get(mode, {}).get('report', {}), mode, source, section['source_ticks'])
         passed += 1
     return dict(passed=passed, declared=len(rows), completed=sum(r['status'] == 'completed' for r in rows), rows=rows)
+
+
+def _operation_source(row, replays, protocol):
+    replay = replays[row['seed']]
+    require(replay['status'] == 'completed' and replay['metrics'].get('agreement') is True,
+            'completed operation lacks passing retained replay unit')
+    _repeat([replay], protocol, 'replay')
+    require(row.get('source') == replay.get('source'), 'operation source differs from retained replay source')
+    expected_row = (json.dumps(replay, sort_keys=True, indent=2, allow_nan=False)+'\n').encode()
+    require(row.get('source_row_sha256') == hashlib.sha256(expected_row).hexdigest(), 'operation source row digest differs')
+    before, after = row.get('source_hashes_before'), row.get('source_hashes_after')
+    require(isinstance(before, dict) and bool(before) and before == after
+            and all(isinstance(k,str) and _digest(v) for k,v in before.items()), 'operation source custody differs')
+    meta = replay['source']
+    snapshot_key = str(Path(meta['snapshot_path']).relative_to(meta['run_path']))
+    require(before.get('recording/manifest.json') == replay['source_manifest_sha256']
+            and before.get(snapshot_key) == replay['metrics']['snapshot_sha256'],
+            'operation retained manifest/snapshot hash differs')
+    require(type(row.get('playback_tick_count')) is int and row['playback_tick_count'] == protocol.replay['source_ticks'],
+            'operation playback count differs')
+    reports = row.get('replay_reports', {})
+    require(set(reports) == {'actions', 'policy'}, 'operation replay reports incomplete')
+    for mode, raw in reports.items():
+        _replay_mode(raw, mode, replay['verifier_report']['source_run_id'], protocol.replay['source_ticks'])
 
 
 def analyze(summary, manifest, protocol):
@@ -141,6 +205,10 @@ def analyze(summary, manifest, protocol):
                     wall_ms={c: stats([g[c]*1000 for g in eligible]) for c in CONDITIONS},
                     relative={c: stats([(g[c]/g['null']-1)*100 for g in eligible]) for c in CONDITIONS[1:]})
     operations = [r for r in rows if r['kind'] == 'operation_cost']
+    replays = {r['seed']: r for r in rows if r['kind'] == 'replay'}
+    for row in operations:
+        if row['status'] == 'completed':
+            _operation_source(row, replays, protocol)
     operation_stats = {}
     for metric in protocol.operation_cost['metrics']:
         values = [r['metrics'][metric] for r in operations if r['status'] == 'completed'

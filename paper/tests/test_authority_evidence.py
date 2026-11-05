@@ -15,6 +15,40 @@ from paper.studies.authority_replay_v1.common import load_protocol, declared_uni
 from paper.studies.authority_replay_v1.analyze import summarize
 
 
+def replay_report(mode, source):
+    return dict(status='passed', mode=mode, source_run_id=source, compared_ticks=100,
+                first_divergence=None, errors=[], comparison={'qpos': 'float32'},
+                controller_reexecuted=mode == 'policy', inference_executed=mode == 'policy')
+
+
+def complete_replay(row, protocol):
+    from paper.studies.authority_replay_v1.repeatability import _paired
+    source = 'source-' + str(row['seed'])
+    meta = dict(run_path='/fixture/' + source, snapshot_path='/fixture/' + source + '/snapshots/prefix.snp',
+                condition='background_storage', recording_writer='background', storage_accounting=True,
+                seed=row['seed'], prefix_ticks=8, source_ticks=100)
+    report = dict(status='passed', finite_scientific_arrays=True, prefix_ticks=8, continuation_ticks=92,
+                  source_run_id=source, source=copy.deepcopy(meta), snapshot_path=meta['snapshot_path'],
+                  snapshot_sha256='e'*64, snapshot_bytes=100,
+                  continuation=dict(status='passed', max_abs_errors={'qpos': 0}, divergences=[]),
+                  playback=dict(mode='playback', first_tick=8),
+                  replays={mode: {'run_id': mode + '-' + source, 'report': replay_report(mode,source)}
+                           for mode in ('actions','policy')})
+    row.update(status='completed', first_divergence=None,
+               metrics=dict(agreement=True, snapshot_sha256='e'*64, snapshot_bytes=100),
+               source_manifest_sha256='d'*64, source=meta, verifier_report=report,
+               paired_raw_values=_paired(report,100))
+
+
+def complete_operation(row, replay):
+    hashes = {'recording/manifest.json': replay['source_manifest_sha256'], 'snapshots/prefix.snp': 'e'*64}
+    row.update(status='completed', timing_eligible=True, metrics={'capture_seconds': 0.1 + row['seed']},
+               source=copy.deepcopy(replay['source']),
+               source_row_sha256=hashlib.sha256((json.dumps(replay,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()).hexdigest(),
+               source_hashes_before=hashes, source_hashes_after=copy.deepcopy(hashes), playback_tick_count=100,
+               replay_reports={mode: replay_report(mode, replay['verifier_report']['source_run_id']) for mode in ('actions','policy')})
+
+
 def fixture():
     protocol = load_protocol(ROOT / 'paper/studies/authority_replay_v1/protocol.json')
     identity = {'commit': 'd8658dda3fca37bb43b6dafc909114279f706f11',
@@ -37,8 +71,11 @@ def fixture():
             row.update(status='completed', tick_count=220, actions_sha256='b'*64,
                        final_state_sha256='c'*64, matched_seed=True, timing_eligible=True,
                        metrics={'wall_seconds_per_tick': wall / 1000})
+        if row['kind'] == 'replay' and row['seed'] < 2:
+            complete_replay(row, protocol)
+    for row in rows:
         if row['kind'] == 'operation_cost' and row['seed'] < 2:
-            row.update(status='completed', metrics={'capture_seconds': 0.1 + row['seed']})
+            complete_operation(row, next(r for r in rows if r['kind'] == 'replay' and r['seed'] == row['seed']))
     return protocol, summarize(protocol, rows), {'identity': identity, 'analysis_status': 'passed'}
 
 
@@ -141,18 +178,10 @@ class AuthorityEvidenceTests(unittest.TestCase):
                           branch_identity_distinct=True, queued_command_idempotency=True)
             row.update(status='completed', first_divergence=None, metrics={'agreement': True}, verifier_report=report)
             if kind == 'replay':
-                report['source_run_id'] = 'source-' + str(row['seed'])
-                row['source_manifest_sha256'] = 'd'*64
-                pairs = {}
-                for mode in p.replay['conditions']:
-                    expected = mode in ('branch', 'policy_replay')
-                    pairs[mode] = dict(agreement=True, first_divergence=None, validated_fields=['qpos'],
-                                       executed_computation=dict(controller_reexecuted=expected, inference_executed=expected))
-                    if mode in ('action_replay', 'policy_replay'):
-                        pairs[mode]['raw'] = dict(status='passed', first_divergence=None, errors=[],
-                            source_run_id=report['source_run_id'], compared_ticks=100,
-                            mode='actions' if mode == 'action_replay' else 'policy')
-                row['paired_raw_values'] = pairs
+                complete_replay(row, p)
+        for row in s['rows']:
+            if row['kind'] == 'operation_cost' and row['status'] == 'completed':
+                complete_operation(row, next(r for r in s['rows'] if r['kind'] == 'replay' and r['seed'] == row['seed']))
         valid = summarize(p, s['rows'])
         result = module.analyze(valid, m, p)
         self.assertEqual((result['continuation']['passed'], result['replay']['passed']), (10, 5))
@@ -161,6 +190,56 @@ class AuthorityEvidenceTests(unittest.TestCase):
             replay = next(r for r in broken['rows'] if r['kind'] == 'replay')
             replay['paired_raw_values']['policy_replay']['raw'][field] = value
             with self.assertRaises(ValueError): module.analyze(summarize(p, broken['rows']), m, p)
+
+    def test_rejects_replay_assertions_disagreeing_with_verifier_evidence(self):
+        module = self.builder()
+        for mutation in ('branch', 'playback_mode', 'playback_tick', 'failed_replay', 'other_source', 'raw_flags', 'numeric_flags'):
+            with self.subTest(mutation=mutation):
+                p,s,m = fixture()
+                row = next(r for r in s['rows'] if r['kind'] == 'replay')
+                report = row['verifier_report']
+                if mutation == 'branch': report['continuation']['divergences'] = [{'tick': 4}]
+                elif mutation == 'playback_mode': report['playback']['mode'] = 'actions'
+                elif mutation == 'playback_tick': report['playback']['first_tick'] = 99
+                elif mutation == 'failed_replay': report['replays']['policy']['report']['status'] = 'failed'
+                elif mutation == 'other_source': report['replays']['actions']['report']['source_run_id'] = 'other'
+                elif mutation == 'raw_flags':
+                    row['paired_raw_values']['policy_replay']['raw']['inference_executed'] = False
+                elif mutation == 'numeric_flags':
+                    row['paired_raw_values']['policy_replay']['raw']['inference_executed'] = 1
+                with self.assertRaises(ValueError): module.analyze(summarize(p,s['rows']),m,p)
+
+    def test_rejects_completed_operations_with_invalid_retained_source(self):
+        module = self.builder()
+        for mutation in ('seed', 'null', 'source_hashes', 'manifest', 'snapshot', 'source_row', 'failed_policy', 'ticks', 'flags', 'other_source', 'wrong_mode'):
+            with self.subTest(mutation=mutation):
+                p,s,m = fixture()
+                row = next(r for r in s['rows'] if r['kind'] == 'operation_cost')
+                if mutation == 'seed': row['source']['seed'] = 999
+                elif mutation == 'null': row['source']['condition'] = 'null'
+                elif mutation == 'source_hashes': row['source_hashes_after']['new'] = 'f'*64
+                elif mutation == 'manifest':
+                    row['source_hashes_before']['recording/manifest.json'] = 'f'*64
+                    row['source_hashes_after']['recording/manifest.json'] = 'f'*64
+                elif mutation == 'snapshot':
+                    row['source_hashes_before']['snapshots/prefix.snp'] = 'f'*64
+                    row['source_hashes_after']['snapshots/prefix.snp'] = 'f'*64
+                elif mutation == 'source_row': row['source_row_sha256'] = 'f'*64
+                elif mutation == 'failed_policy': row['replay_reports']['policy']['status'] = 'failed'
+                elif mutation == 'ticks': row['replay_reports']['actions']['compared_ticks'] = 99
+                elif mutation == 'flags': row['replay_reports']['policy']['controller_reexecuted'] = False
+                elif mutation == 'other_source': row['replay_reports']['policy']['source_run_id'] = 'other'
+                elif mutation == 'wrong_mode': row['replay_reports']['policy']['mode'] = 'actions'
+                with self.assertRaises(ValueError): module.analyze(summarize(p,s['rows']),m,p)
+
+    def test_failed_operation_metrics_are_retained_but_excluded(self):
+        p,s,m = fixture()
+        row = next(r for r in s['rows'] if r['kind'] == 'operation_cost')
+        row.update(status='failed', source={'seed': 999}, replay_reports={})
+        result = self.builder().analyze(summarize(p,s['rows']),m,p)
+        self.assertEqual(result['operations']['capture_seconds']['n'], 1)
+        self.assertEqual(len(result['operation_rows']), 5)
+        self.assertEqual(result['operation_rows'][0]['metrics']['capture_seconds'], 0.1)
 
     def test_deterministic_escaped_outputs_and_cli_freshness(self):
         module = self.builder()
