@@ -51,7 +51,7 @@ def complete_operation(row, replay):
 
 def fixture():
     protocol = load_protocol(ROOT / 'paper/studies/authority_replay_v1/protocol.json')
-    identity = {'commit': 'd8658dda3fca37bb43b6dafc909114279f706f11',
+    identity = {'commit': 'cc57edf9f70323926237d887d766627d8c9cdd42',
                 'protocol_sha256': protocol._content_sha256,
                 **{k: {'fixture': 'a' * 64} for k in ('runtime_source_sha256', 'asset_manifest_sha256', 'asset_sha256')}}
     rows = [dict(schema_version=1, study_id=protocol.study_id, identity=identity,
@@ -87,6 +87,32 @@ class AuthorityEvidenceTests(unittest.TestCase):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module
+
+    def test_authorizes_only_exact_frozen_commit_protocol_pairs(self):
+        module = self.builder()
+        p,s,m = fixture()
+        result = module.analyze(s,m,p)
+        self.assertEqual(result['identity']['commit'], 'cc57edf9f70323926237d887d766627d8c9cdd42')
+        self.assertIn(r'\newcommand{\StudyCommit}{cc57edf9f70323926237d887d766627d8c9cdd42}',
+                      module.generate_outputs(result,{})['authority-claims.tex'])
+        s['identity']['commit'] = 'd8658dda3fca37bb43b6dafc909114279f706f11'
+        with self.assertRaises(ValueError): module.analyze(s,m,p)
+
+    def test_accepts_archived_actual_attempt_with_its_original_protocol(self):
+        module = self.builder()
+        base = ROOT/'paper/evidence/authority-replay-v1/initial-attempt'
+        p = load_protocol(base/'protocol.json')
+        summary = json.loads((base/'summary.json').read_text())
+        manifest = json.loads((base/'campaign-manifest.json').read_text())
+        result = module.analyze(summary,manifest,p)
+        self.assertEqual(result['declared'], 111)
+        self.assertEqual(result['identity']['commit'], 'd8658dda3fca37bb43b6dafc909114279f706f11')
+        macros = module.generate_outputs(result,{})['authority-claims.tex']
+        self.assertIn(r'\newcommand{\StudyCommit}{d8658dda3fca37bb43b6dafc909114279f706f11}',macros)
+        summary['identity']['commit'] = 'cc57edf9f70323926237d887d766627d8c9cdd42'
+        manifest['identity'] = summary['identity']
+        for row in summary['rows']: row['identity'] = summary['identity']
+        with self.assertRaises(ValueError): module.analyze(summary,manifest,p)
 
     def test_counts_unknowns_and_failed_denominators(self):
         p, s, m = fixture()

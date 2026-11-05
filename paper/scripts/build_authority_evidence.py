@@ -13,8 +13,12 @@ from paper.studies.authority_replay_v1.analyze import summarize
 from paper.studies.authority_replay_v1.common import load_protocol, parse_json, require, validate_finite
 from paper.studies.authority_replay_v1.repeatability import _paired
 
-STUDY_COMMIT = 'd8658dda3fca37bb43b6dafc909114279f706f11'
-PROTOCOL_SHA256 = '7a985038bffa2f55ea2eeb6f75815c96ce179e0e5a74ee9e45db0aa1b1c03b35'
+EXECUTION_COMMITS_BY_PROTOCOL = {
+    '7a985038bffa2f55ea2eeb6f75815c96ce179e0e5a74ee9e45db0aa1b1c03b35':
+        'd8658dda3fca37bb43b6dafc909114279f706f11',
+    '570a4afe8179425bb2b25b86364470af34052ecc4929b74f207c279076728860':
+        'cc57edf9f70323926237d887d766627d8c9cdd42',
+}
 CONDITIONS = ('null', 'synchronous', 'background', 'background_storage')
 FLAGS = ('silent_acceptance', 'explicit_detection', 'correct_recovery', 'benign_false_rejection')
 
@@ -184,9 +188,10 @@ def analyze(summary, manifest, protocol):
     validate_finite(summary)
     validate_finite(manifest)
     require(manifest.get('analysis_status') == 'passed', 'campaign analysis did not pass')
-    require(protocol._content_sha256 == PROTOCOL_SHA256, 'protocol differs from frozen execution bytes')
+    require(protocol._content_sha256 in EXECUTION_COMMITS_BY_PROTOCOL, 'protocol differs from frozen execution bytes')
     require(summary.get('identity') == manifest.get('identity'), 'manifest identity differs')
-    require(summary['identity']['commit'] == STUDY_COMMIT, 'execution commit differs from frozen campaign')
+    require(summary['identity']['commit'] == EXECUTION_COMMITS_BY_PROTOCOL[protocol._content_sha256],
+            'execution commit does not match its frozen protocol')
     recomputed = summarize(protocol, summary.get('rows', []))
     require(recomputed == summary, 'summary aggregates differ from retained rows')
     require(recomputed['declared_units'] == 111, 'expected exactly 111 declared descriptors')
@@ -266,7 +271,7 @@ def _table(headers, rows):
 def generate_outputs(result, hashes):
     """Return six deterministic LaTeX files with full raw analysis in comments."""
     f, o = result['faults']['total'], result['overhead']
-    macros = dict(StudyCommit=STUDY_COMMIT, ProtocolHash=result['identity']['protocol_sha256'],
+    macros = dict(StudyCommit=result['identity']['commit'], ProtocolHash=result['identity']['protocol_sha256'],
                   StudyDeclaredUnits=result['declared'], StudyCompletedUnits=result['completed'],
                   FaultDeclaredUnits=f['declared'], FaultCompletedUnits=f['completed'],
                   FaultBaselineFalseAccepts=f['baseline_false_accepts'], FaultBaselineKnownClaims=f['baseline_known'],
