@@ -1,0 +1,19 @@
+{
+  "profiles": [
+    {
+      "path": "docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json",
+      "baseline_commit": "dbadf42",
+      "baseline_sha256": "e71fc7ea6185f7de769b9879d4b581458074b925255b4712f0f6578fb0556261",
+      "current_sha256": "e71fc7ea6185f7de769b9879d4b581458074b925255b4712f0f6578fb0556261",
+      "unchanged": true
+    },
+    {
+      "path": "docs/plans/memory-condition-seal-v1-retained-condition-v1-protocol.json",
+      "baseline_commit": "dbadf42",
+      "baseline_sha256": "ca8f148526c4ce33a28583a33c4d0dc474e7264aba66e89946c8d2fe3cc6f93f",
+      "current_sha256": "ca8f148526c4ce33a28583a33c4d0dc474e7264aba66e89946c8d2fe3cc6f93f",
+      "unchanged": true
+    }
+  ],
+  "scope": "Byte identity only; no current-source/runtime acceptance is inferred."
+}

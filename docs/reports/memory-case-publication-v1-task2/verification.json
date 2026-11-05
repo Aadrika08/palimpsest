@@ -1,0 +1,47 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "-p",
+    "memory_publication_profile_plugin",
+    "--basetemp=/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.pytest_cache/task2-full-e71d91f127d449e9b1230dbd2b4233d5/basetemp",
+    "tests/test_memory_family_case_publication_v1.py",
+    "tests/test_memory_family_retained_case_v1.py",
+    "tests/test_memory_family_retained_condition_v1.py",
+    "tests/test_memory_family_retained_source_v4.py",
+    "tests/test_memory_family_producer_v4.py",
+    "tests/test_memory_family_condition_close_v4.py",
+    "tests/test_memory_family_oracle_admission_v4.py",
+    "tests/test_memory_family_replay_custody_v4.py",
+    "--maxfail=1"
+  ],
+  "environment": {
+    "PYTHONPATH": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/docs/reports/memory-case-publication-v1-task2:tests:src:."
+  },
+  "exit_code": 1,
+  "elapsed_seconds": 306.78128116804874,
+  "scope": "Authored current-profile semantic regressions only. Test plugin binds current behavior to ephemeral authored profiles; no historical-profile acceptance or genuine runtime/observer qualification.",
+  "files_sha256": {
+    "scripts/memory_family_condition_seal_v4.py": "3d6b8fde082de0a58bbfceb66c37123e4d40a858baa61c25a70777e12d2d86fa",
+    "scripts/memory_family_oracle_admission_v4.py": "abce471ef7098ce38bf65893941d85939a3c3bd2f657be6aa08a998805c90b28",
+    "scripts/memory_family_producer_v4.py": "fe18320d9f0f8580f2ee77f920f2f97839107b834b871a618326dd413bff9095",
+    "scripts/memory_family_retained_case_v1.py": "ef3cc47905b05dfd593481ab3b0d188125648db68c8637b8c6a9a2d7e5027baa",
+    "scripts/memory_family_retained_condition_v1.py": "5076a7473584b1239c31c787a713066ef6596ab50b1efea4143fb900fb128e93",
+    "tests/test_memory_family_case_publication_v1.py": "06c915f3fa97e10cb10c0561af37a465c0d0f9c5ea66a47de081dd01c1e6585e",
+    "docs/reports/memory-case-publication-v1-task2/memory_publication_profile_plugin.py": "412cca6632f107f5485785d27a2e1a36eb3877d70da114720536e9ef09821aaf"
+  },
+  "source_unchanged_during_run": true,
+  "log": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.pytest_cache/task2-full-e71d91f127d449e9b1230dbd2b4233d5/regression.log",
+  "real_trust_anchors": "empty and unchanged",
+  "prior_failures": [
+    "Expected RED missing _read_retained_case",
+    "Historical behavior profile correctly refused changed pair source",
+    "First authored plugin was function scoped and did not precede module fixtures",
+    "131 passed then staged public pair-admitter mutation hook was bypassed; restored hook; all five focused mutation tests passed"
+  ]
+}

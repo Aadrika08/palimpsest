@@ -82,7 +82,8 @@ def _production_replay(**values):
 
 
 def _bind(lifetime, root, value, maximum, deadline, *, allow_empty=False,
-          case_id=None):
+          case_id=None, location='staged'):
+    prefix_name = pair._case_prefix(location)
     if case_id is None or not value['path'].startswith('cases/'):
         return lifetime.enter_context(compact.bound_payload(
             root, value, maximum, deadline, allow_empty=allow_empty))
@@ -92,7 +93,7 @@ def _bind(lifetime, root, value, maximum, deadline, *, allow_empty=False,
         raise ValueError('Staged input belongs to another case')
     physical = {**portable, 'path': portable['path'][len(prefix):]}
     return lifetime.enter_context(compact.bound_payload(
-        Path(root) / '.pending' / case_id, physical, maximum, deadline,
+        Path(root) / prefix_name / case_id, physical, maximum, deadline,
         allow_empty=allow_empty))
 
 
@@ -131,7 +132,7 @@ def _extension(lifetime, digest, deadline):
     return checks
 
 
-def _registration(root, registration, case_id, condition, deadline, lifetime):
+def _registration(root, registration, case_id, condition, deadline, lifetime, *, location='staged'):
     audit._public_deadline(deadline)
     memory._id(case_id)
     if not compact._PATH_COMPONENT.fullmatch(case_id):
@@ -199,15 +200,15 @@ def _registration(root, registration, case_id, condition, deadline, lifetime):
         checks.append(_bind(lifetime, root, value, 16 * MiB, deadline)[2])
     if contract['prior_own_receipt'] is not None:
         checks.append(_bind(lifetime, root, contract['prior_own_receipt'], MiB,
-                            deadline, case_id=case_id)[2])
+                            deadline, case_id=case_id, location=location)[2])
     return contract, checks, control_bytes
 
 
 class _Anchor:
     """Keep publication descriptors independent of validating input contexts."""
-    def __init__(self, root, case_id, condition):
+    def __init__(self, root, case_id, condition, *, location='staged'):
         self.root = artifacts._safe_path(root)
-        self.parts = ('.pending', case_id, 'conditions', condition)
+        self.parts = (pair._case_prefix(location), case_id, 'conditions', condition)
         self.fds, self.identities = [], []
         try:
             self.fds.append(os.open(self.root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW))
@@ -253,16 +254,16 @@ class _Anchor:
             raise first
 
 
-def _load_source(root, contract, deadline, lifetime):
+def _load_source(root, contract, deadline, lifetime, *, location='staged'):
     case_id = contract['case']['case_id']
     src = contract['source']
-    values = source._inputs(root, src['registration'], case_id, deadline, lifetime)
+    values = source._inputs(root, src['registration'], case_id, deadline, lifetime, location=location)
     source_contract, case, run_id, raw_receipt, raw_bytes, snapshot_fd, checks, control_bytes = values
     if (case != contract['case'] or run_id != contract['source_run_id']
             or source_contract['snapshot'] != src['snapshot']
             or source_contract['owner_source_sha256'] != contract['owner_source_sha256']):
         raise ValueError('Condition binds another sealed source')
-    fd, _, output_check = lifetime.enter_context(source._source_directory(root, case_id))
+    fd, _, output_check = lifetime.enter_context(source._source_directory(root, case_id, location=location))
     marker_bytes = source._read_file(fd, 'commit.json', MiB, lifetime=lifetime, deadline=deadline)
     compact._check_descriptor(src['commit'], src['commit']['path'], marker_bytes)
     marker = _canonical(marker_bytes, compact.PROTOCOL['source_finalization']['marker_keys'], 'Source marker')
@@ -329,9 +330,9 @@ def _raw(root, contract, deadline, lifetime):
     return data, receipt, raw_bytes, checks
 
 
-def _owner(root, contract, deadline, lifetime):
+def _owner(root, contract, deadline, lifetime, *, location='staged'):
     _, payload, check = _bind(lifetime, root, contract['owner_record'], MiB,
-                             deadline, case_id=contract['case']['case_id'])
+                             deadline, case_id=contract['case']['case_id'], location=location)
     expected = {'schema': 'memory-family-condition-owner-v1',
         'case_id': contract['case']['case_id'], 'run_id': contract['run_id'],
         'condition': contract['condition'], 'source_run_id': contract['source_run_id'],

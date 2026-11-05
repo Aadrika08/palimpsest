@@ -38,6 +38,50 @@ class _StagedRoot:
     case_id: str
 
 
+def _case_prefix(location):
+    if location not in ('staged', 'published'):
+        raise ValueError('Explicit case location must be staged or published')
+    return '.pending' if location == 'staged' else 'cases'
+
+
+@contextmanager
+def _case_namespace(root, case_id, *, location='staged', case_files=None, deadline=None):
+    """Explicit read-only location; published files are externally expected."""
+    _case_prefix(location)
+    case_files = {} if case_files is None else copy.deepcopy(case_files)
+    if location == 'staged':
+        if case_files:
+            raise ValueError('Staged semantic reads accept no case-root files')
+        with _staged_namespace(root, case_id) as staged:
+            yield staged
+        return
+    _fields(case_files, {'manifest.json', 'close.json', 'commit.json'}, 'Published case files')
+    root = Path(root)
+    base = f'cases/{case_id}/'
+    entries = []
+    for name, descriptor in case_files.items():
+        if _descriptor(descriptor, 'Published case file')['path'] != base + name:
+            raise ValueError('Published case descriptor differs from expected location')
+        entries.append(descriptor)
+    from scripts.memory_family_replay_custody_v4 import HeldReplayFiles
+    with HeldReplayFiles(root, sorted(entries, key=lambda d: d['path']), deadline) as held:
+        case_path = root / 'cases' / case_id
+        def check():
+            if (root / '.pending' / case_id).exists() or (root / '.pending' / case_id).is_symlink():
+                raise ValueError('Published case has a staged alias')
+            from scripts.memory_directory_census_v1 import directory_names
+            fd = os.open(case_path, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            try:
+                if set(directory_names(fd, max_entries=5, deadline=deadline)) != {'source', 'conditions', *case_files}:
+                    raise ValueError('Published case contains raw, temporary or unexpected entries')
+            finally:
+                os.close(fd)
+            held.recheck()
+        check()
+        yield root
+        check()
+
+
 def _fields(value, expected, label):
     if type(value) is not dict or set(value) != set(expected):
         raise ValueError(f'{label} has missing or unknown fields')
@@ -1049,6 +1093,12 @@ def _staged_namespace(root, case_id):
 
 
 def admit_staged_compact_pair(*, source_commit, evidence_root, case, **request):
+    return _admit_retained_compact_pair(source_commit=source_commit,
+        evidence_root=evidence_root, case=case, location='staged', case_files={}, **request)
+
+
+def _admit_retained_compact_pair(*, source_commit, evidence_root, case,
+                               location, case_files, **request):
     """Prove a staged pair without publishing or changing its portable schema."""
     required = {'source_bundle', 'condition_bundle', 'source_run_id',
                 'condition_run_id', 'condition', 'source_conversion_receipt',
@@ -1075,7 +1125,8 @@ def admit_staged_compact_pair(*, source_commit, evidence_root, case, **request):
     for value, expected in expected_paths:
         if _descriptor(value, 'Staged descriptor')['path'] != expected:
             raise ValueError('Staged input path differs from its case/condition')
-    with _staged_namespace(evidence_root, case_id) as location, ExitStack() as lifetime:
+    with _case_namespace(evidence_root, case_id, location=location, case_files=case_files,
+                         deadline=request['deadline']) as location, ExitStack() as lifetime:
         marker, _ = _canonical_file(location, source_commit, MiB,
             request['deadline'], 'Staged source commit', lifetime)
         expected = {'schema': 'memory-family-compact-source-commit-v1',

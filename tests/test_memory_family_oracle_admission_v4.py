@@ -14,6 +14,9 @@ import zipfile
 import numpy as np
 import pytest
 
+# Explicit authored current-profile semantics; no real qualification authority.
+from memory_publication_authored_profiles import authored_current_profile
+
 from palimpsest import artifacts, memory, memory_decision as decision
 from palimpsest import memory_experiment, memory_task, snapshots
 from scripts import memory_family_compact_v4 as compact

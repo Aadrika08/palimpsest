@@ -172,3 +172,129 @@ def test_observer_tick_frequency_boolean_is_rejected(monkeypatch):
     request=fixture();request['audit']['observer']['ticks_per_second']=True
     accept(monkeypatch,request)
     with pytest.raises(ValueError):module().validate_execution_audit(**request)
+
+
+
+
+def test_unpatched_historical_profile_rejects_changed_behavior():
+    import os,subprocess,sys
+    code=('from scripts import memory_family_compact_v4 as c;'
+          'from palimpsest import artifacts;'
+          'c.PROTOCOL=artifacts._json((c.ROOT/"docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json").read_bytes());'
+          'c.behavior_source_identities(c.ROOT)')
+    result=subprocess.run([sys.executable,'-B','-c',code],env={**os.environ,'PYTHONPATH':'src:.'},
+                          capture_output=True,text=True,timeout=30)
+    assert result.returncode!=0
+    assert 'Behavior source differs:' in result.stderr
+
+from memory_publication_authored_profiles import _install_authored_profile, _authored_current_profile
+
+
+@pytest.fixture(scope='module')
+def published_template(tmp_path_factory, request):
+    import os,time
+    from scripts import memory_family_retained_case_v1 as cases
+    from scripts import memory_family_condition_seal_v4 as seal
+    from test_memory_family_retained_case_v1 import build_case
+    patch=pytest.MonkeyPatch();request.addfinalizer(patch.undo)
+    tmp_path=tmp_path_factory.mktemp('published-case-template')
+    _authored_current_profile(tmp_path,patch,request)
+    root=tmp_path/'evidence'; sample=build_case(root)
+    patch.setattr(seal,'_require_qualification_pin',lambda value:None)
+    expected=cases.read_retained_staged_case(**sample,deadline=time.monotonic()+90)
+    staged=root/'.pending'/sample['case_slot']['case_id']
+    final=root/'cases'/sample['case_slot']['case_id']; final.parent.mkdir(exist_ok=True)
+    staged.rename(final)
+    files={}
+    for name in ('manifest.json','close.json','commit.json'):
+        payload=memory.canonical_bytes({'authored':'semantic-core-only','name':name})
+        (final/name).write_bytes(payload)
+        files[name]=descriptor(f'cases/{sample["case_slot"]["case_id"]}/{name}',payload)
+    return sample,files,expected
+
+
+@pytest.fixture
+def published_case(published_template,tmp_path):
+    import shutil
+    sample,files,expected=copy.deepcopy(published_template)
+    root=tmp_path/'evidence'
+    shutil.copytree(sample['evidence_root'],root)
+    sample['evidence_root']=root
+    return sample,files,expected
+
+
+def test_private_published_case_core_matches_staged_and_old_route_rejects(published_case,monkeypatch):
+    import os,time
+    from scripts import memory_family_retained_case_v1 as cases
+    sample,files,expected=published_case
+    from test_memory_family_retained_case_v1 import forbid_replay
+    forbid_replay(monkeypatch)
+    before=len(os.listdir('/proc/self/fd'))
+    actual=cases._read_retained_case(**sample,location='published',case_files=files,deadline=time.monotonic()+90)
+    assert actual==expected
+    assert len(os.listdir('/proc/self/fd'))==before
+    with pytest.raises((ValueError,FileNotFoundError)):
+        cases.read_retained_staged_case(**sample,deadline=time.monotonic()+90)
+
+
+@pytest.mark.parametrize('defect',['empty-raw','raw','extra-file','staged-alias','symlink','hardlink','history','source-substitution','condition-substitution','deadline','wrong-case-files'])
+def test_published_core_rejects_invalid_namespace_or_binding(published_case,defect):
+    import os,time
+    from scripts import memory_family_retained_case_v1 as cases
+    sample,files,_=published_case
+    root=sample['evidence_root']; case_id=sample['case_slot']['case_id']; final=root/'cases'/case_id
+    if defect in ('empty-raw','raw'):
+        (final/'.raw').mkdir()
+        if defect=='raw':(final/'.raw'/'unadmitted').write_bytes(b'bad')
+    elif defect=='extra-file':(final/'unexpected').write_bytes(b'bad')
+    elif defect=='staged-alias':(root/'.pending'/case_id).symlink_to(final,target_is_directory=True)
+    elif defect=='symlink':
+        leaf=final/'source/owner.json'; payload=leaf.read_bytes();leaf.unlink();target=root/'wrong-owner';target.write_bytes(payload);leaf.symlink_to(target)
+    elif defect=='hardlink':os.link(final/'source/owner.json',root/'owner-alias')
+    elif defect=='history':
+        import json
+        c=json.loads((root/sample['registrations']['own']['path']).read_bytes())
+        (root/c['history_bundles']['own']['path']).write_bytes(b'changed')
+    elif defect=='source-substitution':sample['case_slot']['source_run_id']='0'*32
+    elif defect=='condition-substitution':sample['condition_commits']['own']['sha256']='0'*64
+    elif defect=='wrong-case-files':files['close.json']['path']='cases/different/close.json'
+    deadline=time.monotonic()-1 if defect=='deadline' else time.monotonic()+90
+    before=len(os.listdir('/proc/self/fd'))
+    with pytest.raises((ValueError,RuntimeError,OSError,TimeoutError)):
+        cases._read_retained_case(**sample,location='published',case_files=files,deadline=deadline)
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+def test_published_core_empty_qualification_refuses_before_protected_case_reads(published_case,monkeypatch):
+    import time
+    from scripts import memory_family_retained_case_v1 as cases
+    from scripts import memory_family_condition_seal_v4 as seal
+    from scripts.memory_condition_replay_admission_v1 import require_qualification_pin
+    sample,files,_=published_case
+    monkeypatch.setattr(seal,'_require_qualification_pin',require_qualification_pin)
+    def forbidden(*args,**kwargs):raise AssertionError('protected case read before qualification')
+    monkeypatch.setattr(cases,'_inventory',forbidden)
+    with pytest.raises(PermissionError):
+        cases._read_retained_case(**sample,location='published',case_files=files,deadline=time.monotonic()+90)
+
+
+def test_published_core_preserves_late_primary_error_and_closes_fds(published_case,monkeypatch):
+    import os,time
+    from scripts import memory_family_retained_case_v1 as cases
+    sample,files,_=published_case
+    original=cases._cell
+    def failed(*args,**kwargs):
+        original(*args,**kwargs)
+        raise RuntimeError('authored late primary failure')
+    monkeypatch.setattr(cases,'_cell',failed)
+    before=len(os.listdir('/proc/self/fd'))
+    with pytest.raises(RuntimeError,match='authored late primary failure'):
+        cases._read_retained_case(**sample,location='published',case_files=files,deadline=time.monotonic()+90)
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+def test_historical_profile_bytes_remain_unchanged():
+    from pathlib import Path
+    root=Path(__file__).resolve().parents[1]
+    payload=(root/'docs/plans/memory-family-compact-evidence-v4-retained-condition-v1-protocol.json').read_bytes()
+    assert hashlib.sha256(payload).hexdigest()=='e71fc7ea6185f7de769b9879d4b581458074b925255b4712f0f6578fb0556261'

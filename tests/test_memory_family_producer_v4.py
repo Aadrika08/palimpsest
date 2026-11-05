@@ -11,6 +11,9 @@ import time
 
 import pytest
 
+# Explicit authored current-profile semantics; no real qualification authority.
+from memory_publication_authored_profiles import authored_current_profile
+
 from palimpsest import artifacts, memory
 from scripts import memory_family_compact_v4 as compact
 from test_memory_family_raw_audit_v4 import _fixture as raw_fixture, _request

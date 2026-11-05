@@ -8,6 +8,9 @@ import time
 
 import pytest
 
+# Explicit authored current-profile semantics; no real qualification authority.
+from memory_publication_authored_profiles import authored_current_profile
+
 NAME = 'scripts.memory_family_replay_custody_v4'
 MiB = 1024 ** 2
 

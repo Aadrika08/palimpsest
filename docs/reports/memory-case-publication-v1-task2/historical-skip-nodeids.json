@@ -1,0 +1,1123 @@
+{
+  "scope": "Collection-only audit of existing skip marks; no fixture execution or mark changes.",
+  "collected": 395,
+  "skipped_count": 186,
+  "skipped": [
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_checks_source_after_fake_raw_removal",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_exact_raw_parent_options[absent]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_exact_raw_parent_options[empty]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_exact_raw_parent_options[condition]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[source-raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[unknown-raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[wrong-raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[source-id]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[raw-symlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[unknown-case]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[condition-file]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[unknown-condition]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[quarantine]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[temp-marker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[snapshot-hardlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[snapshot-symlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[worker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[compact]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[raw-copy]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[owner]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[source-commit]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_rejects_unaccounted_or_changed_evidence[deadline]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_retained_reader_holds_namespace_until_return",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_retained_source_v4.py::test_known_condition_namespace_is_only_inspected_as_names",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_seals_exact_source_without_copying_snapshot_or_deleting_raw",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_invalid_input_without_output_mutation[receipt-missing]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_invalid_input_without_output_mutation[snapshot-mutation]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_invalid_input_without_output_mutation[snapshot-hardlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_invalid_input_without_output_mutation[snapshot-symlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_invalid_input_without_output_mutation[raw-extra]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_unsealed_source_and_postwrite_failure_are_not_readable",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_numeric_candidate_still_requires_raw_equality[reward]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_numeric_candidate_still_requires_raw_equality[encoded_input]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_numeric_candidate_still_requires_raw_equality[control]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_numeric_candidate_still_requires_raw_equality[raw_output]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_numeric_candidate_still_requires_raw_equality[pose]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_legacy_whitespace_is_not_raw_byte_equality",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_mutation_at_receipt_boundary_quarantines_and_keeps_raw[raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_mutation_at_receipt_boundary_quarantines_and_keeps_raw[worker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_mutation_at_receipt_boundary_quarantines_and_keeps_raw[snapshot]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_mutation_at_receipt_boundary_quarantines_and_keeps_raw[receipt]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_mutation_at_receipt_boundary_quarantines_and_keeps_raw[owner]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_mutation_at_receipt_boundary_quarantines_and_keeps_raw[control]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_support_boundary_accepts_equality_and_rejects_one_over",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_canonical_snapshot_resolves_staging_and_final_without_extra_directory",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_publication_faults_are_quarantined[file-fsync]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_publication_faults_are_quarantined[directory-fsync]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_publication_faults_are_quarantined[final-directory-fsync]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_publication_faults_are_quarantined[conversion]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_publication_faults_are_quarantined[marker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_publication_faults_are_quarantined[after-marker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_seal_receipt_rejects_float_descriptor_sizes[marker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_seal_receipt_rejects_float_descriptor_sizes[inventory]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_rebound_seal_receipt_rejects_float_descriptor_sizes[support]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_unaccounted_staging_entries_before_writes[case]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_refuses_unaccounted_staging_entries_before_writes[raw-parent]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_compact_overhead_accepts_exact_cap_and_rejects_one_byte_over",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_quarantine_publication_failure_remains_indeterminate",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_output_identity_and_bytes_until_return[worker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_output_identity_and_bytes_until_return[marker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_output_identity_and_bytes_until_return[conversion]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_output_identity_and_bytes_until_return[chunk]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_source_and_case_namespace_until_return[source-extra]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_source_and_case_namespace_until_return[case-quarantine]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_raw_inventory_until_return[worker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_raw_inventory_until_return[chunk]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_read_keeps_raw_inventory_until_return[extra]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_marker_sync_and_quarantine_failure_cannot_admit_source",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_postcommit_descriptor_teardown_cannot_reclassify_publication",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_prepared_marker_does_not_skip_final_output_proof[worker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_producer_v4.py::test_prepared_marker_does_not_skip_final_output_proof[chunk]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_real_raw_conversion_pair_seals_with_authored_cell_seams",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_default_missing_qualification_refuses_before_source_raw_or_output",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[case]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[condition]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[run]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[source-run]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[source-snapshot]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[source-commit]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[owner]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[prior-own]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_rejects_cross_bound_registration_and_retains_raw[claims]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_replay_failure_or_wrong_identity_quarantines[raises]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_replay_failure_or_wrong_identity_quarantines[wrong-run]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_replay_failure_or_wrong_identity_quarantines[wrong-count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_replay_failure_or_wrong_identity_quarantines[numeric-count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_replay_failure_or_wrong_identity_quarantines[wrong-trace]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_replay_primary_survives_composite_held_output_teardown_failure",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_caller_descriptor_mutation_cannot_rebind_validated_registration",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_mutation_during_internal_replay_cannot_publish[raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_mutation_during_internal_replay_cannot_publish[source-marker]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_mutation_during_internal_replay_cannot_publish[source-snapshot]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_mutation_during_internal_replay_cannot_publish[history]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_mutation_during_internal_replay_cannot_publish[candidate]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_named_output_directory_replacement_is_quarantined[recording]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_named_output_directory_replacement_is_quarantined[chunks]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_postcommit_context_validation_retains_marker_and_quarantines",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_postcommit_anchor_close_failure_is_quarantined",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_publication_faults_never_admit_or_delete_raw[conversion]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_publication_faults_never_admit_or_delete_raw[pair]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_publication_faults_never_admit_or_delete_raw[temporary]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_publication_faults_never_admit_or_delete_raw[rename]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_condition_close_v4.py::test_publication_faults_never_admit_or_delete_raw[quarantine]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[own]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[swapped]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[sham]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[no-U]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[hand-authored]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[history-independent]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[traversal]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[retrieval]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admits_all_nine_exact_condition_identity_mappings_read_only[oracle]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_failed_condition_requires_and_accepts_only_exact_natural_failure_receipt",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_compact_reader_never_accepts_a_failed_source_and_requires_the_receipt",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[raw-count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[raw-events-hash]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[conversion-manifest]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[source-identity]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[snapshot-source-receipt]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[history]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[selection]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[policy-result]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_receipt_compact_identity_and_selector_cross_binding[chunk-sequence]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_snapshot_or_receipt_mutation_alias_and_path_following[snapshot-mutation]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_snapshot_or_receipt_mutation_alias_and_path_following[snapshot-symlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_snapshot_or_receipt_mutation_alias_and_path_following[snapshot-hardlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_snapshot_or_receipt_mutation_alias_and_path_following[receipt-symlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_snapshot_or_receipt_mutation_alias_and_path_following[receipt-missing]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_condition_snapshot_bound_to_another_source_run",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_terminal_semantic_forgery[final-phase]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_terminal_semantic_forgery[total-ticks]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_terminal_semantic_forgery[last-tick]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_terminal_semantic_forgery[world-state-shape]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_terminal_semantic_forgery[world-state-value]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_restore_or_commitment_semantic_forgery[restored-revision]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_restore_or_commitment_semantic_forgery[restored-eyes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_restore_or_commitment_semantic_forgery[commitment]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_oracle_requires_prior_own_receipt_and_non_oracle_rejects_one",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[mutation]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[symlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[hardlink]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[condition]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[claims]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[proof]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity[gold]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_raw_inventory_outside_frozen_authority_limits[zero-worker-report]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_raw_inventory_outside_frozen_authority_limits[oversize-worker-report]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_raw_inventory_outside_frozen_authority_limits[zero-chunk]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_rejects_rebound_raw_inventory_outside_frozen_authority_limits[oversize-recording]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admission_keeps_all_input_bindings_until_return[parent-rebind]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admission_keeps_all_input_bindings_until_return[late-receipt-write]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[source-conversion]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[source-raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[u-digest]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[selector-digest]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[history]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[selector-provenance]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[snapshot-size]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_prior_own_nested_values_bind_current_source_and_own_mapping[claims-alias]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-None-row_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-None-chunk_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-None-event_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-raw_inventory-file_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-raw_inventory-recording_bytes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-raw_inventory-support_bytes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-raw_inventory-total_bytes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-terminal_state-total_ticks]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-terminal_state-last_tick]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[float-policy_result-call_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-None-row_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-None-chunk_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-None-event_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-raw_inventory-file_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-raw_inventory-recording_bytes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-raw_inventory-support_bytes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-raw_inventory-total_bytes]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-terminal_state-total_ticks]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-terminal_state-last_tick]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_raw_receipt_integer_fields_reject_numeric_aliases[bool-policy_result-call_count]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_admission_deadline_includes_final_descriptor_reread",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_final_snapshot_reread_rechecks_ancestor_edges",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_receipt_contract_rejects_rebound_nested_numeric_aliases[claims-raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_receipt_contract_rejects_rebound_nested_numeric_aliases[claims-conversion]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_receipt_contract_rejects_rebound_nested_numeric_aliases[source-protocol-size-raw]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_receipt_contract_rejects_rebound_nested_numeric_aliases[source-protocol-size-conversion]",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    },
+    {
+      "nodeid": "tests/test_memory_family_oracle_admission_v4.py::test_oracle_fixture_reuses_donor_source_across_zip_time_boundary",
+      "reasons": [
+        "historical frozen pin (memory-family-compact-v4): scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md)."
+      ]
+    }
+  ]
+}

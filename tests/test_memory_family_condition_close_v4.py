@@ -14,6 +14,9 @@ import time
 
 import pytest
 
+# Explicit authored current-profile semantics; no real qualification authority.
+from memory_publication_authored_profiles import authored_current_profile
+
 from palimpsest import artifacts, memory, snapshots
 from palimpsest.records import RunWriter
 from scripts import memory_family_compact_v4 as compact
