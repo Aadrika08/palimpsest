@@ -1,13 +1,20 @@
 \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,font=\small]
 \node[font=\bfseries] at (0,0) {Client / display};
-\node[font=\bfseries] at (4.1,0) {Runtime owner};
-\node[font=\bfseries] at (8.5,0) {Retained evidence};
-\foreach \x in {0,4.1,8.5} \draw[gray!50] (\x,-0.35)--(\x,-4.65);
-\draw[->,thick,palblue] (0,-0.7)--node[above,font=\scriptsize]{request $c$, expected revision $v$}(4.1,-0.7);
-\draw[->,palblue] (4.1,-1.25)--node[above,font=\scriptsize]{accepted / queued}(0,-1.25);
+\node[font=\bfseries] at (5,0) {Runtime owner};
+\node[font=\bfseries] at (10.5,0) {Retained evidence};
+\foreach \x in {0,5,10.5} \draw[gray!50] (\x,-0.35)--(\x,-5.9);
+\draw[->,thick,palblue] (0,-0.65)--node[above,font=\scriptsize]{request $c$, expected revision $v$}(5,-0.65);
+\draw[->,palblue] (5,-1.2)--node[above,font=\scriptsize]{accepted / queued}(0,-1.2);
 \node[anchor=west,font=\scriptsize,text=palgold] at (0.12,-1.7) {preview may already be visible};
-\node[fill=white,font=\scriptsize,align=center] at (4.1,-2.0) {$t$: unchanged world\\$t+1$: unchanged world};
-\draw[->,thick,palgreen] (4.1,-2.8)--node[above,font=\scriptsize]{at $t+2$: applied once, revision $v+1$}(8.5,-2.8);
-\draw[->,palgreen] (4.1,-3.4)--node[above,font=\scriptsize]{applied receipt: $c$, $t+2$, $v+1$}(0,-3.4);
-\node[fill=palgreen!8,draw=palgreen,rounded corners,align=center,font=\scriptsize,text width=7cm] at (4.2,-4.25) {Only the applied receipt identifies the intervention boundary.\\A stale revision instead yields rejection without a world change.};
+\node[fill=white,font=\scriptsize,align=center] at (5,-1.8) {$t$, $t+1$: world unchanged};
+\node[draw=palgreen,fill=palgreen!7,rounded corners,align=center,
+      text width=3.7cm,font=\scriptsize] at (5,-2.65)
+      {$t+2$: apply intervention to world\\refresh observation via \texttt{\_get\_obs()}\\increment revision to $v+1$};
+\draw[->,thick,palgreen] (5,-3.4)--node[above,font=\scriptsize]{emit applied receipt: $c$, $t+2$, $v+1$}(10.5,-3.4);
+\node[draw=palblue,fill=palblue!5,rounded corners,align=center,
+      text width=3.7cm,font=\scriptsize] at (5,-4.35)
+      {project refreshed policy inputs\\policy + recurrent/RNG state $\to$ action\\environment step + RNG/wrapper updates};
+\draw[->,thick,palblue] (5,-5.2)--node[above,font=\scriptsize]{record inputs, action, resulting transition}(10.5,-5.2);
+\node[anchor=west,font=\scriptsize,align=left] at (0,-5.85)
+      {Snapshots preserve the whole continuation state, including RNG and pending commands.};
 \end{tikzpicture}
