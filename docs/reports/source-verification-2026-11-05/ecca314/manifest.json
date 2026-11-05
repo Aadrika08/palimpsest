@@ -1,0 +1,69 @@
+{
+  "schema": "palimpsest-canonical-source-verification-v1",
+  "source_commit": "ecca314e63f8fd3426d93ed8ef886575558c8aa0",
+  "exit_code": 0,
+  "passed": 6585,
+  "failed": 0,
+  "skipped": 318,
+  "passes": [
+    {
+      "name": "ordinary",
+      "passed": 6516,
+      "skipped": 318,
+      "deselected": 69,
+      "seconds": 1615.84
+    },
+    {
+      "name": "process-isolated",
+      "passed": 7,
+      "deselected": 6896,
+      "seconds": 9.75
+    },
+    {
+      "name": "runs-basetemp",
+      "passed": 5,
+      "deselected": 6898,
+      "seconds": 58.65
+    },
+    {
+      "name": "tmpfs-basetemp",
+      "passed": 57,
+      "deselected": 6846,
+      "seconds": 53.71
+    }
+  ],
+  "python_execution_alias": "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+  "wrapper": [
+    "bwrap",
+    "--bind",
+    "/",
+    "/",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--size",
+    "4294967296",
+    "--tmpfs",
+    "/tmp",
+    "--",
+    "scripts/run_tests.sh"
+  ],
+  "fixture_base": "/home/utkarsh/Work/shraddha/.palimpsest-source-fixtures-20261105/full-ecca314",
+  "optional_runtime_flags": "unset as in recorded invocation",
+  "research_cpu_charge_seconds": 0,
+  "research_cpu_charge_reason": "ordinary authored software checks excluded by approved research accounting contract",
+  "hosted_ci_verified": false,
+  "scientific_or_artistic_acceptance": false,
+  "files": [
+    {
+      "path": "full-source-ecca314-20261105.log",
+      "size_bytes": 16113,
+      "sha256": "6122e5f4475a1b62fc65f49ffaf7cf1d62f558dde98f345379691266d69d954d"
+    },
+    {
+      "path": "candidate-source-release-review.md",
+      "size_bytes": 12428,
+      "sha256": "c48239c719da6f981767024ec8d79b1ef665956f5ab816bcc513326ba9e1fc37"
+    }
+  ]
+}
