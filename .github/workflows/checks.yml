@@ -87,7 +87,8 @@ jobs:
           runuser -u fixture -- prlimit --nofile=65536: -- env PALIMPSEST_TEST_BASETEMP="$PWD/runs/hosted-preflight" \
             scripts/run_tests.sh -- \
             tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli \
-            tests/test_puck_cpu_held_parent_integration.py::test_authored_admission_uses_synthetic_capacity_only_in_its_bound_clone
+            tests/test_puck_cpu_held_parent_integration.py::test_authored_admission_uses_synthetic_capacity_only_in_its_bound_clone \
+            tests/test_puck_cpu_held_parent_integration.py::test_authored_monitor_preserves_the_real_floor_and_restores_its_sampler
       - name: Run fixture tests
         env:
           PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest

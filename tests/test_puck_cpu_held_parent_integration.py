@@ -66,11 +66,20 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
             authored_roster=b"PREPARATION_NEGATIVE_IMPORTS=['org']"
             if roster in raw:changes.append((roster,authored_roster,1))
             admission=b'def resource_admission(config):\n'
-            synthetic_admission=(admission+
+            synthetic_admission=(
+                b'def _authored_supervised(bounds,*args,**kwargs):\n'
+                b'    # Synthetic capacity is AUTHORED fixture data, not production guard qualification.\n'
+                b"    assert ROOT.name=='authored-project', 'Synthetic capacity requires the authored project'\n"
+                b'    original=bounds.shutil.disk_usage\n'
+                b'    try:\n'
+                b'        bounds.shutil.disk_usage=lambda path: original(path)._replace(free=8*1024**3)\n'
+                b'        return bounds.supervised(*args,**kwargs)\n'
+                b'    finally:bounds.shutil.disk_usage=original\n\n\n'+admission+
                 b'    # Synthetic capacity is AUTHORED fixture data, never a host measurement.\n'
                 b"    assert ROOT.name=='authored-project', 'Synthetic capacity requires the authored project'\n"
                 b'    authored_disk_free_bytes=authored_tmpfs_free_bytes=8*1024**3\n')
             changes.extend([(admission,synthetic_admission,1),
+                (b'observed=bounds.supervised(command,',b'observed=_authored_supervised(bounds,command,',1),
                 (b'shutil.disk_usage(ROOT).free',b'(authored_disk_free_bytes)',2),
                 (b'shutil.disk_usage(parent).free',b'(authored_tmpfs_free_bytes)',2)])
             changed=raw
@@ -283,6 +292,24 @@ def run_cli(root,api,phase,config):
     except BaseException:
         os.killpg(process.pid,signal.SIGKILL);process.communicate();raise
     elapsed=time.monotonic()-started
+    if process.returncode:
+        diagnostic=dict(phase=phase,returncode=process.returncode)
+        if stderr:diagnostic['stderr_tail']=stderr[-2048:].decode('utf-8','replace')
+        try:
+            if len(stdout)>64*1024:raise ValueError('Parent stdout exceeds diagnostic bound')
+            parent=json.loads(stdout)
+            diagnostic['parent']={key:parent[key] for key in ('kind','status','error_type','error','elapsed_seconds') if key in parent}
+        except (ValueError,TypeError) as error:
+            diagnostic['parent_decode_error']=str(error)
+        try:
+            output=root/(api.allocation_output(config) if hasattr(api,'allocation_output') else api.OUTPUTS[config['phase']])
+            with (output/'supervision.json').open('rb') as stream:raw_supervision=stream.read(64*1024+1)
+            if len(raw_supervision)>64*1024:raise ValueError('Supervision exceeds diagnostic bound')
+            observed=json.loads(raw_supervision)
+            diagnostic['supervision']={key:observed[key] for key in ('status','failure','returncode','pid','matching_survivors','sampled_peak_rss_bytes') if key in observed}
+        except (OSError,ValueError,TypeError,KeyError) as error:
+            diagnostic['supervision_read_error']=str(error)
+        print('AUTHORED CLI failure diagnostic:',json.dumps(diagnostic,sort_keys=True))
     if b'CPU held-runtime resource admission failed' in stderr:
         parent=Path(config['stage_parent']).parent
         available=int(next(l.split()[1] for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:')))*1024
@@ -315,6 +342,32 @@ def test_authored_admission_uses_synthetic_capacity_only_in_its_bound_clone(tmp_
     monkeypatch.setattr(api,'ROOT',tmp_path/'foreign-project')
     with pytest.raises(AssertionError,match='Synthetic capacity requires the authored project'):
         api.resource_admission(config)
+
+
+def test_authored_monitor_preserves_the_real_floor_and_restores_its_sampler(tmp_path, monkeypatch):
+    root,api,_,_=project(tmp_path)
+    bounds=load(ROOT/'src/palimpsest/bounded_qualification.py','authored_capacity_real_monitor')
+    real_supervised=bounds.supervised
+    usage=shutil.disk_usage(tmp_path)._replace(free=3*1024**3)
+    low_capacity=lambda path: usage
+    monkeypatch.setattr(bounds.shutil,'disk_usage',low_capacity)
+    command=[api.PYTHON,'-B','-c','print("AUTHORED monitor only")']
+    arguments=dict(cwd=tmp_path,normal_deadline=time.monotonic()+3,hard_deadline=time.monotonic()+4,
+        rss_bytes=256*1024**2,output_bytes=1024**2,min_free_bytes=4*1024**3,log_mode='direct')
+    low=tmp_path/'real-floor';low.mkdir()
+    refused=real_supervised(command,low,**arguments)
+    assert refused['status']=='failed' and refused['failure']=='free-space floor' and refused['pid'] is None
+    authored=tmp_path/'authored-capacity';authored.mkdir()
+    observed=api._authored_supervised(bounds,command,authored,**arguments)
+    assert observed['status']=='completed' and observed['returncode']==0 and observed['failure'] is None
+    assert bounds.supervised is real_supervised and bounds.shutil.disk_usage is low_capacity
+    with pytest.raises(ValueError,match='Qualification process scope is invalid'):
+        api._authored_supervised(bounds,command,authored,**dict(arguments,process_scope='invalid'))
+    assert bounds.shutil.disk_usage is low_capacity
+    monkeypatch.setattr(api,'ROOT',tmp_path/'foreign-project')
+    with pytest.raises(AssertionError,match='Synthetic capacity requires the authored project'):
+        api._authored_supervised(bounds,command,authored,**arguments)
+    assert bounds.shutil.disk_usage is low_capacity
 
 
 def test_actual_authored_prepare_then_separate_held_four_import_cli(tmp_path):
