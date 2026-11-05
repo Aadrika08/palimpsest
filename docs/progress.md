@@ -4,6 +4,16 @@ Objective: implement the approved [full plan](implementation-plan.md), R0–R5 a
 
 Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP tools are not exposed in this session; this file is the recovery fallback, not a claim that the binding was updated.
 
+## Proof-first completion work — 5 November 2026
+
+The active full-project goal follows the approved [proof-first plan](plans/project-completion-2026-11-05.md). Work is isolated on `paper/authority-rewrite`; this is not a new main landing or hosted CI claim.
+
+Commit `9cca071` contains the nine-module standalone Lean 4.31.0 proof package and exact-rational numerical witness exporter. Serial Lake and independent parent builds pass; all 17 exported axiom reports use only the allowed standard axioms. Independent synthetic negative/nonnegative generated witnesses compile, their 18 axiom reports pass, and 31 Python checker/emitter tests pass. The [independent semantic review](reports/change-audit-independent-semantic-review-2026-11-05.json) found no remaining Important issue. Actual sampling assumptions, runtime eligibility and empirical improvement remain unverified. The initial dependency-cap breach and corrective acquisition records are preserved in the formal package.
+
+Memory publication Tasks 1–2 are committed (`dbadf42`, `b9d6ccc`); Task 3 source is undergoing review. Parent host checks pass 79 custody tests on `/dev/shm` tmpfs and six authored-fixture public writer tests on the project filesystem. The original `/tmp` attempt failed `EDQUOT`; that failure is retained. Production acceptance pins remain empty. The final reader and prospective profiles are unfinished. No new research runtime, training or held-out evaluation has launched; research execution CPU used is zero.
+
+The [runtime pilot contract](plans/change-audit-runtime-pilot-v1.md) records the next audit engineering step. Available project storage remains below the compact memory study's full one-block admission minimum. Capability, research, fresh-runtime, human/operator, licensing, paper and delivery gates remain open.
+
 ## Current completion work — 25 October 2026
 
 The [current completion checklist](plans/project-completion-2026-10-23.md)
