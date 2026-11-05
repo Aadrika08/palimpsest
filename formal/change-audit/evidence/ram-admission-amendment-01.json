@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-11-05T09:49:26.307421+00:00",
+  "scope": "Serial proof elaboration RAM admission, separate from disk reserve",
+  "previous_mem_available_floor_bytes": 6442450944,
+  "new_mem_available_floor_bytes": 5905580032,
+  "lean_heap_flag": "-M4096",
+  "parallel_lean_processes": 1,
+  "measured_freshbounded_maximum_rss_kib": 3323196,
+  "evidence": "evidence/build-kernel-pass-08-FreshBounded.resources",
+  "reason": "Parent approved measured ~3.17GiB RSS plus ~2.3GiB available headroom; avoids refusal on ~10MiB fluctuations around temporary 6GiB heuristic. User disk floor unchanged.",
+  "disk_free_floor_bytes": 6442450944
+}

@@ -1,0 +1,24 @@
+ChangeAudit/Anytime.lean:17:0: warning: automatically included section variable(s) unused in theorem `ChangeAudit.threshold_of_violation`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ChangeAudit/Anytime.lean:28:8: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+ChangeAudit/Anytime.lean:31:34: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+ChangeAudit/Anytime.lean:28:8: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ChangeAudit/Anytime.lean:31:34: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ChangeAudit/Anytime.lean:92:0: warning: automatically included section variable(s) unused in theorem `ChangeAudit.false_improvement_subset`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

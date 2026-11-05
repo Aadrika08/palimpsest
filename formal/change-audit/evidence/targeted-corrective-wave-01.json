@@ -1,0 +1,208 @@
+{
+  "started_at": "2026-11-05T09:03:38.939510+00:00",
+  "baseline_combined_logical_bytes": 6855720756,
+  "max_incremental_bytes": 4294967296,
+  "minimum_free_bytes": 6442450944,
+  "reserve_before_each_serial_step": 268435456,
+  "scope": "Only exact-pinned cache archives for actual missing imports. Serial extraction/download. No full lake update.",
+  "steps": [
+    {
+      "module": "Mathlib.Probability.Kernel.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar",
+      "lookup": "Mathlib.Probability.Kernel.Defs: /home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar]:\n/home/utkarsh/.cache/mathlib/f353f011eeaf6007.ltar not found\n\n",
+      "download_exit": 0,
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.GiryMonad",
+      "archive": "/home/utkarsh/.cache/mathlib/95f640b81f290219.ltar",
+      "lookup": "Mathlib.MeasureTheory.Measure.GiryMonad: /home/utkarsh/.cache/mathlib/95f640b81f290219.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/95f640b81f290219.ltar]:\n/home/utkarsh/.cache/mathlib/95f640b81f290219.ltar not found\n\n",
+      "download_exit": 0,
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Normed.Group.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/4588df8fd9184cc6.ltar",
+      "lookup": "Mathlib.Analysis.Normed.Group.Basic: /home/utkarsh/.cache/mathlib/4588df8fd9184cc6.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/4588df8fd9184cc6.ltar]:\n/home/utkarsh/.cache/mathlib/4588df8fd9184cc6.ltar not found\n\n",
+      "download_exit": 0,
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/f92459863b46ae52.ltar",
+      "lookup": "Mathlib.Analysis.Normed.Group.Defs: /home/utkarsh/.cache/mathlib/f92459863b46ae52.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/f92459863b46ae52.ltar]:\n/home/utkarsh/.cache/mathlib/f92459863b46ae52.ltar not found\n\n",
+      "download_exit": 0,
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar]:\n/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar not found\n\n",
+      "download_exit": 0,
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "archive": "/home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar",
+      "lookup": "Aesop.Main: /home/utkarsh/.cache/mathlib/1c3dde7525e8615f.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\nuncaught exception: failure in /home/utkarsh/.elan/toolchains/leanprover--lean4---v4.31.0/bin/leantar #[-k, /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar]:\n/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar not found\n\n",
+      "download_exit": 0,
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Util.Tactic",
+      "archive": "/home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar",
+      "lookup": "Aesop.Util.Tactic: /home/utkarsh/.cache/mathlib/62f4e37df906f228.ltar\n  comment: git=mathlib4@a53645ea49bc3ba5a02df58d6ae09e49be969f82\n",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    }
+  ],
+  "current_combined_logical_bytes": 6864636682,
+  "incremental_logical_bytes": 8915926,
+  "disk_free_bytes": 52181872640
+}

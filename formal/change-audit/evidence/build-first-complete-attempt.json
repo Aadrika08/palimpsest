@@ -1,0 +1,38 @@
+{
+  "started_at": "2026-11-05T09:19:00.554661+00:00",
+  "source_sha256": {
+    "ChangeAudit/Anytime.lean": "2e1372c340f77c7989482c5f694122926180d206c7d92567dd902138765012a6",
+    "ChangeAudit/Audit.lean": "a336ab80499a489d11336f809ce568bd05339d4b4b5e2bb97749d9519e8b840c",
+    "ChangeAudit/Contrast.lean": "b632efaef25276b84114f9e710d6665a799b8c9bb3c9203fbf1f015bbfcea538",
+    "ChangeAudit/Exponential.lean": "fc7d2490cd2e9026162dacbfcfcf05d62df82b74cd9968ed6a52aeac9f1f3330",
+    "ChangeAudit/FixedHorizon.lean": "14db35a486430052473d0690745684ba8448a4b9e7c1f85144169386ea006f2e",
+    "ChangeAudit/FreshBounded.lean": "5208fe36d07f16ee7739c3c9124ac6eb0f5d425871f09856079cdaf5b7dc5aa5",
+    "ChangeAudit/Numerical.lean": "df9900689f1b615eda4fdec136d6705460408f0f7b0cd0cf30f9794a6fb2b2e9",
+    "ChangeAudit/Targets.lean": "858a67e54f07a8025226deec105c43a52d164677b2cde3b4b5ad04663d3ccf51",
+    "ChangeAudit/Ville.lean": "565760e1086d1cbbb0b82791dbe062e0072663d0405b6f37ad68e8e924905c0e",
+    "ChangeAudit.lean": "fc7e0b2e12951efae5c31a3b14c7f6236eeee1f05c41d8c4d7643d8828559172"
+  },
+  "scope": "Serial own-source lean compilation only, no automatic dependency build or acquisition",
+  "commands": [
+    {
+      "module": "Contrast",
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-M2048",
+        "-o",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/build/lib/lean/ChangeAudit/Contrast.olean",
+        "ChangeAudit/Contrast.lean"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 1.0379496950190514,
+      "log": "evidence/build-first-complete-attempt-Contrast.log"
+    }
+  ],
+  "status": "failed",
+  "reason": "compile failed: Contrast",
+  "elapsed_seconds": 1.038248336990364,
+  "sources_unchanged": true
+}

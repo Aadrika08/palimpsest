@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-11-05T08:51:31.279511+00:00",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "ChangeAudit/Contrast.lean"
+  ],
+  "tool_session_id": 22784,
+  "exit_code": 1,
+  "status": "missing-dependency-object",
+  "missing_module": "Mathlib.Probability.Kernel.Condexp",
+  "missing_object": ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/Kernel/Condexp.olean",
+  "scope": "Parent actual command/tool-session receipt; no theorem compiled successfully. Not a complete build transcript.",
+  "dependency_acquisition_restarted": false
+}

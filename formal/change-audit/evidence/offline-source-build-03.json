@@ -1,0 +1,224 @@
+{
+  "scope": "Offline pinned-source and existing-cache recovery only; no network acquisition",
+  "elapsed_seconds": 149.15358916600235,
+  "pending": [
+    "Mathlib.Probability.Kernel.Defs",
+    "Mathlib.MeasureTheory.Measure.GiryMonad",
+    "Mathlib.Analysis.Normed.Group.Basic",
+    "Mathlib.Analysis.Normed.Group.Defs",
+    "Aesop.Main"
+  ],
+  "records": [
+    {
+      "module": "ChangeAudit.Contrast",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/ChangeAudit/Contrast.lean:1:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Probability/Kernel/Defs.olean' of module Mathlib.Probability.Kernel.Defs does not exist\n"
+    },
+    {
+      "module": "Mathlib.Probability.Kernel.Defs",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/Mathlib/Probability/Kernel/Defs.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/MeasureTheory/Measure/GiryMonad.olean' of module Mathlib.MeasureTheory.Measure.GiryMonad does not exist\n"
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.GiryMonad",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/Mathlib/MeasureTheory/Measure/GiryMonad.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Analysis/Normed/Group/Basic.olean' of module Mathlib.Analysis.Normed.Group.Basic does not exist\n"
+    },
+    {
+      "module": "Mathlib.Analysis.Normed.Group.Basic",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/Mathlib/Analysis/Normed/Group/Basic.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Analysis/Normed/Group/Defs.olean' of module Mathlib.Analysis.Normed.Group.Defs does not exist\n"
+    },
+    {
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/mathlib/Mathlib/Analysis/Normed/Group/Defs.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Main.olean' of module Aesop.Main does not exist\n"
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Script/Step.olean' of module Aesop.Script.Step does not exist\n"
+    },
+    {
+      "module": "Aesop.Script.Step",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Script/Step.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/batteries/.lake/build/lib/lean/Batteries/Lean/Meta/Basic.olean' of module Batteries.Lean.Meta.Basic does not exist\n"
+    },
+    {
+      "module": "Batteries.Lean.Meta.Basic",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/batteries/Batteries/Lean/Meta/Basic.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/batteries/.lake/build/lib/lean/Batteries/Control/AlternativeMonad.olean' of module Batteries.Control.AlternativeMonad does not exist\n"
+    },
+    {
+      "module": "Batteries.Control.AlternativeMonad",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Batteries.Lean.Meta.Basic",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Script.Step",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Script/Step.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Script/Util.olean' of module Aesop.Script.Util does not exist\n"
+    },
+    {
+      "module": "Aesop.Script.Util",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Script.Step",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Stats/Basic.olean' of module Aesop.Stats.Basic does not exist\n"
+    },
+    {
+      "module": "Aesop.Stats.Basic",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Stats/Basic.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Options/Public.olean' of module Aesop.Options.Public does not exist\n"
+    },
+    {
+      "module": "Aesop.Options.Public",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Stats.Basic",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Check.olean' of module Aesop.Check does not exist\n"
+    },
+    {
+      "module": "Aesop.Check",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Forward/SlotIndex.olean' of module Aesop.Forward.SlotIndex does not exist\n"
+    },
+    {
+      "module": "Aesop.Forward.SlotIndex",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Forward/State.olean' of module Aesop.Forward.State does not exist\n"
+    },
+    {
+      "module": "Aesop.Forward.State",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Forward/State.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Util/Tactic/Ext.olean' of module Aesop.Util.Tactic.Ext does not exist\n"
+    },
+    {
+      "offline_unpack": "Aesop.Util.Tactic.Ext",
+      "archive": "/home/utkarsh/.cache/mathlib/b1ae071f9195b99e.ltar",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Forward.State",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/RuleSet.olean' of module Aesop.RuleSet does not exist\n"
+    },
+    {
+      "module": "Aesop.RuleSet",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Tree/RunMetaM.olean' of module Aesop.Tree.RunMetaM does not exist\n"
+    },
+    {
+      "module": "Aesop.Tree.RunMetaM",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Tree/State.olean' of module Aesop.Tree.State does not exist\n"
+    },
+    {
+      "module": "Aesop.Tree.State",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/RuleTac/Forward.olean' of module Aesop.RuleTac.Forward does not exist\n"
+    },
+    {
+      "module": "Aesop.RuleTac.Forward",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/RuleTac/Tactic.olean' of module Aesop.RuleTac.Tactic does not exist\n"
+    },
+    {
+      "module": "Aesop.RuleTac.Tactic",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Search/RuleSelection.olean' of module Aesop.Search.RuleSelection does not exist\n"
+    },
+    {
+      "module": "Aesop.Search.RuleSelection",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Builder/Cases.olean' of module Aesop.Builder.Cases does not exist\n"
+    },
+    {
+      "module": "Aesop.Builder.Cases",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: object file '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/.lake/build/lib/lean/Aesop/Builder/Default.olean' of module Aesop.Builder.Default does not exist\n"
+    },
+    {
+      "module": "Aesop.Builder.Default",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "module": "Aesop.Main",
+      "exit_code": 1,
+      "output": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/formal/change-audit/.lake/packages/aesop/Aesop/Main.lean:6:0: error: missing data file for module Aesop.Util.Tactic\n"
+    }
+  ]
+}

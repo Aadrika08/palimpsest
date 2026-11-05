@@ -1,0 +1,15 @@
+{
+  "scope": "Bounded offline compile of already pinned sources; no network acquisition",
+  "elapsed_seconds": 4.991087273985613,
+  "compiled": [],
+  "pending": [
+    "Mathlib.Probability.Kernel.Defs"
+  ],
+  "records": [
+    {
+      "module": "Mathlib.Probability.Kernel.Defs",
+      "exit_code": -6,
+      "output": "libc++abi: terminating due to uncaught exception of type lean::exception: failed to create thread\n"
+    }
+  ]
+}

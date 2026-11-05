@@ -1,0 +1,535 @@
+{
+  "started_at": "2026-11-05T09:17:28.530094+00:00",
+  "baseline_combined_logical_bytes": 6855720756,
+  "max_incremental_bytes": 4294967296,
+  "minimum_free_bytes": 6442450944,
+  "manifest_sha256": "076b2adc5d8f87450cdf66417e6f81f898c1c09f0abdfcfb002c1cce91308d5e",
+  "target_modules": 379,
+  "scope": "Serial exact pinned transitive imports only; same original corrective wave cumulative allocation",
+  "steps": [
+    {
+      "module": "Mathlib.LinearAlgebra.TensorProduct.Tower",
+      "archive": "/home/utkarsh/.cache/mathlib/2ca0a7f27905cb1d.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "958d4e576a5eb111cc81195310e9d92a5a8120123fef909ce77be1c5db2ae83b",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Algebra.NonUnitalSubalgebra",
+      "archive": "/home/utkarsh/.cache/mathlib/084aab74a5903579.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "78d5993ce65cbac3776134976618e725ddf70fc7b2669f50f22e5d7f793da34f",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Function.StronglyMeasurable.ENNReal",
+      "archive": "/home/utkarsh/.cache/mathlib/c87a072835ac5e42.ltar",
+      "base": "mathlib",
+      "archive_sha256": "8fc9339d18c0c8d48436c2b6228178a38b7e33c66b0c6fab961d4c22d28bb897",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Convex.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/95fa824f9a3e890d.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "db181c9ea03cbd7e6628cddbdaaa5d6c10a3cbe36265c660cd6053304ceb85d7",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Topology.Algebra.StarSubalgebra",
+      "archive": "/home/utkarsh/.cache/mathlib/42d9d54fa1cb9d5b.ltar",
+      "base": "mathlib",
+      "archive_sha256": "ce112f0cc559fdb72c1892202332f2ce82db0a22c7bd737d7ccb5fd0628a8947",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Rename",
+      "archive": "/home/utkarsh/.cache/mathlib/31317fa218ff4565.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "0bcd4faaa5880fb47473f2ada67b2601e4fdd37a213c4c7ae2837524bd1df64a",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Util.ElabWithoutMVars",
+      "archive": "/home/utkarsh/.cache/mathlib/29d9e4a9c34fcb42.ltar",
+      "base": "mathlib",
+      "archive_sha256": "348f736d2ce800a9d91d859b0ae1ae06661f1af0b279c09c3ddfc6bcea5560ac",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Algebra.TransferInstance",
+      "archive": "/home/utkarsh/.cache/mathlib/542e6c5af09619e4.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "e8afeed186a4e05a3f7d902e09caaeaf312d027eda0d3ce1c80622354b523507",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.LinearAlgebra.Multilinear.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/544cfa90e5a85a72.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "a11329986454dc80d939d1c889144be77e7db4e6f78e053f478306fc633204d4",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.RingTheory.MatrixAlgebra",
+      "archive": "/home/utkarsh/.cache/mathlib/9c118fdcb5a87198.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "b8648879fc287cd710fed77ae9fbe7d4e3a25837b4de4f9f44a408747431c5eb",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Lean.GoalsLocation",
+      "archive": "/home/utkarsh/.cache/mathlib/336eadddd6631ce4.ltar",
+      "base": "mathlib",
+      "archive_sha256": "6545326ff97720c0ffbee5e22748751921be3cf10d7ae85280cdfeaa302bcb18",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Order.IsBotOne",
+      "archive": "/home/utkarsh/.cache/mathlib/c54e8a9cc936a979.ltar",
+      "base": "mathlib",
+      "archive_sha256": "e0c5e5d58923143eb4a4ce19ccfcdca01476cda311a93d3509884116ddc8eb52",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Order.BoundedOrder.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/0316ddf75c26bfd0.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "c819c29cc60e4c8e3b6fc8a3151bf4f4d3dc812d9d77e7e7fcdd8440967a7aae",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Order.Interval.Set.UnorderedInterval",
+      "archive": "/home/utkarsh/.cache/mathlib/61b6a23f11d5f869.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "72c06bbce2b57da2c6e8abbdc543653f257470321bde2510dd4324ec7603547c",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Polynomial.FieldDivision",
+      "archive": "/home/utkarsh/.cache/mathlib/a2f221add6eb7f41.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "74ce77400c0d1df1eacde1a4f53e601214fe63553428d33a5804486a148f97b8",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.Analytic.Constructions",
+      "archive": "/home/utkarsh/.cache/mathlib/c3e867496f336bf4.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "a70a4a0a3292ce7b5e330d36dbf4e4bc96fae87a1c9af9465b5e0aa082aa337e",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Multiset.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/b32943691a86ccb3.ltar",
+      "base": "mathlib",
+      "archive_sha256": "00fd555e598d4919c1c27f32c7e08b5851f4b70759a1c6bf54246b6026054c99",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Order.Filter.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/831882277c7a5cc1.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "57965be4b83b676ffb29b5fa830c210ede92096e9e489679535b79c5b248679d",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.GroupWithZero.Units.Fintype",
+      "archive": "/home/utkarsh/.cache/mathlib/cf3e9d691afb23d3.ltar",
+      "base": "mathlib",
+      "archive_sha256": "3ae9cdf5fde275fbc2fafc7d7662b409dcfe4ad86c1ad79e5d4e9d8aabbcfd1e",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Probability.Independence.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/6073c176f8bc28e8.ltar",
+      "base": "mathlib",
+      "archive_sha256": "f2652c9b697020c3dbd3ae8c6846f3c7efe31d1f70dfef50ca540acf71094b1c",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Order.Group.Synonym",
+      "archive": "/home/utkarsh/.cache/mathlib/897fd146d8f4a6c0.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "24dfef6a6ab4560a899930c291776432c5dbe827ffd3d4cff104ea34fee8e78a",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Order.SuccPred.PartialSups",
+      "archive": "/home/utkarsh/.cache/mathlib/c8253a9973d09f75.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "755b229d91203f4eefa09c5ae87aefc7484a4085fac156d9da6139c8a3185244",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Field.IsField",
+      "archive": "/home/utkarsh/.cache/mathlib/2bc19cd84b726647.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "b721e4172398c77f610f40af6a8fd88f944f7eef339cb9cc7af798feaff6d76b",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.RingTheory.Derivation.Basic",
+      "archive": "/home/utkarsh/.cache/mathlib/f44e593590acc1a5.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "8c29e0b1b698e934fd0db5c9043939edfe600a9cc5f661ea94576a927230543a",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.FreeMonoid.UniqueProds",
+      "archive": "/home/utkarsh/.cache/mathlib/9105c654f89f1e95.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "2ffefa3b26cd2b7d0d2e5df307dee7a13b639c99a32b0ab3205986b8e08ba2c6",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics",
+      "archive": "/home/utkarsh/.cache/mathlib/fc88c8d9845d804a.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "9b52db493ee2059b17eac61685283f1272cb9f999874f881041a1e4a9c2717c7",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "ProofWidgets.Component.OfRpcMethod",
+      "archive": "/home/utkarsh/.cache/mathlib/52879519eba87059.ltar",
+      "base": "project",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "95db6c9bd6da4ed24ba68ed1a5554c9c49c2125c53d3592247d9a4f618cc5983",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.Group.Finset.Indicator",
+      "archive": "/home/utkarsh/.cache/mathlib/d3110d13a32d928c.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "08bff9dea35aea5f35adf55f96c5806b17e648d5033ecbc45c472ce5f3422378",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.SetTheory.Ordinal.Principal",
+      "archive": "/home/utkarsh/.cache/mathlib/ed4cd97fb5d50bd0.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "91493587d230f2a58477fd14ec0e088bda99e07028938804ede8a06da0d1402d",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Module.Equiv.Opposite",
+      "archive": "/home/utkarsh/.cache/mathlib/b3a32c4af378d2d1.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "b913a1a4e4b9ad2cff98272dd10df78be9141863b7b31fe119fe7476b82cb115",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.LinearAlgebra.Matrix.Block",
+      "archive": "/home/utkarsh/.cache/mathlib/64f0c274a4c16f43.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "cb015c32e046bb44433b4a1af4dfaf3301f9134d9caa66e60040f2f753038996",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.Finite.Sum",
+      "archive": "/home/utkarsh/.cache/mathlib/be5bb134ca96c338.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "28e4458833d223855fee53f288e77fb24799a3392a48626a18367346cf79df13",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute",
+      "archive": "/home/utkarsh/.cache/mathlib/23e87d62bd255a82.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "760922efbd7a36ef6780cbf6c0f1bb2b0e324e1b6e24bdc7e690249f88d20f10",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.Multiset.Pi",
+      "archive": "/home/utkarsh/.cache/mathlib/bbd8d44f880e4972.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "9b1c9c7a51c64e9ba62117172b9f23760c1169da17ea5dbfbf6a96085053df7c",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Ring.Invertible",
+      "archive": "/home/utkarsh/.cache/mathlib/9a7f605c2f6c6a8e.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "93bd421a2f489005b22ece63a5379bcdaea7987306eb3a9b5eb2094fcb992c0d",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Order.Filter.AtTopBot.Prod",
+      "archive": "/home/utkarsh/.cache/mathlib/67ee132263d899ce.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "d2cc37a4dccb8be2d7de9c1d077f61d03901c4fd7d708874915d031a55598296",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.MeasureTheory.MeasurableSpace.EventuallyMeasurable",
+      "archive": "/home/utkarsh/.cache/mathlib/9b3454ac5a4cfbb3.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "7eff46d89be403a0c718d3cc427a5cf308f5d0098a7398aa2c0956a74d77b761",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.FieldTheory.Minpoly.Field",
+      "archive": "/home/utkarsh/.cache/mathlib/1236fda5f77f9530.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "b6724d0bba4561e72cc68bdab37a717296521550d46c57139a06e461877f0362",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Analysis.InnerProductSpace.Orthogonal",
+      "archive": "/home/utkarsh/.cache/mathlib/1004d076f431eee3.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "be81db49cf638344333f2bd3b45df38e310dec091d3feff84b5c82a9494065cd",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Module.TransferInstance",
+      "archive": "/home/utkarsh/.cache/mathlib/3f273c19bf3f7530.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "37bd049452d161e5a858e6095820414c6716333d47311bb5581c83d7b3f14ca5",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.Set.SymmDiff",
+      "archive": "/home/utkarsh/.cache/mathlib/d603b1ec6c2e8a0a.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "a11c14ee561ad7a64f25afa717e01cae5881ea6431708e861d8771843bd071b2",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Polynomial.Degree.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/8618eadd37ac4e1e.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "5860d98c66a68d6a3e5db43981ca0130a981b6bda8c6c2c0641fa4c415479a02",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.Rat.Cast.Lemmas",
+      "archive": "/home/utkarsh/.cache/mathlib/3a55f7351af84f12.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "976619f307b28fc3d19dd71a6f56759dab57fc3879b7ae093fb91a3e219861eb",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Topology.ContinuousMap.Compact",
+      "archive": "/home/utkarsh/.cache/mathlib/f3f9735acfaa3ad8.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "8e2f803da6c24fed06f37da1f7c9b79be6e5a39dde3383c1d3a490ac1f5e042b",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Order.Filter.ENNReal",
+      "archive": "/home/utkarsh/.cache/mathlib/02d8ace67db2578c.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "2df1f1a1dd3bdabe0f1eefcaad6c2f2d7b3b16a82a0c52d1ec5c9a3f001b9051",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.Fintype.Parity",
+      "archive": "/home/utkarsh/.cache/mathlib/ede5cd14c3eaa5a5.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "ddbebf95ae9701e9c78e8f5241d46f266989e15f45bcf25517db0ec59269e955",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Data.ENNReal.Action",
+      "archive": "/home/utkarsh/.cache/mathlib/b756998fac967af3.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "a47abd4450a3187356d6ba962cd4e64e5197bddf34d1339aac1a22b3e4c6cb7c",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Tactic.Linter.MinImports",
+      "archive": "/home/utkarsh/.cache/mathlib/97c1879d071b52e7.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "3e85e75cb0f8bf7200df4564560e1fe89fa4458cb8ff438cc432029fffb72537",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.Order.Monoid.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/e12050f69abbb0b8.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "d72085c044cb340c6e0de666a8bcbb667a052783317a0cfaffeb6b3bdbcd5660",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Algebra.BigOperators.GroupWithZero.Finset",
+      "archive": "/home/utkarsh/.cache/mathlib/c57e99deb6cfb368.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "3db72792f7167ad4b61b60f31c86967a1aa05c9f5b3176b1cf017688cec0df99",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Logic.Equiv.Nat",
+      "archive": "/home/utkarsh/.cache/mathlib/cc083387967130cb.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "c73788eadd9e614cf690376034728cdb2f46b4dafe022b0cfcf74d22f4e024f5",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.RingTheory.Spectrum.Prime.Defs",
+      "archive": "/home/utkarsh/.cache/mathlib/8c137bc814549245.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "7c9caa099e75fe076af50a076b958a5326cdf79a21a46e6d6a2e3eb6d942784e",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Mathlib.Topology.ClusterPt",
+      "archive": "/home/utkarsh/.cache/mathlib/246408f4accd040f.ltar",
+      "base": "mathlib",
+      "download_exit": 0,
+      "download_output": "",
+      "archive_sha256": "78c3c507ec0bee0d9f6577d67d8e8bfefa0762df7d7fdcb830543874a2da73e7",
+      "unpack_exit": 0,
+      "unpack_output": ""
+    },
+    {
+      "module": "Aesop.Search.RuleSelection",
+      "archive": "/home/utkarsh/.cache/mathlib/ba1a207069857e1f.ltar",
+      "base": "project"
+    }
+  ],
+  "combined_logical_bytes": 6981406372,
+  "incremental_logical_bytes": 125685616,
+  "free_bytes": 52051767296,
+  "status": "stopped",
+  "reason": "terminated by signal 15"
+}

@@ -89,3 +89,37 @@ mismatch (`tdd-green-attempt-01.log`), then `tdd-green.log` passed all 20 tests.
 A later resource-growth regression failed as expected in `tdd-red-resource.log`;
 after tightening exact-rational work bounds, `tdd-green-final.log` passes 21 tests.
 These are synthetic arithmetic/schema tests, not experimental observations.
+
+## Closed Lean numerical-witness emission
+
+`emit.py::emit_lean_certificate` calls this checker and returns `lean_source` plus
+metadata. It performs no file I/O, subprocess invocation or Lean execution.
+The expected protocol and spec hashes remain mandatory independent inputs.
+Only validated rational literals and hexadecimal identities enter Lean text;
+family and contrast IDs stay in metadata and never become Lean identifiers/code.
+
+The generated source imports `ChangeAudit.Numerical` and invokes
+`rational_family_log_enclosure` with the exact `K`, `alpha`, `q` and Taylor term
+count. Its finite inequality is discharged with
+`norm_num [Finset.sum_range_succ, Nat.factorial]`. Each contrast embeds the complete
+loss-difference list in registered family order, proves its length and exact
+rational mean, and proves its real-valued conservative endpoint equals the
+checker result. An endpoint below zero receives a strict-negative numerical
+lemma; otherwise a nonnegative lemma is emitted. User-supplied input-row order
+is preserved by the observation hash, while loss-list order uses the independently
+registered family roster.
+
+Code-generation limits are **128 families, 8 contrasts, 32 Taylor terms** and
+**256 KiB for the entire canonical ASCII-JSON serialized return value** (source
+and metadata together). Export limits are deliberately tighter than the generic
+numerical checker; larger exports refuse without changing checker semantics.
+The source is generated, not compiled: metadata always marks source compilation,
+sampling eligibility, theorem application, theorem receipt and certified
+improvement false. Even a later compiled numerical witness would not establish
+the stochastic sampling premises or bind simulator behavior to the theorem.
+
+`tests/test_emit.py` covers the exact `-1/4` example, heterogeneous row ordering,
+nonnegative/zero endpoints, code-like identifiers, incomplete grids, identity
+drift and generation/byte caps. `tdd-emit-red.log` retains ten expected failures
+before implementation; `tdd-emit-green.log` retains ten passing tests. No Lean
+compiler was invoked by those tests or this source lane.

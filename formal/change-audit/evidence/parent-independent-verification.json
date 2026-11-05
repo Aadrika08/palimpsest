@@ -1,0 +1,71 @@
+{
+  "scope": "Parent independent standalone build and kernel-check of exported audit/axioms; no empirical sampling claim",
+  "commands": [
+    {
+      "command": [
+        "lake",
+        "--no-cache",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.5761959080118686
+    },
+    {
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "-o",
+        "evidence/parent-independent-axioms.resources",
+        "lake",
+        "env",
+        "lean",
+        "-j1",
+        "-M4096",
+        "ChangeAudit/Audit.lean"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.974125941982493
+    }
+  ],
+  "source_config_sha256": {
+    "ChangeAudit/Anytime.lean": "5e3694948904a7f6174a2f9e8c7b853dd91aecfa2e79ff7db7910eb4438e357f",
+    "ChangeAudit/Audit.lean": "c39a98d107887fd2208147f05d4f11079fce9ce1eadad7b89b0297b407792af8",
+    "ChangeAudit/Contrast.lean": "b632efaef25276b84114f9e710d6665a799b8c9bb3c9203fbf1f015bbfcea538",
+    "ChangeAudit/Exponential.lean": "b63f418ec5774da1427909c91d4c7a39c55261962edf90462934806074638448",
+    "ChangeAudit/FixedHorizon.lean": "14db35a486430052473d0690745684ba8448a4b9e7c1f85144169386ea006f2e",
+    "ChangeAudit/FreshBounded.lean": "ea350c8d8405aa7a49f8467ace5bec388694f1b07d20a097094a15e69bdf2339",
+    "ChangeAudit/Numerical.lean": "a7c7208150c9f93c22cc4799e40c5ddacf626219355231e63e1ae465b9b9cd75",
+    "ChangeAudit/Targets.lean": "c06ea3d8ff368c55c1fe3b93c7ce7b8a547dda859a477a4e3f6a21d22690ba7d",
+    "ChangeAudit/Ville.lean": "565760e1086d1cbbb0b82791dbe062e0072663d0405b6f37ad68e8e924905c0e",
+    "ChangeAudit.lean": "fc7e0b2e12951efae5c31a3b14c7f6236eeee1f05c41d8c4d7643d8828559172",
+    "lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "lakefile.toml": "691476013b4f365131cc8cf1b8f798c3cceebc6b351cc3711606026038ff395c",
+    "lake-manifest.json": "2c357e316d10df71f33cab00bcbff56a20c9a8927c330ab8bc200ab0ad7fc354"
+  },
+  "sources_unchanged": true,
+  "axiom_report_count": 17,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "theorems": [
+    "ChangeAudit.contrast_mem_Icc",
+    "ChangeAudit.contrast_subgaussian",
+    "ChangeAudit.FreshBounded.conditional_mgf",
+    "ChangeAudit.FreshBounded.toConditionalMGF",
+    "ChangeAudit.exponential_supermartingale",
+    "MeasureTheory.Supermartingale.measure_ville_le_div",
+    "ChangeAudit.anytime_bound",
+    "ChangeAudit.finite_anytime_bound",
+    "ChangeAudit.fixed_horizon_bound",
+    "ChangeAudit.fixed_horizon_sqrt_bound",
+    "ChangeAudit.freshOfContrasts",
+    "ChangeAudit.prefix_target_identity",
+    "ChangeAudit.rational_log_enclosure",
+    "ChangeAudit.rational_family_log_enclosure",
+    "ChangeAudit.finite_false_acceptance_bound",
+    "ChangeAudit.finite_false_strict_acceptance_bound",
+    "ChangeAudit.example_log_enclosure"
+  ]
+}

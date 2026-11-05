@@ -1,0 +1,22 @@
+{
+  "scope": "independent kernel checks of synthetic generated numerical witnesses only",
+  "results": [
+    {
+      "fixture": "negative",
+      "source_sha256": "1edd87e162ff048bae93348e9803a59d1faff8b3a30673fc8d18043588d17a76",
+      "compile_exit_code": 0,
+      "axiom_reports": 9,
+      "allowed_axioms_only": true
+    },
+    {
+      "fixture": "nonnegative",
+      "source_sha256": "df1cfacc3f3f26a21fce020de5ee315e240c19349f4fc72f69d88add23f71a13",
+      "compile_exit_code": 0,
+      "axiom_reports": 9,
+      "allowed_axioms_only": true
+    }
+  ],
+  "python_tests": 31,
+  "sampling_eligibility_verified": false,
+  "certified_improvement": false
+}

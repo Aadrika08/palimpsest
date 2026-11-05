@@ -1,0 +1,14 @@
+ChangeAudit/Numerical.lean:27:2: error: Type mismatch
+  add_le_add_right (div_le_div_of_nonneg_right hb (LT.lt.le (mul_pos hs hnR))) ?m.51
+has type
+  ?m.51 + Real.log (1 / alpha) / (scale * ↑n) ≤ ?m.51 + upperLog / (scale * ↑n)
+but is expected to have type
+  singleRadius alpha scale n ≤ conservativeRadius upperLog scale n
+ChangeAudit/Numerical.lean:36:75: error: Application type mismatch: The argument
+  ha
+has type
+  estimate + conservativeRadius upperLog scale n ≤ -margin
+but is expected to have type
+  conservativeRadius upperLog scale n + estimate ≤ ?m.48
+in the application
+  LE.le.trans (add_le_add_left (radius_le_conservative hs hn hb) estimate) ha

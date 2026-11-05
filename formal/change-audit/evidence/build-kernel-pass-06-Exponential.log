@@ -1,0 +1,25 @@
+ChangeAudit/Exponential.lean:22:8: warning: automatically included section variable(s) unused in theorem `ChangeAudit.wealth_zero`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ChangeAudit/Exponential.lean:27:0: warning: automatically included section variable(s) unused in theorem `ChangeAudit.wealth_nonneg`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ChangeAudit/Exponential.lean:32:0: warning: automatically included section variable(s) unused in theorem `ChangeAudit.wealth_step`:
+  [MeasurableSpace Ω]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace Ω] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ChangeAudit/Exponential.lean:55:31: error: unexpected token 'set_option'; expected 'lemma'
+ChangeAudit/Exponential.lean:85:2: error: Type mismatch: After simplification, term
+  mul_le_mul_of_nonneg_left hf (wealth_nonneg g scale n ω)
+ has type
+  @LE.le ℝ Real.instPreorder.toLE (wealth g scale n ω * μ[factor g scale n | ↑F n] ω) (wealth g scale n ω)
+but is expected to have type
+  @LE.le ℝ Real.partialOrder.toLE ((wealth g scale n * μ[factor g scale n | ↑F n]) ω) (wealth g scale n ω)
