@@ -74,3 +74,25 @@ Observed RED (`task-4-timer-red.log`): timer-duration-only snapshots incorrectly
 Read-only post-hoc application of the new matcher to the two retained diagnostic snapshots produced identical canonical final-state digest `fc918d261a53772a9509388248ad19457680f90908c9c1bc70ec6a12462783cf`, while preserving their differing raw native hashes. This derived development diagnostic is in `post-hoc-telemetry-check.json`; it does not reclassify the original unmatched development seed or constitute campaign evidence. The root rescheduled actual null+synchronous confirmation until after Task2/Task3 own their sequential model lane. No new actual model run occurred after that hold. Submission/runtime qualification remains pending the root's scoped review and scheduled confirmation.
 
 The integration review also caught a CLI spelling discrepancy before campaign execution. The exact planned `--kind operations --replay-root REPLAY_ROOT` invocation is now supported; existing `--kind operation --sources REPLAY_ROOT` remains an alias. Both resolve completed Task3 rows at `REPLAY_ROOT/seed-{seed}/row.json`, verified against the repeatability driver's actual directory creation. The planned invocation had an observed failing argparse test before the alias fix (`task-4-cli-alias-red.log`). Final combined verification after the alias passed58tests with4existing full-model skips (`task-4-timer-alias-regressions.log`);36focused overhead tests passed within that slice. No further model run occurred.
+
+## Final actual development confirmation
+
+After the timer-only matcher and retained-source config fixes, the root authorized a final null+synchronous seed0 pair plus one operation-cost unit, all development-only and sequential. Exact command:
+
+```sh
+PYTHONPATH=src:. MUJOCO_GL=egl OMP_NUM_THREADS=2 /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python runs/task4-final-development-20261105T012122Z/smoke.py
+```
+
+Both execution conditions completed20warm-up+200measured ticks. Action hashes,220tick counts, canonical full final-state hashes and matched native hashes agreed; raw native hashes differed. Raw and canonical snapshots and the explicit telemetry normalization descriptor are retained. The two-condition development facts are at `runs/task4-final-development-20261105T012122Z/execution-pair-facts.json`. This confirms the null/synchronous matching mechanism; it does not establish a four-condition scientific seed result or alter the original unmatched four-condition development run.
+
+The operation in that first final-smoke root failed before the first restored tick with strict production `Snapshot model/runtime/profile identity differs`. Source config was already correct (`vision-ablation`/checker/FLYNN/seed0/CPU). Read-only comparison showed the retained source recorded `CUDA_VISIBLE_DEVICES=''`, whereas the direct overhead child inherited it absent; every other recorded Torch numerical-profile field agreed. The original failed unit, logs and unchanged-source evidence remain under that root's `operation/` directory. The root authorized a narrow fix: bind the five recorded CPU/render environment values before owner construction, removing inherited variables recorded absent. No restore validation was weakened. The exact source config fix is4553c69; the CPU environment fix is5a6f17c. Both had observed failing regressions before implementation. Combined recording/replay/overhead verification after environment binding passed71tests with4existing actual-model skips (`task-4-operation-env-regressions.log`).
+
+The root then authorized only one fresh operation development confirmation:
+
+```sh
+PYTHONPATH=src:. MUJOCO_GL=egl OMP_NUM_THREADS=2 /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python runs/task4-operation-confirmation-20261105T012704Z/confirm.py
+```
+
+This completed successfully using the retained source row `runs/task3-development-20261105T011811Z/replay/row.json`, without a scientific campaign identity freeze. The capture owner used FLYNN/vision-ablation/checker/seed0/CPU, with the recorded CUDA visibility empty and EGL backend. The exact prefix snapshot restored tick8, and one real tick advanced the capture owner to tick9. Validated playback read100ticks. Action replay and policy replay each compared100ticks, returned `passed` and no first divergence; action inference was false and policy inference true. All12source-owner file hashes and all production source hashes matched before/after. The bounded child exited and was reaped; the model lane was released.
+
+The seven retained operation timings were: capture0.013659662s; save0.012205054s; read0.006077691s; restore/first-tick0.223486699s; playback0.049841438s; action replay22.181316812s; policy replay22.483523830s. Output was45,163,665bytes, below512MiB; no timeout, cap or reserve failure occurred. Complete raw config, stdout/stderr, source hash inventories, replay reports and development result are under `runs/task4-operation-confirmation-20261105T012704Z/`, with `development-result.json` as the summary. These are bounded implementation-development observations, not scientific overhead estimates or a campaign retry.
