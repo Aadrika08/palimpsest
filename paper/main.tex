@@ -396,6 +396,17 @@ measured false acceptances under the weak predicates,
 \FaultBenignFalseRejects{} benign false rejections. Detection requires the
 named trace and semantic oracle; an unrelated crash is not semantic success.
 
+\begin{table}[t]
+\centering\small
+\caption{S1's first continuation action after the eight-tick prefix. Maximum
+absolute action error is recomputed from retained paired arrays. Pose-only
+restoration jointly omits continuation state; this ablation does not identify
+the contribution of an individual omitted component.}
+\label{tab:snapshot-ablation}\studyinput{snapshot-ablation}
+\end{table}
+Table~\ref{tab:snapshot-ablation} exposes the magnitude behind the first-action
+divergence, alongside complete-state restoration on the same three seeds.
+
 \subsection{RQ2: Complete continuation and declared replay}
 Ten seeds each execute an eight-tick prefix followed by a 100-tick
 source/restored continuation comparison. The retained data include paired raw

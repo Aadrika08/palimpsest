@@ -27,6 +27,7 @@ The manuscript consumes only these focused generated inputs:
 - `generated/overhead-table.tex`
 - `generated/operation-table.tex`
 - `generated/overhead-plot.tex`
+- `generated/snapshot-ablation.tex`
 
 Missing inputs display explicit PENDING text. The paper never substitutes the
 historical `claims.tex`, old capability outcomes, smoke measurements, or expected

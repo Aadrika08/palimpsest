@@ -31,7 +31,8 @@ clean:
 # Frozen authority/replay campaign inputs. Generation never launches study jobs.
 AUTHORITY_EVIDENCE ?= evidence/authority-replay-v1
 AUTHORITY_PROTOCOL ?= studies/authority_replay_v1/protocol.json
-AUTHORITY_ARGS = --summary $(AUTHORITY_EVIDENCE)/summary.json --manifest $(AUTHORITY_EVIDENCE)/campaign-manifest.json --protocol $(AUTHORITY_PROTOCOL) --output generated
+AUTHORITY_TRACE_ROOT ?= $(AUTHORITY_EVIDENCE)/fault-traces
+AUTHORITY_ARGS = --summary $(AUTHORITY_EVIDENCE)/summary.json --manifest $(AUTHORITY_EVIDENCE)/campaign-manifest.json --protocol $(AUTHORITY_PROTOCOL) --trace-root $(AUTHORITY_TRACE_ROOT) --output generated
 
 .PHONY: authority-evidence authority-evidence-check
 

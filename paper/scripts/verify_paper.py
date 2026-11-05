@@ -149,11 +149,12 @@ def main(argv: list[str] | None = None) -> int:
                paper / "studies" / "authority_replay_v1" / "protocol.json"]
     generated = [paper / "generated" / name for name in (
         "authority-claims.tex", "fault-matrix.tex", "replay-table.tex",
-        "overhead-table.tex", "operation-table.tex", "overhead-plot.tex")]
+        "overhead-table.tex", "operation-table.tex", "overhead-plot.tex", "snapshot-ablation.tex")]
     validation = subprocess.run([
         sys.executable, "-B", str(paper / "scripts" / "build_authority_evidence.py"),
         "--summary", str(sources[0]), "--manifest", str(sources[1]),
         "--protocol", str(sources[2]), "--output", str(paper / "generated"), "--check",
+        "--trace-root", str(evidence / "fault-traces"),
     ], capture_output=True, text=True)
     if validation.returncode:
         print(validation.stderr or validation.stdout, file=sys.stderr)
