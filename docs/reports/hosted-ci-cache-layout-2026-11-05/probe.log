@@ -1,0 +1,8 @@
+Using Python 3.11.15 environment at: runs/ci-cache-layout-20261105/venv
+Resolved 1 package in 3ms
+Prepared 1 package in 3ms
+Installed 1 package in 1ms
+ + cache-layout-probe==0.0.0 (from file:///home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-cache-layout-20261105/cache_layout_probe-0.0.0-py3-none-any.whl)
+Clearing cache at: runs/ci-cache-layout-20261105/cache
+Removed 12 files (66.8KiB)
+{"schema": "authored-ci-cache-layout-check-v1", "uv_version": "uv 0.9.25", "before_nlink": 2, "after_nlink": 1, "shared_cache_env_inode_before_clean": true, "installed_module_sha256": "977207c39093032cc6eb64136be496716038cf39e4b8184f351b9575e0be9277", "installed_bytes_unchanged": true, "imports_before_and_after_clean": true, "dependency_versions_changed": false, "actual_research_inputs_read": false, "scope": "tiny authored local wheel; actual hosted locked dependency installation remains unverified"}

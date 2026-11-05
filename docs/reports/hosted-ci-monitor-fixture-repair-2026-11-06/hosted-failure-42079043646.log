@@ -1,0 +1,481 @@
+fixtures	Run fixture tests	﻿2026-11-05T17:56:48.7519434Z ##[group]Run runuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh
+fixtures	Run fixture tests	2026-11-05T17:56:48.7519799Z ^[[36;1mrunuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh^[[0m
+fixtures	Run fixture tests	2026-11-05T17:56:48.7520179Z shell: bash --noprofile --norc -e -o pipefail {0}
+fixtures	Run fixture tests	2026-11-05T17:56:48.7520354Z env:
+fixtures	Run fixture tests	2026-11-05T17:56:48.7520515Z   UV_PYTHON_INSTALL_DIR: /home/utkarsh/.local/share/uv/python
+fixtures	Run fixture tests	2026-11-05T17:56:48.7520735Z   PYTHONDONTWRITEBYTECODE: 1
+fixtures	Run fixture tests	2026-11-05T17:56:48.7520915Z   PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest
+fixtures	Run fixture tests	2026-11-05T17:56:48.7521108Z ##[endgroup]
+fixtures	Run fixture tests	2026-11-05T17:57:00.6872652Z ........................................................................ [  1%]
+fixtures	Run fixture tests	2026-11-05T17:57:29.6421972Z ........................................................................ [  2%]
+fixtures	Run fixture tests	2026-11-05T17:57:36.2317179Z ........................................................................ [  3%]
+fixtures	Run fixture tests	2026-11-05T17:57:41.5484513Z ........................................................................ [  4%]
+fixtures	Run fixture tests	2026-11-05T17:57:45.7242737Z ........................................................................ [  5%]
+fixtures	Run fixture tests	2026-11-05T17:58:11.7634701Z ....................s.................sss....................s.......... [  6%]
+fixtures	Run fixture tests	2026-11-05T17:58:13.7128411Z ...............................................s............s........... [  7%]
+fixtures	Run fixture tests	2026-11-05T17:58:15.9495931Z ....................s..................ss..........s..s................. [  8%]
+fixtures	Run fixture tests	2026-11-05T17:58:17.5141148Z .....................................s.................................. [  9%]
+fixtures	Run fixture tests	2026-11-05T17:58:20.7016581Z .............................s.......................................... [ 10%]
+fixtures	Run fixture tests	2026-11-05T17:58:23.6719104Z ........................................................................ [ 11%]
+fixtures	Run fixture tests	2026-11-05T17:58:25.8922191Z ........................................................................ [ 12%]
+fixtures	Run fixture tests	2026-11-05T17:59:06.6768014Z ........................................................................ [ 13%]
+fixtures	Run fixture tests	2026-11-05T17:59:18.1964645Z ........................................................................ [ 14%]
+fixtures	Run fixture tests	2026-11-05T18:01:01.9622448Z ........................................................................ [ 15%]
+fixtures	Run fixture tests	2026-11-05T18:01:06.4249984Z ..................ss.........................................sssssssssss [ 16%]
+fixtures	Run fixture tests	2026-11-05T18:01:10.9729184Z sssssssssssssssssssss.................ssssssssssssssssssssssssssssssssss [ 17%]
+fixtures	Run fixture tests	2026-11-05T18:02:14.0686712Z sssssssssssssssssssssssssssssssssssssssssssssssss....................... [ 18%]
+fixtures	Run fixture tests	2026-11-05T18:03:19.4366833Z ...............................sssssssssssssssssssssssssssssssssssssssss [ 20%]
+fixtures	Run fixture tests	2026-11-05T18:03:24.4548306Z ssssss..ssss..........................s...........................ss.... [ 21%]
+fixtures	Run fixture tests	2026-11-05T18:03:47.1875561Z ss...................................................................... [ 22%]
+fixtures	Run fixture tests	2026-11-05T18:08:16.3696878Z ........................................................................ [ 23%]
+fixtures	Run fixture tests	2026-11-05T18:08:24.3569847Z ..ssssssssssssssssssssssss.............................................. [ 24%]
+fixtures	Run fixture tests	2026-11-05T18:08:27.5357671Z .........................sssssssssssssss...s............................ [ 25%]
+fixtures	Run fixture tests	2026-11-05T18:08:42.5985635Z ................s....................................................... [ 26%]
+fixtures	Run fixture tests	2026-11-05T18:09:55.9706088Z ........................................................................ [ 27%]
+fixtures	Run fixture tests	2026-11-05T18:10:25.8059389Z ........................................................................ [ 28%]
+fixtures	Run fixture tests	2026-11-05T18:10:44.4940739Z .................................................ss..................... [ 29%]
+fixtures	Run fixture tests	2026-11-05T18:11:47.9635040Z .................................................sssssssssssssssssss.... [ 30%]
+fixtures	Run fixture tests	2026-11-05T18:11:57.7453441Z ........................................................................ [ 31%]
+fixtures	Run fixture tests	2026-11-05T18:11:59.0690016Z ........................sss............................................. [ 32%]
+fixtures	Run fixture tests	2026-11-05T18:12:00.3611308Z ........................................................................ [ 33%]
+fixtures	Run fixture tests	2026-11-05T18:12:00.8280699Z .....s.................................................................. [ 34%]
+fixtures	Run fixture tests	2026-11-05T18:12:01.0373312Z ........s.s.sssssssssssssss............................................. [ 35%]
+fixtures	Run fixture tests	2026-11-05T18:12:01.1054946Z ......................................................ssss.sssss.s...... [ 36%]
+fixtures	Run fixture tests	2026-11-05T18:12:40.4032785Z ........................................................................ [ 37%]
+fixtures	Run fixture tests	2026-11-05T18:12:40.8854070Z ........................................................................ [ 38%]
+fixtures	Run fixture tests	2026-11-05T18:12:41.4619618Z ........................................................................ [ 40%]
+fixtures	Run fixture tests	2026-11-05T18:12:43.6641761Z ........................................................................ [ 41%]
+fixtures	Run fixture tests	2026-11-05T18:12:44.3672255Z ........................................................................ [ 42%]
+fixtures	Run fixture tests	2026-11-05T18:12:45.3321701Z ........................................................................ [ 43%]
+fixtures	Run fixture tests	2026-11-05T18:12:45.7914228Z ........................................................................ [ 44%]
+fixtures	Run fixture tests	2026-11-05T18:12:46.7865647Z ........................................................................ [ 45%]
+fixtures	Run fixture tests	2026-11-05T18:12:48.8834323Z ........................................................................ [ 46%]
+fixtures	Run fixture tests	2026-11-05T18:12:53.3049067Z ........................................................................ [ 47%]
+fixtures	Run fixture tests	2026-11-05T18:12:55.1118987Z ........................................................................ [ 48%]
+fixtures	Run fixture tests	2026-11-05T18:12:56.6909887Z ........................................................................ [ 49%]
+fixtures	Run fixture tests	2026-11-05T18:12:58.5672317Z ........................................................................ [ 50%]
+fixtures	Run fixture tests	2026-11-05T18:13:00.7712472Z ........................................................................ [ 51%]
+fixtures	Run fixture tests	2026-11-05T18:13:03.7331143Z ........................................................................ [ 52%]
+fixtures	Run fixture tests	2026-11-05T18:13:06.0280465Z ........................................................................ [ 53%]
+fixtures	Run fixture tests	2026-11-05T18:13:08.1693425Z ........................................................................ [ 54%]
+fixtures	Run fixture tests	2026-11-05T18:13:10.1311095Z ........................................................................ [ 55%]
+fixtures	Run fixture tests	2026-11-05T18:13:11.8057180Z ........................................................................ [ 56%]
+fixtures	Run fixture tests	2026-11-05T18:13:12.8413645Z ........................................................................ [ 57%]
+fixtures	Run fixture tests	2026-11-05T18:13:13.7429080Z ........................................................................ [ 58%]
+fixtures	Run fixture tests	2026-11-05T18:13:14.9456694Z ........................................................................ [ 60%]
+fixtures	Run fixture tests	2026-11-05T18:13:16.0011571Z ....................................................................s... [ 61%]
+fixtures	Run fixture tests	2026-11-05T18:13:45.6336065Z ........................................................................ [ 62%]
+fixtures	Run fixture tests	2026-11-05T18:14:30.8273306Z ........................................................................ [ 63%]
+fixtures	Run fixture tests	2026-11-05T18:14:38.4035634Z ........................................................................ [ 64%]
+fixtures	Run fixture tests	2026-11-05T18:15:14.2424178Z ........................................................................ [ 65%]
+fixtures	Run fixture tests	2026-11-05T18:16:01.5872935Z ........................................................................ [ 66%]
+fixtures	Run fixture tests	2026-11-05T18:16:09.0278713Z .....ssssss............................................................. [ 67%]
+fixtures	Run fixture tests	2026-11-05T18:16:37.7181056Z ........................................................................ [ 68%]
+fixtures	Run fixture tests	2026-11-05T18:16:48.6819752Z ...................................................................s.... [ 69%]
+fixtures	Run fixture tests	2026-11-05T18:18:02.0704401Z .......ss............................................................... [ 70%]
+fixtures	Run fixture tests	2026-11-05T18:18:39.6384168Z ........................................................................ [ 71%]
+fixtures	Run fixture tests	2026-11-05T18:19:02.8024863Z .............................s..ss..ss..s......s..s..........s..ss...... [ 72%]
+fixtures	Run fixture tests	2026-11-05T18:19:42.9245179Z ........................................................................ [ 73%]
+fixtures	Run fixture tests	2026-11-05T18:19:43.9982887Z ........................................................................ [ 74%]
+fixtures	Run fixture tests	2026-11-05T18:19:44.9205774Z ........................................................................ [ 75%]
+fixtures	Run fixture tests	2026-11-05T18:19:51.1427344Z ........................................................................ [ 76%]
+fixtures	Run fixture tests	2026-11-05T18:19:51.8468237Z ........................................................................ [ 77%]
+fixtures	Run fixture tests	2026-11-05T18:19:52.4353044Z ...................................................................s.... [ 79%]
+fixtures	Run fixture tests	2026-11-05T18:19:52.8132374Z ........................................................................ [ 80%]
+fixtures	Run fixture tests	2026-11-05T18:19:59.8873789Z ........................................................................ [ 81%]
+fixtures	Run fixture tests	2026-11-05T18:20:02.1506437Z ........................................................................ [ 82%]
+fixtures	Run fixture tests	2026-11-05T18:20:23.1634207Z ........................................................................ [ 83%]
+fixtures	Run fixture tests	2026-11-05T18:20:39.5518211Z ........................................................................ [ 84%]
+fixtures	Run fixture tests	2026-11-05T18:20:39.6406053Z ........................................................................ [ 85%]
+fixtures	Run fixture tests	2026-11-05T18:20:40.6150640Z ........................................................................ [ 86%]
+fixtures	Run fixture tests	2026-11-05T18:20:40.6714204Z ........................................................................ [ 87%]
+fixtures	Run fixture tests	2026-11-05T18:20:40.8164529Z ........................................................................ [ 88%]
+fixtures	Run fixture tests	2026-11-05T18:20:40.8508134Z ........................................................................ [ 89%]
+fixtures	Run fixture tests	2026-11-05T18:20:40.8786944Z ........................................................................ [ 90%]
+fixtures	Run fixture tests	2026-11-05T18:20:40.9952857Z ........................................................................ [ 91%]
+fixtures	Run fixture tests	2026-11-05T18:20:41.1353096Z ........................................................................ [ 92%]
+fixtures	Run fixture tests	2026-11-05T18:20:41.2421687Z ........................................................................ [ 93%]
+fixtures	Run fixture tests	2026-11-05T18:21:01.3194946Z ...........sssssss..s................................................... [ 94%]
+fixtures	Run fixture tests	2026-11-05T18:21:05.8329778Z ..........................ssss.......................................... [ 95%]
+fixtures	Run fixture tests	2026-11-05T18:21:09.5962931Z .s..........sss......................................................... [ 96%]
+fixtures	Run fixture tests	2026-11-05T18:21:13.8850539Z ........................................................................ [ 97%]
+fixtures	Run fixture tests	2026-11-05T18:21:20.7739814Z ........................................................................ [ 99%]
+fixtures	Run fixture tests	2026-11-05T18:21:27.1620829Z ..................................................................       [100%]
+fixtures	Run fixture tests	2026-11-05T18:21:27.1621773Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T18:21:27.1622299Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T18:21:27.1623274Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T18:21:27.1624195Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T18:21:27.1624534Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1624772Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T18:21:27.1625386Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T18:21:27.1626029Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T18:21:27.1626346Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1626841Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1627763Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+fixtures	Run fixture tests	2026-11-05T18:21:27.1628571Z     prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+fixtures	Run fixture tests	2026-11-05T18:21:27.1629450Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1629909Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1630668Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1631527Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1632292Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1633046Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1633799Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1634759Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+fixtures	Run fixture tests	2026-11-05T18:21:27.1635500Z     parse = parser.parseString(pattern)
+fixtures	Run fixture tests	2026-11-05T18:21:27.1635764Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1636198Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1636957Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1638013Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1638771Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1639527Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1640285Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1641236Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+fixtures	Run fixture tests	2026-11-05T18:21:27.1642027Z     parser.resetCache()
+fixtures	Run fixture tests	2026-11-05T18:21:27.1642250Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1642686Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:27.1643627Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+fixtures	Run fixture tests	2026-11-05T18:21:27.1644344Z     ParserElement.enablePackrat()
+fixtures	Run fixture tests	2026-11-05T18:21:27.1644598Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1645061Z tests/test_artwork_encounter.py::EncounterTests::test_missing_unexpected_duplicate_and_escaping_members_rejected
+fixtures	Run fixture tests	2026-11-05T18:21:27.1645951Z   /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'afterimage.svg'
+fixtures	Run fixture tests	2026-11-05T18:21:27.1646647Z     return self._open_to_write(zinfo, force_zip64=force_zip64)
+fixtures	Run fixture tests	2026-11-05T18:21:27.1646961Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1647174Z tests/test_flynn.py: 17 warnings
+fixtures	Run fixture tests	2026-11-05T18:21:27.1647575Z tests/test_memory_family_cell_replay_v4.py: 25 warnings
+fixtures	Run fixture tests	2026-11-05T18:21:27.1647985Z tests/test_snapshots.py: 5 warnings
+fixtures	Run fixture tests	2026-11-05T18:21:27.1648363Z tests/test_velocity_gain_flynn.py: 9 warnings
+fixtures	Run fixture tests	2026-11-05T18:21:27.1649392Z   /__w/palimpsest/palimpsest/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+fixtures	Run fixture tests	2026-11-05T18:21:27.1650424Z     return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+fixtures	Run fixture tests	2026-11-05T18:21:27.1650745Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1651166Z tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+fixtures	Run fixture tests	2026-11-05T18:21:27.1652855Z   /__w/palimpsest/palimpsest/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+fixtures	Run fixture tests	2026-11-05T18:21:27.1654336Z     Wcsr = Wc.to_sparse_csr()
+fixtures	Run fixture tests	2026-11-05T18:21:27.1654564Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1655047Z tests/test_memory_family_cell_replay_v4.py::test_actual_upstream_cell_matches_recorded_policy_without_retina[source]
+fixtures	Run fixture tests	2026-11-05T18:21:27.1657409Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+fixtures	Run fixture tests	2026-11-05T18:21:27.1662214Z     return _C._get_float32_matmul_precision()
+fixtures	Run fixture tests	2026-11-05T18:21:27.1671233Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1671900Z tests/test_puck_episode_profile_candidate.py: 30 warnings
+fixtures	Run fixture tests	2026-11-05T18:21:27.1672705Z   /__w/palimpsest/palimpsest/scripts/derive_puck_episode_profile.py:176: DeprecationWarning: invalid escape sequence '\$'
+fixtures	Run fixture tests	2026-11-05T18:21:27.1673710Z     """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+fixtures	Run fixture tests	2026-11-05T18:21:27.1674113Z 
+fixtures	Run fixture tests	2026-11-05T18:21:27.1674451Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T18:21:27.1675030Z 6516 passed, 318 skipped, 69 deselected, 105 warnings in 1476.30s (0:24:36)
+fixtures	Run fixture tests	2026-11-05T18:21:37.7976526Z .......                                                                  [100%]
+fixtures	Run fixture tests	2026-11-05T18:21:37.7977546Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T18:21:37.7978173Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T18:21:37.7979139Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T18:21:37.7980008Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T18:21:37.7980318Z 
+fixtures	Run fixture tests	2026-11-05T18:21:37.7980518Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T18:21:37.7981073Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T18:21:37.7982270Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T18:21:37.7982548Z 
+fixtures	Run fixture tests	2026-11-05T18:21:37.7982833Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T18:21:37.7983288Z 7 passed, 6896 deselected, 2 warnings in 7.97s
+fixtures	Run fixture tests	2026-11-05T18:21:51.2005539Z FFFFF                                                                    [100%]
+fixtures	Run fixture tests	2026-11-05T18:21:51.2006389Z =================================== FAILURES ===================================
+fixtures	Run fixture tests	2026-11-05T18:21:51.2007457Z _ test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures _
+fixtures	Run fixture tests	2026-11-05T18:21:51.2008035Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2008603Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_real_authored03_audit_bin0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2009165Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2009603Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2010381Z     def test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures(tmp_path):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2011043Z         from test_puck_cpu_held_amendment03 import amendment03_fixture
+fixtures	Run fixture tests	2026-11-05T18:21:51.2011709Z         from test_puck_cpu_held_parent_integration import run_cli
+fixtures	Run fixture tests	2026-11-05T18:21:51.2012196Z         m=api()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2012597Z >       with amendment03_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2013246Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2013539Z tests/test_puck_cpu_amendment03_audit.py:97: 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2014032Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2014737Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2015310Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2015618Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2016055Z tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+fixtures	Run fixture tests	2026-11-05T18:21:51.2016551Z     with amendment_fixture(tmp_path,rocm_probe=True) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2017242Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2017776Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2018084Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2018496Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2018810Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2019289Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_real_authored03_audit_bin0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2019746Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2019939Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T18:21:51.2020457Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2021360Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2022152Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2022735Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2023269Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2023750Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2024174Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T18:21:51.2024672Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2025152Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T18:21:51.2025537Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2026024Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2026494Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T18:21:51.2026879Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2027310Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2027746Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2028106Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2028648Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2029205Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T18:21:51.2029591Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2030255Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T18:21:51.2031041Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T18:21:51.2031653Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2031979Z         try:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2032466Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T18:21:51.2033062Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T18:21:51.2033551Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2034010Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2035112Z E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+fixtures	Run fixture tests	2026-11-05T18:21:51.2036130Z E             ', b'')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2036432Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T18:21:51.2036663Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2036959Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T18:21:51.2037573Z _ test_real_authored04_independent_audits_fresh_bindings_and_preserves_history _
+fixtures	Run fixture tests	2026-11-05T18:21:51.2037946Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2038422Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_real_authored04_independe0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2038879Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2039243Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2039910Z     def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2040687Z         from test_puck_cpu_held_amendment04_integration import amendment04_fixture
+fixtures	Run fixture tests	2026-11-05T18:21:51.2041245Z         from test_puck_cpu_held_parent_integration import run_cli
+fixtures	Run fixture tests	2026-11-05T18:21:51.2041734Z         m=api()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2042081Z >       with amendment04_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2042392Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2042648Z tests/test_puck_cpu_amendment04_audit.py:115: 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2043116Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2043916Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2044456Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2044763Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2045232Z tests/test_puck_cpu_held_amendment04_integration.py:19: in amendment04_fixture
+fixtures	Run fixture tests	2026-11-05T18:21:51.2046419Z     with amendment_fixture(tmp_path,rocm_probe=True,historical_bindings=True,binding_failure=binding_failure) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2047245Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2047787Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2048085Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2048497Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2048800Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2049268Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_real_authored04_independe0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2049724Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2049908Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T18:21:51.2050411Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2051101Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2051855Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2052412Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2053015Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2053569Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2054057Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T18:21:51.2054925Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2055455Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T18:21:51.2068458Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2068952Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2069438Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T18:21:51.2069827Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2070262Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2070691Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2071064Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2071849Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2072394Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T18:21:51.2072780Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2073449Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T18:21:51.2074238Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T18:21:51.2074751Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2075071Z         try:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2075570Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T18:21:51.2076165Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T18:21:51.2076655Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2077111Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2078205Z E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+fixtures	Run fixture tests	2026-11-05T18:21:51.2079188Z E             ', b'')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2079492Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T18:21:51.2079728Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2080013Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T18:21:51.2080560Z __ test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli __
+fixtures	Run fixture tests	2026-11-05T18:21:51.2080918Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2081492Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_real_authored02_has_indep0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2081961Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2082323Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2082983Z     def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2083555Z         from test_puck_cpu_held_amendment import amendment_fixture
+fixtures	Run fixture tests	2026-11-05T18:21:51.2084031Z         from test_puck_cpu_held_parent_integration import run_cli
+fixtures	Run fixture tests	2026-11-05T18:21:51.2084414Z         m=api()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2084758Z >       with amendment_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2085043Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2085298Z tests/test_puck_cpu_amendment_audit.py:141: 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2085770Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2086560Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2087171Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2087520Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2087924Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2088231Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2088700Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_real_authored02_has_indep0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2089156Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2089339Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T18:21:51.2089833Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2090532Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2091213Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2091876Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2092409Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2092892Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2093314Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T18:21:51.2093917Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2094387Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T18:21:51.2094770Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2095255Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2095733Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T18:21:51.2096124Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2096561Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2096993Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2097352Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2097891Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2098444Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T18:21:51.2098831Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2099496Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T18:21:51.2100283Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T18:21:51.2100904Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2101217Z         try:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2101797Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T18:21:51.2102464Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T18:21:51.2102960Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2103407Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2104486Z E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+fixtures	Run fixture tests	2026-11-05T18:21:51.2105348Z E             ', b'')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2105667Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T18:21:51.2105893Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2106181Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T18:21:51.2106725Z ______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+fixtures	Run fixture tests	2026-11-05T18:21:51.2107092Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2107561Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_authored02_uses_fresh_cap0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2108028Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2108399Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2109026Z     def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2109532Z >       with amendment_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2109815Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2110062Z tests/test_puck_cpu_held_amendment.py:243: 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2110514Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2111186Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2111818Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2112126Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2112523Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2112821Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2113290Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_authored02_uses_fresh_cap0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2113744Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2113923Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T18:21:51.2114428Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2115121Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2115898Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2116462Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2116990Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2117469Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2117886Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T18:21:51.2118407Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2118928Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T18:21:51.2119335Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2119810Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2120273Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T18:21:51.2120668Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2121118Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2121638Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2121994Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2122539Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2123194Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T18:21:51.2123567Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2124217Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T18:21:51.2124992Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T18:21:51.2125491Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2125818Z         try:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2126305Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T18:21:51.2126930Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T18:21:51.2127431Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2127874Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2128942Z E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+fixtures	Run fixture tests	2026-11-05T18:21:51.2129787Z E             ', b'')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2130095Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T18:21:51.2130318Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2130601Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T18:21:51.2131146Z _ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+fixtures	Run fixture tests	2026-11-05T18:21:51.2131608Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2132080Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_authored03_completes_afte0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2132531Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2132898Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2133547Z     def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2134145Z >       with amendment03_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2134428Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2134684Z tests/test_puck_cpu_held_amendment03.py:143: 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2135141Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2135810Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2136362Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2136666Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2137101Z tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+fixtures	Run fixture tests	2026-11-05T18:21:51.2137703Z     with amendment_fixture(tmp_path,rocm_probe=True) as case:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2138380Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T18:21:51.2138914Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2139211Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T18:21:51.2139608Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2139910Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2140372Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1630/test_authored03_completes_afte0')
+fixtures	Run fixture tests	2026-11-05T18:21:51.2140831Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.2141013Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T18:21:51.2141590Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T18:21:51.2142278Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2142949Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2143521Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2144031Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2144507Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2145112Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T18:21:51.2145594Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2146048Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T18:21:51.2146425Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2146894Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2147355Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T18:21:51.2147732Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T18:21:51.2148160Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T18:21:51.2148588Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2148942Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T18:21:51.2149476Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T18:21:51.2150015Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T18:21:51.2150459Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T18:21:51.7468506Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T18:21:51.7469489Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T18:21:51.7470075Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T18:21:51.7470495Z         try:
+fixtures	Run fixture tests	2026-11-05T18:21:51.7471000Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T18:21:51.7471763Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T18:21:51.7472330Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T18:21:51.7472792Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T18:21:51.7473897Z E           AssertionError: (1, b'{"allocation_id":1,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef...are","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":1}
+fixtures	Run fixture tests	2026-11-05T18:21:51.7474931Z E             ', b'')
+fixtures	Run fixture tests	2026-11-05T18:21:51.7475241Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T18:21:51.7475486Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.7475786Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T18:21:51.7476289Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T18:21:51.7476780Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T18:21:51.7477689Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T18:21:51.7479049Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T18:21:51.7479380Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.7479624Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T18:21:51.7480228Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T18:21:51.7480862Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T18:21:51.7481183Z 
+fixtures	Run fixture tests	2026-11-05T18:21:51.7481632Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T18:21:51.7482177Z =========================== short test summary info ============================
+fixtures	Run fixture tests	2026-11-05T18:21:51.7482945Z FAILED tests/test_puck_cpu_amendment03_audit.py::test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures
+fixtures	Run fixture tests	2026-11-05T18:21:51.7483854Z FAILED tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history
+fixtures	Run fixture tests	2026-11-05T18:21:51.7484717Z FAILED tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
+fixtures	Run fixture tests	2026-11-05T18:21:51.7485536Z FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+fixtures	Run fixture tests	2026-11-05T18:21:51.7489077Z FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+fixtures	Run fixture tests	2026-11-05T18:21:51.7495283Z 5 failed, 6898 deselected, 2 warnings in 12.42s
+fixtures	Run fixture tests	2026-11-05T18:22:41.7354995Z .........................................................                [100%]
+fixtures	Run fixture tests	2026-11-05T18:22:41.7355850Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T18:22:41.7356423Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T18:22:41.7357375Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T18:22:41.7358305Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T18:22:41.7358656Z 
+fixtures	Run fixture tests	2026-11-05T18:22:41.7358913Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T18:22:41.7359525Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T18:22:41.7360156Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T18:22:41.7360487Z 
+fixtures	Run fixture tests	2026-11-05T18:22:41.7360835Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T18:22:41.7361324Z 57 passed, 6846 deselected, 2 warnings in 48.49s
+fixtures	Run fixture tests	2026-11-05T18:22:48.3682046Z ##[error]Process completed with exit code 1.

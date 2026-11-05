@@ -1,0 +1,46 @@
+{
+  "schema": "palimpsest-hosted-cache-layout-repair-v1",
+  "failed_candidate": "e13a41032194c0005ba94dcbcf4933d58de48df7",
+  "pr": 185,
+  "retained_pr_run": 42059929932,
+  "pr_run_outcome": "failure before fixtures; dependency installation ENOSPC",
+  "duplicate_push_run": 42059645194,
+  "push_run_outcome": "cancelled; install step also reported failure before cancellation",
+  "dependency_versions_changed": false,
+  "package_identity_guards_changed": false,
+  "actual_scientific_inputs_read_or_deleted": false,
+  "probe_scope": "tiny authored offline local wheel only; full hosted locked install still unverified",
+  "files": [
+    {
+      "path": "ci-42059929932-install-failure.log",
+      "size_bytes": 17351,
+      "sha256": "d1ed92a60f8726712accc2a1924689b4684482f97e3d7a09be5b7283cc077b41"
+    },
+    {
+      "path": "probe.py",
+      "size_bytes": 2772,
+      "sha256": "2d96d6c235a5ac160f8417282fd7080cdfb533a1007d615a6d8ce4ad8a3975c6"
+    },
+    {
+      "path": "probe.log",
+      "size_bytes": 924,
+      "sha256": "6d97e9c71fec791c99cdb38c1eba6e6a69f2d2f833786f9811e057072c04ac0a"
+    },
+    {
+      "path": "probe-receipt.json",
+      "size_bytes": 530,
+      "sha256": "9aabf95207dec66ffd4e377e1e90e2e177f14cfcbc30b696d6059cfb9f55bfc6"
+    },
+    {
+      "path": "independent-review.md",
+      "size_bytes": 3468,
+      "sha256": "c2ea581b0b342fce7dd8a581150577755265ff25bc441d4c7574f68307058aef"
+    }
+  ],
+  "workflow_syntax": {
+    "yaml_parser": "system PyYAML6.0.3",
+    "yaml_parse": "passed",
+    "bash_syntax_fixture_run_steps": 6,
+    "project_venv_yaml_parser": "unavailable; system parser used"
+  }
+}

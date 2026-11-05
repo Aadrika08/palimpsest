@@ -1,0 +1,393 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_real_authored03_audit_bin0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures(tmp_path):
+        from test_puck_cpu_held_amendment03 import amendment03_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment03_audit.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_real_authored03_audit_bin0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+            assert code==0,(code,stdout,stderr)
+            prepare_result=root/current.OUTPUTS['prepare']/'result.json'
+            prepared_raw=prepare_result.read_bytes()
+            assert json.loads(prepared_raw)['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            audit_output=root/'docs/authored/historical-audit.json'
+            command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
+                capture_output=True,timeout=30)
+            elapsed=time.monotonic()-started
+            channels={}
+            for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
+                channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
+                elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
+            cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
+>           assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+E           AssertionError: (1, b'{"auditor_source_sha256":"19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9","collection_authoriz...ized":false,"transport_sha256":"a9bda9340aedc18745f08c4989d5d15cbb64908670c61796256b31b46e48fc72","version":1}
+E             ', b'')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...alse,"transport_sha256":"a9bda9340aedc18745f08c4989d5d15cbb64908670c61796256b31b46e48fc72","version":1}\n', stderr=b'').returncode
+
+tests/test_puck_cpu_held_amendment.py:208: AssertionError
+_ test_real_authored04_independent_audits_fresh_bindings_and_preserves_history _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_real_authored04_independe0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
+        from test_puck_cpu_held_amendment04_integration import amendment04_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment04_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment04_audit.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment04_integration.py:19: in amendment04_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True,historical_bindings=True,binding_failure=binding_failure) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_real_authored04_independe0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+            assert code==0,(code,stdout,stderr)
+            prepare_result=root/current.OUTPUTS['prepare']/'result.json'
+            prepared_raw=prepare_result.read_bytes()
+            assert json.loads(prepared_raw)['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            audit_output=root/'docs/authored/historical-audit.json'
+            command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
+                capture_output=True,timeout=30)
+            elapsed=time.monotonic()-started
+            channels={}
+            for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
+                channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
+                elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
+            cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
+>           assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+E           AssertionError: (1, b'{"auditor_source_sha256":"19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9","collection_authoriz...ized":false,"transport_sha256":"84cceda255f39789305327e8f84c998c160136239b2a4f3b614a12bbe39e6b39","version":1}
+E             ', b'')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...alse,"transport_sha256":"84cceda255f39789305327e8f84c998c160136239b2a4f3b614a12bbe39e6b39","version":1}\n', stderr=b'').returncode
+
+tests/test_puck_cpu_held_amendment.py:208: AssertionError
+__ test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_real_authored02_has_indep0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
+        from test_puck_cpu_held_amendment import amendment_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_amendment_audit.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_real_authored02_has_indep0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+            assert code==0,(code,stdout,stderr)
+            prepare_result=root/current.OUTPUTS['prepare']/'result.json'
+            prepared_raw=prepare_result.read_bytes()
+            assert json.loads(prepared_raw)['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            audit_output=root/'docs/authored/historical-audit.json'
+            command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
+                capture_output=True,timeout=30)
+            elapsed=time.monotonic()-started
+            channels={}
+            for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
+                channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
+                elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
+            cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
+>           assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+E           AssertionError: (1, b'{"auditor_source_sha256":"19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9","collection_authoriz...ized":false,"transport_sha256":"4bc1707dbd32473b6d27adbb757377d0d4f1596bf45b84358fec74d67f047ea8","version":1}
+E             ', b'')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...alse,"transport_sha256":"4bc1707dbd32473b6d27adbb757377d0d4f1596bf45b84358fec74d67f047ea8","version":1}\n', stderr=b'').returncode
+
+tests/test_puck_cpu_held_amendment.py:208: AssertionError
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_authored02_uses_fresh_cap0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+>       with amendment_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_authored02_uses_fresh_cap0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+            assert code==0,(code,stdout,stderr)
+            prepare_result=root/current.OUTPUTS['prepare']/'result.json'
+            prepared_raw=prepare_result.read_bytes()
+            assert json.loads(prepared_raw)['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            audit_output=root/'docs/authored/historical-audit.json'
+            command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
+                capture_output=True,timeout=30)
+            elapsed=time.monotonic()-started
+            channels={}
+            for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
+                channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
+                elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
+            cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
+>           assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+E           AssertionError: (1, b'{"auditor_source_sha256":"19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9","collection_authoriz...ized":false,"transport_sha256":"67c44473e86ca7b8b4bf0112f6e05f5d50e4969f2e89260b3fcab92bbef34082","version":1}
+E             ', b'')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...alse,"transport_sha256":"67c44473e86ca7b8b4bf0112f6e05f5d50e4969f2e89260b3fcab92bbef34082","version":1}\n', stderr=b'').returncode
+
+tests/test_puck_cpu_held_amendment.py:208: AssertionError
+_ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_authored03_completes_afte0')
+
+    @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+    def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+>       with amendment03_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment03.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs/ci-b7e364a-amendment-focused-raw/test_authored03_completes_afte0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+            assert code==0,(code,stdout,stderr)
+            prepare_result=root/current.OUTPUTS['prepare']/'result.json'
+            prepared_raw=prepare_result.read_bytes()
+            assert json.loads(prepared_raw)['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            audit_output=root/'docs/authored/historical-audit.json'
+            command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
+                capture_output=True,timeout=30)
+            elapsed=time.monotonic()-started
+            channels={}
+            for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
+                channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
+                elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
+            cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
+>           assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+E           AssertionError: (1, b'{"auditor_source_sha256":"19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9","collection_authoriz...ized":false,"transport_sha256":"9df59df476082fa244fa5afc76ee1e1d8531bd84ce467f38ecb974003a1cf22e","version":1}
+E             ', b'')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '...alse,"transport_sha256":"9df59df476082fa244fa5afc76ee1e1d8531bd84ce467f38ecb974003a1cf22e","version":1}\n', stderr=b'').returncode
+
+tests/test_puck_cpu_held_amendment.py:208: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_amendment03_audit.py::test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures
+FAILED tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history
+FAILED tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+5 failed in 9.25s

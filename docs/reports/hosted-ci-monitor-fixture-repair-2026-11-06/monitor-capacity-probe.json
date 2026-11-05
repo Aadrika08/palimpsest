@@ -1,0 +1,18 @@
+[
+  {
+    "probe": "synthetic-low-three-gib",
+    "synthetic_free_bytes": 3221225472,
+    "status": "failed",
+    "failure": "free-space floor",
+    "pid": null,
+    "returncode": null
+  },
+  {
+    "probe": "synthetic-high-eight-gib",
+    "synthetic_free_bytes": 8589934592,
+    "status": "completed",
+    "failure": null,
+    "pid": 3188908,
+    "returncode": 0
+  }
+]

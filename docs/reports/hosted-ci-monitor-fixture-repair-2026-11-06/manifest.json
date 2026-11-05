@@ -1,0 +1,37 @@
+{
+  "actual_runtime_qualified": false,
+  "exact_hosted_failure_cause_known": false,
+  "failed_head": "8cbeff20db5b759b264107adc87f9cfb18860740",
+  "failed_run": 42079043646,
+  "records": {
+    "authored-parent-diagnostic.log": {
+      "bytes": 446,
+      "sha256": "30e2740172eb063e2cd21d9d02306a93e025b54f74078228612e667a2062a33d"
+    },
+    "authored-parent-probe.json": {
+      "bytes": 1478,
+      "sha256": "3fe0d945f07fedcb1d4c6d843fdb49759ac338667f15f393bf692d71d6baa895"
+    },
+    "diagnosis.md": {
+      "bytes": 13707,
+      "sha256": "1d6f04c2b082fa9b46e9c56fe45465ef45e92e01352883322995b15ecb946c6b"
+    },
+    "focused-tests.log": {
+      "bytes": 99,
+      "sha256": "4c33a09189fb57fdd3bf350f82a075a1cff678293e81c17fc3db8532e95ef629"
+    },
+    "hosted-failure-42079043646.log": {
+      "bytes": 61047,
+      "sha256": "e0610eae3ea344fd5a18608dfb8bb97150efabdf0d84c89432af6c6fa6790ba9"
+    },
+    "independent-review.md": {
+      "bytes": 6274,
+      "sha256": "71f08349801335444663e4103bf57a5436066cf66e0458255461a47c963104d4"
+    },
+    "monitor-capacity-probe.json": {
+      "bytes": 369,
+      "sha256": "19d81a74e5f18b7089a65f7df2b35addd1ebedbf237571e5d5335f615bd251c2"
+    }
+  },
+  "research_execution": false
+}

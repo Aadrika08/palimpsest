@@ -1,0 +1,1097 @@
+fixtures	Run fixture tests	﻿2026-11-05T16:24:55.5993290Z ##[group]Run runuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh
+fixtures	Run fixture tests	2026-11-05T16:24:55.5993936Z ^[[36;1mrunuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh^[[0m
+fixtures	Run fixture tests	2026-11-05T16:24:55.5994699Z shell: bash --noprofile --norc -e -o pipefail {0}
+fixtures	Run fixture tests	2026-11-05T16:24:55.5995029Z env:
+fixtures	Run fixture tests	2026-11-05T16:24:55.5995311Z   UV_PYTHON_INSTALL_DIR: /home/utkarsh/.local/share/uv/python
+fixtures	Run fixture tests	2026-11-05T16:24:55.5995683Z   PYTHONDONTWRITEBYTECODE: 1
+fixtures	Run fixture tests	2026-11-05T16:24:55.5996001Z   PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest
+fixtures	Run fixture tests	2026-11-05T16:24:55.5996342Z ##[endgroup]
+fixtures	Run fixture tests	2026-11-05T16:25:14.7359836Z ........................................................................ [  1%]
+fixtures	Run fixture tests	2026-11-05T16:25:51.7272259Z ...........................F............................................ [  2%]
+fixtures	Run fixture tests	2026-11-05T16:25:59.7995881Z ........................................................................ [  3%]
+fixtures	Run fixture tests	2026-11-05T16:26:06.3287108Z ........................................................................ [  4%]
+fixtures	Run fixture tests	2026-11-05T16:26:12.2463895Z ........................................................................ [  5%]
+fixtures	Run fixture tests	2026-11-05T16:26:47.0678845Z ....................s.................sss....................s.......... [  6%]
+fixtures	Run fixture tests	2026-11-05T16:26:50.2515783Z ...............................................s............s........... [  7%]
+fixtures	Run fixture tests	2026-11-05T16:26:53.8838542Z ....................s..................ss..........s..s................. [  8%]
+fixtures	Run fixture tests	2026-11-05T16:26:56.2917857Z .....................................s.................................. [  9%]
+fixtures	Run fixture tests	2026-11-05T16:27:00.3775506Z .............................s.......................................... [ 10%]
+fixtures	Run fixture tests	2026-11-05T16:27:06.3938277Z ........................................................................ [ 11%]
+fixtures	Run fixture tests	2026-11-05T16:27:11.1473705Z ........................................................................ [ 12%]
+fixtures	Run fixture tests	2026-11-05T16:28:23.2314919Z ........................................................................ [ 13%]
+fixtures	Run fixture tests	2026-11-05T16:28:41.5200793Z ........................................................................ [ 14%]
+fixtures	Run fixture tests	2026-11-05T16:31:48.3328606Z ........................................................................ [ 15%]
+fixtures	Run fixture tests	2026-11-05T16:31:57.0141832Z ..................ss.........................................sssssssssss [ 16%]
+fixtures	Run fixture tests	2026-11-05T16:32:04.7412296Z sssssssssssssssssssss.................ssssssssssssssssssssssssssssssssss [ 17%]
+fixtures	Run fixture tests	2026-11-05T16:34:17.2042453Z sssssssssssssssssssssssssssssssssssssssssssssssss....................... [ 18%]
+fixtures	Run fixture tests	2026-11-05T16:36:25.6817465Z ...............................sssssssssssssssssssssssssssssssssssssssss [ 20%]
+fixtures	Run fixture tests	2026-11-05T16:36:35.6838225Z ssssss..ssss..........................s...........................ss.... [ 21%]
+fixtures	Run fixture tests	2026-11-05T16:37:13.2431257Z ss...................................................................... [ 22%]
+fixtures	Run fixture tests	2026-11-05T16:44:48.3621906Z ........................................................................ [ 23%]
+fixtures	Run fixture tests	2026-11-05T16:45:06.3835989Z ..ssssssssssssssssssssssss.............................................. [ 24%]
+fixtures	Run fixture tests	2026-11-05T16:45:13.1952968Z .........................sssssssssssssss...s............................ [ 25%]
+fixtures	Run fixture tests	2026-11-05T16:45:42.7032318Z ................s....................................................... [ 26%]
+fixtures	Run fixture tests	2026-11-05T16:47:39.8318479Z ........................................................................ [ 27%]
+fixtures	Run fixture tests	2026-11-05T16:48:35.7866343Z ........................................................................ [ 28%]
+fixtures	Run fixture tests	2026-11-05T16:49:09.0563865Z .................................................ss..................... [ 29%]
+fixtures	Run fixture tests	2026-11-05T16:50:57.3413664Z .................................................sssssssssssssssssss.... [ 30%]
+fixtures	Run fixture tests	2026-11-05T16:51:16.4406994Z ........................................................................ [ 31%]
+fixtures	Run fixture tests	2026-11-05T16:51:19.5036993Z ........................sss............................................. [ 32%]
+fixtures	Run fixture tests	2026-11-05T16:51:21.8260270Z ........................................................................ [ 33%]
+fixtures	Run fixture tests	2026-11-05T16:51:22.6385485Z .....s.................................................................. [ 34%]
+fixtures	Run fixture tests	2026-11-05T16:51:23.0412909Z ........s.s.sssssssssssssss............................................. [ 35%]
+fixtures	Run fixture tests	2026-11-05T16:51:23.1715312Z ......................................................ssss.sssss.s...... [ 36%]
+fixtures	Run fixture tests	2026-11-05T16:52:37.1510413Z ........................................................................ [ 37%]
+fixtures	Run fixture tests	2026-11-05T16:52:38.1136273Z ........................................................................ [ 38%]
+fixtures	Run fixture tests	2026-11-05T16:52:39.2821341Z ........................................................................ [ 40%]
+fixtures	Run fixture tests	2026-11-05T16:52:43.0220485Z ........................................................................ [ 41%]
+fixtures	Run fixture tests	2026-11-05T16:52:44.0590378Z ........................................................................ [ 42%]
+fixtures	Run fixture tests	2026-11-05T16:52:45.4667114Z ........................................................................ [ 43%]
+fixtures	Run fixture tests	2026-11-05T16:52:46.2459464Z ........................................................................ [ 44%]
+fixtures	Run fixture tests	2026-11-05T16:52:47.7574670Z ........................................................................ [ 45%]
+fixtures	Run fixture tests	2026-11-05T16:52:50.5023021Z ........................................................................ [ 46%]
+fixtures	Run fixture tests	2026-11-05T16:52:57.1513519Z ........................................................................ [ 47%]
+fixtures	Run fixture tests	2026-11-05T16:53:00.1114334Z ........................................................................ [ 48%]
+fixtures	Run fixture tests	2026-11-05T16:53:03.1988788Z ........................................................................ [ 49%]
+fixtures	Run fixture tests	2026-11-05T16:53:06.5492054Z ........................................................................ [ 50%]
+fixtures	Run fixture tests	2026-11-05T16:53:10.2318617Z ........................................................................ [ 51%]
+fixtures	Run fixture tests	2026-11-05T16:53:14.5466200Z ........................................................................ [ 52%]
+fixtures	Run fixture tests	2026-11-05T16:53:19.1759181Z ........................................................................ [ 53%]
+fixtures	Run fixture tests	2026-11-05T16:53:22.7549203Z ........................................................................ [ 54%]
+fixtures	Run fixture tests	2026-11-05T16:53:25.9974775Z ........................................................................ [ 55%]
+fixtures	Run fixture tests	2026-11-05T16:53:29.2540955Z ........................................................................ [ 56%]
+fixtures	Run fixture tests	2026-11-05T16:53:31.1071642Z ........................................................................ [ 57%]
+fixtures	Run fixture tests	2026-11-05T16:53:32.5229019Z ........................................................................ [ 58%]
+fixtures	Run fixture tests	2026-11-05T16:53:34.3697302Z ........................................................................ [ 60%]
+fixtures	Run fixture tests	2026-11-05T16:53:36.0956119Z ....................................................................s... [ 61%]
+fixtures	Run fixture tests	2026-11-05T16:54:19.7815579Z ........................................................................ [ 62%]
+fixtures	Run fixture tests	2026-11-05T16:55:24.7138946Z ........................................................................ [ 63%]
+fixtures	Run fixture tests	2026-11-05T16:55:35.6663263Z ........................................................................ [ 64%]
+fixtures	Run fixture tests	2026-11-05T16:56:30.8810864Z ........................................................................ [ 65%]
+fixtures	Run fixture tests	2026-11-05T16:57:39.0768124Z ........................................................................ [ 66%]
+fixtures	Run fixture tests	2026-11-05T16:57:49.3295646Z .....ssssss............................................................. [ 67%]
+fixtures	Run fixture tests	2026-11-05T16:58:34.9702523Z ........................................................................ [ 68%]
+fixtures	Run fixture tests	2026-11-05T16:58:51.0456659Z ...................................................................s.... [ 69%]
+fixtures	Run fixture tests	2026-11-05T17:00:37.2616988Z .......ss............................................................... [ 70%]
+fixtures	Run fixture tests	2026-11-05T17:01:31.8570241Z ........................................................................ [ 71%]
+fixtures	Run fixture tests	2026-11-05T17:02:06.8993943Z .............................s..ss..ss..s......s..s..........s..ss...... [ 72%]
+fixtures	Run fixture tests	2026-11-05T17:03:09.7342148Z ........................................................................ [ 73%]
+fixtures	Run fixture tests	2026-11-05T17:03:11.5705559Z ........................................................................ [ 74%]
+fixtures	Run fixture tests	2026-11-05T17:03:13.6080079Z ........................................................................ [ 75%]
+fixtures	Run fixture tests	2026-11-05T17:03:25.1538388Z ........................................................................ [ 76%]
+fixtures	Run fixture tests	2026-11-05T17:03:26.5471498Z ........................................................................ [ 77%]
+fixtures	Run fixture tests	2026-11-05T17:03:27.7813107Z ...................................................................s.... [ 79%]
+fixtures	Run fixture tests	2026-11-05T17:03:28.4599248Z ........................................................................ [ 80%]
+fixtures	Run fixture tests	2026-11-05T17:03:39.5051198Z ........................................................................ [ 81%]
+fixtures	Run fixture tests	2026-11-05T17:03:43.7237144Z ........................................................................ [ 82%]
+fixtures	Run fixture tests	2026-11-05T17:03:59.2802034Z ........................................................................ [ 83%]
+fixtures	Run fixture tests	2026-11-05T17:04:11.2167719Z ........................................................................ [ 84%]
+fixtures	Run fixture tests	2026-11-05T17:04:11.4173318Z ........................................................................ [ 85%]
+fixtures	Run fixture tests	2026-11-05T17:04:12.0680975Z ........................................................................ [ 86%]
+fixtures	Run fixture tests	2026-11-05T17:04:12.1862725Z ........................................................................ [ 87%]
+fixtures	Run fixture tests	2026-11-05T17:04:12.4982653Z ........................................................................ [ 88%]
+fixtures	Run fixture tests	2026-11-05T17:04:12.5720636Z ........................................................................ [ 89%]
+fixtures	Run fixture tests	2026-11-05T17:04:12.6337801Z ........................................................................ [ 90%]
+fixtures	Run fixture tests	2026-11-05T17:04:12.8885258Z ........................................................................ [ 91%]
+fixtures	Run fixture tests	2026-11-05T17:04:13.1582778Z ........................................................................ [ 92%]
+fixtures	Run fixture tests	2026-11-05T17:04:13.3667152Z ........................................................................ [ 93%]
+fixtures	Run fixture tests	2026-11-05T17:04:44.1251308Z ...........sssssss..s................................................... [ 94%]
+fixtures	Run fixture tests	2026-11-05T17:04:50.3151557Z ..........................ssss.......................................... [ 95%]
+fixtures	Run fixture tests	2026-11-05T17:04:58.3813795Z .s..........sss......................................................... [ 96%]
+fixtures	Run fixture tests	2026-11-05T17:05:04.1159813Z ........................................................................ [ 97%]
+fixtures	Run fixture tests	2026-11-05T17:05:18.0162679Z ........................................................................ [ 99%]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0568578Z ..................................................................       [100%]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0573409Z =================================== FAILURES ===================================
+fixtures	Run fixture tests	2026-11-05T17:05:27.0575686Z _____ test_replay_process_ownership_regressions_are_in_the_canonical_suite _____
+fixtures	Run fixture tests	2026-11-05T17:05:27.0577897Z 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0579281Z tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0580898Z 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0581802Z     def test_replay_process_ownership_regressions_are_in_the_canonical_suite(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0584855Z         root=Path(__file__).resolve().parents[1]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0585948Z         command=[sys.executable,'-B','-m','pytest','-q','-p','no:cacheprovider',
+fixtures	Run fixture tests	2026-11-05T17:05:27.0587170Z             'paper/studies/authority_replay_v1/tests/test_repeatability_process_ownership.py',
+fixtures	Run fixture tests	2026-11-05T17:05:27.0588334Z             'paper/studies/authority_replay_v1/tests/test_repeatability.py',
+fixtures	Run fixture tests	2026-11-05T17:05:27.0589231Z             'paper/studies/authority_replay_v1/tests/test_campaign.py',
+fixtures	Run fixture tests	2026-11-05T17:05:27.0590183Z             '--basetemp',str(tmp_path/'owned-processes')]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0591035Z         env={**os.environ,'PYTHONPATH':os.pathsep.join((str(root),str(root/'src'))),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0591876Z              'PYTHONDONTWRITEBYTECODE':'1','TMPDIR':str(tmp_path),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0592802Z              'OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1'}
+fixtures	Run fixture tests	2026-11-05T17:05:27.0593390Z         result=subprocess.run(command,cwd=root,env=env,capture_output=True,text=True,timeout=120)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0594291Z         (tmp_path/'replay-ownership-regressions.log').write_text(result.stdout+result.stderr)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0594938Z >       assert result.returncode==0,result.stdout+result.stderr
+fixtures	Run fixture tests	2026-11-05T17:05:27.0595624Z E       AssertionError: ...F......F....FFF.FFFF.FFF...F.FFFFFFF...F.FF.......................... [ 71%]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0596281Z E         .............................                                            [100%]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0596809Z E         =================================== FAILURES ===================================
+fixtures	Run fixture tests	2026-11-05T17:05:27.0597411Z E         ___________ test_timeout_reaps_guardian_and_nested_detached_workers ____________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0597834Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0598713Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_reaps_guardian_an0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0610390Z E         monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73238fa35410>
+fixtures	Run fixture tests	2026-11-05T17:05:27.0611075Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0611783Z E             def test_timeout_reaps_guardian_and_nested_detached_workers(tmp_path, monkeypatch):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0612568Z E                 pidfile = tmp_path / 'owned.pid'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0613156Z E                 worker = 'import time;time.sleep(10)'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0613782Z E                 nested = ('import subprocess,sys,pathlib,time; '
+fixtures	Run fixture tests	2026-11-05T17:05:27.0614744Z E                           f'p=subprocess.Popen([sys.executable,"-c",{worker!r}],start_new_session=True); '
+fixtures	Run fixture tests	2026-11-05T17:05:27.0615790Z E                           f'pathlib.Path({str(pidfile)!r}).write_text(str(p.pid));time.sleep(10)')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0616545Z E                 code = ('import subprocess,sys,time; '
+fixtures	Run fixture tests	2026-11-05T17:05:27.0617483Z E                         f'subprocess.Popen([sys.executable,"-c",{nested!r}],start_new_session=True);time.sleep(10)')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0618267Z E                 children = []
+fixtures	Run fixture tests	2026-11-05T17:05:27.0618753Z E                 original = driver.subprocess.Popen
+fixtures	Run fixture tests	2026-11-05T17:05:27.0619449Z E                 def spawn(*args, **kwargs):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0620154Z E                     child = original(*args, **kwargs)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0620698Z E                     children.append(child)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0621157Z E                     return child
+fixtures	Run fixture tests	2026-11-05T17:05:27.0621751Z E                 monkeypatch.setattr(driver.subprocess, 'Popen', spawn)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0622669Z E                 result = driver._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=.4,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0623524Z E                                          max_bytes=1024**2, minimum_free_bytes=0)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0624130Z E                 assert result['status'] == 'timeout'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0624762Z E                 assert result['returncode'] == -signal.SIGKILL
+fixtures	Run fixture tests	2026-11-05T17:05:27.0625414Z E         >       assert not _alive(int(pidfile.read_text()))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0626000Z E                                       ^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0626399Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0627098Z E         paper/studies/authority_replay_v1/tests/test_repeatability_process_ownership.py:71: 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0628005Z E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0629131Z E         /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+fixtures	Run fixture tests	2026-11-05T17:05:27.0630360Z E             with self.open(mode='r', encoding=encoding, errors=errors) as f:
+fixtures	Run fixture tests	2026-11-05T17:05:27.0631049Z E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0631739Z E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0632712Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0633968Z E         self = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_reaps_guardian_an0/owned.pid')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0635601Z E         mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+fixtures	Run fixture tests	2026-11-05T17:05:27.0636164Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0636640Z E             def open(self, mode='r', buffering=-1, encoding=None,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0637233Z E                      errors=None, newline=None):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0637662Z E                 """
+fixtures	Run fixture tests	2026-11-05T17:05:27.0638242Z E                 Open the file pointed by this path and return a file object, as
+fixtures	Run fixture tests	2026-11-05T17:05:27.0638912Z E                 the built-in open() function does.
+fixtures	Run fixture tests	2026-11-05T17:05:27.0639372Z E                 """
+fixtures	Run fixture tests	2026-11-05T17:05:27.0639916Z E                 if "b" not in mode:
+fixtures	Run fixture tests	2026-11-05T17:05:27.0640438Z E                     encoding = io.text_encoding(encoding)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0641168Z E         >       return io.open(self, mode, buffering, encoding, errors, newline)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0641888Z E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0643615Z E         E       FileNotFoundError: [Errno 2] No such file or directory: '/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_reaps_guardian_an0/owned.pid'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0644950Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0645911Z E         /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0647132Z E         ____________ test_pidfd_stop_failure_still_allows_guardian_cleanup _____________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0647743Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0649017Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_pidfd_stop_failure_still_0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0650654Z E         monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73238fbb1c90>
+fixtures	Run fixture tests	2026-11-05T17:05:27.0651274Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0651988Z E             def test_pidfd_stop_failure_still_allows_guardian_cleanup(tmp_path, monkeypatch):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0652790Z E                 pidfile = tmp_path / 'unit.pid'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0653388Z E                 code = ('import os,pathlib,time; '
+fixtures	Run fixture tests	2026-11-05T17:05:27.0654275Z E                         f'pathlib.Path({str(pidfile)!r}).write_text(str(os.getpid()));time.sleep(10)')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0655072Z E                 def unavailable(*args):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0655759Z E                     raise OSError('pidfd stop unavailable')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0656515Z E                 monkeypatch.setattr(campaign, '_send_pidfd', unavailable)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0657518Z E                 result = driver._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=.3,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0658454Z E                                          max_bytes=1024**2, minimum_free_bytes=0)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0659103Z E                 assert result['status'] == 'timeout'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0659916Z E                 assert result['returncode'] == -signal.SIGKILL
+fixtures	Run fixture tests	2026-11-05T17:05:27.0660700Z E                 assert 'pidfd stop unavailable' in result['error']['message']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0661448Z E         >       assert not _alive(int(pidfile.read_text()))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0662056Z E                                       ^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0662486Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0663241Z E         paper/studies/authority_replay_v1/tests/test_repeatability_process_ownership.py:160: 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0664216Z E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0665381Z E         /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+fixtures	Run fixture tests	2026-11-05T17:05:27.0666797Z E             with self.open(mode='r', encoding=encoding, errors=errors) as f:
+fixtures	Run fixture tests	2026-11-05T17:05:27.0667538Z E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0668474Z E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0669004Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0670500Z E         self = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_pidfd_stop_failure_still_0/unit.pid')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0671978Z E         mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+fixtures	Run fixture tests	2026-11-05T17:05:27.0672579Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0673083Z E             def open(self, mode='r', buffering=-1, encoding=None,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0673728Z E                      errors=None, newline=None):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0674185Z E                 """
+fixtures	Run fixture tests	2026-11-05T17:05:27.0674800Z E                 Open the file pointed by this path and return a file object, as
+fixtures	Run fixture tests	2026-11-05T17:05:27.0675519Z E                 the built-in open() function does.
+fixtures	Run fixture tests	2026-11-05T17:05:27.0675975Z E                 """
+fixtures	Run fixture tests	2026-11-05T17:05:27.0676389Z E                 if "b" not in mode:
+fixtures	Run fixture tests	2026-11-05T17:05:27.0676963Z E                     encoding = io.text_encoding(encoding)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0677719Z E         >       return io.open(self, mode, buffering, encoding, errors, newline)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0678497Z E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0680467Z E         E       FileNotFoundError: [Errno 2] No such file or directory: '/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_pidfd_stop_failure_still_0/unit.pid'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0681838Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0682834Z E         /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0684084Z E         _______ test_protocol_bounds_seed_and_paired_fields[continuation-9-100] ________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0684729Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0686011Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_protocol_bounds_seed_and_0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0687290Z E         kind = 'continuation', seed = 9, ticks = 100
+fixtures	Run fixture tests	2026-11-05T17:05:27.0687742Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0688505Z E             @pytest.mark.parametrize('kind,seed,ticks', [('continuation', 9, 100), ('replay', 4, 92)])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0689741Z E             def test_protocol_bounds_seed_and_paired_fields(tmp_path, kind, seed, ticks):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0690465Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0690860Z E                 calls = []
+fixtures	Run fixture tests	2026-11-05T17:05:27.0691350Z E                 def run(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0691938Z E                     calls.append((command, limits))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0692595Z E                     return fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0693557Z E                 row = getattr(m, f'run_{kind}_unit')(seed, tmp_path / kind, IDENTITY, protocol=PROTOCOL,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0694507Z E                                                    repo=REPO, assets=tmp_path, runner=run)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0695143Z E         >       command, limits = calls[0]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0695654Z E                                   ^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0696187Z E         E       IndexError: list index out of range
+fixtures	Run fixture tests	2026-11-05T17:05:27.0696622Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0697283Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:64: IndexError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0698290Z E         ___________ test_protocol_bounds_seed_and_paired_fields[replay-4-92] ___________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0698904Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0700314Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_protocol_bounds_seed_and_1')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0701793Z E         kind = 'replay', seed = 4, ticks = 92
+fixtures	Run fixture tests	2026-11-05T17:05:27.0702213Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0702960Z E             @pytest.mark.parametrize('kind,seed,ticks', [('continuation', 9, 100), ('replay', 4, 92)])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0704222Z E             def test_protocol_bounds_seed_and_paired_fields(tmp_path, kind, seed, ticks):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0704930Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0705311Z E                 calls = []
+fixtures	Run fixture tests	2026-11-05T17:05:27.0705802Z E                 def run(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0706374Z E                     calls.append((command, limits))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0707022Z E                     return fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0707969Z E                 row = getattr(m, f'run_{kind}_unit')(seed, tmp_path / kind, IDENTITY, protocol=PROTOCOL,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0708919Z E                                                    repo=REPO, assets=tmp_path, runner=run)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0709694Z E         >       command, limits = calls[0]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0710195Z E                                   ^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0710733Z E         E       IndexError: list index out of range
+fixtures	Run fixture tests	2026-11-05T17:05:27.0711162Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0711825Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:64: IndexError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0712830Z E         _____________ test_failure_retained_no_retry_and_analyzer_accepts ______________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0713495Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0714759Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_failure_retained_no_retry0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0715888Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0716490Z E             def test_failure_retained_no_retry_and_analyzer_accepts(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0717158Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0717623Z E                 calls = []
+fixtures	Run fixture tests	2026-11-05T17:05:27.0718247Z E                 def fail(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0718996Z E                     calls.append(command)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0719819Z E                     output.mkdir()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0720544Z E                     (output / 'partial').write_text('retained')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0721403Z E                     return {'status': 'failed', 'returncode': 7}
+fixtures	Run fixture tests	2026-11-05T17:05:27.0722409Z E                 failed = m.run_continuation_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0723577Z E                                                  repo=REPO, assets=tmp_path, runner=fail)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0724441Z E         >       assert failed['status'] == 'failed' and len(calls) == 1
+fixtures	Run fixture tests	2026-11-05T17:05:27.0725213Z E         E       AssertionError: assert ('refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0725723Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0726091Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0726515Z E         E         + refused)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0726875Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0727612Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:92: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0728689Z E         ________________ test_failed_mode_preserves_all_four_conditions ________________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0729309Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0730875Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_failed_mode_preserves_all0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0732049Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0732641Z E             def test_failed_mode_preserves_all_four_conditions(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0733283Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0733832Z E                 def fail_mode(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0734554Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0735397Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0736466Z E                     report['status'] = 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0737580Z E                     report['replays']['policy']['report'].update(status='failed', first_divergence={'field': 'action', 'tick': 9})
+fixtures	Run fixture tests	2026-11-05T17:05:27.0738923Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0739783Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0740694Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=fail_mode)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0741562Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0742221Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0742816Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0743202Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0743649Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0744019Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0744768Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:122: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0745871Z E         __________________ test_partial_report_cannot_claim_agreement __________________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0746573Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0747891Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_partial_report_cannot_cla0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0749076Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0750239Z E             def test_partial_report_cannot_claim_agreement(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0750830Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0751362Z E                 def incomplete(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0751906Z E                     output.mkdir()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0752598Z E                     (output / 'verification.json').write_text('{"status": "passed"}')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0753454Z E                     return {'status': 'completed', 'returncode': 0}
+fixtures	Run fixture tests	2026-11-05T17:05:27.0754417Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=incomplete)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0755549Z E         >       assert row['status'] == 'failed' and row['metrics']['agreement'] is not True
+fixtures	Run fixture tests	2026-11-05T17:05:27.0756358Z E         E       AssertionError: assert ('refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0756851Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0757186Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0757588Z E         E         + refused)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0757923Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0758613Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:134: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0759784Z E         _________ test_policy_mode_without_inference_is_never_policy_agreement _________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0760402Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0761633Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_policy_mode_without_infer0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0762733Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0763376Z E             def test_policy_mode_without_inference_is_never_policy_agreement(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0764056Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0764571Z E                 def mislabeled(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0765250Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0766063Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0766950Z E                     report['replays']['policy']['report']['inference_executed'] = False
+fixtures	Run fixture tests	2026-11-05T17:05:27.0767815Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0768434Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0769290Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=mislabeled)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0770233Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0771135Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0771629Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0771961Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0772520Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0772854Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0773539Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:146: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0774502Z E         ______________________ test_process_timeout_retains_logs _______________________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0775070Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0776298Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_process_timeout_retains_l0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0777370Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0777826Z E             def test_process_timeout_retains_logs(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0778311Z E                 import sys
+fixtures	Run fixture tests	2026-11-05T17:05:27.0778700Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0779716Z E                 row = m._process([sys.executable, '-c', 'import time; print("started", flush=True); time.sleep(10)'],
+fixtures	Run fixture tests	2026-11-05T17:05:27.0780865Z E                                  tmp_path / 'raw', timeout=.2, max_bytes=1024**2, minimum_free_bytes=0)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0781589Z E                 assert row['status'] == 'timeout'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0782122Z E                 assert row['returncode'] != 0
+fixtures	Run fixture tests	2026-11-05T17:05:27.0782783Z E         >       assert 'started' in (tmp_path / 'stdout.log').read_text()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0783451Z E         E       AssertionError: assert 'started' in ''
+fixtures	Run fixture tests	2026-11-05T17:05:27.0783997Z E         E        +  where '' = read_text()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0785653Z E         E        +    where read_text = (PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_process_timeout_retains_l0') / 'stdout.log').read_text
+fixtures	Run fixture tests	2026-11-05T17:05:27.0786926Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0787618Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:157: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0788617Z E         _______________ test_timeout_kills_nested_worker_process_groups ________________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0789211Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0790571Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_kills_nested_work0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0791640Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0792182Z E             def test_timeout_kills_nested_worker_process_groups(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0792756Z E                 import os
+fixtures	Run fixture tests	2026-11-05T17:05:27.0793126Z E                 import sys
+fixtures	Run fixture tests	2026-11-05T17:05:27.0793496Z E                 import time
+fixtures	Run fixture tests	2026-11-05T17:05:27.0793890Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0794427Z E                 pidfile = tmp_path / 'worker.pid'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0795000Z E                 worker = 'import time; time.sleep(10)'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0795661Z E                 code = ('import subprocess,sys,time,pathlib; '
+fixtures	Run fixture tests	2026-11-05T17:05:27.0796599Z E                         f'p=subprocess.Popen([sys.executable,"-c",{worker!r}],start_new_session=True); '
+fixtures	Run fixture tests	2026-11-05T17:05:27.0797642Z E                         f'pathlib.Path({str(pidfile)!r}).write_text(str(p.pid)); time.sleep(10)')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0798583Z E                 m._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=.3,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0799358Z E                            max_bytes=1024**2, minimum_free_bytes=0)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0800097Z E         >       pid = int(pidfile.read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0800630Z E                           ^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0801025Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0801633Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:181: 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0802469Z E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0803582Z E         /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+fixtures	Run fixture tests	2026-11-05T17:05:27.0804895Z E             with self.open(mode='r', encoding=encoding, errors=errors) as f:
+fixtures	Run fixture tests	2026-11-05T17:05:27.0805800Z E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0806488Z E         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:05:27.0806984Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0808291Z E         self = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_kills_nested_work0/worker.pid')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0809901Z E         mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+fixtures	Run fixture tests	2026-11-05T17:05:27.0810492Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0810988Z E             def open(self, mode='r', buffering=-1, encoding=None,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0811602Z E                      errors=None, newline=None):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0812046Z E                 """
+fixtures	Run fixture tests	2026-11-05T17:05:27.0812642Z E                 Open the file pointed by this path and return a file object, as
+fixtures	Run fixture tests	2026-11-05T17:05:27.0813363Z E                 the built-in open() function does.
+fixtures	Run fixture tests	2026-11-05T17:05:27.0813834Z E                 """
+fixtures	Run fixture tests	2026-11-05T17:05:27.0814226Z E                 if "b" not in mode:
+fixtures	Run fixture tests	2026-11-05T17:05:27.0814767Z E                     encoding = io.text_encoding(encoding)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0815506Z E         >       return io.open(self, mode, buffering, encoding, errors, newline)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0816273Z E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0818072Z E         E       FileNotFoundError: [Errno 2] No such file or directory: '/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_kills_nested_work0/worker.pid'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0819411Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0820513Z E         /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0821727Z E         _______________ test_timeout_with_partial_report_remains_timeout _______________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0822340Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0823599Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_timeout_with_partial_repo0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0824678Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0825226Z E             def test_timeout_with_partial_report_remains_timeout(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0825835Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0826340Z E                 def timed_out(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0826882Z E                     output.mkdir()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0827581Z E                     (output / 'verification.json').write_text('{"status": "running"}')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0828601Z E                     return {'status': 'timeout', 'returncode': -9, 'stop_reason': 'unit wall-clock cap'}
+fixtures	Run fixture tests	2026-11-05T17:05:27.0829863Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=timed_out)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0830693Z E         >       assert row['status'] == 'timeout'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0831320Z E         E       AssertionError: assert 'refused' == 'timeout'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0831802Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0832139Z E         E         - timeout
+fixtures	Run fixture tests	2026-11-05T17:05:27.0832502Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0832838Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0833528Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:209: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0834553Z E         __________ test_fixture_dry_units_pass_complete_denominator_analysis ___________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0835157Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0836418Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_fixture_dry_units_pass_co0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0837747Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0838359Z E             def test_fixture_dry_units_pass_complete_denominator_analysis(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0839313Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0840251Z E                 rows = [{'schema_version': 1, 'study_id': PROTOCOL.study_id, **u, 'identity': IDENTITY,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0841269Z E                          'status': 'incomplete', 'metrics': {}} for u in declared_units(PROTOCOL)]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0842013Z E                 for kind in ('continuation', 'replay'):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0842762Z E                     row = getattr(m, f'run_{kind}_unit')(0, tmp_path / kind, IDENTITY,
+fixtures	Run fixture tests	2026-11-05T17:05:27.0843620Z E                                                         protocol=PROTOCOL, runner=fixture_runner)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0844302Z E         >           assert row['status'] == 'completed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0844969Z E         E           AssertionError: assert 'refused' == 'completed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0845490Z E         E             
+fixtures	Run fixture tests	2026-11-05T17:05:27.0845885Z E         E             - completed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0846323Z E         E             + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0846673Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0847354Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:220: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0848408Z E         _____________ test_continuation_divergence_exposes_field_and_tick ______________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0849012Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0850419Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_continuation_divergence_e0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0851497Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0852075Z E             def test_continuation_divergence_exposes_field_and_tick(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0852778Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0853330Z E                 def divergent(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0854076Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0854870Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0855944Z E                     report.update(status='failed', first_divergence={'component': 'action', 'tick': 8})
+fixtures	Run fixture tests	2026-11-05T17:05:27.0856905Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0857526Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0858412Z E                 row = m.run_continuation_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=divergent)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0859779Z E         >       assert row['first_divergence']['field'] == 'action' and row['first_divergence']['tick'] == 8
+fixtures	Run fixture tests	2026-11-05T17:05:27.0860616Z E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.0861233Z E         E       TypeError: 'NoneType' object is not subscriptable
+fixtures	Run fixture tests	2026-11-05T17:05:27.0861710Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0862360Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:269: TypeError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0863335Z E         _______________ test_nonfinite_report_is_retained_as_failed_row ________________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0863942Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0865187Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_nonfinite_report_is_retai0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0866270Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0866845Z E             def test_nonfinite_report_is_retained_as_failed_row(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0867441Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0867949Z E                 def nonfinite(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0868613Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0869398Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0870369Z E                     report['timings'] = {'policy_replay_seconds': float('nan')}
+fixtures	Run fixture tests	2026-11-05T17:05:27.0871423Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0872212Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0873024Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=nonfinite)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0873842Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0874455Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0874933Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0875273Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0875662Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0875996Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0876713Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:292: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0877763Z E         _ test_replay_requires_executed_mode_full_count_and_same_source[actions-mode] __
+fixtures	Run fixture tests	2026-11-05T17:05:27.0878401Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0879821Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_requires_executed_0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0881104Z E         mode = 'actions', mutation = 'mode'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0881516Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0882348Z E             @pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0883514Z E                                                      ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0884604Z E             def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0885389Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0885873Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0886536Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0887335Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0888071Z E                     raw = report['replays'][mode]['report']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0888970Z E                     raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+fixtures	Run fixture tests	2026-11-05T17:05:27.0890126Z E                         'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0890986Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0891599Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0892419Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0893213Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0893855Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0894348Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0894701Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0895061Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0895386Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0896075Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:309: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0897114Z E         __ test_replay_requires_executed_mode_full_count_and_same_source[policy-mode] __
+fixtures	Run fixture tests	2026-11-05T17:05:27.0897723Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0898941Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_requires_executed_1')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0900293Z E         mode = 'policy', mutation = 'mode'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0900697Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0901520Z E             @pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0902673Z E                                                      ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0904046Z E             def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0904791Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0905472Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0906129Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0906915Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0907625Z E                     raw = report['replays'][mode]['report']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0908497Z E                     raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+fixtures	Run fixture tests	2026-11-05T17:05:27.0909679Z E                         'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0910594Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0911216Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0912059Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0912879Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0913504Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0913993Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0914345Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0914711Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0915042Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0915734Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:309: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0916898Z E         _ test_replay_requires_executed_mode_full_count_and_same_source[actions-ticks] _
+fixtures	Run fixture tests	2026-11-05T17:05:27.0917627Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0918916Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_requires_executed_2')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0920371Z E         mode = 'actions', mutation = 'ticks'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0920774Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0921617Z E             @pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0922800Z E                                                      ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0923925Z E             def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0924676Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0925169Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0925817Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0926618Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0927342Z E                     raw = report['replays'][mode]['report']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0928238Z E                     raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+fixtures	Run fixture tests	2026-11-05T17:05:27.0929236Z E                         'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0930280Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0930904Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0931738Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0932535Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0933141Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0933616Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0933958Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0934331Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0934674Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0935363Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:309: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0936659Z E         _ test_replay_requires_executed_mode_full_count_and_same_source[policy-ticks] __
+fixtures	Run fixture tests	2026-11-05T17:05:27.0937280Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0938733Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_requires_executed_3')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0940109Z E         mode = 'policy', mutation = 'ticks'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0940520Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0941385Z E             @pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0942548Z E                                                      ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0943653Z E             def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0944432Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0944936Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0945601Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0946391Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0947123Z E                     raw = report['replays'][mode]['report']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0947988Z E                     raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+fixtures	Run fixture tests	2026-11-05T17:05:27.0948963Z E                         'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0949971Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0950586Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0951393Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0952182Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0952822Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0953337Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0953678Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0954070Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0954403Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0955090Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:309: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0956213Z E         _ test_replay_requires_executed_mode_full_count_and_same_source[actions-source] _
+fixtures	Run fixture tests	2026-11-05T17:05:27.0956833Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0958077Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_requires_executed_4')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0959291Z E         mode = 'actions', mutation = 'source'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0959833Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0960651Z E             @pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0961808Z E                                                      ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0962972Z E             def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0963729Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0964218Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0964861Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0965641Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0966374Z E                     raw = report['replays'][mode]['report']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0967274Z E                     raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+fixtures	Run fixture tests	2026-11-05T17:05:27.0968251Z E                         'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0969366Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0970135Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0971147Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0971930Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0972534Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0973023Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0973362Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0973729Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0974057Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0974739Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:309: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0975767Z E         _ test_replay_requires_executed_mode_full_count_and_same_source[policy-source] _
+fixtures	Run fixture tests	2026-11-05T17:05:27.0976401Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0977647Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_requires_executed_5')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0978882Z E         mode = 'policy', mutation = 'source'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0979311Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0980306Z E             @pytest.mark.parametrize('mode,mutation', [('actions', 'mode'), ('policy', 'mode'), ('actions', 'ticks'),
+fixtures	Run fixture tests	2026-11-05T17:05:27.0981461Z E                                                      ('policy', 'ticks'), ('actions', 'source'), ('policy', 'source')])
+fixtures	Run fixture tests	2026-11-05T17:05:27.0982552Z E             def test_replay_requires_executed_mode_full_count_and_same_source(tmp_path, mode, mutation):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0983306Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0983793Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0984458Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0985249Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.0986003Z E                     raw = report['replays'][mode]['report']
+fixtures	Run fixture tests	2026-11-05T17:05:27.0986906Z E                     raw[{'mode': 'mode', 'ticks': 'compared_ticks', 'source': 'source_run_id'}[mutation]] = {
+fixtures	Run fixture tests	2026-11-05T17:05:27.0987910Z E                         'mode': 'playback', 'ticks': 0, 'source': 'other-source'}[mutation]
+fixtures	Run fixture tests	2026-11-05T17:05:27.0988774Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.0989409Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.0990372Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.0991181Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0991805Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.0992302Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0992639Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.0993024Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.0993371Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0994073Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:309: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.0995090Z E         ____________ test_replay_binds_reports_to_recorded_source_manifest _____________
+fixtures	Run fixture tests	2026-11-05T17:05:27.0995694Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0996951Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_replay_binds_reports_to_r0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.0998040Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.0998641Z E             def test_replay_binds_reports_to_recorded_source_manifest(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.0999277Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.0999890Z E                 def forged(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.1000534Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1001307Z E                     manifest = output / 'runs/source/recording/manifest.json'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1002268Z E                     raw = json.loads(manifest.read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.1002891Z E                     raw['run_id'] = 'different-source'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1003707Z E                     manifest.write_text(json.dumps(raw))
+fixtures	Run fixture tests	2026-11-05T17:05:27.1004248Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.1005101Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=forged)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1006137Z E         >       assert row['status'] == 'failed' and row['metrics']['agreement'] is not True
+fixtures	Run fixture tests	2026-11-05T17:05:27.1006947Z E         E       AssertionError: assert ('refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1008024Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1027155Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.1027605Z E         E         + refused)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1027966Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1028683Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:378: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.1029927Z E         ____________ test_unit_retains_row_after_monitor_inventory_failure _____________
+fixtures	Run fixture tests	2026-11-05T17:05:27.1030524Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1031771Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_unit_retains_row_after_mo0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.1033203Z E         monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73238fb66850>
+fixtures	Run fixture tests	2026-11-05T17:05:27.1033810Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1034513Z E             def test_unit_retains_row_after_monitor_inventory_failure(tmp_path, monkeypatch):
+fixtures	Run fixture tests	2026-11-05T17:05:27.1035202Z E                 import sys
+fixtures	Run fixture tests	2026-11-05T17:05:27.1035615Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.1036468Z E                 monkeypatch.setattr(m, '_size', lambda *a: (_ for _ in ()).throw(OSError('inventory failure')))
+fixtures	Run fixture tests	2026-11-05T17:05:27.1037360Z E                 def monitored(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.1038295Z E                     return m._process([sys.executable, '-c', 'import time;time.sleep(10)'], output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1039654Z E                 row = m.run_continuation_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=monitored)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1040515Z E                 assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1041185Z E         >       assert row['process']['stop_reason'] == 'monitor failure'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1041783Z E                        ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:05:27.1042240Z E         E       KeyError: 'process'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1042615Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1043264Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:397: KeyError
+fixtures	Run fixture tests	2026-11-05T17:05:27.1044260Z E         __________ test_passing_report_requires_finite_scientific_validation ___________
+fixtures	Run fixture tests	2026-11-05T17:05:27.1044894Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1046141Z E         tmp_path = PosixPath('/home/fixture/.cache/palimpsest-pytest/palimpsest-1538/test_replay_process_ownership_0/owned-processes/test_passing_report_requires_f0')
+fixtures	Run fixture tests	2026-11-05T17:05:27.1047216Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1047839Z E             def test_passing_report_requires_finite_scientific_validation(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:05:27.1048510Z E                 m = driver()
+fixtures	Run fixture tests	2026-11-05T17:05:27.1049032Z E                 def unvalidated(command, output, **limits):
+fixtures	Run fixture tests	2026-11-05T17:05:27.1049855Z E                     result = fixture_runner(command, output, **limits)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1050639Z E                     report = json.loads((output / 'verification.json').read_text())
+fixtures	Run fixture tests	2026-11-05T17:05:27.1051383Z E                     report.pop('finite_scientific_arrays', None)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1052145Z E                     (output / 'verification.json').write_text(json.dumps(report))
+fixtures	Run fixture tests	2026-11-05T17:05:27.1052762Z E                     return result
+fixtures	Run fixture tests	2026-11-05T17:05:27.1053608Z E                 row = m.run_replay_unit(0, tmp_path / 'unit', IDENTITY, protocol=PROTOCOL, runner=unvalidated)
+fixtures	Run fixture tests	2026-11-05T17:05:27.1054739Z E         >       assert row['status'] == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1055343Z E         E       AssertionError: assert 'refused' == 'failed'
+fixtures	Run fixture tests	2026-11-05T17:05:27.1056104Z E         E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1056446Z E         E         - failed
+fixtures	Run fixture tests	2026-11-05T17:05:27.1056805Z E         E         + refused
+fixtures	Run fixture tests	2026-11-05T17:05:27.1057131Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:27.1057838Z E         paper/studies/authority_replay_v1/tests/test_repeatability.py:410: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:27.1058772Z E         =========================== short test summary info ============================
+fixtures	Run fixture tests	2026-11-05T17:05:27.1060332Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability_process_ownership.py::test_timeout_reaps_guardian_and_nested_detached_workers
+fixtures	Run fixture tests	2026-11-05T17:05:27.1062162Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability_process_ownership.py::test_pidfd_stop_failure_still_allows_guardian_cleanup
+fixtures	Run fixture tests	2026-11-05T17:05:27.1063922Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_protocol_bounds_seed_and_paired_fields[continuation-9-100]
+fixtures	Run fixture tests	2026-11-05T17:05:27.1065583Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_protocol_bounds_seed_and_paired_fields[replay-4-92]
+fixtures	Run fixture tests	2026-11-05T17:05:27.1067161Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_failure_retained_no_retry_and_analyzer_accepts
+fixtures	Run fixture tests	2026-11-05T17:05:27.1068667Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_failed_mode_preserves_all_four_conditions
+fixtures	Run fixture tests	2026-11-05T17:05:27.1070265Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_partial_report_cannot_claim_agreement
+fixtures	Run fixture tests	2026-11-05T17:05:27.1071838Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_policy_mode_without_inference_is_never_policy_agreement
+fixtures	Run fixture tests	2026-11-05T17:05:27.1073340Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_process_timeout_retains_logs
+fixtures	Run fixture tests	2026-11-05T17:05:27.1074865Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_timeout_kills_nested_worker_process_groups
+fixtures	Run fixture tests	2026-11-05T17:05:27.1076432Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_timeout_with_partial_report_remains_timeout
+fixtures	Run fixture tests	2026-11-05T17:05:27.1077998Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_fixture_dry_units_pass_complete_denominator_analysis
+fixtures	Run fixture tests	2026-11-05T17:05:27.1079727Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_continuation_divergence_exposes_field_and_tick
+fixtures	Run fixture tests	2026-11-05T17:05:27.1081233Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_nonfinite_report_is_retained_as_failed_row
+fixtures	Run fixture tests	2026-11-05T17:05:27.1083008Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_requires_executed_mode_full_count_and_same_source[actions-mode]
+fixtures	Run fixture tests	2026-11-05T17:05:27.1084824Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_requires_executed_mode_full_count_and_same_source[policy-mode]
+fixtures	Run fixture tests	2026-11-05T17:05:27.1086667Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_requires_executed_mode_full_count_and_same_source[actions-ticks]
+fixtures	Run fixture tests	2026-11-05T17:05:27.1088498Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_requires_executed_mode_full_count_and_same_source[policy-ticks]
+fixtures	Run fixture tests	2026-11-05T17:05:28.6208467Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_requires_executed_mode_full_count_and_same_source[actions-source]
+fixtures	Run fixture tests	2026-11-05T17:05:28.6213161Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_requires_executed_mode_full_count_and_same_source[policy-source]
+fixtures	Run fixture tests	2026-11-05T17:05:28.6216294Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_replay_binds_reports_to_recorded_source_manifest
+fixtures	Run fixture tests	2026-11-05T17:05:28.6222014Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_unit_retains_row_after_monitor_inventory_failure
+fixtures	Run fixture tests	2026-11-05T17:05:28.6225151Z E         FAILED paper/studies/authority_replay_v1/tests/test_repeatability.py::test_passing_report_requires_finite_scientific_validation
+fixtures	Run fixture tests	2026-11-05T17:05:28.6233347Z E         23 failed, 78 passed in 15.29s
+fixtures	Run fixture tests	2026-11-05T17:05:28.6234070Z E         
+fixtures	Run fixture tests	2026-11-05T17:05:28.6234611Z E       assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T17:05:28.6237054Z E        +  where 1 = CompletedProcess(args=['/__w/palimpsest/palimpsest/.venv/bin/python', '-B', '-m', 'pytest', '-q', '-p', 'no:cacheprovi...eatability.py::test_passing_report_requires_finite_scientific_validation\n23 failed, 78 passed in 15.29s\n', stderr='').returncode
+fixtures	Run fixture tests	2026-11-05T17:05:28.6238872Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6239711Z tests/test_authority_replay_process_ownership.py:20: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:05:28.6240821Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T17:05:28.6241840Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T17:05:28.6243787Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T17:05:28.6245634Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T17:05:28.6246276Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6246710Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T17:05:28.6247887Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T17:05:28.6249319Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T17:05:28.6250173Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6251092Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6253008Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+fixtures	Run fixture tests	2026-11-05T17:05:28.6254656Z     prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+fixtures	Run fixture tests	2026-11-05T17:05:28.6255352Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6256247Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6257829Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6259455Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6261208Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6262768Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6264344Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6266353Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+fixtures	Run fixture tests	2026-11-05T17:05:28.6267883Z     parse = parser.parseString(pattern)
+fixtures	Run fixture tests	2026-11-05T17:05:28.6268374Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6269255Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6271013Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6272575Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6274213Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6276294Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6278478Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6280879Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+fixtures	Run fixture tests	2026-11-05T17:05:28.6282351Z     parser.resetCache()
+fixtures	Run fixture tests	2026-11-05T17:05:28.6282757Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6283661Z tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+fixtures	Run fixture tests	2026-11-05T17:05:28.6285590Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+fixtures	Run fixture tests	2026-11-05T17:05:28.6287070Z     ParserElement.enablePackrat()
+fixtures	Run fixture tests	2026-11-05T17:05:28.6287548Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6288583Z tests/test_artwork_encounter.py::EncounterTests::test_missing_unexpected_duplicate_and_escaping_members_rejected
+fixtures	Run fixture tests	2026-11-05T17:05:28.6290568Z   /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'afterimage.svg'
+fixtures	Run fixture tests	2026-11-05T17:05:28.6292024Z     return self._open_to_write(zinfo, force_zip64=force_zip64)
+fixtures	Run fixture tests	2026-11-05T17:05:28.6292599Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6293001Z tests/test_flynn.py: 17 warnings
+fixtures	Run fixture tests	2026-11-05T17:05:28.6293762Z tests/test_memory_family_cell_replay_v4.py: 25 warnings
+fixtures	Run fixture tests	2026-11-05T17:05:28.6294582Z tests/test_snapshots.py: 5 warnings
+fixtures	Run fixture tests	2026-11-05T17:05:28.6295380Z tests/test_velocity_gain_flynn.py: 9 warnings
+fixtures	Run fixture tests	2026-11-05T17:05:28.6297622Z   /__w/palimpsest/palimpsest/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+fixtures	Run fixture tests	2026-11-05T17:05:28.6300001Z     return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+fixtures	Run fixture tests	2026-11-05T17:05:28.6300712Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6301611Z tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+fixtures	Run fixture tests	2026-11-05T17:05:28.6304924Z   /__w/palimpsest/palimpsest/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+fixtures	Run fixture tests	2026-11-05T17:05:28.6307508Z     Wcsr = Wc.to_sparse_csr()
+fixtures	Run fixture tests	2026-11-05T17:05:28.6307973Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6308977Z tests/test_memory_family_cell_replay_v4.py::test_actual_upstream_cell_matches_recorded_policy_without_retina[source]
+fixtures	Run fixture tests	2026-11-05T17:05:28.6314418Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+fixtures	Run fixture tests	2026-11-05T17:05:28.6318719Z     return _C._get_float32_matmul_precision()
+fixtures	Run fixture tests	2026-11-05T17:05:28.6319253Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6319997Z tests/test_puck_episode_profile_candidate.py: 30 warnings
+fixtures	Run fixture tests	2026-11-05T17:05:28.6321399Z   /__w/palimpsest/palimpsest/scripts/derive_puck_episode_profile.py:176: DeprecationWarning: invalid escape sequence '\$'
+fixtures	Run fixture tests	2026-11-05T17:05:28.6322965Z     """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+fixtures	Run fixture tests	2026-11-05T17:05:28.6324001Z 
+fixtures	Run fixture tests	2026-11-05T17:05:28.6324754Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T17:05:28.6326303Z =========================== short test summary info ============================
+fixtures	Run fixture tests	2026-11-05T17:05:28.6327867Z FAILED tests/test_authority_replay_process_ownership.py::test_replay_process_ownership_regressions_are_in_the_canonical_suite
+fixtures	Run fixture tests	2026-11-05T17:05:28.6329961Z 1 failed, 6515 passed, 318 skipped, 69 deselected, 105 warnings in 2430.54s (0:40:30)
+fixtures	Run fixture tests	2026-11-05T17:05:46.8490923Z .......                                                                  [100%]
+fixtures	Run fixture tests	2026-11-05T17:05:46.8492472Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T17:05:46.8493831Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T17:05:46.8496325Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T17:05:46.8498472Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T17:05:46.8499213Z 
+fixtures	Run fixture tests	2026-11-05T17:05:46.8499920Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T17:05:46.8501260Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T17:05:46.8502720Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T17:05:46.8503421Z 
+fixtures	Run fixture tests	2026-11-05T17:05:46.8504101Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T17:05:46.8505188Z 7 passed, 6896 deselected, 2 warnings in 14.76s
+fixtures	Run fixture tests	2026-11-05T17:06:07.9991095Z FFFFF                                                                    [100%]
+fixtures	Run fixture tests	2026-11-05T17:06:07.9992253Z =================================== FAILURES ===================================
+fixtures	Run fixture tests	2026-11-05T17:06:07.9993042Z _ test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures _
+fixtures	Run fixture tests	2026-11-05T17:06:07.9993468Z 
+fixtures	Run fixture tests	2026-11-05T17:06:07.9994037Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_real_authored03_audit_bin0')
+fixtures	Run fixture tests	2026-11-05T17:06:07.9994643Z 
+fixtures	Run fixture tests	2026-11-05T17:06:07.9995051Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T17:06:07.9995854Z     def test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:06:07.9996525Z         from test_puck_cpu_held_amendment03 import amendment03_fixture
+fixtures	Run fixture tests	2026-11-05T17:06:07.9997040Z         from test_puck_cpu_held_parent_integration import run_cli
+fixtures	Run fixture tests	2026-11-05T17:06:07.9997411Z         m=api()
+fixtures	Run fixture tests	2026-11-05T17:06:07.9997738Z >       with amendment03_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:07.9997984Z 
+fixtures	Run fixture tests	2026-11-05T17:06:07.9998187Z tests/test_puck_cpu_amendment03_audit.py:97: 
+fixtures	Run fixture tests	2026-11-05T17:06:07.9998676Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:07.9999678Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0000318Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0000581Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0001024Z tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+fixtures	Run fixture tests	2026-11-05T17:06:08.0001547Z     with amendment_fixture(tmp_path,rocm_probe=True) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0002353Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0002947Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0003191Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0003589Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0003859Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0004373Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_real_authored03_audit_bin0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0004867Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0004969Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T17:06:08.0005539Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0006365Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0007596Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0008408Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0008983Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0009939Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0010836Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T17:06:08.0011882Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0012804Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T17:06:08.0013380Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0014126Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0014884Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T17:06:08.0015553Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0016310Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0017054Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0017660Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0018767Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0019977Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T17:06:08.0020633Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0022051Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T17:06:08.0023588Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T17:06:08.0024479Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0024888Z         try:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0025683Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T17:06:08.0026741Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T17:06:08.0027482Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0028151Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0028848Z E           AssertionError: (1, b'', b'Traceback (most recent call last):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0030434Z E               File "/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_rea... ValueError(\'CPU held-runtime resource admission failed\')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0031626Z E             ValueError: CPU held-runtime resource admission failed
+fixtures	Run fixture tests	2026-11-05T17:06:08.0032141Z E             ')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0032477Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T17:06:08.0032701Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0033045Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:06:08.0033969Z _ test_real_authored04_independent_audits_fresh_bindings_and_preserves_history _
+fixtures	Run fixture tests	2026-11-05T17:06:08.0034482Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0035281Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_real_authored04_independe0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0035988Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0036526Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0037694Z     def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0038679Z         from test_puck_cpu_held_amendment04_integration import amendment04_fixture
+fixtures	Run fixture tests	2026-11-05T17:06:08.0039462Z         from test_puck_cpu_held_parent_integration import run_cli
+fixtures	Run fixture tests	2026-11-05T17:06:08.0040166Z         m=api()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0040613Z >       with amendment04_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0040946Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0041215Z tests/test_puck_cpu_amendment04_audit.py:115: 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0041896Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0043371Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0044403Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0044749Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0045447Z tests/test_puck_cpu_held_amendment04_integration.py:19: in amendment04_fixture
+fixtures	Run fixture tests	2026-11-05T17:06:08.0046580Z     with amendment_fixture(tmp_path,rocm_probe=True,historical_bindings=True,binding_failure=binding_failure) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0048004Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0048810Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0049143Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0049899Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0050329Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0051176Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_real_authored04_independe0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0052014Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0052205Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T17:06:08.0053128Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0054300Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0055409Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0056307Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0057142Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0057847Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0058399Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T17:06:08.0059113Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0059949Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T17:06:08.0060471Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0061181Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0061869Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T17:06:08.0062360Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0062974Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0063576Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0064041Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0064854Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0065695Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T17:06:08.0066206Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0067268Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T17:06:08.0068593Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T17:06:08.0069375Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0069974Z         try:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0070829Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T17:06:08.0072001Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T17:06:08.0072923Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0073751Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0074624Z E           AssertionError: (1, b'', b'Traceback (most recent call last):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0076318Z E               File "/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_rea... ValueError(\'CPU held-runtime resource admission failed\')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0078142Z E             ValueError: CPU held-runtime resource admission failed
+fixtures	Run fixture tests	2026-11-05T17:06:08.0078810Z E             ')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0079681Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T17:06:08.0079988Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0080412Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:06:08.0081522Z __ test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli __
+fixtures	Run fixture tests	2026-11-05T17:06:08.0082185Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0083105Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_real_authored02_has_indep0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0083963Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0084544Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0085601Z     def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0086465Z         from test_puck_cpu_held_amendment import amendment_fixture
+fixtures	Run fixture tests	2026-11-05T17:06:08.0087154Z         from test_puck_cpu_held_parent_integration import run_cli
+fixtures	Run fixture tests	2026-11-05T17:06:08.0087662Z         m=api()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0088103Z >       with amendment_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0088431Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0088699Z tests/test_puck_cpu_amendment_audit.py:141: 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0089369Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0090682Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0091490Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0091832Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0092366Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0092770Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0093482Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_real_authored02_has_indep0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0094147Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0094280Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T17:06:08.0095003Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0096132Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0097250Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0098139Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0098922Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0099807Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0100503Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T17:06:08.0101393Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0102217Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T17:06:08.0102840Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0103704Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0104499Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T17:06:08.0105136Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0105892Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0106638Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0107214Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0108187Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0109195Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T17:06:08.0110047Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0111317Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T17:06:08.0112902Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T17:06:08.0113945Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0114314Z         try:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0115057Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T17:06:08.0116174Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T17:06:08.0116913Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0117562Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0118252Z E           AssertionError: (1, b'', b'Traceback (most recent call last):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0119772Z E               File "/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_rea... ValueError(\'CPU held-runtime resource admission failed\')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0120979Z E             ValueError: CPU held-runtime resource admission failed
+fixtures	Run fixture tests	2026-11-05T17:06:08.0121499Z E             ')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0121839Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T17:06:08.0122076Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0122412Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:06:08.0123255Z ______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+fixtures	Run fixture tests	2026-11-05T17:06:08.0123751Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0124459Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_authored02_uses_fresh_cap0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0125133Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0125632Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0126776Z     def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0127692Z >       with amendment_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0128079Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0128411Z tests/test_puck_cpu_held_amendment.py:243: 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0129199Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0130740Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0131800Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0132217Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0132889Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0133357Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0134214Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_authored02_uses_fresh_cap0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0135042Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0135220Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T17:06:08.0136121Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0137508Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0138717Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0139813Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0140807Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0141693Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0142275Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T17:06:08.0142981Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0143644Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T17:06:08.0144148Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0144852Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0145541Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T17:06:08.0146044Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0146652Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0147249Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0148034Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0148835Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0150213Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T17:06:08.0150728Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0151795Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T17:06:08.0153144Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T17:06:08.0153908Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0154275Z         try:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0154985Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T17:06:08.0155936Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T17:06:08.0156674Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0157351Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0158038Z E           AssertionError: (1, b'', b'Traceback (most recent call last):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0159408Z E               File "/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_aut... ValueError(\'CPU held-runtime resource admission failed\')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0160986Z E             ValueError: CPU held-runtime resource admission failed
+fixtures	Run fixture tests	2026-11-05T17:06:08.0161628Z E             ')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0162028Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T17:06:08.0162290Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0162708Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:06:08.0163738Z _ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+fixtures	Run fixture tests	2026-11-05T17:06:08.0164352Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0165224Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_authored03_completes_afte0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0166066Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0166692Z     @pytest.mark.runs_basetemp  # asserts a persistent basetemp under runs/ (see docs/testing.md)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0167983Z     def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0169010Z >       with amendment03_fixture(tmp_path) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0169432Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0169959Z tests/test_puck_cpu_held_amendment03.py:143: 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0170781Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0172125Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0173126Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0173559Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0174179Z tests/test_puck_cpu_held_amendment03.py:122: in amendment03_fixture
+fixtures	Run fixture tests	2026-11-05T17:06:08.0174897Z     with amendment_fixture(tmp_path,rocm_probe=True) as case:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0176012Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+fixtures	Run fixture tests	2026-11-05T17:06:08.0176831Z     return next(self.gen)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0177173Z            ^^^^^^^^^^^^^^
+fixtures	Run fixture tests	2026-11-05T17:06:08.0177709Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0178088Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0178794Z tmp_path = PosixPath('/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_authored03_completes_afte0')
+fixtures	Run fixture tests	2026-11-05T17:06:08.0179776Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.0179929Z     @contextmanager
+fixtures	Run fixture tests	2026-11-05T17:06:08.0180646Z     def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+fixtures	Run fixture tests	2026-11-05T17:06:08.0181779Z         assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0182864Z         root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0184113Z         legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0184887Z         archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0185776Z         archived_raw=archived_auditor.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0186330Z         assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+fixtures	Run fixture tests	2026-11-05T17:06:08.0187056Z         (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0187708Z         bootstrap=root/current.BOOTSTRAP
+fixtures	Run fixture tests	2026-11-05T17:06:08.0188191Z         fresh_bootstrap=bootstrap.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0188875Z         old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0189735Z         assert old_bootstrap!=fresh_bootstrap
+fixtures	Run fixture tests	2026-11-05T17:06:08.0190323Z         bootstrap.write_bytes(old_bootstrap)
+fixtures	Run fixture tests	2026-11-05T17:06:08.0191064Z         bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+fixtures	Run fixture tests	2026-11-05T17:06:08.0191825Z         fresh_bindings=bindings.read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0192391Z         if historical_bindings:
+fixtures	Run fixture tests	2026-11-05T17:06:08.0193366Z             old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+fixtures	Run fixture tests	2026-11-05T17:06:08.0194400Z             assert old_bindings!=fresh_bindings
+fixtures	Run fixture tests	2026-11-05T17:06:08.7847188Z             bindings.write_bytes(old_bindings)
+fixtures	Run fixture tests	2026-11-05T17:06:08.7848638Z         sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+fixtures	Run fixture tests	2026-11-05T17:06:08.7850497Z         stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+fixtures	Run fixture tests	2026-11-05T17:06:08.7851492Z         assert not stage.exists()
+fixtures	Run fixture tests	2026-11-05T17:06:08.7851961Z         try:
+fixtures	Run fixture tests	2026-11-05T17:06:08.7852857Z             prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+fixtures	Run fixture tests	2026-11-05T17:06:08.7854032Z                 sources=sources(),inputs=inputs,negative_imports=['org'])
+fixtures	Run fixture tests	2026-11-05T17:06:08.7854978Z             code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+fixtures	Run fixture tests	2026-11-05T17:06:08.7855791Z >           assert code==0,(code,stdout,stderr)
+fixtures	Run fixture tests	2026-11-05T17:06:08.7856682Z E           AssertionError: (1, b'', b'Traceback (most recent call last):
+fixtures	Run fixture tests	2026-11-05T17:06:08.7858337Z E               File "/__w/palimpsest/palimpsest/runs/pytest-palimpsest-1538/test_aut... ValueError(\'CPU held-runtime resource admission failed\')
+fixtures	Run fixture tests	2026-11-05T17:06:08.7859953Z E             ValueError: CPU held-runtime resource admission failed
+fixtures	Run fixture tests	2026-11-05T17:06:08.7860471Z E             ')
+fixtures	Run fixture tests	2026-11-05T17:06:08.7860795Z E           assert 1 == 0
+fixtures	Run fixture tests	2026-11-05T17:06:08.7861019Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.7861351Z tests/test_puck_cpu_held_amendment.py:187: AssertionError
+fixtures	Run fixture tests	2026-11-05T17:06:08.7862091Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T17:06:08.7862826Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T17:06:08.7864422Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T17:06:08.7865998Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T17:06:08.7866432Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.7866671Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T17:06:08.7867602Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T17:06:08.7868620Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T17:06:08.7869040Z 
+fixtures	Run fixture tests	2026-11-05T17:06:08.7869898Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T17:06:08.7870756Z =========================== short test summary info ============================
+fixtures	Run fixture tests	2026-11-05T17:06:08.7871968Z FAILED tests/test_puck_cpu_amendment03_audit.py::test_real_authored03_audit_binds_new_policy_capsule_and_retains_both_failures
+fixtures	Run fixture tests	2026-11-05T17:06:08.7873982Z FAILED tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history
+fixtures	Run fixture tests	2026-11-05T17:06:08.7875478Z FAILED tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
+fixtures	Run fixture tests	2026-11-05T17:06:08.7877085Z FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+fixtures	Run fixture tests	2026-11-05T17:06:08.7878544Z FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+fixtures	Run fixture tests	2026-11-05T17:06:08.7879703Z 5 failed, 6898 deselected, 2 warnings in 19.59s
+fixtures	Run fixture tests	2026-11-05T17:07:28.5829038Z .........................................................                [100%]
+fixtures	Run fixture tests	2026-11-05T17:07:28.5831196Z =============================== warnings summary ===============================
+fixtures	Run fixture tests	2026-11-05T17:07:28.5832362Z .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+fixtures	Run fixture tests	2026-11-05T17:07:28.5834631Z   /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+fixtures	Run fixture tests	2026-11-05T17:07:28.5836828Z     from starlette.testclient import TestClient as TestClient  # noqa
+fixtures	Run fixture tests	2026-11-05T17:07:28.5837562Z 
+fixtures	Run fixture tests	2026-11-05T17:07:28.5838008Z tests/test_manual_lab_refresh_v3.py:98
+fixtures	Run fixture tests	2026-11-05T17:07:28.5839380Z   /__w/palimpsest/palimpsest/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+fixtures	Run fixture tests	2026-11-05T17:07:28.5841014Z     code = """import multiprocessing as m,sys,os,subprocess,re,time
+fixtures	Run fixture tests	2026-11-05T17:07:28.5841700Z 
+fixtures	Run fixture tests	2026-11-05T17:07:28.5842403Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+fixtures	Run fixture tests	2026-11-05T17:07:28.5843563Z 57 passed, 6846 deselected, 2 warnings in 77.53s (0:01:17)
+fixtures	Run fixture tests	2026-11-05T17:07:34.8701811Z ##[error]Process completed with exit code 1.

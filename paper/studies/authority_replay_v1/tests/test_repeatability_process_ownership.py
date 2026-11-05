@@ -64,7 +64,7 @@ def test_timeout_reaps_guardian_and_nested_detached_workers(tmp_path, monkeypatc
         children.append(child)
         return child
     monkeypatch.setattr(driver.subprocess, 'Popen', spawn)
-    result = driver._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=.4,
+    result = driver._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=2,
                              max_bytes=1024**2, minimum_free_bytes=0)
     assert result['status'] == 'timeout'
     assert result['returncode'] == -signal.SIGKILL
@@ -152,7 +152,7 @@ def test_pidfd_stop_failure_still_allows_guardian_cleanup(tmp_path, monkeypatch)
     def unavailable(*args):
         raise OSError('pidfd stop unavailable')
     monkeypatch.setattr(campaign, '_send_pidfd', unavailable)
-    result = driver._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=.3,
+    result = driver._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=2,
                              max_bytes=1024**2, minimum_free_bytes=0)
     assert result['status'] == 'timeout'
     assert result['returncode'] == -signal.SIGKILL
