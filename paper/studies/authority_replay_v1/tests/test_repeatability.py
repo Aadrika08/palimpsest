@@ -193,7 +193,10 @@ def test_timeout_kills_nested_worker_process_groups(tmp_path):
         assert not alive()
     finally:
         if alive():
-            os.killpg(pid, 9)  # Clean up only this test's known worker.
+            try:
+                os.killpg(pid, 9)  # Clean up only this test's known worker.
+            except ProcessLookupError:
+                pass  # The killed worker can disappear between alive() and killpg().
 
 
 def test_timeout_with_partial_report_remains_timeout(tmp_path):
