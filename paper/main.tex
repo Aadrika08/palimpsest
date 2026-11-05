@@ -318,13 +318,12 @@ small deterministic fixtures. The table keeps those evidence paths visible.
 
 \begin{table}[t]
 \centering\small
-\caption{Frozen fault/challenge matrix. Each weak predicate is a stated
-acceptance assumption evaluated on the same trace, not a competitor. Acceptance
-and observed claim truth must be interpreted separately. Detection columns split
-production-interface outcomes, diagnostic comparisons (S1/B2), and study replay-label
-guards (R1/R2); diagnostic divergence is not automatic runtime refusal.
-R denotes CPU FLYNN execution, F a production-interface fixture, and F+ a
-fixture with subprocess interruption.}
+\caption{Controlled conformance and ablations. R: CPU FLYNN; F: interface fixture;
+F+: fixture with subprocess interruption. I/D/L counts interface detections,
+diagnostic comparisons (S1/B2), and study label guards (R1/R2). Recovery reports
+successful recoveries/reported flags; C3 alone measures benign false rejection.
+Diagnostic divergence is not automatic runtime refusal. Full predicate/truth
+and family accounting remain in the artifact.}
 \label{tab:fault}\studyinput{fault-matrix}
 \end{table}
 

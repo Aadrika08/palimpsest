@@ -266,8 +266,8 @@ def estimate(value, scale=1):
     return 'not estimable' if value is None else number(value['median']*scale)
 
 
-def _table(headers, rows):
-    return ('{\\small\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{' + 'l' + 'r'*(len(headers)-1) + '}\n\\toprule\n' +
+def _table(headers, rows, alignment=None):
+    return ('{\\small\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{' + (alignment or 'l' + 'r'*(len(headers)-1)) + '}\n\\toprule\n' +
             ' & '.join(escape_latex(x) for x in headers) + r' \\' + '\n\\midrule\n' +
             '\n'.join(' & '.join(escape_latex(number(x)) for x in row) + r' \\' for row in rows) + '\n\\bottomrule\n\\end{tabular}}\n')
 
@@ -368,22 +368,24 @@ def generate_outputs(result, hashes, trace_root=None):
                   StorageWallMedianMs=estimate(o['wall_ms']['background_storage']), OfflineStatus=result['offline']['status'])
     header = '% Generated from retained evidence; do not edit.\n% Input SHA256: ' + json.dumps(hashes, sort_keys=True) + '\n'
     outputs = {'authority-claims.tex': '\n'.join('\\newcommand{\\'+k+'}{'+escape_latex(number(v))+'}' for k,v in macros.items())+'\n'}
+    challenge_labels = {
+        'A1': 'Delayed application', 'A2': 'Stale revision', 'A3': 'Duplicate request',
+        'R1': 'Playback label', 'R2': 'Action-replay label', 'S1': 'Pose-only state',
+        'S2': 'Missing recurrent state', 'D1': 'Runtime/source drift', 'D2': 'Asset substitution',
+        'C1': 'Same-byte replacement', 'C2': 'Edit and restore', 'C3': 'Benign sibling churn',
+        'P1': 'Interrupted publication', 'B1': 'Separate owners', 'B2': 'Shared-owner ablation',
+        'E1': 'Publication quota', 'E2': 'Queue backpressure', 'E3': 'Writer failure',
+    }
     fault_rows = []
     for name, c in result['faults']['cases'].items():
         path_label = {'runtime': 'R', 'fixture': 'F', 'fixture_subprocess': 'F+'}[result['faults']['paths'][name]]
-        fault_rows.append([f'{name} ({path_label})', f"{c['completed']}/{c['declared']}", c['baseline_accepted'], c['baseline_false_accepts'],
-                           f"{c['baseline_true']}/{c['baseline_false']}/{c['baseline_unknown']}/{c['baseline_missing']}",
+        fault_rows.append([f'{name} ({path_label})', challenge_labels[name], f"{c['completed']}/{c['declared']}",
                            f"{c['production_detection']}/{c['diagnostic_detection']}/{c['study_guard_detection']}",
                            f"{c['correct_recovery']}/{c['reported']['correct_recovery']}",
-                           f"{c['benign_false_rejection']}/{c['reported']['benign_false_rejection']}"])
+                           f"{c['benign_false_rejection']}/{c['reported']['benign_false_rejection']}" if name == 'C3' else 'n/a'])
     outputs['fault-matrix.tex'] = '% Interface/diag./label: interface outcomes; S1/B2 comparison diagnostics; R1/R2 study label guards.\n'
     outputs['fault-matrix.tex'] += '% Diagnostic counts do not establish automatic production refusal; raw outcome_scope is retained in metadata.\n'
-    outputs['fault-matrix.tex'] += _table(['Case', 'Done/N', 'Accept', 'False', 'T/F/U/M', 'I/D/L', 'Rec./rep.', 'FR/rep.'], fault_rows)
-    outputs['fault-matrix.tex'] += '\n\\par\\smallskip\n'
-    outputs['fault-matrix.tex'] += _table(['Family', 'Done/N', 'False accept', 'Known/U/M'],
-        [[name, f"{c['completed']}/{c['declared']}", c['baseline_false_accepts'],
-          f"{c['baseline_known']}/{c['baseline_unknown']}/{c['baseline_missing']}"]
-         for name,c in [*result['faults']['families'].items(), ('Total', f)]])
+    outputs['fault-matrix.tex'] += _table(['Case', 'Challenge', 'Done/N', 'I/D/L', 'Recovery/rep.', 'Benign FR'], fault_rows, 'llrrrr')
     outputs['replay-table.tex'] = _table(['Comparison', 'Pass/declared', 'Completed'],
         [[label, f"{result[k]['passed']}/{result[k]['declared']}", result[k]['completed']] for label,k in [('Continuation (100 ticks)', 'continuation'), ('All four replay modes (100 source ticks)', 'replay')]])
     overhead_rows = []
