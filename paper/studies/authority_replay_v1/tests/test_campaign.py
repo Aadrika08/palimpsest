@@ -541,7 +541,10 @@ def launch(*args,**kwargs):
     os.kill(os.getpid(),signal.SIGTERM)
     return child
 c.subprocess.Popen=launch
-c._supervise(Path({str(command)!r}),Path({str(result)!r}),os.getppid())
+read_fd,write_fd=os.pipe()
+os.write(write_fd,b'GO\\n')
+os.close(write_fd)
+c._supervise(Path({str(command)!r}),Path({str(result)!r}),os.getppid(),read_fd)
 '''
     subprocess.run([sys.executable, '-B', '-c', script], check=True, env={**os.environ, 'PYTHONPATH': f'{c.REPO}:{c.REPO}/src:{c.REPO}/scripts'})
     owned = json.loads(launched.read_text())
@@ -550,3 +553,116 @@ c._supervise(Path({str(command)!r}),Path({str(result)!r}),os.getppid())
         assert json.loads(result.read_text())['status'] == 'failed'
     finally:
         c._signal_owned(owned['pid'], owned['start'], 9)
+
+
+@pytest.mark.parametrize('pin_delay', [0., .2])
+def test_pidfd_admission_failure_never_launches_phase_and_retains_record(setup, monkeypatch, pin_delay):
+    import errno
+    c, identity, output = setup
+    output.mkdir()
+    marker = output / 'phase-launched'
+    unrelated = subprocess.Popen([sys.executable, '-c', 'import time;time.sleep(60)'])
+    created = []
+    original = c.subprocess.Popen
+    def launch(*args, **kwargs):
+        child = original(*args, **kwargs)
+        created.append(child)
+        return child
+    def unavailable(pid):
+        # Allow the guardian time to start, exposing launch-before-pin races.
+        time.sleep(pin_delay)
+        raise OSError(errno.EMFILE, 'pidfd admission exhausted descriptors')
+    monkeypatch.setattr(c.subprocess, 'Popen', launch)
+    monkeypatch.setattr(c, '_open_pidfd', unavailable)
+    phase = c.Phase('pin-failure', 'fault', output / 'unit',
+                    [sys.executable, '-c', f'from pathlib import Path;Path({str(marker)!r}).write_text("launched")'])
+    class Guard:
+        def check(self):
+            pass
+    try:
+        record = c.run_phase(phase, root=output, deadline=time.time() + 5, guard=Guard())
+        assert record['status'] == 'failed' and 'exhausted descriptors' in record['reason']
+        assert not marker.exists()
+        assert len(created) == 1 and created[0].returncode is not None
+        assert not Path('/proc', str(created[0].pid)).exists()
+        assert unrelated.poll() is None
+        persisted = json.loads((output / 'commands/pin-failure/process.json').read_text())
+        assert persisted['status'] == 'failed'
+        assert persisted['guardian_pid'] == created[0].pid
+    finally:
+        for child in created:
+            if child.poll() is None:
+                child.kill()
+            child.wait()
+        if unrelated.poll() is None:
+            unrelated.kill()
+        unrelated.wait()
+
+
+@pytest.mark.parametrize('admission', [b'', b'NO\n'])
+def test_guardian_eof_or_invalid_go_never_launches_phase(setup, admission):
+    c, identity, output = setup
+    output.mkdir()
+    marker = output / 'phase-launched'
+    command, result = output / 'command.json', output / 'supervisor.json'
+    command.write_text(json.dumps({'argv': [sys.executable, '-c',
+        f'from pathlib import Path;Path({str(marker)!r}).write_text("launched")'], 'cwd': str(output)}))
+    read_fd, write_fd = os.pipe()
+    try:
+        if admission:
+            os.write(write_fd, admission)
+        os.close(write_fd)
+        write_fd = None
+        child = subprocess.Popen([sys.executable, '-B', str(c.STUDY / 'campaign.py'), '--supervise',
+            str(command), str(result), str(os.getpid()), str(read_fd)], pass_fds=(read_fd,))
+        assert child.wait(timeout=5) == 1
+        assert not marker.exists()
+        record = json.loads(result.read_text())
+        assert record['status'] == 'failed' and record['owned_descendants'] == []
+        assert 'no GO admission' in record['reason']
+    finally:
+        os.close(read_fd)
+        if write_fd is not None:
+            os.close(write_fd)
+
+
+def test_phase_waits_for_successful_parent_pin(setup, monkeypatch):
+    c, identity, output = setup
+    output.mkdir()
+    marker = output / 'phase-launched'
+    original = c._open_pidfd
+    checked = []
+    def pin(pid):
+        time.sleep(.2)
+        assert not marker.exists()
+        checked.append(pid)
+        return original(pid)
+    monkeypatch.setattr(c, '_open_pidfd', pin)
+    phase = c.Phase('handshake', 'fault', output / 'unit', [sys.executable, '-c',
+        f'from pathlib import Path;Path({str(marker)!r}).write_text("launched")'])
+    class Guard:
+        def check(self):
+            pass
+    record = c.run_phase(phase, root=output, deadline=time.time() + 5, guard=Guard())
+    assert checked and record['status'] == 'exited' and marker.exists()
+    assert record['admission'] == 'received_GO'
+
+
+def test_deadline_expiring_during_pin_does_not_admit_phase(setup, monkeypatch):
+    c, identity, output = setup
+    output.mkdir()
+    marker = output / 'phase-launched'
+    original = c._open_pidfd
+    def slow_pin(pid):
+        time.sleep(.1)
+        return original(pid)
+    monkeypatch.setattr(c, '_open_pidfd', slow_pin)
+    phase = c.Phase('expired-admission', 'fault', output / 'unit', [sys.executable, '-c',
+        f'from pathlib import Path;Path({str(marker)!r}).write_text("launched")'])
+    class Guard:
+        def check(self):
+            pass
+    record = c.run_phase(phase, root=output, deadline=time.time() + .01, guard=Guard())
+    assert record['status'] == 'failed'
+    assert not marker.exists()
+    assert 'admission' in record['reason']

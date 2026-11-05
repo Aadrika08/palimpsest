@@ -247,7 +247,7 @@ def _cleanup(child, known, guardian_pid=None):
         time.sleep(.01)
 
 
-def _supervise(command_path, result_path, coordinator_pid):
+def _supervise(command_path, result_path, coordinator_pid, admission_fd):
     """Private ownership guardian; never launches any non-phase subprocess."""
     libc = ctypes.CDLL(None, use_errno=True)
     result, child, known = {'status': 'failed', 'guardian_pid': os.getpid()}, None, {}
@@ -260,6 +260,10 @@ def _supervise(command_path, result_path, coordinator_pid):
         require(libc.prctl(36, 1, 0, 0, 0) == 0, 'cannot enable private child subreaper')
         require(libc.prctl(1, signal.SIGTERM, 0, 0, 0) == 0, 'cannot bind guardian parent death signal')
         require(os.getppid() == coordinator_pid, 'coordinator exited before guardian admission')
+        # No scientific child exists until its coordinator pins this guardian
+        # and sends GO. EOF on coordinator failure/death refuses admission.
+        require(os.read(admission_fd, 3) == b'GO\n', 'guardian received no GO admission')
+        result['admission'] = 'received_GO'
         config = parse_json(command_path.read_text())
         require(not stop_signals, 'guardian stopped before phase launch')
         child = subprocess.Popen(config['argv'], cwd=config['cwd'], start_new_session=True)
@@ -281,6 +285,7 @@ def _supervise(command_path, result_path, coordinator_pid):
     except Exception as exc:
         result.update(reason=str(exc), error_type=type(exc).__name__)
     finally:
+        os.close(admission_fd)
         # A repeated stop signal must not interrupt ownership cleanup itself.
         signal.signal(signal.SIGTERM, signal.SIG_IGN)
         signal.signal(signal.SIGINT, signal.SIG_IGN)
@@ -307,20 +312,32 @@ def run_phase(phase, *, root, deadline, guard):
            'MUJOCO_GL': 'egl', 'MPLBACKEND': 'Agg', 'OMP_NUM_THREADS': '2', 'CUDA_VISIBLE_DEVICES': ''}
     guardian_command = [sys.executable, '-B', str(Path(__file__).resolve()), '--supervise',
                         str(command_path), str(result_path), str(os.getpid())]
-    record['guardian_command'] = guardian_command
     child, descriptor, previous, failure = None, None, {}, None
+    admission_read, admission_write = None, None
     stop_signals = []
     def interrupted(number, frame):
         stop_signals.append(number)
     try:
         for number in (signal.SIGINT, signal.SIGTERM):
             previous[number] = signal.signal(number, interrupted)
+        admission_read, admission_write = os.pipe()
+        guardian_command.append(str(admission_read))
+        record['guardian_command'] = guardian_command
         with (log / 'stdout.log').open('xb') as stdout, (log / 'stderr.log').open('xb') as stderr:
-            child = subprocess.Popen(guardian_command, cwd=REPO, env=env, stdout=stdout, stderr=stderr)
-            descriptor = _open_pidfd(child.pid)
+            child = subprocess.Popen(guardian_command, cwd=REPO, env=env, stdout=stdout, stderr=stderr,
+                                     pass_fds=(admission_read,))
             record['guardian_pid'] = child.pid
             record['pid'] = child.pid
+            os.close(admission_read)
+            admission_read = None
+            descriptor = _open_pidfd(child.pid)
+            require(not stop_signals, 'coordinator stopped before GO admission')
             timeout = min(deadline, record['started_unix'] + 900) if phase.kind == 'offline_reproduction' else deadline
+            require(time.time() < timeout, 'deadline prevents GO admission')
+            require(os.write(admission_write, b'GO\n') == 3, 'guardian GO write incomplete')
+            os.close(admission_write)
+            admission_write = None
+            record['admission'] = 'sent_GO_after_pin'
             while child.poll() is None:
                 if stop_signals:
                     raise InterruptedError(f'coordinator signal {stop_signals[0]}')
@@ -336,32 +353,58 @@ def run_phase(phase, *, root, deadline, guard):
     finally:
         for number in previous:
             signal.signal(number, signal.SIG_IGN)
-        if child is not None:
-            if child.poll() is None:
+        cleanup_errors = []
+        try:
+            # Closing this write end is unconditional: an unadmitted guardian
+            # observes EOF and cannot launch even if it outlives this cleanup.
+            for channel in (admission_read, admission_write):
+                if channel is not None:
+                    try:
+                        os.close(channel)
+                    except OSError as exc:
+                        cleanup_errors.append(str(exc))
+            if child is not None:
                 try:
-                    _send_pidfd(descriptor, signal.SIGTERM)
-                except ProcessLookupError:
-                    pass
-            try:
-                child.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                # Only the owned guardian is addressed through its pinned fd.
-                _send_pidfd(descriptor, signal.SIGKILL)
-                child.wait()
-                failure = {'status': 'failed', 'reason': 'private guardian failed to finish cleanup'}
-            if result_path.exists():
-                record.update(parse_json(result_path.read_text()))
-            else:
-                record.update(status='failed', reason='guardian exited before its process record')
-            record['guardian_returncode'] = child.returncode
-        if descriptor is not None:
-            os.close(descriptor)
-        if failure:
-            record.update(failure)
-        for number, handler in previous.items():
-            signal.signal(number, handler)
-        record['ended_unix'] = time.time()
-        write_json(log / 'process.json', record)
+                    if child.poll() is None:
+                        if descriptor is not None:
+                            _send_pidfd(descriptor, signal.SIGTERM)
+                        else:
+                            # This Popen's sole waiter has not reaped the child;
+                            # its PID cannot be reused. Popen also checks/reaps
+                            # an exited child before sending a direct signal.
+                            child.terminate()
+                    child.wait(timeout=5)
+                except Exception as exc:
+                    cleanup_errors.append(str(exc))
+                    # Even failed pidfd acquisition/signaling must reach reap.
+                    # Only the still-unreaped, directly spawned Popen is used.
+                    try:
+                        if child.poll() is None:
+                            child.kill()
+                        child.wait(timeout=5)
+                    except Exception as reap_error:
+                        cleanup_errors.append(str(reap_error))
+                if result_path.exists():
+                    record.update(parse_json(result_path.read_text()))
+                else:
+                    record.update(status='failed', reason='guardian exited before its process record')
+                record['guardian_returncode'] = child.returncode
+        except Exception as exc:
+            cleanup_errors.append(str(exc))
+        finally:
+            if descriptor is not None:
+                try:
+                    os.close(descriptor)
+                except OSError as exc:
+                    cleanup_errors.append(str(exc))
+            if failure:
+                record.update(failure)
+            if cleanup_errors:
+                record.update(status='failed', cleanup_errors=cleanup_errors)
+            for number, handler in previous.items():
+                signal.signal(number, handler)
+            record['ended_unix'] = time.time()
+            write_json(log / 'process.json', record)
     return record
 
 
@@ -564,8 +607,8 @@ def run(protocol_path, assets, output):
 
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
-    if len(argv) == 4 and argv[0] == '--supervise':
-        return _supervise(Path(argv[1]), Path(argv[2]), int(argv[3]))
+    if len(argv) == 5 and argv[0] == '--supervise':
+        return _supervise(Path(argv[1]), Path(argv[2]), int(argv[3]), int(argv[4]))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol', type=Path, required=True)
     parser.add_argument('--assets', type=Path, required=True)
