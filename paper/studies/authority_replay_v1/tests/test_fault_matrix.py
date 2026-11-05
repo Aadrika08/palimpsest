@@ -496,3 +496,34 @@ def test_final_source_disappearance_retains_failed_row_trace_and_stops_campaign(
     assert json.loads((retained / 'row.json').read_text())['error']['type'] == 'SourceMutation'
     assert json.loads((retained / 'trace.json').read_text()) == row['trace']
     assert all(r['status'] == 'incomplete' for r in rows if r.get('case_id') != 'C1')
+
+
+@pytest.mark.parametrize('change,calls', [({'status': 'failed', 'compared_ticks': 0}, 0),
+    ({'compared_ticks': 2}, 0), ({'mode': 'policy'}, 0), ({'source_run_id': 'other'}, 0),
+    ({'source_snapshot_sha256': 'wrong'}, 0), ({'controller_reexecuted': True}, 0),
+    ({'inference_executed': True}, 0), ({}, 1)])
+def test_r2_unsuccessful_or_wrong_source_replay_cannot_count_as_detection(tmp_path, monkeypatch, change, calls):
+    source = {'source_run_id': 'source', 'source_snapshot_id': 'snapshot', 'source_snapshot_sha256': 'a' * 64}
+    report = {**source, 'mode': 'actions', 'status': 'passed', 'compared_ticks': 3,
+              'controller_reexecuted': False, 'inference_executed': False, 'errors': [], 'first_divergence': None,
+              **change}
+    def invalid_replay(case, output):
+        (output / 'runtime-trace.json').write_text(json.dumps({'replay_report': report}))
+        return module()._r2_evaluation(report, source, 3, calls)
+    monkeypatch.setattr(module(), '_custody', invalid_replay)
+    row = module().run_fault_case(CASES['C1'], tmp_path / 'unit', IDENTITY)
+    assert row['status'] == 'failed', row
+    assert row['error']['type'] == 'ValueError'
+    assert not row.get('explicit_detection', False)
+    assert row['trace']['replay_report'] == report
+
+
+def test_r2_guard_receives_only_observed_successful_replay_facts():
+    source = {'source_run_id': 'source', 'source_snapshot_id': 'snapshot', 'source_snapshot_sha256': 'a' * 64}
+    report = {**source, 'mode': 'actions', 'status': 'passed', 'compared_ticks': 3,
+              'controller_reexecuted': False, 'inference_executed': False, 'errors': [], 'first_divergence': None}
+    trace = module()._r2_evaluation(report, source, 3, 0)
+    assert trace['semantic_outcome'] == 'refused'
+    assert trace['trajectory_matches'] is True
+    assert trace['claim_validation']['facts'] == {'executed_mode': 'actions',
+        'inference_executed': False, 'policy_invocations': 0}

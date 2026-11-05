@@ -461,6 +461,28 @@ def _claim_guard(claimed_mode, executed_mode, inference_executed, policy_invocat
     return {'scope': 'study_guard', 'claimed_mode': claimed_mode, 'facts': facts, 'rejected': False}
 
 
+def _r2_evaluation(report, expected_source, expected_ticks, observed_policy_calls):
+    """A failed or mismatched replay is an execution failure, never detection."""
+    require(report.get('mode') == 'actions' and report.get('status') == 'passed',
+            'R2 requires a successful observed action replay')
+    require(type(report.get('compared_ticks')) is int and report['compared_ticks'] == expected_ticks,
+            'R2 action replay did not compare the complete source trace')
+    require(all(report.get(key) == value for key, value in expected_source.items()),
+            'R2 action replay source identity differs')
+    require(report.get('controller_reexecuted') is False and report.get('inference_executed') is False
+            and observed_policy_calls == 0, 'R2 action replay did not demonstrate controller bypass')
+    require(report.get('errors') == [] and report.get('first_divergence') is None,
+            'R2 action replay reported errors or divergence')
+    guard = _claim_guard('policy', report['mode'], report['inference_executed'], observed_policy_calls)
+    return {'claimed_mode': 'policy', 'executed_mode': report['mode'], 'trajectory_matches': True,
+            'replay_inference_executed': report['inference_executed'],
+            'replay_policy_invocations': observed_policy_calls, 'replay_report': report,
+            'expected_replay_source': expected_source, 'expected_source_ticks': expected_ticks,
+            'semantic_invalid': True, 'claim_validation': guard, 'detection_scope': 'study_guard',
+            'production_outcome': 'actions_replay_' + report['status'],
+            'semantic_outcome': 'refused' if guard['rejected'] else 'accepted'}
+
+
 def _continuation_comparisons(expected, pose, full):
     scientific = lambda rows: [{k: v for k, v in row.items() if k != 'revision'} for row in rows]
     application = lambda rows: [{k: v for k, v in row.items() if k == 'revision'} for row in rows]
@@ -756,11 +778,13 @@ def _runtime(case, output, repo, assets):
             run = output / uuid.uuid4().hex
             engine = _open(repo, assets, run, case.seeds[0])
             engine.restore_branch(snapshot)
-            _register_initial(engine, run)
+            initial_snapshot_id = _register_initial(engine, run)
             for _ in range(3):
                 _command(engine, 'step')
             engine.close()
             source_ticks = list(iter_ticks(run / 'recording'))
+            expected_source = {'source_run_id': run.name, 'source_snapshot_id': initial_snapshot_id,
+                               'source_snapshot_sha256': sha256_file(run / 'snapshots/initial.snp')}
             trace.update(initial_setup_succeeded=True)
             if case.id == 'R1':
                 # Actual validated playback reads retained ticks and renders no policy.
@@ -807,14 +831,11 @@ def _runtime(case, output, repo, assets):
                 report = replay_run(run, destination, mode=mode, repo_root=repo, asset_root=assets)
                 _json(output / 'observed-replay-report.json', report)
                 if case.id == 'R2':
-                    matched = report['status'] == 'passed' and report['compared_ticks'] == len(source_ticks)
-                    guard = _claim_guard('policy', mode, report['inference_executed'], invocations - before_replay)
-                    trace.update(claimed_mode='policy', executed_mode='actions', trajectory_matches=matched,
-                                 replay_inference_executed=report['inference_executed'],
-                                 replay_policy_invocations=invocations - before_replay, replay_report=report, semantic_invalid=True,
-                                 claim_validation=guard, detection_scope='study_guard',
-                                 production_outcome='actions_replay_' + report['status'],
-                                 semantic_outcome='refused' if guard['rejected'] else 'accepted')
+                    # Retain the report and expected identity even when admission
+                    # to this study comparison fails and no guard runs.
+                    trace.update(replay_report=report, expected_replay_source=expected_source,
+                                 expected_source_ticks=len(source_ticks))
+                    trace.update(_r2_evaluation(report, expected_source, len(source_ticks), invocations - before_replay))
                 else:
                     trace.update(replay_ticks=report['compared_ticks'], replay_report=report, semantic_invalid=True,
                                  replay_policy_invocations=invocations - before_replay,
