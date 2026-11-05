@@ -201,7 +201,8 @@ def analyze(summary, manifest, protocol):
     rows = recomputed['rows']
     faults = [r for r in rows if r['kind'] == 'fault']
     families = {case.id: case.family for case in protocol.fault_cases}
-    fault_summary = dict(total=_faults(faults), cases={case.id: _faults([r for r in faults if r['case_id'] == case.id]) for case in protocol.fault_cases},
+    fault_summary = dict(total=_faults(faults), paths={case.id: case.path for case in protocol.fault_cases},
+                         cases={case.id: _faults([r for r in faults if r['case_id'] == case.id]) for case in protocol.fault_cases},
                          families={family: _faults([r for r in faults if families[r['case_id']] == family]) for family in dict.fromkeys(families.values())}, rows=faults)
     raw, eligible = [], []
     for seed in protocol.execution_overhead['seeds']:
@@ -369,7 +370,8 @@ def generate_outputs(result, hashes, trace_root=None):
     outputs = {'authority-claims.tex': '\n'.join('\\newcommand{\\'+k+'}{'+escape_latex(number(v))+'}' for k,v in macros.items())+'\n'}
     fault_rows = []
     for name, c in result['faults']['cases'].items():
-        fault_rows.append([name, f"{c['completed']}/{c['declared']}", c['baseline_accepted'], c['baseline_false_accepts'],
+        path_label = {'runtime': 'R', 'fixture': 'F', 'fixture_subprocess': 'F+'}[result['faults']['paths'][name]]
+        fault_rows.append([f'{name} ({path_label})', f"{c['completed']}/{c['declared']}", c['baseline_accepted'], c['baseline_false_accepts'],
                            f"{c['baseline_true']}/{c['baseline_false']}/{c['baseline_unknown']}/{c['baseline_missing']}",
                            f"{c['production_detection']}/{c['diagnostic_detection']}/{c['study_guard_detection']}",
                            f"{c['correct_recovery']}/{c['reported']['correct_recovery']}",
