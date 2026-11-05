@@ -47,3 +47,28 @@ The prose identifies median overhead and median ms/tick, but the summary columns
 ## Readiness boundary
 
 After the Figure 3 correction and a targeted rendered-page check, the paper is editorially ready for external technical/workshop review within its stated scope. Public submission readiness still depends on the explicitly open archive/redistribution and independent reproduction decisions and a chosen venue's requirements. This review does not authorize publication and does not certify raw-evidence correctness; that is the separate evidence-review lane.
+
+
+## Scoped final rereview: both findings resolved
+
+Reviewed source commit: `67177067e83aa80cda2343162530e48306f56b7a`.
+
+Reviewed PDF SHA-256: `acc7135275833191a11f6079f856483f8013845e9bff3a36fef59a2e7267011a` (10 pages).
+
+Inspected the updated source diff and rendered pages 5--8 in `runs/final-render-r2`; independently read the current PDF hash. This is a targeted rereview, not a repeat evidence audit or test run.
+
+- Important Figure 3 finding: resolved. Page 8 now visibly contains black open-circle storage observations, including the high seed-0 and seed-5 values and the seed-9 observation near the synchronous series. The regular axis labels remain readable, the small negative background observation remains visible, and the 186% tail is retained. The storage legend now matches its plotted observations.
+- Minor Table 4 finding: resolved. Page 7 explicitly labels `median ms/tick` and `median delta (%)`.
+- The added execution-configuration paragraph makes host, software, threading, observation size, control interval, and workload differences concrete. The retained seed-0 worked join usefully connects application receipt, snapshot, branch, replay execution declarations, and terminal source publication. Its final sentence preserves the combined-fault limitation. These writing additions strengthen the software-paper argument without pretending to add experiments.
+- The contribution now says fresh-checkout feasibility, which fits the incomplete declared unit and unsuccessful follow-up better than an unqualified reproduction contribution.
+
+Updated verdict: editorially approved for external technical/workshop review within the stated scope. No unresolved Critical or Important finding in this editorial lane. The earlier readiness boundaries concerning novelty, chosen venue, evidence correctness, archive permissions, and independent reproduction remain; this approval does not certify or authorize public submission. No source/PDF changes, jobs, builds, or tests were performed during rereview. Only this review file was appended; no commit was made.
+
+
+## Final artifact closure: pagination-only acceptance
+
+Final reviewed source: `2b766233e8c4b2602cf02105c9f3d7c8672c81fe`.
+
+Final PDF SHA-256, independently read from `paper/build/palimpsest-systems-paper.pdf`: `7555c4b9c868f75901a15108c2f50fe5841a571e3a6865f869054eb13022a267` (10 pages).
+
+Visually inspected final `runs/final-render-r3` pages 2, 3, 7 and 8. The trusted-OS paragraph ends cleanly on page 2 and page 3 begins with the authority figure; the former page-8 single-word fragment is gone. Table 4 retains explicit median labels. Figure 3 retains visible storage circles, negative background observation, regular axis labels and the large storage tail. No new finding in this final pagination-only check. Editorial approval remains in force for this exact artifact within the prior readiness boundary. Only this review file was appended; no source/PDF edit, commit, job, build or test was performed by this reviewer.

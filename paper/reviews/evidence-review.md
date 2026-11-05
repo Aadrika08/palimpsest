@@ -87,3 +87,48 @@ this review. The complete retained inventory/audit reports were checked for
 binding and scope; only the stated raw samples were independently rechecked.
 All-page visual inspection and combined test execution belong to the separate
 integration lane. This review writes only this report and creates no commit.
+
+## Scoped rereview: configuration and worked evidence join
+
+Reviewed source commit: `67177067e83aa80cda2343162530e48306f56b7a`.
+Reviewed PDF SHA256:
+`acc7135275833191a11f6079f856483f8013845e9bff3a36fef59a2e7267011a`.
+Both match the new verification record; every recorded build-input hash still
+matches its file. Earlier numeric estimates and denominators are unchanged.
+
+**Approved for these additions; no Critical or Important findings.**
+
+- `execution-configuration.json`'s complete retained identity equals the decoded
+  replay-0 prefix snapshot identity, and its source snapshot hash matches that
+  file. Python 3.11.15, NumPy 2.2.5, MuJoCo 3.3.6, PyTorch 2.9.0+cu128, CPU
+  float32 execution, two/eight intra/inter-op threads, disabled deterministic
+  algorithms, Linux x86-64 and the EGL 128-by-128 renderer are recorded there.
+  Its CPU model/governor equal both overhead-0 null/synchronous covariates.
+  The continuation/replay scenario equals the source recording's manifest;
+  throughput snapshots independently name sparse navigation and five obstacles.
+  The two scenario records name checker texture and 0.02-second control periods.
+  The new rendered configuration paragraph describes these fields without
+  claiming GPU execution or deterministic-algorithms enforcement.
+- All four worked-chain packet file hashes match `chain.json`. Packet events
+  and manifest are byte-identical to the actual replay-0 source files. The
+  prefix snapshot contains the exact applied `edit` receipt, source run
+  `ddb94d304cac48a38a56e056b05ef5a9`, application tick 0 and applied revision 1.
+  At snapshot tick 8, its event-prefix length is exactly 30 events; independently
+  hashing those original event bytes reproduces the recorded size and SHA256.
+- Prefix snapshot ID `53e4d9cf82e44736adc18c4d08189060` and its hash match the
+  original retained replay report. The branch ID, successful zero-divergence
+  continuation report and 92-tick count match that same unit. Action/policy
+  reports exactly match the original retained reports and instead bind initial
+  snapshot `605a9e6f09dc41cb89c06e02264636cb`, its file SHA256, the same source ID
+  and 100 compared ticks, with inference false/true respectively. The decoded
+  initial snapshot is at tick 0 with no applied-command receipts. The rendered
+  worked example correctly distinguishes the initial and prefix snapshots.
+- The source publication manifest is completed at 100 recorded ticks.
+  Independently iterating the original source recording decodes 100 records,
+  matching operation_cost/0 and the worked-chain publication count. This is
+  publication/decoding evidence, not a new execution or a combined-fault test.
+
+This rereview used container reads, hashes, JSON/event joins and recorded-tick
+decoding only. No Engine, policy inference, MuJoCo stepping, new experiment,
+regeneration, manuscript/PDF edit or commit was performed. Plot rendering and
+all-page visual acceptance remain assigned to the separate editorial lane.

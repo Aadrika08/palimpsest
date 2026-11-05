@@ -1,5 +1,10 @@
 # Authority-aware replay manuscript
 
+The reviewed PDF is [`build/palimpsest-systems-paper.pdf`](build/palimpsest-systems-paper.pdf)
+(10 pages). [Independent review records](reviews/README.md) describe the verdict,
+resolved findings and remaining limitations. [Submission gates](SUBMISSION_CHECKLIST.md)
+remain separate from the local build and evidence checks.
+
 The venue-neutral paper is `main.tex`. It replaces the historical feature and
 capability inventory with one semantic-contract argument and RQ1–RQ4. The
 venue-neutral layout includes the evaluation tables, three figures and references;
@@ -41,6 +46,8 @@ Generation refuses missing or inconsistent evidence. The historical
 supply results. Verification checks exact generation, input hashes, citations,
 overflow, missing sections and unresolved placeholders. Every final PDF page
 also requires visual inspection.
+Generated evidence is deterministic; compiler metadata can change PDF binary
+hashes between builds. `build/SHA256SUMS` identifies the retained deliverables.
 
 The two static figures are vector TikZ/table sources. Authority ticks are
 symbolic, and the replay matrix describes this system's execution/validation
