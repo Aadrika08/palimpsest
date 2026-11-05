@@ -2,6 +2,7 @@
 """Build paper evidence from a complete frozen campaign; never execute experiments."""
 import argparse
 import hashlib
+import io
 import json
 from pathlib import Path
 import statistics
@@ -58,8 +59,10 @@ def _faults(rows):
                                           r['baseline_outcome']['claim_truth'] is False for r in rows),
                 **{flag: sum(r.get(flag) is True for r in rows) for flag in FLAGS},
                 reported={flag: sum(flag in r for r in rows) for flag in FLAGS},
-                production_detection=sum(r.get('explicit_detection') is True and r.get('outcome_scope') == 'production' for r in rows),
-                study_guard_detection=sum(r.get('explicit_detection') is True and r.get('outcome_scope') == 'study_guard' for r in rows))
+                # Frozen outcome_scope defaults to production even for comparison diagnostics.
+                production_detection=sum(r.get('explicit_detection') is True and r['case_id'] not in ('S1','B2','R1','R2') for r in rows),
+                diagnostic_detection=sum(r.get('explicit_detection') is True and r['case_id'] in ('S1','B2') for r in rows),
+                study_guard_detection=sum(r.get('explicit_detection') is True and r['case_id'] in ('R1','R2') for r in rows))
 
 
 def _digest(value):
@@ -268,8 +271,87 @@ def _table(headers, rows):
             '\n'.join(' & '.join(escape_latex(number(x)) for x in row) + r' \\' for row in rows) + '\n\\bottomrule\n\\end{tabular}}\n')
 
 
-def generate_outputs(result, hashes):
-    """Return six deterministic LaTeX files with full raw analysis in comments."""
+def analyze_snapshot_ablation(result, trace_root):
+    """Read hashed, bounded S1 comparisons; no model execution or new measurements."""
+    import numpy as np
+    from paper.studies.authority_replay_v1.fault_matrix import _continuation_comparisons
+
+    root = Path(trace_root).resolve(strict=True)
+    require(root.is_dir(), 'snapshot trace root must be a directory')
+    values = []
+    for seed in (0,1,2):
+        unit_id = f'fault/S1/default/fault/seed-{seed}'
+        matches = [r for r in result['faults']['rows'] if r['unit_id'] == unit_id]
+        require(len(matches) == 1, 'snapshot ablation requires exactly one declared S1 row per seed')
+        row = matches[0]
+        value = dict(seed=seed, unit_id=unit_id, status=row['status'], pose_action_error=None, full_action_error=None)
+        values.append(value)
+        if row['status'] != 'completed':
+            continue
+        trace = row.get('trace', {})
+        require(trace.get('arrays_path') == 'continuation-pairs.npz' and _digest(trace.get('arrays_sha256')),
+                'completed S1 requires declared arrays filename and SHA256')
+        folder = root / f'fault__S1__default__fault__seed-{seed}'
+        path = folder / trace['arrays_path']
+        require(folder.resolve().is_relative_to(root) and path.resolve().is_relative_to(folder.resolve())
+                and path.is_file(), 'completed S1 arrays missing or outside trace root')
+        raw = path.read_bytes()
+        digest = hashlib.sha256(raw).hexdigest()
+        require(digest == trace['arrays_sha256'], 'snapshot arrays SHA256 differs from retained row')
+        expected_divergence = dict(field='action', tick=0, reason='value')
+        require(type(trace.get('comparison_origin_tick')) is int and trace['comparison_origin_tick'] == 8
+                and trace.get('scientific_first_divergence') == expected_divergence
+                and 'full_scientific_first_divergence' in trace and trace['full_scientific_first_divergence'] is None,
+                'retained S1 scientific comparison scope differs')
+        states = {}
+        with np.load(io.BytesIO(raw), allow_pickle=False) as arrays:
+            require(len(arrays.files) == len(set(arrays.files)), 'duplicate snapshot array names')
+            for key in arrays.files:
+                array = arrays[key]
+                require(array.dtype.kind in 'biufc' and np.isfinite(array).all(), 'snapshot arrays must be finite numeric values')
+                require(any(key == label+'__ticks' or key.startswith(label+'__0__') for label in ('expected','pose','full')),
+                        'unexpected snapshot array field or tick')
+            for label in ('expected','pose','full'):
+                ticks = arrays[label+'__ticks']
+                require(ticks.shape == () and ticks.dtype.kind in 'iu' and int(ticks) == 1,
+                        'snapshot ablation requires exactly one comparison tick per condition')
+                prefix = label+'__0__'
+                states[label] = {key[len(prefix):]: arrays[key].copy() for key in arrays.files if key.startswith(prefix)}
+        actions = [states[label].get('action') for label in ('expected','pose','full')]
+        require(all(action is not None and action.dtype.kind == 'f' and action.ndim == 1 and action.size > 0 for action in actions)
+                and all(action.shape == actions[0].shape and action.dtype == actions[0].dtype for action in actions),
+                'snapshot action shapes/dtypes differ or are empty')
+        comparisons = _continuation_comparisons(*[[states[label]] for label in ('expected','pose','full')])
+        require(comparisons['scientific_first_divergence'] == expected_divergence
+                and comparisons['full_scientific_first_divergence'] is None,
+                'snapshot arrays contradict retained scientific comparison')
+        for key, comparison in comparisons.items():
+            if key in trace:
+                require(trace[key] == comparison, 'snapshot arrays contradict retained trace comparison')
+            if key in trace.get('comparisons', {}):
+                require(trace['comparisons'][key] == comparison, 'snapshot arrays contradict retained comparison ledger')
+        expected, pose, full = [action.astype(np.float64) for action in actions]
+        value.update(pose_action_error=float(np.max(np.abs(pose-expected))),
+                     full_action_error=float(np.max(np.abs(full-expected))),
+                     comparison_origin_tick=8, first_offset=0, arrays_sha256=digest,
+                     arrays_path=str(path.relative_to(root)))
+    validate_finite(values)
+    return values
+
+
+def generate_snapshot_ablation(result, hashes, trace_root):
+    values = analyze_snapshot_ablation(result, trace_root)
+    metadata = dict(inputs=hashes, identity=result['identity'], rows=values,
+                    scope='S1 retained single-offset action comparison; origin control tick 8, offset 0; no means or significance estimates')
+    comments = '% Generated retained snapshot ablation; do not edit.\n'
+    comments += '\n'.join('% '+line for line in json.dumps(metadata, sort_keys=True, indent=2, allow_nan=False).splitlines())+'\n'
+    return comments+_table(['Seed','action error: pose','action error: full'],
+                          [[r['seed'], 'not estimable' if r['pose_action_error'] is None else r['pose_action_error'],
+                            'not estimable' if r['full_action_error'] is None else r['full_action_error']] for r in values])
+
+
+def generate_outputs(result, hashes, trace_root=None):
+    """Return six deterministic files, plus the optional retained S1 table."""
     f, o = result['faults']['total'], result['overhead']
     macros = dict(StudyCommit=result['identity']['commit'], ProtocolHash=result['identity']['protocol_sha256'],
                   StudyDeclaredUnits=result['declared'], StudyCompletedUnits=result['completed'],
@@ -289,10 +371,12 @@ def generate_outputs(result, hashes):
     for name, c in result['faults']['cases'].items():
         fault_rows.append([name, f"{c['completed']}/{c['declared']}", c['baseline_accepted'], c['baseline_false_accepts'],
                            f"{c['baseline_true']}/{c['baseline_false']}/{c['baseline_unknown']}/{c['baseline_missing']}",
-                           f"{c['production_detection']}/{c['study_guard_detection']}",
+                           f"{c['production_detection']}/{c['diagnostic_detection']}/{c['study_guard_detection']}",
                            f"{c['correct_recovery']}/{c['reported']['correct_recovery']}",
                            f"{c['benign_false_rejection']}/{c['reported']['benign_false_rejection']}"])
-    outputs['fault-matrix.tex'] = _table(['Case', 'Done/N', 'Accept', 'False', 'T/F/U/M', 'Prod/guard', 'Rec./rep.', 'FR/rep.'], fault_rows)
+    outputs['fault-matrix.tex'] = '% Interface/diag./label: interface outcomes; S1/B2 comparison diagnostics; R1/R2 study label guards.\n'
+    outputs['fault-matrix.tex'] += '% Diagnostic counts do not establish automatic production refusal; raw outcome_scope is retained in metadata.\n'
+    outputs['fault-matrix.tex'] += _table(['Case', 'Done/N', 'Accept', 'False', 'T/F/U/M', 'I/D/L', 'Rec./rep.', 'FR/rep.'], fault_rows)
     outputs['fault-matrix.tex'] += '\n\\par\\smallskip\n'
     outputs['fault-matrix.tex'] += _table(['Family', 'Done/N', 'False accept', 'Known/U/M'],
         [[name, f"{c['completed']}/{c['declared']}", c['baseline_false_accepts'],
@@ -348,19 +432,23 @@ def generate_outputs(result, hashes):
         outputs['overhead-plot.tex'] = 'Paired timing overhead is not estimable.\n'
     metadata = '% Analysis retains failures, exact compared ticks/source identities, and scope:\n'
     metadata += '\n'.join('% '+line for line in json.dumps(result, sort_keys=True, indent=2, allow_nan=False).splitlines())+'\n'
-    return {name: header+metadata+content for name,content in outputs.items()}
+    outputs = {name: header+metadata+content for name,content in outputs.items()}
+    if trace_root is not None:
+        outputs['snapshot-ablation.tex'] = generate_snapshot_ablation(result, hashes, trace_root)
+    return outputs
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('summary','manifest','protocol','output'): parser.add_argument('--'+name, type=Path, required=True)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--trace-root', type=Path, help='Optional retained fault-matrix root containing the three hashed S1 NPZ files')
     args = parser.parse_args(argv)
     try:
         paths = {name: getattr(args,name) for name in ('summary','manifest','protocol')}
         hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name,path in paths.items()}
         result = analyze(parse_json(args.summary.read_text()), parse_json(args.manifest.read_text()), load_protocol(args.protocol))
-        outputs = generate_outputs(result, hashes)
+        outputs = generate_outputs(result, hashes, trace_root=args.trace_root)
         if args.check:
             stale = [name for name,content in outputs.items() if not (args.output/name).is_file() or (args.output/name).read_text() != content]
             if stale:

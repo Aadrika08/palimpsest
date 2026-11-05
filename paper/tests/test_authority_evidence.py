@@ -80,6 +80,10 @@ def fixture():
 
 
 class AuthorityEvidenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        (ROOT/'runs/paper-generator-tests').mkdir(parents=True, exist_ok=True)
+
     def builder(self):
         path = ROOT / 'paper/scripts/build_authority_evidence.py'
         self.assertTrue(path.exists(), 'authority evidence builder is not implemented')
@@ -122,8 +126,8 @@ class AuthorityEvidenceTests(unittest.TestCase):
         self.assertEqual(result['faults']['total']['baseline_known'], 2)
         self.assertEqual(result['faults']['total']['baseline_unknown'], 1)
         self.assertEqual(result['faults']['total']['baseline_missing'], 47)
-        self.assertEqual(result['faults']['total']['study_guard_detection'], 3)
-        self.assertEqual(result['faults']['total']['production_detection'], 0)
+        self.assertEqual(result['faults']['total']['study_guard_detection'], 0)
+        self.assertEqual(result['faults']['total']['production_detection'], 3)
         self.assertEqual(result['continuation']['passed'], 0)
         self.assertEqual(result['continuation']['declared'], 10)
 
@@ -286,6 +290,90 @@ class AuthorityEvidenceTests(unittest.TestCase):
         self.assertEqual(result['operations']['capture_seconds']['n'], 1)
         self.assertEqual(len(result['operation_rows']), 5)
         self.assertEqual(result['operation_rows'][0]['metrics']['capture_seconds'], 0.1)
+
+    def snapshot_fixture(self, root):
+        import numpy as np
+        p,s,m = fixture()
+        for row in s['rows']:
+            if row.get('case_id') != 'S1': continue
+            folder = root / f"fault__S1__default__fault__seed-{row['seed']}"
+            folder.mkdir()
+            arrays = {}
+            for label in ('expected','pose','full'):
+                arrays[label+'__ticks'] = np.array(1,np.int64)
+                arrays[label+'__0__action'] = np.array([1,2] if label != 'pose' else [2,4],np.float32)
+                arrays[label+'__0__qpos'] = np.array([3,4],np.float64)
+                arrays[label+'__0__revision'] = np.array(2 if label == 'pose' else 1,np.int64)
+            path = folder/'continuation-pairs.npz'
+            np.savez(path,**arrays)
+            divergence = dict(field='action',tick=0,reason='value')
+            row.update(status='completed',trace=dict(arrays_path=path.name,
+                arrays_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),comparison_origin_tick=8,
+                scientific_first_divergence=divergence,full_scientific_first_divergence=None,
+                comparisons=dict(scientific_first_divergence=divergence,full_scientific_first_divergence=None)))
+        return p,summarize(p,s['rows']),m
+
+    def test_optional_snapshot_table_and_unchanged_base_outputs(self):
+        module = self.builder()
+        with tempfile.TemporaryDirectory(dir=ROOT/'runs/paper-generator-tests') as tmp:
+            root = Path(tmp)
+            p,s,m = self.snapshot_fixture(root)
+            result = module.analyze(s,m,p)
+            base = module.generate_outputs(result,{})
+            outputs = module.generate_outputs(result,{},trace_root=root)
+            self.assertEqual({k:v for k,v in outputs.items() if k != 'snapshot-ablation.tex'},base)
+            table = outputs['snapshot-ablation.tex']
+            self.assertIn('action error: pose',table)
+            self.assertIn('2',table)
+            for row in s['rows']:
+                if row.get('case_id') == 'S1': self.assertIn(row['trace']['arrays_sha256'],table)
+            values = module.analyze_snapshot_ablation(result,root)
+            self.assertEqual([row['pose_action_error'] for row in values],[2,2,2])
+            self.assertEqual([row['full_action_error'] for row in values],[0,0,0])
+
+    def test_snapshot_input_tamper_nonfinite_shape_and_escape_refused(self):
+        import numpy as np
+        module = self.builder()
+        for mutation in ('tamper','nonfinite','shape','escape','symlink','ticks','full_diverged','object','missing','origin','trace_oracle'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory(dir=ROOT/'runs/paper-generator-tests') as tmp:
+                root=Path(tmp);p,s,m=self.snapshot_fixture(root)
+                row=next(r for r in s['rows'] if r.get('case_id') == 'S1')
+                path=root/'fault__S1__default__fault__seed-0/continuation-pairs.npz'
+                if mutation == 'escape': row['trace']['arrays_path'] = '../../continuation-pairs.npz'
+                elif mutation == 'tamper': path.write_bytes(path.read_bytes()+b'changed')
+                elif mutation == 'missing': path.unlink()
+                elif mutation == 'symlink':
+                    outside=root/'outside.npz';path.rename(outside);path.symlink_to(outside)
+                elif mutation == 'origin': row['trace']['comparison_origin_tick']=9
+                elif mutation == 'trace_oracle': row['trace']['scientific_first_divergence']['field']='qpos'
+                else:
+                    with np.load(path,allow_pickle=False) as loaded: arrays={key:loaded[key] for key in loaded.files}
+                    if mutation == 'nonfinite': arrays['pose__0__qpos'][0]=float('nan')
+                    elif mutation == 'shape': arrays['pose__0__action']=np.array([2,4,6],np.float32)
+                    elif mutation == 'ticks': arrays['pose__ticks']=np.array(2,np.int64)
+                    elif mutation == 'full_diverged': arrays['full__0__action'][0]+=1
+                    elif mutation == 'object': arrays['pose__0__qpos']=np.array([object()],dtype=object)
+                    np.savez(path,**arrays)
+                    row['trace']['arrays_sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+                result=module.analyze(summarize(p,s['rows']),m,p)
+                with self.assertRaises(ValueError): module.analyze_snapshot_ablation(result,root)
+
+    def test_snapshot_incomplete_rows_remain_not_estimable(self):
+        module=self.builder();p,s,m=fixture()
+        s['rows'][next(i for i,r in enumerate(s['rows']) if r.get('case_id')=='S1')]['status']='failed'
+        result=module.analyze(summarize(p,s['rows']),m,p)
+        with tempfile.TemporaryDirectory(dir=ROOT/'runs/paper-generator-tests') as tmp:
+            rows=module.analyze_snapshot_ablation(result,Path(tmp))
+            self.assertEqual(len(rows),3)
+            self.assertTrue(all(row['pose_action_error'] is None for row in rows))
+            self.assertIn('not estimable',module.generate_outputs(result,{},trace_root=Path(tmp))['snapshot-ablation.tex'])
+
+    def test_detection_partition_distinguishes_interface_diagnostic_and_label(self):
+        module=self.builder();p,s,m=fixture()
+        for row in s['rows']:
+            if row['kind']=='fault': row['explicit_detection']=row['case_id'] in ('S1','B2','R1','R2','A2')
+        counts=module.analyze(summarize(p,s['rows']),m,p)['faults']['total']
+        self.assertEqual((counts['production_detection'],counts['diagnostic_detection'],counts['study_guard_detection']),(3,6,6))
 
     def test_deterministic_escaped_outputs_and_cli_freshness(self):
         module = self.builder()
