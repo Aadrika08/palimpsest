@@ -181,10 +181,11 @@ authorize mutation against a new revision.
 
 \begin{figure}[t]
 \centering\input{figures/authority-sequence.tex}
-\caption{An accepted intervention waits while the authoritative world remains
-unchanged. At symbolic tick $t+2$, mutation and observation refresh precede
-the receipt and subsequent policy/physics transition. The receipt reports an
-application boundary, not a causal effect; ticks are illustrative.}
+\caption{Successful application of a queued intervention. The requested change
+remains unapplied while execution can continue. At illustrative tick $t+2$,
+mutation and observation refresh precede the receipt, which reports application
+revision $v_a$, and the subsequent policy/physics transition. The receipt identifies
+an application boundary rather than a causal effect.}
 \label{fig:authority}
 \end{figure}
 
