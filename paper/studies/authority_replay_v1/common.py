@@ -41,6 +41,7 @@ class Protocol:
     execution_overhead: dict[str, Any]
     operation_cost: dict[str, Any]
     offline_reproduction: dict[str, Any]
+    protocol_revision: int = 1
     # Loader metadata, not part of the frozen JSON schema or constructor.
     _content_sha256: str = field(init=False, repr=False, compare=False, default="")
 
@@ -97,14 +98,16 @@ def _seeds(value: object, expected: list[int], label: str) -> None:
 def load_protocol(path: Path) -> Protocol:
     content = path.read_bytes()
     raw = parse_json(content.decode("utf-8"))
-    _keys(raw, {f.name for f in fields(Protocol) if f.init}, "protocol")
+    _keys(raw, {f.name for f in fields(Protocol) if f.init} - ({'protocol_revision'} if 'protocol_revision' not in raw else set()), "protocol")
+    revision = raw.get('protocol_revision', 1)
+    require(type(revision) is int and revision in (1, 2), 'unsupported protocol revision')
     require(type(raw["schema_version"]) is int and raw["schema_version"] == 1, "unsupported schema version")
     require(raw["study_id"] == "authority_replay_v1", "unsupported study ID")
     resources = raw["resources"]
     expected_bounds = {"unit_timeout_seconds": 900, "campaign_timeout_seconds": 14400,
                        "ordinary_unit_max_output_bytes": 512 * 1024**2,
                        "offline_unit_max_output_bytes": 10 * 1024**3,
-                       "campaign_max_output_bytes": 16 * 1024**3,
+                       "campaign_max_output_bytes": (13 if revision == 2 else 16) * 1024**3,
                        "minimum_free_bytes": 6 * 1024**3}
     _keys(resources, set(expected_bounds) | {"raw_output_root", "sequential", "cpu_only", "stop_rules"}, "resources")
     for key, expected in expected_bounds.items():
@@ -155,6 +158,8 @@ def load_protocol(path: Path) -> Protocol:
         "operation_cost": {"seeds", "source", "source_condition", "metrics", "null_writer_replay_timings", "pass_threshold"},
         "offline_reproduction": {"repetitions", "scope", "full_flynn", "duration_seconds", "setup", "independent_machine_reproduction", "external_gate"},
     }
+    if revision == 2:
+        section_fields['execution_overhead'].add('terminal_policy')
     for name, expected in section_fields.items():
         _keys(raw[name], expected, name)
         if "seeds" in expected:
@@ -170,6 +175,8 @@ def load_protocol(path: Path) -> Protocol:
                 and section["device"] == "cpu", f"invalid {name} execution bounds")
     require(raw["replay"]["conditions"] == ["branch", "playback", "action_replay", "policy_replay"], "invalid replay conditions")
     overhead = raw["execution_overhead"]
+    if revision == 2:
+        require(overhead['terminal_policy'] == 'reset_same_seed', 'invalid overhead terminal policy')
     require(overhead["conditions"] == OVERHEAD_CONDITIONS and overhead["order"] == "cyclic_rotation_by_seed_mod_4"
             and type(overhead["warmup_ticks"]) is int and overhead["warmup_ticks"] == 20
             and type(overhead["measured_ticks"]) is int and overhead["measured_ticks"] == 200

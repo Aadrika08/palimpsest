@@ -51,6 +51,52 @@ class FakeEngine:
         self.last_transition = {'action': [self.total_tick, 0], 'latency': .01, 'step_latency': .02}
 
 
+@pytest.mark.parametrize('terminal_tick,phase', [(10, 'terminated'), (199, 'terminated'), (199, 'truncated')])
+def test_sustained_window_explicit_same_seed_reset(terminal_tick, phase, monkeypatch):
+    clock = [0.]
+    monkeypatch.setattr(o.time, 'perf_counter', lambda: clock[0])
+    class Episodic(FakeEngine):
+        def __init__(self):
+            super().__init__()
+            self.phase, self.episode, self.revision, self.seed = 'paused', 0, 0, 1
+            self.commands, self.queued = [], None
+            self.last_outcome = {'reason': 'goal' if phase == 'terminated' else 'time_limit'}
+        def submit(self, command):
+            self.commands.append(command)
+            self.queued = command
+            return {'status': 'queued'}
+        def advance(self):
+            command = self.queued
+            if command['kind'] == 'reset':
+                assert command['payload'] == {'seed': 1}
+                self.episode += 1
+                self.phase = 'paused'
+                clock[0] += 3.
+                return
+            assert self.phase == 'paused'
+            super().advance()
+            clock[0] += 1.
+            if self.total_tick == terminal_tick:
+                self.phase = phase
+    engine = Episodic()
+    result = o.measure_ticks(engine)
+    assert result['tick_count'] == 220
+    assert len({c['id'] for c in engine.commands}) == len(engine.commands)
+    assert result['reset_counts'] == {'warmup': int(terminal_tick < 20), 'measured': int(terminal_tick >= 20)}
+    assert result['metrics']['reset_seconds'] == (3. if terminal_tick >= 20 else 0.)
+    assert result['metrics']['wall_seconds'] == (203. if terminal_tick >= 20 else 200.)
+    assert result['reset_events'][0]['reason'] in ('goal', 'time_limit')
+
+
+@pytest.mark.parametrize('phase', ['failed', 'stopped'])
+def test_failed_or_stopped_engine_never_reset(phase):
+    engine = FakeEngine()
+    engine.phase = phase
+    engine.submit = lambda command: pytest.fail('failed/stopped engine must not receive reset or step')
+    with pytest.raises(ValueError, match='failed|stopped'):
+        o._step(engine)
+
+
 def test_exact_tick_window():
     engine = FakeEngine()
     result = o.measure_ticks(engine)
@@ -265,6 +311,48 @@ def test_cap_specific_failure_stops_remaining_declared_units(tmp_path, monkeypat
     assert all(not row['timing_eligible'] for row in rows)
 
 
+def test_ordinary_valueerror_continues_all_conditions_and_seeds(tmp_path, monkeypatch):
+    from paper.studies.authority_replay_v1.common import read_rows
+    identity, calls = {'commit': 'fixture'}, []
+    def failed(seed, condition, **kwargs):
+        calls.append((seed, condition))
+        return {'schema_version': 1, 'study_id': 'authority_replay_v1', 'kind': 'execution_overhead',
+                'seed': seed, 'condition': condition, 'unit_id': f'overhead/{seed}/{condition}',
+                'identity': identity, 'status': 'failed', 'timing_eligible': False, 'metrics': {},
+                'error': {'type': 'ValueError', 'message': 'scientific disagreement'}}
+    monkeypatch.setattr(o, 'run_execution_overhead_unit', failed)
+    monkeypatch.setattr(o, 'campaign_identity', lambda *args: identity)
+    output = tmp_path / 'overhead'
+    monkeypatch.setattr(o.sys, 'argv', ['overhead.py', '--kind', 'execution', '--protocol',
+                        str(o.REPO / 'paper/studies/authority_replay_v1/protocol.json'), '--assets', str(tmp_path),
+                        '--output', str(output), '--campaign-root', str(tmp_path)])
+    assert o.main() == 1
+    assert len(calls) == 40
+    assert all(r['status'] == 'failed' for r in read_rows(output / 'rows.jsonl'))
+
+
+@pytest.mark.parametrize('boundary', [False, True])
+def test_worker_structured_error_retains_original_type(tmp_path, monkeypatch, boundary):
+    import io
+    import json
+    output = tmp_path / 'unit'
+    monkeypatch.setattr(o.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 100 * o.GiB})())
+    class FailedChild:
+        def __init__(self, *args, **kwargs):
+            self.args, self.returncode = args, 1
+            self.stdout, self.stderr = io.BytesIO(), io.BytesIO()
+            (output / 'worker-error.json').write_text(json.dumps({'error_type': 'StorageLimitError' if boundary else 'ValueError',
+                'message': 'fixture failure', 'resource_boundary': boundary, **({'resource_limit': 'worker_resource'} if boundary else {})}))
+        def poll(self):
+            return 1
+    monkeypatch.setattr(o.subprocess, 'Popen', FailedChild)
+    row = o.run_execution_overhead_unit(0, 'null', output=output, assets=tmp_path, campaign_root=tmp_path)
+    assert row['status'] == 'failed'
+    assert row['error']['type'] == ('ResourceBoundaryError' if boundary else 'ValueError')
+    assert bool(row['error'].get('resource_limit')) == boundary
+    assert row['metrics']['output_bytes'] > 0
+
+
 def test_development_diagnostics_preserve_complete_normalized_state(tmp_path, monkeypatch):
     from palimpsest import snapshots
     import json
@@ -429,7 +517,7 @@ def test_operation_config_rejects_inconsistent_manifest_profile(tmp_path, field,
 def test_campaign_budget_loads_amended_protocol(tmp_path, monkeypatch):
     monkeypatch.setattr(o.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 100 * o.GiB})())
     budget = o._budget(tmp_path / 'unit', tmp_path)
-    assert budget.campaign_budget.limits.max_bytes == 16 * o.GiB
+    assert budget.campaign_budget.limits.max_bytes == 13 * o.GiB
 
 
 def test_operation_binds_retained_cpu_environment_before_owner_open(tmp_path, monkeypatch):

@@ -9,7 +9,7 @@
     "campaign_timeout_seconds": 14400,
     "ordinary_unit_max_output_bytes": 536870912,
     "offline_unit_max_output_bytes": 10737418240,
-    "campaign_max_output_bytes": 17179869184,
+    "campaign_max_output_bytes": 13958643712,
     "minimum_free_bytes": 6442450944,
     "stop_rules": [
       "Stop new units after any unit timeout.",
@@ -519,7 +519,8 @@
       "thread_count",
       "writer_backpressure_seconds",
       "storage_recount_seconds",
-      "storage_recount_count"
+      "storage_recount_count",
+      "reset_seconds"
     ],
     "covariates": [
       "condition_ordinal",
@@ -528,7 +529,8 @@
       "cpu_model",
       "cpu_governor",
       "competing_palimpsest_processes"
-    ]
+    ],
+    "terminal_policy": "reset_same_seed"
   },
   "operation_cost": {
     "seeds": [
@@ -560,5 +562,6 @@
     "setup": true,
     "independent_machine_reproduction": false,
     "external_gate": "A second machine/operator reproduction remains a submission gate."
-  }
+  },
+  "protocol_revision": 2
 }

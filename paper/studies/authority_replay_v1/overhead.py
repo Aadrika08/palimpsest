@@ -102,26 +102,46 @@ def _resources():
             'thread_count': len(list(Path('/proc/self/task').iterdir()))}
 
 
-def _step(engine):
+def _step(engine, *, reset_same_seed=False):
     tick = engine.total_tick
+    phase = getattr(engine, 'phase', 'paused')
+    require(phase not in ('failed', 'stopped'), f'benchmark engine is {phase}')
+    reset = None
+    if reset_same_seed and phase in ('terminated', 'truncated'):
+        started = time.perf_counter()
+        episode = engine.episode
+        reason = (engine.last_outcome or {}).get('reason', phase)
+        receipt = engine.submit({'id': f'benchmark-reset-{tick}-{episode}', 'kind': 'reset',
+            'expected_state': phase, 'expected_episode': episode, 'expected_revision': engine.revision,
+            'payload': {'seed': engine.seed}})
+        require(receipt.get('status') != 'rejected', 'benchmark reset rejected')
+        engine.advance()
+        require(engine.total_tick == tick and engine.episode == episode + 1 and engine.phase == 'paused',
+                'benchmark reset did not establish a fresh same-seed episode')
+        reset = {'global_tick': tick, 'episode': episode, 'reason': reason,
+                 'seconds': time.perf_counter() - started}
     if hasattr(engine, 'submit'):
-        receipt = engine.submit({'id': f'benchmark-step-{tick}', 'kind': 'step', 'expected_state': engine.phase,
+        receipt = engine.submit({'id': f'benchmark-step-{tick}-{engine.episode}', 'kind': 'step', 'expected_state': engine.phase,
                                 'expected_episode': engine.episode, 'expected_revision': engine.revision})
         require(receipt.get('status') != 'rejected', 'benchmark step rejected')
     engine.advance()
     require(engine.total_tick == tick + 1, f'engine did not complete tick {tick}')
+    return reset
 
 
 def measure_ticks(engine, *, camera_counter=None, budget=None):
     """Twenty warm-up ticks then 200 measured, including final writer drain."""
     import numpy as np
     actions = hashlib.sha256()
-    def advance():
-        _step(engine)
+    resets = []
+    def advance(window):
+        reset = _step(engine, reset_same_seed=True)
+        if reset is not None:
+            resets.append({**reset, 'window': window})
         action = np.asarray(engine.last_transition['action'])
         actions.update(str(action.dtype).encode() + str(action.shape).encode() + action.tobytes())
     for _ in range(20):
-        advance()
+        advance('warmup')
     engine.writer.flush()
     recorded_before = _size(engine.writer.path) if hasattr(engine.writer, 'path') else 0
     camera_start = 0. if camera_counter is None else camera_counter['seconds']
@@ -133,7 +153,7 @@ def measure_ticks(engine, *, camera_counter=None, budget=None):
     policy = physics = 0.
     started = time.perf_counter()
     for index in range(200):
-        advance()
+        advance('measured')
         policy += float(engine.last_transition['latency'])
         physics += float(engine.last_transition['step_latency'])
         if index % 20 == 19:
@@ -141,6 +161,7 @@ def measure_ticks(engine, *, camera_counter=None, budget=None):
     engine.writer.flush()
     wall = time.perf_counter() - started
     metrics = {'wall_seconds': wall, 'wall_seconds_per_tick': wall / 200,
+               'reset_seconds': sum(r['seconds'] for r in resets if r['window'] == 'measured'),
                'policy_seconds': policy, 'physics_seconds': physics,
                'bytes_per_tick': (_size(engine.writer.path) - recorded_before) / 200 if hasattr(engine.writer, 'path') else 0.,
                'camera_seconds': None if camera_counter is None else camera_counter['seconds'] - camera_start,
@@ -150,6 +171,8 @@ def measure_ticks(engine, *, camera_counter=None, budget=None):
                **{key: max(sample[key] for sample in samples) for key in samples[0]}}
     result = {'actions_sha256': actions.hexdigest(), 'tick_count': engine.total_tick,
               'measured_tick_count': 200, 'warmup_tick_count': 20, 'metrics': metrics,
+              'terminal_policy': 'reset_same_seed', 'reset_events': resets,
+              'reset_counts': {window: sum(r['window'] == window for r in resets) for window in ('warmup', 'measured')},
               'resource_samples': samples}
     validate_finite(result)
     return result
@@ -405,6 +428,12 @@ class ResourceBoundaryError(ValueError):
         self.resource_limit = limit
 
 
+class WorkerExecutionError(RuntimeError):
+    def __init__(self, error_type, message):
+        super().__init__(message)
+        self.error_type = error_type
+
+
 def _resource_boundary(condition, limit, message):
     if not condition:
         raise ResourceBoundaryError(limit, message)
@@ -435,7 +464,8 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
         require(Path(output).resolve().is_relative_to(campaign_root.resolve()), 'unit must be below campaign root')
         _resource_boundary(shutil.disk_usage(output).free - 512 * MiB >= 6 * GiB, 'free_space', 'free-space reserve prevents unit admission')
         _resource_boundary(_size(campaign_root) + 512 * MiB <= RESOURCES['campaign_max_output_bytes'], 'campaign_bytes', 'campaign output cap prevents unit admission')
-        require(campaign_deadline_epoch is None or time.time() < campaign_deadline_epoch, 'campaign deadline prevents unit admission')
+        _resource_boundary(campaign_deadline_epoch is None or time.time() < campaign_deadline_epoch,
+                           'campaign_deadline', 'campaign deadline prevents unit admission')
         timeout = min(900., max(0., campaign_deadline_epoch - time.time())) if campaign_deadline_epoch else 900.
         config = {'kind': kind, 'seed': seed, 'condition': condition, 'source': str(source) if source else None,
                   'output': str(Path(output).resolve()), 'repo': str(Path(repo).resolve()), 'assets': str(Path(assets).resolve()),
@@ -463,7 +493,7 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
                 while child.poll() is None:
                     if time.monotonic() - start >= timeout:
                         raise subprocess.TimeoutExpired(child.args, timeout)
-                    require(not overflow.is_set(), 'native log cap crossed')
+                    _resource_boundary(not overflow.is_set(), 'native_log_bytes', 'native log cap crossed')
                     _validate_output_resources(output, campaign_root)
                     time.sleep(.1)
             finally:
@@ -472,8 +502,18 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
                     child.wait()
                 for drain in drains:
                     drain.join()
-        require(not overflow.is_set(), 'native log cap crossed')
-        require(child.returncode == 0, f'worker failed ({child.returncode}); see stderr.log')
+        _resource_boundary(not overflow.is_set(), 'native_log_bytes', 'native log cap crossed')
+        _validate_output_resources(output, campaign_root)
+        if time.monotonic() - start >= timeout or (campaign_deadline_epoch is not None and time.time() >= campaign_deadline_epoch):
+            raise subprocess.TimeoutExpired(child.args, timeout)
+        if child.returncode != 0:
+            error_path = output / 'worker-error.json'
+            error = json.loads(error_path.read_text()) if error_path.is_file() else {
+                'error_type': 'WorkerProcessError', 'message': f'worker failed ({child.returncode}); see stderr.log',
+                'resource_boundary': False}
+            if error.get('resource_boundary') is True:
+                raise ResourceBoundaryError(error.get('resource_limit', 'worker_resource'), error['message'])
+            raise WorkerExecutionError(error['error_type'], error['message'])
         result = json.loads((output / 'worker-result.json').read_text())
         # A fast child can exit between monitor polls; final acceptance includes
         # drained logs and the retained result, not just observed running state.
@@ -486,7 +526,7 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
     except subprocess.TimeoutExpired as exc:
         row.update(status='timeout', error={'type': type(exc).__name__, 'message': str(exc)})
     except Exception as exc:
-        error = {'type': type(exc).__name__, 'message': str(exc)}
+        error = {'type': getattr(exc, 'error_type', type(exc).__name__), 'message': str(exc)}
         if isinstance(exc, ResourceBoundaryError):
             error['resource_limit'] = exc.resource_limit
         row.update(status='failed', error=error)
@@ -542,8 +582,18 @@ def main():
     if args.worker:
         config = json.loads(args.worker.read_text())
         call = _execution if config['kind'] == 'execution_overhead' else _operation
-        result = call(config['seed'], config['condition'] if call is _execution else Path(config['source']),
-                      Path(config['output']), Path(config['repo']), Path(config['assets']), Path(config['campaign_root']))
+        try:
+            result = call(config['seed'], config['condition'] if call is _execution else Path(config['source']),
+                          Path(config['output']), Path(config['repo']), Path(config['assets']), Path(config['campaign_root']))
+        except Exception as exc:
+            from palimpsest.storage import StorageLimitError
+            boundary = isinstance(exc, (ResourceBoundaryError, StorageLimitError, MemoryError)) or (
+                isinstance(exc, OSError) and exc.errno in (12, 24, 28, 122))
+            error = {'error_type': type(exc).__name__, 'message': str(exc), 'resource_boundary': boundary}
+            if boundary:
+                error['resource_limit'] = getattr(exc, 'resource_limit', 'worker_resource')
+            _json(Path(config['output']) / 'worker-error.json', error)
+            raise
         _json(Path(config['output']) / 'worker-result.json', result)
         return 0
     if not args.protocol:
@@ -590,7 +640,7 @@ def main():
                 except Exception as exc:
                     row.update(status='failed', timing_eligible=False, error={'type': 'SourceMutation', 'message': str(exc)})
                     stopped = str(exc)
-                if row['status'] == 'timeout' or row.get('error', {}).get('type') == 'ValueError' or row.get('error', {}).get('resource_limit'):
+                if row['status'] == 'timeout' or row.get('error', {}).get('resource_limit'):
                     stopped = 'unit hard cap or admission failure; no further units'
             rows.append(row)
         if kind == 'execution_overhead':

@@ -27,6 +27,28 @@ def test_public_contract_exists(common):
         assert hasattr(common, name)
 
 
+@pytest.mark.parametrize('revision', [1, 2])
+def test_protocol_revision_preserves_archived_and_recovery_bounds(common, tmp_path, revision):
+    raw = json.loads((ROOT / 'protocol.json').read_text())
+    if revision == 1:
+        raw.pop('protocol_revision', None)
+        raw['execution_overhead'].pop('terminal_policy', None)
+        raw['resources']['campaign_max_output_bytes'] = 16 * 1024**3
+    else:
+        raw['protocol_revision'] = 2
+        raw['execution_overhead']['terminal_policy'] = 'reset_same_seed'
+        raw['resources']['campaign_max_output_bytes'] = 13 * 1024**3
+    path = tmp_path / 'revision.json'
+    path.write_text(json.dumps(raw))
+    protocol = common.load_protocol(path)
+    assert protocol.protocol_revision == revision
+    assert len(common.declared_units(protocol)) == 111
+    raw['resources']['campaign_max_output_bytes'] += 1
+    path.write_text(json.dumps(raw))
+    with pytest.raises(ValueError, match='resource bound'):
+        common.load_protocol(path)
+
+
 @pytest.mark.parametrize("mutation", ["version", "unknown", "condition", "seed", "nan", "case"])
 def test_rejects_invalid_protocol(common, tmp_path, mutation):
     raw = json.loads((ROOT / "protocol.json").read_text())
@@ -84,7 +106,7 @@ def test_protocol_resource_and_comparison_bounds(protocol):
     assert protocol.resources["campaign_timeout_seconds"] == 14400
     assert protocol.resources["ordinary_unit_max_output_bytes"] == 536870912
     assert protocol.resources["offline_unit_max_output_bytes"] == 10737418240
-    assert protocol.resources["campaign_max_output_bytes"] == 17179869184
+    assert protocol.resources["campaign_max_output_bytes"] == 13958643712
     assert protocol.resources["minimum_free_bytes"] == 6442450944
     assert protocol.comparison_policy["atol"] == 1e-6
     assert protocol.comparison_policy["rtol"] == 1e-6
@@ -266,6 +288,6 @@ def test_campaign_identity_rejects_changed_or_nonequivalent_mapping(common, prep
 
 def test_preflight_amendment_does_not_change_scientific_denominators(common, protocol):
     assert protocol.resources['offline_unit_max_output_bytes'] == 10 * 1024**3
-    assert protocol.resources['campaign_max_output_bytes'] == 16 * 1024**3
+    assert protocol.resources['campaign_max_output_bytes'] == 13 * 1024**3
     assert len(common.declared_units(protocol)) == 111
     assert protocol.resources['minimum_free_bytes'] == 6 * 1024**3

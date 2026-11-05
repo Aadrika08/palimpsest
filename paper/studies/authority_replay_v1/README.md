@@ -143,3 +143,7 @@ output is polled, not protected by a strict prewrite filesystem quota. Crossing
 the free-space, logical-output or time boundary stops coordinator-owned processes
 and later phases; observed failures and partial rows remain retained. Actual
 link mode is not assumed from the configured tool default.
+
+## Recovery revision 2
+
+The retained first attempt exposed a benchmark bug when seed 1 reached a goal at tick 199. Revision 2 measures sustained throughput across normal episode endings, explicitly resetting to the same declared seed before the next requested tick. Its 20 warmup and 200 measured ticks are unchanged; measured wall time includes resets and rows retain reset count, reason, and timing. Failed or stopped owners are never reset. Ordinary scientific failures remain ineligible and do not halt unrelated units; resource and identity boundaries still stop execution. `recovery-amendment.json` binds the original attempt, unchanged scientific variables, shared absolute deadline, and reduced recovery cap (13 GiB plus the retained first attempt under the original 16 GiB total). Revision 1 protocol files remain loadable for archival analysis.
