@@ -438,8 +438,11 @@ threshold is imposed.
 Operation costs use the five retained full background-plus-storage source runs
 from RQ2. Each unit measures capture, save, read, restore/first-tick, playback,
 action replay, and policy replay. Their different computational work is explicit:
-playback timing cannot be substituted for policy-replay cost. Null-writer runs
-produce no replay timings. Paired summaries are descriptive, without significance tests or cost thresholds.
+capture and restore/first-tick timing use an already-open owner, excluding owner
+construction. The recorded-tick timing decodes 100 records without display.
+Action/policy replay timings include startup, execution, comparison and output
+recording for 100 source ticks. Null-writer runs produce no replay timings.
+Summaries are descriptive, without significance tests or cost thresholds.
 
 \begin{table}[t]
 \centering\small

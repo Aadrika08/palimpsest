@@ -409,8 +409,13 @@ def generate_outputs(result, hashes, trace_root=None):
     outputs['overhead-table.tex'] += '% Raw paired wall milliseconds and relative percentages (all declared seeds):\n'
     outputs['overhead-table.tex'] += '\n'.join('% '+json.dumps({k:v for k,v in raw.items() if k != 'rows'}, sort_keys=True) for raw in o['raw'])+'\n'
     operation_rows = []
+    operation_labels = {
+        'capture_seconds': 'Capture state', 'save_seconds': 'Serialize snapshot', 'read_seconds': 'Read snapshot',
+        'restore_first_tick_seconds': 'Restore + first tick', 'playback_seconds': 'Decode 100 recorded ticks',
+        'action_replay_seconds': 'Action replay: 100 ticks', 'policy_replay_seconds': 'Policy replay: 100 ticks',
+    }
     for key, value in result['operations'].items():
-        operation_rows.append([key.removesuffix('_seconds'), 0 if value is None else value['n'], estimate(value,1000),
+        operation_rows.append([operation_labels[key], 0 if value is None else value['n'], estimate(value,1000),
                                'not estimable' if value is None else number(value['iqr']*1000)])
     outputs['operation-table.tex'] = _table(['Operation', 'n/5 sources', 'median ms', 'IQR ms'], operation_rows)
     # Numeric paired points, no categorical bars; plot extent includes every negative value.
