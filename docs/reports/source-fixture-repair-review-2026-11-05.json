@@ -1,0 +1,43 @@
+{
+  "schema": "palimpsest-source-repair-review-v1",
+  "failed_baseline_commit": "e729d8772851a500ab9ce9077b0db57fc4b12a27",
+  "failed_baseline": {"passed": 6530, "failed": 41, "skipped": 305},
+  "root_targeted": {"passed": 90, "skipped": 16, "seconds": 10.98, "exit_code": 0},
+  "memory_authored_tests": {
+    "sha256": "08d5e5f33625dabc53fecdbaebb21dbc8a121913f0eb442a62927da0efb0cc50",
+    "cases": 19,
+    "independent_reviewer": "/root/audit_pilot_supervisor",
+    "important_findings_remaining": 0,
+    "scope": "Authored immutable-prior metadata; passing baseline before each specific rejection; no actual qualification."
+  },
+  "puck_metadata_tests": {
+    "sha256": "62cf519e800ba57731011bb185892d5ed3321a04d805ff169634eb2a8a3078dc",
+    "cases": 27,
+    "independent_reviewer": "/root/source_release_review",
+    "important_findings_remaining": 0,
+    "original_cases_remain_active": 25,
+    "scope": "Authored current source namespace and public provenance documents; production validator unchanged."
+  },
+  "timeout_observer": {
+    "test_source_sha256": "f8bde0d009d4b6ce35519004bf40ebb1c445457abb5cfea543a34b7b52bd02fa",
+    "independent_reviewer": "/root/source_release_review",
+    "important_findings_remaining": 0,
+    "maximum_exit_observation_seconds": 1,
+    "ancestor_kill_seconds_unchanged": 5,
+    "outer_guard_seconds_unchanged": 12,
+    "permanent_survivor_still_rejected": true,
+    "production_cleanup_changed": false
+  },
+  "public_custody_policy": {
+    "disposition": "Scope-relaxation proposal withdrawn and retained unapproved; strict public contract preserved.",
+    "source_sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+    "custody_test_sha256": "517f40801eb93aaaa1675e721931908ca2a1cadebfb005c1fb120da8de4c698f",
+    "original_600_interval_fixture": {"passed": 1, "seconds": 36.76},
+    "environment_repair": "Dedicated outside-repository ancestry with sibling writers serialized; unchanged private tmpfs and production guards."
+  },
+  "historical_policy_change": "Two exact function IDs added to existing drift groups; twelve parameterized old-root negatives plus one preceding-profile assertion. No Puck or blanket module skip.",
+  "prospective_profile_changes": "Only test-policy size/hash and dependent profile links; historical templates, science, claims and empty trust anchors unchanged.",
+  "actual_qualification_or_research_claim_granted": false,
+  "complete_canonical_rerun": "pending",
+  "hosted_checks_and_main_delivery": "pending"
+}

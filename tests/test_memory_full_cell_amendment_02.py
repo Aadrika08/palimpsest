@@ -88,7 +88,8 @@ def test_missing_or_different_confirmation_refuses_before_reservation(tmp_path, 
 
 def test_confirmation_and_amendment_identity_propagate_to_parent_and_worker():
     assert hasattr(m, '_execution_command'), 'Amendment subprocess identity propagation is missing'
-    f = candidate()
+    # Command construction is pure and needs only the amendment schema selector.
+    f = {'schema': m.AMENDMENT}
     args = SimpleNamespace(freeze='prospective.json', freeze_sha256='a'*64, approved_amendment_sha256='a'*64)
     for mode in ('parent', 'worker'):
         argv = m._execution_command(f, args, mode)

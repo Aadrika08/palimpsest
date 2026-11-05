@@ -109,6 +109,9 @@ PROTOCOLS = {
         # unpatched current-profile tests under distinct IDs.
         'tests/test_memory_retained_condition_profile_v1.py::test_current_profile_is_explicit_and_changes_only_source_identity',
         'tests/test_memory_retained_condition_profile_v1.py::test_condition_extension_preserves_previous_contract_and_empty_trust',
+        # This assertion binds the preceding exact canonical protocol bytes.
+        # Current publication-profile contract checks have distinct active IDs.
+        'tests/test_memory_family_compact_v4.py::test_protocol_is_canonical_and_freezes_exact_false_claim_contract',
         'tests/test_memory_family_compact_v4.py::test_protocol_binds_exact_present_sources_including_source_producer',
         'tests/test_memory_family_condition_close_v4.py::test_caller_descriptor_mutation_cannot_rebind_validated_registration',
         'tests/test_memory_family_condition_close_v4.py::test_default_missing_qualification_refuses_before_source_raw_or_output',
@@ -241,6 +244,9 @@ PROTOCOLS = {
     )),
     'memory-full-cell-qualification-v4': (None, _full_cell_root, (
         'tests/test_memory_full_cell_amendment_02.py::test_amendment_accepts_exact_runtime_size_and_preserved_prior_failure',
+        # The old negative fixture also depends on this frozen absolute root.
+        # Distinct authored-root tests exercise each rejection against a valid baseline.
+        'tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation',
         'tests/test_memory_full_cell_amendment_02.py::test_missing_or_different_confirmation_refuses_before_reservation',
         'tests/test_memory_full_cell_amendment_02.py::test_parent_refuses_mixed_confirmation_in_attempt_receipt',
         'tests/test_memory_full_cell_qualification_v4.py::test_valid_current_freeze_loads_without_opening_its_protected_inputs',

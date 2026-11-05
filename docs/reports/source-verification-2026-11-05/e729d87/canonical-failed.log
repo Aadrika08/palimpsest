@@ -1,0 +1,1804 @@
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+....................s.................sss....................s.......... [  6%]
+...............................................s............s........... [  7%]
+....................s..................ss..........s..s................. [  8%]
+.....................................s.................................. [  9%]
+.............................s.......................................... [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 15%]
+..................Fs.........................................sssssssssss [ 16%]
+sssssssssssssssssssss.................ssssssssssssssssssssssssssssssssss [ 17%]
+sssssssssssssssssssssssssssssssssssssssssssssssss....................... [ 18%]
+...............................sssssssssssssssssssssssssssssssssssssssss [ 20%]
+ssssss..ssss..........................s...........................ss.... [ 21%]
+ss...................................................................... [ 22%]
+........................................................................ [ 23%]
+..ssssssssssssssssssssssss.............................................. [ 24%]
+.........................sFFFFFFFFFFFFssF..s.........................s.. [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+..............................ss........................................ [ 29%]
+.......................Fsssssssssssssssssss............................. [ 30%]
+.......................................................................s [ 31%]
+ss...................................................................... [ 32%]
+....................................................s................... [ 33%]
+.......................................................s.s.sssssssssssss [ 34%]
+ss...................................................................... [ 35%]
+.............................ssss.sssss.s............................... [ 36%]
+..........F............................................................. [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+...........................................s............................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+....................................................ssssss.............. [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+..........................................s...........ss................ [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+....s..ss..ss..s......s..s..........s..ss............................... [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+...........................FFFFFFFFFFFFFFFFFFFFFFFFF.................... [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+..................................................................s..... [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+..........sssssss..s.................................................... [ 94%]
+.........................ssss........................................... [ 95%]
+s..........sss.......................................................... [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 99%]
+.................................................................        [100%]
+=================================== FAILURES ===================================
+______ test_protocol_is_canonical_and_freezes_exact_false_claim_contract _______
+
+    def test_protocol_is_canonical_and_freezes_exact_false_claim_contract():
+        assert PROTOCOL_PATH.is_file(), 'canonical compact protocol is missing'
+        payload = PROTOCOL_PATH.read_bytes()
+        protocol = artifacts._json(payload)
+        compact = _compact()
+    
+>       assert payload == memory.canonical_bytes(protocol) == compact.PROTOCOL_BYTES
+E       assert b'{"analysis_...":587202560}}' == b'{"analysis_...":587202560}}'
+E         
+E         At index 1398 diff: b'f' != b'd'
+E         Use -v to get more diff
+
+tests/test_memory_family_compact_v4.py:178: AssertionError
+___ test_amendment_refuses_expanded_or_ambiguous_allocation[runtime-unknown] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande0')
+defect = 'runtime-unknown'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+____ test_amendment_refuses_expanded_or_ambiguous_allocation[runtime-size] _____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande1')
+defect = 'runtime-size'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+____ test_amendment_refuses_expanded_or_ambiguous_allocation[runtime-hash] _____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande2')
+defect = 'runtime-hash'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+______ test_amendment_refuses_expanded_or_ambiguous_allocation[raw-root] _______
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande3')
+defect = 'raw-root'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+_____ test_amendment_refuses_expanded_or_ambiguous_allocation[asset-hash] ______
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande4')
+defect = 'asset-hash'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+____ test_amendment_refuses_expanded_or_ambiguous_allocation[missing-prior] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande5')
+defect = 'missing-prior'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+_____ test_amendment_refuses_expanded_or_ambiguous_allocation[prior-hash] ______
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande6')
+defect = 'prior-hash'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+__ test_amendment_refuses_expanded_or_ambiguous_allocation[prior-size-alias] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande7')
+defect = 'prior-size-alias'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+____ test_amendment_refuses_expanded_or_ambiguous_allocation[attempt-alias] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande8')
+defect = 'attempt-alias'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+____ test_amendment_refuses_expanded_or_ambiguous_allocation[attempt-three] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande9')
+defect = 'attempt-three'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+_______ test_amendment_refuses_expanded_or_ambiguous_allocation[limits] ________
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande10')
+defect = 'limits'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+____ test_amendment_refuses_expanded_or_ambiguous_allocation[source-extra] _____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_amendment_refuses_expande11')
+defect = 'source-extra'
+
+    @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
+        'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+___ test_confirmation_and_amendment_identity_propagate_to_parent_and_worker ____
+
+    def test_confirmation_and_amendment_identity_propagate_to_parent_and_worker():
+        assert hasattr(m, '_execution_command'), 'Amendment subprocess identity propagation is missing'
+>       f = candidate()
+            ^^^^^^^^^^^
+
+tests/test_memory_full_cell_amendment_02.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_full_cell_amendment_02.py:33: in candidate
+    f['inputs']['sources']['files'] = [descriptor(path) for path in m._source_roster(m.ROOT)]
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def _source_roster(root):
+        root = Path(root)
+        paths = set(SOURCE_FIXED)
+        for prefix in ('src/palimpsest', 'scripts', 'upstream/fly-gym'):
+            base = root / prefix
+            if not base.is_dir() or base.is_symlink():
+                raise ValueError('Qualification source root is absent or aliased')
+            for directory, directories, files in os.walk(base, followlinks=False):
+                current = Path(directory)
+                if any((current / name).is_symlink() for name in directories):
+                    raise ValueError('Qualification source directory is aliased')
+                for name in files:
+                    path = current / name
+                    if path.suffix == '.pyc':
+>                       raise ValueError('Qualification source has unbound bytecode')
+E                       ValueError: Qualification source has unbound bytecode
+
+scripts/qualify_memory_full_cell_v4.py:105: ValueError
+________ test_ancestor_hard_timeout_leaves_no_selected_pipeline_process ________
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_ancestor_hard_timeout_lea2')
+
+    def test_ancestor_hard_timeout_leaves_no_selected_pipeline_process(tmp_path):
+        """Real supervisor lifecycle; its only worker is a harmless exact-ID sleeper."""
+        import os
+        import signal
+        import subprocess
+    
+        repo=tmp_path/'repo';evidence=repo/'docs/reports/memory-decision-pilot-v2-evidence'
+        evidence.mkdir(parents=True);script=evidence/'execute.py'
+        source=Path(__file__).resolve().parents[1]/'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py'
+        reg={'repo':str(repo),'output':str(repo/'runs/fixture'),'python':sys.executable,
+             'control_root':str(repo/'control'),'publication_root':str(evidence)}
+        (evidence/'registration.json').write_text(json.dumps(reg))
+        script.write_text(f'''import importlib.util,json,os,signal,sys,time
+    from pathlib import Path
+    from types import SimpleNamespace
+    HERE=Path(__file__).resolve().parents[3]
+    def identity(role):
+        fields=Path('/proc/self/stat').read_text().rsplit(')',1)[1].split()
+        (HERE/(role+'.json')).write_text(json.dumps({{'pid':os.getpid(),
+            'starttime':int(fields[19]),'pgid':os.getpgrp()}}))
+    identity('pipeline' if '--pipeline' in sys.argv else 'supervised' if '--supervised' in sys.argv else 'controller')
+    SOURCE=Path({str(source)!r})
+    sys.path[:0]=[str(SOURCE.parents[3]),str(SOURCE.parents[3]/'src')]
+    spec=importlib.util.spec_from_file_location('actual_pilot',SOURCE)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    runner=module.runner;runner.__file__=__file__;runner.WATCHDOG_SECONDS=1.5
+    reg=json.loads((Path(__file__).parent/'registration.json').read_text())
+    runner.admission=lambda *args,**kw:reg
+    runner.shutil.disk_usage=lambda path:SimpleNamespace(free=16*runner.p.GiB)
+    runner.subprocess.check_output=lambda *args,**kw:'0'*40
+    from palimpsest.storage import StorageBudget,StorageLimits
+    runner.d.restore_v2_budget=lambda reg:StorageBudget(
+        [reg[key] for key in ('output','control_root','publication_root')],
+        StorageLimits(max_bytes=64*runner.p.MiB,min_free_bytes=0),headroom_bytes=0)
+    runner.d.recheck_v2_inputs=lambda *args:None
+    runner.d.cleanup_owners=lambda root:[]
+    def harmless_run(path):
+        signal.signal(signal.SIGTERM,signal.SIG_IGN);identity('pipeline-ready')
+        while True:time.sleep(60)
+    module.m.run=harmless_run
+    raise SystemExit(runner.main(sys.argv[1:]))
+    ''')
+        def matching_live(record):
+            try:
+                fields=Path(f"/proc/{record['pid']}/stat").read_text().rsplit(')',1)[1].split()
+                return (int(fields[19]),os.getpgid(record['pid']))==(record['starttime'],record['pgid']) and fields[0]!='Z'
+            except (FileNotFoundError,ProcessLookupError):return False
+        try:
+            with (repo/'harness.log').open('wb') as log:
+                result=subprocess.run(['timeout','--signal=KILL','5s',sys.executable,str(script)],
+                    cwd=repo,stdout=log,stderr=log,start_new_session=True,timeout=12)
+            assert result.returncode!=0
+            assert (repo/'pipeline-ready.json').exists(),(repo/'harness.log').read_text()
+            records={role:json.loads((repo/(role+'.json')).read_text())
+                     for role in ('controller','supervised','pipeline')}
+>           assert not {role:row for role,row in records.items() if matching_live(row)}
+E           AssertionError: assert not {'controller': {'pgid': 3088848, 'pid': 3088849, 'starttime': 31382944}, 'pipeline': {'pgid': 3088848, 'pid': 3088854, 'starttime': 31382959}}
+
+tests/test_memory_selected_pilot_launcher.py:278: AssertionError
+____ test_actual_authored_model_native_episode_to_durable_close[time-limit] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_actual_authored_model_nat3')
+scenario = 'time-limit'
+
+    @pytest.mark.parametrize('scenario',['normal','wrong-initial','second-episode','time-limit','post-terminal-query'])
+    def test_actual_authored_model_native_episode_to_durable_close(tmp_path,scenario):
+        import os,subprocess,sys
+        code=r'''
+    from pathlib import Path
+    from types import SimpleNamespace
+    from unittest.mock import patch
+    import sys
+    import numpy as np
+    from test_puck_execution import context
+    import test_puck_on_policy_native_interval as fixtures
+    from test_puck_profile import OWNERSHIP,raw_contacts
+    from palimpsest import puck_collection_close as close,puck_on_policy as adapter,puck_profile as puck
+    from palimpsest.body_profile import effective_control
+    from scripts import verify_puck_mechanics as gate
+    fixture=fixtures.NativeIntervalTests(methodName='runTest');fixture.setUp()
+    world_patch=patch.object(gate,'world_from',side_effect=lambda env,goal:{**fixture.world,'time_s':env.data.time})
+    world_patch.start();fixture.addCleanup(world_patch.stop)
+    if sys.argv[2]=='time-limit':
+        import time
+        from test_puck_execution import fixture as input_fixture,module as execution_api,raw,sha
+        custody,admit=input_fixture(Path(sys.argv[1])/'inputs')
+        payload=raw(custody)
+        execution=execution_api()._HeldCollectionExecution(payload,sha(payload),time.monotonic()+180,
+            bundle_admitter=admit,runtime_pin=custody['roles']['runtime']['files'][0])
+    else:execution,custody=context(Path(sys.argv[1])/'inputs')
+    writer=adapter.PuckIntervalWriter(fixture.path,max_bytes=149*1024**2)
+    execution.__enter__();execution.materialize_original_model()
+    scene=execution.description['scene'];layout=scene['layout']
+    fixture.world.update(rover_pose=list(layout['rover_pose']),puck_xyz=[*layout['puck_xy'],.062],goal_xy=layout['goal_xy'])
+    if sys.argv[2]=='wrong-initial':fixture.world['rover_pose'][0]+=.1
+    world=dict(fixture.world);state=puck.initialize(world,'fixture')
+    contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
+    calls=[]
+    def step(action):
+        calls.append(action)
+        fixture.env._t+=1;fixture.env.data.time=fixture.env._t*.02;fixture.env.data.ctrl[:]=effective_control(action)
+        if sys.argv[2]=='time-limit':
+            fixture.world['rover_pose']=[fixture.world['rover_pose'][0],fixture.world['rover_pose'][1]+.003,fixture.world['rover_pose'][2]]
+        else:fixture.world['puck_xyz']=[*layout['puck_xy'],.15]
+        return fixture.observation,0.,False,False,{'dist_to_goal':1.,'stalled':False}
+    fixture.env.step=step
+    probe=SimpleNamespace(ownership=OWNERSHIP,install=lambda:None,begin=lambda t:None,end=lambda:raw_contacts(fixture.env._t),close=lambda:None)
+    try:
+        result=close.run_collection_episode(execution,fixture.env,fixture.observation,state,world,contact,probe,writer,
+            output_root=fixture.path.parent,reservation_sha256='b'*64)
+    except ValueError as error:
+        assert sys.argv[2]=='wrong-initial',error
+        assert not calls, 'Wrong scientific initial reached native action'
+        assert writer._broken
+    else:
+        assert sys.argv[2] in ('normal','second-episode','time-limit','post-terminal-query')
+        receipt=close.read_closed_owner(Path(result['recording_close']['manifest_path']))
+        expected=600 if sys.argv[2]=='time-limit' else 1
+        assert receipt['intervals']==len(calls)==expected
+        assert receipt['terminal_reason']==('time_limit' if expected==600 else 'puck_height')
+        assert result['native_authorized'] is False
+        assert writer._broken
+        if sys.argv[2]=='post-terminal-query':
+            from palimpsest import puck_learning as learning
+            try:
+                execution.stage_interval(puck.project(world,contact),world,'approach',learning.initial_cursor(),
+                    terminal_reason=None,capture_query_state=lambda:dict.fromkeys(adapter._QUERY_STATE_FIELDS))
+            except RuntimeError:pass
+            else:raise AssertionError('Completed episode allowed another label/prediction')
+        elif sys.argv[2]=='second-episode':
+            second=fixture.path.parent/'second';second.mkdir()
+            other=adapter.PuckIntervalWriter(second/'intervals',max_bytes=2*1024**2)
+            fixture.world.update(world);fixture.env._t=0;fixture.env.data.time=0.
+            try:
+                close.run_collection_episode(execution,fixture.env,fixture.observation,state,world,contact,probe,other,
+                    output_root=second,reservation_sha256='b'*64)
+            except RuntimeError:
+                assert len(calls)==1, 'Reused episode reached native action'
+            else:raise AssertionError('Same held execution ran another episode')
+        else:execution.__exit__(None,None,None)
+    fixture.doCleanups()
+    '''
+        result=subprocess.run([sys.executable,'-c',code,str(tmp_path),scenario],
+            cwd=Path(__file__).absolute().parents[1],capture_output=True,text=True,timeout=200 if scenario=='time-limit' else 30,
+            env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','PYTHONPATH':'src:.:tests',
+                 'CUDA_VISIBLE_DEVICES':'','OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1'})
+>       assert result.returncode==0,result.stdout+result.stderr
+E       AssertionError: /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+E           return _C._get_float32_matmul_precision()
+E         Traceback (most recent call last):
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution.py", line 292, in recheck
+E             for holder in self._holders.values():holder.recheck()
+E                                                  ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E         During handling of the above exception, another exception occurred:
+E         
+E         Traceback (most recent call last):
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 586, in __exit__
+E             if cb(*exc_details):
+E                ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 339, in __exit__
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E         During handling of the above exception, another exception occurred:
+E         
+E         Traceback (most recent call last):
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 586, in __exit__
+E             if cb(*exc_details):
+E                ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 339, in __exit__
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E         During handling of the above exception, another exception occurred:
+E         
+E         Traceback (most recent call last):
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 586, in __exit__
+E             if cb(*exc_details):
+E                ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 339, in __exit__
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E         During handling of the above exception, another exception occurred:
+E         
+E         Traceback (most recent call last):
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 586, in __exit__
+E             if cb(*exc_details):
+E                ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 339, in __exit__
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E         During handling of the above exception, another exception occurred:
+E         
+E         Traceback (most recent call last):
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 586, in __exit__
+E             if cb(*exc_details):
+E                ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 339, in __exit__
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E         During handling of the above exception, another exception occurred:
+E         
+E         Traceback (most recent call last):
+E           File "<string>", line 42, in <module>
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_collection_close.py", line 287, in run_collection_episode
+E             completed=execution.native_interval(env,observation,state,world,contact,own,mode,probe,writer)
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution.py", line 381, in native_interval
+E             return on_policy_interval(env,observation,state,world,contact,own,
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/verify_puck_mechanics.py", line 409, in on_policy_interval
+E             staged = execution.stage_interval(inputs,world,teacher_mode,own,
+E                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution.py", line 342, in stage_interval
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution.py", line 300, in recheck
+E             self._fail()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution.py", line 141, in _fail
+E             self._stack.__exit__(*details)
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 601, in __exit__
+E             raise exc_details[1]
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 586, in __exit__
+E             if cb(*exc_details):
+E                ^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 339, in __exit__
+E             self.recheck()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python', '-c', "\nfrom pathlib import Path\nf...r(\'Collection root or ancestor changed while held\')\nRuntimeError: Collection root or ancestor changed while held\n').returncode
+
+tests/test_puck_collection_close.py:245: AssertionError
+_ test_exact_public_freeze_validates_without_opening_actual_bundle_or_runtime __
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_exact_public_freeze_valid0')
+
+    def test_exact_public_freeze_validates_without_opening_actual_bundle_or_runtime(tmp_path):
+>       m=module();value=candidate();path=tmp_path/'freeze.json';raw=m.canonical(value)
+                         ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[attempt-True] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ0')
+field = 'attempt', value = True
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[attempt-2] __
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ1')
+field = 'attempt', value = 2
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[model_calls-3.0] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ2')
+field = 'model_calls', value = 3.0
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[native_owners-1] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ3')
+field = 'native_owners', value = 1
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[physics_steps-True] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ4')
+field = 'physics_steps', value = True
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[seeds-value5] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ5')
+field = 'seeds', value = [21, 23, 22]
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[claims-value6] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ6')
+field = 'claims', value = {'qualification_claims': ['passed']}
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[environment-value7] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ7')
+field = 'environment', value = {}
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+_ test_changed_allocation_or_type_alias_refuses_before_reservation[limits-value8] _
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_changed_allocation_or_typ8')
+field = 'limits', value = {}
+
+    @pytest.mark.parametrize('field,value',[('attempt',True),('attempt',2),('model_calls',3.0),
+        ('native_owners',1),('physics_steps',True),('seeds',[21,23,22]),
+        ('claims',{'qualification_claims':['passed']}),('environment',{}),('limits',{})])
+    def test_changed_allocation_or_type_alias_refuses_before_reservation(tmp_path,field,value):
+>       m=module();sample=candidate();sample[field]=value
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+__ test_freeze_roles_and_original_public_identities_are_exact[source-missing] __
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original0')
+defect = 'source-missing'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[source-extra] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original1')
+defect = 'source-extra'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[bundle-size] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original2')
+defect = 'bundle-size'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+____ test_freeze_roles_and_original_public_identities_are_exact[bundle-pin] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original3')
+defect = 'bundle-pin'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[bundle-root] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original4')
+defect = 'bundle-root'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[history-pin] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original5')
+defect = 'history-pin'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+__ test_freeze_roles_and_original_public_identities_are_exact[history-extra] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original6')
+defect = 'history-extra'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[runtime-size] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original7')
+defect = 'runtime-size'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[runtime-pin] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original8')
+defect = 'runtime-pin'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[runtime-root] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original9')
+defect = 'runtime-root'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+______ test_freeze_roles_and_original_public_identities_are_exact[output] ______
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original10')
+defect = 'output'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[interpreter] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original11')
+defect = 'interpreter'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[extra-field] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original12')
+defect = 'extra-field'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+____ test_freeze_roles_and_original_public_identities_are_exact[freeze-pin] ____
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original13')
+defect = 'freeze-pin'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+___ test_freeze_roles_and_original_public_identities_are_exact[noncanonical] ___
+
+tmp_path = PosixPath('/home/utkarsh/.cache/palimpsest-proof-first-e729d87/authority-paper-rewrite-3084380/test_freeze_roles_and_original14')
+defect = 'noncanonical'
+
+    @pytest.mark.parametrize('defect',['source-missing','source-extra','bundle-size','bundle-pin',
+        'bundle-root','history-pin','history-extra','runtime-size','runtime-pin','runtime-root',
+        'output','interpreter','extra-field','freeze-pin','noncanonical'])
+    def test_freeze_roles_and_original_public_identities_are_exact(tmp_path,defect):
+>       m=module();sample=candidate()
+                          ^^^^^^^^^^^
+
+tests/test_puck_original_bundle_qualification.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_original_bundle_qualification.py:29: in candidate
+    sources=[descriptor(name,(ROOT/name).read_bytes()) for name in m.source_paths()]
+                                                                   ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def source_paths():
+        paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+        deadline=time.monotonic()+5;visited=0
+        for directory in ('src/palimpsest','scripts'):
+            for path in (ROOT/directory).rglob('*'):
+                clock(deadline);visited+=1
+                if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                    raise ValueError('Qualification source discovery count/depth exceeded')
+                if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
+>                   raise ValueError('Qualification source inventory has a link or bytecode')
+E                   ValueError: Qualification source inventory has a link or bytecode
+
+scripts/qualify_puck_original_bundles_v1.py:59: ValueError
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_artwork_encounter.py::EncounterTests::test_missing_unexpected_duplicate_and_escaping_members_rejected
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'afterimage.svg'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+tests/test_flynn.py: 17 warnings
+tests/test_memory_family_cell_replay_v4.py: 25 warnings
+tests/test_snapshots.py: 5 warnings
+tests/test_velocity_gain_flynn.py: 9 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_family_cell_replay_v4.py::test_actual_upstream_cell_matches_recorded_policy_without_retina[source]
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_puck_episode_profile_candidate.py: 30 warnings
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/derive_puck_episode_profile.py:176: DeprecationWarning: invalid escape sequence '\$'
+    """The template origins plus held-directory origins every static \$ORIGIN dependency needs.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_compact_v4.py::test_protocol_is_canonical_and_freezes_exact_false_claim_contract
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[runtime-unknown]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[runtime-size]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[runtime-hash]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[raw-root]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[asset-hash]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[missing-prior]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[prior-hash]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[prior-size-alias]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[attempt-alias]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[attempt-three]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[limits]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_amendment_refuses_expanded_or_ambiguous_allocation[source-extra]
+FAILED tests/test_memory_full_cell_amendment_02.py::test_confirmation_and_amendment_identity_propagate_to_parent_and_worker
+FAILED tests/test_memory_selected_pilot_launcher.py::test_ancestor_hard_timeout_leaves_no_selected_pipeline_process
+FAILED tests/test_puck_collection_close.py::test_actual_authored_model_native_episode_to_durable_close[time-limit]
+FAILED tests/test_puck_original_bundle_qualification.py::test_exact_public_freeze_validates_without_opening_actual_bundle_or_runtime
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[attempt-True]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[attempt-2]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[model_calls-3.0]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[native_owners-1]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[physics_steps-True]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[seeds-value5]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[claims-value6]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[environment-value7]
+FAILED tests/test_puck_original_bundle_qualification.py::test_changed_allocation_or_type_alias_refuses_before_reservation[limits-value8]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[source-missing]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[source-extra]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[bundle-size]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[bundle-pin]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[bundle-root]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[history-pin]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[history-extra]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[runtime-size]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[runtime-pin]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[runtime-root]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[output]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[interpreter]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[extra-field]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[freeze-pin]
+FAILED tests/test_puck_original_bundle_qualification.py::test_freeze_roles_and_original_public_identities_are_exact[noncanonical]
+41 failed, 6487 passed, 305 skipped, 43 deselected, 105 warnings in 1581.21s (0:26:21)
+.......                                                                  [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+7 passed, 6869 deselected, 2 warnings in 9.82s
+.....                                                                    [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 6871 deselected, 2 warnings in 59.18s
+...............................                                          [100%]
+=============================== warnings summary ===============================
+../../.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_manual_lab_refresh_v3.py:98
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_manual_lab_refresh_v3.py:98: DeprecationWarning: invalid escape sequence '\('
+    code = """import multiprocessing as m,sys,os,subprocess,re,time
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+31 passed, 6845 deselected, 2 warnings in 23.72s
