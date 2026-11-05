@@ -145,9 +145,8 @@ contract, not a compositional theorem or exhaustive combined-fault guarantee.
 The faults cover admission/application timing, stale/duplicate commands,
 incomplete state, source/asset drift, shared branches, publication interruption,
 and resource/writer failure. Runtime cases exercise CPU controller execution;
-storage cases use production interfaces with controlled payloads. We trust the
-host OS, runtime owner, instrumentation, and measurement code; limits appear in
-Section~\ref{sec:limits}.
+storage cases use production interfaces with controlled payloads. The host OS
+and experiment code are trusted.
 
 \section{Design and Implementation}
 \subsection{Receipts at control boundaries}
@@ -448,7 +447,7 @@ Storage-accounted costs varied substantially: paired overhead reached
 points. Recorded producer backpressure reached
 \StorageBackpressureMaximumSeconds{} s within a 200-tick window. The bounded
 retention mechanism therefore exposes producer stalls as well as a median cost;
-Figure~\ref{fig:overhead} retains these slow runs. All ten sets remained state-matched.
+Figure~\ref{fig:overhead} retains these slow runs.
 
 Operation costs use the five retained full background-plus-storage source runs
 from RQ2. Each unit measures capture, save, read, restore/first-tick, playback,
