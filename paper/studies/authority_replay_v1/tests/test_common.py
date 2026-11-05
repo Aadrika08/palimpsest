@@ -165,6 +165,105 @@ def test_campaign_identity_binds_clean_commit_protocol_sources_and_assets(common
         common.campaign_identity(repo, protocol_path, assets)
 
 
+def commit_fixture(repo):
+    subprocess.run(["git", "-C", str(repo), "add", "."], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(repo), "-c", "user.name=Study Test", "-c",
+                    "user.email=study@example.invalid", "commit", "-qm", "fixture"],
+                   check=True, capture_output=True)
+
+
+@pytest.fixture
+def prepared_mapping(tmp_path):
+    import hashlib
+
+    def identity(data):
+        return {"size_bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+
+    repo, assets = tmp_path / "repo", tmp_path / "assets"
+    repo.mkdir()
+    assets.mkdir()
+    (repo / "src").mkdir()
+    (repo / "src/runtime.py").write_text("VALUE = 1\n")
+    (repo / "model_manifests").mkdir()
+    protocol_path = repo / "protocol.json"
+    protocol_path.write_text("{}\n")
+    archive = b"pinned archive"
+    (assets / "graph.7z").write_bytes(archive)
+    graph_root = assets / f"graph-{identity(archive)['sha256']}"
+    directory = graph_root / "drosophila adult connectome"
+    directory.mkdir(parents=True)
+    edge_bytes = b"pre,post\n1,2\n"
+    (directory / "connections_princeton.csv").write_bytes(edge_bytes)
+    source_name = "upstream/fly-gym/connectomes/drosophila adult connectome/mapping.csv"
+    source = repo / source_name
+    source.parent.mkdir(parents=True)
+    source_bytes = b"root_id,column\n1,L1\n2,L2\n"
+    source.write_bytes(source_bytes)
+    mapping = directory / "mapping.csv"
+    mapping.write_bytes(source_bytes.replace(b"\n", b"\r\n"))
+    # A second mapping covers the fallback contract for files copied from Git.
+    plain_source_name = str(Path(source_name).with_name("plain.csv"))
+    (repo / plain_source_name).write_bytes(b"root_id\n3\n")
+    (directory / "plain.csv").write_bytes(b"root_id\n3\n")
+    manifest = {
+        "files": [{"id": "graph_archive", "path": "graph.7z", **identity(archive)}],
+        "graph": {"edge_identity": identity(edge_bytes),
+                  "mapping_preparation": "Preserve archive bytes; CRLF to LF reproduces pinned Git bytes.",
+                  "mapping_files": [
+                      {"path": "mapping.csv", "source_path": source_name, **identity(source_bytes),
+                       "archive_identity": identity(mapping.read_bytes())},
+                      {"path": "plain.csv", "source_path": plain_source_name, **identity(b"root_id\n3\n")},
+                  ]},
+    }
+    manifest_path = repo / "model_manifests/flynn-full-vision.json"
+    manifest_path.write_text(json.dumps(manifest))
+    (graph_root / "palimpsest-prepared.json").write_text(json.dumps({
+        "archive_sha256": identity(archive)["sha256"],
+        "edge_path": "drosophila adult connectome/connections_princeton.csv"}))
+    subprocess.run(["git", "-C", str(repo), "init", "-q"], check=True, capture_output=True)
+    commit_fixture(repo)
+    return repo, assets, protocol_path, source, mapping, manifest_path
+
+
+def test_campaign_identity_preserves_and_binds_archive_and_git_mapping_bytes(common, prepared_mapping):
+    import hashlib
+    repo, assets, protocol_path, source, mapping, _ = prepared_mapping
+    before = {path: path.read_bytes() for path in (source, mapping)}
+    identity = common.campaign_identity(repo, protocol_path, assets)
+    assert identity["asset_sha256"][str(mapping.relative_to(assets))] == hashlib.sha256(before[mapping]).hexdigest()
+    assert identity["runtime_source_sha256"][str(source.relative_to(repo))] == hashlib.sha256(before[source]).hexdigest()
+    assert before[mapping] != before[source]
+    assert before[mapping].replace(b"\r\n", b"\n") == before[source]
+    assert {path: path.read_bytes() for path in before} == before
+
+
+@pytest.mark.parametrize("corruption", ["prepared_bytes", "pinned_source", "normalization"])
+def test_campaign_identity_rejects_changed_or_nonequivalent_mapping(common, prepared_mapping, corruption):
+    import hashlib
+    repo, assets, protocol_path, source, mapping, manifest_path = prepared_mapping
+    if corruption == "pinned_source":
+        source.write_bytes(b"changed upstream Git CSV\n")
+        commit_fixture(repo)
+        expected = "pinned upstream mapping"
+    else:
+        mapping.write_bytes(mapping.read_bytes().replace(b"1,L1", b"1,L9"))
+        expected = "mapping"
+        if corruption == "normalization":
+            # Even a separately raw-pinned archive mapping must normalize to the
+            # independently pinned Git source, not merely match its own raw pin.
+            manifest = json.loads(manifest_path.read_text())
+            manifest["graph"]["mapping_files"][0]["archive_identity"] = {
+                "size_bytes": mapping.stat().st_size,
+                "sha256": hashlib.sha256(mapping.read_bytes()).hexdigest()}
+            manifest_path.write_text(json.dumps(manifest))
+            commit_fixture(repo)
+            expected = "beyond CRLF line endings"
+    before = {path: path.read_bytes() for path in (source, mapping, manifest_path)}
+    with pytest.raises(ValueError, match=expected):
+        common.campaign_identity(repo, protocol_path, assets)
+    assert {path: path.read_bytes() for path in before} == before
+
+
 def test_preflight_amendment_does_not_change_scientific_denominators(common, protocol):
     assert protocol.resources['offline_unit_max_output_bytes'] == 10 * 1024**3
     assert protocol.resources['campaign_max_output_bytes'] == 16 * 1024**3

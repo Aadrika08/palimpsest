@@ -1,4 +1,4 @@
-"""Standard-library-only protocol, identity, and append-only campaign contracts.
+"""Lightweight protocol, identity, and append-only campaign contracts.
 
 This module does not execute experiments. A declared row is an accounting unit,
 including when its execution fails or is stopped before completion.
@@ -266,8 +266,14 @@ def campaign_identity(repo: Path, protocol: Path, assets: Path) -> dict[str, obj
             require(metadata["archive_sha256"] == archive["sha256"], "asset prepared archive identity mismatch")
             edge = prepared.parent / metadata["edge_path"]
             verify(str(edge.relative_to(assets)), manifest["graph"]["edge_identity"])
-            for item in manifest["graph"]["mapping_files"]:
-                verify(str((edge.parent / item["path"]).relative_to(assets)), item)
+            # Reuse the production read-only contract: verify Git source bytes,
+            # preserved archive bytes, and their pinned CRLF-to-LF equivalence.
+            from palimpsest.assets import _check_mappings
+            mappings = manifest["graph"]["mapping_files"]
+            _check_mappings(repo, edge.parent, mappings, copy_missing=False)
+            for item in mappings:
+                verify(str((edge.parent / item["path"]).relative_to(assets)), item.get("archive_identity", item))
+                source_paths.append(Path(item["source_path"]))
             asset_hashes[str(prepared.relative_to(assets))] = sha256_file(prepared)
     return {"commit": _git(repo, "rev-parse", "HEAD"), "protocol_sha256": sha256_file(protocol),
             "runtime_source_sha256": {str(p): sha256_file(repo / p) for p in sorted(set(source_paths))},

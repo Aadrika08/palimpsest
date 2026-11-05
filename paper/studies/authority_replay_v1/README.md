@@ -25,8 +25,11 @@ Before execution, drivers prepare/verify the full FLYNN runtime and call
 `campaign_identity(repo, protocol, assets)`. It requires a clean Git checkout,
 hashes runtime/study Python and configuration sources, hashes the pinned FLYNN
 manifest, verifies its archive/checkpoint bytes, and verifies prepared graph
-edge/mapping bytes when preparation metadata exists. It does not prepare assets
-or infer that absent prepared metadata is a working runtime. Drivers must
+edge/mapping bytes when preparation metadata exists. Pinned CRLF archive bytes
+must normalize exactly to their independently pinned upstream Git CSV bytes.
+Raw mapping hashes are bound as assets and Git CSV hashes as runtime sources.
+This read-only check does not prepare assets or infer that absent prepared
+metadata is a working runtime. Drivers must
 record their exact command and environment separately, recheck identity after
 each unit, and preserve before/after hashes. An identity recheck that fails is a
 retained failed unit, never permission to change a pin.
