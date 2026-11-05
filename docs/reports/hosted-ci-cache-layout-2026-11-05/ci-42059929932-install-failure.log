@@ -1,0 +1,115 @@
+fixtures	Install the exact fixture interpreter and locked dependencies	﻿2026-11-05T15:56:25.2700742Z ##[group]Run curl --fail --location --output /tmp/uv.tar.gz https://github.com/astral-sh/uv/releases/download/0.9.25/uv-x86_64-unknown-linux-gnu.tar.gz
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2701884Z ^[[36;1mcurl --fail --location --output /tmp/uv.tar.gz https://github.com/astral-sh/uv/releases/download/0.9.25/uv-x86_64-unknown-linux-gnu.tar.gz^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2703016Z ^[[36;1mprintf '%s  %s\n' fa1f4abfe101d43e820342210c3c6854028703770f81e95b119ed1e65ec81b35 /tmp/uv.tar.gz | sha256sum --check -^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2703616Z ^[[36;1mtar -xzf /tmp/uv.tar.gz -C /tmp^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2703999Z ^[[36;1minstall /tmp/uv-x86_64-unknown-linux-gnu/uv /usr/local/bin/uv^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2704639Z ^[[36;1muv python install 3.11.15 --no-bin --python-downloads-json-url "file://$PWD/.github/python-downloads.json"^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2705361Z ^[[36;1mFIXTURE_PYTHON="$UV_PYTHON_INSTALL_DIR/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11"^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2706526Z ^[[36;1mprintf '%s  %s\n' 572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a "$FIXTURE_PYTHON" | sha256sum --check -^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2707788Z ^[[36;1mprintf '%s  %s\n' afa518f786b425fc598b11adbf60d667bf7fe7f5f0662a0cd6bbf6f3e25c8d21 "$UV_PYTHON_INSTALL_DIR/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/_sysconfigdata__linux_x86_64-linux-gnu.py" | sha256sum --check -^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2708934Z ^[[36;1muv sync --locked --no-python-downloads --python "$FIXTURE_PYTHON" --extra simulation --extra lab^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2709465Z ^[[36;1mln -s "$(command -v node)" /usr/bin/node^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2709779Z ^[[36;1mnpm ci --prefix ui^[[0m
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2710351Z shell: bash --noprofile --norc -e -o pipefail {0}
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2710661Z env:
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2710972Z   UV_PYTHON_INSTALL_DIR: /home/utkarsh/.local/share/uv/python
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2711344Z   PYTHONDONTWRITEBYTECODE: 1
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.2711597Z ##[endgroup]
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.3467013Z   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.3468158Z                                  Dload  Upload  Total   Spent   Left   Speed
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.3468636Z 
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.4906238Z   0      0   0      0   0      0      0      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.4907507Z   0      0   0      0   0      0      0      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.4908634Z   0      0   0      0   0      0      0      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.5055325Z 
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.5937750Z   0      0   0      0   0      0      0      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.5940510Z 100 21.30M 100 21.30M   0      0 79.11M      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.5941886Z 100 21.30M 100 21.30M   0      0 79.10M      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.5963419Z 100 21.30M 100 21.30M   0      0 79.09M      0                              0
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:25.6217415Z /tmp/uv.tar.gz: OK
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:26.1758637Z Downloading cpython-3.11.15-linux-x86_64-gnu (download) (29.5MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.1846516Z  Downloaded cpython-3.11.15-linux-x86_64-gnu (download)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.1989780Z Installed Python 3.11.15 in 1.21s
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.1990850Z  + cpython-3.11.15-linux-x86_64-gnu
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.2210880Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11: OK
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.2259152Z /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/_sysconfigdata__linux_x86_64-linux-gnu.py: OK
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.3878639Z Using CPython 3.11.15 interpreter at: /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.3880392Z Creating virtual environment at: .venv
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.3926703Z Resolved 92 packages in 0.65ms
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4445052Z    Building palimpsest @ file:///__w/palimpsest/palimpsest
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4795625Z Downloading sympy (6.0MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4854734Z Downloading scikit-learn (8.7MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4870380Z Downloading networkx (1.6MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4889238Z Downloading pyopengl (3.0MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4889868Z Downloading nvidia-cufft-cu12 (184.2MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4897046Z Downloading kiwisolver (1.4MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4903431Z Downloading nvidia-curand-cu12 (60.7MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4919647Z Downloading brotli (1.4MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4921954Z Downloading nvidia-nvshmem-cu12 (118.9MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4923705Z Downloading pydantic-core (2.0MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4925139Z Downloading nvidia-cusparse-cu12 (274.9MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4936255Z Downloading nvidia-nccl-cu12 (307.4MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4937152Z Downloading pygments (1.2MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4940223Z Downloading nvidia-cusparselt-cu12 (273.9MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4943077Z Downloading nvidia-nvjitlink-cu12 (37.4MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4947073Z Downloading nvidia-cuda-nvrtc-cu12 (84.0MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4962421Z Downloading nvidia-cublas-cu12 (566.8MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4963428Z Downloading nvidia-cusolver-cu12 (255.1MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4964352Z Downloading nvidia-cudnn-cu12 (674.0MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4965197Z Downloading triton (162.5MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4966488Z Downloading pycryptodomex (2.2MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4972207Z Downloading pillow (6.6MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4983326Z Downloading torchvision (7.7MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4986663Z Downloading nvidia-cufile-cu12 (1.1MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.4991699Z Downloading mujoco (6.4MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5070251Z Downloading opencv-python (63.9MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5073999Z Downloading scipy (35.9MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5083558Z Downloading numpy (15.7MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5087121Z Downloading pandas (12.5MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5092720Z Downloading nvidia-cuda-cupti-cu12 (9.8MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5097030Z Downloading torch (858.1MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5135147Z Downloading matplotlib (8.2MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:27.5136130Z Downloading fonttools (5.2MiB)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:28.5881422Z  Downloaded nvidia-cufile-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:28.6777548Z    Building python-louvain==0.16
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:28.7693851Z  Downloaded kiwisolver
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:28.8337309Z  Downloaded brotli
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:29.1279699Z  Downloaded pydantic-core
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:29.2456474Z  Downloaded pygments
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:29.3877830Z       Built palimpsest @ file:///__w/palimpsest/palimpsest
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:29.3906520Z  Downloaded pycryptodomex
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:29.8304763Z  Downloaded networkx
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:31.0894629Z  Downloaded fonttools
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:31.6957824Z  Downloaded sympy
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:31.8676851Z       Built python-louvain==0.16
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:31.8920990Z  Downloaded pillow
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:32.0981539Z  Downloaded torchvision
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:32.1498281Z  Downloaded mujoco
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:32.3183472Z  Downloaded matplotlib
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:32.5173796Z  Downloaded nvidia-cuda-cupti-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:32.5736376Z  Downloaded scikit-learn
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:33.3143691Z  Downloaded pandas
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:33.7458853Z  Downloaded numpy
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:36.7938704Z  Downloaded nvidia-nvjitlink-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:37.8457429Z  Downloaded scipy
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:38.0363609Z  Downloaded pyopengl
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:39.7396636Z  Downloaded nvidia-curand-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:40.2322362Z  Downloaded opencv-python
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:42.3620382Z  Downloaded nvidia-cuda-nvrtc-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:44.8664256Z  Downloaded nvidia-nvshmem-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:49.3832716Z  Downloaded triton
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:49.3837411Z  Downloaded nvidia-cufft-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:52.7097928Z  Downloaded nvidia-cusolver-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:53.4557989Z  Downloaded nvidia-cusparselt-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:53.5877756Z  Downloaded nvidia-cusparse-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:54.3548222Z  Downloaded nvidia-nccl-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:57.5540305Z  Downloaded nvidia-cublas-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:56:58.5737516Z  Downloaded nvidia-cudnn-cu12
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:07.7702929Z  Downloaded torch
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:07.7707052Z Prepared 88 packages in 40.37s
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:07.7730410Z warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:07.7732353Z          If the cache and target directories are on different filesystems, hardlinking may not be supported.
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:07.7734173Z          If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:59.5008920Z error: Failed to install: nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl (nvidia-cudnn-cu12==9.10.2.21)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:59.5013323Z   Caused by: failed to copy file from /github/home/.cache/uv/archive-v0/bL-_xxWSUNWBJ83PA0u19/nvidia/cudnn/lib/libcudnn_engines_precompiled.so.9 to /__w/palimpsest/palimpsest/.venv/lib/python3.11/site-packages/nvidia/cudnn/lib/libcudnn_engines_precompiled.so.9: No space left on device (os error 28)
+fixtures	Install the exact fixture interpreter and locked dependencies	2026-11-05T15:57:59.5107991Z ##[error]Process completed with exit code 2.

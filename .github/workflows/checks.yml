@@ -46,7 +46,13 @@ jobs:
           FIXTURE_PYTHON="$UV_PYTHON_INSTALL_DIR/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11"
           printf '%s  %s\n' 572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a "$FIXTURE_PYTHON" | sha256sum --check -
           printf '%s  %s\n' afa518f786b425fc598b11adbf60d667bf7fe7f5f0662a0cd6bbf6f3e25c8d21 "$UV_PYTHON_INSTALL_DIR/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/_sysconfigdata__linux_x86_64-linux-gnu.py" | sha256sum --check -
-          uv sync --locked --no-python-downloads --python "$FIXTURE_PYTHON" --extra simulation --extra lab
+          # Cache and environment share a filesystem, avoiding a second copy of
+          # the locked CUDA wheels. Drop only this job's disposable download
+          # cache after linking so installed dependency files have one link.
+          CI_DEP_CACHE="$PWD/runs/.ci-uv-cache"
+          mkdir -p "$CI_DEP_CACHE"
+          uv sync --locked --no-python-downloads --python "$FIXTURE_PYTHON" --extra simulation --extra lab --cache-dir "$CI_DEP_CACHE" --link-mode hardlink
+          uv cache clean --cache-dir "$CI_DEP_CACHE"
           ln -s "$(command -v node)" /usr/bin/node
           npm ci --prefix ui
       - name: Give fixture processes ordinary user ownership
