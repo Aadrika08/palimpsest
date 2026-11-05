@@ -1,0 +1,185 @@
+test_duplicate_family_contrast_is_rejected (test_check.AuditChecks.test_duplicate_family_contrast_is_rejected) ... FAIL
+test_duplicate_planned_family_and_contrast_are_rejected (test_check.AuditChecks.test_duplicate_planned_family_and_contrast_are_rejected) ... FAIL
+test_exact_negative_upper_endpoint_accepts_only_numerically (test_check.AuditChecks.test_exact_negative_upper_endpoint_accepts_only_numerically) ... FAIL
+test_extra_or_unknown_identity_is_rejected (test_check.AuditChecks.test_extra_or_unknown_identity_is_rejected) ... FAIL
+test_float_and_boolean_spec_parameters_are_rejected (test_check.AuditChecks.test_float_and_boolean_spec_parameters_are_rejected) ... FAIL
+test_float_boolean_and_nonfinite_observations_are_rejected (test_check.AuditChecks.test_float_boolean_and_nonfinite_observations_are_rejected) ... FAIL
+test_incomplete_and_refused_rows_are_rejected (test_check.AuditChecks.test_incomplete_and_refused_rows_are_rejected) ... FAIL
+test_insufficient_log_budget_is_rejected (test_check.AuditChecks.test_insufficient_log_budget_is_rejected) ... FAIL
+test_insufficient_taylor_terms_are_rejected (test_check.AuditChecks.test_insufficient_taylor_terms_are_rejected) ... FAIL
+test_loss_outside_closed_range_is_rejected (test_check.AuditChecks.test_loss_outside_closed_range_is_rejected) ... FAIL
+test_missing_row_is_not_counted_as_smaller_sample (test_check.AuditChecks.test_missing_row_is_not_counted_as_smaller_sample) ... FAIL
+test_negative_or_boolean_count_is_rejected (test_check.AuditChecks.test_negative_or_boolean_count_is_rejected) ... FAIL
+test_protocol_drift_is_rejected (test_check.AuditChecks.test_protocol_drift_is_rejected) ... FAIL
+test_receipt_identity_must_be_a_hash (test_check.AuditChecks.test_receipt_identity_must_be_a_hash) ... FAIL
+test_spec_identity_drift_is_rejected (test_check.AuditChecks.test_spec_identity_drift_is_rejected) ... FAIL
+test_term_and_operand_resource_guards (test_check.AuditChecks.test_term_and_operand_resource_guards) ... FAIL
+test_unrecognized_proof_boolean_is_not_a_guarantee (test_check.AuditChecks.test_unrecognized_proof_boolean_is_not_a_guarantee) ... FAIL
+test_zero_denominator_and_invalid_probabilities_are_rejected (test_check.AuditChecks.test_zero_denominator_and_invalid_probabilities_are_rejected) ... FAIL
+test_zero_endpoint_is_inconclusive (test_check.AuditChecks.test_zero_endpoint_is_inconclusive) ... FAIL
+test_zero_mean_has_no_numerical_improvement (test_check.AuditChecks.test_zero_mean_has_no_numerical_improvement) ... FAIL
+
+======================================================================
+FAIL: test_duplicate_family_contrast_is_rejected (test_check.AuditChecks.test_duplicate_family_contrast_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_duplicate_planned_family_and_contrast_are_rejected (test_check.AuditChecks.test_duplicate_planned_family_and_contrast_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_exact_negative_upper_endpoint_accepts_only_numerically (test_check.AuditChecks.test_exact_negative_upper_endpoint_accepts_only_numerically)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_extra_or_unknown_identity_is_rejected (test_check.AuditChecks.test_extra_or_unknown_identity_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_float_and_boolean_spec_parameters_are_rejected (test_check.AuditChecks.test_float_and_boolean_spec_parameters_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_float_boolean_and_nonfinite_observations_are_rejected (test_check.AuditChecks.test_float_boolean_and_nonfinite_observations_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_incomplete_and_refused_rows_are_rejected (test_check.AuditChecks.test_incomplete_and_refused_rows_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_insufficient_log_budget_is_rejected (test_check.AuditChecks.test_insufficient_log_budget_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_insufficient_taylor_terms_are_rejected (test_check.AuditChecks.test_insufficient_taylor_terms_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_loss_outside_closed_range_is_rejected (test_check.AuditChecks.test_loss_outside_closed_range_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_missing_row_is_not_counted_as_smaller_sample (test_check.AuditChecks.test_missing_row_is_not_counted_as_smaller_sample)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_negative_or_boolean_count_is_rejected (test_check.AuditChecks.test_negative_or_boolean_count_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_protocol_drift_is_rejected (test_check.AuditChecks.test_protocol_drift_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_receipt_identity_must_be_a_hash (test_check.AuditChecks.test_receipt_identity_must_be_a_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_spec_identity_drift_is_rejected (test_check.AuditChecks.test_spec_identity_drift_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_term_and_operand_resource_guards (test_check.AuditChecks.test_term_and_operand_resource_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_unrecognized_proof_boolean_is_not_a_guarantee (test_check.AuditChecks.test_unrecognized_proof_boolean_is_not_a_guarantee)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_zero_denominator_and_invalid_probabilities_are_rejected (test_check.AuditChecks.test_zero_denominator_and_invalid_probabilities_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_zero_endpoint_is_inconclusive (test_check.AuditChecks.test_zero_endpoint_is_inconclusive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+======================================================================
+FAIL: test_zero_mean_has_no_numerical_improvement (test_check.AuditChecks.test_zero_mean_has_no_numerical_improvement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/paper/studies/change_audit_v1/tests/test_check.py", line 49, in setUp
+    self.assertIsNotNone(checker, 'Exact rational numerical audit checker is not implemented')
+AssertionError: unexpectedly None : Exact rational numerical audit checker is not implemented
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.002s
+
+FAILED (failures=20)
