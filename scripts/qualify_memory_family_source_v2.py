@@ -56,6 +56,21 @@ def _number(value, label):
     return value
 
 
+def _worker_cpu_budget(remaining_cpu_seconds, inherited_hard_limit):
+    """Fit the unchanged supervisor's soft/hard pair to the observed ceiling."""
+    if (type(remaining_cpu_seconds) not in (int, float)
+            or not math.isfinite(remaining_cpu_seconds)
+            or not 0 < remaining_cpu_seconds <= ALLOCATION['cpu_seconds']):
+        raise ValueError('Remaining worker CPU must be known, finite and within allocation')
+    if type(inherited_hard_limit) is not int:
+        raise ValueError('Inherited hard CPU limit must be a known integer')
+    if inherited_hard_limit == resource.RLIM_INFINITY:
+        return remaining_cpu_seconds
+    if inherited_hard_limit < 2:
+        raise ValueError('Inherited hard CPU limit cannot fit supervisor soft/hard pair')
+    return min(remaining_cpu_seconds, inherited_hard_limit - 1)
+
+
 def _deadline(deadline):
     if time.monotonic() >= deadline:
         raise TimeoutError('Enclosing deadline includes cleanup and final publication')
@@ -752,7 +767,9 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
                 if remaining <= seconds:
                     raise TimeoutError('Insufficient wall for fixed job plus cleanup/publication')
                 phase_before = check()
-                remaining_cpu = ALLOCATION['cpu_seconds'] - phase_before
+                remaining_cpu = _worker_cpu_budget(
+                    ALLOCATION['cpu_seconds'] - phase_before,
+                    resource.getrlimit(resource.RLIMIT_CPU)[1])
                 record = {'role': role, 'command': command, 'environment': value['environment'],
                     'wall_seconds': seconds, 'cpu_seconds': remaining_cpu,
                     'accounting': None}

@@ -51,7 +51,7 @@ def _accounting():
 
 
 def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
-            accounting_defect=None, final_check=False, controlled_home=False):
+            accounting_defect=None, final_check=False, controlled_home=False, cpu_requests=None):
     p = parent()
     freeze, path, digest = write_freeze(tmp_path, monkeypatch, complete=True)
     if controlled_home:
@@ -70,6 +70,8 @@ def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
         return StorageBudget([output], StorageLimits(max_bytes=p.ALLOCATION['max_bytes'], min_free_bytes=0),
             headroom_bytes=p.ALLOCATION['headroom_bytes'])
     def runner(command, **kwargs):
+        if cpu_requests is not None:
+            cpu_requests.append(kwargs['cpu_seconds'])
         role = 'owner' if '-c' in command else 'audit'
         calls.append(role)
         if role == 'audit':
@@ -813,3 +815,19 @@ def test_fresh_controlled_home_bootstraps_before_parent_lease(tmp_path, monkeypa
     assert all(d['size_bytes'] == 0 for d in leases)
     assert result['actual_source_qualified'] is False
     assert result['parent_lifetime_reconciled'] is False
+
+
+def test_parent_records_and_passes_inherited_cpu_clamp(tmp_path, monkeypatch):
+    p = parent()
+    getrlimit = p.resource.getrlimit
+    monkeypatch.setattr(p.resource, 'getrlimit', lambda kind:
+        (10, 10) if kind == p.resource.RLIMIT_CPU else getrlimit(kind))
+    requests = []
+    freeze, result, calls = harness(tmp_path, monkeypatch, cpu_requests=requests)
+    assert calls == ['owner', 'audit']
+    assert requests == [9, 9]
+    assert [item['cpu_seconds'] for item in result['jobs']] == [9, 9]
+    control = Path(freeze['job']['paths']['control_root'])
+    assert [p._read(control / (role + '-launch.json'))['cpu_seconds']
+            for role in calls] == [9, 9]
+    assert result['qualification_claims'] is False
