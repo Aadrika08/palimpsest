@@ -27,3 +27,16 @@ verify: paper
 clean:
 	rm -f $(BUILD)/main.aux $(BUILD)/main.bbl $(BUILD)/main.blg \
 		$(BUILD)/main.log $(BUILD)/main.out $(BUILD)/main.pdf $(BUILD)/main.toc
+
+# Frozen authority/replay campaign inputs. Generation never launches study jobs.
+AUTHORITY_EVIDENCE ?= evidence/authority-replay-v1
+AUTHORITY_PROTOCOL ?= studies/authority_replay_v1/protocol.json
+AUTHORITY_ARGS = --summary $(AUTHORITY_EVIDENCE)/summary.json --manifest $(AUTHORITY_EVIDENCE)/campaign-manifest.json --protocol $(AUTHORITY_PROTOCOL) --output generated
+
+.PHONY: authority-evidence authority-evidence-check
+
+authority-evidence:
+	$(PYTHON) -B scripts/build_authority_evidence.py $(AUTHORITY_ARGS)
+
+authority-evidence-check:
+	$(PYTHON) -B scripts/build_authority_evidence.py $(AUTHORITY_ARGS) --check

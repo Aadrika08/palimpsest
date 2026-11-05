@@ -1,0 +1,292 @@
+#!/usr/bin/env python3
+"""Build paper evidence from a complete frozen campaign; never execute experiments."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import statistics
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from paper.studies.authority_replay_v1.analyze import summarize
+from paper.studies.authority_replay_v1.common import load_protocol, parse_json, require, validate_finite
+
+STUDY_COMMIT = 'd8658dda3fca37bb43b6dafc909114279f706f11'
+PROTOCOL_SHA256 = '7a985038bffa2f55ea2eeb6f75815c96ce179e0e5a74ee9e45db0aa1b1c03b35'
+CONDITIONS = ('null', 'synchronous', 'background', 'background_storage')
+FLAGS = ('silent_acceptance', 'explicit_detection', 'correct_recovery', 'benign_false_rejection')
+
+
+def stats(values):
+    if not values:
+        return None
+    q1, q3 = (values[0], values[0]) if len(values) == 1 else statistics.quantiles(values, n=4, method='inclusive')[::2]
+    return dict(n=len(values), median=statistics.median(values), minimum=min(values), maximum=max(values), q1=q1, q3=q3, iqr=q3-q1)
+
+
+def _truth(value):
+    return type(value) is bool or (type(value) is str and value == 'unknown')
+
+
+def _faults(rows):
+    for row in rows:
+        baseline = row.get('baseline_outcome')
+        if baseline is not None:
+            require(isinstance(baseline, dict) and type(baseline.get('accepted')) is bool, 'baseline accepted must be boolean')
+            require(_truth(baseline.get('claim_truth')), 'baseline claim truth must be boolean or unknown')
+            require('baseline_claim_truth' not in row or type(row['baseline_claim_truth']) is type(baseline['claim_truth'])
+                    and row['baseline_claim_truth'] == baseline['claim_truth'], 'baseline claim truth drift')
+            require('silent_acceptance' not in baseline or baseline['silent_acceptance'] is
+                    (baseline['accepted'] and baseline['claim_truth'] is False), 'baseline silent acceptance drift')
+        elif 'baseline_claim_truth' in row:
+            require(_truth(row['baseline_claim_truth']), 'invalid orphan baseline truth')
+    return dict(declared=len(rows), completed=sum(r['status'] == 'completed' for r in rows),
+                baseline_reported=sum('baseline_outcome' in r for r in rows),
+                baseline_known=sum(type(r.get('baseline_outcome', {}).get('claim_truth')) is bool for r in rows),
+                baseline_unknown=sum(r.get('baseline_outcome', {}).get('claim_truth') == 'unknown' for r in rows),
+                baseline_missing=sum('baseline_outcome' not in r for r in rows),
+                baseline_true=sum(r.get('baseline_outcome', {}).get('claim_truth') is True for r in rows),
+                baseline_false=sum(r.get('baseline_outcome', {}).get('claim_truth') is False for r in rows),
+                baseline_accepted=sum(r.get('baseline_outcome', {}).get('accepted') is True for r in rows),
+                baseline_false_accepts=sum(r.get('baseline_outcome', {}).get('accepted') is True and
+                                          r['baseline_outcome']['claim_truth'] is False for r in rows),
+                **{flag: sum(r.get(flag) is True for r in rows) for flag in FLAGS},
+                reported={flag: sum(flag in r for r in rows) for flag in FLAGS},
+                production_detection=sum(r.get('explicit_detection') is True and r.get('outcome_scope') == 'production' for r in rows),
+                study_guard_detection=sum(r.get('explicit_detection') is True and r.get('outcome_scope') == 'study_guard' for r in rows))
+
+
+def _repeat(rows, protocol, kind):
+    passed = 0
+    section = getattr(protocol, kind)
+    for row in rows:
+        agreement = row['metrics'].get('agreement')
+        require(agreement is None or type(agreement) is bool, 'agreement must be boolean or null')
+        if agreement is not True:
+            continue
+        report = row.get('verifier_report', {})
+        require(row['status'] == 'completed' and row.get('first_divergence') is None
+                and report.get('status') == 'passed' and report.get('finite_scientific_arrays') is True,
+                'passing comparison lacks completed finite report')
+        count = section['continuation_ticks'] if kind == 'continuation' else section['source_ticks'] - section['prefix_ticks']
+        require(report.get('prefix_ticks') == section['prefix_ticks'] and report.get('continuation_ticks') == count,
+                'comparison tick bounds differ')
+        if kind == 'continuation':
+            require(report.get('first_divergence') is None and bool(report.get('max_abs_errors'))
+                    and all(report.get(k) is True for k in ('random_draws_match', 'source_event_prefix_unchanged',
+                                                          'branch_identity_distinct', 'queued_command_idempotency')),
+                    'continuation passing evidence incomplete')
+        else:
+            pairs = row.get('paired_raw_values', {})
+            require(set(pairs) == set(section['conditions']), 'replay requires all four paired modes')
+            require(isinstance(report.get('source_run_id'), str) and bool(report['source_run_id'])
+                    and isinstance(row.get('source_manifest_sha256'), str) and len(row['source_manifest_sha256']) == 64,
+                    'replay source identity missing')
+            for name, pair in pairs.items():
+                require(pair.get('agreement') is True and pair.get('first_divergence') is None
+                        and bool(pair.get('validated_fields')), 'passing replay mode inconsistent')
+                computation = pair.get('executed_computation', {})
+                expected = name in ('branch', 'policy_replay')
+                require(all(computation.get(k) is expected for k in ('controller_reexecuted', 'inference_executed')),
+                        'replay computation scope differs')
+                if name in ('action_replay', 'policy_replay'):
+                    raw = pair.get('raw', {})
+                    require(raw.get('status') == 'passed' and raw.get('first_divergence') is None
+                            and raw.get('errors') == [] and raw.get('source_run_id') == report['source_run_id']
+                            and raw.get('compared_ticks') == section['source_ticks']
+                            and raw.get('mode') == ('actions' if name == 'action_replay' else 'policy'),
+                            'replay raw source/tick comparison differs')
+        passed += 1
+    return dict(passed=passed, declared=len(rows), completed=sum(r['status'] == 'completed' for r in rows), rows=rows)
+
+
+def analyze(summary, manifest, protocol):
+    """Validate retained rows then derive counts and whole-set paired estimates."""
+    validate_finite(summary)
+    validate_finite(manifest)
+    require(manifest.get('analysis_status') == 'passed', 'campaign analysis did not pass')
+    require(protocol._content_sha256 == PROTOCOL_SHA256, 'protocol differs from frozen execution bytes')
+    require(summary.get('identity') == manifest.get('identity'), 'manifest identity differs')
+    require(summary['identity']['commit'] == STUDY_COMMIT, 'execution commit differs from frozen campaign')
+    recomputed = summarize(protocol, summary.get('rows', []))
+    require(recomputed == summary, 'summary aggregates differ from retained rows')
+    require(recomputed['declared_units'] == 111, 'expected exactly 111 declared descriptors')
+    rows = recomputed['rows']
+    faults = [r for r in rows if r['kind'] == 'fault']
+    families = {case.id: case.family for case in protocol.fault_cases}
+    fault_summary = dict(total=_faults(faults), cases={case.id: _faults([r for r in faults if r['case_id'] == case.id]) for case in protocol.fault_cases},
+                         families={family: _faults([r for r in faults if families[r['case_id']] == family]) for family in dict.fromkeys(families.values())}, rows=faults)
+    raw, eligible = [], []
+    for seed in protocol.execution_overhead['seeds']:
+        group = [r for r in rows if r['kind'] == 'execution_overhead' and r['seed'] == seed]
+        matched = all(r['status'] == 'completed' for r in group)
+        for key in protocol.execution_overhead['matched_fields']:
+            matched = matched and group[0].get(key) is not None and all(r.get(key) == group[0][key] for r in group)
+        matched = bool(matched and group[0].get('tick_count') == 220)
+        for row in group:
+            for flag in ('matched_seed', 'timing_eligible'):
+                if flag in row:
+                    require(type(row[flag]) is bool and row[flag] is matched, 'falsified matched seed gate')
+                elif matched:
+                    raise ValueError('matched seed gate not reported')
+        values = {r['condition']: r['metrics'].get('wall_seconds_per_tick') for r in group}
+        if matched:
+            require(all(type(v) in (int, float) and v > 0 for v in values.values()), 'matched timing must be positive finite scalar')
+            eligible.append(values)
+        raw.append(dict(seed=seed, matched=matched, rows=group,
+                        wall_ms={k: v*1000 if type(v) in (int, float) else None for k, v in values.items()},
+                        relative_percent={k: (values[k]/values['null']-1)*100 for k in CONDITIONS[1:]} if matched else None))
+    overhead = dict(matched=len(eligible), declared=len(raw), raw=raw,
+                    wall_ms={c: stats([g[c]*1000 for g in eligible]) for c in CONDITIONS},
+                    relative={c: stats([(g[c]/g['null']-1)*100 for g in eligible]) for c in CONDITIONS[1:]})
+    operations = [r for r in rows if r['kind'] == 'operation_cost']
+    operation_stats = {}
+    for metric in protocol.operation_cost['metrics']:
+        values = [r['metrics'][metric] for r in operations if r['status'] == 'completed'
+                  and r.get('timing_eligible', True) is True and type(r['metrics'].get(metric)) in (int, float)]
+        require(all(v >= 0 for v in values), 'operation timing must be nonnegative')
+        operation_stats[metric] = stats(values)
+    offline = next(r for r in rows if r['kind'] == 'offline_reproduction')
+    return dict(identity=recomputed['identity'], declared=len(rows), completed=sum(r['status'] == 'completed' for r in rows),
+                status_counts=recomputed['status_counts'], faults=fault_summary,
+                continuation=_repeat([r for r in rows if r['kind'] == 'continuation'], protocol, 'continuation'),
+                replay=_repeat([r for r in rows if r['kind'] == 'replay'], protocol, 'replay'), overhead=overhead,
+                operations=operation_stats, operation_rows=operations,
+                scope=dict(overhead_cache_policy=protocol.execution_overhead['cache_policy'],
+                           offline=protocol.offline_reproduction['scope'],
+                           independent_machine_reproduction=False,
+                           limitations=manifest.get('limitations', [])),
+                offline=dict(status=offline['status'], scope=protocol.offline_reproduction['scope'],
+                             independent_machine=False, row=offline))
+
+
+def escape_latex(value):
+    replacements = {'\\': r'\textbackslash{}', '&': r'\&', '%': r'\%', '$': r'\$', '#': r'\#',
+                    '_': r'\_', '{': r'\{', '}': r'\}', '~': r'\textasciitilde{}', '^': r'\textasciicircum{}'}
+    return ''.join(replacements.get(c, c) for c in str(value))
+
+
+def number(value):
+    return 'not reported' if value is None else f'{value:.3g}' if type(value) is float else str(value)
+
+
+def estimate(value, scale=1):
+    return 'not estimable' if value is None else number(value['median']*scale)
+
+
+def _table(headers, rows):
+    return ('{\\small\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{' + 'l' + 'r'*(len(headers)-1) + '}\n\\toprule\n' +
+            ' & '.join(escape_latex(x) for x in headers) + r' \\' + '\n\\midrule\n' +
+            '\n'.join(' & '.join(escape_latex(number(x)) for x in row) + r' \\' for row in rows) + '\n\\bottomrule\n\\end{tabular}}\n')
+
+
+def generate_outputs(result, hashes):
+    """Return six deterministic LaTeX files with full raw analysis in comments."""
+    f, o = result['faults']['total'], result['overhead']
+    macros = dict(StudyCommit=STUDY_COMMIT, ProtocolHash=result['identity']['protocol_sha256'],
+                  StudyDeclaredUnits=result['declared'], StudyCompletedUnits=result['completed'],
+                  FaultDeclaredUnits=f['declared'], FaultCompletedUnits=f['completed'],
+                  FaultBaselineFalseAccepts=f['baseline_false_accepts'], FaultBaselineKnownClaims=f['baseline_known'],
+                  FaultBaselineUnknownClaims=f['baseline_unknown'], FaultSystemSilentAccepts=f['silent_acceptance'] if f['reported']['silent_acceptance'] else 'not reported',
+                  FaultBenignFalseRejects=f['benign_false_rejection'] if f['reported']['benign_false_rejection'] else 'not reported',
+                  ContinuationPassed=result['continuation']['passed'], ContinuationDeclared=result['continuation']['declared'],
+                  ReplayPassed=result['replay']['passed'], ReplayDeclared=result['replay']['declared'],
+                  OverheadMatchedSeeds=o['matched'], OverheadDeclaredSeeds=o['declared'],
+                  SynchronousOverheadMedian=estimate(o['relative']['synchronous']), BackgroundOverheadMedian=estimate(o['relative']['background']),
+                  StorageOverheadMedian=estimate(o['relative']['background_storage']), NullWallMedianMs=estimate(o['wall_ms']['null']),
+                  StorageWallMedianMs=estimate(o['wall_ms']['background_storage']), OfflineStatus=result['offline']['status'])
+    header = '% Generated from retained evidence; do not edit.\n% Input SHA256: ' + json.dumps(hashes, sort_keys=True) + '\n'
+    outputs = {'authority-claims.tex': '\n'.join('\\newcommand{\\'+k+'}{'+escape_latex(number(v))+'}' for k,v in macros.items())+'\n'}
+    fault_rows = []
+    for name, c in result['faults']['cases'].items():
+        fault_rows.append([name, f"{c['completed']}/{c['declared']}", c['baseline_accepted'], c['baseline_false_accepts'],
+                           f"{c['baseline_true']}/{c['baseline_false']}/{c['baseline_unknown']}/{c['baseline_missing']}",
+                           f"{c['production_detection']}/{c['study_guard_detection']}",
+                           f"{c['correct_recovery']}/{c['reported']['correct_recovery']}",
+                           f"{c['benign_false_rejection']}/{c['reported']['benign_false_rejection']}"])
+    outputs['fault-matrix.tex'] = _table(['Case', 'Done/N', 'Accept', 'False', 'T/F/U/M', 'Prod/guard', 'Rec./rep.', 'FR/rep.'], fault_rows)
+    outputs['fault-matrix.tex'] += '\n\\par\\smallskip\n'
+    outputs['fault-matrix.tex'] += _table(['Family', 'Done/N', 'False accept', 'Known/U/M'],
+        [[name, f"{c['completed']}/{c['declared']}", c['baseline_false_accepts'],
+          f"{c['baseline_known']}/{c['baseline_unknown']}/{c['baseline_missing']}"]
+         for name,c in [*result['faults']['families'].items(), ('Total', f)]])
+    outputs['replay-table.tex'] = _table(['Comparison', 'Pass/declared', 'Completed'],
+        [[label, f"{result[k]['passed']}/{result[k]['declared']}", result[k]['completed']] for label,k in [('Continuation (100 ticks)', 'continuation'), ('All four replay modes (100 source ticks)', 'replay')]])
+    overhead_rows = []
+    for c in CONDITIONS:
+        wall, relative = o['wall_ms'][c], o['relative'].get(c)
+        overhead_rows.append([c.replace('background_storage', 'storage'), f"{o['matched']}/10", estimate(wall), 'not estimable' if wall is None else f"{number(wall['minimum'])}--{number(wall['maximum'])}",
+                              'not estimable' if wall is None else number(wall['iqr']), 'reference' if c == 'null' else estimate(relative),
+                              'reference' if c == 'null' else 'not estimable' if relative is None else number(relative['iqr'])])
+    outputs['overhead-table.tex'] = _table(['Condition', 'n/N', 'ms/tick', 'range', 'IQR', 'delta (%)', 'delta IQR'], overhead_rows)
+    outputs['overhead-table.tex'] += '\n\\par\\smallskip Raw per-seed ms/tick and paired differences (\\%).\\par\n'
+    paired_rows = []
+    for raw in o['raw']:
+        delta = raw['relative_percent'] or {}
+        paired_rows.append([raw['seed'], 'matched' if raw['matched'] else 'excluded',
+                            *[number(raw['wall_ms'][c]) for c in CONDITIONS],
+                            '/'.join(number(delta.get(c)) for c in CONDITIONS[1:])])
+    outputs['overhead-table.tex'] += _table(['Seed', 'Gate', 'Null', 'Sync', 'Bg', 'Storage', 'delta S/B/T'], paired_rows)
+    outputs['overhead-table.tex'] += '% Raw paired wall milliseconds and relative percentages (all declared seeds):\n'
+    outputs['overhead-table.tex'] += '\n'.join('% '+json.dumps({k:v for k,v in raw.items() if k != 'rows'}, sort_keys=True) for raw in o['raw'])+'\n'
+    operation_rows = []
+    for key, value in result['operations'].items():
+        operation_rows.append([key.removesuffix('_seconds'), 0 if value is None else value['n'], estimate(value,1000),
+                               'not estimable' if value is None else number(value['iqr']*1000)])
+    outputs['operation-table.tex'] = _table(['Operation', 'n/5 sources', 'median ms', 'IQR ms'], operation_rows)
+    # Numeric paired points, no categorical bars; plot extent includes every negative value.
+    points = [(raw['seed'], c, raw['relative_percent'][c]) for raw in o['raw'] if raw['matched'] for c in CONDITIONS[1:]]
+    if points:
+        low = min(0, *(p[2] for p in points)); high = max(0, *(p[2] for p in points))
+        span = max(high-low, 1)
+        y = lambda value: 0.25+3*(value-low)/span
+        plot = [r'\begin{tikzpicture}[x=0.48cm,y=1cm]', rf'\draw[->] (-0.5,0) -- (10,0) node[right] {{seed}};',
+                rf'\draw[->] (-0.5,0) -- (-0.5,3.7) node[above] {{paired delta (\%)}};',
+                rf'\draw[dashed] (-0.5,{y(0):.6f}) -- (9.5,{y(0):.6f});']
+        for value in dict.fromkeys((low,0,high)):
+            plot.append(rf'\node[left] at (-0.5,{y(value):.6f}) {{{number(value)}}};')
+        for seed in range(10): plot.append(rf'\node[below] at ({seed},0) {{{seed}}};')
+        for raw in o['raw']:
+            if raw['matched']:
+                values = [0, *raw['relative_percent'].values()]
+                plot.append(rf'\draw[gray!40] ({raw["seed"]},{y(min(values)):.6f}) -- ({raw["seed"]},{y(max(values)):.6f});')
+        for c, color, label in zip(CONDITIONS[1:], ('blue','red','black'), ('sync','background','storage')):
+            coords = ' '.join(f'({seed},{y(value):.6f})' for seed,condition,value in points if condition == c)
+            plot.append(rf'\draw[{color}] plot[only marks,mark=+] coordinates {{{coords}}};')
+            plot.append(rf'\node[{color},anchor=west] at (0,{4.1+CONDITIONS.index(c)*0.25:.2f}) {{{label}}};')
+        plot.append(r'\end{tikzpicture}')
+        outputs['overhead-plot.tex'] = '\n'.join(plot)+'\n'
+    else:
+        outputs['overhead-plot.tex'] = 'Paired timing overhead is not estimable.\n'
+    metadata = '% Analysis retains failures, exact compared ticks/source identities, and scope:\n'
+    metadata += '\n'.join('% '+line for line in json.dumps(result, sort_keys=True, indent=2, allow_nan=False).splitlines())+'\n'
+    return {name: header+metadata+content for name,content in outputs.items()}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ('summary','manifest','protocol','output'): parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--check', action='store_true')
+    args = parser.parse_args(argv)
+    try:
+        paths = {name: getattr(args,name) for name in ('summary','manifest','protocol')}
+        hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name,path in paths.items()}
+        result = analyze(parse_json(args.summary.read_text()), parse_json(args.manifest.read_text()), load_protocol(args.protocol))
+        outputs = generate_outputs(result, hashes)
+        if args.check:
+            stale = [name for name,content in outputs.items() if not (args.output/name).is_file() or (args.output/name).read_text() != content]
+            if stale:
+                print('FAIL: stale evidence: '+', '.join(stale), file=sys.stderr)
+                return 1
+        else:
+            args.output.mkdir(parents=True, exist_ok=True)
+            for name, content in outputs.items(): (args.output/name).write_text(content)
+        return 0
+    except (ValueError, OSError, KeyError, TypeError) as exc:
+        print(f'FAIL: {exc}', file=sys.stderr)
+        return 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
