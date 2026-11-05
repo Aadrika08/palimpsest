@@ -72,7 +72,7 @@ def harness(tmp_path):
         return budget
     def runner(command, **kwargs):
         assert state.budgets[-1].held
-        assert command[:2] == [str(Path(p.sys.executable).resolve()),'-B']
+        assert command[:2] == [str(Path(p.sys.executable).absolute()),'-B']
         assert Path(command[2]).is_absolute()
         assert kwargs['max_log_bytes'] == 256*1024
         assert kwargs['wall_seconds'] <= 120 and kwargs['cpu_seconds'] <= 120
@@ -366,3 +366,32 @@ def test_executing_source_mismatch_retains_preflight_charge(harness,monkeypatch)
     assert receipt['accounting_complete'] is True and receipt['worker_invocations']==0
     assert (harness.options['output']/'terminal-accounting.json').is_file()
     assert not harness.state.calls
+
+
+def test_worker_command_preserves_virtualenv_prefix_and_dependency_metadata(harness,tmp_path,monkeypatch):
+    """Execute only stdlib Python plus authored package metadata, no real worker."""
+    import subprocess
+    import sys
+    import venv
+
+    virtualenv=tmp_path/'software-venv'
+    venv.EnvBuilder(with_pip=False,symlinks=True).create(virtualenv)
+    alias=virtualenv/'bin'/'python'
+    assert alias.is_symlink() and alias.resolve()!=alias
+    site=virtualenv/'lib'/f'python{sys.version_info.major}.{sys.version_info.minor}'/'site-packages'
+    metadata=site/'audit_supervisor_software_fixture-1.0.dist-info'
+    metadata.mkdir(parents=True)
+    (metadata/'METADATA').write_text('Metadata-Version: 2.1\nName: audit-supervisor-software-fixture\nVersion: 1.0\n')
+    monkeypatch.setattr(p.sys,'executable',str(alias))
+    original=harness.options['_runner']; probes=[]
+    def runner(command,**kwargs):
+        if not probes:
+            program=('import sys,json; from importlib.metadata import version; '
+                'print(json.dumps({"prefix":sys.prefix,"dependency":version("audit-supervisor-software-fixture")}))')
+            probes.append(subprocess.run(command[:2]+['-c',program],cwd=tmp_path,env=kwargs['env'],
+                capture_output=True,text=True,check=False))
+        return original(command,**kwargs)
+    result=harness.run(_runner=runner)
+    assert result['status']=='completed'
+    assert len(probes)==1 and probes[0].returncode==0,probes[0].stderr
+    assert json.loads(probes[0].stdout)=={'prefix':str(virtualenv),'dependency':'1.0'}

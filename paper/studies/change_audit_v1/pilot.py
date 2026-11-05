@@ -376,7 +376,9 @@ def _run(*, mode, roster_path, roster_sha, projection_path, projection_sha, sour
             jobs.append(row)
             event({'kind':'job-running','job':row,'phase_cpu_seconds':charge()})
             config_path = output/'configs'/(config['root_id']+'.json')
-            command = [str(Path(sys.executable).resolve()),'-B',str(source_root/'paper/studies/change_audit_v1/pilot_worker.py'),
+            # Preserve the absolute interpreter alias: resolving a venv symlink
+            # changes sys.prefix and silently loses its dependency environment.
+            command = [str(_path(sys.executable)),'-B',str(source_root/'paper/studies/change_audit_v1/pilot_worker.py'),
                 '--mode',job['mode'],'--config',str(config_path),'--expected-config-sha256',config_hashes[config['root_id']],
                 '--output',str(artifact),'--pilot-root',str(output)]
             if anchor is not None:

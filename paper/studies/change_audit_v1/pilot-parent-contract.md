@@ -74,7 +74,10 @@ order. Conditions cannot begin before this publication.
 
 Sixteen sequential fresh workers then run four gains per root in exact order
 `1, .5, .75, 1.25`; every worker uses CPU FLYNN, parity false and 64 requested
-ticks. The command uses the absolute current Python, `-B`, the absolute worker
+ticks. The command preserves the original absolute `sys.executable` alias,
+including its virtualenv path; resolving that symlink would lose virtualenv
+`sys.prefix` and dependency access. The canonical interpreter ELF remains a
+separately pinned input-roster identity. The command uses `-B`, the absolute worker
 script, and pinned config/anchor descriptor SHA values. The production worker
 accepts no test seam. CPU thread variables are one, CUDA is hidden and rendering
 uses EGL. A fresh unused `PYTHONPYCACHEPREFIX` plus `-B` avoids stale ignored
