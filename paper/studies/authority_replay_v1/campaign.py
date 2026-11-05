@@ -10,6 +10,7 @@ import ctypes
 import hashlib
 from dataclasses import dataclass
 import json
+import math
 import os
 from pathlib import Path
 import shlex
@@ -98,6 +99,48 @@ def boundary(row):
     if error.get('type') in ('SourceMutation', 'IdentityDrift', 'OutputCap', 'CampaignOutputCap'):
         return f"unit identity/resource boundary: {row['unit_id']}"
     return None
+
+
+def phase_stop_reason(phase, process, emitted, expected, identity):
+    """Continue only after complete accounting and successful guardian cleanup.
+
+    An ordinary scientific failure may give the driver a positive exit code.
+    That is distinct from a monitor/cleanup failure, signal death, a resource
+    boundary, or an unexplained unsuccessful exit with only successful rows.
+    """
+    ids = [row['unit_id'] for row in emitted]
+    if len(ids) != len(set(ids)):
+        return f'{phase.name}: duplicate emitted unit descriptors'
+    if set(ids) != {unit['unit_id'] for unit in expected}:
+        return f'{phase.name}: phase failed before all declared rows were emitted'
+    descriptors = {unit['unit_id']: unit for unit in expected}
+    for row in emitted:
+        unit = descriptors[row['unit_id']]
+        if row.get('identity') != identity or any(
+                row.get(key) != value or type(row.get(key)) is not type(value)
+                for key, value in unit.items()):
+            return f'{phase.name}: emitted identity or unit descriptor drift'
+        if row.get('status') not in ('completed', 'failed', 'refused', 'timeout', 'incomplete'):
+            return f'{phase.name}: invalid emitted status'
+        reason = boundary(row)
+        if reason:
+            return reason
+    if process.get('status') != 'exited' or process.get('cleanup_error') or process.get('cleanup_errors'):
+        return process.get('reason', f'{phase.name}: phase monitoring or cleanup failure')
+    code = process.get('returncode')
+    if type(code) is not int or code < 0:
+        return f'{phase.name}: phase crashed or returned no exit status'
+    if code != 0 and not any(row['status'] == 'failed' for row in emitted):
+        return f'{phase.name}: nonzero exit without an accounted scientific failure'
+    return None
+
+
+def campaign_deadline(started, duration, requested=None):
+    if requested is None:
+        return started + duration
+    require(math.isfinite(requested), 'campaign deadline must be finite')
+    require(requested > started, 'campaign deadline already expired')
+    return min(started + duration, requested)
 
 
 class Guard:
@@ -544,15 +587,15 @@ def _finish(protocol, output, identity, phases, records, stopped):
     return result
 
 
-def run(protocol_path, assets, output):
+def run(protocol_path, assets, output, campaign_deadline_epoch=None):
     require(not Path(output).is_symlink(), 'campaign requires a fresh nonsymlink output root')
     protocol_path, assets, output = map(lambda p: Path(p).resolve(), (protocol_path, assets, output))
     require(not output.exists() and not output.is_symlink(), 'campaign requires a fresh nonexistent output root')
     protocol = load_protocol(protocol_path)
+    started = time.time()
+    deadline = campaign_deadline(started, protocol.resources['campaign_timeout_seconds'], campaign_deadline_epoch)
     identity = campaign_identity(REPO, protocol_path, assets)
     output.mkdir(parents=True, exist_ok=False)
-    started = time.time()
-    deadline = started + protocol.resources['campaign_timeout_seconds']
     write_json(output / 'identity.json', identity)
     write_json(output / 'preflight.json', {
         'resources': protocol.resources, 'available_free_bytes': shutil.disk_usage(output).free,
@@ -562,7 +605,8 @@ def run(protocol_path, assets, output):
         'offline_allocation_policy': 'Logical inventory cap; physical free reserve actively monitored. '
                                      'No worst-case reservation of the whole cached environment.',
     })
-    write_json(output / 'campaign-clock.json', dict(identity=identity, started_unix=started, deadline_unix=deadline))
+    write_json(output / 'campaign-clock.json', dict(identity=identity, started_unix=started, deadline_unix=deadline,
+                                                   requested_deadline_unix=campaign_deadline_epoch))
     guard = Guard(output, protocol_path, assets, identity, deadline)
     phases, records, stopped = plan(protocol_path, assets, output, deadline), [], None
     for phase in phases:
@@ -589,12 +633,7 @@ def run(protocol_path, assets, output):
                 path = phase.output / 'rows.jsonl'
                 emitted = read_rows(path) if path.exists() else []
                 expected = [u for u in declared_units(protocol) if u['kind'] == phase.kind]
-                if {r['unit_id'] for r in emitted} != {u['unit_id'] for u in expected}:
-                    stopped = f'{phase.name}: phase failed before all declared rows were emitted'
-                if process['status'] != 'exited':
-                    stopped = process.get('reason', 'phase monitoring failure')
-                for row in emitted:
-                    stopped = boundary(row) or stopped
+                stopped = phase_stop_reason(phase, process, emitted, expected, identity)
                 guard.check()
             except Exception as exc:
                 stopped = str(exc)
@@ -614,15 +653,17 @@ def main(argv=None):
     parser.add_argument('--assets', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--plan-only', action='store_true')
+    parser.add_argument('--campaign-deadline-epoch', type=float,
+                        help='Absolute inherited deadline; can shorten but never extend the protocol budget')
     args = parser.parse_args(argv)
     if args.plan_only:
         protocol = load_protocol(args.protocol)
         print('# resources ' + json.dumps(protocol.resources, sort_keys=True))
-        deadline = time.time() + 14400
+        deadline = campaign_deadline(time.time(), protocol.resources['campaign_timeout_seconds'], args.campaign_deadline_epoch)
         for phase in plan(args.protocol, args.assets, args.output, deadline):
             print(shlex.join(phase.command))
         return 0
-    return run(args.protocol, args.assets, args.output)
+    return run(args.protocol, args.assets, args.output, args.campaign_deadline_epoch)
 
 
 if __name__ == '__main__':

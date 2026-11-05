@@ -71,7 +71,7 @@ def test_complete_denominator_and_unique_logs(setup, monkeypatch):
         else:
             phase.output.mkdir()
             (phase.output / 'report.json').write_text(json.dumps({'status': 'blocked', 'reason': 'unshare denied'}))
-        return {'returncode': 1, 'status': 'exited'}
+        return {'returncode': int(phase.kind in ('replay', 'offline_reproduction')), 'status': 'exited'}
     monkeypatch.setattr(c, 'run_phase', fake)
     assert c.run(STUDY / 'protocol.json', output.parent, output) == 1
     summary = json.loads((output / 'analysis/summary.json').read_text())
@@ -303,7 +303,8 @@ def test_plan_prints_amended_resource_preflight(tmp_path, capsys):
     c.main(['--protocol', str(STUDY / 'protocol.json'), '--assets', str(tmp_path),
             '--output', str(tmp_path / 'new'), '--plan-only'])
     text = capsys.readouterr().out
-    assert '10737418240' in text and '17179869184' in text
+    assert '10737418240' in text
+    assert str(common.load_protocol(STUDY / 'protocol.json').resources['campaign_max_output_bytes']) in text
     assert not (tmp_path / 'new').exists()
 
 
@@ -666,3 +667,64 @@ def test_deadline_expiring_during_pin_does_not_admit_phase(setup, monkeypatch):
     assert record['status'] == 'failed'
     assert not marker.exists()
     assert 'admission' in record['reason']
+
+
+@pytest.mark.parametrize('offset,expected', [(60, 60), (20000, 14400)])
+def test_inherited_deadline_can_only_shorten_budget(setup, monkeypatch, offset, expected):
+    c, identity, output = setup
+    started = time.time()
+    monkeypatch.setattr(c.time, 'time', lambda: started)
+    calls = []
+    def fake(phase, **kwargs):
+        calls.append(kwargs['deadline'])
+        if phase.kind != 'offline_reproduction':
+            emit(c, identity, phase)
+        else:
+            phase.output.mkdir()
+        return {'status': 'exited', 'returncode': 0}
+    monkeypatch.setattr(c, 'run_phase', fake)
+    c.run(STUDY / 'protocol.json', output.parent, output, started + offset)
+    assert calls == [started + expected] * 6
+    clock = json.loads((output / 'campaign-clock.json').read_text())
+    assert clock['requested_deadline_unix'] == started + offset
+    assert clock['deadline_unix'] == started + expected
+
+
+@pytest.mark.parametrize('requested', [0., float('nan'), float('inf')])
+def test_invalid_or_expired_inherited_deadline_refused_before_identity(setup, monkeypatch, requested):
+    c, identity, output = setup
+    monkeypatch.setattr(c, 'campaign_identity', lambda *a: pytest.fail('invalid deadline precedes identity'))
+    monkeypatch.setattr(c, 'run_phase', lambda *a, **k: pytest.fail('invalid deadline precedes launch'))
+    with pytest.raises(ValueError, match='deadline'):
+        c.run(STUDY / 'protocol.json', output.parent, output, requested)
+    assert not output.exists()
+
+
+@pytest.mark.parametrize('failure', ['ordinary', 'resource', 'signal', 'cleanup', 'unexplained'])
+def test_complete_failed_phase_continues_only_for_ordinary_failure(setup, monkeypatch, failure):
+    c, identity, output = setup
+    calls = []
+    def fake(phase, **kwargs):
+        calls.append(phase.name)
+        if phase.kind == 'offline_reproduction':
+            phase.output.mkdir()
+            return {'status': 'exited', 'returncode': 0}
+        status = 'completed' if failure == 'unexplained' else 'failed'
+        emit(c, identity, phase, status)
+        if failure in ('ordinary', 'resource'):
+            path = phase.output / 'rows.jsonl'
+            rows = common.read_rows(path)
+            for row in rows:
+                row['error'] = {'type': 'ValueError', 'message': 'scientific disagreement'}
+                if failure == 'resource':
+                    row['error']['resource_limit'] = 'output cap'
+            path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        return {'status': 'exited', 'returncode': -9 if failure == 'signal' else 1,
+                **({'cleanup_error': 'unreaped descendant'} if failure == 'cleanup' else {})}
+    monkeypatch.setattr(c, 'run_phase', fake)
+    assert c.run(STUDY / 'protocol.json', output.parent, output) == 1
+    summary = json.loads((output / 'analysis/summary.json').read_text())
+    assert len(calls) == (6 if failure == 'ordinary' else 1)
+    assert summary['status_counts']['incomplete'] == (0 if failure == 'ordinary' else 61)
+    manifest = json.loads((output / 'analysis/campaign-manifest.json').read_text())
+    assert bool(manifest['stopped_reason']) is (failure != 'ordinary')
