@@ -223,7 +223,6 @@ def validate_runtime_reference(value: dict) -> dict:
     paths = [result[k]['path'] for k in ('recipe','manifest','ledger')]
     if any(_overlap(a,b) for i,a in enumerate(paths) for b in paths[i+1:]):
         raise ValueError('Metadata descriptors overlap')
-    _bounded_encoding(result, 'charge_reference')
     return result
 
 
@@ -705,6 +704,8 @@ class RuntimeHandle:
     def accounting(self, *, prior_charge_reference: dict, prior_cpu: dict) -> dict:
         self._active()
         try:
+            if type(prior_charge_reference) is not dict or type(prior_cpu) is not dict:
+                raise ValueError('Required prior charge and CPU must be dictionaries')
             self.recheck()
             result = validate_preparation_ledger(self._ledger_raw, self._reference, self._manifest,
                 self._recipe, prior_charge_reference=prior_charge_reference, prior_cpu=prior_cpu)

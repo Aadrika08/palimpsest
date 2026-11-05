@@ -431,3 +431,50 @@ def test_combined_absolute_runtime_path_has_its_own_byte_bound():
     p = package(roots=[dict(root=root,kind='complete',files=[descriptor('a'),descriptor(relative)],directories=dirs)])
     with pytest.raises(ValueError): p[0].validate_runtime_manifest(canonical(p[2]),p[1],
         required_roots=(root,),required_pins=p[5],output_root='/out')
+
+
+@pytest.mark.parametrize('character', ['x', '"'])
+def test_runtime_reference_accepts_schema_bounded_paths_above_charge_budget(character):
+    p = package(); m, ref = p[:2]
+    for kind in ('recipe', 'manifest', 'ledger'):
+        prefix = '/'+kind+'/'
+        remaining = 4096-len(prefix)
+        components = []
+        while remaining > 255:
+            components.append(character*255)
+            remaining -= 256
+        components.append(character*remaining)
+        ref[kind]['path'] = prefix+'/'.join(components)
+        assert len(ref[kind]['path'].encode('utf-8')) == 4096
+    assert len(canonical(ref)) > 8192
+    if character == '"':
+        assert len(canonical(ref)) > 16384
+    normalized = m.validate_runtime_reference(ref)
+    assert normalized == ref
+    too_long = copy.deepcopy(ref)
+    too_long['recipe']['path'] += character
+    with pytest.raises(ValueError): m.validate_runtime_reference(too_long)
+    ref['recipe']['path'] = '/changed'
+    assert normalized['recipe']['path'] != ref['recipe']['path']
+
+
+@pytest.mark.parametrize('charge,cpu', [(None,None), (None,{}), ({},None), ([],{}), ({},[])])
+def test_handle_accounting_requires_prior_dictionaries_and_poisons(tmp_path, charge, cpu):
+    p = authored(tmp_path)
+    before = len(os.listdir('/proc/self/fd'))
+    with pytest.raises(RuntimeError, match='failed before context exit'):
+        with holder(p) as held:
+            with pytest.raises(ValueError):
+                held.accounting(prior_charge_reference=charge, prior_cpu=cpu)
+            with pytest.raises(RuntimeError): held.summary()
+            with pytest.raises(RuntimeError): held.recheck()
+    assert len(os.listdir('/proc/self/fd')) == before
+
+
+def test_pure_ledger_retains_explicit_both_absent_child_mode():
+    p = package(); m, ref, manifest, recipe, ledger, _ = p
+    result = m.validate_preparation_ledger(canonical(ledger), ref, manifest, recipe,
+        prior_charge_reference=None, prior_cpu=None)
+    assert result == dict(runtime_input_bytes=1,
+        external_input_bytes=sum(ref[k]['size_bytes'] for k in ('recipe','manifest','ledger'))+3,
+        project_cpu_ns=11, memory_cpu_ns=7, accounting_authority_qualified=False)
