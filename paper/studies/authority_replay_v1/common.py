@@ -100,14 +100,14 @@ def load_protocol(path: Path) -> Protocol:
     raw = parse_json(content.decode("utf-8"))
     _keys(raw, {f.name for f in fields(Protocol) if f.init} - ({'protocol_revision'} if 'protocol_revision' not in raw else set()), "protocol")
     revision = raw.get('protocol_revision', 1)
-    require(type(revision) is int and revision in (1, 2), 'unsupported protocol revision')
+    require(type(revision) is int and revision in (1, 2, 3), 'unsupported protocol revision')
     require(type(raw["schema_version"]) is int and raw["schema_version"] == 1, "unsupported schema version")
     require(raw["study_id"] == "authority_replay_v1", "unsupported study ID")
     resources = raw["resources"]
     expected_bounds = {"unit_timeout_seconds": 900, "campaign_timeout_seconds": 14400,
                        "ordinary_unit_max_output_bytes": 512 * 1024**2,
                        "offline_unit_max_output_bytes": 10 * 1024**3,
-                       "campaign_max_output_bytes": (13 if revision == 2 else 16) * 1024**3,
+                       "campaign_max_output_bytes": ({1: 16, 2: 13, 3: 12}[revision]) * 1024**3,
                        "minimum_free_bytes": 6 * 1024**3}
     _keys(resources, set(expected_bounds) | {"raw_output_root", "sequential", "cpu_only", "stop_rules"}, "resources")
     for key, expected in expected_bounds.items():
@@ -158,7 +158,7 @@ def load_protocol(path: Path) -> Protocol:
         "operation_cost": {"seeds", "source", "source_condition", "metrics", "null_writer_replay_timings", "pass_threshold"},
         "offline_reproduction": {"repetitions", "scope", "full_flynn", "duration_seconds", "setup", "independent_machine_reproduction", "external_gate"},
     }
-    if revision == 2:
+    if revision >= 2:
         section_fields['execution_overhead'].add('terminal_policy')
     for name, expected in section_fields.items():
         _keys(raw[name], expected, name)
@@ -175,7 +175,7 @@ def load_protocol(path: Path) -> Protocol:
                 and section["device"] == "cpu", f"invalid {name} execution bounds")
     require(raw["replay"]["conditions"] == ["branch", "playback", "action_replay", "policy_replay"], "invalid replay conditions")
     overhead = raw["execution_overhead"]
-    if revision == 2:
+    if revision >= 2:
         require(overhead['terminal_policy'] == 'reset_same_seed', 'invalid overhead terminal policy')
     require(overhead["conditions"] == OVERHEAD_CONDITIONS and overhead["order"] == "cyclic_rotation_by_seed_mod_4"
             and type(overhead["warmup_ticks"]) is int and overhead["warmup_ticks"] == 20

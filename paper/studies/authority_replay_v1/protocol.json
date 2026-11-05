@@ -9,7 +9,7 @@
     "campaign_timeout_seconds": 14400,
     "ordinary_unit_max_output_bytes": 536870912,
     "offline_unit_max_output_bytes": 10737418240,
-    "campaign_max_output_bytes": 13958643712,
+    "campaign_max_output_bytes": 12884901888,
     "minimum_free_bytes": 6442450944,
     "stop_rules": [
       "Stop new units after any unit timeout.",
@@ -563,5 +563,5 @@
     "independent_machine_reproduction": false,
     "external_gate": "A second machine/operator reproduction remains a submission gate."
   },
-  "protocol_revision": 2
+  "protocol_revision": 3
 }

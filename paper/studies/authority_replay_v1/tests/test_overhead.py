@@ -555,7 +555,7 @@ def test_operation_config_rejects_inconsistent_manifest_profile(tmp_path, field,
 def test_campaign_budget_loads_amended_protocol(tmp_path, monkeypatch):
     monkeypatch.setattr(o.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 100 * o.GiB})())
     budget = o._budget(tmp_path / 'unit', tmp_path)
-    assert budget.campaign_budget.limits.max_bytes == 13 * o.GiB
+    assert budget.campaign_budget.limits.max_bytes == 12 * o.GiB
 
 
 def test_operation_binds_retained_cpu_environment_before_owner_open(tmp_path, monkeypatch):

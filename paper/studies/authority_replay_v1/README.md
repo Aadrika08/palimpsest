@@ -62,7 +62,7 @@ reason for units stopped before starting. Do not retry or substitute a seed.
 This append contract makes no power-loss/crash-consistency claim.
 
 Stop new units at any 15-minute unit timeout, four-hour campaign limit, 512 MiB
-ordinary-unit cap, 10 GiB checkout-unit cap, 16 GiB raw campaign cap, or crossing
+ordinary-unit cap, 10 GiB checkout-unit cap, revision-specific raw campaign cap (12 GiB in revision3), or crossing
 the 6 GiB free-space reserve. Stopping never authorizes deletion or scope
 reduction. These are frozen limits consumed by the drivers, not measurements of
 acceptable overhead.
@@ -147,3 +147,5 @@ link mode is not assumed from the configured tool default.
 ## Recovery revision 2
 
 The retained first attempt exposed a benchmark bug when seed 1 reached a goal at tick 199. Revision 2 measures sustained throughput across normal episode endings, explicitly resetting to the same declared seed before the next requested tick. Its 20 warmup and 200 measured ticks are unchanged; measured wall time includes resets and rows retain reset count, reason, and timing. Failed or stopped owners are never reset. Ordinary scientific failures remain ineligible and do not halt unrelated units; resource and identity boundaries still stop execution. `recovery-amendment.json` binds the original attempt, unchanged scientific variables, shared absolute deadline, and reduced recovery cap (13 GiB plus the retained first attempt under the original 16 GiB total). Revision 1 protocol files remain loadable for archival analysis.
+
+Revision3 isolates execution after a source-drift stop in the first recovery launch. It lowers the final raw cap to12GiB so both retained attempts plus final output remain under the original16GiB budget. Revision2 semantics, all111descriptors, and original absolute deadline are preserved. See recovery-amendment.json.

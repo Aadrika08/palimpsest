@@ -27,7 +27,7 @@ def test_public_contract_exists(common):
         assert hasattr(common, name)
 
 
-@pytest.mark.parametrize('revision', [1, 2])
+@pytest.mark.parametrize('revision', [1, 2, 3])
 def test_protocol_revision_preserves_archived_and_recovery_bounds(common, tmp_path, revision):
     raw = json.loads((ROOT / 'protocol.json').read_text())
     if revision == 1:
@@ -35,9 +35,9 @@ def test_protocol_revision_preserves_archived_and_recovery_bounds(common, tmp_pa
         raw['execution_overhead'].pop('terminal_policy', None)
         raw['resources']['campaign_max_output_bytes'] = 16 * 1024**3
     else:
-        raw['protocol_revision'] = 2
+        raw['protocol_revision'] = revision
         raw['execution_overhead']['terminal_policy'] = 'reset_same_seed'
-        raw['resources']['campaign_max_output_bytes'] = 13 * 1024**3
+        raw['resources']['campaign_max_output_bytes'] = (13 if revision == 2 else 12) * 1024**3
     path = tmp_path / 'revision.json'
     path.write_text(json.dumps(raw))
     protocol = common.load_protocol(path)
@@ -106,7 +106,7 @@ def test_protocol_resource_and_comparison_bounds(protocol):
     assert protocol.resources["campaign_timeout_seconds"] == 14400
     assert protocol.resources["ordinary_unit_max_output_bytes"] == 536870912
     assert protocol.resources["offline_unit_max_output_bytes"] == 10737418240
-    assert protocol.resources["campaign_max_output_bytes"] == 13958643712
+    assert protocol.resources["campaign_max_output_bytes"] == 12884901888
     assert protocol.resources["minimum_free_bytes"] == 6442450944
     assert protocol.comparison_policy["atol"] == 1e-6
     assert protocol.comparison_policy["rtol"] == 1e-6
@@ -288,6 +288,6 @@ def test_campaign_identity_rejects_changed_or_nonequivalent_mapping(common, prep
 
 def test_preflight_amendment_does_not_change_scientific_denominators(common, protocol):
     assert protocol.resources['offline_unit_max_output_bytes'] == 10 * 1024**3
-    assert protocol.resources['campaign_max_output_bytes'] == 13 * 1024**3
+    assert protocol.resources['campaign_max_output_bytes'] == 12 * 1024**3
     assert len(common.declared_units(protocol)) == 111
     assert protocol.resources['minimum_free_bytes'] == 6 * 1024**3
