@@ -4,7 +4,7 @@ BIBTEX ?= bibtex
 BUILD := build
 PDF := $(BUILD)/palimpsest-systems-paper.pdf
 
-.PHONY: all evidence paper verify clean
+.PHONY: all evidence paper figures verify clean
 
 all: paper
 
@@ -23,6 +23,9 @@ paper: authority-evidence
 verify: paper
 	$(PYTHON) -B scripts/build_authority_evidence.py $(AUTHORITY_ARGS) --check
 	$(PYTHON) scripts/verify_paper.py --write
+
+figures: authority-evidence
+	$(PYTHON) -B scripts/build_figures.py
 
 clean:
 	rm -f $(BUILD)/main.aux $(BUILD)/main.bbl $(BUILD)/main.blg \
