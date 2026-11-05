@@ -323,12 +323,15 @@ class AuthorityEvidenceTests(unittest.TestCase):
             outputs = module.generate_outputs(result,{},trace_root=root)
             self.assertEqual({k:v for k,v in outputs.items() if k != 'snapshot-ablation.tex'},base)
             table = outputs['snapshot-ablation.tex']
-            self.assertIn('action error: pose',table)
+            self.assertIn('Pose: velocity cmd.',table)
+            self.assertIn('Pose: heading (rad)',table)
             self.assertIn('2',table)
             for row in s['rows']:
                 if row.get('case_id') == 'S1': self.assertIn(row['trace']['arrays_sha256'],table)
             values = module.analyze_snapshot_ablation(result,root)
             self.assertEqual([row['pose_action_error'] for row in values],[2,2,2])
+            self.assertEqual([row['pose_velocity_error'] for row in values],[1,1,1])
+            self.assertEqual([row['pose_heading_error'] for row in values],[2,2,2])
             self.assertEqual([row['full_action_error'] for row in values],[0,0,0])
 
     def test_snapshot_input_tamper_nonfinite_shape_and_escape_refused(self):

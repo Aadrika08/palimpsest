@@ -347,8 +347,9 @@ named trace and semantic oracle; an unrelated crash is not semantic success.
 
 \begin{table}[t]
 \centering\small
-\caption{S1's first continuation action after the eight-tick prefix. Maximum
-absolute action error is recomputed from retained paired arrays. Pose-only
+\caption{S1's first continuation action after the eight-tick prefix. Absolute
+component errors are recomputed from retained paired arrays: velocity command
+and relative heading angle. Pose-only
 restoration jointly omits continuation state; this ablation does not identify
 the contribution of an individual omitted component.}
 \label{tab:snapshot-ablation}\studyinput{snapshot-ablation}
@@ -364,6 +365,8 @@ under the frozen policy.
 
 Five additional source trajectories each use an eight-tick prefix and 100 source
 ticks, followed by branch, playback, action replay, and policy replay conditions.
+Branch continuation compares the remaining 92 ticks; action and policy replay
+each compare all 100 source ticks.
 Conditions share a source and are paired, with computation/validation defined
 in Figure~\ref{fig:matrix}.
 The trajectory-level result is \ReplayPassed{}/\ReplayDeclared{}.

@@ -285,7 +285,8 @@ def analyze_snapshot_ablation(result, trace_root):
         matches = [r for r in result['faults']['rows'] if r['unit_id'] == unit_id]
         require(len(matches) == 1, 'snapshot ablation requires exactly one declared S1 row per seed')
         row = matches[0]
-        value = dict(seed=seed, unit_id=unit_id, status=row['status'], pose_action_error=None, full_action_error=None)
+        value = dict(seed=seed, unit_id=unit_id, status=row['status'], pose_action_error=None, full_action_error=None,
+                     pose_velocity_error=None, pose_heading_error=None, full_velocity_error=None, full_heading_error=None)
         values.append(value)
         if row['status'] != 'completed':
             continue
@@ -319,7 +320,7 @@ def analyze_snapshot_ablation(result, trace_root):
                 prefix = label+'__0__'
                 states[label] = {key[len(prefix):]: arrays[key].copy() for key in arrays.files if key.startswith(prefix)}
         actions = [states[label].get('action') for label in ('expected','pose','full')]
-        require(all(action is not None and action.dtype.kind == 'f' and action.ndim == 1 and action.size > 0 for action in actions)
+        require(all(action is not None and action.dtype.kind == 'f' and action.shape == (2,) for action in actions)
                 and all(action.shape == actions[0].shape and action.dtype == actions[0].dtype for action in actions),
                 'snapshot action shapes/dtypes differ or are empty')
         comparisons = _continuation_comparisons(*[[states[label]] for label in ('expected','pose','full')])
@@ -334,6 +335,8 @@ def analyze_snapshot_ablation(result, trace_root):
         expected, pose, full = [action.astype(np.float64) for action in actions]
         value.update(pose_action_error=float(np.max(np.abs(pose-expected))),
                      full_action_error=float(np.max(np.abs(full-expected))),
+                     pose_velocity_error=float(abs(pose[0]-expected[0])), pose_heading_error=float(abs(pose[1]-expected[1])),
+                     full_velocity_error=float(abs(full[0]-expected[0])), full_heading_error=float(abs(full[1]-expected[1])),
                      comparison_origin_tick=8, first_offset=0, arrays_sha256=digest,
                      arrays_path=str(path.relative_to(root)))
     validate_finite(values)
@@ -346,9 +349,9 @@ def generate_snapshot_ablation(result, hashes, trace_root):
                     scope='S1 retained single-offset action comparison; origin control tick 8, offset 0; no means or significance estimates')
     comments = '% Generated retained snapshot ablation; do not edit.\n'
     comments += '\n'.join('% '+line for line in json.dumps(metadata, sort_keys=True, indent=2, allow_nan=False).splitlines())+'\n'
-    return comments+_table(['Seed','action error: pose','action error: full'],
-                          [[r['seed'], 'not estimable' if r['pose_action_error'] is None else r['pose_action_error'],
-                            'not estimable' if r['full_action_error'] is None else r['full_action_error']] for r in values])
+    fields = ('pose_velocity_error', 'pose_heading_error', 'full_velocity_error', 'full_heading_error')
+    return comments+_table(['Seed','Pose: velocity cmd.','Pose: heading (rad)','Full: velocity cmd.','Full: heading (rad)'],
+                          [[r['seed'], *['not estimable' if r[key] is None else r[key] for key in fields]] for r in values])
 
 
 def generate_outputs(result, hashes, trace_root=None):
