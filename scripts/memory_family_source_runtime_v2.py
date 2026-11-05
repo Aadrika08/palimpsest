@@ -95,10 +95,10 @@ def _descriptor(value):
         raise ValueError('Immutable descriptor size is invalid')
 
 
-def validate_source_job(value: dict) -> dict:
-    """Validate only finite, exact, case-bound metadata, before imports/writes."""
+def _validate_metadata(value: dict) -> dict:
+    """Common metadata checks; never supplies parent execution admission."""
     _fields(value, JOB_FIELDS, 'Source job')
-    digest = job_sha256(value)
+    job_sha256(value)
     job = copy.deepcopy(value)
     if (job['schema'] != 'memory-family-source-job-v2'
             or job['operation'] != 'source' or job['condition'] is not None
@@ -153,6 +153,21 @@ def validate_source_job(value: dict) -> dict:
     if any(type(job['limits'][key]) is not int or job['limits'][key] != limit
            for key, limit in LIMITS.items()):
         raise ValueError('Source limits differ from the fixed parent allocation')
+    return job
+
+
+def validate_source_template(value: dict) -> dict:
+    """Validate a preparation template without payload reads or admission."""
+    job = _validate_metadata(value)
+    if job['parent_admission'] is not None:
+        raise PermissionError('Source template must have null parent admission')
+    return job
+
+
+def validate_source_job(value: dict) -> dict:
+    """Validate finite exact metadata and a live enclosing parent assertion."""
+    job = _validate_metadata(value)
+    digest = job_sha256(job)
     admission = job['parent_admission']
     if admission is None:
         raise PermissionError('Missing enclosing source admission')

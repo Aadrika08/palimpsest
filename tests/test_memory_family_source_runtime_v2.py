@@ -508,3 +508,16 @@ def test_authored_immutable_identity_checks_reject_drift_and_aliases(tmp_path, d
         alias.symlink_to(data)
     with pytest.raises((ValueError, RuntimeError)):
         runtime()._check_identity(value)
+
+
+def test_source_template_is_metadata_only_and_cannot_authorize_owner(tmp_path, monkeypatch):
+    module = runtime()
+    value = job(tmp_path)
+    value['parent_admission'] = None
+    monkeypatch.setattr(module, '_check_identity', lambda *a: pytest.fail('template opened payload'))
+    assert module.validate_source_template(value) == value
+    with pytest.raises(PermissionError, match='Missing'):
+        module.validate_source_job(value)
+    with pytest.raises(PermissionError, match='null'):
+        module.validate_source_template(job(tmp_path))
+    assert not Path(value['paths']['evidence_root']).exists()
