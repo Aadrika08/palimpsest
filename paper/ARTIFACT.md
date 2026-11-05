@@ -23,6 +23,33 @@ in declared denominators; the protocol does not allow replacing them.
 
 ## Evidence custody and analysis
 
+### Retained initial attempt and recovery amendment
+
+The initial frozen campaign at `d8658dda3fca37bb43b6dafc909114279f706f11`
+accounted for 111 descriptors: 69 completed, one failed, and 41 incomplete.
+Overhead seed 1 reached its navigation goal at tick 199; the benchmark then
+requested another step without resetting the terminal episode. The driver also
+misclassified the ordinary `ValueError` as a resource boundary. This is a
+benchmark failure, not evidence that recording or continuation failed.
+
+`evidence/authority-replay-v1/initial-attempt/` retains the exact summary,
+manifest, inventory, fault traces, failure report, original protocol and stderr.
+Its `retention.json` binds their hashes and the original raw-output location.
+The summary SHA-256 is
+`b9f7c43b1c5ba9015a2f45361671eaec7a31065220d004871b83a8bc3b8679e9`.
+The complete original raw tree remains retained locally.
+
+The recovery amendment explicitly resets normally ended episodes using the same
+declared seed while retaining the fixed 20 warm-up and 200 measured ticks.
+Measured reset work is included in throughput cost. It also preserves typed
+worker failures so ordinary scientific failures can remain ineligible without
+silently cancelling later units. This measures sustained engineering throughput
+across episode boundaries. Production engine, controller, seeds, tolerances,
+fault oracles and declared scope stay fixed. The new campaign has a separate
+execution/protocol identity and fresh output root; it does not replace initial
+rows. Both attempts share the initial absolute deadline and aggregate storage
+budget. The final report must state outcomes for both attempts.
+
 Retain the frozen execution commit, protocol hash, effective configuration,
 commands, source/asset identities, raw-tree inventories and hashes, compact
 rows, sanitized fault traces, and analysis output. The report commit may differ

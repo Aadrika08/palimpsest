@@ -1,0 +1,23 @@
+/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+  Wcsr = Wc.to_sparse_csr()
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/overhead.py", line 606, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/overhead.py", line 545, in main
+    result = call(config['seed'], config['condition'] if call is _execution else Path(config['source']),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/overhead.py", line 269, in _execution
+    result = measure_ticks(engine, camera_counter=camera if render else None, budget=budget)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/overhead.py", line 136, in measure_ticks
+    advance()
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/overhead.py", line 120, in advance
+    _step(engine)
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/overhead.py", line 112, in _step
+    require(engine.total_tick == tick + 1, f'engine did not complete tick {tick}')
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/paper/studies/authority_replay_v1/common.py", line 56, in require
+    raise ValueError(message)
+ValueError: engine did not complete tick 199
