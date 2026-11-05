@@ -5,6 +5,7 @@ injected for tests; the CLI always executes the production verifier processes.
 """
 from __future__ import annotations
 import argparse
+import ctypes
 import json
 import os
 from pathlib import Path
@@ -13,6 +14,7 @@ import signal
 import stat
 import subprocess
 import sys
+import tempfile
 import time
 
 REPO = Path(__file__).resolve().parents[3]
@@ -44,73 +46,211 @@ def _size(root):
     return total
 
 
-def _descendants(pid):
-    """Include nested verifier workers, which create their own sessions."""
-    result = set()
+def _exec_unit(command_path, admission_fd):
+    """Replace this pinned launcher only after its guardian authorizes execution."""
     try:
-        children = Path(f'/proc/{pid}/task/{pid}/children').read_text().split()
-    except (FileNotFoundError, ProcessLookupError):
-        return result
-    for child in children:
-        identifier = int(child)
-        result.add(identifier)
-        result.update(_descendants(identifier))
-    return result
+        require(os.read(admission_fd, 3) == b'GO\n', 'unit received no GO admission')
+    finally:
+        os.close(admission_fd)
+    command = parse_json(command_path.read_text())
+    os.execvp(command[0], command)
 
 
-def _kill_tree(child):
-    descendants = _descendants(child.pid)
-    # Capture before killing the leader, which reparents isolated worker sessions.
-    # The process group may outlive a leader already reaped by poll().
+def _supervise_unit(command_path, result_path, coordinator_pid, admission_fd):
+    """One private subreaper owns one unit, including detached grandchildren."""
+    from paper.studies.authority_replay_v1.campaign import (
+        _cleanup, _open_pidfd, _processes, _remember, _send_pidfd,
+    )
+    child, descriptor, known, result = None, None, {}, {}
+    unit_read, unit_write = None, None
+    stopped = []
+    def record_error(exc, prefix=''):
+        message = prefix + str(exc)
+        if 'error' in result:
+            result['error']['message'] += '; ' + message[:4096]
+        else:
+            result['error'] = {'type': type(exc).__name__, 'message': message[:4096]}
+    def interrupted(number, frame):
+        stopped.append(number)
     try:
-        os.killpg(child.pid, signal.SIGKILL)
-    except ProcessLookupError:
-        pass
-    for pid in descendants:
-        try:
-            if os.getpgid(pid) == pid:
-                os.killpg(pid, signal.SIGKILL)
-            else:
-                os.kill(pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
+        for number in (signal.SIGTERM, signal.SIGINT):
+            signal.signal(number, interrupted)
+        libc = ctypes.CDLL(None, use_errno=True)
+        require(libc.prctl(36, 1, 0, 0, 0) == 0, 'cannot enable private unit subreaper')
+        require(libc.prctl(1, signal.SIGTERM, 0, 0, 0) == 0, 'cannot bind unit guardian parent death signal')
+        require(os.getppid() == coordinator_pid, 'unit coordinator exited before admission')
+        require(os.read(admission_fd, 3) == b'GO\n', 'unit guardian received no GO admission')
+        require(not stopped, 'unit guardian stopped before launch')
+        unit_read, unit_write = os.pipe()
+        child = subprocess.Popen(
+            [sys.executable, '-B', str(Path(__file__).resolve()), '--exec-unit', str(command_path), str(unit_read)],
+            start_new_session=True, pass_fds=(unit_read,))
+        os.close(unit_read)
+        unit_read = None
+        # The direct child is still unreaped, so it cannot be a recycled PID.
+        descriptor = _open_pidfd(child.pid)
+        initial = _processes().get(child.pid)
+        require(initial is not None and initial[0] == os.getpid(), 'unit leader identity unavailable')
+        known[child.pid] = {'start_ticks': initial[1], 'provenance': 'guardian_launched_unit',
+                            'parent_pid': os.getpid()}
+        require(not stopped, 'unit guardian stopped before unit admission')
+        require(os.write(unit_write, b'GO\n') == 3, 'unit GO write incomplete')
+        os.close(unit_write)
+        unit_write = None
+        # Preserve leader identity until ancestry discovery/cleanup is complete.
+        while os.waitid(os.P_PID, child.pid, os.WEXITED | os.WNOHANG | os.WNOWAIT) is None:
+            _remember(child, known, os.getpid())
+            if stopped:
+                break
+            time.sleep(.01)
+    except Exception as exc:
+        record_error(exc)
+    finally:
+        for channel in (unit_read, unit_write):
+            if channel is not None:
+                os.close(channel)  # EOF prevents exec when ownership admission fails.
+        os.close(admission_fd)
+        for number in (signal.SIGTERM, signal.SIGINT):
+            signal.signal(number, signal.SIG_IGN)
+        if child is not None:
+            drain_needed = False
+            try:
+                _cleanup(child, known, os.getpid())
+            except Exception as exc:
+                drain_needed = True
+                record_error(exc, 'unit ownership cleanup failed: ')
+            finally:
+                # Even failed identity acquisition/cleanup must reap the direct
+                # child. Popen only signals its own unreaped child; no group or
+                # discovered numeric PID grants authority in this fallback.
+                try:
+                    if child.returncode is None:
+                        drain_needed = True
+                        if descriptor is not None:
+                            _send_pidfd(descriptor, signal.SIGKILL)
+                        else:
+                            child.kill()
+                except Exception as exc:
+                    record_error(exc, 'direct unit cleanup failed: ')
+                    child.kill()
+                finally:
+                    result['returncode'] = child.wait()
+                if drain_needed:
+                    # Killing/reaping the direct child can adopt grandchildren.
+                    # Re-discover these only through this private guardian and
+                    # the retained start identities; preserve any primary error.
+                    try:
+                        _cleanup(child, known, os.getpid())
+                    except Exception as exc:
+                        record_error(exc, 'post-reap ownership cleanup failed: ')
+        if descriptor is not None:
+            os.close(descriptor)
+        _json(result_path, result)
+    return int('error' in result)
 
 
 def _process(command, output, *, timeout, max_bytes, minimum_free_bytes):
-    """Kill the entire owner process group on timeout/resource crossing.
+    """Monitor a privately owned unit without signaling recycled PID/PGIDs.
 
-    Admission reserves the full unit allowance before launch. The lab verifier
-    and execution verifiers additionally enforce pre-publication StorageBudget.
-    Monitoring guards native logs; it is not a filesystem quota on those logs.
+    The private guardian admits the unit only after its caller pins the guardian.
+    It retains the leader unreaped and uses start-verified pidfds for descendants,
+    including new sessions adopted by its private subreaper. Native log monitoring
+    remains a cooperative resource guard rather than a filesystem quota.
     """
+    from paper.studies.authority_replay_v1.campaign import _open_pidfd, _send_pidfd
     env = os.environ.copy()
     env.update(MUJOCO_GL='egl', MPLBACKEND='Agg', OMP_NUM_THREADS='2', CUDA_VISIBLE_DEVICES='')
     env['PYTHONPATH'] = os.pathsep.join((str(REPO), str(REPO / 'src'), str(REPO / 'scripts'), env.get('PYTHONPATH', '')))
     started = time.monotonic()
-    # Verifiers require a fresh destination, so logs live in its parent.
-    with (output.parent / 'stdout.log').open('wb') as stdout, (output.parent / 'stderr.log').open('wb') as stderr:
-        child = subprocess.Popen(command, env=env, stdout=stdout, stderr=stderr, start_new_session=True)
-        status, reason, error = 'completed', None, None
-        try:
-            while child.poll() is None:
-                if time.monotonic() - started >= timeout:
-                    status, reason = 'timeout', 'unit wall-clock cap'
-                elif _size(output.parent) >= max_bytes:
-                    status, reason = 'failed', 'unit output cap'
-                elif shutil.disk_usage(output.parent).free < minimum_free_bytes:
-                    status, reason = 'failed', 'filesystem free-space reserve'
-                if reason:
-                    break
-                time.sleep(.05)
-        except Exception as exc:
-            status, reason = 'failed', 'monitor failure'
-            error = {'type': type(exc).__name__, 'message': str(exc)[:4096]}
-        finally:
+    status, reason, error, code = 'completed', None, None, None
+    # Control records are private and removed on return; verifier logs and raw
+    # output retain their existing paths. Their temporary bytes count in _size.
+    with tempfile.TemporaryDirectory(prefix='.unit-supervision-', dir=output.parent) as control:
+        command_path, result_path = Path(control) / 'command.json', Path(control) / 'result.json'
+        _json(command_path, command)
+        read_fd, write_fd = os.pipe()
+        child, descriptor, guardian_code = None, None, None
+        with (output.parent / 'stdout.log').open('wb') as stdout, (output.parent / 'stderr.log').open('wb') as stderr:
             try:
-                _kill_tree(child)
+                child = subprocess.Popen(
+                    [sys.executable, '-B', str(Path(__file__).resolve()), '--supervise-unit',
+                     str(command_path), str(result_path), str(os.getpid()), str(read_fd)],
+                    env=env, stdout=stdout, stderr=stderr, pass_fds=(read_fd,))
+                os.close(read_fd)
+                read_fd = None
+                descriptor = _open_pidfd(child.pid)
+                require(os.write(write_fd, b'GO\n') == 3, 'unit guardian GO write incomplete')
+                os.close(write_fd)
+                write_fd = None
+                while os.waitid(os.P_PID, child.pid, os.WEXITED | os.WNOHANG | os.WNOWAIT) is None:
+                    if time.monotonic() - started >= timeout:
+                        status, reason = 'timeout', 'unit wall-clock cap'
+                    elif _size(output.parent) >= max_bytes:
+                        status, reason = 'failed', 'unit output cap'
+                    elif shutil.disk_usage(output.parent).free < minimum_free_bytes:
+                        status, reason = 'failed', 'filesystem free-space reserve'
+                    if reason:
+                        break
+                    time.sleep(.05)
+                # Include fast publication and resource crossings between the
+                # last running poll and guardian exit, using the same limits.
+                if reason is None:
+                    if time.monotonic() - started >= timeout:
+                        status, reason = 'timeout', 'unit wall-clock cap'
+                    elif _size(output.parent) >= max_bytes:
+                        status, reason = 'failed', 'unit output cap'
+                    elif shutil.disk_usage(output.parent).free < minimum_free_bytes:
+                        status, reason = 'failed', 'filesystem free-space reserve'
+            except Exception as exc:
+                status, reason = 'failed', 'monitor failure'
+                error = {'type': type(exc).__name__, 'message': str(exc)[:4096]}
             finally:
-                code = child.wait()
-
+                for channel in (read_fd, write_fd):
+                    if channel is not None:
+                        os.close(channel)  # EOF forbids an unadmitted unit launch.
+                if child is not None:
+                    try:
+                        if descriptor is not None:
+                            _send_pidfd(descriptor, signal.SIGTERM)
+                        guardian_code = child.wait(timeout=5)
+                    except Exception as exc:
+                        if status == 'completed':
+                            status, reason = 'failed', 'supervisor cleanup failure'
+                        error = error or {'type': type(exc).__name__, 'message': str(exc)[:4096]}
+                        try:
+                            # A failed pidfd send must still let the guardian
+                            # clean its unit. This sole waiter's direct Popen
+                            # safely handles an already-exited guardian.
+                            child.terminate()
+                            guardian_code = child.wait(timeout=5)
+                        except Exception:
+                            child.kill()
+                            guardian_code = child.wait()
+                    finally:
+                        if descriptor is not None:
+                            os.close(descriptor)
+        try:
+            require(result_path.exists(), 'unit supervisor record unavailable')
+            supervised = parse_json(result_path.read_text())
+            code = supervised.get('returncode')
+            if supervised.get('error'):
+                failure = supervised['error']
+                if status == 'completed':
+                    status, reason = 'failed', 'unit ownership cleanup failure'
+                if error:
+                    error['message'] += '; unit supervisor: ' + failure['message']
+                else:
+                    error = failure
+            else:
+                require(type(code) is int and guardian_code == 0, 'unit supervisor did not complete cleanup')
+        except Exception as exc:
+            if status == 'completed':
+                status, reason = 'failed', 'unit supervisor record unavailable'
+            failure = {'type': type(exc).__name__, 'message': str(exc)[:4096]}
+            if error:
+                error['message'] += '; unit supervisor: ' + failure['message']
+            else:
+                error = failure
     if code and status == 'completed':
         status = 'failed'
     return {'status': status, 'returncode': code, 'stop_reason': reason, 'error': error}
@@ -338,4 +478,8 @@ def main():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) == 4 and sys.argv[1] == '--exec-unit':
+        raise SystemExit(_exec_unit(Path(sys.argv[2]), int(sys.argv[3])))
+    if len(sys.argv) == 6 and sys.argv[1] == '--supervise-unit':
+        raise SystemExit(_supervise_unit(Path(sys.argv[2]), Path(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5])))
     raise SystemExit(main())
