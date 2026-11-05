@@ -315,7 +315,7 @@ one offline check. Continuation pairs and replay trajectories are their
 respective units; ticks are repeated measurements. Fault units are
 specified case/condition/repetition executions, including deterministic fixture
 variants. Failures, refusals, timeouts, and incomplete units remain in declared
-denominators and cannot be replaced with successful retries.
+denominators for their attempt; revised execution is identified separately.
 
 The campaign executes sequentially under frozen time, output and free-space
 limits. Crossing a boundary stops new work while retaining completed and partial
@@ -331,11 +331,24 @@ First divergence names a field and tick. The study-level finite/exact checks
 supplement production replay reporting; the claim is about their evaluated
 composition. Scope is CPU, same version, same architecture.
 
+\paragraph{Disclosed benchmark amendment.}
+The first frozen campaign completed 69 of 111 descriptors, failed one, and left
+41 incomplete. Completed units included all 50 fault/challenge units, 10
+continuation pairs, five replay trajectories, and seed 0's four cost conditions.
+Seed 1's synchronous condition reached its goal at tick 199; a subsequent step
+without reset exposed a benchmark defect. Its generic exception was initially
+misclassified as a resource failure. Protocol revision 2 resets normally ended
+episodes with the same seed while preserving 20 warm-up and 200 measured ticks;
+reset cost stays within measured wall time, with reset counts/events retained.
+Engine, controller, seeds, oracles, and tolerances are unchanged. The complete
+initial attempt is retained with hashes. The amended full campaign retains the
+original deadline and combined 16 GiB cap; its completion is not assumed here.
+
 \paragraph{Result binding.}
-The campaign execution commit is \StudyCommit{} and protocol digest is
-\ProtocolHash{}. Completed descriptors: \StudyCompletedUnits{}/\StudyDeclaredUnits{}.
-\textbf{PENDING RESULTS: campaign evidence has not yet been bound to this draft.}
-Generated tables will supply its numerical results.
+\textbf{PENDING RESULTS: recovery campaign evidence has not yet been bound to this draft.}
+Completed descriptors: \StudyCompletedUnits{}/\StudyDeclaredUnits{}.
+Generated tables will supply its numerical results; execution and protocol
+identities are retained in the artifact rather than printed in full here.
 
 \subsection{RQ1: Controlled conformance and mechanism ablations}
 The 50 units cover delayed/stale/duplicate intervention requests (A1--A3), replay
@@ -407,6 +420,8 @@ original field/tick under the unchanged comparison policy.
 Ten seeds run four conditions in fresh processes: a benchmark-only null writer,
 a synchronous writer, a background writer, and a background writer plus actual
 bounded storage accounting. Each uses 20 warm-up ticks and 200 measured ticks.
+This measures sustained execution throughput across normal episode boundaries,
+including any required resets, rather than navigation success or time to goal.
 The null writer isolates recording cost.
 Condition order rotates cyclically by seed modulo four to reduce order
 effects; ten seeds do not fully balance all four rotations.
