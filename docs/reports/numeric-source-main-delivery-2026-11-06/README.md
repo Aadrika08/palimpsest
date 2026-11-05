@@ -8,7 +8,12 @@ run42104557534 passed at `108c6ef`:6935passed,318skipped,zero failures,
 The fetched main parents are530ffe6+108c6ef and its whole tree equals the
 tested head,4d7376656963da7e4560d095737b5a7a93671b97. The original log/API
 and merge readback are retained here. Main's separate automatic push run
-42113003331 is tracked independently, not assumed passed from tree equality.
+42113003331 independently PASSED at that exact merge commit: 6,935 passed,
+318 skipped, zero failures, 48 preflight checks, frontend build, 15 browser
+measurement checks and memory annotations. Original log/API readback are
+retained as main-postmerge-42113003331.log/json. The ordinary pass reports
+105 warnings; each later pass reports two dependency/escape warnings. These
+are retained rather than described as warning-free validation.
 
 This delivers the numeric source software only. Local CPU-compatibility and
 runtime-reference prototype work is later, unpushed and outside this result.
