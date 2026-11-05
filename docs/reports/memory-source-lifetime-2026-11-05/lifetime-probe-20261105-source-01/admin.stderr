@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.superpowers/sdd/memory-source-runtime-v2-implementation/lifetime-probe-20261105-source-01/admin.py", line 11, in <module>
+    assert all(int(fields[key].strip(), 16) == 0
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               for key in ('CapInh', 'CapPrm', 'CapEff', 'CapAmb'))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

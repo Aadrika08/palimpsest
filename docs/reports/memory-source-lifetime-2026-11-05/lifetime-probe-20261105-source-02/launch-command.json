@@ -1,0 +1,16 @@
+[
+  "/usr/bin/setpriv",
+  "--inh-caps=-all",
+  "--ambient-caps=-all",
+  "--no-new-privs",
+  "--",
+  "/usr/bin/prlimit",
+  "--cpu=2:2",
+  "--core=0:0",
+  "--",
+  "/usr/bin/python3",
+  "-I",
+  "-B",
+  "-S",
+  "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/.superpowers/sdd/memory-source-runtime-v2-implementation/lifetime-probe-20261105-source-02/admin.py"
+]

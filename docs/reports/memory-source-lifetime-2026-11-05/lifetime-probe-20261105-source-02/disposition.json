@@ -1,0 +1,23 @@
+{
+  "unit": "palimpsest-memory-lifetime-probe-20261105-source-02.service",
+  "invocation_id": "d51cbb4a162049829394c37ed5fb09c7",
+  "authorization": "Root explicitly authorized fourth bounded stop client after reviewing same-attempt emptiness evidence",
+  "pre_stop_basis": {
+    "MainPID": 0,
+    "ControlPID": 0,
+    "ControlGroup": "",
+    "original_cgroup_exists": false,
+    "retained_unit_state": "active/exited"
+  },
+  "stop_client": "04-stop-empty",
+  "stop_client_returncode": 0,
+  "stop_stdout": "04-stop-empty.stdout",
+  "stop_stderr": "04-stop-empty.stderr",
+  "separate_post_stop_property_query": false,
+  "service_launches_in_source_02": 1,
+  "total_fixed_clients_in_source_02": 4,
+  "relaunch": false,
+  "third_probe": false,
+  "artifact_deletion": false,
+  "actual_source_qualified": false
+}
