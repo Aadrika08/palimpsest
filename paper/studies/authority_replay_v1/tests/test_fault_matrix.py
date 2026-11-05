@@ -527,3 +527,108 @@ def test_r2_guard_receives_only_observed_successful_replay_facts():
     assert trace['trajectory_matches'] is True
     assert trace['claim_validation']['facts'] == {'executed_mode': 'actions',
         'inference_executed': False, 'policy_invocations': 0}
+
+
+def _independent_owner_probe():
+    def owner(pid, digest, pose='pose'):
+        return {'pid': pid, 'digest': digest, 'rng_sha256': 'rng-' + digest, 'pose_sha256': pose}
+    parent, sibling, branch = owner(1, 'parent'), owner(2, 'sibling'), owner(3, 'branch')
+    return {'semantic_invalid': True, 'semantic_outcome': 'recovered', 'retained_prefix_valid': True,
+            'pose_copies_completed': True, 'owner_states': {'parent_before': parent, 'parent_after': dict(parent),
+                'sibling_before': sibling, 'sibling_after': dict(sibling), 'branch_before': branch,
+                'branch_after': owner(3, 'mutated', 'different-pose')}}
+
+
+@pytest.mark.parametrize('seed', [0, 1, 2])
+def test_b1_successful_independence_is_not_a_false_baseline_conclusion(tmp_path, monkeypatch, seed):
+    # Row-pipeline fixture only; actual FLYNN integration retains separate tests.
+    import types
+    trace = _independent_owner_probe()
+    monkeypatch.setattr(module(), '_original_hashes', lambda runtime: {'source': 'a' * 64})
+    monkeypatch.setattr(module(), '_runtime_inputs', lambda case, output: (output, output))
+    def runtime(command, stdout, stderr, timeout):
+        config = json.loads(Path(command[-1]).read_text())
+        (Path(config['output']) / 'runtime-trace.json').write_text(json.dumps(trace))
+        return types.SimpleNamespace(returncode=0)
+    monkeypatch.setattr(module(), '_runtime_process', runtime)
+    unit = next(u for u in declared_units(PROTOCOL) if u.get('case_id') == 'B1' and u['seed'] == seed)
+    row = module().run_fault_case(narrow(unit), tmp_path / 'unit', IDENTITY)
+    assert row['correct_recovery'] is True
+    assert row['baseline_outcome']['accepted'] is True
+    assert row['baseline_outcome']['silent_acceptance'] is False
+    assert row['baseline_outcome']['claim_truth'] is True
+
+
+@pytest.mark.parametrize('unit', [u for u in FIXTURES if u['case_id'] == 'E2'], ids=lambda u: u['variant'])
+def test_e2_successful_ordered_retention_is_not_a_false_baseline_conclusion(tmp_path, unit):
+    row = module().run_fault_case(narrow(unit), tmp_path / 'unit', IDENTITY)
+    assert row['correct_recovery'] is True
+    assert row['baseline_outcome']['accepted'] is True
+    assert row['baseline_outcome']['silent_acceptance'] is False
+    assert row['baseline_outcome']['claim_truth'] is True
+
+
+def test_baseline_unknown_truth_is_never_counted_as_false_acceptance():
+    baseline = module()._baseline_outcome('B1', {'pose_copies_completed': True, 'semantic_invalid': True})
+    assert baseline['accepted'] is True and baseline['claim_truth'] == 'unknown'
+    assert baseline['silent_acceptance'] is False
+
+
+@pytest.mark.parametrize('change', [{'truth': 1}, {'truth': None}, {'truth': 'false'},
+    {'evidence': {'nonfinite': float('nan')}}, {'temporal_scope': {'phase': 'probe', 'ticks': [True]}},
+    {'temporal_scope': {'phase': '', 'ticks': []}}, {'temporal_scope': None}])
+def test_baseline_claim_truth_and_json_scope_are_validated(change):
+    claim = {'claim': 'observed independence', 'truth': True, 'evidence': {'probe': True},
+             'temporal_scope': {'phase': 'branch_probe', 'ticks': []}, **change}
+    with pytest.raises(ValueError):
+        module().validate_baseline_claim(claim)
+
+
+@pytest.mark.parametrize('case,trace,truth', [
+    ('A1', {'queued_boundaries': [{'tick': 9, 'receipt': 'queued'}], 'terminal_receipt': {'status': 'applied', 'applied_tick': 10}}, False),
+    ('A2', {'terminal_receipt': {'status': 'rejected'}, 'world_unchanged': True}, False),
+    ('A2', {'terminal_receipt': {'status': 'applied'}, 'world_unchanged': False}, True),
+    ('A3', {'accepted_requests': 2, 'authoritative_applications': 1}, False),
+    ('A3', {'accepted_requests': 2, 'authoritative_applications': 2}, True),
+    ('R1', {'executed_mode': 'playback', 'replay_inference_executed': False, 'replay_policy_invocations': 0}, False),
+    ('R2', {'executed_mode': 'actions', 'replay_inference_executed': False, 'replay_policy_invocations': 0}, False),
+    ('S1', {'scientific_first_divergence': None, 'application_first_divergence': {'field': 'revision'}}, False),
+    ('S1', {'scientific_first_divergence': None, 'application_first_divergence': None}, True),
+    ('S1', {'first_divergence': {'field': 'revision'}}, 'unknown'),
+    ('S2', {'error': 'missing recurrent state', 'destination_unchanged': True}, False),
+    ('D1', {'copied_target_sha256_before': 'a' * 64, 'copied_target_sha256_after': 'b' * 64}, False),
+    ('D2', {'copied_target_sha256_before': 'a' * 64, 'copied_target_sha256_after': 'a' * 64, 'shape_matches': True}, True),
+    ('C1', {'protected_identity_before': {'inode': 1}, 'protected_identity_after': {'inode': 2}, 'protected_content_unchanged': True}, False),
+    ('C2', {'protected_identity_before': {'ctime': 1}, 'protected_identity_after': {'ctime': 2}, 'protected_content_unchanged': True}, False),
+    ('C3', {'protected_identity_before': {'inode': 1}, 'protected_identity_after': {'inode': 1}, 'protected_content_unchanged': True}, True),
+    ('P1', {'terminal_success': False, 'retained_prefix_valid': True}, False),
+    ('P1', {'terminal_success': True, 'retained_prefix_valid': True}, True),
+    ('B2', {'sibling_before': 'before', 'sibling_after': 'after'}, False),
+    ('E1', {'error': 'quota', 'required_bytes': 2, 'cap_bytes': 1, 'used_bytes': 0}, False),
+    ('E2', {'accepted_items': 2, 'retained_items': 2, 'accepted_item_order': [0, 1], 'retained_item_order': [1, 0]}, False),
+    ('E2', {'accepted_items': 2, 'retained_items': 2}, 'unknown'),
+    ('E3', {'failure_calls': 1, 'closed': True, 'late_rejected': True}, False),
+])
+def test_baseline_truth_is_derived_from_observations_not_fault_intent(case, trace, truth):
+    left = module()._baseline_claim(case, {**trace, 'semantic_invalid': True})
+    right = module()._baseline_claim(case, {**trace, 'semantic_invalid': False})
+    assert left == right
+    assert left['truth'] == truth
+    module().validate_baseline_claim(left)
+    if case == 'A1':
+        assert left['temporal_scope']['phase'] == 'queued_boundaries_before_application'
+        assert left['temporal_scope']['ticks'] == [9]
+    if case == 'P1':
+        assert left['claim'] == 'terminal publication completed'
+        assert left['evidence']['validated_prefix_claim_truth'] is True
+
+
+def test_branch_contamination_is_false_but_unprobed_independence_unknown():
+    import copy
+    trace = _independent_owner_probe()
+    contaminated = copy.deepcopy(trace)
+    contaminated['owner_states']['parent_after']['digest'] = 'contaminated'
+    assert module()._baseline_outcome('B1', contaminated)['silent_acceptance'] is True
+    trace['owner_states']['branch_after'] = trace['owner_states']['branch_before']
+    baseline = module()._baseline_outcome('B1', trace)
+    assert baseline['claim_truth'] == 'unknown' and baseline['silent_acceptance'] is False

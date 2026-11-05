@@ -78,6 +78,134 @@ def classify_outcome(trace, condition):
             'benign_false_rejection': benign and outcome in ('refused', 'detected')}
 
 
+def validate_baseline_claim(claim):
+    from paper.studies.authority_replay_v1.common import validate_finite
+    require(type(claim) is dict and set(claim) == {'claim', 'truth', 'evidence', 'temporal_scope'}, 'invalid baseline claim fields')
+    truth = claim['truth']
+    require(type(truth) is bool or (type(truth) is str and truth == 'unknown'), 'baseline truth must be bool or unknown')
+    require(type(claim['claim']) is str and bool(claim['claim'].strip()), 'baseline claim must be named')
+    require(type(claim['evidence']) is dict and bool(claim['evidence']), 'baseline evidence must be a nonempty object')
+    scope = claim['temporal_scope']
+    require(type(scope) is dict and set(scope) == {'phase', 'ticks'}, 'baseline temporal scope must have phase/ticks')
+    require(type(scope['phase']) is str and bool(scope['phase'].strip()), 'baseline scope phase must be named')
+    require(type(scope['ticks']) is list and all(type(t) is int and t >= 0 for t in scope['ticks']), 'baseline scope ticks must be nonnegative integers')
+    validate_finite(claim)
+
+
+def _baseline_claim(case_id, trace):
+    """Truth concerns the observed claim in its stated scope, not fault intent."""
+    truth, ticks = 'unknown', []
+    evidence = {'missing_observations': True}
+    claim, phase = 'unresolved observed claim', 'unresolved'
+    if case_id == 'A1':
+        claim, phase = 'accepted intervention was already applied while queued', 'queued_boundaries_before_application'
+        states = trace.get('queued_boundaries', [])
+        evidence = {'queued_boundaries': states, 'terminal_receipt': trace.get('terminal_receipt')}
+        ticks = [s['tick'] for s in states if type(s.get('tick')) is int]
+        if any(s.get('receipt') == 'queued' for s in states):
+            truth = False
+    elif case_id == 'A2':
+        claim, phase = 'parsed intervention was applied', 'command_terminal_receipt'
+        receipt = trace.get('terminal_receipt', {})
+        evidence = {'terminal_receipt': receipt, 'world_unchanged': trace.get('world_unchanged')}
+        if receipt.get('status') in ('rejected', 'applied'):
+            truth = receipt['status'] == 'applied'
+    elif case_id == 'A3':
+        claim, phase = 'two accepted requests caused two applications', 'command_application_events'
+        count = trace.get('authoritative_applications')
+        evidence = {'accepted_requests': trace.get('accepted_requests'), 'authoritative_applications': count,
+                    'authoritative_ticks': trace.get('authoritative_ticks')}
+        if type(count) is int:
+            truth = count >= 2
+    elif case_id in ('R1', 'R2'):
+        claim, phase = 'this execution reproduced the policy', 'observed_replay_execution'
+        evidence = {k: trace.get(k) for k in ('executed_mode', 'replay_inference_executed', 'replay_policy_invocations')}
+        if evidence['executed_mode'] in ('playback', 'actions') and evidence['replay_inference_executed'] is False and evidence['replay_policy_invocations'] == 0:
+            truth = False
+    elif case_id == 'S1':
+        claim, phase = 'pose-only continuation matched scientific and application state', 'paired_continuation_comparison'
+        evidence = {k: trace.get(k) for k in ('scientific_first_divergence', 'application_first_divergence', 'arrays_path', 'arrays_sha256')}
+        if all(k in trace for k in ('scientific_first_divergence', 'application_first_divergence')):
+            truth = trace['scientific_first_divergence'] is None and trace['application_first_divergence'] is None
+        if type(trace.get('comparison_origin_tick')) is int:
+            ticks = [trace['comparison_origin_tick']]
+    elif case_id == 'S2':
+        claim, phase = 'readable incomplete snapshot was successfully restored', 'restore_admission'
+        evidence = {k: trace.get(k) for k in ('snapshot_readable', 'error', 'destination_unchanged')}
+        if evidence['error'] and evidence['destination_unchanged'] is True:
+            truth = False
+    elif case_id in ('D1', 'D2'):
+        claim, phase = 'copied destination identity remained compatible', 'post_source_run_destination_admission'
+        before, after = trace.get('copied_target_sha256_before'), trace.get('copied_target_sha256_after')
+        evidence = {'copied_target_sha256_before': before, 'copied_target_sha256_after': after,
+                    'shape_matches': trace.get('shape_matches'), 'schema_parsed': trace.get('schema_parsed')}
+        if type(before) is str and type(after) is str:
+            truth = before == after
+    elif case_id in ('C1', 'C2', 'C3'):
+        claim, phase = 'protected file identity and content remained unchanged', 'held_custody_recheck'
+        before, after = trace.get('protected_identity_before'), trace.get('protected_identity_after')
+        content = trace.get('protected_content_unchanged')
+        evidence = {'protected_identity_before': before, 'protected_identity_after': after,
+                    'protected_content_unchanged': content}
+        if type(before) is dict and type(after) is dict and type(content) is bool:
+            truth = before == after and content
+    elif case_id == 'P1':
+        claim, phase = 'terminal publication completed', 'post_process_death_publication'
+        evidence = {'terminal_success': trace.get('terminal_success'), 'published_ticks': trace.get('published_ticks'),
+                    'validated_prefix_claim_truth': trace.get('retained_prefix_valid')}
+        if type(evidence['terminal_success']) is bool:
+            truth = evidence['terminal_success']
+    elif case_id == 'B1':
+        claim, phase = 'branch mutation preserved parent and sibling state', 'completed_branch_mutation_probe'
+        states = trace.get('owner_states', {})
+        evidence = {'owner_states': states}
+        keys = ('parent_before', 'parent_after', 'sibling_before', 'sibling_after', 'branch_before', 'branch_after')
+        if (all(type(states.get(k)) is dict and 'digest' in states[k] for k in keys)
+                and all('pose_sha256' in states[k] for k in ('parent_before', 'branch_before', 'sibling_before'))):
+            probe = states['branch_before'].get('digest') != states['branch_after'].get('digest')
+            poses = _initial_poses_match(states['parent_before'], states['branch_before'], states['sibling_before'])
+            evidence.update(successful_mutation_probe=probe, initial_poses_match=poses)
+            if probe and poses:
+                truth = states['parent_before'] == states['parent_after'] and states['sibling_before'] == states['sibling_after']
+    elif case_id == 'B2':
+        claim, phase = 'shared-owner branch mutation preserved sibling state', 'reset_pose_copy_mutation_probe'
+        before, after = trace.get('sibling_before'), trace.get('sibling_after')
+        evidence = {'sibling_before': before, 'sibling_after': after}
+        if type(before) is str and type(after) is str and before != after:
+            truth = False
+    elif case_id == 'E1':
+        claim, phase = 'quota-constrained publication succeeded', 'writer_publication_attempt'
+        evidence = {k: trace.get(k) for k in ('error', 'required_bytes', 'cap_bytes', 'used_bytes')}
+        if evidence['error'] and type(evidence['required_bytes']) is int and type(evidence['cap_bytes']) is int and evidence['required_bytes'] > evidence['cap_bytes']:
+            truth = False
+    elif case_id == 'E2':
+        claim, phase = 'all accepted producer items were retained in order', 'after_writer_drain'
+        evidence = {k: trace.get(k) for k in ('accepted_items', 'retained_items', 'accepted_item_order', 'retained_item_order')}
+        accepted, retained = evidence['accepted_items'], evidence['retained_items']
+        if type(accepted) is int and type(retained) is int:
+            if accepted != retained:
+                truth = False
+            elif type(evidence['accepted_item_order']) is list and type(evidence['retained_item_order']) is list:
+                truth = (len(evidence['accepted_item_order']) == accepted and len(evidence['retained_item_order']) == retained
+                         and evidence['accepted_item_order'] == evidence['retained_item_order'])
+    elif case_id == 'E3':
+        claim, phase = 'writer operation succeeded despite process continuation', 'terminal_writer_failure'
+        evidence = {k: trace.get(k) for k in ('failure_calls', 'late_rejected', 'closed', 'published_ticks')}
+        if type(evidence['failure_calls']) is int and evidence['failure_calls'] > 0:
+            truth = False
+    result = {'claim': claim, 'truth': truth, 'evidence': evidence, 'temporal_scope': {'phase': phase, 'ticks': ticks}}
+    validate_baseline_claim(result)
+    return result
+
+
+def _baseline_outcome(case_id, trace):
+    accepted = naive_accepts(case_id, trace)
+    claim = _baseline_claim(case_id, trace)
+    return {'accepted': accepted, 'silent_acceptance': accepted and claim['truth'] is False,
+            'claim': claim['claim'], 'claim_truth': claim['truth'], 'claim_evidence': claim['evidence'],
+            'temporal_scope': claim['temporal_scope']}
+
+
 def first_divergence(expected, actual):
     """Stable field/tick order; exact discrete state, frozen tolerant float32 state."""
     import numpy as np
@@ -105,6 +233,10 @@ def _custody(case, output):
     leaf = protected / 'held.txt'
     shutil.copyfile(FIXTURE_SOURCE, leaf)
     initial = sha256_file(leaf)
+    def identity():
+        stat = leaf.stat()
+        return {name: getattr(stat, name) for name in ('st_dev', 'st_ino', 'st_size', 'st_mtime_ns', 'st_ctime_ns')}
+    initial_identity = identity()
     descriptor = {'path': leaf.name, 'size_bytes': leaf.stat().st_size, 'sha256': initial}
     held = AdmissionInputs(protected.resolve(), [descriptor], time.monotonic() + 30)
     detected = poisoned = False
@@ -138,6 +270,7 @@ def _custody(case, output):
         poisoned = True
     return {'start_hash_matches': initial == descriptor['sha256'], 'exit_hash_matches': sha256_file(leaf) == initial,
             'protected_content_unchanged': sha256_file(leaf) == initial, 'context_poisoned_or_closed': poisoned,
+            'protected_identity_before': initial_identity, 'protected_identity_after': identity(),
             'error': error, 'semantic_invalid': case.id != 'C3',
             'semantic_outcome': 'detected' if detected else 'accepted', 'retained_prefix_valid': True}
 
@@ -207,6 +340,7 @@ def _queue(case, output):
     recovered = (len(retained) == count and [e['index'] for e in retained] == list(range(count))
                  and stats['backpressure_events'] >= 1 and during['queued_items'] <= bound)
     return {'producer_returned': True, 'accepted_items': count, 'retained_items': len(retained),
+            'accepted_item_order': list(range(count)), 'retained_item_order': [event['index'] for event in retained],
             'queue_bound': bound, 'stats': stats, 'semantic_invalid': True,
             'semantic_outcome': 'recovered' if recovered else 'accepted', 'retained_prefix_valid': recovered}
 
@@ -990,9 +1124,8 @@ def run_fault_case(case: FaultCase, output: Path, identity: dict[str, object]) -
         row['palimpsest_outcome'] = trace.get('production_outcome', trace['semantic_outcome'])
         if row['outcome_scope'] == 'study_guard':
             row['study_guard_outcome'] = trace['semantic_outcome']
-        baseline = naive_accepts(case.id, trace)
-        row['baseline_outcome'] = {'predicate': case.naive_predicate, 'accepted': baseline,
-                                   'silent_acceptance': baseline and trace['semantic_invalid']}
+        row['baseline_outcome'] = {'predicate': case.naive_predicate, **_baseline_outcome(case.id, trace)}
+        row['baseline_claim_truth'] = row['baseline_outcome']['claim_truth']
     except subprocess.TimeoutExpired as exc:
         row.update(status='timeout', error={'type': type(exc).__name__, 'message': str(exc)})
     except Exception as exc:
