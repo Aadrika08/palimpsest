@@ -73,6 +73,7 @@ jobs:
         run: |
           runuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh -- \
             tests/test_frozen_pins.py \
+            tests/test_authority_replay_process_ownership.py \
             tests/test_lab.py::Supervision::test_watchdog_terminates_owner_process_group \
             tests/test_bounded_qualification_descendants.py \
             tests/test_memory_family_allocation_v3.py::test_rollback_never_unlinks_a_replacement_inode \
@@ -85,7 +86,8 @@ jobs:
             tests/test_storage.py::StorageTests::test_nested_inventory_rejects_special_files_scan_errors_and_changed_root
           runuser -u fixture -- prlimit --nofile=65536: -- env PALIMPSEST_TEST_BASETEMP="$PWD/runs/hosted-preflight" \
             scripts/run_tests.sh -- \
-            tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli
+            tests/test_puck_cpu_amendment_audit.py::test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli \
+            tests/test_puck_cpu_held_parent_integration.py::test_authored_admission_uses_synthetic_capacity_only_in_its_bound_clone
       - name: Run fixture tests
         env:
           PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest

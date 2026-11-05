@@ -9,11 +9,14 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import resource
 import secrets
 import shutil
 import signal
 import subprocess
 import time
+
+import pytest
 
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -53,23 +56,30 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
     for name in current.SOURCES:
         raw=(ROOT/name).read_bytes()
         if name==PARENT:
-            assert raw.count(marker)==1
-            changed=raw.replace(marker,replacement)
-            assert changed.replace(replacement,marker)==raw
             # The real legacy auditor labels these inert fixtures explicitly.
             # Adapt only this authenticated test clone; production acceptance
             # continues to require the ordinary actual-data scope.
             scope=b"audit.get('evidence_scope')!='ordinary CPU held allocation only'"
             authored_scope=b"audit.get('evidence_scope')!='AUTHORED fixture only'"
-            assert changed.count(scope)==1
-            changed=changed.replace(scope,authored_scope)
-            assert changed.replace(authored_scope,scope).replace(replacement,marker)==raw
+            changes=[(marker,replacement,1),(scope,authored_scope,1)]
             roster=b"PREPARATION_NEGATIVE_IMPORTS=['numpy._distributor_init_local','org']"
             authored_roster=b"PREPARATION_NEGATIVE_IMPORTS=['org']"
-            if roster in changed:
-                assert changed.count(roster)==1
-                changed=changed.replace(roster,authored_roster)
-                assert changed.replace(authored_roster,roster).replace(authored_scope,scope).replace(replacement,marker)==raw
+            if roster in raw:changes.append((roster,authored_roster,1))
+            admission=b'def resource_admission(config):\n'
+            synthetic_admission=(admission+
+                b'    # Synthetic capacity is AUTHORED fixture data, never a host measurement.\n'
+                b"    assert ROOT.name=='authored-project', 'Synthetic capacity requires the authored project'\n"
+                b'    authored_disk_free_bytes=authored_tmpfs_free_bytes=8*1024**3\n')
+            changes.extend([(admission,synthetic_admission,1),
+                (b'shutil.disk_usage(ROOT).free',b'(authored_disk_free_bytes)',2),
+                (b'shutil.disk_usage(parent).free',b'(authored_tmpfs_free_bytes)',2)])
+            changed=raw
+            for before,after,count in changes:
+                assert changed.count(before)==count
+                changed=changed.replace(before,after)
+            restored=changed
+            for before,after,_ in reversed(changes):restored=restored.replace(after,before)
+            assert restored==raw
             raw=changed
         write(project,name,raw)
     api=load(project/PARENT,'cpu_authored_cloned_parent')
@@ -273,6 +283,13 @@ def run_cli(root,api,phase,config):
     except BaseException:
         os.killpg(process.pid,signal.SIGKILL);process.communicate();raise
     elapsed=time.monotonic()-started
+    if b'CPU held-runtime resource admission failed' in stderr:
+        parent=Path(config['stage_parent']).parent
+        available=int(next(l.split()[1] for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:')))*1024
+        print('AUTHORED post-failure resource sample:',dict(
+            nofile=resource.getrlimit(resource.RLIMIT_NOFILE),mem_available_bytes=available,
+            disk_free_bytes=shutil.disk_usage(root).free,tmpfs_free_bytes=shutil.disk_usage(parent).free,
+            limits=config['limits']))
     channels={}
     for name,payload in (('stdout',stdout),('stderr',stderr)):
         leaf='authored-'+phase+'-cli.'+name
@@ -284,6 +301,20 @@ def run_cli(root,api,phase,config):
     receipt_raw=canonical(receipt);assert len(receipt_raw)<=64*1024
     (root/('authored-'+phase+'-transport.json')).write_bytes(receipt_raw)
     return process.returncode,stdout,stderr
+
+
+def test_authored_admission_uses_synthetic_capacity_only_in_its_bound_clone(tmp_path, monkeypatch):
+    original=(ROOT/PARENT).read_bytes()
+    root,api,_,sources=project(tmp_path)
+    assert (ROOT/PARENT).read_bytes()==original
+    assert next(row for row in sources if row['path']==PARENT)['sha256']==digest((root/PARENT).read_bytes())
+    monkeypatch.setattr(api.shutil,'disk_usage',lambda path: pytest.fail('Authored admission sampled host capacity'))
+    config=dict(stage_parent='/tmp/authored-capacity-probe',limits=api.LIMITS['prepare'])
+    admission=api.resource_admission(config)
+    assert admission['disk_available_bytes']==admission['tmpfs_available_bytes']==8*1024**3
+    monkeypatch.setattr(api,'ROOT',tmp_path/'foreign-project')
+    with pytest.raises(AssertionError,match='Synthetic capacity requires the authored project'):
+        api.resource_admission(config)
 
 
 def test_actual_authored_prepare_then_separate_held_four_import_cli(tmp_path):

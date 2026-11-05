@@ -22,6 +22,13 @@ def driver():
     return importlib.import_module('paper.studies.authority_replay_v1.repeatability')
 
 
+@pytest.fixture(autouse=True)
+def fixture_disk_capacity(tmp_path, monkeypatch):
+    # Authored verifier fixtures need deterministic admission, even on a small tmpfs.
+    usage = shutil.disk_usage(tmp_path)._replace(total=16 * 1024**3, used=8 * 1024**3, free=8 * 1024**3)
+    monkeypatch.setattr(driver().shutil, 'disk_usage', lambda path: usage)
+
+
 def fixture_runner(command, output, **limits):
     output.mkdir()
     options = dict(zip(command[2::2], command[3::2]))
@@ -151,7 +158,7 @@ def test_process_timeout_retains_logs(tmp_path):
     import sys
     m = driver()
     row = m._process([sys.executable, '-c', 'import time; print("started", flush=True); time.sleep(10)'],
-                     tmp_path / 'raw', timeout=.2, max_bytes=1024**2, minimum_free_bytes=0)
+                     tmp_path / 'raw', timeout=2, max_bytes=1024**2, minimum_free_bytes=0)
     assert row['status'] == 'timeout'
     assert row['returncode'] != 0
     assert 'started' in (tmp_path / 'stdout.log').read_text()
@@ -176,7 +183,7 @@ def test_timeout_kills_nested_worker_process_groups(tmp_path):
     code = ('import subprocess,sys,time,pathlib; '
             f'p=subprocess.Popen([sys.executable,"-c",{worker!r}],start_new_session=True); '
             f'pathlib.Path({str(pidfile)!r}).write_text(str(p.pid)); time.sleep(10)')
-    m._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=.3,
+    m._process([sys.executable, '-c', code], tmp_path / 'raw', timeout=2,
                max_bytes=1024**2, minimum_free_bytes=0)
     pid = int(pidfile.read_text())
     # A killed child can briefly remain a zombie until the host reaps it.
