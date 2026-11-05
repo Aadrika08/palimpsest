@@ -1,0 +1,13 @@
+# Scoped science fix review 1
+
+5 November 2026. Source-only rereview of **original P2 and direct breakage from the order-text replacement only**. Original review remains unchanged at `oracle-amendment-science-review.md`. Tracked HEAD: `2652e367353983c8898e997c0d616f85cbc5149e`. Revised candidate `docs/plans/memory-family-vnext-oracle-order-amendment-design.md` SHA256: `078be5163f9a5a32d3f6d1d5716c89086ef831cd69c75a6788ed074deb895d36`.
+
+**Verdict: original P2 ADDRESSED. No direct new material finding from this replacement.** This passes the revised document as a prospective design candidate; it does not adopt the order, qualify actual runtime/order, authorize execution, or close the other adoption gates in the original review.
+
+The revised lines 33–37 remove the naive `row % 8` proposal and explicitly reject its hidden-factor alias. They reuse the existing linked bounded-imbalance candidate and existing `memory_family_order_v4.validate_order_candidate`, requiring independently frozen source, assignment-roster and candidate hashes. They accurately state its bounded marginal criteria: six per later condition/position over the 48 family rows, two per cost stratum, hidden binary factors at three ones/three zeros, and public-factor one counts in [2,4]. They explicitly disclaim exact public-factor/higher-order orthogonality, preserve own-first non-counterbalance, require publication of aliases and keep independent scientific/order acceptance and actual launch receipts separate.
+
+These claims match the existing validator's checks and output limitations (`scripts/memory_family_order_v4.py:115–177`) and the linked candidate's declared limitation list. The existing source negative `tests/test_memory_family_order_v4.py:90–93` specifically targets naive-row-mod-eight hidden aliasing. This review inspected that source; it did **not** run the test or validator and makes no fresh passing-test claim.
+
+The fix does not change the oracle lifecycle, all-nine natural-terminal scoring, estimands/thresholds, family/case-kind order, no-retry/no-replacement rule, old donor preservation, or prospective admission boundaries. Marginal 3/3 hidden-factor balance is not a claim of joint hidden-factor or higher-order balance, and the revised text correctly leaves those limitations visible. An externally hash-bound static candidate is still not actual source/order acceptance; lines 33,37,43,45 retain that separation.
+
+Only read-only candidate/static-source inspection and creation of this ignored note occurred. No tests, repository imports, solver, case construction, model/native/research work, protected raw/SNP/catalog/held-out reads, source edits, commits or pushes were performed.
