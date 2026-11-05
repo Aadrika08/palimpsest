@@ -31,6 +31,31 @@ def descriptor(path, data=b''):
     return dict(path=str(path), size_bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
 
 
+def test_pin_requirements_validator_is_pure_copied_and_zero_byte_eligible(monkeypatch):
+    m = module()
+    pins = dict(python_alias='/authored/bin/python', python_elf=descriptor('/authored/elf'),
+                owner_source=descriptor('/authored/owner.py'), pyvenv_config=descriptor('/authored/pyvenv.cfg'),
+                required_sources=[descriptor('/authored/owner.py')])
+    def forbidden(*a, **k): pytest.fail('pure pin validation reached IO, holder or clock')
+    monkeypatch.setattr(m, 'RuntimeHandle', forbidden)
+    monkeypatch.setattr(os, 'open', forbidden)
+    monkeypatch.setattr(Path, 'open', forbidden)
+    monkeypatch.setattr(hashlib, 'file_digest', forbidden)
+    monkeypatch.setattr(m.time, 'monotonic', forbidden)
+    got = m.validate_runtime_pin_requirements(pins)
+    assert got == pins and got is not pins
+    pins['required_sources'][0]['sha256'] = '0'*64
+    pins['pyvenv_config']['size_bytes'] = 9
+    assert got['required_sources'][0]['sha256'] == hashlib.sha256(b'').hexdigest()
+    assert got['pyvenv_config']['size_bytes'] == 0
+    for change in ({'extra': 1}, {'required_sources': [descriptor('/same')]*2},
+                   {'python_alias': '/a//b'}, {'owner_source': dict(descriptor('/a'), size_bytes=True)},
+                   {'python_elf': dict(descriptor('/a'), size_bytes=2**31+1)}):
+        with pytest.raises(ValueError): m.validate_runtime_pin_requirements(dict(got, **change))
+    del got['pyvenv_config']
+    with pytest.raises(ValueError): m.validate_runtime_pin_requirements(got)
+
+
 def package(base='/authored', *, files=None, directories=None, roots=None):
     m = module()
     profile = dict(profile_id='memory-source-runtime-profile-v1-proposed',

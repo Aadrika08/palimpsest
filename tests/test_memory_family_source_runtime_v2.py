@@ -521,3 +521,465 @@ def test_source_template_is_metadata_only_and_cannot_authorize_owner(tmp_path, m
     with pytest.raises(PermissionError, match='null'):
         module.validate_source_template(job(tmp_path))
     assert not Path(value['paths']['evidence_root']).exists()
+
+
+def reference_job(tmp_path):
+    """Independent metadata only: these pins do not describe installed bytes."""
+    from scripts import memory_source_runtime_closure_v1 as closure
+    value = job(tmp_path)
+    value['schema'] = 'memory-family-source-job-v3'
+    immutable = value['immutable']
+    del immutable['closure']
+    descriptor = lambda path: dict(path=str(path), size_bytes=0, sha256='a'*64)
+    immutable['runtime_manifest'] = dict(
+        schema='memory-source-runtime-reference-v1',
+        profile_id='memory-source-runtime-profile-v1-proposed',
+        profile_sha256=closure.PROFILE_SHA256, load_policy='retained-unqualified-v1',
+        **{key: dict(descriptor(tmp_path / (key+'.json')), size_bytes=1)
+           for key in ('recipe', 'manifest', 'ledger')})
+    immutable['runtime_requirements'] = dict(
+        roots=sorted([str(runtime().REPO_ROOT/name) for name in
+                      ('src', 'scripts', 'paper/studies/change_audit_v1')]
+                     + [str(tmp_path/'venv'), str(tmp_path/'base')]),
+        pyvenv_config=descriptor(tmp_path/'venv/pyvenv.cfg'),
+        required_sources=[descriptor(runtime().REPO_ROOT/'scripts'/name) for name in sorted([
+            'memory_family_source_runtime_v2.py', 'qualify_memory_family_source_v2.py',
+            'memory_source_runtime_closure_v1.py', 'memory_family_source_seal_v2.py',
+            'memory_family_numeric_preservation_v2.py', 'memory_directory_census_v1.py'])])
+    # The repeated owner pin must describe identical physical input bytes.
+    immutable['owner_source']['size_bytes'] = 0
+    value['parent_admission'].update(
+        schema='memory-family-source-parent-admission-v3', deadline_monotonic=1200.0,
+        runtime_deadline_monotonic=1800.0,
+        runtime_manifest_sha256=immutable['runtime_manifest']['manifest']['sha256'],
+        runtime_profile_sha256=closure.PROFILE_SHA256)
+    return rebind(value)
+
+
+def test_v2_job_rejects_reference_and_v3_rejects_closure(tmp_path):
+    module = runtime()
+    for version in (2, 3):
+        value = reference_job(tmp_path)
+        if version == 2:
+            value['schema'] = 'memory-family-source-job-v2'
+        else:
+            value['immutable']['closure'] = []
+        value['parent_admission'] = None
+        with pytest.raises(ValueError): module.validate_source_template(value)
+    value = reference_job(tmp_path); value['parent_admission'] = None
+    assert module.validate_source_template(value) == value
+
+
+def test_v3_template_never_constructs_holder_or_reads_pins(tmp_path, monkeypatch):
+    import builtins
+    import hashlib
+    from scripts import memory_source_runtime_closure_v1 as closure
+    value = reference_job(tmp_path); value['parent_admission'] = None
+    def forbidden(*a, **k): pytest.fail('V3 template touched payload or loader')
+    monkeypatch.setattr(closure, 'hold_runtime_manifest', forbidden)
+    monkeypatch.setattr(closure, 'RuntimeHandle', forbidden)
+    monkeypatch.setattr(runtime(), '_check_identity', forbidden)
+    monkeypatch.setattr(runtime(), '_load_engine', forbidden)
+    monkeypatch.setattr(builtins, 'open', forbidden)
+    monkeypatch.setattr(Path, 'open', forbidden)
+    monkeypatch.setattr(Path, 'resolve', forbidden)
+    monkeypatch.setattr(hashlib, 'file_digest', forbidden)
+    assert runtime().validate_source_template(value) == value
+    assert not Path(value['paths']['evidence_root']).exists()
+
+
+def test_v3_requirements_are_exact_independent_metadata(tmp_path):
+    value = reference_job(tmp_path); value['parent_admission'] = None
+    module = runtime()
+    roots, pins = module._runtime_requirements(value)
+    assert roots == tuple(value['immutable']['runtime_requirements']['roots'])
+    assert pins['pyvenv_config']['size_bytes'] == pins['required_sources'][0]['size_bytes'] == 0
+    assert module.validate_source_template(value) == value
+    pins['required_sources'][0]['sha256'] = '0'*64
+    assert value['immutable']['runtime_requirements']['required_sources'][0]['sha256'] == 'a'*64
+    for defect in ('missing', 'extra', 'relative', 'overlap', 'unsorted', '17', 'config',
+                   'duplicate', '65', 'contradiction', 'bool', 'bad-path', 'huge-file'):
+        bad = copy.deepcopy(value); req = bad['immutable']['runtime_requirements']
+        if defect == 'missing': del req['pyvenv_config']
+        elif defect == 'extra': req['extra'] = 0
+        elif defect == 'relative': req['roots'] = ['relative']
+        elif defect == 'overlap': req['roots'] = ['/authored', '/authored/child']
+        elif defect == 'unsorted': req['roots'] = ['/z', '/a']
+        elif defect == '17': req['roots'] = [f'/r{i:02}' for i in range(17)]
+        elif defect == 'config': req['pyvenv_config']['path'] = '/wrong/pyvenv.cfg'
+        elif defect == 'duplicate': req['required_sources'] *= 2
+        elif defect == '65': req['required_sources'] = [dict(req['pyvenv_config'], path=f'/s{i:02}') for i in range(65)]
+        elif defect == 'contradiction':
+            next(row for row in req['required_sources'] if row['path'] == bad['immutable']['owner_source']['path'])['size_bytes'] = 1
+        elif defect == 'bool': req['pyvenv_config']['size_bytes'] = False
+        elif defect == 'bad-path': req['roots'] = ['/a\\b']
+        else: req['pyvenv_config']['size_bytes'] = 2**31+1
+        with pytest.raises(ValueError): module.validate_source_template(bad)
+    # Returned collections do not change if the caller changes its job.
+    roots, pins = module._runtime_requirements(value)
+    value['immutable']['runtime_requirements']['roots'][0] = '/changed'
+    value['immutable']['runtime_requirements']['pyvenv_config']['sha256'] = '0'*64
+    assert '/changed' not in roots and pins['pyvenv_config']['sha256'] == 'a'*64
+
+
+def test_v3_admission_binds_manifest_profile_and_deadlines(tmp_path, monkeypatch):
+    monkeypatch.setattr(runtime().time, 'monotonic', lambda: 1000.0)
+    value = reference_job(tmp_path)
+    assert runtime().validate_source_job(value) == value
+    for key, bad in [('runtime_manifest_sha256', '0'*64), ('runtime_profile_sha256', '0'*64),
+                     ('deadline_monotonic', 1361.0), ('deadline_monotonic', 1801.0),
+                     ('runtime_deadline_monotonic', 1901.0), ('runtime_deadline_monotonic', 1199.0),
+                     ('runtime_deadline_monotonic', True), ('runtime_deadline_monotonic', 999.0),
+                     ('runtime_deadline_monotonic', float('nan')),
+                     ('deadline_monotonic', True), ('deadline_monotonic', float('inf'))]:
+        candidate = copy.deepcopy(value); candidate['parent_admission'][key] = bad
+        with pytest.raises((ValueError, PermissionError)): runtime().validate_source_job(candidate)
+
+
+def test_v2_admission_schema_cannot_admit_v3(tmp_path, monkeypatch):
+    monkeypatch.setattr(runtime().time, 'monotonic', lambda: 1000.0)
+    value = reference_job(tmp_path)
+    value['parent_admission'] = job(tmp_path)['parent_admission']
+    rebind(value)
+    with pytest.raises((ValueError, PermissionError)): runtime().validate_source_job(value)
+    value = job(tmp_path); value['parent_admission'] = reference_job(tmp_path)['parent_admission']
+    rebind(value)
+    with pytest.raises((ValueError, PermissionError)): runtime().validate_source_job(value)
+
+
+def test_public_v3_owner_refuses_before_payload_or_loader(tmp_path, monkeypatch):
+    import builtins
+    from scripts import memory_source_runtime_closure_v1 as closure
+    monkeypatch.setattr(runtime().time, 'monotonic', lambda: 1000.0)
+    value = reference_job(tmp_path)
+    def forbidden(*a, **k): pytest.fail('public V3 crossed retained-unqualified gate')
+    for name in ('_check_identity', '_load_engine', '_storage', '_safe_path', '_write_json'):
+        monkeypatch.setattr(runtime(), name, forbidden)
+    monkeypatch.setattr(closure, 'hold_runtime_manifest', forbidden)
+    monkeypatch.setattr(closure, 'RuntimeHandle', forbidden)
+    monkeypatch.setattr(builtins, 'open', forbidden)
+    monkeypatch.setattr(Path, 'open', forbidden)
+    with pytest.raises(PermissionError, match='retained-unqualified'):
+        runtime().run_source(value)
+    assert not Path(value['paths']['evidence_root']).exists()
+
+
+@pytest.mark.parametrize('target', ['root', 'pin', 'alias', 'recipe', 'manifest', 'ledger', 'asset'])
+def test_v3_rejects_output_overlap_with_every_declared_input(tmp_path, target):
+    value = reference_job(tmp_path); value['parent_admission'] = None
+    immutable = value['immutable']; output = value['paths']['evidence_root']
+    if target == 'root': immutable['runtime_requirements']['roots'] = [output]
+    elif target == 'pin': immutable['python_elf']['path'] = output+'/elf'
+    elif target == 'alias':
+        immutable['python_alias'] = output+'/bin/python'
+        immutable['runtime_requirements']['pyvenv_config']['path'] = output+'/pyvenv.cfg'
+    elif target == 'asset': value['paths']['assets'] = output+'/assets'
+    else: immutable['runtime_manifest'][target]['path'] = output+'/'+target
+    with pytest.raises(ValueError): runtime().validate_source_template(value)
+
+
+def test_v3_complete_admitted_job_envelope_is_bounded(tmp_path, monkeypatch):
+    monkeypatch.setattr(runtime().time, 'monotonic', lambda: 1000.0)
+    value = reference_job(tmp_path)
+    # A structurally valid long assets path leaves the hash-excluded envelope legal,
+    # while the complete admitted representation is one byte beyond its cap.
+    # Repeated lexical root components create bounded canonical paths/strings.
+    req = value['immutable']['runtime_requirements']
+    req['required_sources'] = [dict(path='/'+'/'.join(['x'*236]*16)+f'/s{i:02}',
+                                    size_bytes=0, sha256='a'*64) for i in range(64)]
+    base_size = len(memory.canonical_bytes(value))
+    padding = 256*1024+1-base_size
+    assert 0 < padding < 4096
+    length = len(value['paths']['assets']) + padding
+    parts = []
+    while length > 256:
+        parts.append('a'*250); length -= 251
+    parts.append('a'*(length-1))
+    value['paths']['assets'] = '/' + '/'.join(parts)
+    rebind(value)
+    assert len(memory.canonical_bytes(value)) == 256*1024+1
+    runtime().job_sha256(value)
+    with pytest.raises(ValueError, match='256 KiB'): runtime().validate_source_job(value)
+
+
+def private_owner_inputs(tmp_path, monkeypatch, *, acquire=True, close_error=False,
+                         fail_recheck=False):
+    """Process-local authored handle and engine; no installed file is visited."""
+    from palimpsest.storage import StorageBudget, StorageLimits
+    module = runtime()
+    clock = [1000.0]
+    monkeypatch.setattr(module.time, 'monotonic', lambda: clock[0])
+    value = reference_job(tmp_path)
+    monkeypatch.setattr(module.sys, 'executable', value['immutable']['python_alias'])
+    monkeypatch.setattr(module.sys, 'prefix', str(tmp_path/'venv'))
+    monkeypatch.setattr(module.sys, 'base_prefix', str(tmp_path/'base'))
+    # Only these existing post-gate symlink identity lookups are substituted.
+    resolve = Path.resolve
+    def authored_resolve(path, *a, **k):
+        if str(path) in (value['immutable']['python_alias'], '/proc/self/exe'):
+            return Path(value['immutable']['python_elf']['path'])
+        return resolve(path, *a, **k)
+    monkeypatch.setattr(Path, 'resolve', authored_resolve)
+    Path(value['paths']['assets']).mkdir()
+    storage = StorageBudget([value['paths']['evidence_root']],
+        StorageLimits(max_bytes=module.LIMITS['max_bytes'], min_free_bytes=0,
+                      max_runs=1, max_snapshots=1))
+    events, contexts, factories, open_calls = [], [], [], []
+
+    class AuthoredHandle:
+        active = False
+        def __enter__(self):
+            assert not self.active
+            self.active = True
+            events.append('enter'); self.check()
+            return self
+        def recheck(self):
+            assert self.active, 'identity callback used released handle'
+            events.append('recheck'); self.check()
+            if fail_recheck and 'report' in events:
+                raise RuntimeError('authored custody drift')
+        def descriptor(self, path):
+            self.recheck()
+            rows = [self.pins[k] for k in ('python_elf', 'owner_source', 'pyvenv_config')]
+            rows += self.pins['required_sources']
+            return copy.deepcopy(next(row for row in rows if row['path'] == path))
+        def __exit__(self, *exc):
+            try:
+                self.recheck()
+                events.append('release')
+                if close_error:
+                    raise RuntimeError('authored handle close failure')
+            finally:
+                self.active = False
+            return False
+
+    def factory(reference, **kwargs):
+        factories.append((copy.deepcopy(reference), copy.deepcopy({k:v for k,v in kwargs.items() if k != 'check'})))
+        held = AuthoredHandle(); held.pins = kwargs['required_pins']; held.check = kwargs['check']
+        contexts.append(held)
+        return held
+
+    def loader():
+        assert contexts[-1].active
+        events.append('loader')
+        def opener(*args, **kwargs):
+            assert contexts[-1].active
+            open_calls.append((args, kwargs))
+            events.append('engine')
+            return AuthoredEngine(value, acquire=acquire)
+        return opener
+
+    original_write = module._write_json
+    def write(path, payload, budget):
+        assert contexts[-1].active
+        if Path(path).name == 'worker-report.json': events.append('report')
+        if str(path) == value['paths']['error']: events.append('failure')
+        return original_write(path, payload, budget)
+    monkeypatch.setattr(module, '_write_json', write)
+    monkeypatch.setattr(module, '_capture', lambda engine: {'application': engine.application_state()})
+    monkeypatch.setattr(module, '_load_engine', lambda: pytest.fail('real engine factory reached'))
+    monkeypatch.setattr(module, '_check_identity', lambda *a: pytest.fail('V2 closure identity reached'))
+    return value, storage, factory, loader, events, contexts, factories, open_calls, clock
+
+
+def test_private_v3_owner_acquires_its_own_handle(tmp_path, monkeypatch):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    charged = []
+    outcome = runtime()._run_reference_admitted(value, storage, check=lambda: charged.append(True),
+        runtime_handle_factory=factory, engine_loader=loader)
+    assert outcome['status'] == 'recorded' and outcome['schema'] == 'memory-family-source-owner-outcome-v3'
+    assert len(contexts) == 1 and contexts[0].active is False
+    assert events.index('enter') < events.index('loader') < events.index('engine')
+    assert events.count('loader') == 1 and events.count('recheck') >= 4
+    assert len(charged) >= 4
+    assert not Path(value['paths']['error']).exists()
+
+
+def test_private_v3_owner_passes_complete_independent_requirements(tmp_path, monkeypatch):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    runtime()._run_reference_admitted(value, storage, check=lambda: None,
+        runtime_handle_factory=factory, engine_loader=loader)
+    reference, kwargs = calls[0]
+    immutable = value['immutable']; req = immutable['runtime_requirements']
+    assert reference == immutable['runtime_manifest']
+    assert kwargs == dict(required_roots=tuple(req['roots']),
+        required_pins=dict(python_alias=immutable['python_alias'], python_elf=immutable['python_elf'],
+            owner_source=immutable['owner_source'], pyvenv_config=req['pyvenv_config'],
+            required_sources=req['required_sources']),
+        output_root=value['paths']['evidence_root'], deadline=1800.0)
+
+
+@pytest.mark.parametrize('defect', ['helper', 'config', 'prefix', 'alias', 'elf', 'held-pin'])
+def test_private_v3_missing_live_layout_refuses_before_engine_loader(tmp_path, monkeypatch, defect):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    req = value['immutable']['runtime_requirements']
+    if defect == 'helper':
+        req['required_sources'] = [row for row in req['required_sources'] if not row['path'].endswith('memory_directory_census_v1.py')]
+    elif defect == 'config': req['pyvenv_config']['path'] = str(tmp_path/'wrong.cfg')
+    elif defect == 'prefix':
+        req['roots'] = [root for root in req['roots'] if root != str(tmp_path/'base')]
+    elif defect == 'alias': monkeypatch.setattr(runtime().sys, 'executable', '/authored/other-alias')
+    elif defect == 'elf':
+        original = Path.resolve
+        monkeypatch.setattr(Path, 'resolve', lambda path, *a, **k:
+            Path('/authored/other-elf') if str(path) == '/proc/self/exe' else original(path, *a, **k))
+    else:
+        original_factory = factory
+        def factory(*a, **k):
+            held = original_factory(*a, **k)
+            descriptor = held.descriptor
+            held.descriptor = lambda path: dict(descriptor(path), sha256='0'*64)
+            return held
+    rebind(value)
+    with pytest.raises((ValueError, PermissionError)):
+        runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=factory, engine_loader=loader)
+    assert 'loader' not in events and opened == []
+    assert not Path(value['paths']['evidence_root']).exists()
+
+
+@pytest.mark.parametrize('name', [
+    'memory_family_source_runtime_v2.py', 'qualify_memory_family_source_v2.py',
+    'memory_source_runtime_closure_v1.py', 'memory_family_source_seal_v2.py',
+    'memory_family_numeric_preservation_v2.py', 'memory_directory_census_v1.py'])
+def test_private_v3_requires_each_named_live_source(tmp_path, monkeypatch, name):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    req = value['immutable']['runtime_requirements']
+    req['required_sources'] = [row for row in req['required_sources'] if Path(row['path']).name != name]
+    rebind(value)
+    with pytest.raises(ValueError, match='sources'):
+        runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=factory, engine_loader=loader)
+    assert not calls and not opened
+
+
+@pytest.mark.parametrize('root', ['src', 'scripts', 'paper/studies/change_audit_v1', 'venv', 'base'])
+def test_private_v3_requires_every_live_prefix(tmp_path, monkeypatch, root):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    omitted = tmp_path/root if root in ('venv', 'base') else runtime().REPO_ROOT/root
+    req = value['immutable']['runtime_requirements']
+    req['roots'].remove(str(omitted)); rebind(value)
+    with pytest.raises(ValueError, match='roots'):
+        runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=factory, engine_loader=loader)
+    assert not calls and not opened
+
+
+def test_owner_source_deadline_includes_handle_teardown(tmp_path, monkeypatch):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    original_factory = factory
+    def factory(*a, **k):
+        held = original_factory(*a, **k)
+        recheck = held.recheck
+        def delayed():
+            if 'report' in events:
+                clock[0] = 1200.0
+            recheck()
+        held.recheck = delayed
+        return held
+    with pytest.raises(TimeoutError):
+        runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=factory, engine_loader=loader)
+    assert contexts[0].active is False
+    assert (Path(value['paths']['raw'])/'worker-report.json').is_file()
+    assert Path(value['paths']['error']).is_file()
+
+
+@pytest.mark.parametrize('path', ['/authored/a:b', '/authored/a\\b', '/authored/a\x01b',
+                                '/authored/'+'é'*128, '/authored/'+'a'*256])
+def test_v3_asset_paths_obey_canonical_posix_byte_bounds(tmp_path, path):
+    value = reference_job(tmp_path); value['parent_admission'] = None
+    value['paths']['assets'] = path
+    with pytest.raises(ValueError): runtime().validate_source_template(value)
+
+
+def test_private_v3_engine_loader_returns_opener(tmp_path, monkeypatch):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    outcome = runtime()._run_reference_admitted(value, storage, check=lambda: None,
+        runtime_handle_factory=factory, engine_loader=loader)
+    assert outcome['status'] == 'recorded'
+    args, kwargs = opened[0]
+    assert args == (value['paths']['repo'], value['paths']['assets'], Path(value['paths']['raw'])/'recording')
+    assert kwargs == dict(controller='flynn', device='cpu', texture='checker', seed=value['case']['seed'],
+        scenario=world.SCENARIO, memory_case=value['case'], run_id=value['run_id'],
+        max_bytes=512*1024**2, storage_budget=storage)
+
+
+def test_owner_uses_parent_runtime_deadline_without_reset(tmp_path, monkeypatch):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    # Simulate admission earlier in the same parent window, not a new interval.
+    clock[0] = 1199.0
+    original = factory
+    def delayed(*args, **kwargs):
+        assert kwargs['deadline'] == 1800.0
+        held = original(*args, **kwargs)
+        clock[0] = 1200.0
+        return held
+    with pytest.raises(TimeoutError):
+        runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=delayed, engine_loader=loader)
+    assert calls[0][1]['deadline'] == 1800.0 and 'loader' not in events
+    assert not Path(value['paths']['evidence_root']).exists()
+
+
+def test_owner_final_checks_run_before_handle_release(tmp_path, monkeypatch):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    runtime()._run_reference_admitted(value, storage, check=lambda: None,
+        runtime_handle_factory=factory, engine_loader=loader)
+    assert 'recheck' in events[events.index('report')+1:events.index('release')]
+    assert events[-1] == 'release'
+
+
+@pytest.mark.parametrize('defect', ['drift', 'close-recorded', 'close-failed'])
+def test_owner_custody_failure_prevents_recorded_outcome(tmp_path, monkeypatch, defect):
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(
+        tmp_path, monkeypatch, acquire=defect != 'close-failed', close_error=defect != 'drift',
+        fail_recheck=defect == 'drift')
+    first_failure = []
+    original = runtime()._write_json
+    def write(path, payload, budget):
+        original(path, payload, budget)
+        if str(path) == value['paths']['error']:
+            first_failure.append(Path(path).read_bytes())
+    monkeypatch.setattr(runtime(), '_write_json', write)
+    with pytest.raises(RuntimeError, match='authored (custody drift|handle close failure)'):
+        runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=factory, engine_loader=loader)
+    assert contexts[0].active is False
+    if defect != 'close-recorded':
+        assert len(first_failure) == 1
+        assert Path(value['paths']['error']).read_bytes() == first_failure[0]
+        assert b'"schema":"memory-family-source-owner-failure-v3"' in first_failure[0]
+    else:
+        assert (Path(value['paths']['raw'])/'worker-report.json').is_file()
+        assert not Path(value['paths']['error']).exists()
+    assert Path(value['paths']['raw']).exists()
+
+
+@pytest.mark.parametrize('version', [2, 3])
+@pytest.mark.parametrize('acquire', [True, False])
+def test_owner_outcome_and_failure_versions_selected_before_write(tmp_path, monkeypatch, version, acquire):
+    if version == 2:
+        value, result, engines, captures = owner(tmp_path, monkeypatch, acquire=acquire)
+    else:
+        value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(
+            tmp_path, monkeypatch, acquire=acquire)
+        result = runtime()._run_reference_admitted(value, storage, check=lambda: None,
+            runtime_handle_factory=factory, engine_loader=loader)
+    assert result['schema'] == f'memory-family-source-owner-outcome-v{version}'
+    assert result['status'] == ('recorded' if acquire else 'failed')
+    if not acquire:
+        # The complete first-write canonical V2 bytes retain their old schema/fields.
+        golden = memory.canonical_bytes(dict(schema=f'memory-family-source-owner-failure-v{version}',
+            run_id=value['run_id'], job_sha256=runtime().job_sha256(value), status='failed',
+            error=dict(type='ValueError', message='Source step limit/termination without acquired boundary is unscored'),
+            qualification_claims=False))
+        assert Path(value['paths']['error']).read_bytes() == golden
+
+
+def test_unknown_core_job_schema_refuses_before_any_write(tmp_path, monkeypatch):
+    value = job(tmp_path); value['schema'] = 'unknown'
+    monkeypatch.setattr(runtime(), '_write_json', lambda *a: pytest.fail('unknown schema wrote failure'))
+    with pytest.raises(ValueError, match='schema'):
+        runtime()._run_admitted(value, None, lambda *a: pytest.fail('loader'), lambda: None)
+    assert not Path(value['paths']['evidence_root']).exists()

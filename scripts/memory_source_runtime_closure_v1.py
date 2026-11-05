@@ -254,6 +254,11 @@ def _pins(value):
     return result
 
 
+def validate_runtime_pin_requirements(value: dict) -> dict:
+    """Copy the complete independent pin expectations without IO or custody."""
+    return _pins(value)
+
+
 def _runtime_records(manifest):
     records = {root['root']+'/'+row['path']: dict(row, path=root['root']+'/'+row['path'])
                for root in manifest['roots'] for row in root['files']}
