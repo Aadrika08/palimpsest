@@ -47,8 +47,21 @@ silently cancelling later units. This measures sustained engineering throughput
 across episode boundaries. Production engine, controller, seeds, tolerances,
 fault oracles and declared scope stay fixed. The new campaign has a separate
 execution/protocol identity and fresh output root; it does not replace initial
-rows. Both attempts share the initial absolute deadline and aggregate storage
-budget. The final report must state outcomes for both attempts.
+rows.
+
+The first recovery launch at `6c129516742d240075a95565bcd308ef1d313bb0`
+stopped when a late worker fix changed source identity during execution. Its
+manifest, emitted rows, unexecuted descriptors and supervisor records are retained
+under `evidence/authority-replay-v1/interrupted-recovery/`; it is excluded from
+scientific aggregation. This was an orchestration failure. Final execution uses
+an isolated checkout at `cc57edf9f70323926237d887d766627d8c9cdd42`, protocol
+revision 3, SHA-256
+`570a4afe8179425bb2b25b86364470af34052ecc4929b74f207c279076728860`.
+Revision 3 preserves the amended execution semantics and tightens the final
+output cap to 12 GiB. Original (3,076,227,528 bytes), interrupted recovery
+(461,457,713 bytes), and final cap total 16,422,587,129 bytes, below the original
+16 GiB budget (17,179,869,184 bytes). All launches share the original absolute
+deadline, Unix `1793860506.2223496`. Raw outputs from every attempt remain local.
 
 Retain the frozen execution commit, protocol hash, effective configuration,
 commands, source/asset identities, raw-tree inventories and hashes, compact

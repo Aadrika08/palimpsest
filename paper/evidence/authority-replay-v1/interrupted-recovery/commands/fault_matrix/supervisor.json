@@ -1,0 +1,45 @@
+{
+  "admission": "received_GO",
+  "error_type": "InterruptedError",
+  "guardian_pid": 2849610,
+  "owned_descendants": [
+    {
+      "parent_pid": 2849610,
+      "pid": 2849611,
+      "provenance": "guardian_launched_phase",
+      "start_ticks": 27860335
+    },
+    {
+      "parent_pid": 2849611,
+      "parent_start_ticks": 27860335,
+      "pid": 2849613,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 27860342
+    },
+    {
+      "parent_pid": 2849611,
+      "parent_start_ticks": 27860335,
+      "pid": 2849672,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 27860445
+    },
+    {
+      "parent_pid": 2849611,
+      "parent_start_ticks": 27860335,
+      "pid": 2849683,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 27860526
+    },
+    {
+      "parent_pid": 2849611,
+      "parent_start_ticks": 27860335,
+      "pid": 2850033,
+      "provenance": "observed_phase_ancestry",
+      "start_ticks": 27862620
+    }
+  ],
+  "pid": 2849611,
+  "reason": "guardian signal 15",
+  "returncode": -9,
+  "status": "failed"
+}

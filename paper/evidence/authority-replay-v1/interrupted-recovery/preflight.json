@@ -1,0 +1,26 @@
+{
+  "available_free_bytes": 13949161472,
+  "cache_link_mode": {
+    "UV_LINK_MODE": "tool default; actual mode not inferred",
+    "npm": "existing cache required; installer output is monitored"
+  },
+  "offline_admission_headroom_bytes": 536870912,
+  "offline_allocation_policy": "Logical inventory cap; physical free reserve actively monitored. No worst-case reservation of the whole cached environment.",
+  "resources": {
+    "campaign_max_output_bytes": 13958643712,
+    "campaign_timeout_seconds": 14400,
+    "cpu_only": true,
+    "minimum_free_bytes": 6442450944,
+    "offline_unit_max_output_bytes": 10737418240,
+    "ordinary_unit_max_output_bytes": 536870912,
+    "raw_output_root": "runs/paper-authority-replay-v1",
+    "sequential": true,
+    "stop_rules": [
+      "Stop new units after any unit timeout.",
+      "Stop new units at four campaign hours.",
+      "Stop new units when any output cap or the free-space reserve is crossed.",
+      "Retain completed, failed, refused, timed-out and incomplete rows; never delete, replace, retry or reduce declared scope."
+    ],
+    "unit_timeout_seconds": 900
+  }
+}
