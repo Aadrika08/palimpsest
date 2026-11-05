@@ -59,7 +59,7 @@ reason for units stopped before starting. Do not retry or substitute a seed.
 This append contract makes no power-loss/crash-consistency claim.
 
 Stop new units at any 15-minute unit timeout, four-hour campaign limit, 512 MiB
-ordinary-unit cap, 2 GiB checkout-unit cap, 8 GiB raw campaign cap, or crossing
+ordinary-unit cap, 10 GiB checkout-unit cap, 16 GiB raw campaign cap, or crossing
 the 6 GiB free-space reserve. Stopping never authorizes deletion or scope
 reduction. These are frozen limits consumed by the drivers, not measurements of
 acceptable overhead.
@@ -118,3 +118,25 @@ and raw-tree inventories are committed after source-bound verification.
 Generated LaTeX consumes that compact evidence separately. A fresh checkout on
 this host is **same-host clean-checkout evidence**. Independent machine/operator
 reproduction remains an external submission gate.
+
+
+### Pre-execution resource amendment (2026-11-05)
+
+Before scientific execution, preparation measured the locked local Python
+environment at about 7.2 GiB logical size (torch about 1.7 GiB and NVIDIA
+dependencies about 4.3 GiB). The original 2 GiB offline cap could not contain
+the required fresh-checkout environment. The authorized amendment raises only
+the offline logical inventory cap to 10 GiB and aggregate logical inventory cap
+to 16 GiB. All 111 descriptors, seeds, conditions, 512 MiB ordinary-unit cap,
+900-second unit timeout, four-hour campaign deadline and 6 GiB physical free
+reserve are unchanged. No scientific result preceded this amendment.
+
+Cached installs may use hardlinks/reflinks, so logical inventory and physical
+allocation differ. Offline admission records available space and the configured
+cache/link policy, requires the 6 GiB actual free reserve plus 512 MiB headroom,
+and actively monitors actual free space and the 10 GiB logical inventory cap.
+It does not reserve 10 GiB of physical space up front. Installer/native uv/npm
+output is polled, not protected by a strict prewrite filesystem quota. Crossing
+the free-space, logical-output or time boundary stops coordinator-owned processes
+and later phases; observed failures and partial rows remain retained. Actual
+link mode is not assumed from the configured tool default.

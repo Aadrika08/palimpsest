@@ -83,8 +83,8 @@ def test_protocol_resource_and_comparison_bounds(protocol):
     assert protocol.resources["unit_timeout_seconds"] == 900
     assert protocol.resources["campaign_timeout_seconds"] == 14400
     assert protocol.resources["ordinary_unit_max_output_bytes"] == 536870912
-    assert protocol.resources["offline_unit_max_output_bytes"] == 2147483648
-    assert protocol.resources["campaign_max_output_bytes"] == 8589934592
+    assert protocol.resources["offline_unit_max_output_bytes"] == 10737418240
+    assert protocol.resources["campaign_max_output_bytes"] == 17179869184
     assert protocol.resources["minimum_free_bytes"] == 6442450944
     assert protocol.comparison_policy["atol"] == 1e-6
     assert protocol.comparison_policy["rtol"] == 1e-6
@@ -163,3 +163,10 @@ def test_campaign_identity_binds_clean_commit_protocol_sources_and_assets(common
     (repo / "src/runtime.py").write_text("VALUE = 2\n")
     with pytest.raises(ValueError, match="clean"):
         common.campaign_identity(repo, protocol_path, assets)
+
+
+def test_preflight_amendment_does_not_change_scientific_denominators(common, protocol):
+    assert protocol.resources['offline_unit_max_output_bytes'] == 10 * 1024**3
+    assert protocol.resources['campaign_max_output_bytes'] == 16 * 1024**3
+    assert len(common.declared_units(protocol)) == 111
+    assert protocol.resources['minimum_free_bytes'] == 6 * 1024**3

@@ -8,8 +8,8 @@
     "unit_timeout_seconds": 900,
     "campaign_timeout_seconds": 14400,
     "ordinary_unit_max_output_bytes": 536870912,
-    "offline_unit_max_output_bytes": 2147483648,
-    "campaign_max_output_bytes": 8589934592,
+    "offline_unit_max_output_bytes": 10737418240,
+    "campaign_max_output_bytes": 17179869184,
     "minimum_free_bytes": 6442450944,
     "stop_rules": [
       "Stop new units after any unit timeout.",

@@ -76,9 +76,9 @@ to the clean campaign commit frozen after study implementation and before the
 first result-producing run.
 
 The local campaign is sequential. Its total wall-clock cap is four hours, each
-unit has a 15-minute hard timeout, raw outputs may consume at most 8 GiB, each
+unit has a 15-minute hard timeout, raw outputs may consume at most 16 GiB, each
 ordinary unit may consume at most 512 MiB, the offline-checkout unit may consume
-at most 2 GiB, and at least 6 GiB of filesystem free space must remain. Crossing
+at most 10 GiB, and at least 6 GiB of filesystem free space must remain. Crossing
 a cap stops new units and retains completed/failed rows; it never authorizes
 deletion, replacement, or scope reduction.
 
@@ -282,3 +282,25 @@ The rewrite is complete only when:
 - a fresh independent reviewer finds no critical evidence/claim mismatch;
 - remaining external gates, especially second-machine reproduction, venue,
   authorship, licensing, and archive decisions, are explicit.
+
+
+### Pre-execution resource amendment (2026-11-05)
+
+Before scientific execution, preparation measured the locked local Python
+environment at about 7.2 GiB logical size (torch about 1.7 GiB and NVIDIA
+dependencies about 4.3 GiB). The original 2 GiB offline cap could not contain
+the required fresh-checkout environment. The authorized amendment raises only
+the offline logical inventory cap to 10 GiB and aggregate logical inventory cap
+to 16 GiB. All 111 descriptors, seeds, conditions, 512 MiB ordinary-unit cap,
+900-second unit timeout, four-hour campaign deadline and 6 GiB physical free
+reserve are unchanged. No scientific result preceded this amendment.
+
+Cached installs may use hardlinks/reflinks, so logical inventory and physical
+allocation differ. Offline admission records available space and the configured
+cache/link policy, requires the 6 GiB actual free reserve plus 512 MiB headroom,
+and actively monitors actual free space and the 10 GiB logical inventory cap.
+It does not reserve 10 GiB of physical space up front. Installer/native uv/npm
+output is polled, not protected by a strict prewrite filesystem quota. Crossing
+the free-space, logical-output or time boundary stops coordinator-owned processes
+and later phases; observed failures and partial rows remain retained. Actual
+link mode is not assumed from the configured tool default.

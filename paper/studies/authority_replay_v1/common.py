@@ -103,8 +103,8 @@ def load_protocol(path: Path) -> Protocol:
     resources = raw["resources"]
     expected_bounds = {"unit_timeout_seconds": 900, "campaign_timeout_seconds": 14400,
                        "ordinary_unit_max_output_bytes": 512 * 1024**2,
-                       "offline_unit_max_output_bytes": 2 * 1024**3,
-                       "campaign_max_output_bytes": 8 * 1024**3,
+                       "offline_unit_max_output_bytes": 10 * 1024**3,
+                       "campaign_max_output_bytes": 16 * 1024**3,
                        "minimum_free_bytes": 6 * 1024**3}
     _keys(resources, set(expected_bounds) | {"raw_output_root", "sequential", "cpu_only", "stop_rules"}, "resources")
     for key, expected in expected_bounds.items():

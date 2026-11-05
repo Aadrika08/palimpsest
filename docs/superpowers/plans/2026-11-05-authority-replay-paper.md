@@ -49,7 +49,7 @@
 - [ ] Write failing tests for schema/version validation, exact declared unit expansion, empty-root refusal, append-only unique unit IDs, finite numeric fields, failed-unit retention, duplicate/missing/undeclared rows, and commit/protocol/asset identity drift.
 - [ ] Run `/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -m pytest -q paper/studies/authority_replay_v1/tests/test_common.py paper/studies/authority_replay_v1/tests/test_analyze.py` and confirm failures because the interfaces are absent.
 - [ ] Implement the typed protocol/identity/row contract and deterministic summary generation using only the standard library.
-- [ ] Populate the protocol with every A1--E3 case/seed/variant/control exactly as tabulated in the spec, continuation seeds 0--9, replay seeds 0--4, overhead seeds 0--9 and four cyclic matched conditions, operation-cost seeds 0--4, the exact comparison policy, 15-minute unit/four-hour campaign timeouts, 512 MiB/2 GiB/8 GiB output caps, 6 GiB reserve, metrics, and stop rules.
+- [ ] Populate the protocol with every A1--E3 case/seed/variant/control exactly as tabulated in the spec, continuation seeds 0--9, replay seeds 0--4, overhead seeds 0--9 and four cyclic matched conditions, operation-cost seeds 0--4, the exact comparison policy, 15-minute unit/four-hour campaign timeouts, 512 MiB/10 GiB/16 GiB output caps, 6 GiB reserve, metrics, and stop rules.
 - [ ] Document raw-output ownership, commands, failure retention, and the distinction between same-host checkout and independent reproduction.
 - [ ] Run the focused tests and `/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python paper/studies/authority_replay_v1/analyze.py --protocol paper/studies/authority_replay_v1/protocol.json --self-check`; require PASS.
 - [ ] Commit as `paper: freeze authority replay study protocol`.
@@ -129,7 +129,7 @@
 - Consumes: Tasks 1--4 at one clean committed SHA.
 - Produces: complete append-only row sets and hash inventory for Tasks 6--8.
 
-- [ ] Record free disk, memory, CPU/GPU environment, exact branch/SHA, clean status, asset identity, tool versions, and protocol hash; require at least 6 GiB free, cap study raw output at 8 GiB, cap ordinary units at 512 MiB and offline checkout at 2 GiB, run sequentially, and stop new units after four total hours or any 15-minute unit timeout.
+- [ ] Record free disk, memory, CPU/GPU environment, exact branch/SHA, clean status, asset identity, tool versions, and protocol hash; require at least 6 GiB free, cap study raw output at 16 GiB, cap ordinary units at 512 MiB and offline checkout at 10 GiB, run sequentially, and stop new units after four total hours or any 15-minute unit timeout.
 - [ ] Run `/usr/bin/env PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 PALIMPSEST_SIMULATION_TESTS=1 /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -m pytest -q paper/studies/authority_replay_v1/tests tests/test_engine.py tests/test_worker.py tests/test_snapshots.py tests/test_replay.py tests/test_records.py tests/test_records_background.py tests/test_recovery.py tests/test_storage.py` at the frozen SHA.
 - [ ] Execute `/usr/bin/env PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python paper/studies/authority_replay_v1/fault_matrix.py --protocol paper/studies/authority_replay_v1/protocol.json --assets /home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn --output runs/paper-authority-replay-v1/faults`; preserve every declared unit and analyze immediately.
 - [ ] Execute `/usr/bin/env PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python paper/studies/authority_replay_v1/repeatability.py --kind continuation --protocol paper/studies/authority_replay_v1/protocol.json --assets /home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn --output runs/paper-authority-replay-v1/continuation` for seeds 0--9; never substitute a failed seed.
@@ -204,3 +204,25 @@
 - [ ] Fix critical/important evidence mismatches with regression coverage; do not hide failed study units.
 - [ ] Commit source corrections, rebuild the artifact against the exact source commit, and commit the verified PDF/record separately.
 - [ ] Report the completed local paper separately from external submission gates.
+
+
+### Pre-execution resource amendment (2026-11-05)
+
+Before scientific execution, preparation measured the locked local Python
+environment at about 7.2 GiB logical size (torch about 1.7 GiB and NVIDIA
+dependencies about 4.3 GiB). The original 2 GiB offline cap could not contain
+the required fresh-checkout environment. The authorized amendment raises only
+the offline logical inventory cap to 10 GiB and aggregate logical inventory cap
+to 16 GiB. All 111 descriptors, seeds, conditions, 512 MiB ordinary-unit cap,
+900-second unit timeout, four-hour campaign deadline and 6 GiB physical free
+reserve are unchanged. No scientific result preceded this amendment.
+
+Cached installs may use hardlinks/reflinks, so logical inventory and physical
+allocation differ. Offline admission records available space and the configured
+cache/link policy, requires the 6 GiB actual free reserve plus 512 MiB headroom,
+and actively monitors actual free space and the 10 GiB logical inventory cap.
+It does not reserve 10 GiB of physical space up front. Installer/native uv/npm
+output is polled, not protected by a strict prewrite filesystem quota. Crossing
+the free-space, logical-output or time boundary stops coordinator-owned processes
+and later phases; observed failures and partial rows remain retained. Actual
+link mode is not assumed from the configured tool default.

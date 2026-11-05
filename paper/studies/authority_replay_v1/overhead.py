@@ -30,6 +30,8 @@ from paper.studies.authority_replay_v1.common import (
 )
 from paper.studies.authority_replay_v1.null_writer import NullWriter
 
+# The protocol is frozen and validated before any driver launch.
+RESOURCES = load_protocol(REPO / 'paper/studies/authority_replay_v1/protocol.json').resources
 CONDITIONS = OVERHEAD_CONDITIONS
 MiB, GiB = 1024**2, 1024**3
 
@@ -175,7 +177,7 @@ def _budget(output, campaign_root):
             finally:
                 self.recount_wall_seconds += time.perf_counter() - start
     # Both caps apply before each write. Root accounting includes sibling studies.
-    campaign = TimedBudget((campaign_root,), StorageLimits(max_bytes=8 * GiB, min_free_bytes=6 * GiB), headroom_bytes=16 * MiB, recount_seconds=.25)
+    campaign = TimedBudget((campaign_root,), StorageLimits(max_bytes=RESOURCES['campaign_max_output_bytes'], min_free_bytes=6 * GiB), headroom_bytes=16 * MiB, recount_seconds=.25)
     unit = TimedBudget((output,), StorageLimits(max_bytes=512 * MiB, min_free_bytes=6 * GiB), headroom_bytes=16 * MiB, recount_seconds=.25)
     original = unit.check
     def check(additional_bytes, *, path):
@@ -376,7 +378,7 @@ def _resource_boundary(condition, limit, message):
 
 def _validate_output_resources(output, campaign_root):
     _resource_boundary(_size(output) <= 512 * MiB, 'unit_bytes', 'unit output cap crossed')
-    _resource_boundary(_size(campaign_root) <= 8 * GiB, 'campaign_bytes', 'campaign output cap crossed')
+    _resource_boundary(_size(campaign_root) <= RESOURCES['campaign_max_output_bytes'], 'campaign_bytes', 'campaign output cap crossed')
     _resource_boundary(shutil.disk_usage(output).free >= 6 * GiB, 'free_space', 'free-space reserve crossed')
 
 
@@ -398,7 +400,7 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
     try:
         require(Path(output).resolve().is_relative_to(campaign_root.resolve()), 'unit must be below campaign root')
         _resource_boundary(shutil.disk_usage(output).free - 512 * MiB >= 6 * GiB, 'free_space', 'free-space reserve prevents unit admission')
-        _resource_boundary(_size(campaign_root) + 512 * MiB <= 8 * GiB, 'campaign_bytes', 'campaign output cap prevents unit admission')
+        _resource_boundary(_size(campaign_root) + 512 * MiB <= RESOURCES['campaign_max_output_bytes'], 'campaign_bytes', 'campaign output cap prevents unit admission')
         require(campaign_deadline_epoch is None or time.time() < campaign_deadline_epoch, 'campaign deadline prevents unit admission')
         timeout = min(900., max(0., campaign_deadline_epoch - time.time())) if campaign_deadline_epoch else 900.
         config = {'kind': kind, 'seed': seed, 'condition': condition, 'source': str(source) if source else None,

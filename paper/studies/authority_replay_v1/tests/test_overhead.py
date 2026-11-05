@@ -211,7 +211,7 @@ def test_fast_successful_child_must_pass_final_boundaries(tmp_path, monkeypatch,
         if launched and boundary == 'unit_bytes' and Path(path) == output:
             return 512 * o.MiB + 1
         if launched and boundary == 'campaign_bytes' and Path(path) == tmp_path:
-            return 8 * o.GiB + 1
+            return 16 * o.GiB + 1
         return 0
     def free(path):
         return disk(100 * o.GiB, 0, 5 * o.GiB if launched and boundary == 'free_space' else 100 * o.GiB)
@@ -416,3 +416,9 @@ def test_operation_config_rejects_inconsistent_manifest_profile(tmp_path, field,
     (recording / 'manifest.json').write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match='source config mismatch'):
         o._operation_config(0, meta, recording, retained)
+
+
+def test_campaign_budget_loads_amended_protocol(tmp_path, monkeypatch):
+    monkeypatch.setattr(o.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 100 * o.GiB})())
+    budget = o._budget(tmp_path / 'unit', tmp_path)
+    assert budget.campaign_budget.limits.max_bytes == 16 * o.GiB
