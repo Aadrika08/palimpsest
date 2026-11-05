@@ -507,13 +507,14 @@ def _run_reference_admitted(job: dict, storage, *, check: Callable[[], None],
     with runtime_handle_factory(job['immutable']['runtime_manifest'], required_roots=roots,
             required_pins=pins, output_root=job['paths']['evidence_root'],
             deadline=runtime_deadline, check=bounded_check) as held:
+        for row in [pins['python_elf'], pins['owner_source'], pins['pyvenv_config'], *pins['required_sources']]:
+            if held.descriptor(row['path']) != row:
+                raise ValueError('Held runtime descriptor differs from frozen owner pin')
+
         def identity():
             bounded_check()
             _check_reference_layout(job, roots, pins)
             held.recheck()
-            for row in [pins['python_elf'], pins['owner_source'], pins['pyvenv_config'], *pins['required_sources']]:
-                if held.descriptor(row['path']) != row:
-                    raise ValueError('Held runtime descriptor differs from frozen owner pin')
             bounded_check()
 
         identity()

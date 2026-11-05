@@ -67,7 +67,7 @@ def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
         freeze['lifetime_contract'] = copy.deepcopy(descriptor)
         path.write_bytes(memory.canonical_bytes(freeze))
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        reference.update(contexts=[], layouts=[], admissions=[])
+        reference.update(contexts=[], layouts=[], admissions=[], close_faults=[])
         class Handle:
             active = False
             def __enter__(self):
@@ -96,8 +96,11 @@ def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
             def __exit__(self, *exc):
                 try:
                     self.recheck()
-                    if reference.get('close_error') and len(reference['contexts']) > 1:
-                        raise OSError('authored reference close failure')
+                    party = 'parent' if reference['contexts'][0] is self else 'child'
+                    if reference.get('close_error') == party:
+                        reference['close_faults'].append({'party': party,
+                            'provisional_marker_exists': (numeric_candidate(freeze)/'commit.json').exists()})
+                        raise OSError(f'authored {party} reference close failure')
                 finally:
                     self.active = False
         def factory(ref, **kw):
@@ -1223,8 +1226,30 @@ def test_v4_parent_requires_each_independent_live_source(tmp_path, monkeypatch, 
 
 
 def test_v4_handle_teardown_failure_cannot_return_preserved(tmp_path, monkeypatch):
-    freeze, result, _ = harness(tmp_path, monkeypatch, reference={'close_error': True})
+    reference = {'close_error': 'child'}
+    freeze, result, calls = harness(tmp_path, monkeypatch, reference=reference)
+    assert calls == ['owner']
+    assert reference['close_faults'] == [{'party': 'child', 'provisional_marker_exists': False}]
     assert result['status'] == 'stopped'
     assert result['actual_source_qualified'] is result['execution_authorized'] is False
     assert Path(freeze['job']['paths']['raw'],'worker-report.json').is_file()
     assert Path(freeze['job']['paths']['snapshot']).is_file()
+
+
+def test_v4_parent_only_late_close_retains_and_quarantines_provisional_marker(tmp_path, monkeypatch):
+    reference = {'close_error': 'parent'}
+    freeze, result, calls = harness(tmp_path, monkeypatch, reference=reference)
+    assert calls == ['owner', 'audit']
+    assert [row['role'] for row in result['jobs']] == calls
+    assert all(row['accounting']['status'] == 'completed'
+               and row['accounting']['accounting_complete'] is True
+               and row['accounting']['returncode'] == 0 for row in result['jobs'])
+    assert result['status'] == 'stopped'
+    assert result['teardown_error'] == {'type': 'OSError', 'message': 'authored parent reference close failure'}
+    assert reference['close_faults'] == [{'party': 'parent', 'provisional_marker_exists': True}]
+    assert (numeric_candidate(freeze)/'commit.json').is_file()
+    assert (numeric_candidate(freeze)/'quarantine.json').is_file()
+    assert Path(freeze['job']['paths']['raw'],'worker-report.json').is_file()
+    assert Path(freeze['job']['paths']['snapshot']).is_file()
+    assert all(not held.active for held in reference['contexts'])
+    assert result['actual_source_qualified'] is result['execution_authorized'] is False

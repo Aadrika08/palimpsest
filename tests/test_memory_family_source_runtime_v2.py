@@ -795,6 +795,69 @@ def test_private_v3_owner_acquires_its_own_handle(tmp_path, monkeypatch):
     assert not Path(value['paths']['error']).exists()
 
 
+@pytest.mark.parametrize('source_count', [6, 64])
+def test_private_v3_immutable_pins_checked_once_and_callbacks_have_constant_cost(tmp_path, monkeypatch, source_count):
+    module = runtime()
+    value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
+    sources = value['immutable']['runtime_requirements']['required_sources']
+    sources.extend(dict(path=str(tmp_path/f'extra-source-{i:02d}.py'), size_bytes=0, sha256='b'*64)
+                   for i in range(source_count-len(sources)))
+    sources.sort(key=lambda row: row['path']); rebind(value)
+    lookups, accessor_costs, layout_calls, callback_costs, before_loader = [], [], [], [], []
+    original_factory, original_layout = factory, module._check_reference_layout
+
+    def factory(*args, **kwargs):
+        held = original_factory(*args, **kwargs)
+        rows = [held.pins[k] for k in ('python_elf', 'owner_source', 'pyvenv_config')]
+        rows += held.pins['required_sources']
+        held._records = {row['path']: copy.deepcopy(row) for row in rows}
+        # Execute the actual accessor against an authored, no-IO holder proxy.
+        def active():
+            assert held.active
+        def poison():
+            pytest.fail('unexpected accessor poisoning in valid authored pins')
+        held._active, held._poison = active, poison
+        def descriptor(path):
+            assert 'enter' in events
+            before_loader.append('loader' not in events)
+            before = events.count('recheck')
+            result = module.closure.RuntimeHandle.descriptor(held, path)
+            accessor_costs.append(events.count('recheck')-before)
+            lookups.append(path)
+            return result
+        held.descriptor = descriptor
+        return held
+
+    def layout(*args):
+        layout_calls.append(True)
+        return original_layout(*args)
+
+    repetitions = 7
+    def core(job, budget, opener, identity):
+        assert callable(opener) and events.count('loader') == 1
+        for _ in range(repetitions):
+            before = (events.count('recheck'), len(lookups), len(layout_calls))
+            identity()
+            callback_costs.append((events.count('recheck')-before[0],
+                len(lookups)-before[1], len(layout_calls)-before[2]))
+        return {'status': 'recorded'}
+
+    monkeypatch.setattr(module, '_check_reference_layout', layout)
+    monkeypatch.setattr(module, '_run_admitted', core)
+    result = module._run_reference_admitted(value, storage, check=lambda: None,
+        runtime_handle_factory=factory, engine_loader=loader)
+    assert result['status'] == 'recorded'
+    pins = module._runtime_requirements(value)[1]
+    expected = [pins[k]['path'] for k in ('python_elf','owner_source','pyvenv_config')]
+    expected += [row['path'] for row in pins['required_sources']]
+    assert callback_costs == [(1, 0, 1)]*repetitions
+    assert lookups == expected and all(before_loader)
+    assert accessor_costs == [2]*(3+source_count)
+    assert len(layout_calls) == repetitions+4  # Pre-entry plus every lifecycle identity.
+    assert events[-1] == 'release' and not contexts[0].active
+    assert opened == []  # The stub core never opens even an authored engine.
+
+
 def test_private_v3_owner_passes_complete_independent_requirements(tmp_path, monkeypatch):
     value, storage, factory, loader, events, contexts, calls, opened, clock = private_owner_inputs(tmp_path, monkeypatch)
     runtime()._run_reference_admitted(value, storage, check=lambda: None,
