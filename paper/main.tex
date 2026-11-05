@@ -2,7 +2,7 @@
 \usepackage[margin=0.82in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,microtype,booktabs,array,tabularx,graphicx,xcolor,tikz,amsmath}
-\usetikzlibrary{arrows.meta,positioning,fit}
+\usetikzlibrary{arrows.meta,positioning,fit,plotmarks}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{enumitem,url,hyperref}
 \definecolor{palblue}{HTML}{245A7A}
@@ -77,7 +77,7 @@ state, replay execution, and terminal evidence, with explicit failure boundaries
 projection, complete snapshots, independent branch owners, and bounded staged
 publication.
 \item A predeclared evaluation of controlled conformance, mechanism ablations,
-paired executable agreement, execution/operation cost, and same-host reproduction.
+paired executable agreement, execution/operation cost, and fresh-checkout feasibility.
 \end{enumerate}
 
 \section{Failure Model and Semantic Contract}
@@ -254,6 +254,17 @@ production-interface fixture evidence. FLYNN is a recurrent navigation model
 constrained by fly-brain topology \citep{wang2026flynn}. Controller quality, human
 interpretation, and competing-system performance are outside this study.
 
+\paragraph{Execution configuration.}
+The host ran Linux x86-64 on an AMD Ryzen 7 7735HS in the performance governor.
+The recorded environment used Python 3.11.15, NumPy 2.2.5, MuJoCo 3.3.6 and
+PyTorch \texttt{2.9.0+cu128}, with float32 policy execution on CPU, two intra-op
+threads and eight inter-op threads; deterministic-algorithms mode was off.
+EGL cameras produced $128\times128$ images at a 20 ms control interval.
+Continuation/replay used the 20-obstacle vision-ablation preset with a scripted
+goal edit and left-eye mask; throughput used five-obstacle sparse navigation.
+Both used checker texture. The artifact binds exact graph, checkpoint, mapping
+and runtime identities.
+
 The protocol declares 111 invocation descriptors: 50 fault/challenge units,
 10 continuation pairs, five replay trajectories, 40 execution-overhead
 invocations forming 10 four-condition matched sets, five operation units, and
@@ -355,6 +366,18 @@ each compare all 100 source ticks.
 Conditions share a source and are paired, with computation/validation defined
 in Figure~\ref{fig:matrix}.
 The trajectory-level result is \ReplayPassed{}/\ReplayDeclared{}.
+
+\paragraph{A retained join across the contract.}
+For seed 0, source run \texttt{ddb94d30} applied goal-edit command \texttt{edit}
+at control tick 0, revision 1. Snapshot \texttt{53e4d9cf}, captured at tick 8,
+contains that receipt and a digest of 30 source events; its separate branch
+matched 92 continuation ticks. Action and policy replay instead restored
+initial snapshot \texttt{605a9e6f}. Both reports bind the same source and compare
+100 ticks, with policy execution false and true respectively. The completed
+source publication contains 100 readable ticks. The artifact retains full IDs,
+hashes, receipts, snapshots, event prefix, manifest and verifier reports;
+displayed IDs are prefixes. This positive join illustrates the integration
+without testing all combined faults.
 
 \begin{table}[t]
 \centering\small

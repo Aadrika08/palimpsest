@@ -101,6 +101,22 @@ than treating a combined numerical discrepancy as a physical distance.
 
 ## Observed completion and checkout gap
 
+### Worked source trace and recorded configuration
+
+`execution-configuration.json` records the observed CPU/governor, package,
+thread, renderer, controller and scenario settings used in the manuscript.
+`worked-chain/chain.json` joins `replay/0` and `operation_cost/0` to their actual
+source run. The directory retains that source's manifest and complete event
+stream plus the two relevant snapshots, with exact SHA-256 values.
+
+The tick-8 snapshot contains the applied `edit` receipt (tick 0, revision 1) and
+the digest of the first 30 source events; that prefix digest was recomputed from
+the retained stream. Its branch compares 92 remaining ticks. Action and policy
+replays use the separate initial snapshot and compare 100 source ticks, with
+their policy-execution flags false and true respectively. The completed source
+has 100 published ticks, independently decoded by its operation-cost unit.
+This is one successful evidence join, not a combined-fault campaign or proof.
+
 The final campaign accounted for all 111 descriptors: 110 completed, with the
 declared offline checkout unit incomplete. Its conservative aggregate admission
 required the full 10 GiB unit allowance in addition to existing output, exceeding

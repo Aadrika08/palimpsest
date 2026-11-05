@@ -7,7 +7,7 @@ PAPER = Path(__file__).resolve().parents[1]
 HEADER = r"""\documentclass[10pt,border=2pt]{standalone}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,tikz,booktabs,array,tabularx,amsmath}
-\usetikzlibrary{arrows.meta,positioning,fit}
+\usetikzlibrary{arrows.meta,positioning,fit,plotmarks}
 \definecolor{palblue}{HTML}{245A7A}
 \definecolor{palgreen}{HTML}{2D7B64}
 \definecolor{palgold}{HTML}{B27A20}

@@ -404,7 +404,7 @@ def generate_outputs(result, hashes, trace_root=None):
         overhead_rows.append([c.replace('background_storage', 'storage'), f"{o['matched']}/10", estimate(wall), 'not estimable' if wall is None else f"{number(wall['minimum'])}--{number(wall['maximum'])}",
                               'not estimable' if wall is None else number(wall['iqr']), 'reference' if c == 'null' else estimate(relative),
                               'reference' if c == 'null' else 'not estimable' if relative is None else number(relative['iqr'])])
-    outputs['overhead-table.tex'] = _table(['Condition', 'n/N', 'ms/tick', 'range (ms)', 'IQR (ms)', 'delta (%)', 'IQR (pp)'], overhead_rows)
+    outputs['overhead-table.tex'] = _table(['Condition', 'n/N', 'median ms/tick', 'range (ms)', 'IQR (ms)', 'median delta (%)', 'IQR (pp)'], overhead_rows)
     outputs['overhead-table.tex'] += '\n\\par\\smallskip Raw per-seed ms/tick and paired differences (\\%).\\par\n'
     paired_rows = []
     for raw in o['raw']:
