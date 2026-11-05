@@ -102,6 +102,21 @@ def _resources():
             'thread_count': len(list(Path('/proc/self/task').iterdir()))}
 
 
+def _check_engine_failure(engine):
+    """Engine.advance retains errors as outcomes; recover their failure class."""
+    if getattr(engine, 'phase', None) != 'failed':
+        return
+    outcome = engine.last_outcome or {}
+    error_type, message = outcome.get('type', 'EngineFailure'), outcome.get('message', 'engine failed')
+    if (error_type in ('StorageLimitError', 'MemoryError', 'OSError')
+            or message in ('Recording quota exceeded before publication', 'Background recording write failed')
+            or getattr(engine, '_recording_failed', False)):
+        error = ResourceBoundaryError('engine_recording_or_resource', message)
+        error.error_type = error_type
+        raise error
+    raise WorkerExecutionError(error_type, message)
+
+
 def _step(engine, *, reset_same_seed=False):
     tick = engine.total_tick
     phase = getattr(engine, 'phase', 'paused')
@@ -116,6 +131,7 @@ def _step(engine, *, reset_same_seed=False):
             'payload': {'seed': engine.seed}})
         require(receipt.get('status') != 'rejected', 'benchmark reset rejected')
         engine.advance()
+        _check_engine_failure(engine)
         require(engine.total_tick == tick and engine.episode == episode + 1 and engine.phase == 'paused',
                 'benchmark reset did not establish a fresh same-seed episode')
         reset = {'global_tick': tick, 'episode': episode, 'reason': reason,
@@ -125,6 +141,7 @@ def _step(engine, *, reset_same_seed=False):
                                 'expected_episode': engine.episode, 'expected_revision': engine.revision})
         require(receipt.get('status') != 'rejected', 'benchmark step rejected')
     engine.advance()
+    _check_engine_failure(engine)
     require(engine.total_tick == tick + 1, f'engine did not complete tick {tick}')
     return reset
 
@@ -510,9 +527,11 @@ def _unit(kind, seed, output, identity, repo, assets, campaign_root, *, conditio
             error_path = output / 'worker-error.json'
             error = json.loads(error_path.read_text()) if error_path.is_file() else {
                 'error_type': 'WorkerProcessError', 'message': f'worker failed ({child.returncode}); see stderr.log',
-                'resource_boundary': False}
+                'resource_boundary': True, 'resource_limit': 'unclassified_worker_failure'}
             if error.get('resource_boundary') is True:
-                raise ResourceBoundaryError(error.get('resource_limit', 'worker_resource'), error['message'])
+                failure = ResourceBoundaryError(error.get('resource_limit', 'worker_resource'), error['message'])
+                failure.error_type = error['error_type']
+                raise failure
             raise WorkerExecutionError(error['error_type'], error['message'])
         result = json.loads((output / 'worker-result.json').read_text())
         # A fast child can exit between monitor polls; final acceptance includes
@@ -589,7 +608,7 @@ def main():
             from palimpsest.storage import StorageLimitError
             boundary = isinstance(exc, (ResourceBoundaryError, StorageLimitError, MemoryError)) or (
                 isinstance(exc, OSError) and exc.errno in (12, 24, 28, 122))
-            error = {'error_type': type(exc).__name__, 'message': str(exc), 'resource_boundary': boundary}
+            error = {'error_type': getattr(exc, 'error_type', type(exc).__name__), 'message': str(exc), 'resource_boundary': boundary}
             if boundary:
                 error['resource_limit'] = getattr(exc, 'resource_limit', 'worker_resource')
             _json(Path(config['output']) / 'worker-error.json', error)

@@ -97,6 +97,18 @@ def test_failed_or_stopped_engine_never_reset(phase):
         o._step(engine)
 
 
+@pytest.mark.parametrize('error_type,message', [('StorageLimitError', 'quota exceeded'),
+    ('RuntimeError', 'Recording quota exceeded before publication'), ('OSError', 'disk full')])
+def test_swallowed_storage_error_keeps_resource_boundary(error_type, message):
+    engine = FakeEngine()
+    def failed_advance():
+        engine.phase = 'failed'
+        engine.last_outcome = {'reason': 'runtime_failure', 'type': error_type, 'message': message}
+    engine.advance = failed_advance
+    with pytest.raises(o.ResourceBoundaryError, match=message):
+        o._step(engine)
+
+
 def test_exact_tick_window():
     engine = FakeEngine()
     result = o.measure_ticks(engine)
@@ -348,9 +360,26 @@ def test_worker_structured_error_retains_original_type(tmp_path, monkeypatch, bo
     monkeypatch.setattr(o.subprocess, 'Popen', FailedChild)
     row = o.run_execution_overhead_unit(0, 'null', output=output, assets=tmp_path, campaign_root=tmp_path)
     assert row['status'] == 'failed'
-    assert row['error']['type'] == ('ResourceBoundaryError' if boundary else 'ValueError')
+    assert row['error']['type'] == ('StorageLimitError' if boundary else 'ValueError')
     assert bool(row['error'].get('resource_limit')) == boundary
     assert row['metrics']['output_bytes'] > 0
+
+
+def test_unclassified_native_crash_stops_admission(tmp_path, monkeypatch):
+    import io
+    output = tmp_path / 'unit'
+    monkeypatch.setattr(o.shutil, 'disk_usage', lambda _: type('Disk', (), {'free': 100 * o.GiB})())
+    class CrashedChild:
+        def __init__(self, *args, **kwargs):
+            self.args, self.returncode = args, -9
+            self.stdout, self.stderr = io.BytesIO(), io.BytesIO()
+        def poll(self):
+            return -9
+    monkeypatch.setattr(o.subprocess, 'Popen', CrashedChild)
+    row = o.run_execution_overhead_unit(0, 'null', output=output, assets=tmp_path, campaign_root=tmp_path)
+    assert row['status'] == 'failed'
+    assert row['error']['type'] == 'WorkerProcessError'
+    assert row['error']['resource_limit'] == 'unclassified_worker_failure'
 
 
 def test_development_diagnostics_preserve_complete_normalized_state(tmp_path, monkeypatch):
