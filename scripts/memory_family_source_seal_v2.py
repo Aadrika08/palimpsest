@@ -10,6 +10,7 @@ from contextlib import ExitStack
 import copy
 import os
 from pathlib import Path, PurePosixPath
+import stat
 
 from palimpsest import artifacts, memory, snapshots
 from scripts import memory_family_compact_v4 as compact
@@ -178,6 +179,32 @@ def _write_bundle(lifetime, output, bundle, deadline):
         _write_file(directories[parent], parts[-1], bundle[path])
     for fd in reversed(list(directories.values())):
         os.fsync(fd)
+
+
+def _prepared_marker(lifetime, output, payload, deadline):
+    """Keep pre-rename bytes/mtime custody; rename may legitimately alter ctime."""
+    fd = os.open('.commit.tmp', os.O_RDONLY | os.O_NOFOLLOW, dir_fd=output)
+    lifetime.callback(os.close, fd)
+    before = os.fstat(fd)
+    if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+            or before.st_size != len(payload) or len(payload) > RESERVES['commit']):
+        raise ValueError('Invalid prepared numeric marker type, size or alias count')
+    def identity(value):
+        return (value.st_dev, value.st_ino, value.st_mode, value.st_size,
+                value.st_mtime_ns, value.st_nlink)
+    expected = identity(before)
+    def check(name=None):
+        audit._deadline(deadline)
+        if (identity(os.fstat(fd)) != expected
+                or os.pread(fd, RESERVES['commit'] + 1, 0) != payload
+                or identity(os.fstat(fd)) != expected):
+            raise RuntimeError('Prepared numeric marker changed across publication')
+        if name is not None and identity(os.stat(
+                name, dir_fd=output, follow_symlinks=False)) != expected:
+            raise RuntimeError('Numeric marker name no longer binds its prepared descriptor')
+    check('.commit.tmp')
+    lifetime.callback(check)
+    return check
 
 
 def _physical(descriptor, case_id):
@@ -415,12 +442,12 @@ def seal_numeric_source_v2(evidence_root, registration, *, case_id, deadline, ad
             _write_bundle(lifetime, output, bundle, deadline)
             _write_file(output, 'conversion.json', payload)
             _write_file(output, '.commit.tmp', marker_bytes)
+            marker_check = _prepared_marker(lifetime, output, marker_bytes, deadline)
             os.fsync(output)
             expected = {**{p: compact._descriptor(p, b) for p, b in bundle.items()},
                 'conversion.json': compact._descriptor('conversion.json', payload),
                 '.commit.tmp': compact._descriptor('.commit.tmp', marker_bytes)}
             disk = _tree(lifetime, output, expected, deadline, preparing=True)
-            marker_identity = _edge(os.stat('.commit.tmp', dir_fd=output, follow_symlinks=False))
             disk_bundle = {p: disk[p] for p in bundle}
             read = _prove(raw, disk_bundle, receipt, contract, snapshot_fd)
             if _records(registration, contract, receipt, disk_bundle, read,
@@ -433,8 +460,7 @@ def seal_numeric_source_v2(evidence_root, registration, *, case_id, deadline, ad
             audit._deadline(deadline)
             _rename_noreplace(output)
             os.fsync(output)
-            if marker_identity != _edge(os.stat('commit.json', dir_fd=output, follow_symlinks=False)):
-                raise RuntimeError('Numeric marker inode changed during publication')
+            marker_check('commit.json')
             final_expected = {**expected}
             del final_expected['.commit.tmp']
             final_expected['commit.json'] = compact._descriptor('commit.json', marker_bytes)

@@ -711,3 +711,41 @@ def test_control_descriptor_roots_are_refused_before_control_payload_open(tmp_pa
     with pytest.raises(ValueError, match='outside|Invalid relative'):
         getattr(module, entry)(**{**request(sample), 'registration':registration})
     assert not candidate(sample).exists()
+
+
+@pytest.mark.parametrize('quarantine_unavailable', [False, True])
+def test_review_fix1_prepared_marker_change_restore_during_real_rename_is_refused(tmp_path, monkeypatch, quarantine_unavailable):
+    module = source_module()
+    sample = fixture(tmp_path / 'evidence')
+    raw_before = inventory(sample['raw'])
+    real_rename = module._rename_noreplace
+    real_write = module._write_file
+    observed = []
+    def changed(fd):
+        real_rename(fd)
+        path = candidate(sample) / 'commit.json'
+        before = path.stat()
+        payload = path.read_bytes()
+        path.write_bytes(payload + b'authored marker mutation')
+        path.write_bytes(payload)
+        after = path.stat()
+        assert before.st_ino == after.st_ino
+        assert before.st_mtime_ns != after.st_mtime_ns
+        assert path.read_bytes() == payload
+        observed.append(payload)
+    def write(fd, name, payload):
+        if quarantine_unavailable and name == 'quarantine.json':
+            raise OSError('authored quarantine publication unavailable')
+        return real_write(fd, name, payload)
+    monkeypatch.setattr(module, '_rename_noreplace', changed)
+    monkeypatch.setattr(module, '_write_file', write)
+    expected = module.SealIndeterminate if quarantine_unavailable else RuntimeError
+    with pytest.raises(expected):
+        module.seal_numeric_source_v2(**request(sample))
+    assert observed
+    assert (candidate(sample) / 'commit.json').read_bytes() == observed[0]
+    assert inventory(sample['raw']) == raw_before
+    assert (candidate(sample) / 'quarantine.json').exists() is not quarantine_unavailable
+    if not quarantine_unavailable:
+        with pytest.raises((ValueError, RuntimeError)):
+            module.read_numeric_source_v2(**request(sample))
