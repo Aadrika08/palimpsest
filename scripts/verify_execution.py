@@ -1,12 +1,28 @@
 """Check snapshot continuation across fresh worker processes using the actual simulator."""
 
 import argparse
+import io
 import json
 import os
 from pathlib import Path
 import sys
 
 from palimpsest.evaluate import bounded_process
+
+
+def worker_budget(config):
+    """Study-only shared quota; the legacy verifier has no extra quota."""
+    if config.get('storage_max_bytes') is None:
+        return None
+    from palimpsest.storage import StorageBudget, StorageLimits
+    return StorageBudget((Path(config['storage_root']),), StorageLimits(
+        max_bytes=config['storage_max_bytes'], min_free_bytes=config.get('minimum_free_bytes', 0)))
+
+
+def write_payload(path, payload, budget):
+    if budget is not None:
+        budget.check(len(payload), path=path)
+    Path(path).write_bytes(payload)
 
 
 def worker(config):
@@ -18,8 +34,9 @@ def worker(config):
     from palimpsest.snapshots import capture, restore, save_snapshot, read_snapshot
 
     output = Path(config['output'])
+    budget = worker_budget(config)
     engine = Engine.open(Path(config['repo']), Path(config['assets']), output / 'recording',
-                         controller=config['controller'], device=config['device'], seed=config['seed'])
+                         controller=config['controller'], device=config['device'], seed=config['seed'], storage_budget=budget)
     queued = {'id': 'resume-from-snapshot', 'kind': 'run', 'expected_state': 'paused',
               'expected_episode': 0}
 
@@ -44,7 +61,7 @@ def worker(config):
                     projected = {**engine.effective_cameras(), 'sensors': engine.observation['sensors']}
                     parity = engine.policy.act(projected, check_parity=True)['parity']
                     engine.policy._restore(before)
-                    (output / 'input-parity.json').write_text(json.dumps(parity, allow_nan=False))
+                    write_payload(output / 'input-parity.json', json.dumps(parity, allow_nan=False).encode(), budget)
             goal = engine.env._goal_xy.copy()
             goal[0] += .1  # Seeded goals begin with ample wall/obstacle clearance.
             command('edit-before-snapshot', 'intervene', 'paused',
@@ -59,7 +76,7 @@ def worker(config):
             engine.writer.flush()
             snapshot = capture(engine.env, engine.observation, policy=engine.policy,
                                teacher=engine.teacher, application=engine.application_state())
-            save_snapshot(snapshot, Path(config['snapshot']))
+            save_snapshot(snapshot, Path(config['snapshot']), storage_budget=budget)
         else:
             snapshot = read_snapshot(Path(config['snapshot']))
             engine.validate_application(snapshot['application'])
@@ -87,13 +104,18 @@ def worker(config):
             for eye in ('left', 'right'):
                 for name, value in getattr(engine.policy.agent, 'state_vision_' + eye).items():
                     final[eye + '_' + name] = value.detach().cpu().numpy().copy()
-        np.savez(output / 'continuation-state.npz', **final)
+        if budget is None:
+            np.savez(output / 'continuation-state.npz', **final)
+        else:
+            archive = io.BytesIO()
+            np.savez(archive, **final)
+            write_payload(output / 'continuation-state.npz', archive.getvalue(), budget)
         random_draws = {'python': random.random(), 'numpy': np.random.random(3).tolist(),
                         'environment': engine.env.np_random.random(3).tolist(),
                         'torch_cpu': torch.rand(3).tolist()}
         if config['device'] == 'cuda' and config['controller'] == 'flynn':
             random_draws['torch_cuda'] = torch.rand(3, device='cuda').cpu().tolist()
-        (output / 'random-draws.json').write_text(json.dumps(random_draws, allow_nan=False))
+        write_payload(output / 'random-draws.json', json.dumps(random_draws, allow_nan=False).encode(), budget)
     finally:
         engine.close()
 
@@ -116,6 +138,8 @@ def verify(config):
     output = Path(config['output']).resolve()
     output.mkdir(parents=True, exist_ok=False)
     config['snapshot'] = str(output / 'continuation.snapshot')
+    if config.get('storage_max_bytes') is not None:
+        config['storage_root'] = str(output)
     env = os.environ.copy()
     env.setdefault('MUJOCO_GL', 'egl')
     env['MPLBACKEND'] = 'Agg'
@@ -123,7 +147,7 @@ def verify(config):
     for mode in ('source', 'restored'):
         child = {**config, 'mode': mode, 'output': str(output / mode)}
         report = bounded_process([sys.executable, __file__, '--worker', json.dumps(child)],
-                                 output / mode, config['timeout'], env)
+                                 output / mode, config['timeout'], env, storage_budget=worker_budget(config))
         if report['status'] != 'completed':
             raise ValueError(f'{mode} worker failed: {report}; inspect stderr.log')
     result = compare(output, config)
@@ -216,6 +240,8 @@ if __name__ == '__main__':
         parser.add_argument('--prefix', type=int, default=8)
         parser.add_argument('--continuation', type=int, default=12)
         parser.add_argument('--timeout', type=int, default=180)
+        parser.add_argument('--storage-max-bytes', type=int, help='optional shared source/restored payload quota')
+        parser.add_argument('--minimum-free-bytes', type=int, default=0)
         parser.add_argument('--mask-left', action='store_true', help='verify masked preprocessing and continuation')
         parser.add_argument('--output', type=Path, required=True)
         args = parser.parse_args()
