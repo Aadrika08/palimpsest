@@ -16,7 +16,9 @@ HEADER = r"""\documentclass[10pt,border=2pt]{standalone}
 
 
 def main():
-    output = PAPER / 'build' / 'figures'
+    # Keep wrappers outside build/figures: TeX searches its output directory
+    # first, so matching wrapper names there would shadow the source inputs.
+    output = PAPER / 'build' / 'standalone-figures'
     output.mkdir(parents=True, exist_ok=True)
     bodies = {
         'authority-sequence': r'\input{figures/authority-sequence.tex}',

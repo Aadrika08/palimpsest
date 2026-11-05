@@ -46,4 +46,4 @@ The two static figures are vector TikZ/table sources. Authority ticks are
 symbolic, and the replay matrix describes this system's execution/validation
 semantics. Neither is a measured performance plot or a competitor comparison.
 `make -C paper figures PYTHON="$(pwd)/.venv/bin/python"` also exports all three
-figures as standalone vector PDFs under `paper/build/figures/`.
+figures as standalone vector PDFs under `paper/build/standalone-figures/`.
