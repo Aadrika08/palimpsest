@@ -132,6 +132,23 @@ Task7's analysis design retains exactly the old `memory_family_analysis_v3.py:16
 
 **Files:** ownership table Task2a. **Consumes:** Task1 strict4/result/schema contract. **Produces:** private `Engine._persist_terminal_transition_vnext(result:TransitionResult,*,context:Context,job_sha256:str,chain:tuple[int,str])->None` and `_require_memory_transition_mode()->None`. No public opt-in, Task6 import, absent-class stub, fake/duck-typed custody object or integrated Engine claim in this task. Private authored helper tests are not public admission.
 
+Fixed private journal fields are `_memory_terminal_vnext_mode` (literal
+`memory-terminal-vnext-v1`), `_memory_terminal_vnext_context`,
+`_memory_terminal_vnext_job_sha256`, `_memory_terminal_vnext_chain` and the
+one-way stop latch `_memory_terminal_vnext_failed`. The finite manifest
+indications are `memory_terminal_vnext_context_sha256` and
+`memory_terminal_vnext_mode`. Presence, including null/partial values, refuses
+the default path. The helper additionally consumes a fixed private
+`_memory_terminal_vnext_route_anchor` datum when returned decisions are
+nonempty: exact `{tick,stage,xy}`, stage `pre-control`, exact tick equal to
+Engine total_tick and episode_step, and two plain finite floats. Validate it
+before any write; ordinary decision events retain legacy
+`route_anchor={stage,xy}` after Commit. Task2b must bind this datum from the
+same actual sensing pose cut, and Task3 independently verify it. It is authored
+data in Task2a tests, never a claim of actual pose/source authentication. Its
+presence also refuses the default path. Do not omit the existing anchor or
+derive pose from a transition that deliberately has no pose input.
+
 - [ ] Write red `test_default_engine_path_emits_no_vnext_events`, `test_default_refuses_state4_or_lost_context_lifecycle_mode_before_selection`, `test_witness_fsync_precedes_assignment_and_natural_rethrow`, `test_failed_witness_write_keeps_input_and_blocks_policy`, `test_failed_commit_write_records_actual_assigned_state_and_infrastructure_failure`, `test_assignment_cannot_mutate_detached_hashed_witness`, `test_trigger_plus_failure_single_transaction`, `test_background_writer_refused_for_vnext`. Authored Engine/RunWriter objects exercise only the private helper and default guard; ordinary fake env/policy raises if touched. No fake public held-source argument. Inject failures exactly before/after assignment; compare nested identities and canonical bytes.
 - [ ] Run Task2a red command, then implement the helper and guard without wiring an opt-in. For `memory-decision-v2`, guard at the start of `_step` before old validation/sensing/selection accepts only strict3 with no vnext state/manifest/mode indication. Any4/new marker/manifest context/bound-mode indication currently refuses as not integrated; inconsistent/removed markers refuse rather than call legacy oracle[]. Other scenarios are unaffected unless a contradictory vnext indication is present (then refuse). Genuine3 default behavior/events remain unchanged.
 - [ ] Helper requires synchronous writer (`records.py:213–234`). New event kinds are exactly `memory_transition_witness_vnext` / `memory_transition_commit_vnext`: existing Engine/RunWriter envelope keys `run_id,episode,tick,episode_step,sequence,kind` plus only `witness:Witness` / `commit:Commit`. Hash canonical Witness body; preserve actual spaced JSON/newline bytes. Confirm Witness fsync **before** updating journal or assigning proposed state/rethrowing. Assign a recursively detached proposed strict4 state only for returned/idempotent variants; Commit only for witnessed returned variant and only after real assignment, then ordinary returned decision events. Raised/rejected variants never assign local state/Lifecycle or fabricate ordinary decisions/Commit; retain witness if valid and use `rethrow_transition_error_vnext` for original class/message or infrastructure refusal, never directly raise its opaque token. Idempotent has no new witness/call/event. No result field claims commit.
