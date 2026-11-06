@@ -607,12 +607,16 @@ def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=Fals
     return snp["observation"], snp["application"]
 
 
-def save_snapshot(snapshot, path, *, storage_budget=None, preflight_bytes=0):
+def save_snapshot(snapshot, path, *, storage_budget=None, preflight_bytes=0, preserve_failed=False):
     """Write an exclusive bounded container and return its exact byte count.
 
     Optional preflight bytes estimate subsequent recording needs; they are
     checked with the actual serialized snapshot before any disk write.
+    Preserved failed bytes remain chargeable; source admission must reserve
+    atomic space separately and is not implemented by this option.
     """
+    if type(preserve_failed) is not bool:
+        raise ValueError("preserve_failed must be a bool")
     import numpy as np
     if type(preflight_bytes) is not int or preflight_bytes < 0:
         raise ValueError("preflight_bytes must be a nonnegative integer")
@@ -660,7 +664,8 @@ def save_snapshot(snapshot, path, *, storage_budget=None, preflight_bytes=0):
             stream.flush()
             os.fsync(stream.fileno())
         except BaseException:
-            path.unlink()
+            if not preserve_failed:
+                path.unlink()
             raise
     return len(payload)
 

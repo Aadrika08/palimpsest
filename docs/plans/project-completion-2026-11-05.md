@@ -1,5 +1,17 @@
 # Palimpsest proof-first completion implementation
 
+Latest local prerequisite, 6 November: the canonical prepared source path now
+selects opt-in failure-byte retention in the real recorder, with the same option
+available in the original SNP saver. Final dedicated tests passed63 checks;
+covering bootstrap/recorder tests passed119 checks. Independent review and a
+test-only scoped correction both completed; no production findings remain.
+See [preservation evidence](../reports/source-failure-preservation-review-2026-11-06/README.md).
+This is ordinary authored software evidence, not experiment cost or source
+qualification. The complete provider-neutral producer/auditor/codec/qualifier
+contract is under amendment after independent review; actual backend, accounting,
+namespace exports, input/resource admission, exact GO and all study gates remain
+open. No research attempt or raw deletion follows from this prerequisite.
+
 Approved in conversation on 5 November 2026. Baselines: main 12ba63c947213b794a0a8cfcb7b965fe6b18dacf; paper branch 6a7273249e197b7017c3879e81c36890097ab236.
 
 ## Goal and constraints

@@ -23,7 +23,7 @@ def _json(value):
     return json.dumps(value, allow_nan=False, sort_keys=True)
 
 
-def _atomic_manifest(path, payload):
+def _atomic_manifest(path, payload, *, preserve_failed=False):
     temporary = path.with_suffix(".tmp")
     try:
         with temporary.open("xb") as stream:
@@ -32,7 +32,8 @@ def _atomic_manifest(path, payload):
             os.fsync(stream.fileno())
         temporary.replace(path)
     finally:
-        temporary.unlink(missing_ok=True)
+        if not preserve_failed:
+            temporary.unlink(missing_ok=True)
 
 
 def _digest(path):
@@ -44,7 +45,7 @@ def _integer(value):
     return type(value) is int and value >= 0
 
 
-def _publish_chunk(path, payload):
+def _publish_chunk(path, payload, *, preserve_failed=False):
     temporary = path.with_suffix(".tmp")
     try:
         with temporary.open("xb") as stream:
@@ -53,7 +54,8 @@ def _publish_chunk(path, payload):
             os.fsync(stream.fileno())
         temporary.replace(path)
     finally:
-        temporary.unlink(missing_ok=True)
+        if not preserve_failed:
+            temporary.unlink(missing_ok=True)
 
 
 class _BackgroundWrites:
@@ -66,7 +68,8 @@ class _BackgroundWrites:
     raises it on its next call.
     """
 
-    def __init__(self, events, max_items):
+    def __init__(self, events, max_items, *, preserve_failed=False):
+        self.preserve_failed = preserve_failed
         self.queue = queue.Queue(max_items)
         self.lock = threading.Lock()
         self.pending_bytes = 0
@@ -97,7 +100,7 @@ class _BackgroundWrites:
                     return
                 if self.error is None:
                     if item[0] == "chunk":
-                        _publish_chunk(item[1], item[2])
+                        _publish_chunk(item[1], item[2], preserve_failed=self.preserve_failed)
                     else:
                         events.write(item[1])
                         events.flush()
@@ -127,7 +130,16 @@ def _load_json(value):
 
 
 class RunWriter:
-    def __init__(self, path: Path, manifest: dict, max_bytes=None, *, storage_budget=None):
+    """Bounded recorder; preserved failed pending bytes remain chargeable.
+
+    Source admission must separately reserve atomic space; this option only
+    retains failed bytes and does not implement source admission.
+    """
+
+    def __init__(self, path: Path, manifest: dict, max_bytes=None, *, storage_budget=None, preserve_failed=False):
+        if type(preserve_failed) is not bool:
+            raise ValueError("preserve_failed must be a bool")
+        self._preserve_failed = preserve_failed
         if max_bytes is not None and (not _integer(max_bytes) or max_bytes == 0):
             raise ValueError("max_bytes must be a positive integer or None")
         self._max_bytes = max_bytes
@@ -167,7 +179,7 @@ class RunWriter:
             raise ValueError("background writes already started")
         if not _integer(max_items) or max_items == 0:
             raise ValueError("max_items must be a positive integer")
-        self._background = _BackgroundWrites(self._events, max_items)
+        self._background = _BackgroundWrites(self._events, max_items, preserve_failed=self._preserve_failed)
 
     def background_stats(self):
         return None if self._background is None else self._background.view()
@@ -199,7 +211,7 @@ class RunWriter:
         payload = (_json(value) + "\n").encode("utf-8")
         self._check_budget(len(payload))  # The old manifest survives until atomic replacement.
         try:
-            _atomic_manifest(self.path / "manifest.json", payload)
+            _atomic_manifest(self.path / "manifest.json", payload, preserve_failed=self._preserve_failed)
         except OSError:
             self._broken = True
             raise
@@ -298,7 +310,7 @@ class RunWriter:
             self._broken = True
             raise
         finally:
-            if self._background is None:  # The writer thread owns its temporary file.
+            if self._background is None and not self._preserve_failed:  # The writer thread owns its temporary file.
                 temporary.unlink(missing_ok=True)
         self._buffer.clear()
         self._chunk += 1

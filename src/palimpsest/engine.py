@@ -474,7 +474,8 @@ class Engine:
                 "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled"},
             **case_manifest, **research_manifest,
             **({'source_bootstrap_epoch': source_bootstrap_mode} if canonical_prepared else {}),
-        }, max_bytes=max_bytes, storage_budget=storage_budget)
+        }, max_bytes=max_bytes, storage_budget=storage_budget,
+            **({'preserve_failed': True} if canonical_prepared else {}))
         env = None
         try:
             if not canonical_prepared:
