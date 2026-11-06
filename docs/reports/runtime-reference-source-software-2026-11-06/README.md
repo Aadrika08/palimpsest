@@ -34,3 +34,9 @@ The proposed runtime profile is unadopted, public V3-job/V4-freeze execution
 remains closed, actual source/preservation/scientific qualification is false,
 and raw deletion stays disabled. Exact-head hosted validation is tracked
 separately; older numeric-source main CI does not cover this later candidate.
+
+Hosted PR187 run42129292624 subsequently failed one isolated child-retention
+fixture at `4a59e7a`:7,103 passed,318 skipped,1 failed; frontend passed.
+The child never launched and its exact supervisor refusal was not printed.
+See the [hosted diagnostic](../runtime-reference-hosted-diagnostic-2026-11-06/README.md).
+This local canonical result does not clear that hosted failure.
