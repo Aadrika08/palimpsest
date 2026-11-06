@@ -466,3 +466,62 @@ def test_actual_authored_runwriter_readback_preserves_safe_numpy_scalar_rows(tmp
     assert result['row_count'] == 1
     from scripts import memory_family_raw_audit_v4 as raw_audit
     assert result['row_sequence_sha256'] == raw_audit._audit_rows([decoded], 'condition')[2]
+
+
+@pytest.mark.parametrize('over', (0, 1))
+def test_round1_complete_source_event_bytes_bound_valid_prefix_and_suffix(over):
+    sample = fixture(count=0)
+    source_events = sample['source_events']
+    prefix = copy.deepcopy(sample['source_application']['event_prefix'])
+    suffix = {'sequence': len(source_events), 'kind': 'diagnostic', 'run_id': SOURCE,
+        'episode': 0, 'episode_step': sample['context']['schedule']['boundary_tick'],
+        'tick': sample['context']['schedule']['boundary_tick'], 'message': ''}
+    limit = 7 * 1024**2
+    before = sum(len(encoded(e)) for e in source_events)
+    suffix['message'] = 'x' * (limit + over - before - len(encoded(suffix)))
+    source_events.append(suffix)
+    assert sum(len(encoded(e)) for e in source_events) == limit + over
+    assert sample['source_application']['event_prefix'] == prefix
+    if over:
+        from scripts import memory_family_oracle_v3 as oracle
+        with patch.object(oracle, '_source_evidence', side_effect=AssertionError('source replay must follow whole-stream cap')):
+            with pytest.raises(ValueError, match='source event byte ceiling'):
+                prove(sample)
+    else:
+        assert prove(sample)['row_count'] == 0
+
+
+@pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+    ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+    sample = fixture(count=4, normal=True)
+    manifest = copy.deepcopy(sample['raw']['manifest'])
+    event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+    event['outcome'] = copy.deepcopy(event['outcome'])
+    event['metrics'] = copy.deepcopy(event['metrics'])
+    original = event[group][field]
+    event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+    assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+    assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+    assert sample['raw']['manifest'] == manifest
+    rebind(sample)
+    with pytest.raises(ValueError):
+        prove(sample)
+
+
+@pytest.mark.parametrize('flag', (1, 1.0))
+def test_round1_hash_bound_source_eye_numeric_aliases_refuse(flag):
+    original_application = _application
+    def inexact_application(*args, **kwargs):
+        application = original_application(*args, **kwargs)
+        application['eyes'] = {'left': flag, 'right': flag}
+        return application
+    with patch(__name__ + '._application', side_effect=inexact_application):
+        sample = fixture(count=0)
+    restored = next(e for e in sample['raw']['events'] if e['kind'] == 'application_restored')
+    restored['eyes'] = {'left': True, 'right': True}
+    assert sample['context']['source_application_sha256'] == memory.sha256(sample['source_application'])
+    assert type(sample['source_application']['eyes']['left']) is type(flag)
+    rebind(sample)
+    with pytest.raises(ValueError):
+        prove(sample)

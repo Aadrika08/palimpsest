@@ -108,6 +108,7 @@ def _decoded_rows(rows, maximum_rows, maximum_bytes):
 
 def _source(application, events, rows, context):
     _fields(application, oracle.APPLICATION_FIELDS)
+    _same(application['eyes'], {'left': True, 'right': True})
     _require(type(rows) is list and 0 < len(rows) <= 1200, 'Source must remain nonempty and bounded')
     _require(context['source_snapshot']['size_bytes'] > 0, 'A nonempty source snapshot identity is required')
     _decoded_rows(rows, 1200, 512 * _MIB)
@@ -144,19 +145,26 @@ def _source(application, events, rows, context):
     _same(context['source_world_sha256'], memory.sha256(source_world))
     _same(context['source_invariant_sha256'], transition.terminal_condition_invariant_vnext(application))
     _events(events, context['source_run_id'])
-    projection, _, _ = legacy._audit_rows(rows, 'source')
-    _require(len(projection) == b, 'Source rows do not reach acquired boundary')
-    oracle._source_evidence(case, application, events, projection)
     prefix = application['event_prefix']; _fields(prefix, ('sha256', 'size_bytes', 'event_count'))
     _int(prefix['event_count'], 50000); _int(prefix['size_bytes'], 7 * _MIB)
     memory._digest(prefix['sha256'])
     count = prefix['event_count']
     _require(0 < count <= len(events), 'Invalid source event prefix count')
-    payload = b''.join(_writer(e) for e in events[:count])
-    _require(len(payload) == prefix['size_bytes'] and hashlib.sha256(payload).hexdigest() == prefix['sha256'],
+    total_bytes, prefix_bytes, prefix_digest = 0, 0, hashlib.sha256()
+    for index, event in enumerate(events):
+        payload = _writer(event)
+        total_bytes += len(payload)
+        _require(total_bytes <= 7 * _MIB, 'Supplied source event byte ceiling exceeded')
+        if index < count:
+            prefix_bytes += len(payload)
+            prefix_digest.update(payload)
+    _require(prefix_bytes == prefix['size_bytes'] and prefix_digest.hexdigest() == prefix['sha256'],
         'Source event prefix commitment differs')
     acquired_index, _ = oracle._single(events, 'memory_acquired_boundary', 'source')
     _require(acquired_index < count, 'Source prefix precedes its acquired cut')
+    projection, _, _ = legacy._audit_rows(rows, 'source')
+    _require(len(projection) == b, 'Source rows do not reach acquired boundary')
+    oracle._source_evidence(case, application, events, projection)
     return case, state, source_world, projection
 
 
@@ -381,6 +389,9 @@ def _replay(raw, context, application, case, source, source_world, projection, f
         _require(n > 0 and decision_reached, 'Normal outcome lacks full reached decision proof')
         legacy._normal_condition_terminal(events, raw['manifest'], {'manifest_status': 'completed',
             'final_phase': raw['manifest']['final_phase'], 'total_ticks': b + n, 'last_tick': b + n - 1}, context['schedule'])
+        _, terminal_event = oracle._single(events, 'episode_finished', 'normal terminal')
+        _same(terminal_event['outcome'], raw['manifest']['last_outcome'])
+        _same(terminal_event['metrics'], raw['manifest']['metrics'])
         outcome = raw['manifest']['last_outcome']
         if outcome['reason'] == 'goal':
             _require(transition.terminal_goal_allowed_vnext(state, context=context), 'Goal without inspected permitted route')
