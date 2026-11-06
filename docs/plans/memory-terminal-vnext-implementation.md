@@ -417,6 +417,26 @@ Task5's authored proof/sealer-reader tests may use Task1/2a-produced fixture evi
 - [ ] Reuse condition seal/read held-custody/on-disk equality/independent pair/marker-last/failure/quarantine semantics (`memory_family_condition_seal_v4.py:474–656`) through reviewed fixed helpers. Successor profile binds no donor; every other condition mapping/U/history identity and reached proof remains exact. Producer-supplied proof/status cannot qualify itself. Preserve raw, partials and refusal to prune.
 - [ ] Derive goals from independently checked terminal reason/radius (zero never goal), actual count and ordered XY path sum, capped900 and source invariant; preserve own/sham and all-nine no-event equality including terminal/outcome/count/path/invariant, plus actual zero resolver/selector for no-event. Run Task5 green with failed-before/after-publication and closed-gate tests; commit only reviewed files after authorization.
 
+## Task 5a: Independent conditional resource/history mapping
+
+Root freezes the [exact pure pair contract](../reports/memory-terminal-pair-contract-2026-11-06/contract.md).
+This closes a concrete gap beyond3a: registered nonoracle U/selector/history
+mapping, with an independent E-only refit and complete fresh3a proof equality.
+Ownership is the new terminal_condition_vnext script and focused test only.
+Supplied history bodies/descriptors are conditional value premises; physical
+origin, seed/relation/profile registration and custody are not certified.
+Oracle remains pending until reached gold is independently reconstructed;
+no prior-own receipt, loader, qualified flag or actual adapter is introduced.
+
+- [ ] Genuine authored held-source positive, all-nine mapping/forgery negatives,
+  zero/short natural endpoint cases and input preservation.
+- [ ] Required focused TDD and independent spec/code review.
+
+Pair equality does not establish cross-condition equality. Own/sham and all-nine
+no-event checks remain complete-family6b/7 obligations, including terminal/count/
+path/outcome/invariant and actual no-event nonuse. Task5a does not complete Task5,
+actual replay/seal/read, source/backend/accounting, study or deletion gates.
+
 ## Task 6: Source consumption, case publication epoch and physical census
 
 **Files:** ownership table Task6. **Consumes:** Task5 exact cells/receipts. **Produces:** `open_source_numeric_vnext(evidence_root,registration,*,case_id,deadline) -> ContextManager[HeldSourceVnext]`; `read_source_numeric_vnext(evidence_root,registration,*,case_id,deadline) -> dict`; `read_terminal_case_vnext(evidence_root,registration,*,case_id,deadline) -> dict`; `publish_terminal_case_vnext(evidence_root,registration,*,case_id,deadline) -> dict`; `check_terminal_census_vnext(inventory,*,scope) -> dict`. `HeldSourceVnext` in `scripts/memory_family_source_consumer_vnext.py` exposes read-only detached `context,case,source_application,source_world,source_m,source_snapshot_reference` and fixed `recheck()->None`; internally owns existing held-path descriptors/ExitStack and active lifetime, no supplied callbacks. Private construction occurs only after source/qualification/admission checks; read returns detached data without claiming a still-active lifetime. Pure software/closed public adapters only; actual study execution remains unavailable.
