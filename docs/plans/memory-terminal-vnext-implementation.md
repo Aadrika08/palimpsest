@@ -506,9 +506,14 @@ keeps legacy hex IDs/preparation/other controllers. This configuration is not
 an actual source factory, trusted admission, qualified backend, state4 opt-in
 or GO; the future fixed source owner and Q/L/F/R remain separate.
 
-- [ ] Shared constructor unit coverage, canonical/pre-read refusal order,
+- [x] Shared constructor unit coverage, canonical/pre-read refusal order,
   immutable assets, legacy default and failure/closure regressions.
-- [ ] Focused TDD and fresh independent spec/code review.
+- [x] Focused TDD and fresh independent spec/code review.
+
+Accepted configuration source: [bootstrap evidence and limitations](../reports/canonical-source-bootstrap-review-2026-11-06/README.md),
+101 passes/no skips and independent SPEC PASS/QUALITY APPROVED.
+The [broken-recorder clarification](../reports/canonical-source-bootstrap-contract-2026-11-06/broken-writer-clarification.md)
+requires retained running/incomplete prefixes to remain inadmissible.
 
 Controlled allocation/RNG/native boundary objects are unit evidence only,
 with real case/profile/geometry/held-record/RunWriter/Engine initialization.

@@ -102,6 +102,16 @@ sealing/publication, accounting, compact-evidence adequacy and the full study
 remain unverified; no actual research or CI execution follows from these tests.
 Raw deletion remains disabled and the full project remains incomplete.
 
+## Canonical source creation mechanism, 6 November 2026
+
+The shared Engine now has an explicit canonical-UUID/read-only-prepared bootstrap
+configuration, with101 controlled source-unit passes and independent approval.
+Default legacy creation remains unchanged. See [evidence and scope](../reports/canonical-source-bootstrap-review-2026-11-06/README.md).
+This completes creation mechanics only: actual source owner/backend/replay,
+accounting/namespace/GO, strict4 integration, measured experiment cost and all
+study/human/rights/reproduction/paper gates remain open. No research launched;
+raw deletion stays disabled and the full project remains incomplete.
+
 ## Verified proof milestone, 5 November 2026
 
 The standalone nine-module package and final Lake build passed, followed by an independent parent build and kernel check. All 17 exported axiom reports use only the standard allowed axioms. The retained package checksum manifest verifies 269 files. The numerical exporter also passed 31 Python tests and independent Lean compilation of synthetic negative and nonnegative fixtures, including their axiom reports. These are arithmetic fixtures; sampling eligibility and empirical improvement remain unverified. Runtime qualification, memory publication and all empirical/human delivery gates remain open. Research execution CPU used remains zero; proof builds and ordinary tests are excluded. See `formal/change-audit/evidence/verification-summary.json` and `paper/studies/change_audit_v1/independent-emitter-verification/verification.json`.

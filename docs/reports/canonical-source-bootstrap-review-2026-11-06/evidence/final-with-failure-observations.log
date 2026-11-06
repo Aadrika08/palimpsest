@@ -1,0 +1,14 @@
+........................................................................ [ 71%]
+.............................                                            [100%]
+============================= slowest 10 durations =============================
+0.06s call     tests/test_memory_source_bootstrap_vnext.py::test_canonical_open_traverses_shared_constructor_world_and_writer
+0.05s call     tests/test_memory_source_bootstrap_vnext.py::test_failures_after_writer_creation_keep_failed_manifest_and_close_resources[configure-ValueError-cylinder type/radius-True]
+0.05s call     tests/test_memory_source_bootstrap_vnext.py::test_close_error_preserves_failed_recording_and_environment_cleanup
+0.04s call     tests/test_memory_source_bootstrap_vnext.py::test_legacy_default_keeps_preparation_hex_ids_and_diagnostics[held-omitted]
+0.04s call     tests/test_memory_source_bootstrap_vnext.py::test_legacy_default_keeps_preparation_hex_ids_and_diagnostics[doctor-omitted]
+0.04s call     tests/test_memory_source_bootstrap_vnext.py::test_legacy_default_keeps_preparation_hex_ids_and_diagnostics[held-None]
+0.04s call     tests/test_memory_source_bootstrap_vnext.py::test_failures_after_writer_creation_keep_failed_manifest_and_close_resources[episode-ValueError-Out of range float-True]
+0.04s call     tests/test_memory_source_bootstrap_vnext.py::test_legacy_default_keeps_preparation_hex_ids_and_diagnostics[doctor-None]
+0.03s call     tests/test_memory_source_bootstrap_vnext.py::test_legacy_ordinary_controllers_and_generated_or_hex_ids[None-teacher]
+0.03s call     tests/test_memory_source_bootstrap_vnext.py::test_legacy_ordinary_controllers_and_generated_or_hex_ids[bc47d6797b204ac9b63027e4c7b05691-manual]
+101 passed in 1.19s

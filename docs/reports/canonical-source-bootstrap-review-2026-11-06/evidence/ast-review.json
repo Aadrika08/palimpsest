@@ -1,0 +1,13 @@
+{
+  "baseline": "a591076",
+  "existing_functions": 40,
+  "changed_existing_functions": [
+    "Engine.open"
+  ],
+  "added_functions": [
+    "_runtime_diagnostics_ok"
+  ],
+  "existing_open_signature_and_defaults_unchanged": true,
+  "only_added_public_keyword": "source_bootstrap_mode=None",
+  "tests_ast_parsed": true
+}

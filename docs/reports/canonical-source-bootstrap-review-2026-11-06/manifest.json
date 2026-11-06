@@ -1,0 +1,163 @@
+{
+  "actual_experiment_cost_measured": false,
+  "baseline_contract_commit": "a59107670bb3061fe376cc59d40203aa43e1dc2e",
+  "files": [
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-report.md",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/implementation.md",
+      "sha256": "83d24d1401a3abc769618621803438c9f8eff2eeeeb47111a2872fe3a37cfd9b",
+      "size_bytes": 15235
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-review.md",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/independent-review.md",
+      "sha256": "607ad39ccd5a95bdfdd8b27abcaba69ccf7770b2d9f961076137e79d717d63bf",
+      "size_bytes": 8318
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/failure-observations.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/failure-observations.json",
+      "sha256": "7d9ca9d97689f00a39f3105c6b594048545a85b67e79b6d627e5ce57d9cb8dd8",
+      "size_bytes": 4395
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/final-with-failure-observations.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/final-with-failure-observations.log",
+      "sha256": "d63d68e15cc72702e977bb1d7dfc535136dd6af881faf640f09ad80e13a4f522",
+      "size_bytes": 1714
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/final.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/final.log",
+      "sha256": "13d91d79254a8ef8d6030c17c6f09f989144d83149fd70ee447faebaf782b067",
+      "size_bytes": 1796
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/ast-review.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/ast-review.json",
+      "sha256": "cb2a4cd3921b0a6a344c4e13413fcf2c23cdb6d410a7940629210cb2851d600f",
+      "size_bytes": 318
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/focus-3.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/focus-3.log",
+      "sha256": "904979f34bfbca8d2e679039984ede8afadeacb68b23ef85a3bc32a6c557a4c1",
+      "size_bytes": 179
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/focus-2.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/focus-2.log",
+      "sha256": "fd1d8ca750ce23b271e38ecd7065d27fb158181f3dc9a4c13dd90df981c9020a",
+      "size_bytes": 179
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/focus-1.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/focus-1.log",
+      "sha256": "4368219c0f27b3df2586123c685bf1e66b93bb753395b95493193f6950687011",
+      "size_bytes": 1752
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/red-3.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/red-3.log",
+      "sha256": "de9a3e667676ff6bed92b7dce60b397d23458b42861606f17dc8a366796a27d3",
+      "size_bytes": 231151
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/red-2.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/red-2.log",
+      "sha256": "cb648d8f173505c56b40bca837d9bac40379af171c4aa37c872a79e30bde3522",
+      "size_bytes": 238458
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/canonical-bootstrap-evidence/red-1.log",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/evidence/red-1.log",
+      "sha256": "6fe02832c4a9431f31f73e1686f892aee57e26e0c85ea5530783547236ab735f",
+      "size_bytes": 17306
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/2b926a59fbe34ccabb8f38be939f1865/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/2b926a59fbe34ccabb8f38be939f1865.json",
+      "sha256": "61f02eb736630bfff7473d538db6609c496f2268e89e2418ff779b2c1e939229",
+      "size_bytes": 331
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/4e4fb1a693214d1d9097f46d29b1ca2a/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/4e4fb1a693214d1d9097f46d29b1ca2a.json",
+      "sha256": "123792b50455f5fdc3ce5684b4c3b2ad92dd5c84ac08bffe802ee2caee04fe25",
+      "size_bytes": 428
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/820199013f534b13965fd127baac3e57/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/820199013f534b13965fd127baac3e57.json",
+      "sha256": "cc921d7a2edec0542e8510c16bf117aaa9671a426a40cbd302cb42ae76cb70b7",
+      "size_bytes": 303
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/8e591e51f3f049f6a13758a5734b7447/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/8e591e51f3f049f6a13758a5734b7447.json",
+      "sha256": "3dc48c4a920a20bb1ffd6cbcc1adc2d063f88e0bd027f9929302bd9550f7c6a7",
+      "size_bytes": 307
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/9251dc2ccd7a434681b3fdb52b3552a8/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/9251dc2ccd7a434681b3fdb52b3552a8.json",
+      "sha256": "28ab1546ea9d98031dc79d2011fcbbd0b6228cf55d63f2f4d738e39471a7086a",
+      "size_bytes": 337
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/a0c6e505a64747f1ac84fedb18a66b1d/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/a0c6e505a64747f1ac84fedb18a66b1d.json",
+      "sha256": "22802cc88d265bfea2892d53a23ba8dbf187deb329a4c2adee1f715db7735bfe",
+      "size_bytes": 321
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/a7adda3162b541dbb85f7c0fd97d590f/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/a7adda3162b541dbb85f7c0fd97d590f.json",
+      "sha256": "d47484f6a4ec64b37c77c0458060ee45a9867d79b9745eb269f0b6b7bcce0258",
+      "size_bytes": 353
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/c254b67568614509b168c0416f019b4e/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/c254b67568614509b168c0416f019b4e.json",
+      "sha256": "cf9c426961ec49cd417ea3781f04ba55f8b5a0145d3ee96431f50ffc5cec3657",
+      "size_bytes": 327
+    },
+    {
+      "original": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/cc15e3731d414d20955c5895bde0dc43/failure-observation.json",
+      "path": "docs/reports/canonical-source-bootstrap-review-2026-11-06/observations/cc15e3731d414d20955c5895bde0dc43.json",
+      "sha256": "832824abda7393d3137460397e62d6a862044bfc0fbb1bb7df2857cff90eec99",
+      "size_bytes": 335
+    }
+  ],
+  "final_result": {
+    "passed": 101,
+    "seconds": 1.19,
+    "skipped": 0
+  },
+  "implementation_commit": "1b3f0f93240b7c1f5cdf7978f4ecc1294ddbaf08",
+  "independent_review": "SPEC PASS; QUALITY APPROVED; no actionable findings; no reviewer rerun",
+  "schema": "canonical-bootstrap-source-evidence-archive-v1",
+  "scope": "creation configuration and controlled source units only; not actual source/runtime/model/scientific/qualification/admission/GO",
+  "source_and_contract_references": [
+    {
+      "path": "src/palimpsest/engine.py",
+      "sha256": "bccc6848b445c2ca684328396a2704a959cdb993caa1fcdcce4d987125e64fbc",
+      "size_bytes": 113618
+    },
+    {
+      "path": "tests/test_memory_source_bootstrap_vnext.py",
+      "sha256": "5f7da39596f71164db1214a7228cc06eb8564625c5144d06325a5f99c9f2aba6",
+      "size_bytes": 30430
+    },
+    {
+      "path": "docs/reports/canonical-source-bootstrap-contract-2026-11-06/contract.md",
+      "sha256": "562f2146f1e1b0d8df5d364ace45acf24b2667ecc9fcbc0bd7faa86270804e4f",
+      "size_bytes": 10925
+    },
+    {
+      "path": "docs/reports/canonical-source-bootstrap-contract-2026-11-06/broken-writer-clarification.md",
+      "sha256": "339d532b354fdc20270e3cf5988614d92f151401a2966b177a3f16088d67adff",
+      "size_bytes": 1221
+    }
+  ]
+}
