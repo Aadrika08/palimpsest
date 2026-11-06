@@ -1,0 +1,138 @@
+FFFFF...F                                                                [100%]
+=================================== FAILURES ===================================
+______ test_round1_selected_duplicate_requires_persisted_selection_count _______
+
+    def test_round1_selected_duplicate_requires_persisted_selection_count():
+        v,_,state,c,b,case=at_trigger()
+        first,p=step(v,state,c,b,case,token=1)
+        with patch.object(memory_experiment,'selection_for_condition',wraps=memory_experiment.selection_for_condition) as select:
+            valid=v.advance_transition_vnext(first.proposed_state,p,context=c,oracle_binding=b,reach=reach_for(case,event=True),
+                job_sha256='f'*64,chain=(1,memory.sha256(first.witness)))
+            contradictory=v.advance_transition_vnext(first.proposed_state,p,context=c,oracle_binding=b,reach=reach_for(case,event=True),
+                job_sha256='f'*64,chain=(0,memory.sha256(c)))
+        assert select.call_count==0
+        assert valid.status=='idempotent' and valid.idempotent and valid.witness is None and valid.decisions==[]
+>       assert contradictory.status=='rejected' and not contradictory.idempotent and contradictory.witness is None
+E       AssertionError: assert ('idempotent' == 'rejected'
+E         
+E         - rejected
+E         + idempotent)
+
+tests/test_memory_transition_vnext.py:562: AssertionError
+____ test_round1_witness_input_selected_requires_index_one_bidirectionally _____
+
+    def test_round1_witness_input_selected_requires_index_one_bidirectionally():
+        v,_,state,c,b,case=at_trigger()
+        first,_=step(v,state,c,b,case,token=1)
+        assert first.witness['index']==0 and first.witness['input_lifecycle']['status']=='pending'
+        assert first.witness['local_lifecycle']['status']=='selected'
+        later,_=step(v,first.proposed_state,c,b,case,token=1,missing=True,chain=(1,memory.sha256(first.witness)))
+        w=copy.deepcopy(later.witness)
+        assert w['input_lifecycle']['status']=='selected'
+        assert v.terminal_event_bytes_vnext('memory_transition_witness_vnext',w,sequence=49999,
+            run_id=c['run_id'],episode=0,tick=w['tick'],episode_step=w['tick'])
+        w.update(index=0,previous_sha256=memory.sha256(c))
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_transition_vnext.py:577: Failed
+___ test_round1_reach_ref_invariants_match_admission_and_encoding[<lambda>0] ___
+
+mutation = <function <lambda> at 0x7ff4c3c66160>
+
+    @pytest.mark.parametrize('mutation',[
+        lambda r:r.update(gate_event=None),
+        lambda r:r.update(intervention_event=None),
+        lambda r:r.update(cue_event=None),
+        lambda r:r['gate_event'].update(sequence=r['intervention_event']['sequence']),
+        lambda r:r['gate_event'].update(sha256=r['intervention_event']['sha256']),
+        lambda r:r['gate_event'].update(sequence=r['sensed_event']['sequence']+1),
+    ])
+    def test_round1_reach_ref_invariants_match_admission_and_encoding(mutation):
+        v,_,state,c,b,case=at_trigger()
+        first,_=step(v,state,c,b,case,token=1)
+        w=copy.deepcopy(first.witness); mutation(w['reach'])
+        with pytest.raises(ValueError):
+            v.validate_reach_vnext(w['reach'],context=c,subjects=case['subjects_by_side'])
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_transition_vnext.py:596: Failed
+___ test_round1_reach_ref_invariants_match_admission_and_encoding[<lambda>1] ___
+
+mutation = <function <lambda> at 0x7ff4c3c66200>
+
+    @pytest.mark.parametrize('mutation',[
+        lambda r:r.update(gate_event=None),
+        lambda r:r.update(intervention_event=None),
+        lambda r:r.update(cue_event=None),
+        lambda r:r['gate_event'].update(sequence=r['intervention_event']['sequence']),
+        lambda r:r['gate_event'].update(sha256=r['intervention_event']['sha256']),
+        lambda r:r['gate_event'].update(sequence=r['sensed_event']['sequence']+1),
+    ])
+    def test_round1_reach_ref_invariants_match_admission_and_encoding(mutation):
+        v,_,state,c,b,case=at_trigger()
+        first,_=step(v,state,c,b,case,token=1)
+        w=copy.deepcopy(first.witness); mutation(w['reach'])
+        with pytest.raises(ValueError):
+            v.validate_reach_vnext(w['reach'],context=c,subjects=case['subjects_by_side'])
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_transition_vnext.py:596: Failed
+___ test_round1_reach_ref_invariants_match_admission_and_encoding[<lambda>2] ___
+
+mutation = <function <lambda> at 0x7ff4c3c662a0>
+
+    @pytest.mark.parametrize('mutation',[
+        lambda r:r.update(gate_event=None),
+        lambda r:r.update(intervention_event=None),
+        lambda r:r.update(cue_event=None),
+        lambda r:r['gate_event'].update(sequence=r['intervention_event']['sequence']),
+        lambda r:r['gate_event'].update(sha256=r['intervention_event']['sha256']),
+        lambda r:r['gate_event'].update(sequence=r['sensed_event']['sequence']+1),
+    ])
+    def test_round1_reach_ref_invariants_match_admission_and_encoding(mutation):
+        v,_,state,c,b,case=at_trigger()
+        first,_=step(v,state,c,b,case,token=1)
+        w=copy.deepcopy(first.witness); mutation(w['reach'])
+        with pytest.raises(ValueError):
+            v.validate_reach_vnext(w['reach'],context=c,subjects=case['subjects_by_side'])
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_transition_vnext.py:596: Failed
+___ test_round1_valid_input_output_decision_cap_is_rejected_without_witness ____
+
+    def test_round1_valid_input_output_decision_cap_is_rejected_without_witness():
+        v,source,state,c,b,case=fixture(condition='no-U',kind='no-event')
+        state['last_decisions']=['x'*65520]
+        original=copy.deepcopy(state)
+        assert len(memory.canonical_bytes(state['last_decisions']))==65524
+        assert v.validate_terminal_state_vnext(state,context=c)==state
+        legacy_input=legacy.configure_selector(source,state['selector'],state['u'])
+        legacy_input=legacy.arm(legacy_input,c['schedule']['boundary_tick'])
+        legacy_input['last_decisions']=copy.deepcopy(state['last_decisions'])
+        legacy_original=copy.deepcopy(legacy_input)
+        assert legacy.validate_state(legacy_input)==legacy_input
+        p=packet(state,state['cursor']['tick']+1)
+        with pytest.raises(ValueError) as old_error:
+            legacy.advance_memory(legacy_input,p)
+        with patch.object(memory_experiment,'selection_for_condition',wraps=memory_experiment.selection_for_condition) as select:
+            r,_=step(v,state,c,b,case)
+        assert select.call_count==0 and state==original and legacy_input==legacy_original
+>       assert r.status=='rejected' and r.witness is None and not r.idempotent
+E       AssertionError: assert ('raised' == 'rejected'
+E         
+E         - rejected
+E         + raised)
+
+tests/test_memory_transition_vnext.py:618: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_transition_vnext.py::test_round1_selected_duplicate_requires_persisted_selection_count
+FAILED tests/test_memory_transition_vnext.py::test_round1_witness_input_selected_requires_index_one_bidirectionally
+FAILED tests/test_memory_transition_vnext.py::test_round1_reach_ref_invariants_match_admission_and_encoding[<lambda>0]
+FAILED tests/test_memory_transition_vnext.py::test_round1_reach_ref_invariants_match_admission_and_encoding[<lambda>1]
+FAILED tests/test_memory_transition_vnext.py::test_round1_reach_ref_invariants_match_admission_and_encoding[<lambda>2]
+FAILED tests/test_memory_transition_vnext.py::test_round1_valid_input_output_decision_cap_is_rejected_without_witness
+6 failed, 3 passed, 61 deselected in 1.84s

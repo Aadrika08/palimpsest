@@ -1,0 +1,138 @@
+{
+  "actual_acceptance": false,
+  "files": [
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/README.md",
+      "sha256": "9223040253bb7e51e8ee7b6fc956cb6b56279dc067792cc77366db5b5c39dc54",
+      "size_bytes": 1467
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/authored-normal-900-descriptor.json",
+      "sha256": "f5acbd44ffedfdcd5de84c8efa6e21d41c2602ee4afc6d0c31d7fe15c205f410",
+      "size_bytes": 351
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-1-final.log",
+      "sha256": "a02b846386fa28561e12de5b3c030a1694889a4d948da83e39580cae9ac6caed",
+      "size_bytes": 284
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-1-fix-review.md",
+      "sha256": "c5fe89f9c7e27918e3a9f37bca0bd6128158084be93838662a4019bf163b4475",
+      "size_bytes": 3449
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-1-red.log",
+      "sha256": "0ea1dfc5f9a58fcd1e443bb615e7e61bce92882b988905137a658e2eec43a83c",
+      "size_bytes": 7916
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-1-report.md",
+      "sha256": "d1c6c37f0889c7017031616fb35972ed9fe6c44dab9a37da3fb0683ab8630937",
+      "size_bytes": 21897
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-1-review.md",
+      "sha256": "91bf77ad7fb364763decece1b4e25c1f8ce0957a8149f6c441b0c451a380ea5a",
+      "size_bytes": 6811
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-2a-final.log",
+      "sha256": "56183e1eb0a77998084568699e7ed126806c6e6220ea64db4b9d738e682061a4",
+      "size_bytes": 261
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-2a-red.log",
+      "sha256": "7c90b8ca2c4c100cf42b43620fb5e4e7f898a32a04cc708b1608e16cd299eeff",
+      "size_bytes": 217639
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-2a-report.md",
+      "sha256": "c673fc4819df4fe22b85714e908b78a7a9c7bb6f575a6d9f0c005ec12c82933b",
+      "size_bytes": 9138
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-2a-review.md",
+      "sha256": "c824dd67946d8d9928241a0d8437f4d582a019b0889b9fc3981b0baa227d022f",
+      "size_bytes": 3596
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3-report.md",
+      "sha256": "606442899960d54fff0a71cc5cf8506aa3b8118ba77520322805a240c2334671",
+      "size_bytes": 12530
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3a-final.log",
+      "sha256": "9d4b1e4c65c4c6fa330db3007e457ef5177d659bea0de9509f30377fd88310d8",
+      "size_bytes": 443
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3a-fix-review.md",
+      "sha256": "38f89c10ecabb48a0d8957daf8e5c96b087d061b0c559276690a953efa77760e",
+      "size_bytes": 4933
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3a-red.log",
+      "sha256": "6e814102235c1e1f3b203099585bf97218cb3f0d9adfc9b679c9646b2d6d2122",
+      "size_bytes": 15463
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3a-review-exact-types.log",
+      "sha256": "d4c7d176d3eda8bcc37ab96230da8207b3cf3bbf25a6976db976721f503aae83",
+      "size_bytes": 119
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3a-review-source-cap.log",
+      "sha256": "a8dfa729827a64a0ca6c53fd4c7f39335efc6708d5904b76b580a819f2145ba6",
+      "size_bytes": 119
+    },
+    {
+      "path": "docs/reports/memory-terminal-source-review-2026-11-06/task-3a-review.md",
+      "sha256": "16d78b99ab4f86d0370db74a4445774ceb827ff98fabcb25fb0abe9c48b3cf56",
+      "size_bytes": 8662
+    },
+    {
+      "path": "src/palimpsest/memory_decision.py",
+      "sha256": "064c589f33711b4afd5de995f0132562cd5808ca1b420444a24c68ddeadb8526",
+      "size_bytes": 33942
+    },
+    {
+      "path": "src/palimpsest/memory_transition_vnext.py",
+      "sha256": "e2205e82f9543c976c0cda0c5826641fcfe4e7247998a8f0ff351402083e2be8",
+      "size_bytes": 39587
+    },
+    {
+      "path": "src/palimpsest/engine.py",
+      "sha256": "7001059ce5c8b7b7659cbbe848ce01d1bbadf9e32215d9fa0aa11738eb10ccc4",
+      "size_bytes": 110241
+    },
+    {
+      "path": "scripts/memory_family_terminal_audit_vnext.py",
+      "sha256": "3b074e0bca4b0553fd5e93dcd779baae8f49e59f1b79cebf54649254e265863c",
+      "size_bytes": 31315
+    },
+    {
+      "path": "tests/test_memory_transition_vnext.py",
+      "sha256": "63a51ddcc5afc23fb6c805c17e34f6a8023281d3a60d03caa70361988ce0890f",
+      "size_bytes": 38661
+    },
+    {
+      "path": "tests/test_memory_engine_transition_vnext.py",
+      "sha256": "4e6a7f13a74d7fcd558f878976e4d6bd1711a0776e5d650b4886cdadb3446d40",
+      "size_bytes": 20749
+    },
+    {
+      "path": "tests/test_memory_family_terminal_audit_vnext.py",
+      "sha256": "7af17e61e1b437280a941cb25bd7c43a9d97f4f22f6b671a9cb30f20327c7300",
+      "size_bytes": 32070
+    },
+    {
+      "path": "docs/plans/memory-terminal-vnext-v1-protocol.json",
+      "sha256": "74f6cd713660e71b1cecf39ca978baa773dcba3a4fe87f986b5cf3f4094df9a0",
+      "size_bytes": 17145
+    }
+  ],
+  "raw_deletion_authorized": false,
+  "scope": "only named source, authored software evidence and review text",
+  "source_git_ref": "6cc0e8ef8ae2b9afc932b8e408d194f9ed67ea7e"
+}
