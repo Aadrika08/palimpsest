@@ -1,0 +1,16 @@
+{
+  "original_module_text_prefix_unchanged": true,
+  "all_original_nodes_AST_unchanged": true,
+  "original_mixed_function_decorators_unchanged": true,
+  "new_function": "test_declared_profile_metadata_and_empty_real_trust_remain_active",
+  "independent_body_AST_identical_after_removing_generator_import_and_live_closure_assert": true,
+  "assert_sites": 6,
+  "canonical_read_calls": [
+    "read(BASE)",
+    "read(CONDITION)",
+    "read(PUBLICATION)"
+  ],
+  "required_literal_members": 12,
+  "excluded_literal_members": 5,
+  "new_decorators": []
+}

@@ -1,0 +1,49 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_exact_roundtrip_and_partial_partition[source-1] _____________
+
+count = 1, operation = 'source'
+
+    @pytest.mark.parametrize('count', [1, 31, 32, 33])
+    @pytest.mark.parametrize('operation', ['source', 'condition'])
+    def test_exact_roundtrip_and_partial_partition(count, operation):
+        module = codec()
+>       rows, base, receipt = fixture(count, operation)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_numeric_preservation_v2.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_numeric_preservation_v2.py:86: in fixture
+    receipt = declared_receipt(rows, run_id, CASE_ID, operation, events)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_family_numeric_preservation_v2.py:58: in declared_receipt
+    source_identity=audit.canonical_source_identity('a' * 64),
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_raw_audit_v4.py:106: in canonical_source_identity
+    behavior = compact.behavior_source_identities(REPO_ROOT)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+
+    def behavior_source_identities(repo_root):
+        """Rehash only protocol-listed local sources; import or execute none."""
+        root = artifacts._safe_path(repo_root)
+        result = []
+        for expected in PROTOCOL['behavior_sources']:
+            _fields(expected, {'id', 'path', 'size_bytes', 'sha256'},
+                    'Behavior source identity')
+            relative = _behavior_relative(expected['path'])
+            path = artifacts._safe_path(root / relative)
+            if not path.is_relative_to(root) or not path.is_file():
+                raise ValueError('Behavior source is missing or outside the repository')
+            payload = artifacts._read(path, 2 * MiB)
+            actual = {'id': expected['id'], **_descriptor(relative, payload)}
+            if actual != expected:
+>               raise ValueError(f"Behavior source differs: {expected['id']}")
+E               ValueError: Behavior source differs: engine
+
+scripts/memory_family_compact_v4.py:240: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_numeric_preservation_v2.py::test_exact_roundtrip_and_partial_partition[source-1]
+1 failed in 0.21s

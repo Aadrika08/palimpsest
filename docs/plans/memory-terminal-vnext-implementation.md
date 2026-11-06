@@ -31,14 +31,14 @@
 
 ## Ownership and interface map
 
-Names in this plan are **proposed new software names**, not existing accepted profiles. Each task is one reviewable deliverable. The dependency order is **1→2a→3a→4→5→6→3b→2b→7**. Task3a is a pure conditional proof; its authentic public adapter Task3b waits for Task6's actual source holder. Task4 and private Task5 software may consume authored pure proofs, but actual receipt/publication acceptance waits for3b. Task2a is not an integrated opt-in; only Task2b integrates the authentic Task6 custody dependency. No task changes old protocol/pin files. Root must approve any shared-helper factoring before implementation.
+Names in this plan are **proposed new software names**, not existing accepted profiles. Each task is one reviewable deliverable. The dependency order is **1→2a→3a→4a→5→6→3b→4b→2b→7**. Task3a is a pure conditional proof; its authentic public adapter Task3b waits for Task6's actual source holder. Task4a and private Task5 software may consume authored pure proofs, but actual receipt/publication acceptance waits for3b and the separately reviewed Task4b adapter. Task2a is not an integrated opt-in; only Task2b integrates the authentic Task6 custody dependency. No task changes old protocol/pin files. Root must approve any shared-helper factoring before implementation.
 
 | Task | Files owned during implementation | Responsibility |
 | --- | --- | --- |
 | 1 | Modify `src/palimpsest/memory_decision.py`; create `src/palimpsest/memory_transition_vnext.py`, `tests/test_memory_transition_vnext.py`, proposed `docs/plans/memory-terminal-vnext-v1-protocol.json` | Fixed transition semantics, detached exception witnesses, exact schemas/DAG/subcaps. |
 | 2a | Modify `src/palimpsest/engine.py`; create `tests/test_memory_engine_transition_vnext.py` | Private synchronous persistence helper and default legacy-rejection guard only; no opt-in integration claim/import of future custody class. |
 | 3 | Create `scripts/memory_family_terminal_audit_vnext.py`, `tests/test_memory_family_terminal_audit_vnext.py` | Independently reconstruct reached world/packet/transition/terminal evidence from authored or separately admitted raw. |
-| 4 | Create `scripts/memory_family_terminal_numeric_vnext.py`, `tests/test_memory_family_terminal_numeric_vnext.py`; narrow helper factoring only in `memory_family_compact_v4.py` / `memory_family_numeric_preservation_v2.py` if needed | Versioned empty/early condition codec, reuse numerical wire/proof primitives, old APIs reject new receipts. |
+| 4a / later4b | Create `scripts/memory_family_terminal_numeric_vnext.py`, `tests/test_memory_family_terminal_numeric_vnext.py`, `docs/plans/memory-terminal-numeric-pure-vnext-v1-protocol.json`; narrow helper factoring only in `memory_family_compact_v4.py` / `memory_family_numeric_preservation_v2.py` if separately approved | Pure empty/early condition codec now; actual receipt adapter after3b. Reuse numerical primitives, old APIs reject successor/pure output. |
 | 5 | Create `scripts/memory_family_terminal_condition_vnext.py`, `tests/test_memory_family_terminal_condition_vnext.py` | Guarded replay scope, successor pair/seal/read/endpoints, real public gate closed. |
 | 6 | Create `scripts/memory_family_source_consumer_vnext.py`, `scripts/memory_family_terminal_case_vnext.py`, `tests/test_memory_family_source_consumer_vnext.py`, `tests/test_memory_family_terminal_case_vnext.py` | New source-consumption/case epoch and exact successor physical census; byte/resource refusal. |
 | 2b (after6) | Modify `src/palimpsest/engine.py`, `tests/test_memory_engine_transition_vnext.py` sequentially after Task6 | Authentic fixed-class opt-in and integrated version4 Engine branch; old default remains strict. |
@@ -270,15 +270,140 @@ qualification bypass. Exact inventory/custody/publication failure tests belong
 here;3a's authored byte/shape refusal tests do not establish those properties.
 Tasks4/5/6 may not claim actual acceptance through a missing3b receipt.
 
-## Task 4: Successor empty/early compact numeric preservation
+## Task 4a: Conditional pure empty/early compact numeric preservation
 
-**Files:** ownership table Task4. **Consumes:** independently established Task3 receipt/TerminalProof. **Produces:** `convert_terminal_numeric_vnext(raw:dict,*,receipt:dict,context:Context,external_overhead_bytes:int) -> dict[str,bytes]`; `read_terminal_numeric_vnext(bundle:dict[str,bytes],*,receipt:dict,external_overhead_bytes:int) -> dict`; `prove_terminal_numeric_vnext(raw,bundle,receipt,*,external_overhead_bytes:int) -> dict`. No public source/condition authority.
+**Files:** ownership table Task4a, serial ownership for later4b. **Consumes:** independently established conditional Task3a TerminalProof, never a fabricated old raw-audit receipt. `receipt` below is exactly that proof, whose source replay validity remains a premise. **Produces:** `convert_terminal_numeric_vnext(raw:dict,*,receipt:dict,context:Context,external_overhead_bytes:int) -> dict[str,bytes]`; `read_terminal_numeric_vnext(bundle:dict[str,bytes],*,receipt:dict,external_overhead_bytes:int) -> dict`; `prove_terminal_numeric_vnext(raw,bundle,receipt,*,external_overhead_bytes:int) -> dict`. No public source/condition authority.
 
-- [ ] Write red `test_zero_numeric_has_no_partition_and_typed_empty_frames`, `test_one_two_31_32_33_900_rows_preserve_all_bytes`, `test_signed_zero_latency_population_and_commitments_are_exact`, `test_old_reader_refuses_successor_and_new_reader_refuses_old_or_malformed_full`, `test_extra_duplicate_missing_member_or_census_refuses`, `test_combined_metadata_and_event_caps_include_every_copy`. Authored NumPy arrays only; no sample rows/models.
-- [ ] Run Task4 red command.
-- [ ] Reuse existing 16 base +3 companion numeric arrays/partitions, little-endian shapes and exact byte proof from numeric V2 (`numeric_preservation_v2.py:20–31,86–106,119–137,170–217,300–314`), original legacy ASCII trace and binary sequence formulas, copied event/manifest bytes and selected-pixel rules. Factor fixed pure codec primitives only where old whole-reader/provenance validation cannot be reused; do not impersonate old audit receipts or monkeypatch protocol globals. New profile identifies that shared code closure. No duplicated generic converter framework.
-- [ ] For zero condition: empty base/companion indexes, no partition; first/last motor null; audit ticks `<i8 (0,)`, raw left/right `|u1 (0,128,128,3)`; no `stack([])`/fake image/row. Positive prefixes use exact original rows and in-range selected schedule, including all timing and `(3,4)` population arrays/order. Preserve source SNP reference and empty-sequence commitments; terminal packet belongs to events, never motor rows. Source codecs remain unchanged/nonempty. Preserve all existing omissions (most full pixels; no perception/physics replay).
-- [ ] Count Context/TerminalProof/receipts/conversion/support/controls/markers in combined1MiB overhead, witness and commit bytes in actual5MiB event cap, companions/header/index bytes in actual25MiB total and stage copies in lifetime peak. Exhaustive dtype/shape/bytes equality; no allclose, outcome drop, fallback or cap increase. Run green/maxima/one-byte-over negatives. Commit only reviewed Task4 files after authorization.
+The actual Task4 schema strings in the successor-adapter section above are
+reserved for later4b. Task3a supplies no published condition raw-audit D or
+owner-source identity; neither can be derived from unrelated Context hashes.
+Task4a therefore has a distinct PURE wire format. In its envelope `raw_audit`
+and `source_identity` must be exactly null; readers refuse nonnull values.
+Pure output cannot be relabeled as accepted output or grant permission by
+injecting a digest or claim flag. Inherited claims remain false.
+
+### Frozen Task4a wire and inputs
+
+- Base schema `memory-family-compact-pure-manifest-vnext-v1`, format
+  `palimpsest-family-compact-pure-vnext-v1`; numeric envelope schema
+  `memory-family-numeric-pure-manifest-vnext-v1`, format
+  `palimpsest-family-numeric-pure-compact-vnext-v1`.
+- Base exact keys: compact.MANIFEST_FIELDS plus terminal_proof and context.
+  Envelope exact keys: numeric.ENVELOPE_FIELDS plus those same two fields.
+  Index/entry exact keys and index schema strings remain inherited. First/last
+  tick are null iff zero; snapshot_event_prefix is null for this condition-only
+  codec. audit_schedule has exactly event_tick and decision_tick, equal the
+  corresponding Context.schedule projection; boundary_tick binds separately
+  through proof/row intervals. event_tick is null only no-event.
+- Exact output members are numeric-pure-vnext.json, numeric-index.json,
+  terminal-proof.json, context.json, base/manifest.json,
+  base/legacy-manifest.json, base/legacy-events.jsonl, base/chunk-index.json,
+  base/audit-frames.npz, plus base/chunks/{i:06d}.npz and
+  numeric/{i:06d}.npz for each partition. Thus9+2*k files, exactly9 at zero.
+  No partition at zero, no extra/duplicate/alias/trailing members.
+- Raw exact keys: terminal_raw, recorded_manifest_bytes,
+  recorded_events_bytes, snapshot_reference. terminal_raw has exactly Task3a's
+  six input keys. Both recorded payloads are built-in bytes, equal the unchanged
+  writer encoding of decoded objects and the proof D hashes/sizes, and copied
+  without alteration. This verifies supplied representations, not physical
+  original-byte custody. The codec opens no caller-referenced paths.
+- snapshot_reference retains the inherited exact six fields; kind shared-source,
+  source_run_id and SNP D equal Context. Its supplied source_receipt_sha256 is
+  specifically a source CONVERSION digest. It remains a conditional declaration,
+  not an inferred value, proof of that conversion or source authority.
+- Output context and terminal_proof D refer to their actual copied members.
+  The proof's own Context D still identifies its original input; validate the
+  common bytes/hash/size without silently rewriting that original descriptor.
+- New profile file schema memory-terminal-numeric-pure-protocol-vnext-v1 freezes
+  these pure wire rules, limits and inherited16+3 array layout. It references
+  terminal_profile D (exact Task1 profile) plus inherited_base_protocol and
+  inherited_numeric_protocol D for the existing actual parent protocol files.
+  No self/source-code hash or accepted pin. Base protocol_sha256 is the new
+  profile hash; envelope protocol/base_protocol are its D (one profile describes
+  both PURE layers). Context.profile equals the profile's terminal_profile D,
+  not the new codec profile. Later external closure must bind code/profile.
+
+### Frozen Task4a per-API bindings and preservation scope
+
+Every entry point validates the exact Task3a TerminalProof key set, schema,
+descriptor/reference types and bounded lists, exact nonboolean counts and
+booleans, finite metrics/outcome types, and their coherence. Proof validity from
+source replay remains the explicit premise, not a replacement receipt flag.
+Bind proof boundary_tick, source_snapshot and invariant to validated Context;
+goal, outcome, capped_ticks, path_length, row/chunk counts, first/last motor
+ticks and terminal_sensor_tick must retain Task3a's zero/positive/normal/tail
+relationships. Both manifest layers, copied recording metadata/events,
+partition census and proof agree on owner/case/condition, operation condition,
+counts and interval. Validate available Witness/Commit references against the
+copied complete events, not caller reached flags. A normal terminal still
+requires the original full decision/cap/terminal obligations.
+
+| API | Required checks / permitted claim |
+| --- | --- |
+| All | New profile and exact Task1 Context profile relationship; canonical proof and Context, fixed copied-member D bindings; every available proof count/interval/sequence/trace/terminal binding; strict schema/array/container/census/role/ledger checks. Bundle terminal-proof.json equals canonical_bytes(receipt) exactly. Proof.context still binds the original input Context bytes/hash/size; copied context.json D binds the same bytes at its new fixed member, without rewriting the proof's original path. |
+| convert / prove input | terminal_raw's five descriptors equal the proof's five D exactly; raw.job equals proof.job. Bind canonical worker_report bytes and both recorded payloads to their proof D. Decoded recording objects must encode exactly to those supplied bytes. Validate plain decoded array/safe scalar types before any inherited numerical coercion; no opaque loader/subclass hook. Actual job body, physical original bytes and raw origin remain premises/3b duties. |
+| read | Recompute ASCII trace and the camera/row sequences from stored digest arrays, compare with both manifest and proof, validate selected pixels against camera digests, and verify copied bytes/index/chunk mappings. These are stored-format/commitment checks, not reconstruction of opaque original row digests or authentication of every retained field. The reader lacks most raw pixels and the proof excludes latency/step_latency from row digests. It cannot independently assert original raw timing equality or complete raw-array equality. Returned raw_comparison_performed is false and actual_acceptance is false. |
+| convert / prove raw comparison | Independently project supplied raw rows and rederive original row/camera/ASCII-trace commitments, comparing them with the proof. Compare every retained base field and all three companion fields by exact dtype.str, shape and tobytes, selected pixel bytes, and copied recording/proof/Context bytes. Conversion verifies its actual encoded result before returning; prove performs the comparison explicitly. Only this performed comparison may report raw_comparison_performed true. It proves equality to supplied raw, not physical source authority; actual_acceptance stays false. |
+
+No entry point may claim all retained values are authenticated by opaque
+per-row digest arrays. Internal hashes alone cannot authenticate a caller's
+rewritten bundle. Task4b must separately authenticate conversion/bundle identity
+and raw origin through the genuine held receipt/publication path. No new
+timing digest, Task3a proof-schema change, fabricated receipt or actual adapter
+is required in4a. Preserve the inherited false claims and explicitly document
+reader-only versus performed raw-comparison scope in the profile/API results.
+
+### Frozen Task4a limits and accounting
+
+Context<=16KiB; canonical proof, recorded manifest, report/job D and each
+base/envelope/index JSON<=1MiB individually, with the shared1MiB limit stricter.
+Source SNP identity remains nonempty<=16MiB. Recorded condition events are
+nonempty<=5MiB. Audit frames use min(inherited1.5MiB, count*98312+4096);
+base partitions count*19534+8192; companions retain count*112+4096. Require
+the fixed NPY v1/C-order/128-byte header schema and stored ZIP limits before
+decoding and exact re-encoding afterward. Keep all inherited field dtype/shape
+and role restrictions; source commit16KiB/conversion64KiB byte limits still
+apply when those actual payload roles are present, not merely a digest premise.
+Sixteen selected camera pairs occupy1.5MiB before container headers, so that
+cardinality may fail the unchanged1.5MiB frame-file cap. Retain the resource
+refusal; do not raise the cap or drop policy-selected frames to fit.
+
+external_overhead_bytes means the caller's COMPLETE distinct external metadata
+cost, not an additional amount above a separately added floor. Its mandatory
+known floor is canonical proof + canonical Context + declared raw-manifest,
+worker-report and job byte sizes. Require external>=floor, never add it twice.
+This prospectively charges original declared metadata copies beside bundle
+copies; it is not a physical measurement or a free reserve. Let T be actual
+sum of bundle bytes plus external. Metadata overhead is T minus the verified
+19646*n dense bytes,98304*selected-frame-count pixels and actual copied event
+bytes. Container/NPY headers, all proof/Context/reference/support copies remain
+charged. Require total<=25MiB and shared metadata<=1MiB, alongside each5MiB
+event-file bound. An excessive floor refuses. Additional distinct controls,
+markers/profile copies and other external costs remain the caller's declared
+premise; no physical lifetime/RSS/stage peak completeness is claimed. Original
+raw events/SNP stay in the separate physical raw/source ledger, never compact
+subtractor slack or permission to remove raw.
+
+Test genuine Task3a-proof-admitted conversions for0/1/2/31/32/33 where they fit.
+The authored900 normal recording exceeds5MiB and remains an unscored resource
+refusal, not a positive conversion. Private fixed partition primitives may
+exercise900 numeric rows solely for wire-boundary coverage; do not fabricate a
+900 TerminalProof, drop events/IDs/inspections or waive a cap to make a public
+conversion pass. Such primitive coverage is not admission or paper evidence.
+
+- [x] Write red `test_zero_numeric_has_no_partition_and_typed_empty_frames`, `test_fitting_one_two_31_32_33_rows_preserve_all_bytes`, `test_900_numeric_primitive_is_not_proof_admission`, `test_signed_zero_latency_population_and_commitments_are_exact`, `test_old_reader_refuses_successor_and_new_reader_refuses_old_or_malformed_full`, `test_extra_duplicate_missing_member_or_census_refuses`, `test_combined_metadata_and_event_caps_include_every_copy`. Authored NumPy arrays only; no sample rows/models.
+- [x] Run Task4 red command.
+- [x] Reuse existing 16 base +3 companion numeric arrays/partitions, little-endian shapes and exact byte proof from numeric V2 (`numeric_preservation_v2.py:20–31,86–106,119–137,170–217,300–314`), original legacy ASCII trace and binary sequence formulas, copied event/manifest bytes and selected-pixel rules. Factor fixed pure codec primitives only where old whole-reader/provenance validation cannot be reused; do not impersonate old audit receipts or monkeypatch protocol globals. New profile identifies that shared code closure. No duplicated generic converter framework.
+- [x] For zero condition: empty base/companion indexes, no partition; first/last motor null; audit ticks `<i8 (0,)`, raw left/right `|u1 (0,128,128,3)`; no `stack([])`/fake image/row. Positive prefixes use exact original rows and in-range selected schedule, including all timing and `(3,4)` population arrays/order. Preserve source SNP reference and empty-sequence commitments; terminal packet belongs to events, never motor rows. Source codecs remain unchanged/nonempty. Preserve all existing omissions (most full pixels; no perception/physics replay).
+- [x] Count Context/TerminalProof/receipts/conversion/support/controls/markers in combined1MiB overhead, witness and commit bytes in actual5MiB event cap, companions/header/index bytes in actual25MiB total and all declared distinct external metadata copies in the pure serialized ledger. Physical raw+stage+candidate/final peaks remain later held-ledger obligations, not a passed4a check. Exhaustive dtype/shape/bytes equality; no allclose, outcome drop, fallback or cap increase. Run green/maxima/one-byte-over negatives. Commit only reviewed Task4a files after authorization.
+
+### Task 4b (after3b): Actual receipt adapter
+
+Not implementation-ready and no stub/API is produced in4a. Freeze a separate
+real raw-audit/source-identity/held-input contract after3b exists, then review
+the actual successor envelope specified above. It must not promote pure null
+authority fields or a caller flag into accepted provenance. Tasks5/6 actual
+acceptance waits for3b/4b; pure array preservation alone cannot admit a study.
 
 ## Task 5: Pair, guarded replay scope, closed public condition route and endpoints
 

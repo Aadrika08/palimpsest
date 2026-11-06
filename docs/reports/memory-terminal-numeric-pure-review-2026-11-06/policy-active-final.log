@@ -1,0 +1,4 @@
+...................................................s.sss..               [100%]
+=========================== short test summary info ============================
+SKIPPED [4] tests/test_memory_case_publication_profile_v1.py: historical frozen pin (memory-family-compact-v4-case-publication-v1): src/palimpsest/engine.py differs from its pin f3a3cbf35375; src/palimpsest/memory_decision.py differs from its pin f22e72166fbd; tests/conftest.py differs from its pin d9fbfce795fe; tests/frozen_pins.py differs from its pin a7ced465b908; tests/test_memory_case_publication_profile_v1.py differs from its pin 48024bd061ab. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md).
+54 passed, 4 skipped in 20.20s
