@@ -495,6 +495,25 @@ actual source adapters are unchanged. Actual input bytes, complete runtime,
 namespace/accounting/qualification and GO remain unverified. No6a.2 or study
 checkbox is completed by this helper, and experiment cost remains unmeasured.
 
+### Canonical prepared source creation mechanism
+
+Root freezes the [single-mode bootstrap contract](../reports/canonical-source-bootstrap-contract-2026-11-06/contract.md).
+Only Engine.open and a new focused unit-test file are owned. The sole opt-in
+configuration preserves canonical UUIDs and validates existing prepared assets
+before outputs/native/model allocation; held diagnostics and all existing
+case/profile/geometry/seed/runtime construction checks remain. Default None
+keeps legacy hex IDs/preparation/other controllers. This configuration is not
+an actual source factory, trusted admission, qualified backend, state4 opt-in
+or GO; the future fixed source owner and Q/L/F/R remain separate.
+
+- [ ] Shared constructor unit coverage, canonical/pre-read refusal order,
+  immutable assets, legacy default and failure/closure regressions.
+- [ ] Focused TDD and fresh independent spec/code review.
+
+Controlled allocation/RNG/native boundary objects are unit evidence only,
+with real case/profile/geometry/held-record/RunWriter/Engine initialization.
+Actual native/model/source qualification and measured cost remain open.
+
 ## Task 2b (after6): Authentic opt-in and integrated strict4 Engine branch
 
 **Files:** ownership table Task2b. **Consumes:** Task1 strict4 APIs, Task2a persistence/default guard, Task6's actual fixed `HeldSourceVnext` class/private constructor/recheck logic. **Produces:** `Engine.configure_memory_terminal_vnext(context:dict,*,held_source:HeldSourceVnext)->None` and the integrated private `_advance_memory_terminal_vnext(packet:dict,reach:Reach)->None`. Before this task these interfaces do not exist as integrated public capabilities. Import the exact Task6 class only inside this new opt-in path after its module exists; legacy import/default path has no eager Task6 dependency. No duck typing, class stub, dynamic loader override or caller-provided sink.
