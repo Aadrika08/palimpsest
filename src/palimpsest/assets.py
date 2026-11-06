@@ -217,3 +217,86 @@ def prepare_graph(repo_root: Path, asset_root: Path) -> Path:
         (staging / metadata_name).write_text(json.dumps(metadata, indent=2) + "\n")
         staging.rename(destination)
     return destination / relative_edge
+
+
+def resolve_prepared_assets_readonly(repo_root: Path, asset_root: Path) -> dict:
+    """Verify existing prepared bytes without acquisition or repair.
+
+    This checks current paths and bytes, not continuous descriptor custody,
+    training provenance, runtime admission, or execution/deletion authority.
+    Callers must separately hold their lifetime guard and resource budget.
+    """
+    import stat
+
+    def root(path: Path) -> Path:
+        path = Path(path)
+        if ".." in path.parts:
+            raise ValueError(f"Traversal in root spelling: {path}")
+        path = path.absolute()
+        # Inspect from the filesystem root down before resolving any component.
+        for current in reversed((path, *path.parents)):
+            if not stat.S_ISDIR(current.lstat().st_mode):
+                raise ValueError(f"Root component is not a real directory: {current}")
+        return path.resolve(strict=True)
+
+    def named(base: Path, name: str, *, directory=False) -> Path:
+        relative = _relative(name)
+        current = base
+        for index, part in enumerate(relative.parts):
+            current = current / part
+            mode = current.lstat().st_mode
+            is_directory = directory or index < len(relative.parts) - 1
+            if not (stat.S_ISDIR(mode) if is_directory else stat.S_ISREG(mode)):
+                raise ValueError(f"Prepared input has an unsafe file type: {current}")
+        return current
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"Duplicate prepared metadata key: {key}")
+            result[key] = value
+        return result
+
+    def nonfinite(value):
+        raise ValueError(f"Nonfinite prepared metadata value: {value}")
+
+    repo_root, asset_root = root(repo_root), root(asset_root)
+    named(repo_root, "model_manifests/flynn-full-vision.json")
+    manifest = load_manifest(repo_root)
+    paths = {}
+    for item in manifest["files"]:
+        path = named(asset_root, item["path"])
+        if not _verified(path, item):
+            raise ValueError(f"Missing or different prepared asset: {item['id']}")
+        paths[item["id"]] = path
+    graph = manifest["graph"]
+    archive = next(item for item in manifest["files"] if item["id"] == "graph_archive")
+    directory = named(asset_root, f"graph-{archive['sha256']}", directory=True)
+    metadata_path = named(directory, "palimpsest-prepared.json")
+    limit = 1024 * 1024
+    if metadata_path.stat().st_size > limit:
+        raise ValueError("Prepared metadata exceeds 1 MiB")
+    with metadata_path.open("rb") as stream:
+        raw = stream.read(limit + 1)
+    if len(raw) > limit:
+        raise ValueError("Prepared metadata exceeds 1 MiB")
+    metadata = json.loads(raw, object_pairs_hook=unique_object, parse_constant=nonfinite)
+    edge_name = graph["edge_identity"]["archive_member"]
+    expected = {
+        "archive_sha256": archive["sha256"], "edge_path": edge_name,
+        "edge_sha256": graph["edge_identity"]["sha256"], "upstream_commit": UPSTREAM_COMMIT,
+        "mapping_files": graph["mapping_files"], "provenance_limit": manifest["provenance_limit"],
+    }
+    # Canonical JSON distinguishes bool/int/float as well as complete nested
+    # key sets; allow_nan=False also refuses overflowed JSON exponents.
+    if json.dumps(metadata, sort_keys=True, allow_nan=False) != json.dumps(expected, sort_keys=True, allow_nan=False):
+        raise ValueError("Prepared metadata differs from the pinned manifest")
+    edge = named(directory, edge_name)
+    if not _verified(edge, graph["edge_identity"]):
+        raise ValueError("Missing or different prepared graph edge")
+    for item in graph["mapping_files"]:
+        named(repo_root, item["source_path"])
+        named(edge.parent, item["path"])
+    _check_mappings(repo_root, edge.parent, graph["mapping_files"], copy_missing=False)
+    return {"archive": paths["graph_archive"], "checkpoint": paths["checkpoint"], "edge": edge}
