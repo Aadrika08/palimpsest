@@ -484,6 +484,17 @@ later finalization, registrations, holders or bespoke final-reader CPU.
 No provider exemption, accounting policy, global census, study or deletion
 authority is adopted. The full completion objective and all other gates stand.
 
+### First actual source/bootstrap readiness
+
+The [current critical path and literal asset candidate](../reports/first-memory-source-readiness-2026-11-06/README.md)
+separate remaining producer/backend contracts from owner inputs. A reviewed
+read-only prepared-assets resolver now passes222 authored checks with all21
+existing asset-module AST nodes unchanged. This closes the extraction/write/
+rename side-effect gap for a future immutable bootstrap; Engine/defaults and
+actual source adapters are unchanged. Actual input bytes, complete runtime,
+namespace/accounting/qualification and GO remain unverified. No6a.2 or study
+checkbox is completed by this helper, and experiment cost remains unmeasured.
+
 ## Task 2b (after6): Authentic opt-in and integrated strict4 Engine branch
 
 **Files:** ownership table Task2b. **Consumes:** Task1 strict4 APIs, Task2a persistence/default guard, Task6's actual fixed `HeldSourceVnext` class/private constructor/recheck logic. **Produces:** `Engine.configure_memory_terminal_vnext(context:dict,*,held_source:HeldSourceVnext)->None` and the integrated private `_advance_memory_terminal_vnext(packet:dict,reach:Reach)->None`. Before this task these interfaces do not exist as integrated public capabilities. Import the exact Task6 class only inside this new opt-in path after its module exists; legacy import/default path has no eager Task6 dependency. No duck typing, class stub, dynamic loader override or caller-provided sink.

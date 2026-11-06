@@ -1,0 +1,90 @@
+{
+  "actual_qualified_experiment_cost_measured": false,
+  "baseline": "0e21d0b5584abae9a1adf9dafb72ca605dc64c64",
+  "files": [
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/readonly-assets-report.md",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/implementation.md",
+      "sha256": "8e0526d481d902d5287e6a0a7d2cf9bebe0b23fb41a98530748536665538ee7d",
+      "size_bytes": 6246
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/readonly-assets-review.md",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/independent-review.md",
+      "sha256": "f9b3a3c5e3634552a0352d23883877faa7fd46054e2cad4eb322bc0c3ba14cae",
+      "size_bytes": 5223
+    },
+    {
+      "original": "/var/tmp/palimpsest-readonly-red-jqabCYBv/pytest.log",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/evidence/red.log",
+      "sha256": "6eb3d6e53f5f7542d1c6bcb72bebd44b477ab03c7461401c27eabb1a9686bb02",
+      "size_bytes": 4747
+    },
+    {
+      "original": "/var/tmp/palimpsest-readonly-iteration-MGJKDp0T/pytest.log",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/evidence/iteration.log",
+      "sha256": "1ac337ffecd274c85c18e3ea47ae1b06b189d381026f9c8441cbbe0274b58989",
+      "size_bytes": 340
+    },
+    {
+      "original": "/var/tmp/palimpsest-readonly-final-5cuEE3jh/pytest.log",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/evidence/final.log",
+      "sha256": "370b6f8b470e37d08c06d0c272aa0ce7df21020b115c91910f3697f5d8b0417f",
+      "size_bytes": 340
+    },
+    {
+      "original": "/var/tmp/palimpsest-readonly-final-5cuEE3jh/time.txt",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/evidence/ordinary-test-time.txt",
+      "sha256": "faed04a1d121b1930cf53235fc532c13c87e5b16d56bb1b4c0b73813ffd933b8",
+      "size_bytes": 74
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/readonly-assets-evidence/ast-preservation.txt",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/evidence/ast-preservation.txt",
+      "sha256": "dee649070e1c75a008a8cb4f7dd554f9374b80fb42737dc486c7c673f6338f30",
+      "size_bytes": 185
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/readonly-assets-evidence/baseline-assets.py",
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/evidence/baseline-assets.py",
+      "sha256": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "size_bytes": 11122
+    }
+  ],
+  "implementation_commit": "482589b590f04bb18ac55aa0c90b6283e7280ba3",
+  "independent_review": "SPEC PASS; QUALITY APPROVED; no actionable findings; no reviewer test rerun",
+  "schema": "readonly-assets-source-evidence-v1",
+  "scope": "read-only byte/path resolver and authored software tests only; not actual asset/backend/scientific acceptance",
+  "settled_result": {
+    "passed": 222,
+    "seconds": 1.0,
+    "skipped": 0
+  },
+  "source_and_contract_references": [
+    {
+      "path": "src/palimpsest/assets.py",
+      "sha256": "98989be297441dffe7eed8d5d5e5b134d2d2e4b51d95b7552be4309631e87b22",
+      "size_bytes": 15130
+    },
+    {
+      "path": "tests/test_assets_prepared_readonly.py",
+      "sha256": "8c731825a6db056375b5d31070ae569160852fce7d5254cafda384b5fed38833",
+      "size_bytes": 15967
+    },
+    {
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/critical-path.md",
+      "sha256": "e6ad437270a7c96183a5dcd15d6555e1774ac0fe4a0ad566507610f91a38d3cb",
+      "size_bytes": 11460
+    },
+    {
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/asset-readset-candidate.json",
+      "sha256": "1e1cc63a508f71d36fd9fd9fa91f4d518ed43c12f0a5495c33ed0d3cc88a5994",
+      "size_bytes": 6817
+    },
+    {
+      "path": "docs/reports/first-memory-source-readiness-2026-11-06/readonly-assets-contract.md",
+      "sha256": "1819729eaa9ee349be6dcc6e2ac0fc186473d493b4b2e82212245cf513d1d71c",
+      "size_bytes": 5093
+    }
+  ]
+}
