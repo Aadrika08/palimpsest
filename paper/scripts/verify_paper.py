@@ -146,10 +146,12 @@ def main(argv: list[str] | None = None) -> int:
     log = paper / "build" / "main.log"
     evidence = paper / "evidence" / "authority-replay-v1"
     sources = [evidence / "summary.json", evidence / "campaign-manifest.json",
-               paper / "studies" / "authority_replay_v1" / "protocol.json"]
+               paper / "studies" / "authority_replay_v1" / "protocol.json",
+               paper / "evidence" / "change-audit-runtime-pilot-v1" / "source3c17cfd" / "pilot-process-accounting.json"]
     generated = [paper / "generated" / name for name in (
         "authority-claims.tex", "fault-matrix.tex", "replay-table.tex",
-        "overhead-table.tex", "operation-table.tex", "overhead-plot.tex", "snapshot-ablation.tex")]
+        "overhead-table.tex", "operation-table.tex", "overhead-plot.tex", "snapshot-ablation.tex",
+        "audit-affordability.tex")]
     validation = subprocess.run([
         sys.executable, "-B", str(paper / "scripts" / "build_authority_evidence.py"),
         "--summary", str(sources[0]), "--manifest", str(sources[1]),
@@ -158,6 +160,12 @@ def main(argv: list[str] | None = None) -> int:
     ], capture_output=True, text=True)
     if validation.returncode:
         print(validation.stderr or validation.stdout, file=sys.stderr)
+        return 1
+    affordability = subprocess.run([
+        sys.executable, "-B", str(paper / "scripts" / "build_audit_affordability.py"), "--check",
+    ], capture_output=True, text=True)
+    if affordability.returncode:
+        print(affordability.stderr or affordability.stdout, file=sys.stderr)
         return 1
     build_inputs = [
         paper / "main.tex",
@@ -168,6 +176,7 @@ def main(argv: list[str] | None = None) -> int:
         paper / "scripts" / "build_authority_evidence.py",
         paper / "scripts" / "audit_authority_state.py",
         paper / "scripts" / "verify_paper.py",
+        paper / "scripts" / "build_audit_affordability.py",
         repo / "pyproject.toml",
         repo / "uv.lock",
         repo / "src" / "palimpsest" / "snapshots.py",
