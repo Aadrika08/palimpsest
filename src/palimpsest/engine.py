@@ -503,6 +503,151 @@ class Engine:
         self.writer.event(kind, run_id=self.run_id, episode=self.episode, tick=self.total_tick,
                           episode_step=self.episode_step, **data)
 
+    def _require_memory_transition_mode(self):
+        # These finite fields are reserved for the later admitted strict4 path.
+        # Presence, including a lost/null binding, must never select legacy [].
+        marked = isinstance(self.memory, dict) and (self.memory.get('version') == 4 or
+            'terminal_context_sha256' in self.memory or 'terminal_lifecycle' in self.memory)
+        bound = any(hasattr(self, '_memory_terminal_vnext_' + field) for field in
+                    ('mode', 'context', 'job_sha256', 'chain', 'failed', 'route_anchor'))
+        manifest = self.writer.manifest
+        if (marked or bound or 'memory_terminal_vnext_context_sha256' in manifest
+                or 'memory_terminal_vnext_mode' in manifest):
+            self._memory_terminal_vnext_failed = True
+            raise RuntimeError('Terminal vnext Engine path is not integrated')
+        if self.scenario == 'memory-decision-v2':
+            from . import memory_decision
+            memory_decision.validate_state(self.memory)
+
+    def _persist_terminal_transition_vnext(self, result, *, context, job_sha256, chain):
+        """Persist one private authored transaction; this grants no admission.
+
+        Task2b must bind the Context/job/chain and same-sensing-cut route anchor
+        while authentic source custody is active. There is no public opt-in.
+        The failure latch deliberately survives partial writes and assignment.
+        """
+        from . import memory, memory_transition_vnext as terminal
+        from .records import RunWriter
+
+        try:
+            self._active()
+            if getattr(self, '_memory_terminal_vnext_failed', False):
+                raise RuntimeError('Terminal vnext transaction already failed; continuation forbidden')
+            if type(self.writer) is not RunWriter or self.writer._background is not None:
+                raise RuntimeError('Terminal vnext requires the fixed synchronous RunWriter')
+            self.writer._active()
+            c = terminal.validate_context_vnext(context)
+            context_hash = memory.sha256(c)
+            memory._digest(job_sha256)
+            if (self.scenario != 'memory-decision-v2'
+                    or getattr(self, '_memory_terminal_vnext_mode', None) != 'memory-terminal-vnext-v1'
+                    or getattr(self, '_memory_terminal_vnext_context', None) != c
+                    or getattr(self, '_memory_terminal_vnext_job_sha256', None) != job_sha256
+                    or getattr(self, '_memory_terminal_vnext_chain', None) != chain
+                    or self.writer.manifest.get('memory_terminal_vnext_context_sha256') != context_hash
+                    or self.writer.manifest.get('memory_terminal_vnext_mode') != 'memory-terminal-vnext-v1'
+                    or self.writer.manifest.get('run_id') != c['run_id'] or self.run_id != c['run_id']):
+                raise ValueError('Terminal vnext bound Context/job/mode/manifest identity differs')
+            state = terminal.validate_terminal_state_vnext(self.memory, context=c)
+            if (type(chain) is not tuple or len(chain) != 2 or type(chain[0]) is not int
+                    or chain[0] not in (0, 1)):
+                raise ValueError('Terminal vnext chain exceeds bounded transaction count')
+            memory._digest(chain[1])
+            if ((chain[0] == 0) != (chain[1] == context_hash)
+                    or chain[0] != (1 if state['terminal_lifecycle']['status'] == 'selected' else 0)):
+                raise ValueError('Terminal vnext chain contradicts input Lifecycle')
+            if (type(self.episode) is not int or self.episode != 0
+                    or type(self.total_tick) is not int or type(self.episode_step) is not int
+                    or self.total_tick != self.episode_step
+                    or not c['schedule']['boundary_tick'] <= self.total_tick <= min(2100, c['schedule']['boundary_tick'] + 900)):
+                raise ValueError('Terminal vnext Engine counters differ from continuation')
+            if type(result) is not terminal.TransitionResult or result.status not in (
+                    'ordinary-return', 'witnessed-return', 'idempotent', 'raised', 'rejected'):
+                raise ValueError('Invalid terminal TransitionResult')
+            returned = result.status in ('ordinary-return', 'witnessed-return', 'idempotent')
+            if type(result.idempotent) is not bool or result.idempotent != (result.status == 'idempotent'):
+                raise ValueError('Terminal result idempotence contradicts status')
+            if result.input_lifecycle != state['terminal_lifecycle'] and not (
+                    result.status == 'rejected' and result.input_lifecycle is None and result.local_lifecycle is None):
+                raise ValueError('Terminal result input Lifecycle differs')
+            decisions = copy.deepcopy(result.decisions)
+            if type(decisions) is not list:
+                raise ValueError('Terminal decisions must be a list')
+            memory._bounded(decisions, 65536)
+            witness = copy.deepcopy(result.witness)
+            if returned:
+                proposed = terminal.validate_terminal_state_vnext(result.proposed_state, context=c)
+                if (result.error is not None or result.local_lifecycle != proposed['terminal_lifecycle']
+                        or type(result.bearing) is not list or len(result.bearing) != 2
+                        or any(type(x) is not float or not math.isfinite(x) for x in result.bearing)
+                        or proposed['cursor']['bearing'] != result.bearing
+                        or proposed['cursor']['tick'] != self.total_tick):
+                    raise ValueError('Terminal returned state/Lifecycle/bearing differs')
+                if result.idempotent:
+                    if proposed != state or decisions or witness is not None:
+                        raise ValueError('Idempotent result contains new effects')
+                elif state['cursor']['tick'] + 1 != self.total_tick:
+                    raise ValueError('Terminal returned transition is not consecutive')
+                if (result.status == 'witnessed-return') != (witness is not None):
+                    raise ValueError('Returned result contradicts witnessed status')
+                if witness is None and result.local_lifecycle != result.input_lifecycle:
+                    raise ValueError('Unwitnessed result changed Lifecycle')
+                reached = (result.local_lifecycle != result.input_lifecycle
+                           or proposed['supervisor']['phase'] == 'failure')
+                if not result.idempotent and (witness is not None) != reached:
+                    raise ValueError('Terminal returned result contradicts required Witness predicate')
+            elif (result.proposed_state is not None or result.bearing is not None or decisions
+                    or type(result.error) is not terminal._ExceptionToken
+                    or result.status == 'raised' and witness is None):
+                raise ValueError('Terminal exception result contains invented return effects')
+            anchor = None
+            if returned and decisions:
+                anchor = copy.deepcopy(getattr(self, '_memory_terminal_vnext_route_anchor', None))
+                memory._fields(anchor, 'tick stage xy')
+                if (type(anchor['tick']) is not int or anchor['tick'] != self.total_tick
+                        or anchor['stage'] != 'pre-control' or type(anchor['xy']) is not list
+                        or len(anchor['xy']) != 2 or any(type(x) is not float or not math.isfinite(x) for x in anchor['xy'])):
+                    raise ValueError('Terminal decision route anchor differs from sensing cut')
+            commit = None
+            if witness is not None:
+                if (witness['context_sha256'] != context_hash or witness['job_sha256'] != job_sha256
+                        or (witness['index'], witness['previous_sha256']) != chain
+                        or witness['input_memory_sha256'] != memory.sha256(state)
+                        or witness['input_lifecycle'] != result.input_lifecycle
+                        or witness['local_lifecycle'] != result.local_lifecycle
+                        or witness['result'] != ('returned' if returned else result.status)):
+                    raise ValueError('Terminal Witness differs from result/input/chain')
+                if returned and (witness['local_memory_sha256'] != memory.sha256(proposed)
+                        or witness['local_decisions_sha256'] != memory.sha256(decisions)
+                        or witness['packet_sha256'] != proposed['cursor']['packet_sha256']):
+                    raise ValueError('Terminal Witness differs from actual returned effects')
+                terminal.terminal_event_bytes_vnext('memory_transition_witness_vnext', witness,
+                    sequence=self.writer._sequence, run_id=self.run_id, episode=self.episode,
+                    tick=self.total_tick, episode_step=self.episode_step)
+                if returned:
+                    commit = {'schema': terminal.COMMIT_SCHEMA, 'context_sha256': context_hash,
+                        'witness_sha256': memory.sha256(witness), 'tick': self.total_tick,
+                        'memory_sha256': memory.sha256(proposed), 'lifecycle': copy.deepcopy(result.local_lifecycle)}
+                    terminal.terminal_event_bytes_vnext('memory_transition_commit_vnext', commit,
+                        sequence=self.writer._sequence + 1, run_id=self.run_id, episode=self.episode,
+                        tick=self.total_tick, episode_step=self.episode_step)
+                self._event('memory_transition_witness_vnext', witness=witness)
+                # Synchronous event() has flushed and fsynced the real bytes.
+                self._memory_terminal_vnext_chain = (chain[0] + 1, memory.sha256(witness))
+            if not returned:
+                terminal.rethrow_transition_error_vnext(result)
+            self.memory = copy.deepcopy(proposed)
+            if commit is not None:
+                self._event('memory_transition_commit_vnext', commit=commit)
+            for decision in decisions:
+                self._event('memory_decision', detail=decision,
+                    route_anchor={'stage': 'pre-control', 'xy': copy.deepcopy(anchor['xy'])})
+            if self.memory['supervisor']['phase'] == 'failure':
+                self._memory_terminal_vnext_failed = True
+        except BaseException:
+            self._memory_terminal_vnext_failed = True
+            raise
+
     def _reset_world(self, *, calibration_session=None):
         # Fixture environments reset themselves; the production environment uses real MjData.
         if type(self.env.data).__module__.split(".", 1)[0] == "mujoco":
@@ -809,6 +954,7 @@ class Engine:
             self._recording_failed = True
 
     def _step(self, action_override=None):
+        self._require_memory_transition_mode()
         import numpy as np
         from .evaluate import outcome
 
