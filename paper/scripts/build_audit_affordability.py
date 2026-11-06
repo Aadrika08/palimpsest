@@ -67,7 +67,9 @@ def compute(accounting: dict) -> dict:
     for r in RADII:
         n = ceil_div(2 * LOG_UPPER, r * r)
         required.append((r, n, n * per_scenario / 3600))
+    supervisor = Fraction(str(run['supervisor_cpu_seconds']))
     return dict(pilot=pilot, charged=charged, per_scenario=per_scenario, budgets=budgets,
+                supervisor_share=100 * supervisor / pilot,
                 affordable=affordable, radius={k: radius_upper(n) for k, n in affordable.items()},
                 required=required)
 
@@ -82,6 +84,7 @@ def render(v: dict) -> str:
         f'\\newcommand{{\\AuditPilotCpu}}{{{fmt(v["pilot"], 1)}}}',
         f'\\newcommand{{\\AuditChargedCpu}}{{{fmt(v["charged"], 1)}}}',
         f'\\newcommand{{\\AuditPerScenarioCpu}}{{{fmt(v["per_scenario"], 1)}}}',
+        f'\\newcommand{{\\AuditSupervisorShare}}{{{fmt(v["supervisor_share"], 0)}}}',
         f'\\newcommand{{\\AuditLaneScenarios}}{{{v["affordable"]["audit"]}}}',
         f'\\newcommand{{\\AuditLaneRadius}}{{{fmt(v["radius"]["audit"], 3)}}}',
         f'\\newcommand{{\\AuditTotalScenarios}}{{{v["affordable"]["total"]}}}',

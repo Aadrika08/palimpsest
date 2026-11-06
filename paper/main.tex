@@ -40,10 +40,11 @@ Median recording overhead relative to a null writer was
 \StorageOverheadMedian{}\% with storage accounting, whose largest paired
 overhead reached \StorageOverheadMaximum{}\%. We also machine-check, in Lean~4
 with mathlib, fixed-horizon and anytime finite-candidate bounds for auditing a
-controller change, and price them with the measured pilot cost: the remaining
-one-hour audit allocation affords \AuditLaneScenarios{} independent scenarios, a
-vacuous radius, and even the entire 24 CPU-hour research allocation would only
-certify effects above \AuditTotalRadius{}. The contribution is a bounded
+controller change, and price them at the pilot's measured per-scenario cost,
+including supervision: the remaining one-hour audit allocation affords
+\AuditLaneScenarios{} independent scenarios, a vacuous radius, and even the
+remainder of the 24 CPU-hour research allocation would resolve only effects
+larger than \AuditTotalRadius{}. The contribution is a bounded
 implementation and evaluation of a common contract, building on established
 state/action replay semantics.
 \end{abstract}
@@ -253,13 +254,14 @@ sibling churn as a mutation of protected evidence. This keeps benign sibling act
 \subsection{Protocol and interpretation}
 The protocol was committed and frozen, not independently preregistered. Seed 0
 appeared in disclosed development checks; fixed seeds are engineering repetitions,
-not held-out evaluation. The study asks four questions: (RQ1) which injected evidence errors the
+not held-out evaluation. The study asks five questions: (RQ1) which injected evidence errors the
 contract exposes; (RQ2) whether complete continuation and declared replay agree;
 (RQ3) what execution and operation costs the mechanisms incur; (RQ4) whether
 a fresh checkout on the same host can execute the focused workflow; and (RQ5)
 whether a formally verified improvement audit is affordable on this substrate.
-RQ5 uses a separate engineering pilot and retained accounting
-(Section~\ref{sec:rq5}).
+RQ1--RQ4 belong to the frozen protocol. RQ5 was added after that protocol was
+frozen; it is descriptive and uses a separate engineering pilot and retained
+accounting (Section~\ref{sec:rq5}).
 The scope is one host and pinned CPU FLYNN/MuJoCo execution, with runtime and
 production-interface fixture evidence. FLYNN is a recurrent navigation model
 constrained by fly-brain topology \citep{wang2026flynn}. Controller quality, human
@@ -507,15 +509,16 @@ A standalone package of nine Lean~4.31.0 modules, pinned to one mathlib revision
 \citep{demoura2021lean4,mathlib2020}, proves two one-sided bounds under explicit
 fresh-sampling premises: bounded increments that are adapted, independent of the
 past and centred. At a predeclared horizon $n$, the probability that any
-candidate's mean contrast exceeds its expectation by more than
+candidate's observed mean contrast falls below its expectation by more than
 $\sqrt{2\log(K/\alpha)/n}$ is at most $\alpha$ \citep{hoeffding1963probability}.
 For a fixed positive betting scale $\lambda$, a Ville-type supermartingale
 argument \citep{ville1939etude,howard2021timeuniform} gives the same guarantee
 simultaneously at every prefix with radius
 $\log(K/\alpha)/(\lambda n)+\lambda/2$, whose floor does not vanish. A
 numerical module proves that exact rational Taylor lower sums certify an upper
-bound on $\log(K/\alpha)$, so a runtime checker can decide the gate with rational
-arithmetic only. All 17 exported theorems depend only on Lean's three standard
+bound on $\log(K/\alpha)$, so a runtime checker can decide the anytime gate with
+rational arithmetic only; the square-root fixed-horizon radius has no such
+bridge. All 17 exported axiom reports list only Lean's three standard
 axioms; there is no \texttt{sorry}, custom axiom or native-computation shortcut.
 The Ville helper is adapted, with attribution, from an Apache-2.0 upstream proof;
 we claim no new probability theorem. The proofs do not verify the Python parser,
@@ -527,8 +530,9 @@ One fixed engineering pilot ran four seeds, each restoring a paused anchor and
 running the baseline gain and three candidate velocity gains for 64 own-policy
 ticks: 16 conditions and 1,024 recorded ticks, with no retries. A separate
 NumPy audit confirmed identical first-tick inputs across gains and action
-arithmetic within $10^{-6}$. No condition touched an input contact in 64 ticks,
-so every observed contrast was zero. The pilot certifies nothing and supplies no
+arithmetic within $10^{-6}$. No condition recorded an input-contact tick in 64 ticks, so any contact-based
+loss would give zero contrasts; no loss was defined or computed. The pilot
+certifies nothing and supplies no
 evidence of improvement or of its absence; it measures cost. Its supervised
 process tree used \AuditPilotCpu{} CPU-seconds, or \AuditPerScenarioCpu{} per
 four-condition scenario; total charged research CPU, including input preparation
@@ -539,12 +543,14 @@ With $K=3$ and $\alpha=0.05$, Table~\ref{tab:affordability} gives the
 independent scenarios needed for each fixed-horizon radius and the CPU time at the
 pilot's measured per-scenario cost. The remaining one-hour audit allocation
 affords \AuditLaneScenarios{} scenarios, radius \AuditLaneRadius{}: vacuous for
-contrasts in $[-1,1]$. Spending the entire 24 CPU-hour research allocation on
-this audit would afford \AuditTotalScenarios{} scenarios and radius
+contrasts in $[-1,1]$. Spending the remainder of the 24 CPU-hour research
+allocation on this audit would afford \AuditTotalScenarios{} scenarios and radius
 \AuditTotalRadius{}. Moreover, 64-tick prefixes produced no contacts, so useful
 horizons would cost more per scenario. The extrapolation assumes the pilot's
-execution design; amortizing model loading could lower it, and we did not
-measure such a design. The radii are conservative: counts and radii round up,
+execution design, including supervisor CPU (\AuditSupervisorShare{}\% of the
+pilot); amortizing model loading or supervision could lower it, longer horizons
+would raise it, and we measured neither, so it is neither an upper nor a lower
+bound. The radii are conservative: counts and radii round up,
 and the logarithm budget is certified by the same rational method as the Lean
 bridge.
 
@@ -637,12 +643,14 @@ effects. Warm-cache local costs cannot predict distributed deployment.
 
 \textbf{Improvement claims.}
 The RQ5 proofs are conditional on fresh-sampling premises that no hash or replay
-check can establish. Under our measured costs and allocation no certified
-improvement claim is affordable, so we make none. Separately predeclared
+check can establish. Within the one-hour audit lane no certified improvement
+claim is affordable, and even the whole remaining allocation would resolve only
+effects larger than about \AuditTotalRadius{}; we make no improvement claim. Separately predeclared
 capability studies on the same substrate are also unresolved: a stale-information
 memory comparison covered 44 of 48 development cells, with all 120 applicable
-correction pairs tied, and a navigation development gate failed. Held-out
-evaluation was not run for either.
+correction pairs tied, and a navigation
+development gate failed. Held-out evaluation was not run for either study; an
+earlier recovery-navigation held-out stage did not qualify.
 
 \textbf{Retention and availability.}
 Protected rechecks can detect specified identity/content changes, not every
@@ -661,7 +669,8 @@ synchronous writing, while storage-accounted retention exposed long producer
 stalls. The resulting artifact makes application, continuation, computation,
 and publication claims separately inspectable. A machine-checked audit makes the
 missing claim precise: certifying improvement needs hundreds of independent
-scenarios, beyond this study's compute allocation.
+scenarios, beyond the one-hour audit lane; even the whole remaining allocation
+would resolve only effects larger than about \AuditTotalRadius{}.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
