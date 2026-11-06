@@ -1,0 +1,5684 @@
+{
+  "version": 1,
+  "status": "passed",
+  "controller": "flynn",
+  "device": "cpu",
+  "seed": 0,
+  "prefix_ticks": 4,
+  "continuation_ticks": 4,
+  "timings": {
+    "capture_save_seconds": 0.07871178700042947,
+    "branch_seconds": 17.934750865999376,
+    "playback_seconds": 0.008475380000163568,
+    "action_replay_seconds": 17.853350433999367,
+    "policy_replay_seconds": 17.84270942100011
+  },
+  "source_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+  "snapshot_id": "b57faee8ab0e43b695606809382194b5",
+  "snapshot_sha256": "c604bce4c2b3f76fc4803bf8b2923049e582d878e3833cfa130749148a2604f8",
+  "snapshot_bytes": 1166569,
+  "snapshot_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/full-flynn/runs/e25e0b591b214e4caf7b4aacca72b399/snapshots/b57faee8ab0e43b695606809382194b5.snp",
+  "source": {
+    "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/full-flynn/runs/e25e0b591b214e4caf7b4aacca72b399",
+    "snapshot_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/full-flynn/runs/e25e0b591b214e4caf7b4aacca72b399/snapshots/b57faee8ab0e43b695606809382194b5.snp",
+    "condition": "background_storage",
+    "recording_writer": "background",
+    "storage_accounting": true,
+    "seed": 0,
+    "prefix_ticks": 4,
+    "source_ticks": 8
+  },
+  "branch_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+  "continuation": {
+    "status": "passed",
+    "max_abs_errors": {
+      "episode": 0.0,
+      "tick": 0.0,
+      "action": 0.0,
+      "cam_left": 0.0,
+      "cam_right": 0.0,
+      "control": 0.0,
+      "encoded_input": 0.0,
+      "eyes": 0.0,
+      "next_pose": 0.0,
+      "population_stats": 0.0,
+      "pose": 0.0,
+      "raw_cam_left": 0.0,
+      "raw_cam_right": 0.0,
+      "raw_output": 0.0,
+      "revision": 0.0,
+      "reward": 0.0,
+      "sensors": 0.0,
+      "simulation_time": 0.0
+    },
+    "divergences": []
+  },
+  "playback": {
+    "mode": "playback",
+    "first_tick": 4
+  },
+  "comparison": {
+    "left_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+    "right_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+    "differences": [
+      {
+        "field": "initial_world",
+        "left": {
+          "arena": 7.0,
+          "goal": [
+            4.509548664093018,
+            -5.026264190673828,
+            0.25
+          ],
+          "obstacles": [
+            [
+              1.7531095977146158,
+              -2.9467300638224603,
+              0.4
+            ],
+            [
+              -5.875538893616708,
+              -6.188446265234828,
+              0.4
+            ],
+            [
+              4.009859061763487,
+              5.283271389154839,
+              0.4
+            ],
+            [
+              1.3649379298199023,
+              2.93755598059518,
+              0.4
+            ],
+            [
+              0.5583998907574124,
+              5.568927024483434,
+              0.4
+            ],
+            [
+              4.042925492755613,
+              -6.364947197822104,
+              0.4
+            ],
+            [
+              2.9395897143032848,
+              -4.151608056287245,
+              0.4
+            ],
+            [
+              4.648690206078548,
+              0.5307036191883743,
+              0.4
+            ],
+            [
+              -2.5636878011214748,
+              -0.9896035686699722,
+              0.4
+            ],
+            [
+              6.364287178101902,
+              6.154692336335746,
+              0.4
+            ],
+            [
+              2.4121181513080323,
+              -1.4218057730674714,
+              0.4
+            ],
+            [
+              -4.670764735713137,
+              2.8350507544842465,
+              0.4
+            ],
+            [
+              0.3245353276892917,
+              -2.4289039928453677,
+              0.4
+            ],
+            [
+              5.555757004239997,
+              -1.820221482123901,
+              0.4
+            ],
+            [
+              -1.3872767932395362,
+              4.995511705661341,
+              0.4
+            ],
+            [
+              -3.49238280277274,
+              1.5767954519813427,
+              0.4
+            ],
+            [
+              -5.324603602145475,
+              4.257845089963492,
+              0.4
+            ],
+            [
+              -2.0977016250155476,
+              -4.47642282374606,
+              0.4
+            ],
+            [
+              -3.447779724880033,
+              -5.7341273463755575,
+              0.4
+            ],
+            [
+              -5.23836101607524,
+              1.0282545406316883,
+              0.4
+            ]
+          ],
+          "pose": [
+            -2.2143425941467285,
+            1.8919436931610107,
+            -1.8880001474933032
+          ]
+        },
+        "right": {
+          "arena": 7.0,
+          "goal": [
+            4.609548568725586,
+            -5.026264190673828,
+            0.25
+          ],
+          "obstacles": [
+            [
+              1.7531095977146158,
+              -2.9467300638224603,
+              0.4
+            ],
+            [
+              -5.875538893616708,
+              -6.188446265234828,
+              0.4
+            ],
+            [
+              4.009859061763487,
+              5.283271389154839,
+              0.4
+            ],
+            [
+              1.3649379298199023,
+              2.93755598059518,
+              0.4
+            ],
+            [
+              0.5583998907574124,
+              5.568927024483434,
+              0.4
+            ],
+            [
+              4.042925492755613,
+              -6.364947197822104,
+              0.4
+            ],
+            [
+              2.9395897143032848,
+              -4.151608056287245,
+              0.4
+            ],
+            [
+              4.648690206078548,
+              0.5307036191883743,
+              0.4
+            ],
+            [
+              -2.5636878011214748,
+              -0.9896035686699722,
+              0.4
+            ],
+            [
+              6.364287178101902,
+              6.154692336335746,
+              0.4
+            ],
+            [
+              2.4121181513080323,
+              -1.4218057730674714,
+              0.4
+            ],
+            [
+              -4.670764735713137,
+              2.8350507544842465,
+              0.4
+            ],
+            [
+              0.3245353276892917,
+              -2.4289039928453677,
+              0.4
+            ],
+            [
+              5.555757004239997,
+              -1.820221482123901,
+              0.4
+            ],
+            [
+              -1.3872767932395362,
+              4.995511705661341,
+              0.4
+            ],
+            [
+              -3.49238280277274,
+              1.5767954519813427,
+              0.4
+            ],
+            [
+              -5.324603602145475,
+              4.257845089963492,
+              0.4
+            ],
+            [
+              -2.0977016250155476,
+              -4.47642282374606,
+              0.4
+            ],
+            [
+              -3.447779724880033,
+              -5.7341273463755575,
+              0.4
+            ],
+            [
+              -5.23836101607524,
+              1.0282545406316883,
+              0.4
+            ]
+          ],
+          "pose": [
+            -2.216115951538086,
+            1.8889604806900024,
+            -1.9053546235307575
+          ]
+        }
+      },
+      {
+        "field": "parent_run_id",
+        "left": null,
+        "right": "e25e0b591b214e4caf7b4aacca72b399"
+      },
+      {
+        "field": "parent_event_prefix",
+        "left": null,
+        "right": {
+          "event_count": 22,
+          "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+          "size_bytes": 27977
+        }
+      },
+      {
+        "field": "source_snapshot_id",
+        "left": null,
+        "right": "b57faee8ab0e43b695606809382194b5"
+      },
+      {
+        "field": "controller_replacement",
+        "left": null,
+        "right": false
+      },
+      {
+        "field": "interventions",
+        "left": [
+          {
+            "kind": "intervention",
+            "episode": 0,
+            "episode_step": 0,
+            "change": {
+              "kind": "move_goal",
+              "new": {
+                "xy": [
+                  4.609548568725586,
+                  -5.026264190673828
+                ]
+              },
+              "old": {
+                "xy": [
+                  4.509548664093018,
+                  -5.026264190673828
+                ]
+              },
+              "simulation_time": 0.0
+            },
+            "eyes": null
+          },
+          {
+            "kind": "eyes_changed",
+            "episode": 0,
+            "episode_step": 0,
+            "change": null,
+            "eyes": {
+              "left": false,
+              "right": true
+            }
+          }
+        ],
+        "right": []
+      }
+    ],
+    "lineage": {
+      "shared_parent": null,
+      "shared_snapshot": null
+    },
+    "interpretation": "Recorded differences are descriptive; they do not establish causality.",
+    "left": {
+      "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+      "provenance": {
+        "controller": "flynn",
+        "profile": "flynn",
+        "scenario": {
+          "arena": 7.0,
+          "control_interval_seconds": 0.02,
+          "controller": "flynn",
+          "description": "Disable either eye or both; goal and contact cues remain available.",
+          "height": 128,
+          "id": "vision-ablation",
+          "label": "Vision ablation",
+          "logging": "lossless-inputs-actions-world-v1",
+          "max_steps": 600,
+          "n_obstacles": 20,
+          "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+          "task": "navigation",
+          "teacher_privileged": false,
+          "texture": "checker",
+          "version": 1,
+          "width": 128
+        },
+        "texture": "checker",
+        "seed": 0,
+        "requested_device": "cpu",
+        "teacher_privileged": false,
+        "initial_world": {
+          "arena": 7.0,
+          "goal": [
+            4.509548664093018,
+            -5.026264190673828,
+            0.25
+          ],
+          "obstacles": [
+            [
+              1.7531095977146158,
+              -2.9467300638224603,
+              0.4
+            ],
+            [
+              -5.875538893616708,
+              -6.188446265234828,
+              0.4
+            ],
+            [
+              4.009859061763487,
+              5.283271389154839,
+              0.4
+            ],
+            [
+              1.3649379298199023,
+              2.93755598059518,
+              0.4
+            ],
+            [
+              0.5583998907574124,
+              5.568927024483434,
+              0.4
+            ],
+            [
+              4.042925492755613,
+              -6.364947197822104,
+              0.4
+            ],
+            [
+              2.9395897143032848,
+              -4.151608056287245,
+              0.4
+            ],
+            [
+              4.648690206078548,
+              0.5307036191883743,
+              0.4
+            ],
+            [
+              -2.5636878011214748,
+              -0.9896035686699722,
+              0.4
+            ],
+            [
+              6.364287178101902,
+              6.154692336335746,
+              0.4
+            ],
+            [
+              2.4121181513080323,
+              -1.4218057730674714,
+              0.4
+            ],
+            [
+              -4.670764735713137,
+              2.8350507544842465,
+              0.4
+            ],
+            [
+              0.3245353276892917,
+              -2.4289039928453677,
+              0.4
+            ],
+            [
+              5.555757004239997,
+              -1.820221482123901,
+              0.4
+            ],
+            [
+              -1.3872767932395362,
+              4.995511705661341,
+              0.4
+            ],
+            [
+              -3.49238280277274,
+              1.5767954519813427,
+              0.4
+            ],
+            [
+              -5.324603602145475,
+              4.257845089963492,
+              0.4
+            ],
+            [
+              -2.0977016250155476,
+              -4.47642282374606,
+              0.4
+            ],
+            [
+              -3.447779724880033,
+              -5.7341273463755575,
+              0.4
+            ],
+            [
+              -5.23836101607524,
+              1.0282545406316883,
+              0.4
+            ]
+          ],
+          "pose": [
+            -2.2143425941467285,
+            1.8919436931610107,
+            -1.8880001474933032
+          ]
+        },
+        "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+        "control_interval_seconds": 0.02,
+        "continuation_contract": {
+          "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled",
+          "float_atol": 1e-06,
+          "float_rtol": 1e-06,
+          "integer_and_camera_exact": true,
+          "scope": "matching software/hardware regime; compare before claiming repeatability"
+        },
+        "parent_run_id": null,
+        "parent_event_prefix": null,
+        "source_snapshot_id": null,
+        "snapshot_id": null,
+        "controller_replacement": null,
+        "replay_mode": null,
+        "initial_memory": null,
+        "task_protocol": null,
+        "task_calibration": null,
+        "task_profile_sha256": null,
+        "environment": [
+          {
+            "kind": "environment",
+            "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+            "source_sha256": {
+              "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+              "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+              "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+              "src/palimpsest/artifacts.py": "2774cf9cd2c4bd1b7b960572cabd9c01f883e8214135ce7db9c53a430e0560af",
+              "src/palimpsest/assets.py": "98989be297441dffe7eed8d5d5e5b134d2d2e4b51d95b7552be4309631e87b22",
+              "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+              "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+              "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+              "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+              "src/palimpsest/bounded_qualification.py": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+              "src/palimpsest/cli.py": "4c2b208660fe40db118c986b6233f8d5db6b01dd56866dc0295b2ba4d9aa4da3",
+              "src/palimpsest/comparison.py": "dd73599d7b20bbb1780e92edb6b6bd3cd3a19ae8e42fb5b2b2deb73b75c5b490",
+              "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+              "src/palimpsest/engine.py": "603a8d4d6fd0033f1b65504e51af08e91658cb5ac4e386f7d9918b264dc6ec43",
+              "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+              "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+              "src/palimpsest/held_provenance.py": "8cb30e7d2edfac2fdd8f8e298afd83d9835afda7c6ea7c9c6e772bb2b555d71c",
+              "src/palimpsest/interventions.py": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe",
+              "src/palimpsest/lab.py": "2640404a0be8cad4d660321c6218e042118e233eec3f6bc42165d57e3aa381a8",
+              "src/palimpsest/male_matched_budget.py": "79bd896d1a52ebfe8c9b9b82df3d6b25f673d722f10841d56db1d4caebe6fde5",
+              "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+              "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
+              "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+              "src/palimpsest/male_recovery_heldout.py": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977",
+              "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+              "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+              "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+              "src/palimpsest/memory_decision.py": "064c589f33711b4afd5de995f0132562cd5808ca1b420444a24c68ddeadb8526",
+              "src/palimpsest/memory_decision_world.py": "d518e0cdaa6ac2352c7ed681ca85d7722708b50feb106ad0f9cb8c3f6fa75991",
+              "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+              "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+              "src/palimpsest/memory_reference.py": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661",
+              "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+              "src/palimpsest/memory_transition_vnext.py": "e2205e82f9543c976c0cda0c5826641fcfe4e7247998a8f0ff351402083e2be8",
+              "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+              "src/palimpsest/profiles.py": "9a947c62f200640f973786e14e5bffaa365a1ea1f09617c984ebf16cea1aa2a3",
+              "src/palimpsest/puck_balanced.py": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c",
+              "src/palimpsest/puck_balanced_development.py": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8",
+              "src/palimpsest/puck_balanced_student.py": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e",
+              "src/palimpsest/puck_build_inputs.py": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+              "src/palimpsest/puck_bundle_provenance.py": "dd5edbcad6b63e960de6c31685926e09b7ab0a329dc398069eefaa19b5fbe99f",
+              "src/palimpsest/puck_collection_admission.py": "536f2f8c953f64d62396cba6690501479aa5128820de96640e6d1cc21528318e",
+              "src/palimpsest/puck_collection_close.py": "5773525db10a06beb627eba99c4ba8f394596cdf492c7cd57efde950915e884b",
+              "src/palimpsest/puck_collection_ledger.py": "da0621e397f3baa577c2f01a493053841b92772ed3d743caa7c74e741588dabf",
+              "src/palimpsest/puck_cpu_namespace.py": "4c9f7a91cbe3d59af6f4b3e9e124ac99916aba8255031af1367693024854c72b",
+              "src/palimpsest/puck_cpu_registration.py": "e35105b29b271f56b52c35a6e405307b57a10a064dd78ddbb3c7dc32eb3a8779",
+              "src/palimpsest/puck_dependency_bindings.py": "f6d686bf28bfc23ce09faf63d5e95113d18c19ea6f5b2e7a059346046e529631",
+              "src/palimpsest/puck_dependency_files.py": "a2382959c5cc039dc3a169378760569c7a2533323104512f1fa4d5ca10fea02c",
+              "src/palimpsest/puck_dependency_imports.py": "c157b3a897aa72ee456301eaa6724c5edb050ab8810ce1f40d94ac4b50080e2c",
+              "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+              "src/palimpsest/puck_execution.py": "aed15e6601d19803d5ddc28747bc41bf9b657e9098b08d9e76db4424a2907631",
+              "src/palimpsest/puck_execution_files.py": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+              "src/palimpsest/puck_held_episode.py": "083c5c117502256ee2b32fbbc001f53fa2d72a7c566afa3444e9f7436c17a917",
+              "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+              "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+              "src/palimpsest/puck_native_identity.py": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+              "src/palimpsest/puck_native_origins.py": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+              "src/palimpsest/puck_on_policy.py": "c1c0889b217a8baff732c13e77676185901576be293dad0181115e696fe25242",
+              "src/palimpsest/puck_package_payloads.py": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+              "src/palimpsest/puck_profile.py": "eb0f8036f18d94b0fb8eb95e8af2821b26bc57f8e71d938579567e194088ce80",
+              "src/palimpsest/puck_retained_installation.py": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+              "src/palimpsest/puck_runtime_qualification.py": "32a1618b5d79863f8b2a4de16909e1a060c684ab36ef88c7808871e99d17b0f5",
+              "src/palimpsest/puck_runtime_registration.py": "e8bf16eac387fab8819ac20e871cee2bf4f4c6a31d24530e9b85697c5264f74f",
+              "src/palimpsest/puck_runtime_staging.py": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+              "src/palimpsest/puck_scene_catalog.py": "12de1d806a0755594dce52980ee8a378510fe74eb4a374b7689b00306e62ca01",
+              "src/palimpsest/puck_scene_git.py": "5c4da951d8cfbec15c10ab32c15fd28b42a232684af7bec1e989ea5742ebac69",
+              "src/palimpsest/puck_scene_inventory_scope.py": "3f93fcbc809d90cff7e0b46e3093004bb81358babfffb3b8ee508cb76aecd38b",
+              "src/palimpsest/puck_scene_markdown.py": "d91d80fda0be70ccec6fd2577efbabd1b97672c20bdca72b8db68fc99fecb556",
+              "src/palimpsest/puck_scene_reference_resolution.py": "c28f4ec5669549b3502560986a9b4c49eddced62a8b900072c8908e50f7b3c4a",
+              "src/palimpsest/puck_scene_registry.py": "fe59478c064d565ff1e37d69ff27d3e53172588c273348e114935a046aeac864",
+              "src/palimpsest/puck_scene_reports.py": "e099f7deee74485deff0d04f36e1f985ec93ba9ba509f37b31d8f6602f3e0fb9",
+              "src/palimpsest/puck_scene_retained.py": "e898248fff03db9675e5d62131807e9a2d19137a1403d9ffd3306ed17cd5806b",
+              "src/palimpsest/puck_scene_roots.py": "f3dd54059353cafd937796b943cd130484ecd89c70821c55413b46c49a4221a7",
+              "src/palimpsest/puck_scene_training.py": "fb90a8d4a30da7d4b6e6fb77076abcffb5c0fd13742c7c55a3e21bf518d477db",
+              "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+              "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+              "src/palimpsest/puck_worker_preflight.py": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+              "src/palimpsest/records.py": "02be4c925873e4aa5c1b21fe0b70e9372c1fc573cef19cae577455e66991f94c",
+              "src/palimpsest/replay.py": "1b332948a641b3c1a0c65a16ff8dfdf67688ad342ef74480b1f6ac2d783e203d",
+              "src/palimpsest/snapshots.py": "8d6eb407e34326554db77c874c62f257297ba08e278c907186c10567f0f6ba46",
+              "src/palimpsest/sonification.py": "973e310c0a44a15d4d75ac48dbb6c6cb137a8f301acbc017d6d41a0ca877c561",
+              "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+              "src/palimpsest/storage.py": "40bfa773aba25448250e0b11c5500903b59379d4b8c36a5c06098a7fb687ee4d",
+              "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+              "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+              "src/palimpsest/velocity_gain.py": "5121dd73b9dd4502af7850033df4a34f85b66ce5d0ab5c810ad30e2b0312582e",
+              "src/palimpsest/velocity_gain_snapshot.py": "9a616b265eabef6dba04c94202b64495230c42608fe8229f87ca8f90ee9b33ee",
+              "src/palimpsest/worker.py": "f73cb1ba6df6c54efa0f64e75dcd37ef556142cd9003fbc898044cf979705840"
+            },
+            "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+          }
+        ],
+        "policy": [
+          {
+            "checkpoint_sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+            "checkpoint_structural_buffers": [
+              "grid_L1_left",
+              "grid_L2_left",
+              "grid_L3_left",
+              "grid_L1_right",
+              "grid_L2_right",
+              "grid_L3_right",
+              "cell.W_crow_indices",
+              "cell.W_col_indices",
+              "cell.W_size",
+              "cell.W_coo_rows",
+              "cell.input_nodes",
+              "cell.output_nodes",
+              "cell.neuron_type_ids"
+            ],
+            "device": "cpu",
+            "dtype": "torch.float32",
+            "edge_sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+            "mapping_ids_not_in_graph": {
+              "JO-C_and_JO-E.csv": {
+                "count": 4,
+                "ids_sha256": "24511aefd850062f4c7a529fdf939fd031f92687a8762febc3add194bc82e4ab",
+                "sample": [
+                  720575940612841330,
+                  720575940621032513,
+                  720575940623325993,
+                  720575940631406944
+                ]
+              },
+              "consolidated_cell_types.csv": {
+                "count": 560,
+                "ids_sha256": "3b6fee36b16485a8a75dfd8d5ab19df3279a3e9b3cd2583717dc0d28cf19041b",
+                "sample": [
+                  720575940604705481,
+                  720575940604810668,
+                  720575940605400032,
+                  720575940605634220,
+                  720575940606007280,
+                  720575940606022128,
+                  720575940606180896,
+                  720575940606292326,
+                  720575940606292582,
+                  720575940606630590
+                ]
+              },
+              "descending_neurons.csv": {
+                "count": 15,
+                "ids_sha256": "46dc327a2df88a76ea5fda716559caa9ecb18a58e5be4c04d40dcfdbd593c343",
+                "sample": [
+                  720575940606756309,
+                  720575940612429743,
+                  720575940617035449,
+                  720575940617873201,
+                  720575940618548244,
+                  720575940618863553,
+                  720575940619434587,
+                  720575940621082111,
+                  720575940621294218,
+                  720575940622681864
+                ]
+              },
+              "head_bristles_left.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              },
+              "head_bristles_right.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              },
+              "visual_column_L1_L2_L3_rear_view_left.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              },
+              "visual_column_L1_L2_L3_rear_view_right.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              }
+            },
+            "neuron_count": 138584,
+            "ordered_neuron_ids_encoding": "decimal ID followed by LF, ascending tensor index",
+            "ordered_neuron_ids_sha256": "719ee4899cf005efc4b5e772e484a59a0df1f964d906265027118eca264e5806",
+            "provenance_limit": "Buffers bind graph structure and mappings; legacy checkpoint contains no original training neuron IDs or training lineage.",
+            "requested_device": "cpu",
+            "seed": 0,
+            "unknown_cell_type_count": 1467,
+            "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+          }
+        ],
+        "runtime": [
+          {
+            "detail": {
+              "executable": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+              "required": "Python 3.11; uv sync --extra simulation",
+              "version": "3.11.15"
+            },
+            "name": "python",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "machine": "x86_64",
+              "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44"
+            },
+            "name": "platform",
+            "status": "info"
+          },
+          {
+            "detail": "0.1.0.dev0",
+            "name": "dependency:palimpsest",
+            "status": "ok"
+          },
+          {
+            "detail": "2.9.0",
+            "name": "dependency:torch",
+            "status": "ok"
+          },
+          {
+            "detail": "0.24.0",
+            "name": "dependency:torchvision",
+            "status": "ok"
+          },
+          {
+            "detail": "2.2.5",
+            "name": "dependency:numpy",
+            "status": "ok"
+          },
+          {
+            "detail": "1.15.2",
+            "name": "dependency:scipy",
+            "status": "ok"
+          },
+          {
+            "detail": "2.2.3",
+            "name": "dependency:pandas",
+            "status": "ok"
+          },
+          {
+            "detail": "1.8.0",
+            "name": "dependency:scikit-learn",
+            "status": "ok"
+          },
+          {
+            "detail": "3.3.6",
+            "name": "dependency:mujoco",
+            "status": "ok"
+          },
+          {
+            "detail": "1.2.1",
+            "name": "dependency:gymnasium",
+            "status": "ok"
+          },
+          {
+            "detail": "2.10.0",
+            "name": "dependency:glfw",
+            "status": "ok"
+          },
+          {
+            "detail": "4.12.0.88",
+            "name": "dependency:opencv-python",
+            "status": "ok"
+          },
+          {
+            "detail": "3.10.1",
+            "name": "dependency:matplotlib",
+            "status": "ok"
+          },
+          {
+            "detail": "0.13.2",
+            "name": "dependency:seaborn",
+            "status": "ok"
+          },
+          {
+            "detail": "3.4.2",
+            "name": "dependency:networkx",
+            "status": "ok"
+          },
+          {
+            "detail": "0.16",
+            "name": "dependency:python-louvain",
+            "status": "ok"
+          },
+          {
+            "detail": "1.1.3",
+            "name": "dependency:py7zr",
+            "status": "ok"
+          },
+          {
+            "name": "gpu",
+            "devices": [
+              {
+                "driver_version": "615.78.08",
+                "memory_total_mib": 6141,
+                "name": "NVIDIA GeForce RTX 4050 Laptop GPU"
+              }
+            ]
+          },
+          {
+            "detail": {
+              "backend_selection": "explicit MUJOCO_GL",
+              "command": "palimpsest doctor --probe-renderer",
+              "probed": false,
+              "requested_backend": "egl"
+            },
+            "name": "renderer",
+            "status": "info"
+          }
+        ],
+        "memory_swaps": [],
+        "interventions": [
+          {
+            "kind": "intervention",
+            "episode": 0,
+            "episode_step": 0,
+            "change": {
+              "kind": "move_goal",
+              "new": {
+                "xy": [
+                  4.609548568725586,
+                  -5.026264190673828
+                ]
+              },
+              "old": {
+                "xy": [
+                  4.509548664093018,
+                  -5.026264190673828
+                ]
+              },
+              "simulation_time": 0.0
+            },
+            "eyes": null
+          },
+          {
+            "kind": "eyes_changed",
+            "episode": 0,
+            "episode_step": 0,
+            "change": null,
+            "eyes": {
+              "left": false,
+              "right": true
+            }
+          }
+        ]
+      },
+      "geometry_stage": "last recorded transition per episode",
+      "worlds": [
+        {
+          "episode": 0,
+          "world": {
+            "arena": 7.0,
+            "goal": [
+              4.609548568725586,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.221384048461914,
+              1.8737894296646118,
+              -1.9011418215376974
+            ]
+          }
+        }
+      ],
+      "traces": [
+        {
+          "episode": 0,
+          "start_tick": 0,
+          "points": [
+            [
+              -2.2143425941467285,
+              1.8919436931610107
+            ],
+            [
+              -2.2144455909729004,
+              1.891801118850708
+            ],
+            [
+              -2.214764356613159,
+              1.8913791179656982
+            ],
+            [
+              -2.215315818786621,
+              1.8905025720596313
+            ],
+            [
+              -2.216115951538086,
+              1.8889604806900024
+            ],
+            [
+              -2.2171614170074463,
+              1.8865621089935303
+            ],
+            [
+              -2.218418836593628,
+              1.8832300901412964
+            ],
+            [
+              -2.219839334487915,
+              1.8790149688720703
+            ],
+            [
+              -2.221384048461914,
+              1.8737894296646118
+            ]
+          ]
+        }
+      ],
+      "metrics": {
+        "contact_ticks": 0,
+        "path_length": 0.019552478477450633,
+        "reward": -0.07024909258633852
+      },
+      "recorded_metrics": [
+        {
+          "episode": 0,
+          "start_tick": 0,
+          "reward": -0.07024909258633852,
+          "path_length": 0.019552478477450633,
+          "contact_ticks": 0
+        }
+      ],
+      "events": [
+        {
+          "episode": 0,
+          "episode_step": 0,
+          "eyes": {
+            "left": true,
+            "right": true
+          },
+          "goal": [
+            4.509548664093018,
+            -5.026264190673828
+          ],
+          "initial_qpos": [
+            1.7531095977146158,
+            -2.9467300638224603,
+            0.0,
+            -5.875538893616708,
+            -6.188446265234828,
+            0.0,
+            4.009859061763487,
+            5.283271389154839,
+            0.0,
+            1.3649379298199023,
+            2.93755598059518,
+            0.0,
+            0.5583998907574124,
+            5.568927024483434,
+            0.0,
+            4.042925492755613,
+            -6.364947197822104,
+            0.0,
+            2.9395897143032848,
+            -4.151608056287245,
+            0.0,
+            4.648690206078548,
+            0.5307036191883743,
+            0.0,
+            -2.5636878011214748,
+            -0.9896035686699722,
+            0.0,
+            6.364287178101902,
+            6.154692336335746,
+            0.0,
+            2.4121181513080323,
+            -1.4218057730674714,
+            0.0,
+            -4.670764735713137,
+            2.8350507544842465,
+            0.0,
+            0.3245353276892917,
+            -2.4289039928453677,
+            0.0,
+            5.555757004239997,
+            -1.820221482123901,
+            0.0,
+            -1.3872767932395362,
+            4.995511705661341,
+            0.0,
+            -3.49238280277274,
+            1.5767954519813427,
+            0.0,
+            -5.324603602145475,
+            4.257845089963492,
+            0.0,
+            -2.0977016250155476,
+            -4.47642282374606,
+            0.0,
+            -3.447779724880033,
+            -5.7341273463755575,
+            0.0,
+            -5.23836101607524,
+            1.0282545406316883,
+            0.0,
+            -2.2143425389918514,
+            1.8919436575199526,
+            0.1,
+            0.5865530232173046,
+            0.0,
+            0.0,
+            -0.8099108290143058,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_qvel": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "kind": "episode_started",
+          "obstacles": [
+            [
+              1.7531095743179321,
+              -2.946730136871338
+            ],
+            [
+              -5.8755388259887695,
+              -6.188446044921875
+            ],
+            [
+              4.009859085083008,
+              5.283271312713623
+            ],
+            [
+              1.3649379014968872,
+              2.937556028366089
+            ],
+            [
+              0.5583999156951904,
+              5.568926811218262
+            ],
+            [
+              4.0429253578186035,
+              -6.364947319030762
+            ],
+            [
+              2.939589738845825,
+              -4.151607990264893
+            ],
+            [
+              4.648690223693848,
+              0.530703604221344
+            ],
+            [
+              -2.563687801361084,
+              -0.989603579044342
+            ],
+            [
+              6.364287376403809,
+              6.15469217300415
+            ],
+            [
+              2.4121181964874268,
+              -1.421805739402771
+            ],
+            [
+              -4.670764923095703,
+              2.8350508213043213
+            ],
+            [
+              0.3245353400707245,
+              -2.4289040565490723
+            ],
+            [
+              5.55575704574585,
+              -1.8202214241027832
+            ],
+            [
+              -1.3872767686843872,
+              4.995511531829834
+            ],
+            [
+              -3.492382764816284,
+              1.5767954587936401
+            ],
+            [
+              -5.32460355758667,
+              4.257844924926758
+            ],
+            [
+              -2.0977015495300293,
+              -4.4764227867126465
+            ],
+            [
+              -3.447779655456543,
+              -5.734127521514893
+            ],
+            [
+              -5.23836088180542,
+              1.028254508972168
+            ]
+          ],
+          "reset_protocol": "fresh physics and controller episode state; upstream seeded layout",
+          "revision": 0,
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "seed": 0,
+          "sequence": 4,
+          "tick": 0,
+          "world": {
+            "arena": 7.0,
+            "goal": [
+              4.509548664093018,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.2143425941467285,
+              1.8919436931610107,
+              -1.8880001474933032
+            ]
+          }
+        },
+        {
+          "episode": 0,
+          "filename": "initial.snp",
+          "initial": true,
+          "kind": "snapshot_registered",
+          "revision": 0,
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 5,
+          "sha256": "69c220438c7e9c8ae0f2fe3309a97fe78875b8089cebbf1b5d366da71e165b84",
+          "snapshot_id": "b1960d928d2545738d58cb2830a47ecc",
+          "tick": 0
+        },
+        {
+          "change": {
+            "kind": "move_goal",
+            "new": {
+              "xy": [
+                4.609548568725586,
+                -5.026264190673828
+              ]
+            },
+            "old": {
+              "xy": [
+                4.509548664093018,
+                -5.026264190673828
+              ]
+            },
+            "simulation_time": 0.0
+          },
+          "episode": 0,
+          "episode_step": 0,
+          "id": "edit",
+          "kind": "intervention",
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 8,
+          "tick": 0
+        },
+        {
+          "command_kind": "intervene",
+          "episode": 0,
+          "episode_step": 0,
+          "id": "edit",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 1,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 0,
+            "id": "edit",
+            "kind": "intervene",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 0,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 9,
+          "tick": 0
+        },
+        {
+          "episode": 0,
+          "episode_step": 0,
+          "eyes": {
+            "left": false,
+            "right": true
+          },
+          "kind": "eyes_changed",
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 11,
+          "tick": 0
+        },
+        {
+          "command_kind": "set_eyes",
+          "episode": 0,
+          "episode_step": 0,
+          "id": "mask",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 2,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 0,
+            "id": "mask",
+            "kind": "set_eyes",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 0,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 12,
+          "tick": 0
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 0,
+          "id": "prefix-0",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 3,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 0,
+            "id": "prefix-0",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 0,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 14,
+          "tick": 0
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 1,
+          "id": "prefix-1",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 4,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 1,
+            "id": "prefix-1",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 1,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 16,
+          "tick": 1
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 2,
+          "id": "prefix-2",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 5,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 2,
+            "id": "prefix-2",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 2,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 18,
+          "tick": 2
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 3,
+          "id": "prefix-3",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 6,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 3,
+            "id": "prefix-3",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 3,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 20,
+          "tick": 3
+        },
+        {
+          "episode": 0,
+          "filename": "b57faee8ab0e43b695606809382194b5.snp",
+          "initial": false,
+          "kind": "snapshot_registered",
+          "revision": 6,
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 22,
+          "sha256": "c604bce4c2b3f76fc4803bf8b2923049e582d878e3833cfa130749148a2604f8",
+          "snapshot_id": "b57faee8ab0e43b695606809382194b5",
+          "tick": 4
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 4,
+          "id": "continuation-0",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 7,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 4,
+            "id": "continuation-0",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 4,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 24,
+          "tick": 4
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 5,
+          "id": "continuation-1",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 8,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 5,
+            "id": "continuation-1",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 5,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 26,
+          "tick": 5
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 6,
+          "id": "continuation-2",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 9,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 6,
+            "id": "continuation-2",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 6,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 28,
+          "tick": 6
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 7,
+          "id": "continuation-3",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 10,
+            "applied_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "applied_tick": 7,
+            "id": "continuation-3",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "received_tick": 7,
+            "status": "applied"
+          },
+          "run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "sequence": 30,
+          "tick": 7
+        }
+      ],
+      "final_phase": "paused",
+      "last_outcome": null
+    },
+    "right": {
+      "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+      "provenance": {
+        "controller": "flynn",
+        "profile": "flynn",
+        "scenario": {
+          "arena": 7.0,
+          "control_interval_seconds": 0.02,
+          "controller": "flynn",
+          "description": "Disable either eye or both; goal and contact cues remain available.",
+          "height": 128,
+          "id": "vision-ablation",
+          "label": "Vision ablation",
+          "logging": "lossless-inputs-actions-world-v1",
+          "max_steps": 600,
+          "n_obstacles": 20,
+          "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+          "task": "navigation",
+          "teacher_privileged": false,
+          "texture": "checker",
+          "version": 1,
+          "width": 128
+        },
+        "texture": "checker",
+        "seed": 0,
+        "requested_device": "cpu",
+        "teacher_privileged": false,
+        "initial_world": {
+          "arena": 7.0,
+          "goal": [
+            4.609548568725586,
+            -5.026264190673828,
+            0.25
+          ],
+          "obstacles": [
+            [
+              1.7531095977146158,
+              -2.9467300638224603,
+              0.4
+            ],
+            [
+              -5.875538893616708,
+              -6.188446265234828,
+              0.4
+            ],
+            [
+              4.009859061763487,
+              5.283271389154839,
+              0.4
+            ],
+            [
+              1.3649379298199023,
+              2.93755598059518,
+              0.4
+            ],
+            [
+              0.5583998907574124,
+              5.568927024483434,
+              0.4
+            ],
+            [
+              4.042925492755613,
+              -6.364947197822104,
+              0.4
+            ],
+            [
+              2.9395897143032848,
+              -4.151608056287245,
+              0.4
+            ],
+            [
+              4.648690206078548,
+              0.5307036191883743,
+              0.4
+            ],
+            [
+              -2.5636878011214748,
+              -0.9896035686699722,
+              0.4
+            ],
+            [
+              6.364287178101902,
+              6.154692336335746,
+              0.4
+            ],
+            [
+              2.4121181513080323,
+              -1.4218057730674714,
+              0.4
+            ],
+            [
+              -4.670764735713137,
+              2.8350507544842465,
+              0.4
+            ],
+            [
+              0.3245353276892917,
+              -2.4289039928453677,
+              0.4
+            ],
+            [
+              5.555757004239997,
+              -1.820221482123901,
+              0.4
+            ],
+            [
+              -1.3872767932395362,
+              4.995511705661341,
+              0.4
+            ],
+            [
+              -3.49238280277274,
+              1.5767954519813427,
+              0.4
+            ],
+            [
+              -5.324603602145475,
+              4.257845089963492,
+              0.4
+            ],
+            [
+              -2.0977016250155476,
+              -4.47642282374606,
+              0.4
+            ],
+            [
+              -3.447779724880033,
+              -5.7341273463755575,
+              0.4
+            ],
+            [
+              -5.23836101607524,
+              1.0282545406316883,
+              0.4
+            ]
+          ],
+          "pose": [
+            -2.216115951538086,
+            1.8889604806900024,
+            -1.9053546235307575
+          ]
+        },
+        "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+        "control_interval_seconds": 0.02,
+        "continuation_contract": {
+          "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled",
+          "float_atol": 1e-06,
+          "float_rtol": 1e-06,
+          "integer_and_camera_exact": true,
+          "scope": "matching software/hardware regime; compare before claiming repeatability"
+        },
+        "parent_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+        "parent_event_prefix": {
+          "event_count": 22,
+          "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+          "size_bytes": 27977
+        },
+        "source_snapshot_id": "b57faee8ab0e43b695606809382194b5",
+        "snapshot_id": null,
+        "controller_replacement": false,
+        "replay_mode": null,
+        "initial_memory": null,
+        "task_protocol": null,
+        "task_calibration": null,
+        "task_profile_sha256": null,
+        "environment": [
+          {
+            "kind": "environment",
+            "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+            "source_sha256": {
+              "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+              "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+              "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+              "src/palimpsest/artifacts.py": "2774cf9cd2c4bd1b7b960572cabd9c01f883e8214135ce7db9c53a430e0560af",
+              "src/palimpsest/assets.py": "98989be297441dffe7eed8d5d5e5b134d2d2e4b51d95b7552be4309631e87b22",
+              "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+              "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+              "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+              "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+              "src/palimpsest/bounded_qualification.py": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+              "src/palimpsest/cli.py": "4c2b208660fe40db118c986b6233f8d5db6b01dd56866dc0295b2ba4d9aa4da3",
+              "src/palimpsest/comparison.py": "dd73599d7b20bbb1780e92edb6b6bd3cd3a19ae8e42fb5b2b2deb73b75c5b490",
+              "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+              "src/palimpsest/engine.py": "603a8d4d6fd0033f1b65504e51af08e91658cb5ac4e386f7d9918b264dc6ec43",
+              "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+              "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+              "src/palimpsest/held_provenance.py": "8cb30e7d2edfac2fdd8f8e298afd83d9835afda7c6ea7c9c6e772bb2b555d71c",
+              "src/palimpsest/interventions.py": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe",
+              "src/palimpsest/lab.py": "2640404a0be8cad4d660321c6218e042118e233eec3f6bc42165d57e3aa381a8",
+              "src/palimpsest/male_matched_budget.py": "79bd896d1a52ebfe8c9b9b82df3d6b25f673d722f10841d56db1d4caebe6fde5",
+              "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+              "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
+              "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+              "src/palimpsest/male_recovery_heldout.py": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977",
+              "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+              "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+              "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+              "src/palimpsest/memory_decision.py": "064c589f33711b4afd5de995f0132562cd5808ca1b420444a24c68ddeadb8526",
+              "src/palimpsest/memory_decision_world.py": "d518e0cdaa6ac2352c7ed681ca85d7722708b50feb106ad0f9cb8c3f6fa75991",
+              "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+              "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+              "src/palimpsest/memory_reference.py": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661",
+              "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+              "src/palimpsest/memory_transition_vnext.py": "e2205e82f9543c976c0cda0c5826641fcfe4e7247998a8f0ff351402083e2be8",
+              "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+              "src/palimpsest/profiles.py": "9a947c62f200640f973786e14e5bffaa365a1ea1f09617c984ebf16cea1aa2a3",
+              "src/palimpsest/puck_balanced.py": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c",
+              "src/palimpsest/puck_balanced_development.py": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8",
+              "src/palimpsest/puck_balanced_student.py": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e",
+              "src/palimpsest/puck_build_inputs.py": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+              "src/palimpsest/puck_bundle_provenance.py": "dd5edbcad6b63e960de6c31685926e09b7ab0a329dc398069eefaa19b5fbe99f",
+              "src/palimpsest/puck_collection_admission.py": "536f2f8c953f64d62396cba6690501479aa5128820de96640e6d1cc21528318e",
+              "src/palimpsest/puck_collection_close.py": "5773525db10a06beb627eba99c4ba8f394596cdf492c7cd57efde950915e884b",
+              "src/palimpsest/puck_collection_ledger.py": "da0621e397f3baa577c2f01a493053841b92772ed3d743caa7c74e741588dabf",
+              "src/palimpsest/puck_cpu_namespace.py": "4c9f7a91cbe3d59af6f4b3e9e124ac99916aba8255031af1367693024854c72b",
+              "src/palimpsest/puck_cpu_registration.py": "e35105b29b271f56b52c35a6e405307b57a10a064dd78ddbb3c7dc32eb3a8779",
+              "src/palimpsest/puck_dependency_bindings.py": "f6d686bf28bfc23ce09faf63d5e95113d18c19ea6f5b2e7a059346046e529631",
+              "src/palimpsest/puck_dependency_files.py": "a2382959c5cc039dc3a169378760569c7a2533323104512f1fa4d5ca10fea02c",
+              "src/palimpsest/puck_dependency_imports.py": "c157b3a897aa72ee456301eaa6724c5edb050ab8810ce1f40d94ac4b50080e2c",
+              "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+              "src/palimpsest/puck_execution.py": "aed15e6601d19803d5ddc28747bc41bf9b657e9098b08d9e76db4424a2907631",
+              "src/palimpsest/puck_execution_files.py": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+              "src/palimpsest/puck_held_episode.py": "083c5c117502256ee2b32fbbc001f53fa2d72a7c566afa3444e9f7436c17a917",
+              "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+              "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+              "src/palimpsest/puck_native_identity.py": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+              "src/palimpsest/puck_native_origins.py": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+              "src/palimpsest/puck_on_policy.py": "c1c0889b217a8baff732c13e77676185901576be293dad0181115e696fe25242",
+              "src/palimpsest/puck_package_payloads.py": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+              "src/palimpsest/puck_profile.py": "eb0f8036f18d94b0fb8eb95e8af2821b26bc57f8e71d938579567e194088ce80",
+              "src/palimpsest/puck_retained_installation.py": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+              "src/palimpsest/puck_runtime_qualification.py": "32a1618b5d79863f8b2a4de16909e1a060c684ab36ef88c7808871e99d17b0f5",
+              "src/palimpsest/puck_runtime_registration.py": "e8bf16eac387fab8819ac20e871cee2bf4f4c6a31d24530e9b85697c5264f74f",
+              "src/palimpsest/puck_runtime_staging.py": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+              "src/palimpsest/puck_scene_catalog.py": "12de1d806a0755594dce52980ee8a378510fe74eb4a374b7689b00306e62ca01",
+              "src/palimpsest/puck_scene_git.py": "5c4da951d8cfbec15c10ab32c15fd28b42a232684af7bec1e989ea5742ebac69",
+              "src/palimpsest/puck_scene_inventory_scope.py": "3f93fcbc809d90cff7e0b46e3093004bb81358babfffb3b8ee508cb76aecd38b",
+              "src/palimpsest/puck_scene_markdown.py": "d91d80fda0be70ccec6fd2577efbabd1b97672c20bdca72b8db68fc99fecb556",
+              "src/palimpsest/puck_scene_reference_resolution.py": "c28f4ec5669549b3502560986a9b4c49eddced62a8b900072c8908e50f7b3c4a",
+              "src/palimpsest/puck_scene_registry.py": "fe59478c064d565ff1e37d69ff27d3e53172588c273348e114935a046aeac864",
+              "src/palimpsest/puck_scene_reports.py": "e099f7deee74485deff0d04f36e1f985ec93ba9ba509f37b31d8f6602f3e0fb9",
+              "src/palimpsest/puck_scene_retained.py": "e898248fff03db9675e5d62131807e9a2d19137a1403d9ffd3306ed17cd5806b",
+              "src/palimpsest/puck_scene_roots.py": "f3dd54059353cafd937796b943cd130484ecd89c70821c55413b46c49a4221a7",
+              "src/palimpsest/puck_scene_training.py": "fb90a8d4a30da7d4b6e6fb77076abcffb5c0fd13742c7c55a3e21bf518d477db",
+              "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+              "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+              "src/palimpsest/puck_worker_preflight.py": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+              "src/palimpsest/records.py": "02be4c925873e4aa5c1b21fe0b70e9372c1fc573cef19cae577455e66991f94c",
+              "src/palimpsest/replay.py": "1b332948a641b3c1a0c65a16ff8dfdf67688ad342ef74480b1f6ac2d783e203d",
+              "src/palimpsest/snapshots.py": "8d6eb407e34326554db77c874c62f257297ba08e278c907186c10567f0f6ba46",
+              "src/palimpsest/sonification.py": "973e310c0a44a15d4d75ac48dbb6c6cb137a8f301acbc017d6d41a0ca877c561",
+              "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+              "src/palimpsest/storage.py": "40bfa773aba25448250e0b11c5500903b59379d4b8c36a5c06098a7fb687ee4d",
+              "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+              "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+              "src/palimpsest/velocity_gain.py": "5121dd73b9dd4502af7850033df4a34f85b66ce5d0ab5c810ad30e2b0312582e",
+              "src/palimpsest/velocity_gain_snapshot.py": "9a616b265eabef6dba04c94202b64495230c42608fe8229f87ca8f90ee9b33ee",
+              "src/palimpsest/worker.py": "f73cb1ba6df6c54efa0f64e75dcd37ef556142cd9003fbc898044cf979705840"
+            },
+            "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+          }
+        ],
+        "policy": [
+          {
+            "checkpoint_sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+            "checkpoint_structural_buffers": [
+              "grid_L1_left",
+              "grid_L2_left",
+              "grid_L3_left",
+              "grid_L1_right",
+              "grid_L2_right",
+              "grid_L3_right",
+              "cell.W_crow_indices",
+              "cell.W_col_indices",
+              "cell.W_size",
+              "cell.W_coo_rows",
+              "cell.input_nodes",
+              "cell.output_nodes",
+              "cell.neuron_type_ids"
+            ],
+            "device": "cpu",
+            "dtype": "torch.float32",
+            "edge_sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+            "mapping_ids_not_in_graph": {
+              "JO-C_and_JO-E.csv": {
+                "count": 4,
+                "ids_sha256": "24511aefd850062f4c7a529fdf939fd031f92687a8762febc3add194bc82e4ab",
+                "sample": [
+                  720575940612841330,
+                  720575940621032513,
+                  720575940623325993,
+                  720575940631406944
+                ]
+              },
+              "consolidated_cell_types.csv": {
+                "count": 560,
+                "ids_sha256": "3b6fee36b16485a8a75dfd8d5ab19df3279a3e9b3cd2583717dc0d28cf19041b",
+                "sample": [
+                  720575940604705481,
+                  720575940604810668,
+                  720575940605400032,
+                  720575940605634220,
+                  720575940606007280,
+                  720575940606022128,
+                  720575940606180896,
+                  720575940606292326,
+                  720575940606292582,
+                  720575940606630590
+                ]
+              },
+              "descending_neurons.csv": {
+                "count": 15,
+                "ids_sha256": "46dc327a2df88a76ea5fda716559caa9ecb18a58e5be4c04d40dcfdbd593c343",
+                "sample": [
+                  720575940606756309,
+                  720575940612429743,
+                  720575940617035449,
+                  720575940617873201,
+                  720575940618548244,
+                  720575940618863553,
+                  720575940619434587,
+                  720575940621082111,
+                  720575940621294218,
+                  720575940622681864
+                ]
+              },
+              "head_bristles_left.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              },
+              "head_bristles_right.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              },
+              "visual_column_L1_L2_L3_rear_view_left.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              },
+              "visual_column_L1_L2_L3_rear_view_right.csv": {
+                "count": 0,
+                "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "sample": []
+              }
+            },
+            "neuron_count": 138584,
+            "ordered_neuron_ids_encoding": "decimal ID followed by LF, ascending tensor index",
+            "ordered_neuron_ids_sha256": "719ee4899cf005efc4b5e772e484a59a0df1f964d906265027118eca264e5806",
+            "provenance_limit": "Buffers bind graph structure and mappings; legacy checkpoint contains no original training neuron IDs or training lineage.",
+            "requested_device": "cpu",
+            "seed": 0,
+            "unknown_cell_type_count": 1467,
+            "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+          }
+        ],
+        "runtime": [
+          {
+            "detail": {
+              "executable": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+              "required": "Python 3.11; uv sync --extra simulation",
+              "version": "3.11.15"
+            },
+            "name": "python",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "machine": "x86_64",
+              "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44"
+            },
+            "name": "platform",
+            "status": "info"
+          },
+          {
+            "detail": "0.1.0.dev0",
+            "name": "dependency:palimpsest",
+            "status": "ok"
+          },
+          {
+            "detail": "2.9.0",
+            "name": "dependency:torch",
+            "status": "ok"
+          },
+          {
+            "detail": "0.24.0",
+            "name": "dependency:torchvision",
+            "status": "ok"
+          },
+          {
+            "detail": "2.2.5",
+            "name": "dependency:numpy",
+            "status": "ok"
+          },
+          {
+            "detail": "1.15.2",
+            "name": "dependency:scipy",
+            "status": "ok"
+          },
+          {
+            "detail": "2.2.3",
+            "name": "dependency:pandas",
+            "status": "ok"
+          },
+          {
+            "detail": "1.8.0",
+            "name": "dependency:scikit-learn",
+            "status": "ok"
+          },
+          {
+            "detail": "3.3.6",
+            "name": "dependency:mujoco",
+            "status": "ok"
+          },
+          {
+            "detail": "1.2.1",
+            "name": "dependency:gymnasium",
+            "status": "ok"
+          },
+          {
+            "detail": "2.10.0",
+            "name": "dependency:glfw",
+            "status": "ok"
+          },
+          {
+            "detail": "4.12.0.88",
+            "name": "dependency:opencv-python",
+            "status": "ok"
+          },
+          {
+            "detail": "3.10.1",
+            "name": "dependency:matplotlib",
+            "status": "ok"
+          },
+          {
+            "detail": "0.13.2",
+            "name": "dependency:seaborn",
+            "status": "ok"
+          },
+          {
+            "detail": "3.4.2",
+            "name": "dependency:networkx",
+            "status": "ok"
+          },
+          {
+            "detail": "0.16",
+            "name": "dependency:python-louvain",
+            "status": "ok"
+          },
+          {
+            "detail": "1.1.3",
+            "name": "dependency:py7zr",
+            "status": "ok"
+          },
+          {
+            "name": "gpu",
+            "devices": [
+              {
+                "driver_version": "615.78.08",
+                "memory_total_mib": 6141,
+                "name": "NVIDIA GeForce RTX 4050 Laptop GPU"
+              }
+            ]
+          },
+          {
+            "detail": {
+              "backend_selection": "explicit MUJOCO_GL",
+              "command": "palimpsest doctor --probe-renderer",
+              "probed": false,
+              "requested_backend": "egl"
+            },
+            "name": "renderer",
+            "status": "info"
+          }
+        ],
+        "memory_swaps": [],
+        "interventions": []
+      },
+      "geometry_stage": "last recorded transition per episode",
+      "worlds": [
+        {
+          "episode": 0,
+          "world": {
+            "arena": 7.0,
+            "goal": [
+              4.609548568725586,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.221384048461914,
+              1.8737894296646118,
+              -1.9011418215376974
+            ]
+          }
+        }
+      ],
+      "traces": [
+        {
+          "episode": 0,
+          "start_tick": 4,
+          "points": [
+            [
+              -2.216115951538086,
+              1.8889604806900024
+            ],
+            [
+              -2.2171614170074463,
+              1.8865621089935303
+            ],
+            [
+              -2.218418836593628,
+              1.8832300901412964
+            ],
+            [
+              -2.219839334487915,
+              1.8790149688720703
+            ],
+            [
+              -2.221384048461914,
+              1.8737894296646118
+            ]
+          ]
+        }
+      ],
+      "metrics": {
+        "contact_ticks": 0,
+        "path_length": 0.019552478477450633,
+        "reward": -0.07024909258633852
+      },
+      "recorded_metrics": [
+        {
+          "episode": 0,
+          "start_tick": 4,
+          "reward": -0.03084663036891392,
+          "path_length": 0.016074827713537382,
+          "contact_ticks": 0
+        }
+      ],
+      "events": [
+        {
+          "episode": 0,
+          "episode_step": 0,
+          "eyes": {
+            "left": true,
+            "right": true
+          },
+          "goal": [
+            4.509548664093018,
+            -5.026264190673828
+          ],
+          "initial_qpos": [
+            1.7531095977146158,
+            -2.9467300638224603,
+            0.0,
+            -5.875538893616708,
+            -6.188446265234828,
+            0.0,
+            4.009859061763487,
+            5.283271389154839,
+            0.0,
+            1.3649379298199023,
+            2.93755598059518,
+            0.0,
+            0.5583998907574124,
+            5.568927024483434,
+            0.0,
+            4.042925492755613,
+            -6.364947197822104,
+            0.0,
+            2.9395897143032848,
+            -4.151608056287245,
+            0.0,
+            4.648690206078548,
+            0.5307036191883743,
+            0.0,
+            -2.5636878011214748,
+            -0.9896035686699722,
+            0.0,
+            6.364287178101902,
+            6.154692336335746,
+            0.0,
+            2.4121181513080323,
+            -1.4218057730674714,
+            0.0,
+            -4.670764735713137,
+            2.8350507544842465,
+            0.0,
+            0.3245353276892917,
+            -2.4289039928453677,
+            0.0,
+            5.555757004239997,
+            -1.820221482123901,
+            0.0,
+            -1.3872767932395362,
+            4.995511705661341,
+            0.0,
+            -3.49238280277274,
+            1.5767954519813427,
+            0.0,
+            -5.324603602145475,
+            4.257845089963492,
+            0.0,
+            -2.0977016250155476,
+            -4.47642282374606,
+            0.0,
+            -3.447779724880033,
+            -5.7341273463755575,
+            0.0,
+            -5.23836101607524,
+            1.0282545406316883,
+            0.0,
+            -2.2143425389918514,
+            1.8919436575199526,
+            0.1,
+            0.5865530232173046,
+            0.0,
+            0.0,
+            -0.8099108290143058,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "initial_qvel": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "kind": "episode_started",
+          "obstacles": [
+            [
+              1.7531095743179321,
+              -2.946730136871338
+            ],
+            [
+              -5.8755388259887695,
+              -6.188446044921875
+            ],
+            [
+              4.009859085083008,
+              5.283271312713623
+            ],
+            [
+              1.3649379014968872,
+              2.937556028366089
+            ],
+            [
+              0.5583999156951904,
+              5.568926811218262
+            ],
+            [
+              4.0429253578186035,
+              -6.364947319030762
+            ],
+            [
+              2.939589738845825,
+              -4.151607990264893
+            ],
+            [
+              4.648690223693848,
+              0.530703604221344
+            ],
+            [
+              -2.563687801361084,
+              -0.989603579044342
+            ],
+            [
+              6.364287376403809,
+              6.15469217300415
+            ],
+            [
+              2.4121181964874268,
+              -1.421805739402771
+            ],
+            [
+              -4.670764923095703,
+              2.8350508213043213
+            ],
+            [
+              0.3245353400707245,
+              -2.4289040565490723
+            ],
+            [
+              5.55575704574585,
+              -1.8202214241027832
+            ],
+            [
+              -1.3872767686843872,
+              4.995511531829834
+            ],
+            [
+              -3.492382764816284,
+              1.5767954587936401
+            ],
+            [
+              -5.32460355758667,
+              4.257844924926758
+            ],
+            [
+              -2.0977015495300293,
+              -4.4764227867126465
+            ],
+            [
+              -3.447779655456543,
+              -5.734127521514893
+            ],
+            [
+              -5.23836088180542,
+              1.028254508972168
+            ]
+          ],
+          "reset_protocol": "fresh physics and controller episode state; upstream seeded layout",
+          "revision": 0,
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "seed": 0,
+          "sequence": 4,
+          "tick": 0,
+          "world": {
+            "arena": 7.0,
+            "goal": [
+              4.509548664093018,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.2143425941467285,
+              1.8919436931610107,
+              -1.8880001474933032
+            ]
+          }
+        },
+        {
+          "episode": 0,
+          "episode_step": 4,
+          "eyes": {
+            "left": false,
+            "right": true
+          },
+          "kind": "application_restored",
+          "parent_event_prefix": {
+            "event_count": 22,
+            "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+            "size_bytes": 27977
+          },
+          "parent_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "revision": 6,
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 5,
+          "tick": 4,
+          "world": {
+            "arena": 7.0,
+            "goal": [
+              4.609548568725586,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.216115951538086,
+              1.8889604806900024,
+              -1.9053546235307575
+            ]
+          }
+        },
+        {
+          "controller_replaced": false,
+          "kind": "branch_created",
+          "parent_snapshot_id": "b57faee8ab0e43b695606809382194b5",
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 6
+        },
+        {
+          "episode": 0,
+          "filename": "initial.snp",
+          "initial": true,
+          "kind": "snapshot_registered",
+          "revision": 6,
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 7,
+          "sha256": "9a932360eb012d017a798ea803dc1cd8e7de2fb8df6271baffeee76ff824b293",
+          "snapshot_id": "8bf5f0b91aa44a6488f614e7349b7cef",
+          "tick": 4
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 4,
+          "id": "continuation-0",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 7,
+            "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "applied_tick": 4,
+            "id": "continuation-0",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "received_tick": 4,
+            "status": "applied"
+          },
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 10,
+          "tick": 4
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 5,
+          "id": "continuation-1",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 8,
+            "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "applied_tick": 5,
+            "id": "continuation-1",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "received_tick": 5,
+            "status": "applied"
+          },
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 12,
+          "tick": 5
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 6,
+          "id": "continuation-2",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 9,
+            "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "applied_tick": 6,
+            "id": "continuation-2",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "received_tick": 6,
+            "status": "applied"
+          },
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 14,
+          "tick": 6
+        },
+        {
+          "command_kind": "step",
+          "episode": 0,
+          "episode_step": 7,
+          "id": "continuation-3",
+          "kind": "command_applied",
+          "result": {
+            "applied_episode": 0,
+            "applied_revision": 10,
+            "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "applied_tick": 7,
+            "id": "continuation-3",
+            "kind": "step",
+            "received_episode": 0,
+            "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "received_tick": 7,
+            "status": "applied"
+          },
+          "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+          "sequence": 16,
+          "tick": 7
+        }
+      ],
+      "final_phase": "paused",
+      "last_outcome": null
+    }
+  },
+  "live_interruption": {
+    "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+    "command": {
+      "kind": "move_obstacle",
+      "index": 0,
+      "xy": [
+        2.0531095977146157,
+        -2.9467300638224603
+      ]
+    },
+    "receipt": {
+      "id": "live-obstacle-edit",
+      "kind": "intervene",
+      "status": "applied",
+      "received_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+      "received_episode": 0,
+      "received_tick": 7,
+      "applied_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+      "applied_episode": 0,
+      "applied_tick": 7,
+      "applied_revision": 8
+    },
+    "comparison": {
+      "left_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+      "right_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+      "differences": [
+        {
+          "field": "interventions",
+          "left": [],
+          "right": [
+            {
+              "kind": "intervention",
+              "episode": 0,
+              "episode_step": 7,
+              "change": {
+                "index": 0,
+                "kind": "move_obstacle",
+                "new": {
+                  "xy": [
+                    2.053109645843506,
+                    -2.946730136871338
+                  ]
+                },
+                "old": {
+                  "xy": [
+                    1.7531095977146158,
+                    -2.9467300638224603
+                  ]
+                },
+                "simulation_time": 0.1400000000000001
+              },
+              "eyes": null
+            }
+          ]
+        }
+      ],
+      "lineage": {
+        "shared_parent": "e25e0b591b214e4caf7b4aacca72b399",
+        "shared_snapshot": "b57faee8ab0e43b695606809382194b5"
+      },
+      "interpretation": "Recorded differences are descriptive; they do not establish causality.",
+      "left": {
+        "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+        "provenance": {
+          "controller": "flynn",
+          "profile": "flynn",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "flynn",
+            "description": "Disable either eye or both; goal and contact cues remain available.",
+            "height": 128,
+            "id": "vision-ablation",
+            "label": "Vision ablation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 20,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "seed": 0,
+          "requested_device": "cpu",
+          "teacher_privileged": false,
+          "initial_world": {
+            "arena": 7.0,
+            "goal": [
+              4.609548568725586,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.216115951538086,
+              1.8889604806900024,
+              -1.9053546235307575
+            ]
+          },
+          "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+          "control_interval_seconds": 0.02,
+          "continuation_contract": {
+            "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled",
+            "float_atol": 1e-06,
+            "float_rtol": 1e-06,
+            "integer_and_camera_exact": true,
+            "scope": "matching software/hardware regime; compare before claiming repeatability"
+          },
+          "parent_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "parent_event_prefix": {
+            "event_count": 22,
+            "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+            "size_bytes": 27977
+          },
+          "source_snapshot_id": "b57faee8ab0e43b695606809382194b5",
+          "snapshot_id": null,
+          "controller_replacement": false,
+          "replay_mode": null,
+          "initial_memory": null,
+          "task_protocol": null,
+          "task_calibration": null,
+          "task_profile_sha256": null,
+          "environment": [
+            {
+              "kind": "environment",
+              "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+              "source_sha256": {
+                "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+                "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+                "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+                "src/palimpsest/artifacts.py": "2774cf9cd2c4bd1b7b960572cabd9c01f883e8214135ce7db9c53a430e0560af",
+                "src/palimpsest/assets.py": "98989be297441dffe7eed8d5d5e5b134d2d2e4b51d95b7552be4309631e87b22",
+                "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+                "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+                "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+                "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+                "src/palimpsest/bounded_qualification.py": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+                "src/palimpsest/cli.py": "4c2b208660fe40db118c986b6233f8d5db6b01dd56866dc0295b2ba4d9aa4da3",
+                "src/palimpsest/comparison.py": "dd73599d7b20bbb1780e92edb6b6bd3cd3a19ae8e42fb5b2b2deb73b75c5b490",
+                "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+                "src/palimpsest/engine.py": "603a8d4d6fd0033f1b65504e51af08e91658cb5ac4e386f7d9918b264dc6ec43",
+                "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+                "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+                "src/palimpsest/held_provenance.py": "8cb30e7d2edfac2fdd8f8e298afd83d9835afda7c6ea7c9c6e772bb2b555d71c",
+                "src/palimpsest/interventions.py": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe",
+                "src/palimpsest/lab.py": "2640404a0be8cad4d660321c6218e042118e233eec3f6bc42165d57e3aa381a8",
+                "src/palimpsest/male_matched_budget.py": "79bd896d1a52ebfe8c9b9b82df3d6b25f673d722f10841d56db1d4caebe6fde5",
+                "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+                "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
+                "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+                "src/palimpsest/male_recovery_heldout.py": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977",
+                "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+                "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+                "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+                "src/palimpsest/memory_decision.py": "064c589f33711b4afd5de995f0132562cd5808ca1b420444a24c68ddeadb8526",
+                "src/palimpsest/memory_decision_world.py": "d518e0cdaa6ac2352c7ed681ca85d7722708b50feb106ad0f9cb8c3f6fa75991",
+                "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+                "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+                "src/palimpsest/memory_reference.py": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661",
+                "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+                "src/palimpsest/memory_transition_vnext.py": "e2205e82f9543c976c0cda0c5826641fcfe4e7247998a8f0ff351402083e2be8",
+                "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+                "src/palimpsest/profiles.py": "9a947c62f200640f973786e14e5bffaa365a1ea1f09617c984ebf16cea1aa2a3",
+                "src/palimpsest/puck_balanced.py": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c",
+                "src/palimpsest/puck_balanced_development.py": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8",
+                "src/palimpsest/puck_balanced_student.py": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e",
+                "src/palimpsest/puck_build_inputs.py": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+                "src/palimpsest/puck_bundle_provenance.py": "dd5edbcad6b63e960de6c31685926e09b7ab0a329dc398069eefaa19b5fbe99f",
+                "src/palimpsest/puck_collection_admission.py": "536f2f8c953f64d62396cba6690501479aa5128820de96640e6d1cc21528318e",
+                "src/palimpsest/puck_collection_close.py": "5773525db10a06beb627eba99c4ba8f394596cdf492c7cd57efde950915e884b",
+                "src/palimpsest/puck_collection_ledger.py": "da0621e397f3baa577c2f01a493053841b92772ed3d743caa7c74e741588dabf",
+                "src/palimpsest/puck_cpu_namespace.py": "4c9f7a91cbe3d59af6f4b3e9e124ac99916aba8255031af1367693024854c72b",
+                "src/palimpsest/puck_cpu_registration.py": "e35105b29b271f56b52c35a6e405307b57a10a064dd78ddbb3c7dc32eb3a8779",
+                "src/palimpsest/puck_dependency_bindings.py": "f6d686bf28bfc23ce09faf63d5e95113d18c19ea6f5b2e7a059346046e529631",
+                "src/palimpsest/puck_dependency_files.py": "a2382959c5cc039dc3a169378760569c7a2533323104512f1fa4d5ca10fea02c",
+                "src/palimpsest/puck_dependency_imports.py": "c157b3a897aa72ee456301eaa6724c5edb050ab8810ce1f40d94ac4b50080e2c",
+                "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+                "src/palimpsest/puck_execution.py": "aed15e6601d19803d5ddc28747bc41bf9b657e9098b08d9e76db4424a2907631",
+                "src/palimpsest/puck_execution_files.py": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+                "src/palimpsest/puck_held_episode.py": "083c5c117502256ee2b32fbbc001f53fa2d72a7c566afa3444e9f7436c17a917",
+                "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+                "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+                "src/palimpsest/puck_native_identity.py": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+                "src/palimpsest/puck_native_origins.py": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+                "src/palimpsest/puck_on_policy.py": "c1c0889b217a8baff732c13e77676185901576be293dad0181115e696fe25242",
+                "src/palimpsest/puck_package_payloads.py": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+                "src/palimpsest/puck_profile.py": "eb0f8036f18d94b0fb8eb95e8af2821b26bc57f8e71d938579567e194088ce80",
+                "src/palimpsest/puck_retained_installation.py": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+                "src/palimpsest/puck_runtime_qualification.py": "32a1618b5d79863f8b2a4de16909e1a060c684ab36ef88c7808871e99d17b0f5",
+                "src/palimpsest/puck_runtime_registration.py": "e8bf16eac387fab8819ac20e871cee2bf4f4c6a31d24530e9b85697c5264f74f",
+                "src/palimpsest/puck_runtime_staging.py": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+                "src/palimpsest/puck_scene_catalog.py": "12de1d806a0755594dce52980ee8a378510fe74eb4a374b7689b00306e62ca01",
+                "src/palimpsest/puck_scene_git.py": "5c4da951d8cfbec15c10ab32c15fd28b42a232684af7bec1e989ea5742ebac69",
+                "src/palimpsest/puck_scene_inventory_scope.py": "3f93fcbc809d90cff7e0b46e3093004bb81358babfffb3b8ee508cb76aecd38b",
+                "src/palimpsest/puck_scene_markdown.py": "d91d80fda0be70ccec6fd2577efbabd1b97672c20bdca72b8db68fc99fecb556",
+                "src/palimpsest/puck_scene_reference_resolution.py": "c28f4ec5669549b3502560986a9b4c49eddced62a8b900072c8908e50f7b3c4a",
+                "src/palimpsest/puck_scene_registry.py": "fe59478c064d565ff1e37d69ff27d3e53172588c273348e114935a046aeac864",
+                "src/palimpsest/puck_scene_reports.py": "e099f7deee74485deff0d04f36e1f985ec93ba9ba509f37b31d8f6602f3e0fb9",
+                "src/palimpsest/puck_scene_retained.py": "e898248fff03db9675e5d62131807e9a2d19137a1403d9ffd3306ed17cd5806b",
+                "src/palimpsest/puck_scene_roots.py": "f3dd54059353cafd937796b943cd130484ecd89c70821c55413b46c49a4221a7",
+                "src/palimpsest/puck_scene_training.py": "fb90a8d4a30da7d4b6e6fb77076abcffb5c0fd13742c7c55a3e21bf518d477db",
+                "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+                "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+                "src/palimpsest/puck_worker_preflight.py": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+                "src/palimpsest/records.py": "02be4c925873e4aa5c1b21fe0b70e9372c1fc573cef19cae577455e66991f94c",
+                "src/palimpsest/replay.py": "1b332948a641b3c1a0c65a16ff8dfdf67688ad342ef74480b1f6ac2d783e203d",
+                "src/palimpsest/snapshots.py": "8d6eb407e34326554db77c874c62f257297ba08e278c907186c10567f0f6ba46",
+                "src/palimpsest/sonification.py": "973e310c0a44a15d4d75ac48dbb6c6cb137a8f301acbc017d6d41a0ca877c561",
+                "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+                "src/palimpsest/storage.py": "40bfa773aba25448250e0b11c5500903b59379d4b8c36a5c06098a7fb687ee4d",
+                "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+                "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+                "src/palimpsest/velocity_gain.py": "5121dd73b9dd4502af7850033df4a34f85b66ce5d0ab5c810ad30e2b0312582e",
+                "src/palimpsest/velocity_gain_snapshot.py": "9a616b265eabef6dba04c94202b64495230c42608fe8229f87ca8f90ee9b33ee",
+                "src/palimpsest/worker.py": "f73cb1ba6df6c54efa0f64e75dcd37ef556142cd9003fbc898044cf979705840"
+              },
+              "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+            }
+          ],
+          "policy": [
+            {
+              "checkpoint_sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+              "checkpoint_structural_buffers": [
+                "grid_L1_left",
+                "grid_L2_left",
+                "grid_L3_left",
+                "grid_L1_right",
+                "grid_L2_right",
+                "grid_L3_right",
+                "cell.W_crow_indices",
+                "cell.W_col_indices",
+                "cell.W_size",
+                "cell.W_coo_rows",
+                "cell.input_nodes",
+                "cell.output_nodes",
+                "cell.neuron_type_ids"
+              ],
+              "device": "cpu",
+              "dtype": "torch.float32",
+              "edge_sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+              "mapping_ids_not_in_graph": {
+                "JO-C_and_JO-E.csv": {
+                  "count": 4,
+                  "ids_sha256": "24511aefd850062f4c7a529fdf939fd031f92687a8762febc3add194bc82e4ab",
+                  "sample": [
+                    720575940612841330,
+                    720575940621032513,
+                    720575940623325993,
+                    720575940631406944
+                  ]
+                },
+                "consolidated_cell_types.csv": {
+                  "count": 560,
+                  "ids_sha256": "3b6fee36b16485a8a75dfd8d5ab19df3279a3e9b3cd2583717dc0d28cf19041b",
+                  "sample": [
+                    720575940604705481,
+                    720575940604810668,
+                    720575940605400032,
+                    720575940605634220,
+                    720575940606007280,
+                    720575940606022128,
+                    720575940606180896,
+                    720575940606292326,
+                    720575940606292582,
+                    720575940606630590
+                  ]
+                },
+                "descending_neurons.csv": {
+                  "count": 15,
+                  "ids_sha256": "46dc327a2df88a76ea5fda716559caa9ecb18a58e5be4c04d40dcfdbd593c343",
+                  "sample": [
+                    720575940606756309,
+                    720575940612429743,
+                    720575940617035449,
+                    720575940617873201,
+                    720575940618548244,
+                    720575940618863553,
+                    720575940619434587,
+                    720575940621082111,
+                    720575940621294218,
+                    720575940622681864
+                  ]
+                },
+                "head_bristles_left.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                },
+                "head_bristles_right.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                },
+                "visual_column_L1_L2_L3_rear_view_left.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                },
+                "visual_column_L1_L2_L3_rear_view_right.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                }
+              },
+              "neuron_count": 138584,
+              "ordered_neuron_ids_encoding": "decimal ID followed by LF, ascending tensor index",
+              "ordered_neuron_ids_sha256": "719ee4899cf005efc4b5e772e484a59a0df1f964d906265027118eca264e5806",
+              "provenance_limit": "Buffers bind graph structure and mappings; legacy checkpoint contains no original training neuron IDs or training lineage.",
+              "requested_device": "cpu",
+              "seed": 0,
+              "unknown_cell_type_count": 1467,
+              "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+            }
+          ],
+          "runtime": [
+            {
+              "detail": {
+                "executable": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+                "required": "Python 3.11; uv sync --extra simulation",
+                "version": "3.11.15"
+              },
+              "name": "python",
+              "status": "ok"
+            },
+            {
+              "detail": {
+                "machine": "x86_64",
+                "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44"
+              },
+              "name": "platform",
+              "status": "info"
+            },
+            {
+              "detail": "0.1.0.dev0",
+              "name": "dependency:palimpsest",
+              "status": "ok"
+            },
+            {
+              "detail": "2.9.0",
+              "name": "dependency:torch",
+              "status": "ok"
+            },
+            {
+              "detail": "0.24.0",
+              "name": "dependency:torchvision",
+              "status": "ok"
+            },
+            {
+              "detail": "2.2.5",
+              "name": "dependency:numpy",
+              "status": "ok"
+            },
+            {
+              "detail": "1.15.2",
+              "name": "dependency:scipy",
+              "status": "ok"
+            },
+            {
+              "detail": "2.2.3",
+              "name": "dependency:pandas",
+              "status": "ok"
+            },
+            {
+              "detail": "1.8.0",
+              "name": "dependency:scikit-learn",
+              "status": "ok"
+            },
+            {
+              "detail": "3.3.6",
+              "name": "dependency:mujoco",
+              "status": "ok"
+            },
+            {
+              "detail": "1.2.1",
+              "name": "dependency:gymnasium",
+              "status": "ok"
+            },
+            {
+              "detail": "2.10.0",
+              "name": "dependency:glfw",
+              "status": "ok"
+            },
+            {
+              "detail": "4.12.0.88",
+              "name": "dependency:opencv-python",
+              "status": "ok"
+            },
+            {
+              "detail": "3.10.1",
+              "name": "dependency:matplotlib",
+              "status": "ok"
+            },
+            {
+              "detail": "0.13.2",
+              "name": "dependency:seaborn",
+              "status": "ok"
+            },
+            {
+              "detail": "3.4.2",
+              "name": "dependency:networkx",
+              "status": "ok"
+            },
+            {
+              "detail": "0.16",
+              "name": "dependency:python-louvain",
+              "status": "ok"
+            },
+            {
+              "detail": "1.1.3",
+              "name": "dependency:py7zr",
+              "status": "ok"
+            },
+            {
+              "name": "gpu",
+              "devices": [
+                {
+                  "driver_version": "615.78.08",
+                  "memory_total_mib": 6141,
+                  "name": "NVIDIA GeForce RTX 4050 Laptop GPU"
+                }
+              ]
+            },
+            {
+              "detail": {
+                "backend_selection": "explicit MUJOCO_GL",
+                "command": "palimpsest doctor --probe-renderer",
+                "probed": false,
+                "requested_backend": "egl"
+              },
+              "name": "renderer",
+              "status": "info"
+            }
+          ],
+          "memory_swaps": [],
+          "interventions": []
+        },
+        "geometry_stage": "last recorded transition per episode",
+        "worlds": [
+          {
+            "episode": 0,
+            "world": {
+              "arena": 7.0,
+              "goal": [
+                4.609548568725586,
+                -5.026264190673828,
+                0.25
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "pose": [
+                -2.221384048461914,
+                1.8737894296646118,
+                -1.9011418215376974
+              ]
+            }
+          }
+        ],
+        "traces": [
+          {
+            "episode": 0,
+            "start_tick": 4,
+            "points": [
+              [
+                -2.216115951538086,
+                1.8889604806900024
+              ],
+              [
+                -2.2171614170074463,
+                1.8865621089935303
+              ],
+              [
+                -2.218418836593628,
+                1.8832300901412964
+              ],
+              [
+                -2.219839334487915,
+                1.8790149688720703
+              ],
+              [
+                -2.221384048461914,
+                1.8737894296646118
+              ]
+            ]
+          }
+        ],
+        "metrics": {
+          "contact_ticks": 0,
+          "path_length": 0.019552478477450633,
+          "reward": -0.07024909258633852
+        },
+        "recorded_metrics": [
+          {
+            "episode": 0,
+            "start_tick": 4,
+            "reward": -0.03084663036891392,
+            "path_length": 0.016074827713537382,
+            "contact_ticks": 0
+          }
+        ],
+        "events": [
+          {
+            "episode": 0,
+            "episode_step": 0,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "goal": [
+              4.509548664093018,
+              -5.026264190673828
+            ],
+            "initial_qpos": [
+              1.7531095977146158,
+              -2.9467300638224603,
+              0.0,
+              -5.875538893616708,
+              -6.188446265234828,
+              0.0,
+              4.009859061763487,
+              5.283271389154839,
+              0.0,
+              1.3649379298199023,
+              2.93755598059518,
+              0.0,
+              0.5583998907574124,
+              5.568927024483434,
+              0.0,
+              4.042925492755613,
+              -6.364947197822104,
+              0.0,
+              2.9395897143032848,
+              -4.151608056287245,
+              0.0,
+              4.648690206078548,
+              0.5307036191883743,
+              0.0,
+              -2.5636878011214748,
+              -0.9896035686699722,
+              0.0,
+              6.364287178101902,
+              6.154692336335746,
+              0.0,
+              2.4121181513080323,
+              -1.4218057730674714,
+              0.0,
+              -4.670764735713137,
+              2.8350507544842465,
+              0.0,
+              0.3245353276892917,
+              -2.4289039928453677,
+              0.0,
+              5.555757004239997,
+              -1.820221482123901,
+              0.0,
+              -1.3872767932395362,
+              4.995511705661341,
+              0.0,
+              -3.49238280277274,
+              1.5767954519813427,
+              0.0,
+              -5.324603602145475,
+              4.257845089963492,
+              0.0,
+              -2.0977016250155476,
+              -4.47642282374606,
+              0.0,
+              -3.447779724880033,
+              -5.7341273463755575,
+              0.0,
+              -5.23836101607524,
+              1.0282545406316883,
+              0.0,
+              -2.2143425389918514,
+              1.8919436575199526,
+              0.1,
+              0.5865530232173046,
+              0.0,
+              0.0,
+              -0.8099108290143058,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "initial_qvel": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "kind": "episode_started",
+            "obstacles": [
+              [
+                1.7531095743179321,
+                -2.946730136871338
+              ],
+              [
+                -5.8755388259887695,
+                -6.188446044921875
+              ],
+              [
+                4.009859085083008,
+                5.283271312713623
+              ],
+              [
+                1.3649379014968872,
+                2.937556028366089
+              ],
+              [
+                0.5583999156951904,
+                5.568926811218262
+              ],
+              [
+                4.0429253578186035,
+                -6.364947319030762
+              ],
+              [
+                2.939589738845825,
+                -4.151607990264893
+              ],
+              [
+                4.648690223693848,
+                0.530703604221344
+              ],
+              [
+                -2.563687801361084,
+                -0.989603579044342
+              ],
+              [
+                6.364287376403809,
+                6.15469217300415
+              ],
+              [
+                2.4121181964874268,
+                -1.421805739402771
+              ],
+              [
+                -4.670764923095703,
+                2.8350508213043213
+              ],
+              [
+                0.3245353400707245,
+                -2.4289040565490723
+              ],
+              [
+                5.55575704574585,
+                -1.8202214241027832
+              ],
+              [
+                -1.3872767686843872,
+                4.995511531829834
+              ],
+              [
+                -3.492382764816284,
+                1.5767954587936401
+              ],
+              [
+                -5.32460355758667,
+                4.257844924926758
+              ],
+              [
+                -2.0977015495300293,
+                -4.4764227867126465
+              ],
+              [
+                -3.447779655456543,
+                -5.734127521514893
+              ],
+              [
+                -5.23836088180542,
+                1.028254508972168
+              ]
+            ],
+            "reset_protocol": "fresh physics and controller episode state; upstream seeded layout",
+            "revision": 0,
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "seed": 0,
+            "sequence": 4,
+            "tick": 0,
+            "world": {
+              "arena": 7.0,
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ]
+            }
+          },
+          {
+            "episode": 0,
+            "episode_step": 4,
+            "eyes": {
+              "left": false,
+              "right": true
+            },
+            "kind": "application_restored",
+            "parent_event_prefix": {
+              "event_count": 22,
+              "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+              "size_bytes": 27977
+            },
+            "parent_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "revision": 6,
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 5,
+            "tick": 4,
+            "world": {
+              "arena": 7.0,
+              "goal": [
+                4.609548568725586,
+                -5.026264190673828,
+                0.25
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "pose": [
+                -2.216115951538086,
+                1.8889604806900024,
+                -1.9053546235307575
+              ]
+            }
+          },
+          {
+            "controller_replaced": false,
+            "kind": "branch_created",
+            "parent_snapshot_id": "b57faee8ab0e43b695606809382194b5",
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 6
+          },
+          {
+            "episode": 0,
+            "filename": "initial.snp",
+            "initial": true,
+            "kind": "snapshot_registered",
+            "revision": 6,
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 7,
+            "sha256": "9a932360eb012d017a798ea803dc1cd8e7de2fb8df6271baffeee76ff824b293",
+            "snapshot_id": "8bf5f0b91aa44a6488f614e7349b7cef",
+            "tick": 4
+          },
+          {
+            "command_kind": "step",
+            "episode": 0,
+            "episode_step": 4,
+            "id": "continuation-0",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 7,
+              "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "applied_tick": 4,
+              "id": "continuation-0",
+              "kind": "step",
+              "received_episode": 0,
+              "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "received_tick": 4,
+              "status": "applied"
+            },
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 10,
+            "tick": 4
+          },
+          {
+            "command_kind": "step",
+            "episode": 0,
+            "episode_step": 5,
+            "id": "continuation-1",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 8,
+              "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "applied_tick": 5,
+              "id": "continuation-1",
+              "kind": "step",
+              "received_episode": 0,
+              "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "received_tick": 5,
+              "status": "applied"
+            },
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 12,
+            "tick": 5
+          },
+          {
+            "command_kind": "step",
+            "episode": 0,
+            "episode_step": 6,
+            "id": "continuation-2",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 9,
+              "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "applied_tick": 6,
+              "id": "continuation-2",
+              "kind": "step",
+              "received_episode": 0,
+              "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "received_tick": 6,
+              "status": "applied"
+            },
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 14,
+            "tick": 6
+          },
+          {
+            "command_kind": "step",
+            "episode": 0,
+            "episode_step": 7,
+            "id": "continuation-3",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 10,
+              "applied_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "applied_tick": 7,
+              "id": "continuation-3",
+              "kind": "step",
+              "received_episode": 0,
+              "received_run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+              "received_tick": 7,
+              "status": "applied"
+            },
+            "run_id": "71242a1390ef4611b4e6302eeedbf3e3",
+            "sequence": 16,
+            "tick": 7
+          }
+        ],
+        "final_phase": "paused",
+        "last_outcome": null
+      },
+      "right": {
+        "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+        "provenance": {
+          "controller": "flynn",
+          "profile": "flynn",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "flynn",
+            "description": "Disable either eye or both; goal and contact cues remain available.",
+            "height": 128,
+            "id": "vision-ablation",
+            "label": "Vision ablation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 20,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "seed": 0,
+          "requested_device": "cpu",
+          "teacher_privileged": false,
+          "initial_world": {
+            "arena": 7.0,
+            "goal": [
+              4.609548568725586,
+              -5.026264190673828,
+              0.25
+            ],
+            "obstacles": [
+              [
+                1.7531095977146158,
+                -2.9467300638224603,
+                0.4
+              ],
+              [
+                -5.875538893616708,
+                -6.188446265234828,
+                0.4
+              ],
+              [
+                4.009859061763487,
+                5.283271389154839,
+                0.4
+              ],
+              [
+                1.3649379298199023,
+                2.93755598059518,
+                0.4
+              ],
+              [
+                0.5583998907574124,
+                5.568927024483434,
+                0.4
+              ],
+              [
+                4.042925492755613,
+                -6.364947197822104,
+                0.4
+              ],
+              [
+                2.9395897143032848,
+                -4.151608056287245,
+                0.4
+              ],
+              [
+                4.648690206078548,
+                0.5307036191883743,
+                0.4
+              ],
+              [
+                -2.5636878011214748,
+                -0.9896035686699722,
+                0.4
+              ],
+              [
+                6.364287178101902,
+                6.154692336335746,
+                0.4
+              ],
+              [
+                2.4121181513080323,
+                -1.4218057730674714,
+                0.4
+              ],
+              [
+                -4.670764735713137,
+                2.8350507544842465,
+                0.4
+              ],
+              [
+                0.3245353276892917,
+                -2.4289039928453677,
+                0.4
+              ],
+              [
+                5.555757004239997,
+                -1.820221482123901,
+                0.4
+              ],
+              [
+                -1.3872767932395362,
+                4.995511705661341,
+                0.4
+              ],
+              [
+                -3.49238280277274,
+                1.5767954519813427,
+                0.4
+              ],
+              [
+                -5.324603602145475,
+                4.257845089963492,
+                0.4
+              ],
+              [
+                -2.0977016250155476,
+                -4.47642282374606,
+                0.4
+              ],
+              [
+                -3.447779724880033,
+                -5.7341273463755575,
+                0.4
+              ],
+              [
+                -5.23836101607524,
+                1.0282545406316883,
+                0.4
+              ]
+            ],
+            "pose": [
+              -2.216115951538086,
+              1.8889604806900024,
+              -1.9053546235307575
+            ]
+          },
+          "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+          "control_interval_seconds": 0.02,
+          "continuation_contract": {
+            "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled",
+            "float_atol": 1e-06,
+            "float_rtol": 1e-06,
+            "integer_and_camera_exact": true,
+            "scope": "matching software/hardware regime; compare before claiming repeatability"
+          },
+          "parent_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+          "parent_event_prefix": {
+            "event_count": 22,
+            "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+            "size_bytes": 27977
+          },
+          "source_snapshot_id": "b57faee8ab0e43b695606809382194b5",
+          "snapshot_id": null,
+          "controller_replacement": false,
+          "replay_mode": null,
+          "initial_memory": null,
+          "task_protocol": null,
+          "task_calibration": null,
+          "task_profile_sha256": null,
+          "environment": [
+            {
+              "kind": "environment",
+              "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+              "source_sha256": {
+                "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+                "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+                "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+                "src/palimpsest/artifacts.py": "2774cf9cd2c4bd1b7b960572cabd9c01f883e8214135ce7db9c53a430e0560af",
+                "src/palimpsest/assets.py": "98989be297441dffe7eed8d5d5e5b134d2d2e4b51d95b7552be4309631e87b22",
+                "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+                "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+                "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+                "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+                "src/palimpsest/bounded_qualification.py": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+                "src/palimpsest/cli.py": "4c2b208660fe40db118c986b6233f8d5db6b01dd56866dc0295b2ba4d9aa4da3",
+                "src/palimpsest/comparison.py": "dd73599d7b20bbb1780e92edb6b6bd3cd3a19ae8e42fb5b2b2deb73b75c5b490",
+                "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+                "src/palimpsest/engine.py": "603a8d4d6fd0033f1b65504e51af08e91658cb5ac4e386f7d9918b264dc6ec43",
+                "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+                "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+                "src/palimpsest/held_provenance.py": "8cb30e7d2edfac2fdd8f8e298afd83d9835afda7c6ea7c9c6e772bb2b555d71c",
+                "src/palimpsest/interventions.py": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe",
+                "src/palimpsest/lab.py": "2640404a0be8cad4d660321c6218e042118e233eec3f6bc42165d57e3aa381a8",
+                "src/palimpsest/male_matched_budget.py": "79bd896d1a52ebfe8c9b9b82df3d6b25f673d722f10841d56db1d4caebe6fde5",
+                "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+                "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
+                "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+                "src/palimpsest/male_recovery_heldout.py": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977",
+                "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+                "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+                "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+                "src/palimpsest/memory_decision.py": "064c589f33711b4afd5de995f0132562cd5808ca1b420444a24c68ddeadb8526",
+                "src/palimpsest/memory_decision_world.py": "d518e0cdaa6ac2352c7ed681ca85d7722708b50feb106ad0f9cb8c3f6fa75991",
+                "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+                "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+                "src/palimpsest/memory_reference.py": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661",
+                "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+                "src/palimpsest/memory_transition_vnext.py": "e2205e82f9543c976c0cda0c5826641fcfe4e7247998a8f0ff351402083e2be8",
+                "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+                "src/palimpsest/profiles.py": "9a947c62f200640f973786e14e5bffaa365a1ea1f09617c984ebf16cea1aa2a3",
+                "src/palimpsest/puck_balanced.py": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c",
+                "src/palimpsest/puck_balanced_development.py": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8",
+                "src/palimpsest/puck_balanced_student.py": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e",
+                "src/palimpsest/puck_build_inputs.py": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+                "src/palimpsest/puck_bundle_provenance.py": "dd5edbcad6b63e960de6c31685926e09b7ab0a329dc398069eefaa19b5fbe99f",
+                "src/palimpsest/puck_collection_admission.py": "536f2f8c953f64d62396cba6690501479aa5128820de96640e6d1cc21528318e",
+                "src/palimpsest/puck_collection_close.py": "5773525db10a06beb627eba99c4ba8f394596cdf492c7cd57efde950915e884b",
+                "src/palimpsest/puck_collection_ledger.py": "da0621e397f3baa577c2f01a493053841b92772ed3d743caa7c74e741588dabf",
+                "src/palimpsest/puck_cpu_namespace.py": "4c9f7a91cbe3d59af6f4b3e9e124ac99916aba8255031af1367693024854c72b",
+                "src/palimpsest/puck_cpu_registration.py": "e35105b29b271f56b52c35a6e405307b57a10a064dd78ddbb3c7dc32eb3a8779",
+                "src/palimpsest/puck_dependency_bindings.py": "f6d686bf28bfc23ce09faf63d5e95113d18c19ea6f5b2e7a059346046e529631",
+                "src/palimpsest/puck_dependency_files.py": "a2382959c5cc039dc3a169378760569c7a2533323104512f1fa4d5ca10fea02c",
+                "src/palimpsest/puck_dependency_imports.py": "c157b3a897aa72ee456301eaa6724c5edb050ab8810ce1f40d94ac4b50080e2c",
+                "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+                "src/palimpsest/puck_execution.py": "aed15e6601d19803d5ddc28747bc41bf9b657e9098b08d9e76db4424a2907631",
+                "src/palimpsest/puck_execution_files.py": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+                "src/palimpsest/puck_held_episode.py": "083c5c117502256ee2b32fbbc001f53fa2d72a7c566afa3444e9f7436c17a917",
+                "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+                "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+                "src/palimpsest/puck_native_identity.py": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+                "src/palimpsest/puck_native_origins.py": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+                "src/palimpsest/puck_on_policy.py": "c1c0889b217a8baff732c13e77676185901576be293dad0181115e696fe25242",
+                "src/palimpsest/puck_package_payloads.py": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+                "src/palimpsest/puck_profile.py": "eb0f8036f18d94b0fb8eb95e8af2821b26bc57f8e71d938579567e194088ce80",
+                "src/palimpsest/puck_retained_installation.py": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+                "src/palimpsest/puck_runtime_qualification.py": "32a1618b5d79863f8b2a4de16909e1a060c684ab36ef88c7808871e99d17b0f5",
+                "src/palimpsest/puck_runtime_registration.py": "e8bf16eac387fab8819ac20e871cee2bf4f4c6a31d24530e9b85697c5264f74f",
+                "src/palimpsest/puck_runtime_staging.py": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+                "src/palimpsest/puck_scene_catalog.py": "12de1d806a0755594dce52980ee8a378510fe74eb4a374b7689b00306e62ca01",
+                "src/palimpsest/puck_scene_git.py": "5c4da951d8cfbec15c10ab32c15fd28b42a232684af7bec1e989ea5742ebac69",
+                "src/palimpsest/puck_scene_inventory_scope.py": "3f93fcbc809d90cff7e0b46e3093004bb81358babfffb3b8ee508cb76aecd38b",
+                "src/palimpsest/puck_scene_markdown.py": "d91d80fda0be70ccec6fd2577efbabd1b97672c20bdca72b8db68fc99fecb556",
+                "src/palimpsest/puck_scene_reference_resolution.py": "c28f4ec5669549b3502560986a9b4c49eddced62a8b900072c8908e50f7b3c4a",
+                "src/palimpsest/puck_scene_registry.py": "fe59478c064d565ff1e37d69ff27d3e53172588c273348e114935a046aeac864",
+                "src/palimpsest/puck_scene_reports.py": "e099f7deee74485deff0d04f36e1f985ec93ba9ba509f37b31d8f6602f3e0fb9",
+                "src/palimpsest/puck_scene_retained.py": "e898248fff03db9675e5d62131807e9a2d19137a1403d9ffd3306ed17cd5806b",
+                "src/palimpsest/puck_scene_roots.py": "f3dd54059353cafd937796b943cd130484ecd89c70821c55413b46c49a4221a7",
+                "src/palimpsest/puck_scene_training.py": "fb90a8d4a30da7d4b6e6fb77076abcffb5c0fd13742c7c55a3e21bf518d477db",
+                "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+                "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+                "src/palimpsest/puck_worker_preflight.py": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+                "src/palimpsest/records.py": "02be4c925873e4aa5c1b21fe0b70e9372c1fc573cef19cae577455e66991f94c",
+                "src/palimpsest/replay.py": "1b332948a641b3c1a0c65a16ff8dfdf67688ad342ef74480b1f6ac2d783e203d",
+                "src/palimpsest/snapshots.py": "8d6eb407e34326554db77c874c62f257297ba08e278c907186c10567f0f6ba46",
+                "src/palimpsest/sonification.py": "973e310c0a44a15d4d75ac48dbb6c6cb137a8f301acbc017d6d41a0ca877c561",
+                "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+                "src/palimpsest/storage.py": "40bfa773aba25448250e0b11c5500903b59379d4b8c36a5c06098a7fb687ee4d",
+                "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+                "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+                "src/palimpsest/velocity_gain.py": "5121dd73b9dd4502af7850033df4a34f85b66ce5d0ab5c810ad30e2b0312582e",
+                "src/palimpsest/velocity_gain_snapshot.py": "9a616b265eabef6dba04c94202b64495230c42608fe8229f87ca8f90ee9b33ee",
+                "src/palimpsest/worker.py": "f73cb1ba6df6c54efa0f64e75dcd37ef556142cd9003fbc898044cf979705840"
+              },
+              "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+            }
+          ],
+          "policy": [
+            {
+              "checkpoint_sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+              "checkpoint_structural_buffers": [
+                "grid_L1_left",
+                "grid_L2_left",
+                "grid_L3_left",
+                "grid_L1_right",
+                "grid_L2_right",
+                "grid_L3_right",
+                "cell.W_crow_indices",
+                "cell.W_col_indices",
+                "cell.W_size",
+                "cell.W_coo_rows",
+                "cell.input_nodes",
+                "cell.output_nodes",
+                "cell.neuron_type_ids"
+              ],
+              "device": "cpu",
+              "dtype": "torch.float32",
+              "edge_sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+              "mapping_ids_not_in_graph": {
+                "JO-C_and_JO-E.csv": {
+                  "count": 4,
+                  "ids_sha256": "24511aefd850062f4c7a529fdf939fd031f92687a8762febc3add194bc82e4ab",
+                  "sample": [
+                    720575940612841330,
+                    720575940621032513,
+                    720575940623325993,
+                    720575940631406944
+                  ]
+                },
+                "consolidated_cell_types.csv": {
+                  "count": 560,
+                  "ids_sha256": "3b6fee36b16485a8a75dfd8d5ab19df3279a3e9b3cd2583717dc0d28cf19041b",
+                  "sample": [
+                    720575940604705481,
+                    720575940604810668,
+                    720575940605400032,
+                    720575940605634220,
+                    720575940606007280,
+                    720575940606022128,
+                    720575940606180896,
+                    720575940606292326,
+                    720575940606292582,
+                    720575940606630590
+                  ]
+                },
+                "descending_neurons.csv": {
+                  "count": 15,
+                  "ids_sha256": "46dc327a2df88a76ea5fda716559caa9ecb18a58e5be4c04d40dcfdbd593c343",
+                  "sample": [
+                    720575940606756309,
+                    720575940612429743,
+                    720575940617035449,
+                    720575940617873201,
+                    720575940618548244,
+                    720575940618863553,
+                    720575940619434587,
+                    720575940621082111,
+                    720575940621294218,
+                    720575940622681864
+                  ]
+                },
+                "head_bristles_left.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                },
+                "head_bristles_right.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                },
+                "visual_column_L1_L2_L3_rear_view_left.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                },
+                "visual_column_L1_L2_L3_rear_view_right.csv": {
+                  "count": 0,
+                  "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "sample": []
+                }
+              },
+              "neuron_count": 138584,
+              "ordered_neuron_ids_encoding": "decimal ID followed by LF, ascending tensor index",
+              "ordered_neuron_ids_sha256": "719ee4899cf005efc4b5e772e484a59a0df1f964d906265027118eca264e5806",
+              "provenance_limit": "Buffers bind graph structure and mappings; legacy checkpoint contains no original training neuron IDs or training lineage.",
+              "requested_device": "cpu",
+              "seed": 0,
+              "unknown_cell_type_count": 1467,
+              "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+            }
+          ],
+          "runtime": [
+            {
+              "detail": {
+                "executable": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+                "required": "Python 3.11; uv sync --extra simulation",
+                "version": "3.11.15"
+              },
+              "name": "python",
+              "status": "ok"
+            },
+            {
+              "detail": {
+                "machine": "x86_64",
+                "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44"
+              },
+              "name": "platform",
+              "status": "info"
+            },
+            {
+              "detail": "0.1.0.dev0",
+              "name": "dependency:palimpsest",
+              "status": "ok"
+            },
+            {
+              "detail": "2.9.0",
+              "name": "dependency:torch",
+              "status": "ok"
+            },
+            {
+              "detail": "0.24.0",
+              "name": "dependency:torchvision",
+              "status": "ok"
+            },
+            {
+              "detail": "2.2.5",
+              "name": "dependency:numpy",
+              "status": "ok"
+            },
+            {
+              "detail": "1.15.2",
+              "name": "dependency:scipy",
+              "status": "ok"
+            },
+            {
+              "detail": "2.2.3",
+              "name": "dependency:pandas",
+              "status": "ok"
+            },
+            {
+              "detail": "1.8.0",
+              "name": "dependency:scikit-learn",
+              "status": "ok"
+            },
+            {
+              "detail": "3.3.6",
+              "name": "dependency:mujoco",
+              "status": "ok"
+            },
+            {
+              "detail": "1.2.1",
+              "name": "dependency:gymnasium",
+              "status": "ok"
+            },
+            {
+              "detail": "2.10.0",
+              "name": "dependency:glfw",
+              "status": "ok"
+            },
+            {
+              "detail": "4.12.0.88",
+              "name": "dependency:opencv-python",
+              "status": "ok"
+            },
+            {
+              "detail": "3.10.1",
+              "name": "dependency:matplotlib",
+              "status": "ok"
+            },
+            {
+              "detail": "0.13.2",
+              "name": "dependency:seaborn",
+              "status": "ok"
+            },
+            {
+              "detail": "3.4.2",
+              "name": "dependency:networkx",
+              "status": "ok"
+            },
+            {
+              "detail": "0.16",
+              "name": "dependency:python-louvain",
+              "status": "ok"
+            },
+            {
+              "detail": "1.1.3",
+              "name": "dependency:py7zr",
+              "status": "ok"
+            },
+            {
+              "name": "gpu",
+              "devices": [
+                {
+                  "driver_version": "615.78.08",
+                  "memory_total_mib": 6141,
+                  "name": "NVIDIA GeForce RTX 4050 Laptop GPU"
+                }
+              ]
+            },
+            {
+              "detail": {
+                "backend_selection": "explicit MUJOCO_GL",
+                "command": "palimpsest doctor --probe-renderer",
+                "probed": false,
+                "requested_backend": "egl"
+              },
+              "name": "renderer",
+              "status": "info"
+            }
+          ],
+          "memory_swaps": [],
+          "interventions": [
+            {
+              "kind": "intervention",
+              "episode": 0,
+              "episode_step": 7,
+              "change": {
+                "index": 0,
+                "kind": "move_obstacle",
+                "new": {
+                  "xy": [
+                    2.053109645843506,
+                    -2.946730136871338
+                  ]
+                },
+                "old": {
+                  "xy": [
+                    1.7531095977146158,
+                    -2.9467300638224603
+                  ]
+                },
+                "simulation_time": 0.1400000000000001
+              },
+              "eyes": null
+            }
+          ]
+        },
+        "geometry_stage": "last recorded transition per episode",
+        "worlds": [
+          {
+            "episode": 0,
+            "world": {
+              "arena": 7.0,
+              "goal": [
+                4.609548568725586,
+                -5.026264190673828,
+                0.25
+              ],
+              "obstacles": [
+                [
+                  2.053109645843506,
+                  -2.946730136871338,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "pose": [
+                -2.223020315170288,
+                1.867480993270874,
+                -1.88912188507302
+              ]
+            }
+          }
+        ],
+        "traces": [
+          {
+            "episode": 0,
+            "start_tick": 4,
+            "points": [
+              [
+                -2.216115951538086,
+                1.8889604806900024
+              ],
+              [
+                -2.2171614170074463,
+                1.8865621089935303
+              ],
+              [
+                -2.218418836593628,
+                1.8832300901412964
+              ],
+              [
+                -2.219839334487915,
+                1.8790149688720703
+              ],
+              [
+                -2.221384048461914,
+                1.8737894296646118
+              ],
+              [
+                -2.223020315170288,
+                1.867480993270874
+              ]
+            ]
+          }
+        ],
+        "metrics": {
+          "contact_ticks": 0,
+          "path_length": 0.025578295026265584,
+          "reward": -0.07598650749985661
+        },
+        "recorded_metrics": [
+          {
+            "episode": 0,
+            "start_tick": 4,
+            "reward": -0.03658404528243201,
+            "path_length": 0.02210064426235233,
+            "contact_ticks": 0
+          }
+        ],
+        "events": [
+          {
+            "episode": 0,
+            "episode_step": 0,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "goal": [
+              4.509548664093018,
+              -5.026264190673828
+            ],
+            "initial_qpos": [
+              1.7531095977146158,
+              -2.9467300638224603,
+              0.0,
+              -5.875538893616708,
+              -6.188446265234828,
+              0.0,
+              4.009859061763487,
+              5.283271389154839,
+              0.0,
+              1.3649379298199023,
+              2.93755598059518,
+              0.0,
+              0.5583998907574124,
+              5.568927024483434,
+              0.0,
+              4.042925492755613,
+              -6.364947197822104,
+              0.0,
+              2.9395897143032848,
+              -4.151608056287245,
+              0.0,
+              4.648690206078548,
+              0.5307036191883743,
+              0.0,
+              -2.5636878011214748,
+              -0.9896035686699722,
+              0.0,
+              6.364287178101902,
+              6.154692336335746,
+              0.0,
+              2.4121181513080323,
+              -1.4218057730674714,
+              0.0,
+              -4.670764735713137,
+              2.8350507544842465,
+              0.0,
+              0.3245353276892917,
+              -2.4289039928453677,
+              0.0,
+              5.555757004239997,
+              -1.820221482123901,
+              0.0,
+              -1.3872767932395362,
+              4.995511705661341,
+              0.0,
+              -3.49238280277274,
+              1.5767954519813427,
+              0.0,
+              -5.324603602145475,
+              4.257845089963492,
+              0.0,
+              -2.0977016250155476,
+              -4.47642282374606,
+              0.0,
+              -3.447779724880033,
+              -5.7341273463755575,
+              0.0,
+              -5.23836101607524,
+              1.0282545406316883,
+              0.0,
+              -2.2143425389918514,
+              1.8919436575199526,
+              0.1,
+              0.5865530232173046,
+              0.0,
+              0.0,
+              -0.8099108290143058,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "initial_qvel": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "kind": "episode_started",
+            "obstacles": [
+              [
+                1.7531095743179321,
+                -2.946730136871338
+              ],
+              [
+                -5.8755388259887695,
+                -6.188446044921875
+              ],
+              [
+                4.009859085083008,
+                5.283271312713623
+              ],
+              [
+                1.3649379014968872,
+                2.937556028366089
+              ],
+              [
+                0.5583999156951904,
+                5.568926811218262
+              ],
+              [
+                4.0429253578186035,
+                -6.364947319030762
+              ],
+              [
+                2.939589738845825,
+                -4.151607990264893
+              ],
+              [
+                4.648690223693848,
+                0.530703604221344
+              ],
+              [
+                -2.563687801361084,
+                -0.989603579044342
+              ],
+              [
+                6.364287376403809,
+                6.15469217300415
+              ],
+              [
+                2.4121181964874268,
+                -1.421805739402771
+              ],
+              [
+                -4.670764923095703,
+                2.8350508213043213
+              ],
+              [
+                0.3245353400707245,
+                -2.4289040565490723
+              ],
+              [
+                5.55575704574585,
+                -1.8202214241027832
+              ],
+              [
+                -1.3872767686843872,
+                4.995511531829834
+              ],
+              [
+                -3.492382764816284,
+                1.5767954587936401
+              ],
+              [
+                -5.32460355758667,
+                4.257844924926758
+              ],
+              [
+                -2.0977015495300293,
+                -4.4764227867126465
+              ],
+              [
+                -3.447779655456543,
+                -5.734127521514893
+              ],
+              [
+                -5.23836088180542,
+                1.028254508972168
+              ]
+            ],
+            "reset_protocol": "fresh physics and controller episode state; upstream seeded layout",
+            "revision": 0,
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "seed": 0,
+            "sequence": 4,
+            "tick": 0,
+            "world": {
+              "arena": 7.0,
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ]
+            }
+          },
+          {
+            "episode": 0,
+            "episode_step": 4,
+            "eyes": {
+              "left": false,
+              "right": true
+            },
+            "kind": "application_restored",
+            "parent_event_prefix": {
+              "event_count": 22,
+              "sha256": "5e6ed5a9117fd3af7d4216f449def82a70ea93a18c6d36a51ade13d78ef15258",
+              "size_bytes": 27977
+            },
+            "parent_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+            "revision": 6,
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 5,
+            "tick": 4,
+            "world": {
+              "arena": 7.0,
+              "goal": [
+                4.609548568725586,
+                -5.026264190673828,
+                0.25
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "pose": [
+                -2.216115951538086,
+                1.8889604806900024,
+                -1.9053546235307575
+              ]
+            }
+          },
+          {
+            "controller_replaced": false,
+            "kind": "branch_created",
+            "parent_snapshot_id": "b57faee8ab0e43b695606809382194b5",
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 6
+          },
+          {
+            "episode": 0,
+            "filename": "initial.snp",
+            "initial": true,
+            "kind": "snapshot_registered",
+            "revision": 6,
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 7,
+            "sha256": "62fec16697a0d412f758fb2b0240666681defc3d4c100b5e8f74e9f489d1e6db",
+            "snapshot_id": "a73b1a9010d046018f4d66eb71a70a7f",
+            "tick": 4
+          },
+          {
+            "command_kind": "run",
+            "episode": 0,
+            "episode_step": 4,
+            "id": "start-travel",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 7,
+              "applied_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+              "applied_tick": 4,
+              "id": "start-travel",
+              "kind": "run",
+              "received_episode": 0,
+              "received_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+              "received_tick": 4,
+              "status": "applied"
+            },
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 10,
+            "tick": 4
+          },
+          {
+            "change": {
+              "index": 0,
+              "kind": "move_obstacle",
+              "new": {
+                "xy": [
+                  2.053109645843506,
+                  -2.946730136871338
+                ]
+              },
+              "old": {
+                "xy": [
+                  1.7531095977146158,
+                  -2.9467300638224603
+                ]
+              },
+              "simulation_time": 0.1400000000000001
+            },
+            "episode": 0,
+            "episode_step": 7,
+            "id": "live-obstacle-edit",
+            "kind": "intervention",
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 12,
+            "tick": 7
+          },
+          {
+            "command_kind": "intervene",
+            "episode": 0,
+            "episode_step": 7,
+            "id": "live-obstacle-edit",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 8,
+              "applied_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+              "applied_tick": 7,
+              "id": "live-obstacle-edit",
+              "kind": "intervene",
+              "received_episode": 0,
+              "received_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+              "received_tick": 7,
+              "status": "applied"
+            },
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 13,
+            "tick": 7
+          },
+          {
+            "command_kind": "pause",
+            "episode": 0,
+            "episode_step": 9,
+            "id": "pause-after-edit",
+            "kind": "command_applied",
+            "result": {
+              "applied_episode": 0,
+              "applied_revision": 9,
+              "applied_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+              "applied_tick": 9,
+              "id": "pause-after-edit",
+              "kind": "pause",
+              "received_episode": 0,
+              "received_run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+              "received_tick": 9,
+              "status": "applied"
+            },
+            "run_id": "d5f67e4606ff4ab09167f8a382e0fd04",
+            "sequence": 15,
+            "tick": 9
+          }
+        ],
+        "final_phase": "paused",
+        "last_outcome": null
+      }
+    },
+    "scope": "Exploratory world intervention; no required direction or size of behavioral effect"
+  },
+  "replays": {
+    "actions": {
+      "run_id": "d9f2ff15a77e43719a17a5fe0dd34990",
+      "report": {
+        "schema_version": 1,
+        "source_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+        "run_id": "d9f2ff15a77e43719a17a5fe0dd34990",
+        "mode": "actions",
+        "status": "passed",
+        "compared_ticks": 8,
+        "compared_events": 22,
+        "first_divergence": null,
+        "comparison": {
+          "float_atol": 1e-06,
+          "float_rtol": 1e-06,
+          "integer_and_camera_exact": true,
+          "excluded": [
+            "encoded_input",
+            "latency",
+            "population_stats",
+            "raw_output",
+            "step_latency"
+          ],
+          "fields": [
+            "action",
+            "cam_left",
+            "cam_right",
+            "control",
+            "eyes",
+            "next_pose",
+            "pose",
+            "raw_cam_left",
+            "raw_cam_right",
+            "revision",
+            "reward",
+            "sensors",
+            "simulation_time"
+          ],
+          "runtime_source_keys": [
+            "src/palimpsest/engine.py",
+            "src/palimpsest/profiles.py",
+            "src/palimpsest/interventions.py",
+            "src/palimpsest/flynn.py",
+            "src/palimpsest/snapshots.py",
+            "src/palimpsest/records.py",
+            "src/palimpsest/evaluate.py",
+            "src/palimpsest/assets.py",
+            "src/palimpsest/doctor.py",
+            "src/palimpsest/memory.py",
+            "src/palimpsest/memory_task.py",
+            "src/palimpsest/memory_world.py",
+            "src/palimpsest/task_mechanics.py",
+            "src/palimpsest/task_profiles.py"
+          ],
+          "upstream_and_lock_exact": true,
+          "snapshot_identity_exact": true
+        },
+        "controller_reexecuted": false,
+        "inference_executed": false,
+        "errors": [],
+        "source_snapshot_id": "b1960d928d2545738d58cb2830a47ecc",
+        "source_snapshot_sha256": "69c220438c7e9c8ae0f2fe3309a97fe78875b8089cebbf1b5d366da71e165b84",
+        "storage_preflight": {
+          "source_ticks": 8,
+          "recording_bytes_estimate": 2822378,
+          "scope": "source recording bytes plus overhead and actual initial snapshot"
+        },
+        "initial_snapshot_id": "27f4f9ca5b3a49609fef1334c317189f"
+      }
+    },
+    "policy": {
+      "run_id": "0a699d097be84d35a9a5589c9102cea8",
+      "report": {
+        "schema_version": 1,
+        "source_run_id": "e25e0b591b214e4caf7b4aacca72b399",
+        "run_id": "0a699d097be84d35a9a5589c9102cea8",
+        "mode": "policy",
+        "status": "passed",
+        "compared_ticks": 8,
+        "compared_events": 22,
+        "first_divergence": null,
+        "comparison": {
+          "float_atol": 1e-06,
+          "float_rtol": 1e-06,
+          "integer_and_camera_exact": true,
+          "excluded": [
+            "latency",
+            "step_latency"
+          ],
+          "fields": "all recorded fields except wall latencies",
+          "runtime_source_keys": [
+            "src/palimpsest/engine.py",
+            "src/palimpsest/profiles.py",
+            "src/palimpsest/interventions.py",
+            "src/palimpsest/flynn.py",
+            "src/palimpsest/snapshots.py",
+            "src/palimpsest/records.py",
+            "src/palimpsest/evaluate.py",
+            "src/palimpsest/assets.py",
+            "src/palimpsest/doctor.py",
+            "src/palimpsest/memory.py",
+            "src/palimpsest/memory_task.py",
+            "src/palimpsest/memory_world.py",
+            "src/palimpsest/task_mechanics.py",
+            "src/palimpsest/task_profiles.py"
+          ],
+          "upstream_and_lock_exact": true,
+          "snapshot_identity_exact": true
+        },
+        "controller_reexecuted": true,
+        "inference_executed": true,
+        "errors": [],
+        "source_snapshot_id": "b1960d928d2545738d58cb2830a47ecc",
+        "source_snapshot_sha256": "69c220438c7e9c8ae0f2fe3309a97fe78875b8089cebbf1b5d366da71e165b84",
+        "storage_preflight": {
+          "source_ticks": 8,
+          "recording_bytes_estimate": 2822378,
+          "scope": "source recording bytes plus overhead and actual initial snapshot"
+        },
+        "initial_snapshot_id": "9ee5688a162945b19e62cbbfaed6e5ba"
+      }
+    }
+  },
+  "exports": {
+    "svg": {
+      "path": "route.svg",
+      "sha256": "aef0832cd5cc3c0e2ff25b605f689eb3c42b1a1bbeaae1c7760d972fa979ba6a",
+      "size_bytes": 27764
+    },
+    "png": {
+      "path": "route.png",
+      "sha256": "0fec49e7d7eb665ae604cfb273c6ceb0f93b660d812c07d45366af5b6c6f366a",
+      "size_bytes": 49264
+    },
+    "bundle": {
+      "path": "route.zip",
+      "sha256": "b5b86860404ef1107a0d4cb657804dfe24ed779dcdec8e0a7b0f11190198096a",
+      "size_bytes": 2093185
+    }
+  },
+  "wall_seconds": 95.83479410700056
+}

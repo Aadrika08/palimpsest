@@ -492,8 +492,13 @@ A separately labeled operational follow-up used the same frozen runtime and
 actual cumulative-inventory monitoring within the original limits. It created
 the fresh checkout, but offline dependency installation stopped because the
 locked \texttt{torch==2.9.0} wheel was absent from the cache. No FLYNN execution
-occurred in that new environment. Its failed result is retained separately;
-fresh-environment reproduction remains unestablished.
+occurred in that new environment. Its failed result is retained separately.
+A later, separately labelled reproduction first prepared the permitted locked
+dependency cache, then repeated the fresh checkout in a network-isolated
+namespace: offline locked installation, UI build, API smoke and a 55-second CPU
+full-FLYNN branch/replay verification all passed, using 158 CPU-seconds. It
+does not change the frozen unit's incomplete status; second-machine
+reproduction remains open.
 
 \subsection{RQ5: Can a verified improvement audit be afforded?}
 \label{sec:rq5}

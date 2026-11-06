@@ -21,7 +21,7 @@ Unchecked items remain open even if an earlier draft checked a different gate.
 
 ## External reproduction and archive
 
-- [ ] Fresh-environment full workflow executes after permitted locked dependency-cache preparation.
+- [x] Fresh-environment full workflow executes after permitted locked dependency-cache preparation (same host; [v2 evidence](../docs/reports/fresh-reproduction-v2-2026-11-07/README.md)).
 - [ ] Second machine/operator reproduces the focused workflow.
 - [ ] Root code licence and relevant parameter redistribution terms resolved.
 - [ ] Third-party assets/derived arrays reviewed individually before deposit.
