@@ -31,7 +31,7 @@
 
 ## Ownership and interface map
 
-Names in this plan are **proposed new software names**, not existing accepted profiles. Each task is one reviewable deliverable. The dependency order is **1→2a→3→4→5→6→2b→7**: Task2a is not an integrated opt-in; only Task2b integrates the authentic Task6 custody dependency. No task changes old protocol/pin files. Root must approve any shared-helper factoring before implementation.
+Names in this plan are **proposed new software names**, not existing accepted profiles. Each task is one reviewable deliverable. The dependency order is **1→2a→3a→4→5→6→3b→2b→7**. Task3a is a pure conditional proof; its authentic public adapter Task3b waits for Task6's actual source holder. Task4 and private Task5 software may consume authored pure proofs, but actual receipt/publication acceptance waits for3b. Task2a is not an integrated opt-in; only Task2b integrates the authentic Task6 custody dependency. No task changes old protocol/pin files. Root must approve any shared-helper factoring before implementation.
 
 | Task | Files owned during implementation | Responsibility |
 | --- | --- | --- |
@@ -154,15 +154,121 @@ derive pose from a transition that deliberately has no pose input.
 - [ ] Helper requires synchronous writer (`records.py:213–234`). New event kinds are exactly `memory_transition_witness_vnext` / `memory_transition_commit_vnext`: existing Engine/RunWriter envelope keys `run_id,episode,tick,episode_step,sequence,kind` plus only `witness:Witness` / `commit:Commit`. Hash canonical Witness body; preserve actual spaced JSON/newline bytes. Confirm Witness fsync **before** updating journal or assigning proposed state/rethrowing. Assign a recursively detached proposed strict4 state only for returned/idempotent variants; Commit only for witnessed returned variant and only after real assignment, then ordinary returned decision events. Raised/rejected variants never assign local state/Lifecycle or fabricate ordinary decisions/Commit; retain witness if valid and use `rethrow_transition_error_vnext` for original class/message or infrastructure refusal, never directly raise its opaque token. Idempotent has no new witness/call/event. No result field claims commit.
 - [ ] A failed write/drain/identity/cap blocks later policy/physics and remains infrastructure-failed with partial evidence. Preserve actually assigned state after commit-write failure; no rollback fiction/900. A crash between fsync/assignment/commit is incomplete, never resumed. Zero retries. Run Task2a green plus legacy fixture checks; review helper/default guard only, not integrated opt-in. Commit only Task2a files after implementation authorization.
 
-## Task 3: Independent raw terminal/reached-transition audit
+## Task 3a: Pure independent terminal/reached-transition proof
 
-**Files:** ownership table Task3. **Consumes:** Task1 schemas/transitions and Task2a helper event semantics; authored raw fixtures until real Task2b integration/admission. **Produces:** `prove_terminal_vnext(raw:dict,*,context:Context,source_application:dict,source_events:list,source_rows:list,deadline:float) -> TerminalProof`; `audit_terminal_run_vnext(run_path:Path,receipt_root:Path,*,registration:dict,deadline:float) -> dict`; `validate_terminal_receipt_vnext(run_path:Path,receipt_root:Path,*,registration:dict,deadline:float) -> dict`, same held-path/exclusive-publication shape as existing raw auditor, not a qualification bypass.
+**Files:** ownership table Task3, serial ownership for3a then3b. **Consumes:** Task1 schemas/transitions and Task2a helper event semantics; authored raw fixtures until real Task2b integration/admission. **Produces now:** `prove_terminal_vnext(raw:dict,*,context:Context,source_application:dict,source_events:list,source_rows:list,deadline:float) -> TerminalProof` only. Pure raw has exact keys `{manifest,events,rows,worker_report,job,descriptors}`; descriptors has exact `{context,job,raw_manifest,raw_events,worker_report}` with proposed D bounds. Exact byte-versus-decoded-value representation must be settled before implementation: never derive an actual raw-byte identity merely by reserializing decoded input. Supplied source inputs and geometry are conditional premises, not held-SNP/native-placement/qualification authority.
 
-- [ ] Write red authored all-nine `test_zero_one_two_and_full_prefixes_all_arms`, `test_world_applied_without_trigger_stays_pending`, `test_selected_then_exception_replays_local_not_committed_state`, `test_terminal_packet_fresh_passage_before_decision_refuses`, `test_spoofed_flags_and_witness_hash_chain_do_not_replace_transition_replay`, `test_unknown_exception_or_missing_reached_proof_is_unscored`, `test_normal_malformed_evidence_cannot_fall_back_to_prefix`. Assert source remains nonempty, original source SNP/event prefix/invariant bound; exact zero motor counters/calls/path/900; independent packet reconstruction and exact exception target/message/cursors; no postterminal progress.
+Preflight found a real public custody dependency: the authentic fixed source
+holder is Task6. The Task5 finalization registration includes this auditor's
+outputs and cannot serve as its producer input. Public audit/validate APIs are
+therefore deliberately absent in3a, not always-raising stubs or fake receipt
+flags. Old source UUID-hex and new canonical-hyphen UUID requirements also need
+an explicit successor source identity contract; no legacy byte relabeling or
+global validator patch is permitted. The old nonempty reader and old manifest
+envelope must not be used to admit zero-row successor data.
+
+Task3a input representation is fixed as follows. `raw.job` is a D equal to
+`descriptors.job`, not an invented partial owner-job body. Witness job hashes
+must equal it; actual job-body/Context correspondence is an explicit premise
+for3b to establish from held bytes. Context and worker-report descriptors bind
+`memory.canonical_bytes`; manifest and event descriptors bind the unchanged
+RunWriter `json.dumps(sort_keys=True,allow_nan=False)` representation plus a
+newline per object. This proves equality to that deterministic representation,
+not that physical originals used it;3b must compare the held original bytes.
+Pure proof opens no repository or referenced file. Supplied source application
+hash and exact event-prefix commitments must be checked, with nonempty source
+rows, without claiming held-SNP origin or native placement authentication.
+
+Manifest metadata remains the real extensible RunWriter object, with its whole
+byte identity bound. Independently require the relevant fixed semantic fields:
+run/case/condition/source lineage, closed status, recording format, configured
+CPU FLYNN/device/eye state, counters/final state and original normal terminal
+obligations. The new Context descriptor field is
+`memory_terminal_vnext_context`, equal to `descriptors.context`; the existing
+Task2a mode and Context-hash markers must agree. Unknown bounded metadata
+confers no permission and cannot replace required fields. Do not claim a new
+exact whole-manifest key set or forge the old admission envelope. Worker report
+retains exactly `admission.REPORT_FIELDS` and data schema
+`memory-family-owner-report-v3`, whose fields do not encode state3/4; verify its
+contents independently. This is not reuse of an old qualification receipt.
+
+#### Frozen Task3a semantic projection
+
+Here M is the whole manifest, R the worker report, C the validated Context,
+A the supplied source application, E the whole ordered condition event list,
+and b=C.schedule.boundary_tick. K is the validated version3 case from
+A.world_task_state.case. All counters below are exact nonboolean integers;
+all required fields must be present. Metadata outside this projection stays
+byte-bound and supplies no acceptance permission.
+
+| Required path / evidence | Exact check |
+| --- | --- |
+| M.run_id | Canonical hyphenated UUID equal C.run_id. |
+| M.memory_case | Validated world.validate_case, version3, exactly K; preserve K's actual split without relabeling. Existing public held-out GO remains separate. |
+| M.memory_case_sha256 | H equal C.case_sha256 and sha256(K); K.case_id equal C.case_id, K.kind equal C.kind. |
+| M.seed, M.acquisition_protocol_sha256 | Exact integer K.seed; H equal K.acquisition_protocol_sha256. |
+| M.controller, M.requested_device, M.teacher_privileged, M.texture | Exactly `flynn`, `cpu`, boolean false, `checker`. |
+| M.scenario | Exactly existing pure validate_decision(world.SCENARIO,'checker','flynn',profile_sha256=K.profile_sha256) result. |
+| M.recording_format, M.recording_max_bytes | Exactly `palimpsest-npz-v1`, integer384*1024**2. Physical byte total remains3b's obligation. |
+| M.parent_run_id | Equal C.source_run_id and A.source_run_id. No UUID normalization of original bytes. |
+| M.parent_event_prefix | Exact keys sha256,size_bytes,event_count, equal A.event_prefix; H and nonnegative integer byte/count fields, checked against the deterministic supplied source-event prefix through its actual acquired cut. Source rows nonempty. |
+| M.memory_terminal_vnext_mode | Exactly `memory-terminal-vnext-v1`. |
+| M.memory_terminal_vnext_context_sha256, M.memory_terminal_vnext_context | sha256(C), and D exactly raw.descriptors.context respectively. |
+| M.memory_family_oracle_admission_v3 | Must be absent; an old envelope cannot stand in for successor semantics. |
+| Condition / owner binding | R.condition equals C.condition (one of nine), R.run_id equals C.run_id; raw.job D equals descriptors.job and every Witness job hash. Actual job body, resource/closure execution and source authority remain explicit3b premises, not manifest flags. |
+| M.recorded_ticks | n=len(rows), integer0..900. |
+| M.recorded_chunks | Integer equal number of chunk events, ceil(n/32), at most29; zero exactly no chunks. |
+| M.recorded_events | Integer equal len(E), at most50000; E has exact consecutive sequence values. |
+| Chunk events / rows | Contiguous chunks/{i:06d}.npz, episode integer0, start=b+32*i, positive count=min(32,n-32*i), required H. Rows exactly ticks b..b+n-1, same inherited required fields/dtypes/shapes and policy/array digest obligations. No fake zero row or chunk. Chunk container bytes/inventory remain3b premises. |
+| M.total_tick, R.total_ticks | Equal integer b+n, at least1. First/last motor ticks null iff n=0, otherwise b and b+n-1. |
+| M.world_state, R.world_state | Equal validated state2, exact K/profile/schedule/acquired hash and independent replay of supplied applied-world events from A.world_task_state. Last_tick b+n for a terminal sensed tail, otherwise b+n-1. This is the worker-added world_state field, not an invented Engine final-memory field. |
+| M.status, M.final_phase, R.final_phase | Status failed iff phase failed; otherwise completed with terminated/truncated. Phases equal; no generic paused early-prefix acceptance. |
+| M.last_outcome | Exactly the sole verified terminal runtime_failure.error or episode_finished.outcome, with preserved exact nested schema/types. |
+| M.metrics | Exact reward,contact_ticks,path_length keys; reward/path finite floats, contact_ticks nonnegative integer. Match A.metrics plus actual continuation row rewards/collision flags/path using original accumulation order. Each path increment is exactly float(np.linalg.norm(next_pose[:2]-pose[:2])), matching Engine; proof path_length accumulates the same increments from zero. |
+| M.close_reason | Exactly `operator_closed`. |
+| R | Exactly admission.REPORT_FIELDS; schema memory-family-owner-report-v3; run_id/case_id/condition equal C, operation condition, status recorded, acquired boolean true; both snapshot hashes equal C.source_snapshot.sha256. Other fields equal M as above. |
+| Eyes / initial application | A.eyes and actual application_restored.eyes exactly {left:true,right:true}; restored parent prefix/source revision equal A at b; restored world.pose and first condition pose equal the last supplied source row.next_pose (A has no pose member). Every positive row has full eyes; eyes_changed and original forbidden replacement/replay events refuse. No M.eyes or synthetic run_started requirement. |
+| Configuration / arm | Exactly one condition configure/promote/arm chain from supplied A.memory strict3, actual configured resource hash equal C.condition_resources_sha256, Context/schedule/source invariant agree. No manufactured final SNP or final memory member. |
+| Assigned memory | Replay once per actual sensed packet. Assign only returned proposals; compare exact strict4 memory_inspected at every reached returned inspection and exact journal/Commit order. Raised local state remains local Witness evidence. |
+
+Positive motor rows require their actual sensed/cue/inspection/policy-call
+ordering and all original row/policy bindings. A terminal pre-control sensed
+tail is at b+n and requires n<900 and b+n<min(2100,b+900). At n=900
+the Engine already stops after its last motor row: only a row-backed normal
+terminal satisfying the original cap/outcome checks is possible, never another
+sensed-tail advance. There are two exact existing mechanism branches: (a) replayed
+CueUnavailable with the same type/message, no Commit/ordinary decisions/
+inspection/cue/policy after its raised transition; (b) replayed returned
+supervisor failure with Witness, Commit, actual ordinary decisions and
+memory_inspected, then the existing Engine ValueError message
+`Memory-v2 supervisor failure: ` plus that replayed failure_reason, with no
+cue/policy/motor afterward. Either may have n=0; zero motor rows alone say
+nothing about whether a transition committed. Unknown exceptions or unproved
+causes refuse rather than becoming900. This creates no new exception class
+or arbitrary ValueError permission. Normal row-backed goal/stalled/collision/
+time_limit terminals retain the full original normal-terminal requirements,
+including reached decision and exact cap/outcome/metrics/episode_finished
+ordering. Pure proof still cannot certify physical bytes, custody or admission.
+
+- [ ] Write red authored all-nine `test_zero_one_two_and_full_prefixes_all_arms`, `test_world_applied_without_trigger_stays_pending`, `test_selected_then_exception_replays_local_not_committed_state`, `test_terminal_packet_fresh_passage_before_decision_refuses`, `test_spoofed_flags_and_witness_hash_chain_do_not_replace_transition_replay`, `test_unknown_exception_or_missing_reached_proof_is_unscored`, `test_normal_malformed_evidence_cannot_fall_back_to_prefix`. Assert supplied source rows remain nonempty, declared source SNP identity plus supplied application/event-prefix/invariant bindings agree (physical SNP custody waits3b); exact zero motor counters/calls/path/900; independent packet reconstruction and exact exception target/message/cursors; no postterminal progress.
 - [ ] Run Task3 red command.
-- [ ] Reuse raw custody/inventory/array/policy-binding helpers, source application and geometry reconstruction (`raw_audit_v4.py:296–384,405–456,663–715`; `oracle_v3.py:340–400,452–484`; `memory_decision_world.py:486–537`). New terminal auditor verifies actual edit acceptance and world before deriving occupancy; replays every sensed packet from authenticated acquired state using Task1, checks reached no-fresh-passage invariant, source-M cardinality and every witness/commit/ordinary event sequence. Compare local effects on raised transition separately from committed Engine memory. A JSON validator or producer flag is insufficient.
+- [ ] Reuse compatible pure array/policy-binding helpers and source application/geometry reconstruction (`raw_audit_v4.py:296–384,405–456,663–715`; `oracle_v3.py:340–400,452–484`; `memory_decision_world.py:486–537`). Under supplied-source premises, verify edit acceptance and world before deriving occupancy; replay every sensed packet using Task1, checking reached no-fresh-passage invariant, source-M cardinality and every witness/commit/ordinary event sequence. Compare local effects on raised transition separately from assigned Engine memory. A JSON validator or producer flag is insufficient; physical custody/inventory belong3b.
 - [ ] Preserve all normal/full terminal obligations when reached. Proved early natural failure is900; owner/audit/custody/resource/unknown/absent reached proof remains incomplete/unscored. Do not create any new natural exception type. Version raw limit support only for condition n=0; positive n contiguous from b, chunks ceil(n/32); exact empty list/index for zero, metadata/events/report still nonempty; old source/nonempty APIs unchanged.
-- [ ] Run Task3 green and negative exact inventory/custody/one-byte-over cases under unchanged caps. Review independently reproducible terminal cause versus operational disposition; commit only Task3 files after authorization.
+- [ ] Run Task3a green and negative exact byte/shape/count/cap and one-byte-over authored cases under unchanged caps. Review reproducible terminal cause versus operational disposition and conditional premises; commit only Task3 files after authorization. Held-inventory/custody/publication negatives wait for3b.
+
+### Task 3b (after6): Authentic public terminal audit adapter
+
+Pending reviewed design and implementation, not completed by3a. Produces
+`audit_terminal_run_vnext(run_path:Path,receipt_root:Path,*,registration:dict,deadline:float) -> dict`
+and `validate_terminal_receipt_vnext(run_path:Path,receipt_root:Path,*,registration:dict,deadline:float) -> dict`.
+Use the real Task6 fixed holder, held-path/exclusive-publication primitives and
+actual source registration/qualification checks. Before code, freeze the exact
+pre-audit producer registration without output/self edges, root/location
+binding, source identity compatibility and lifecycle close. The final receipt
+remains the successor contract above; no old-receipt impersonation or
+qualification bypass. Exact inventory/custody/publication failure tests belong
+here;3a's authored byte/shape refusal tests do not establish those properties.
+Tasks4/5/6 may not claim actual acceptance through a missing3b receipt.
 
 ## Task 4: Successor empty/early compact numeric preservation
 
