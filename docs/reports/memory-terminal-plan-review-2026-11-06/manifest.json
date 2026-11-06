@@ -1,0 +1,49 @@
+{
+  "baseline_commit": "caf919b18817c44304a0bc4fe19ffefd3284e7e1",
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 1995,
+      "sha256": "3b030086413719e6624fa4724e876c3b9e0edee4a5f3efc4319540307bebd795"
+    },
+    {
+      "path": "terminal-vnext-spec-report.md",
+      "size_bytes": 8501,
+      "sha256": "a459f57c864c7b67b93d5132e17111a5716233736e18e6aa21f77a59815c6d0d"
+    },
+    {
+      "path": "terminal-vnext-plan-review.md",
+      "size_bytes": 12806,
+      "sha256": "1e5ec6b63127314532b7c96d48bf76e1e20fe1bf872b06fdf7a593d26798a181"
+    },
+    {
+      "path": "terminal-vnext-plan-fix-review.md",
+      "size_bytes": 5367,
+      "sha256": "302d246783663c33697f443b3642451c6ab35a06709677ea2db4801701da7a93"
+    },
+    {
+      "path": "lifetime-accounting-feasibility-review.md",
+      "size_bytes": 16006,
+      "sha256": "1df15997c1ae59c849d9e3f771a5bc4e42ffac3cddbc15cd6684a0bada95c889"
+    },
+    {
+      "path": "accounting-contract-next-review.md",
+      "size_bytes": 5123,
+      "sha256": "0870076336fe1e32640b77a993b2fbbe4f881e9f5f6a162736ca4297e640925c"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "docs/plans/memory-terminal-vnext-implementation.md",
+      "size_bytes": 78050,
+      "sha256": "1a6ea877ffe35dcffce4da5c468526a220ed78c3bbce9e4a7e0f44e591d4b1df"
+    },
+    {
+      "path": "docs/plans/memory-source-accounting-contract-next.md",
+      "size_bytes": 6692,
+      "sha256": "0a5f0ec5deb0fcd767424fb440c69196706549bbfea3ba05da2d90360e91f579"
+    }
+  ],
+  "approved_software_scope": "Task 1 only after root authorization",
+  "actual_execution_authorized": false
+}
