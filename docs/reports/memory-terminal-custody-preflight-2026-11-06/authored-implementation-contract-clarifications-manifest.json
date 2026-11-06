@@ -1,0 +1,22 @@
+{
+  "files": [
+    {
+      "path": "docs/reports/memory-terminal-custody-preflight-2026-11-06/authored-profile-byte-rule.md",
+      "sha256": "710227d6020806cccf6b6d8b66c786534938da5348e550ec1c783c41cf7edb8a",
+      "size_bytes": 1202
+    },
+    {
+      "path": "docs/reports/memory-terminal-custody-preflight-2026-11-06/authored-output-topology-rule.md",
+      "sha256": "a1cdae4e70c2dc08c9b5a37446b522accfb6c3e8119877cd86538c0d1439c15a",
+      "size_bytes": 1581
+    },
+    {
+      "path": "docs/reports/memory-terminal-custody-preflight-2026-11-06/authored-nested-fd-drain-rule.md",
+      "sha256": "802cc8a4750d2e7601cddf55c11886bf266724b38d9150e3bdbd28441cb3f1ae",
+      "size_bytes": 2588
+    }
+  ],
+  "implementation_candidate": "9d2b88779e586328c76ddf76e105ff16e2256cec",
+  "schema": "source-review-file-manifest-v1",
+  "scope": "authored custody clarifications and exact teardown-only shared ownership; no actual acceptance"
+}

@@ -431,10 +431,15 @@ Task5's authored proof/sealer-reader tests may use Task1/2a-produced fixture evi
 
 Root accepts the exact narrow contract in
 [authored-source-contract-addendum-var-tmp.md](../reports/memory-terminal-custody-preflight-2026-11-06/authored-source-contract-addendum-var-tmp.md),
+with the [exact inherited profile-byte clarification](../reports/memory-terminal-custody-preflight-2026-11-06/authored-profile-byte-rule.md),
+and the [fixed output topology rule](../reports/memory-terminal-custody-preflight-2026-11-06/authored-output-topology-rule.md),
 including predecode SNP expansion limits and the distinction between current
 root custody and unproved exclusive creation history. It supersedes the older
 preflight's unbound/rebinding suggestion only for this authored slice. Ownership
 is exactly `scripts/memory_family_source_consumer_vnext.py` and its focused test.
+The [nested FD-drain amendment](../reports/memory-terminal-custody-preflight-2026-11-06/authored-nested-fd-drain-rule.md)
+additionally authorizes teardown-only repairs in compact/replay-custody primitives,
+with all stat/hash/path/format/qualification rules unchanged.
 Implement one genuine private authored opener and fixed holder, one immutable
 condition slot, actual held files/decoded nonempty source/derived Context,
 complete rechecks/detached views and teardown. Public actual factories and
