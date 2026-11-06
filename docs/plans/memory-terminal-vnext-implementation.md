@@ -445,8 +445,12 @@ condition slot, actual held files/decoded nonempty source/derived Context,
 complete rechecks/detached views and teardown. Public actual factories and
 Engine opt-in remain absent; no actual Q/L/R/admission-shaped fixtures.
 
-- [ ] Genuine authored positive and OS custody/role/source/slot/lifetime negatives.
-- [ ] Required TDD and focused software checks; independent spec/code review.
+- [x] Genuine authored positive and OS custody/role/source/slot/lifetime negatives.
+- [x] Required TDD and focused software checks; independent spec/code review.
+
+Accepted source-only: [Task6a.1 evidence and limitations](../reports/memory-source-authored-holder-review-2026-11-06/README.md).
+Settled208 passes/2 historical skips; independent SPEC PASS/QUALITY APPROVED.
+This checks neither actual6a.2 nor any study/admission box.
 
 Order for this bounded prerequisite is 6a.1 before later separately reviewed
 3b/4b/2b and Task5/6b integration. It does not make actual6a.2 or those adapters

@@ -1,0 +1,62 @@
+F..............F                                                         [100%]
+=================================== FAILURES ===================================
+_______ test_real_authored_lease_derives_detached_context_and_closes_fds _______
+
+    def test_real_authored_lease_derives_detached_context_and_closes_fds():
+        fixture = authored()
+        root, adm, case, app, rows, _ = fixture
+>       with lease(fixture) as held:
+
+tests/test_memory_family_source_consumer_vnext.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+scripts/memory_family_source_consumer_vnext.py:484: in _open_authored_source_vnext
+    for k,v in hashes.items(): _same(raw_audit[k],v)
+                               ^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_source_consumer_vnext.py:53: in _same
+    _require(memory.canonical_bytes(left) == memory.canonical_bytes(right), 'Authored source binding differs')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Authored source binding differs'
+
+    def _require(value, message):
+        if not value:
+>           raise ValueError(message)
+E           ValueError: Authored source binding differs
+
+scripts/memory_family_source_consumer_vnext.py:49: ValueError
+___________ test_cross_thread_poison_and_original_body_error_survive ___________
+
+    def test_cross_thread_poison_and_original_body_error_survive():
+        fixture = authored()
+        caught = []
+        primary = LookupError('body primary')
+        with pytest.raises(LookupError) as result:
+>           with lease(fixture) as held:
+
+tests/test_memory_family_source_consumer_vnext.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+scripts/memory_family_source_consumer_vnext.py:484: in _open_authored_source_vnext
+    for k,v in hashes.items(): _same(raw_audit[k],v)
+                               ^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_source_consumer_vnext.py:53: in _same
+    _require(memory.canonical_bytes(left) == memory.canonical_bytes(right), 'Authored source binding differs')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Authored source binding differs'
+
+    def _require(value, message):
+        if not value:
+>           raise ValueError(message)
+E           ValueError: Authored source binding differs
+
+scripts/memory_family_source_consumer_vnext.py:49: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_authored_lease_derives_detached_context_and_closes_fds
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_cross_thread_poison_and_original_body_error_survive
+2 failed, 14 passed in 4.60s

@@ -1,0 +1,1832 @@
+FFFFFFFFF.FFFFFFFFFF                                                     [100%]
+=================================== FAILURES ===================================
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-entry] _
+
+root = PosixPath('/var/tmp/palimpsest-AUTHORED-source-vnext-1000-df46c605-678c-49b1-8267-65155e0566ab')
+descriptor = {'path': 'inputs/registrations/admission.json', 'sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'size_bytes': 6847}
+maximum = 1048576, deadline = 373982.887965228
+
+    @contextmanager
+    def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
+                      staged=True, allow_empty=False, raw_run=None):
+        """Hold file and ancestor descriptors; sibling writes cannot replace edges."""
+        _fields(descriptor, DESCRIPTOR_FIELDS, 'Bound payload descriptor')
+        is_behavior = (source_case is None and raw_run is None
+            and artifacts._safe_path(root) == ROOT
+            and any({key:row[key] for key in DESCRIPTOR_FIELDS} == descriptor
+                    for row in PROTOCOL['behavior_sources']))
+        relative = (_behavior_relative(descriptor['path']) if is_behavior
+                    else _relative(descriptor['path'], 'bound payload path'))
+        minimum = 0 if allow_empty else 1
+        if type(descriptor['size_bytes']) is not int or not minimum <= descriptor['size_bytes'] <= maximum:
+            raise ValueError('Bound payload size exceeds its frozen limit')
+        _digest(descriptor['sha256'])
+        if source_case is not None:
+            memory._id(source_case)
+            if raw_run is not None:
+                _run_id(raw_run)
+                relative = f'.pending/{source_case}/.raw/{raw_run}/{relative}'
+            prefix = f'cases/{source_case}/source/'
+            if (raw_run is None and not relative.startswith(prefix)) or type(staged) is not bool:
+                raise ValueError('Payload is outside the registered source')
+            if raw_run is None:
+                relative = (f'.pending/{source_case}/source/' if staged else prefix) + relative[len(prefix):]
+        root = artifacts._safe_path(root)
+        parts = PurePosixPath(relative).parts
+        opened, edges = [], []
+        def edge(value):
+            return value.st_dev, value.st_ino, value.st_mode
+        def check_deadline():
+            if (type(deadline) not in (int, float) or not math.isfinite(deadline)
+                    or time.monotonic() >= deadline):
+                raise TimeoutError('Bound payload deadline exhausted')
+        def read(fd):
+            os.lseek(fd, 0, os.SEEK_SET)
+            payload = bytearray()
+            while True:
+                check_deadline()
+                block = os.read(fd, min(MiB, maximum + 1 - len(payload)))
+                if not block:
+                    return bytes(payload)
+                payload.extend(block)
+                if len(payload) > maximum:
+                    raise ValueError('Bound payload exceeds its frozen limit')
+        try:
+            opened.append(os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW))
+            edges.append(edge(os.fstat(opened[0])))
+            if edges[0] != edge(root.lstat()):
+                raise RuntimeError('Evidence root changed before open')
+            for part in parts[:-1]:
+                opened.append(os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=opened[-1]))
+                edges.append(edge(os.fstat(opened[-1])))
+            fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW, dir_fd=opened[-1])
+            opened.append(fd)
+            before = os.fstat(fd)
+            if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                    or before.st_size != descriptor['size_bytes']):
+                raise ValueError('Bound payload type, size or alias count differs')
+            payload = read(fd)
+            if hashlib.sha256(payload).hexdigest() != descriptor['sha256']:
+>               raise ValueError('Bound payload checksum differs')
+E               ValueError: Bound payload checksum differs
+
+scripts/memory_family_compact_v4.py:497: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acbda80d0>
+primitive = 'bootstrap', stage = 'entry', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+scripts/memory_family_compact_v4.py:516: in bound_payload
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 15
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-body] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5ace871c10>
+primitive = 'bootstrap', stage = 'body', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+>                   if stage=='body': raise primary
+                                      ^^^^^^^^^^^^^
+E                   LookupError: genuine primitive body primary
+
+tests/test_memory_family_source_consumer_vnext.py:696: LookupError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5ace871c10>
+primitive = 'bootstrap', stage = 'body', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+scripts/memory_family_compact_v4.py:516: in bound_payload
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 18
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-recheck] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc79c390>
+primitive = 'bootstrap', stage = 'recheck', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+>                       if primitive=='bootstrap': held[2]()
+                                                   ^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:699: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def recheck():
+        if edge(root.lstat()) != edges[0]:
+            raise RuntimeError('Evidence root replaced while bound')
+        for index, identity in enumerate(edges):
+            named = (root.lstat() if index == 0 else os.stat(
+                parts[index - 1], dir_fd=opened[index - 1], follow_symlinks=False))
+            if edge(os.fstat(opened[index])) != identity or edge(named) != identity:
+                raise RuntimeError('Bound payload ancestor edge changed')
+        named = os.stat(parts[-1], dir_fd=opened[-2], follow_symlinks=False)
+        if (_file_identity(before) != _file_identity(os.fstat(fd))
+                or _file_identity(before) != _file_identity(named)
+                or read(fd) != payload):
+>           raise RuntimeError('Bound payload changed while held')
+E           RuntimeError: Bound payload changed while held
+
+scripts/memory_family_compact_v4.py:510: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc79c390>
+primitive = 'bootstrap', stage = 'recheck', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+scripts/memory_family_compact_v4.py:516: in bound_payload
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 21
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-teardown] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acbdc4b10>
+primitive = 'bootstrap', stage = 'teardown', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+                        elif stage=='read': held.read(admission['path'],MIB)
+                        else: held.recheck()
+>       assert owned and set(attempted)==owned
+E       assert ({21, 22, 23, 24} and {24} == {21, 22, 23, 24}
+E         
+E         Extra items in the right set:
+E         21
+E         22
+E         23
+E         Use -v to get more diff)
+
+tests/test_memory_family_source_consumer_vnext.py:703: AssertionError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-entry] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5aceb73350>
+
+    def __enter__(self):
+        if self._state != 'new':
+            raise RuntimeError('Replay file custody can only be entered once')
+        try:
+            self._clock()
+            root_key = self.root.parts[1:]
+            self._directory(root_key)
+            self._check_subtrees()
+            identities = set()
+            for entry in self._entries.values():
+                parts = entry.path.split('/')
+                parent = self._directory((*root_key, *parts[:-1]))
+                fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                             dir_fd=parent)
+                self._fds.append(fd)
+                state = os.fstat(fd)
+                expected = _identity(state)
+                if (not stat.S_ISREG(state.st_mode) or state.st_nlink != 1
+                        or state.st_size > entry.maximum
+                        or entry.size is not None and state.st_size != entry.size
+                        or (state.st_dev, state.st_ino) in identities):
+                    raise ValueError('Replay leaf type, alias count or size differs')
+                identities.add((state.st_dev, state.st_ino))
+                self._files[entry.path] = (fd, parent, parts[-1], expected)
+>               self._check_file(entry.path)
+
+scripts/memory_family_replay_custody_v4.py:259: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5aceb73350>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+            raise RuntimeError('Replay input file edge or metadata changed while held')
+        count, digest, payload = self._hash(fd, entry.maximum, copy_bytes=copy_bytes)
+        if (digest != entry.sha256 or (entry.size is not None and count != entry.size)
+                or count != expected[3]):
+>           raise ValueError('Replay input file bytes or size differ')
+E           ValueError: Replay input file bytes or size differ
+
+scripts/memory_family_replay_custody_v4.py:183: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acbd6d610>
+primitive = 'strong', stage = 'entry', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:264: in __enter__
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 30
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-body] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acddb9ed0>
+primitive = 'strong', stage = 'body', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+>                   if stage=='body': raise primary
+                                      ^^^^^^^^^^^^^
+E                   LookupError: genuine primitive body primary
+
+tests/test_memory_family_source_consumer_vnext.py:696: LookupError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acddb9ed0>
+primitive = 'strong', stage = 'body', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:331: in __exit__
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 30
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-recheck] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5acbd9bad0>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+            for relative in self._entries:
+>               self._check_file(relative)
+
+scripts/memory_family_replay_custody_v4.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5acbd9bad0>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Replay input file edge or metadata changed while held')
+E           RuntimeError: Replay input file edge or metadata changed while held
+
+scripts/memory_family_replay_custody_v4.py:179: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acedb6a90>
+primitive = 'strong', stage = 'recheck', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+                        elif stage=='read': held.read(admission['path'],MIB)
+>                       else: held.recheck()
+                              ^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:702: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:278: in recheck
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 30
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-guard] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5ace86ced0>
+relative = 'inputs/registrations/admission.json'
+
+    def _guard(self, relative):
+        self._active()
+        relative = _relative(relative)
+        if relative not in self._entries:
+            raise ValueError('Replay path was not registered')
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+>           self._check_file(relative)
+
+scripts/memory_family_replay_custody_v4.py:290: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5ace86ced0>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Replay input file edge or metadata changed while held')
+E           RuntimeError: Replay input file edge or metadata changed while held
+
+scripts/memory_family_replay_custody_v4.py:179: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acddf4a50>
+primitive = 'strong', stage = 'guard', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+>                       elif stage=='guard': held.fd_path(admission['path'])
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:700: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:318: in fd_path
+    relative = self._guard(relative)
+               ^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_replay_custody_v4.py:294: in _guard
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 30
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-read] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5ace86ced0>
+relative = 'inputs/registrations/admission.json'
+
+    def _guard(self, relative):
+        self._active()
+        relative = _relative(relative)
+        if relative not in self._entries:
+            raise ValueError('Replay path was not registered')
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+>           self._check_file(relative)
+
+scripts/memory_family_replay_custody_v4.py:290: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5ace86ced0>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Replay input file edge or metadata changed while held')
+E           RuntimeError: Replay input file edge or metadata changed while held
+
+scripts/memory_family_replay_custody_v4.py:179: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acebb6350>
+primitive = 'strong', stage = 'read', fault_count = 1
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+>                       elif stage=='read': held.read(admission['path'],MIB)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:701: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:302: in read
+    relative = self._guard(relative)
+               ^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_replay_custody_v4.py:294: in _guard
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 30
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-entry] _
+
+root = PosixPath('/var/tmp/palimpsest-AUTHORED-source-vnext-1000-9ae44351-a749-4f23-95f5-0a94d63b26c6')
+descriptor = {'path': 'inputs/registrations/admission.json', 'sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'size_bytes': 6847}
+maximum = 1048576, deadline = 373984.935884278
+
+    @contextmanager
+    def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
+                      staged=True, allow_empty=False, raw_run=None):
+        """Hold file and ancestor descriptors; sibling writes cannot replace edges."""
+        _fields(descriptor, DESCRIPTOR_FIELDS, 'Bound payload descriptor')
+        is_behavior = (source_case is None and raw_run is None
+            and artifacts._safe_path(root) == ROOT
+            and any({key:row[key] for key in DESCRIPTOR_FIELDS} == descriptor
+                    for row in PROTOCOL['behavior_sources']))
+        relative = (_behavior_relative(descriptor['path']) if is_behavior
+                    else _relative(descriptor['path'], 'bound payload path'))
+        minimum = 0 if allow_empty else 1
+        if type(descriptor['size_bytes']) is not int or not minimum <= descriptor['size_bytes'] <= maximum:
+            raise ValueError('Bound payload size exceeds its frozen limit')
+        _digest(descriptor['sha256'])
+        if source_case is not None:
+            memory._id(source_case)
+            if raw_run is not None:
+                _run_id(raw_run)
+                relative = f'.pending/{source_case}/.raw/{raw_run}/{relative}'
+            prefix = f'cases/{source_case}/source/'
+            if (raw_run is None and not relative.startswith(prefix)) or type(staged) is not bool:
+                raise ValueError('Payload is outside the registered source')
+            if raw_run is None:
+                relative = (f'.pending/{source_case}/source/' if staged else prefix) + relative[len(prefix):]
+        root = artifacts._safe_path(root)
+        parts = PurePosixPath(relative).parts
+        opened, edges = [], []
+        def edge(value):
+            return value.st_dev, value.st_ino, value.st_mode
+        def check_deadline():
+            if (type(deadline) not in (int, float) or not math.isfinite(deadline)
+                    or time.monotonic() >= deadline):
+                raise TimeoutError('Bound payload deadline exhausted')
+        def read(fd):
+            os.lseek(fd, 0, os.SEEK_SET)
+            payload = bytearray()
+            while True:
+                check_deadline()
+                block = os.read(fd, min(MiB, maximum + 1 - len(payload)))
+                if not block:
+                    return bytes(payload)
+                payload.extend(block)
+                if len(payload) > maximum:
+                    raise ValueError('Bound payload exceeds its frozen limit')
+        try:
+            opened.append(os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW))
+            edges.append(edge(os.fstat(opened[0])))
+            if edges[0] != edge(root.lstat()):
+                raise RuntimeError('Evidence root changed before open')
+            for part in parts[:-1]:
+                opened.append(os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=opened[-1]))
+                edges.append(edge(os.fstat(opened[-1])))
+            fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW, dir_fd=opened[-1])
+            opened.append(fd)
+            before = os.fstat(fd)
+            if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                    or before.st_size != descriptor['size_bytes']):
+                raise ValueError('Bound payload type, size or alias count differs')
+            payload = read(fd)
+            if hashlib.sha256(payload).hexdigest() != descriptor['sha256']:
+>               raise ValueError('Bound payload checksum differs')
+E               ValueError: Bound payload checksum differs
+
+scripts/memory_family_compact_v4.py:497: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc7cec10>
+primitive = 'bootstrap', stage = 'entry', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+scripts/memory_family_compact_v4.py:516: in bound_payload
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 27
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-body] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc329fd0>
+primitive = 'bootstrap', stage = 'body', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+>                   if stage=='body': raise primary
+                                      ^^^^^^^^^^^^^
+E                   LookupError: genuine primitive body primary
+
+tests/test_memory_family_source_consumer_vnext.py:696: LookupError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc329fd0>
+primitive = 'bootstrap', stage = 'body', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+scripts/memory_family_compact_v4.py:516: in bound_payload
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 30
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-recheck] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc722690>
+primitive = 'bootstrap', stage = 'recheck', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+>                       if primitive=='bootstrap': held[2]()
+                                                   ^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:699: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def recheck():
+        if edge(root.lstat()) != edges[0]:
+            raise RuntimeError('Evidence root replaced while bound')
+        for index, identity in enumerate(edges):
+            named = (root.lstat() if index == 0 else os.stat(
+                parts[index - 1], dir_fd=opened[index - 1], follow_symlinks=False))
+            if edge(os.fstat(opened[index])) != identity or edge(named) != identity:
+                raise RuntimeError('Bound payload ancestor edge changed')
+        named = os.stat(parts[-1], dir_fd=opened[-2], follow_symlinks=False)
+        if (_file_identity(before) != _file_identity(os.fstat(fd))
+                or _file_identity(before) != _file_identity(named)
+                or read(fd) != payload):
+>           raise RuntimeError('Bound payload changed while held')
+E           RuntimeError: Bound payload changed while held
+
+scripts/memory_family_compact_v4.py:510: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc722690>
+primitive = 'bootstrap', stage = 'recheck', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+scripts/memory_family_compact_v4.py:516: in bound_payload
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 33
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-teardown] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acddc82d0>
+primitive = 'bootstrap', stage = 'teardown', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+                        elif stage=='read': held.read(admission['path'],MIB)
+                        else: held.recheck()
+>       assert owned and set(attempted)==owned
+E       assert ({33, 34, 35, 36} and {36} == {33, 34, 35, 36}
+E         
+E         Extra items in the right set:
+E         33
+E         34
+E         35
+E         Use -v to get more diff)
+
+tests/test_memory_family_source_consumer_vnext.py:703: AssertionError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-entry] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5aceb90710>
+
+    def __enter__(self):
+        if self._state != 'new':
+            raise RuntimeError('Replay file custody can only be entered once')
+        try:
+            self._clock()
+            root_key = self.root.parts[1:]
+            self._directory(root_key)
+            self._check_subtrees()
+            identities = set()
+            for entry in self._entries.values():
+                parts = entry.path.split('/')
+                parent = self._directory((*root_key, *parts[:-1]))
+                fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                             dir_fd=parent)
+                self._fds.append(fd)
+                state = os.fstat(fd)
+                expected = _identity(state)
+                if (not stat.S_ISREG(state.st_mode) or state.st_nlink != 1
+                        or state.st_size > entry.maximum
+                        or entry.size is not None and state.st_size != entry.size
+                        or (state.st_dev, state.st_ino) in identities):
+                    raise ValueError('Replay leaf type, alias count or size differs')
+                identities.add((state.st_dev, state.st_ino))
+                self._files[entry.path] = (fd, parent, parts[-1], expected)
+>               self._check_file(entry.path)
+
+scripts/memory_family_replay_custody_v4.py:259: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5aceb90710>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+            raise RuntimeError('Replay input file edge or metadata changed while held')
+        count, digest, payload = self._hash(fd, entry.maximum, copy_bytes=copy_bytes)
+        if (digest != entry.sha256 or (entry.size is not None and count != entry.size)
+                or count != expected[3]):
+>           raise ValueError('Replay input file bytes or size differ')
+E           ValueError: Replay input file bytes or size differ
+
+scripts/memory_family_replay_custody_v4.py:183: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc791950>
+primitive = 'strong', stage = 'entry', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:264: in __enter__
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 42
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-body] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acbdfdcd0>
+primitive = 'strong', stage = 'body', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+>                   if stage=='body': raise primary
+                                      ^^^^^^^^^^^^^
+E                   LookupError: genuine primitive body primary
+
+tests/test_memory_family_source_consumer_vnext.py:696: LookupError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acbdfdcd0>
+primitive = 'strong', stage = 'body', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+>               with manager as held:
+
+tests/test_memory_family_source_consumer_vnext.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:331: in __exit__
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 42
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-recheck] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5acedbdd10>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+            for relative in self._entries:
+>               self._check_file(relative)
+
+scripts/memory_family_replay_custody_v4.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5acedbdd10>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Replay input file edge or metadata changed while held')
+E           RuntimeError: Replay input file edge or metadata changed while held
+
+scripts/memory_family_replay_custody_v4.py:179: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc374b50>
+primitive = 'strong', stage = 'recheck', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+                        elif stage=='read': held.read(admission['path'],MIB)
+>                       else: held.recheck()
+                              ^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:702: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:278: in recheck
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 42
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-guard] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5acf25cbd0>
+relative = 'inputs/registrations/admission.json'
+
+    def _guard(self, relative):
+        self._active()
+        relative = _relative(relative)
+        if relative not in self._entries:
+            raise ValueError('Replay path was not registered')
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+>           self._check_file(relative)
+
+scripts/memory_family_replay_custody_v4.py:290: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5acf25cbd0>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Replay input file edge or metadata changed while held')
+E           RuntimeError: Replay input file edge or metadata changed while held
+
+scripts/memory_family_replay_custody_v4.py:179: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acc79e4d0>
+primitive = 'strong', stage = 'guard', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+>                       elif stage=='guard': held.fd_path(admission['path'])
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:700: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:318: in fd_path
+    relative = self._guard(relative)
+               ^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_replay_custody_v4.py:294: in _guard
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 42
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-read] _
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5aceae72d0>
+relative = 'inputs/registrations/admission.json'
+
+    def _guard(self, relative):
+        self._active()
+        relative = _relative(relative)
+        if relative not in self._entries:
+            raise ValueError('Replay path was not registered')
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+>           self._check_file(relative)
+
+scripts/memory_family_replay_custody_v4.py:290: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7f5aceae72d0>
+relative = 'inputs/registrations/admission.json'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Replay input file edge or metadata changed while held')
+E           RuntimeError: Replay input file edge or metadata changed while held
+
+scripts/memory_family_replay_custody_v4.py:179: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acee5f090>
+primitive = 'strong', stage = 'read', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+>                       elif stage=='read': held.read(admission['path'],MIB)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:701: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_family_replay_custody_v4.py:302: in read
+    relative = self._guard(relative)
+               ^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_replay_custody_v4.py:294: in _guard
+    self._failed()
+scripts/memory_family_replay_custody_v4.py:127: in _failed
+    self._close()
+scripts/memory_family_replay_custody_v4.py:123: in _close
+    raise first
+scripts/memory_family_replay_custody_v4.py:118: in _close
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 42
+
+    def close_then_fail(fd):
+        owned.update(live_fds()-baseline)
+        attempted.append(fd)
+        actual_close(fd)
+        if len(attempted)<=fault_count:
+>           raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+E           OSError: injected internal close failure 1 after closing FD
+
+tests/test_memory_family_source_consumer_vnext.py:688: OSError
+_ test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-teardown] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5acbd11d90>
+primitive = 'strong', stage = 'teardown', fault_count = 2
+
+    @pytest.mark.parametrize('primitive,stage', [
+        ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
+        ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
+        ('strong','read'),('strong','teardown')])
+    @pytest.mark.parametrize('fault_count',[1,2])
+    def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
+        module=api()
+        fixture=authored()
+        root,admission,*_=fixture
+        d=copy.deepcopy(admission)
+        if stage=='entry': d['sha256']='0'*64
+        baseline=live_fds()
+        actual_close=os.close
+        attempted=[]
+        owned=set()
+        primary=LookupError('genuine primitive body primary')
+        def close_then_fail(fd):
+            owned.update(live_fds()-baseline)
+            attempted.append(fd)
+            actual_close(fd)
+            if len(attempted)<=fault_count:
+                raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
+        expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
+        with monkeypatch.context() as patch:
+            patch.setattr(os,'close',close_then_fail)
+            manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
+            with pytest.raises(expected) as rejection:
+                with manager as held:
+                    owned.update(live_fds()-baseline)
+                    if stage=='body': raise primary
+                    if stage in ('recheck','guard','read'):
+                        with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
+                        if primitive=='bootstrap': held[2]()
+                        elif stage=='guard': held.fd_path(admission['path'])
+                        elif stage=='read': held.read(admission['path'],MIB)
+                        else: held.recheck()
+        assert owned and set(attempted)==owned
+        assert len(attempted)==len(owned)  # Each close is attempted once; no blind retry.
+        closed_fds(owned)
+        if stage=='body': assert rejection.value is primary
+        notes=getattr(rejection.value,'__notes__',[])
+>       assert len(notes)>=fault_count-(1 if stage=='teardown' else 0)
+E       assert 0 >= (2 - 1)
+E        +  where 0 = len([])
+
+tests/test_memory_family_source_consumer_vnext.py:708: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-entry]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-body]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-recheck]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-bootstrap-teardown]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-entry]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-body]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-recheck]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-guard]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[1-strong-read]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-entry]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-body]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-recheck]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-bootstrap-teardown]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-entry]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-body]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-recheck]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-guard]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-read]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_internal_close_faults_attempt_all_real_fds_and_preserve_primary[2-strong-teardown]
+19 failed, 1 passed in 4.25s

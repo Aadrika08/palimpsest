@@ -1,0 +1,44 @@
+{
+  "source_unchanged_since_full_run": true,
+  "source_sha256": "501de64b6a91ffa421576904cda0efe5a06941ce077ff1a5c3709881c51ec471",
+  "test_full_run_sha256": "9b92cf77a46fdf5646147981fa304e8bf1957e25b332b049e736581fb680dcc7",
+  "test_current_sha256": "ee27da83ce00021ed767b94bb019388b7f821fd068816b4bb07c4ab2354bbd96",
+  "changed_functions": [
+    "test_real_authored_lease_derives_detached_context_and_closes_fds",
+    "test_real_filesystem_mutation_permanently_poisons",
+    "test_cross_thread_poison_and_original_body_error_survive",
+    "test_real_deadline_expiry_is_permanent_and_closes_resources",
+    "test_final_recheck_failure_refuses_and_closes_all_owned_fds",
+    "test_multiple_teardown_faults_drain_every_real_context",
+    "test_output_ancestors_and_precreated_branch_edges_remain_bound",
+    "test_decode_error_remains_primary_through_multiple_real_context_exits"
+  ],
+  "added_functions": [
+    "closed_fds",
+    "live_fds",
+    "retained_fds"
+  ],
+  "unchanged_test_functions": {
+    "test_record_equality_and_authored_domain_refuse": "ea3364a6a9aa44181db6c9bd53f4e9d5895a5f931a963224a4822efccd8b3b23",
+    "test_private_constructor_and_arbitrary_authority_refuse": "9b7bfe9a88640f75bf36f13333b625eebd2f0a9a7429e1e6c7a79040e6052535",
+    "test_admission_and_record_derived_slot_authority_refuse": "e18890bd955c403d0182b352071536a8573c67e70b4be66ae23e5c99053d0f8f",
+    "test_held_snp_source_values_refuse": "b954ec2f02ae240b80eb5d778b3430f1d417d037264a06dd683dfa7aea32dee3",
+    "test_real_raw_numeric_frame_value_mismatches_refuse": "d56f4d3194518a30b8ab9bbc166bc066b4e128cba9a1b6e0d6d6fe7d465466b2",
+    "test_framing_and_combined_metadata_limits_refuse": "60ce3a8f081f8e9044782d710a4b9841c9d5c0e73ec4dd4139cdcbc7f38c5854",
+    "test_snp_preflight_refuses_before_decode": "296f8f7beba1a97d74c7939cdf544188a0740771a39c41642603ac78b3948e46",
+    "test_real_initial_forest_refuses_aliases_missing_and_extra": "9d506f2eabb6167c854fc7837df9dbfd12dbea1229f6c477624409b7f1ba6dfe",
+    "test_invalid_deadline_never_opens_files": "e5050b03c375109c2f70138889482c4ca4abf7e8121ad61351503b7d10f44fd5",
+    "test_single_slot_has_no_mutable_public_context_and_tampering_poison": "6c1f5f257485f99d406ce5338203eedd3a022bb988da27abed5d15c0a58d1468",
+    "test_wrong_case_actual_namespace_and_excessive_deadline_refuse_before_yield": "01a765915b13ba458fe54c0c98d20bba3a04fc56ae5ff79950dfcbc32a045a04"
+  },
+  "changed_test_functions": {
+    "test_real_authored_lease_derives_detached_context_and_closes_fds": "d3a26788194f282767cdebb19a6682ac5eece294b53b5aa5d127cb9cf1169345",
+    "test_real_filesystem_mutation_permanently_poisons": "989bda0572c7c1fb1bc429d068f74514d00b024551e9d5f4270e7d00d5c7eebd",
+    "test_cross_thread_poison_and_original_body_error_survive": "ab806aae22fab62a7583e976e176e753b8a5f133c6c4ef40d6ac0e03acb8cfe0",
+    "test_real_deadline_expiry_is_permanent_and_closes_resources": "660b1ad2c269598f8f407645fd707466ac9613e4ba9a9b9633b729c6d2f77238",
+    "test_final_recheck_failure_refuses_and_closes_all_owned_fds": "c04ac5153fede85590e154da4964f20a1a601707bac24b1eb5d4fa0c6333190d",
+    "test_multiple_teardown_faults_drain_every_real_context": "261055d61411374fa365c6c9e39e8b1c43e6d4051140b27567d7c99d451a5479",
+    "test_output_ancestors_and_precreated_branch_edges_remain_bound": "1bd4b842ca1c9acfd4736d24dc80ae76886a63e3fad8a49b492109ca64ef6464",
+    "test_decode_error_remains_primary_through_multiple_real_context_exits": "9c1c0ea663fb2c30bf4848ba0c624be57c0a8e28a85090e418b2b217972641a1"
+  }
+}

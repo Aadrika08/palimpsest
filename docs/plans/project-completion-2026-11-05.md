@@ -73,6 +73,21 @@ paper/release gates above remain open. The project is not complete.
 
 The user reports approximately3,000 included GitHub Actions minutes. Complete local checks first, then use one final hosted validation wave and cancel a duplicate event for the same exact head. Billing/account quota remains independently unverified. CI authorization grants neither paid compute nor research/protected-read/deletion permission.
 
+## Authored source custody milestone, 6 November 2026
+
+Task6a.1 now has a real fixed authored holder and independently reviewed
+teardown repair:208 local passes,2 historical pin skips,37.95s. All112 new
+holder cases execute; the skips lose old identity coverage. This establishes
+bounded authored file/value custody, not actual source authentication or model
+qualification. See [evidence and limits](../reports/memory-source-authored-holder-review-2026-11-06/README.md).
+
+The local unpublished branch still lacks actual source/bootstrap/replay
+qualification, complete lifetime/accounting, integrated condition admission,
+actual compact-evidence adequacy and full-study execution. Public actual source
+factories/Engine opt-in remain absent. Raw deletion stays disabled. No new
+research/probe/CI run or research CPU debit follows from these ordinary tests;
+all empirical/human/rights/reproducibility/final paper gates remain open.
+
 ## Verified proof milestone, 5 November 2026
 
 The standalone nine-module package and final Lake build passed, followed by an independent parent build and kernel check. All 17 exported axiom reports use only the standard allowed axioms. The retained package checksum manifest verifies 269 files. The numerical exporter also passed 31 Python tests and independent Lean compilation of synthetic negative and nonnegative fixtures, including their axiom reports. These are arithmetic fixtures; sampling eligibility and empirical improvement remain unverified. Runtime qualification, memory publication and all empirical/human delivery gates remain open. Research execution CPU used remains zero; proof builds and ordinary tests are excluded. See `formal/change-audit/evidence/verification-summary.json` and `paper/studies/change_audit_v1/independent-emitter-verification/verification.json`.

@@ -1,0 +1,41 @@
+..F..................................................................... [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_real_authored_lease_derives_detached_context_and_closes_fds[no-event-oracle] _
+
+kind = 'no-event', condition = 'oracle'
+
+    @pytest.mark.parametrize('kind,condition', [('change','oracle'),('null','no-U'),('no-event','oracle')])
+    def test_real_authored_lease_derives_detached_context_and_closes_fds(kind, condition):
+        fixture = authored(kind=kind, condition=condition)
+        root, adm, case, app, rows, _ = fixture
+>       with lease(fixture) as held:
+
+tests/test_memory_family_source_consumer_vnext.py:212: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+scripts/memory_family_source_consumer_vnext.py:502: in _open_authored_source_vnext
+    arrays=codec._read_arrays(payload,schema,row['count'],cap,'authored '+role); check()
+                                                                                 ^^^^^^^
+scripts/memory_family_source_consumer_vnext.py:455: in check
+    files.recheck()
+scripts/memory_family_replay_custody_v4.py:275: in recheck
+    self._check_dirs()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scripts.memory_family_replay_custody_v4.HeldReplayFiles object at 0x7fe3f2215ad0>
+
+    def _check_dirs(self):
+        for fd, parent, name, expected in self._dirs.values():
+            self._clock()
+            if (_identity(os.fstat(fd)) != expected
+                    or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>               raise RuntimeError('Replay root or ancestor changed while held')
+E               RuntimeError: Replay root or ancestor changed while held
+
+scripts/memory_family_replay_custody_v4.py:154: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_authored_lease_derives_detached_context_and_closes_fds[no-event-oracle]
+1 failed, 79 passed in 25.22s

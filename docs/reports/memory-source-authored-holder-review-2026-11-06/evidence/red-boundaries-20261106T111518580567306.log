@@ -1,0 +1,58 @@
+.........................................................F.............. [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+______________ test_snp_preflight_refuses_before_decode[trailing] ______________
+
+bad = 'trailing'
+
+    @pytest.mark.parametrize('bad', ['trailing','compressed','duplicate','unknown-meta','duplicate-json','missing-entry',
+        'noncontiguous','unknown-typed','unknown-member','metadata-expansion'])
+    def test_snp_preflight_refuses_before_decode(bad):
+        def edit(role,payload):
+            if role!='source_snapshot_bytes': return
+            if bad=='trailing': return payload+b'trailing'
+            source=zipfile.ZipFile(io.BytesIO(payload))
+            out=io.BytesIO()
+            with source, zipfile.ZipFile(out,'w',compression=zipfile.ZIP_DEFLATED if bad=='compressed' else zipfile.ZIP_STORED) as dest:
+                for info in source.infolist():
+                    name,value=info.filename,source.read(info)
+                    if name=='metadata.json':
+                        meta=json.loads(value)
+                        if bad=='unknown-meta': meta['unknown']=None
+                        elif bad=='unknown-typed': meta['container']['unexpected']=None
+                        elif bad=='metadata-expansion': meta['container']['padding']='x'*(8*MIB)
+                        value=json.dumps(meta,separators=(',',':')).encode()
+                        if bad=='duplicate-json': value=b'{"format":"duplicate",'+value[1:]
+                    elif bad=='missing-entry': continue
+                    elif bad=='noncontiguous': name='state/9999.bin'
+                    dest.writestr(name,value)
+                if bad=='duplicate': dest.writestr('metadata.json',b'{}')
+                if bad=='unknown-member': dest.writestr('../unknown',b'authored')
+            return out.getvalue()
+>       refuses(authored(edit=edit))
+
+tests/test_memory_family_source_consumer_vnext.py:422: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fixture = (PosixPath('/var/tmp/palimpsest-AUTHORED-source-vnext-1000-31f8860d-e380-4c0a-a632-9e1dcf423f15'), {'path': 'inputs/re...2\x00\x00population_stats.npyPK\x05\x06\x00\x00\x00\x00\x03\x00\x03\x00\xb9\x00\x00\x00\x05\x0b\x00\x00\x00\x00", ...})
+
+    def refuses(fixture):
+        with pytest.raises((ValueError, RuntimeError, OSError, KeyError)):
+>           with lease(fixture): pytest.fail('invalid authored values yielded capability')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: invalid authored values yielded capability
+
+tests/test_memory_family_source_consumer_vnext.py:313: Failed
+=============================== warnings summary ===============================
+tests/test_memory_family_source_consumer_vnext.py::test_framing_and_combined_metadata_limits_refuse[npz-duplicate]
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'latency.npy'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+tests/test_memory_family_source_consumer_vnext.py::test_snp_preflight_refuses_before_decode[duplicate]
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'metadata.json'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_snp_preflight_refuses_before_decode[trailing]
+1 failed, 79 passed, 2 warnings in 27.08s

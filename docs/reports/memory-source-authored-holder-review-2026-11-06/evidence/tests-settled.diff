@@ -1,0 +1,720 @@
+diff --git 1/tests/test_memory_family_source_consumer_vnext.py 2/tests/test_memory_family_source_consumer_vnext.py
+new file mode 100644
+index 0000000..4eaf391
+--- /dev/null
++++ 2/tests/test_memory_family_source_consumer_vnext.py
+@@ -0,0 +1,714 @@
++"""Real AUTHORED files only; these leases grant no actual source authority."""
++import copy
++from contextlib import contextmanager
++import hashlib
++import importlib
++import io
++import json
++import math
++import os
++from pathlib import Path
++import threading
++import time
++import uuid
++import zipfile
++
++import numpy as np
++import pytest
++
++from palimpsest import memory, snapshots
++from palimpsest import memory_decision_world as world, memory_transition_vnext as transition
++from scripts import memory_family_compact_v4 as compact
++from scripts import memory_family_terminal_audit_vnext as audit
++from scripts import memory_family_terminal_numeric_vnext as codec
++from scripts import memory_family_numeric_preservation_v2 as numeric
++from test_memory_family_oracle_v3 import _acquire, _application, _bind_events, _event
++from test_memory_family_raw_audit_v4 import _policy_row
++
++MIB = 1024 ** 2
++SOURCE = '00000000-0000-0000-0000-000000000001'
++RUN = '00000000-0000-0000-0000-000000000002'
++CLAIMS = dict.fromkeys(('actual_acceptance', 'source_qualified', 'model_qualified',
++    'allocation_authorized', 'publication_authorized', 'go_authorized'), False)
++REQUIREMENTS = ('src/palimpsest/memory_transition_vnext.py', 'src/palimpsest/snapshots.py',
++    'scripts/memory_family_replay_custody_v4.py', 'scripts/memory_family_compact_v4.py',
++    'scripts/memory_family_numeric_preservation_v2.py', 'scripts/memory_family_terminal_audit_vnext.py',
++    'scripts/memory_family_terminal_numeric_vnext.py')
++
++
++def api():
++    try:
++        return importlib.import_module('scripts.memory_family_source_consumer_vnext')
++    except ModuleNotFoundError:
++        pytest.fail('Fixed authored source holder is missing', pytrace=False)
++
++
++def descriptor(path, payload):
++    return {'path': path, 'size_bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()}
++
++
++def npz_size(schema, count):
++    # NPY1.0 128-byte header; local ZIP64 header, central header, EOCD.
++    return 22 + sum(128 + count * math.prod(shape) * np.dtype(dtype).itemsize
++        + 30 + 20 + 46 + 2 * len((name + '.npy').encode()) for name, (dtype, shape) in schema.items())
++
++
++def authored(*, edit=None, kind='change', condition='oracle'):
++    """Exclusive retained fixture; edit alters real bytes before downstream Ds."""
++    root = Path(f'/var/tmp/palimpsest-AUTHORED-source-vnext-{os.geteuid()}-{uuid.uuid4()}')
++    root.mkdir()
++    case = world.make_family_case('development', 0, 4, kind)
++    b = 'inputs/cases/' + case['case_id']
++    for path in ('inputs/meta', 'inputs/registrations', 'inputs/controls', b + '/source/snapshots',
++            b + '/raw/chunks', b + '/numeric/base', b + '/numeric/extra',
++            'outputs/condition/work', 'outputs/condition/atomic', 'outputs/condition/quarantine'):
++        (root / path).mkdir(parents=True, exist_ok=True)
++    roster = {}
++    records = {}
++
++    def put(role, path, value, maximum=MIB, middle=None):
++        if middle:
++            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
++        if edit:
++            replacement = edit(role, value)
++            if replacement is not None:
++                value = replacement
++        payload = memory.canonical_bytes(value) if type(value) is dict else value
++        with (root / path).open('xb') as stream:
++            stream.write(payload)
++            stream.flush()
++            os.fsync(stream.fileno())
++        d = descriptor(path, payload)
++        roster[role] = {'role': role, 'descriptor': d, 'max_bytes': maximum}
++        records[role] = value
++        return d
++
++    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
++    closure = put('source_closure', 'inputs/meta/source-closure.json', {'profile': profile,
++        'requirements': sorted([descriptor(p, (codec.ROOT / p).read_bytes()) for p in REQUIREMENTS], key=lambda d: d['path'])}, middle='software-closure')
++    common = {'profile': profile, 'source_closure': closure}
++    state, n, _, events, projected = _acquire(case)
++    events.append(_event('memory_acquired_boundary', n, boundary_tick=n,
++        acquired_evidence=copy.deepcopy(state['supervisor']['acquired_evidence'])))
++    rows = []
++    for row in projected:
++        _, arrays = _policy_row(row, SOURCE)
++        arrays['population_stats'] = np.zeros((3, 4), dtype='<f8')
++        for name in ('reward', 'simulation_time', 'revision', 'latency', 'step_latency'):
++            arrays[name] = arrays[name][()]
++        rows.append({'episode': 0, 'tick': row['tick'], **arrays})
++    raw_schema = {'episode': ('<i8', ()), 'tick': ('<i8', ()), **codec.RAW_ARRAYS}
++    raw_chunks = []
++    for i in range((n + 31) // 32):
++        start, count = 32 * i, min(32, n - 32 * i)
++        arrays = {name: np.stack([row[name] for row in rows[start:start+count]]) for name in raw_schema}
++        payload = compact._npz(arrays)
++        d = put(f'raw_chunk:{i}', f'{b}/raw/chunks/{i:06d}.npz', payload, npz_size(raw_schema, count))
++        raw_chunks.append({'index': i, 'start': start, 'count': count, 'descriptor': d})
++        events.append(_event('chunk', n, episode=0, start=start, count=count,
++            path=f'chunks/{i:06d}.npz', sha256=d['sha256']))
++    _bind_events(events, SOURCE)
++    events_payload = b''.join(audit._writer(e) for e in events)
++    events_d = put('raw_events', b + '/raw/events.jsonl', events_payload, 7*MIB)
++    manifest = put('raw_manifest', b + '/raw/manifest.json', {'case_id': case['case_id'],
++        'source_run_id': SOURCE, 'row_count': n, 'event_count': len(events), 'chunks': raw_chunks}, middle='raw-manifest')
++    sw = world.initial_state(case)
++    sw['last_tick'] = n - 1
++    application = _application(case, state, n, sw, SOURCE)
++    application['event_prefix'] = {'sha256': hashlib.sha256(events_payload).hexdigest(),
++        'size_bytes': len(events_payload), 'event_count': len(events)}
++    snapshot = {'schema': 'memory-source-authored-snapshot-vnext-v1', 'application': application,
++        'native_data': b'opaque AUTHORED bytes; never restore', 'claims': copy.deepcopy(CLAIMS)}
++    snapshot['native_sha256'] = hashlib.sha256(snapshot['native_data']).hexdigest()
++    if edit:
++        replacement = edit('snapshot', snapshot)
++        if replacement is not None:
++            snapshot = replacement
++    snp_path = b + '/source/snapshots/initial.snp'
++    snapshots.save_snapshot(snapshot, root / snp_path)
++    if edit:
++        changed = edit('source_snapshot_bytes', (root / snp_path).read_bytes())
++        if changed is not None:
++            (root / snp_path).write_bytes(changed)
++    snp = descriptor(snp_path, (root / snp_path).read_bytes())
++    roster['source_snapshot'] = {'role': 'source_snapshot', 'descriptor': snp, 'max_bytes': 16*MIB}
++    ident = {'case_id': case['case_id'], 'source_run_id': SOURCE}
++    owner = put('owner_record', b + '/source/owner.json', {**ident, 'snapshot': snp}, middle='owner')
++    report = put('worker_report', b + '/raw/owner-report.json', {**ident, 'snapshot': snp,
++        'total_ticks': n, 'world_state': sw}, middle='owner-report')
++    projected_rows = compact._project_rows(rows, 'source')
++    hashes = {'camera_sequence_sha256': compact._sequence_hash(projected_rows, compact.DIGEST_FIELDS[:-1]),
++        'row_sequence_sha256': compact._sequence_hash(projected_rows, ('row_digest',)),
++        'trace_digest': compact._trace_digest(projected_rows)}
++    raw_audit = put('source_raw_audit', 'inputs/controls/raw-audit.json', {**common, **ident,
++        'case_sha256': memory.sha256(case), 'owner_record': owner, 'worker_report': report,
++        'raw_manifest': manifest, 'raw_events': events_d, 'snapshot': snp,
++        'row_count': n, 'chunk_count': len(raw_chunks), 'event_count': len(events),
++        'recording_bytes': sum(d['size_bytes'] for d in (manifest, events_d, report,
++            *(c['descriptor'] for c in raw_chunks))), **hashes}, middle='raw-audit')
++    producer = put('producer_registration', 'inputs/registrations/producer.json', {**common,
++        'case': case, 'source_run_id': SOURCE, 'owner_record': owner, 'worker_report': report,
++        'raw_manifest': manifest, 'raw_events': events_d, 'raw_audit': raw_audit, 'snapshot': snp}, middle='producer-registration')
++    chunks = []
++    for i, raw_chunk in enumerate(raw_chunks):
++        start, count = raw_chunk['start'], raw_chunk['count']
++        base = compact._npz({name: np.stack([r[name] for r in projected_rows[start:start+count]]) for name in codec.BASE_ARRAYS})
++        extra = compact._npz({name: np.stack([r[name] for r in rows[start:start+count]]) for name in numeric.NUMERIC_FIELDS})
++        bd = put(f'numeric_base:{i}', f'{b}/numeric/base/{i:06d}.npz', base, npz_size(codec.BASE_ARRAYS, count))
++        ed = put(f'numeric_extra:{i}', f'{b}/numeric/extra/{i:06d}.npz', extra, npz_size(numeric.NUMERIC_FIELDS, count))
++        chunks.append({'index': i, 'start': start, 'count': count, 'raw': raw_chunk['descriptor'], 'base': bd, 'extra': ed})
++    ticks = compact.audit_ticks(range(n), event_tick=None, decision_tick=None)
++    frames = compact._npz({'tick': np.array(ticks, dtype='<i8'),
++        **{name: np.stack([rows[t][name] for t in ticks]) for name in ('raw_cam_left', 'raw_cam_right')}})
++    frame_d = put('audit_frames', b + '/numeric/audit-frames.npz', frames, npz_size(compact.FRAME_FIELDS, len(ticks)))
++    index = put('numeric_index', b + '/numeric/index.json', {**ident, 'row_count': n, 'chunks': chunks}, middle='numeric-index')
++    inventory = sorted([index, frame_d, *(x[k] for x in chunks for k in ('base', 'extra'))], key=lambda d:d['path'])
++    conversion = put('source_numeric_conversion', b + '/numeric/conversion.json', {**common, **ident,
++        'producer_registration': producer, 'raw_audit': raw_audit, 'snapshot': snp, 'index': index,
++        'audit_frames': frame_d, 'inventory': inventory, 'row_count': n, 'trace_digest': hashes['trace_digest']}, 65536, 'numeric-conversion')
++    commit = put('source_numeric_commit', b + '/numeric/commit.json', {**common, **ident,
++        'conversion': conversion, 'status': 'AUTHORED-RETENTION-ONLY'}, 16384, 'retention-commit')
++    schedule = {'boundary_tick': n, 'event_tick': None if kind=='no-event' else n + world.registered_profile(case['profile_sha256'])['arm_schedule']['event_offset'],
++        'decision_tick': n + world.registered_profile(case['profile_sha256'])['arm_schedule']['decision_offset']}
++    pending = {'profile': profile, 'source_application_sha256': memory.sha256(application),
++        'case_sha256': memory.sha256(case), 'run_id': RUN}
++    resource = [] if condition == 'oracle' else None
++    selector = {'version': 1, 'condition': condition, 'limit': 1, 'resource': resource,
++        'resource_sha256': memory.sha256(resource), 'provenance_sha256': transition.pending_provenance_vnext(pending) if condition=='oracle' else 'b'*64}
++    resources = {'selector': selector, 'u': memory.artifact()}
++    st = root.stat()
++    admission_value = {**common, **ident, 'case_sha256': memory.sha256(case), 'producer_registration': producer,
++        'source_commit': commit, 'source_raw_audit': raw_audit, 'source_snapshot': snp,
++        'source_numeric_conversion': conversion, 'source_numeric_commit': commit,
++        'condition_slot': {'run_id': RUN, 'condition': condition, 'resources': resources,
++            'condition_resources_sha256': memory.sha256(resources), 'schedule': schedule},
++        'namespace': {'schema':'memory-source-authored-namespace-vnext-v1', 'root': str(root),
++            'uid': os.geteuid(), 'device':st.st_dev, 'inode':st.st_ino},
++        'inventory': sorted(roster.values(), key=lambda d:d['descriptor']['path'])}
++    adm = put('admission', 'inputs/registrations/admission.json', admission_value, middle='admission')
++    return root, adm, case, application, rows, records
++
++
++def lease(fixture, **kwargs):
++    root, adm, case, *_ = fixture
++    module=api()
++    manager=module._open_authored_source_vnext(str(root), adm, case_id=case['case_id'],
++        deadline=kwargs.pop('deadline', time.monotonic()+60), **kwargs)
++    @contextmanager
++    def checked():
++        try:
++            with manager as held: yield held
++        except RuntimeError as error:
++            # Read-only diagnostics from the unchanged primitive's actual saved
++            # witnesses, even if a factory failed before yielding its holder.
++            seen=set()
++            failure=error
++            while failure is not None and id(failure) not in seen:
++                seen.add(id(failure))
++                tb=failure.__traceback__
++                while tb is not None:
++                    if tb.tb_frame.f_code.co_name=='_check_dirs':
++                        files=tb.tb_frame.f_locals['self']
++                        for key,(_,_,_,expected) in files._dirs.items():
++                            path='/'+'/'.join(key)
++                            try: current=module.custody._identity(os.stat(path,follow_symlinks=False))
++                            except OSError as missing: current=repr(missing)
++                            if current!=expected:
++                                error.add_note(f'Actual held directory {path}: expected={expected!r}; current={current!r}')
++                    tb=tb.tb_next
++                failure=failure.__cause__ or failure.__context__
++            raise
++    return checked()
++
++
++def owned_fds(root):
++    result = []
++    for p in Path('/proc/self/fd').iterdir():
++        try:
++            if os.readlink(p).startswith(str(root)):
++                result.append(int(p.name))
++        except FileNotFoundError:
++            pass
++    return result
++
++
++def live_fds():
++    """Exclude the transient directory-listing FD using a real fstat."""
++    result=set()
++    for path in Path('/proc/self/fd').iterdir():
++        try: os.fstat(int(path.name))
++        except OSError: continue
++        result.add(int(path.name))
++    return result
++
++
++def retained_fds(held,root,baseline):
++    active=live_fds()
++    strong=set(held._files._fds)
++    assert strong <= active
++    assert strong.isdisjoint(baseline)
++    return (active-baseline) | strong | set(owned_fds(root))
++
++
++def closed_fds(fds):
++    for fd in fds:
++        with pytest.raises(OSError): os.fstat(fd)
++
++
++def require_entered(rejection,fds):
++    # A setup refusal is never evidence of a post-yield mutation/lifetime gate.
++    if fds is None:
++        raise rejection.value
++
++
++@pytest.mark.parametrize('kind,condition', [('change','oracle'),('null','no-U'),('no-event','oracle')])
++def test_real_authored_lease_derives_detached_context_and_closes_fds(kind, condition):
++    fixture = authored(kind=kind, condition=condition)
++    root, adm, case, app, rows, _ = fixture
++    baseline=live_fds()
++    with lease(fixture) as held:
++        assert type(held) is api().HeldSourceVnext
++        assert held.context['source_registration'] == adm
++        assert held.context['source_m_sha256'] == memory.sha256(app['memory']['m'])
++        assert held.context['source_invariant_sha256'] == transition.terminal_condition_invariant_vnext(app)
++        assert held.case == case and held.source_application == app
++        assert len(held._source_rows) == len(rows) > 0
++        assert held.source_snapshot_reference['source_receipt_sha256'] is None
++        assert held.source_snapshot_reference['path'].endswith('/source/snapshots/initial.snp')
++        copy_context, copy_rows = held.context, held._source_rows
++        copy_context['run_id'] = SOURCE
++        copy_rows[0]['cam_left'][:] = 255
++        assert held.context['run_id'] == RUN
++        assert np.array_equal(held._source_rows[0]['cam_left'], rows[0]['cam_left'])
++        fds = retained_fds(held,root,baseline)
++        assert len(fds) >= 17
++        held.recheck()
++        (root/'outputs/condition/work/result.json').write_text('{}')
++        held.recheck()
++    assert not owned_fds(root)
++    closed_fds(fds)
++    with pytest.raises(RuntimeError): held.context
++
++
++@pytest.mark.parametrize('role,field,value', [
++    ('admission','claims', {**CLAIMS,'actual_acceptance': True}),
++    ('admission','schema','actual-source-admission-v1'),
++    ('admission','source_run_id',SOURCE.replace('-','')),
++    ('raw_manifest','row_count', True),
++    ('source_raw_audit','trace_digest','0'*64),
++    ('owner_record','snapshot', {'path':'wrong.snp','size_bytes':1,'sha256':'0'*64}),
++    ('source_numeric_commit','status','accepted'),
++])
++def test_record_equality_and_authored_domain_refuse(role, field, value):
++    def edit(name, v):
++        if name == role: v[field] = value
++    fixture = authored(edit=edit)
++    with pytest.raises(ValueError):
++        with lease(fixture): pytest.fail('invalid record yielded a source capability')
++    assert not owned_fds(fixture[0])
++
++
++@pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','input-directory','symlink','ancestor','absolute-parent'])
++def test_real_filesystem_mutation_permanently_poisons(mutation):
++    fixture = authored()
++    root, adm, *_ = fixture
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(RuntimeError) as rejection:
++        with lease(fixture) as held:
++            fds=retained_fds(held,root,baseline)
++            path = root/adm['path']
++            if mutation=='bytes':
++                with path.open('r+b') as stream: stream.write(b'x')
++            elif mutation=='replace':
++                sibling = root/'outputs/condition/work/replacement'
++                sibling.write_bytes(path.read_bytes())
++                os.replace(sibling, path)
++            elif mutation=='root-child': (root/'unexpected').mkdir()
++            elif mutation=='input-child': (root/'inputs/meta/unexpected').write_text('x')
++            elif mutation=='input-directory': (root/'inputs/unexpected').mkdir()
++            elif mutation=='absolute-parent': (root.parent/('task-6a1-parent-mutation-'+str(uuid.uuid4()))).mkdir()
++            elif mutation=='symlink':
++                target = root/'outputs/condition/work/admission'
++                os.rename(path, target)
++                path.symlink_to(target)
++            else: os.rename(root/'inputs/registrations', root/'inputs/registrations-replaced')
++            with pytest.raises((RuntimeError,FileNotFoundError)): held.context
++            with pytest.raises(RuntimeError): held.context
++    require_entered(rejection,fds)
++    assert not owned_fds(root)
++    closed_fds(fds)
++
++
++def test_private_constructor_and_arbitrary_authority_refuse():
++    cls = api().HeldSourceVnext
++    with pytest.raises((TypeError,ValueError)):
++        cls(object(), stack=None, files=None, deadline=time.monotonic()+5,
++            owner_thread=threading.get_ident(), admission={}, context={}, source={})
++    fixture = authored()
++    with pytest.raises(TypeError):
++        with lease(fixture, checker=lambda: True): pass
++    assert not hasattr(cls, 'bind') and not hasattr(cls, 'rebind')
++
++
++def test_cross_thread_poison_and_original_body_error_survive():
++    fixture = authored()
++    caught = []
++    primary = LookupError('body primary')
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(LookupError) as result:
++        with lease(fixture) as held:
++            fds=retained_fds(held,fixture[0],baseline)
++            def worker():
++                try: held.recheck()
++                except BaseException as error: caught.append(error)
++            thread = threading.Thread(target=worker)
++            thread.start(); thread.join()
++            assert len(caught)==1 and isinstance(caught[0], RuntimeError)
++            with pytest.raises(RuntimeError): held.source_m
++            raise primary
++    require_entered(result,fds)
++    assert result.value is primary
++    assert not owned_fds(fixture[0])
++    closed_fds(fds)
++
++
++def refuses(fixture, match=None, expected=ValueError):
++    with pytest.raises(expected, match=match):
++        with lease(fixture): pytest.fail('invalid authored values yielded capability')
++    assert not owned_fds(fixture[0])
++
++
++@pytest.mark.parametrize('bad', ['unknown','missing','qualified','namespace-uid','namespace-root',
++    'inventory-cap','inventory-role','inventory-missing','slot-run','slot-schedule','slot-resources',
++    'slot-resource-hash','profile','case-hash','source-alias','conversion-alias','closure-roster'])
++def test_admission_and_record_derived_slot_authority_refuse(bad):
++    def edit(role, v):
++        if role=='source_closure' and bad=='closure-roster':
++            v['requirements'][0]['path']='src/unregistered.py'
++        if role!='admission': return
++        if bad=='unknown': v['extra']=False
++        elif bad=='missing': v.pop('case_sha256')
++        elif bad=='qualified': v['qualified']=True
++        elif bad=='namespace-uid': v['namespace']['uid']=True
++        elif bad=='namespace-root': v['namespace']['root']='/actual/source'
++        elif bad=='inventory-cap': v['inventory'][0]['max_bytes']+=1
++        elif bad=='inventory-role': v['inventory'][0]['role']='fake'
++        elif bad=='inventory-missing': v['inventory'].pop()
++        elif bad=='slot-run': v['condition_slot']['run_id']=SOURCE
++        elif bad=='slot-schedule': v['condition_slot']['schedule']['decision_tick']+=1
++        elif bad=='slot-resources':
++            v['condition_slot']['resources']['selector']['condition']='no-U'
++            v['condition_slot']['condition_resources_sha256']=memory.sha256(v['condition_slot']['resources'])
++        elif bad=='slot-resource-hash': v['condition_slot']['condition_resources_sha256']='0'*64
++        elif bad=='profile': v['profile']={**v['profile'],'path':'inputs/meta/wrong.json'}
++        elif bad=='case-hash': v['case_sha256']='0'*64
++        elif bad=='source-alias': v['source_commit']={**v['source_commit'],'sha256':'0'*64}
++        elif bad=='conversion-alias': v['source_numeric_conversion']={**v['source_numeric_conversion'],'sha256':'0'*64}
++    refuses(authored(edit=edit))
++
++
++@pytest.mark.parametrize('bad', ['prefix','armed','acquisition','source-id','case','native-hash'])
++def test_held_snp_source_values_refuse(bad):
++    def edit(role, v):
++        if role!='snapshot': return
++        app=v['application']
++        if bad=='prefix': app['event_prefix']['sha256']='0'*64
++        elif bad=='armed': app['world_task_state']['armed_boundary_tick']=app['episode_step']
++        elif bad=='acquisition': app['memory']['supervisor']['phase']='acquire'
++        elif bad=='source-id': app['source_run_id']=RUN
++        elif bad=='case': app['world_task_state']['case']['kind']='null'
++        elif bad=='native-hash': v['native_sha256']='0'*64
++    refuses(authored(edit=edit))
++
++
++def replace_npz(payload, name):
++    with np.load(io.BytesIO(payload), allow_pickle=False) as archive:
++        arrays={key:archive[key].copy() for key in archive.files}
++    arrays[name].flat[0]+=1
++    return compact._npz(arrays)
++
++
++@pytest.mark.parametrize('role,name', [('raw_chunk:0','cam_left'), ('numeric_base:0','encoded_input'),
++    ('numeric_base:0','cam_left_sha256'), ('numeric_extra:0','latency'),
++    ('numeric_extra:0','population_stats'), ('audit_frames','raw_cam_left')])
++def test_real_raw_numeric_frame_value_mismatches_refuse(role,name):
++    refuses(authored(edit=lambda r,v:replace_npz(v,name) if r==role else None))
++
++
++@pytest.mark.parametrize('bad', ['events-writer','chunk-sha','npz-trailing','npz-duplicate','json-duplicate',
++    'json-trailing','metadata-aggregate','empty-source','profile-bytes','wrong-npy-header'])
++def test_framing_and_combined_metadata_limits_refuse(bad):
++    def edit(role,v):
++        if bad=='events-writer' and role=='raw_events': return v.replace(b': ',b':',1)
++        if bad=='chunk-sha' and role=='raw_events':
++            events=[json.loads(line) for line in v.splitlines()]
++            events[-1]['sha256']='0'*64
++            return b''.join(audit._writer(e) for e in events)
++        if bad=='npz-trailing' and role=='numeric_extra:0': return v+b'trailing'
++        if bad=='npz-duplicate' and role=='numeric_extra:0':
++            out=io.BytesIO(v)
++            with zipfile.ZipFile(out,'a') as z:
++                with pytest.warns(UserWarning, match='Duplicate name'): z.writestr('latency.npy',b'bad')
++            return out.getvalue()
++        if bad=='json-duplicate' and role=='owner_record':
++            payload=memory.canonical_bytes(v)
++            return b'{"case_id":"duplicate",'+payload[1:]
++        if bad=='json-trailing' and role=='owner_record': return memory.canonical_bytes(v)+b'\n'
++        if bad=='metadata-aggregate' and role=='source_closure':
++            v['requirements'][0]['padding']='x'*(MIB-12000)
++        if bad=='empty-source' and role=='raw_manifest': v['row_count']=0
++        if bad=='profile-bytes' and role=='profile': return v.replace(b'"adopted":false',b'"adopted":true ',1)
++        if bad=='wrong-npy-header' and role=='numeric_extra:0':
++            with np.load(io.BytesIO(v),allow_pickle=False) as archive:
++                arrays={name:archive[name].copy() for name in archive.files}
++            arrays['latency']=arrays['latency'].view('<i8')
++            return compact._npz(arrays)
++    refuses(authored(edit=edit), match='Combined authored metadata' if bad=='metadata-aggregate' else None)
++
++
++@pytest.mark.parametrize('bad', ['trailing','compressed','duplicate','unknown-meta','duplicate-json','missing-entry',
++    'noncontiguous','unknown-typed','unknown-member','metadata-expansion','typed-nodes','entry-count'])
++def test_snp_preflight_refuses_before_decode(bad):
++    def edit(role,payload):
++        if role!='source_snapshot_bytes': return
++        if bad=='trailing': return payload+b'trailing'
++        source=zipfile.ZipFile(io.BytesIO(payload))
++        out=io.BytesIO()
++        with source, zipfile.ZipFile(out,'w',compression=zipfile.ZIP_DEFLATED if bad=='compressed' else zipfile.ZIP_STORED) as dest:
++            for info in source.infolist():
++                name,value=info.filename,source.read(info)
++                if name=='metadata.json':
++                    meta=json.loads(value)
++                    if bad=='unknown-meta': meta['unknown']=None
++                    elif bad=='unknown-typed': meta['container']['unexpected']=None
++                    elif bad=='metadata-expansion': meta['container']['padding']='x'*(8*MIB)
++                    elif bad=='typed-nodes': meta['container']['items'].append(['padding',{'kind':'list','items':[None]*(512*1024)}])
++                    value=json.dumps(meta,separators=(',',':')).encode()
++                    if bad=='duplicate-json': value=b'{"format":"duplicate",'+value[1:]
++                elif bad=='missing-entry': continue
++                elif bad=='noncontiguous': name='state/9999.bin'
++                dest.writestr(name,value)
++            if bad=='duplicate':
++                with pytest.warns(UserWarning, match='Duplicate name'): dest.writestr('metadata.json',b'{}')
++            if bad=='unknown-member': dest.writestr('../unknown',b'authored')
++            if bad=='entry-count':
++                for i in range(8192): dest.writestr(f'unused/{i}',b'authored')
++        return out.getvalue()
++    refuses(authored(edit=edit))
++
++
++@pytest.mark.parametrize('bad', ['missing-leaf','extra-leaf','hardlink','input-symlink','extra-output'])
++def test_real_initial_forest_refuses_aliases_missing_and_extra(bad):
++    fixture=authored()
++    root,adm,_,_,_,records=fixture
++    path=root/adm['path']
++    if bad=='missing-leaf': os.rename(path,root/'outputs/condition/work/retained-admission')
++    elif bad=='extra-leaf': (root/'inputs/meta/unregistered').write_bytes(b'authored')
++    elif bad=='extra-output': (root/'outputs/condition/work/unexpected').write_bytes(b'authored')
++    elif bad=='hardlink':
++        other=root/records['admission']['source_closure']['path']
++        os.rename(other,root/'outputs/condition/work/retained-closure')
++        os.link(path,other)
++    else:
++        os.rename(root/'inputs/meta',root/'outputs/condition/work/retained-meta')
++        (root/'inputs/meta').symlink_to(root/'outputs/condition/work/retained-meta')
++    refuses(fixture, expected=FileNotFoundError if bad=='missing-leaf' else NotADirectoryError if bad=='input-symlink' else ValueError)
++
++
++def test_real_deadline_expiry_is_permanent_and_closes_resources():
++    fixture=authored()
++    deadline=time.monotonic()+2
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(RuntimeError) as rejection:
++        with lease(fixture,deadline=deadline) as held:
++            fds=retained_fds(held,fixture[0],baseline)
++            time.sleep(max(0,deadline-time.monotonic())+.005)
++            with pytest.raises(TimeoutError): held.source_world
++            with pytest.raises(RuntimeError): held.context
++    require_entered(rejection,fds)
++    assert not owned_fds(fixture[0])
++    closed_fds(fds)
++
++
++@pytest.mark.parametrize('deadline',[True,float('nan'),float('inf'),-1])
++def test_invalid_deadline_never_opens_files(deadline):
++    fixture=authored()
++    with pytest.raises(ValueError):
++        with lease(fixture,deadline=deadline): pytest.fail('invalid deadline yielded')
++    assert not owned_fds(fixture[0])
++
++
++def test_final_recheck_failure_refuses_and_closes_all_owned_fds():
++    fixture=authored()
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(RuntimeError) as rejection:
++        with lease(fixture) as held:
++            fds=retained_fds(held,fixture[0],baseline)
++            (fixture[0]/'inputs/final-mutation').mkdir()
++    require_entered(rejection,fds)
++    assert not owned_fds(fixture[0])
++    closed_fds(fds)
++    with pytest.raises(RuntimeError): held._source_snapshot
++
++
++@pytest.mark.parametrize('with_body',[False,True])
++def test_multiple_teardown_faults_drain_every_real_context(monkeypatch,with_body):
++    module=api()
++    original=module.compact.bound_payload
++    original_strong_exit=module.custody.HeldReplayFiles.__exit__
++    def strong_exit(self,*args):
++        try: return original_strong_exit(self,*args)
++        finally: raise ArithmeticError('deterministic strong exit after real FD closure')
++    monkeypatch.setattr(module.custody.HeldReplayFiles,'__exit__',strong_exit)
++    primary=LookupError('original body error')
++    class FailingExit:
++        def __init__(self,manager): self.manager=manager
++        def __enter__(self): return self.manager.__enter__()
++        def __exit__(self,*args):
++            try: return self.manager.__exit__(*args)
++            finally: raise OSError('deterministic exit after real payload closure')
++    monkeypatch.setattr(module.compact,'bound_payload',lambda *a,**k:FailingExit(original(*a,**k)))
++    fixture=authored()
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(LookupError if with_body else RuntimeError) as result:
++        with lease(fixture) as held:
++            fds=retained_fds(held,fixture[0],baseline)
++            if with_body: raise primary
++    require_entered(result,fds)
++    if with_body: assert result.value is primary
++    assert len(result.value.__notes__)>=3
++    assert any('deterministic strong exit' in note for note in result.value.__notes__)
++    assert not owned_fds(fixture[0])
++    closed_fds(fds)
++    with pytest.raises(RuntimeError): held.context
++
++
++@pytest.mark.parametrize('mutation',['outputs-child','condition-child','branch-mode','branch-replace','outputs-replace'])
++def test_output_ancestors_and_precreated_branch_edges_remain_bound(mutation):
++    fixture=authored()
++    root=fixture[0]
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(RuntimeError) as rejection:
++        with lease(fixture) as held:
++            fds=retained_fds(held,root,baseline)
++            if mutation=='outputs-child': (root/'outputs/unregistered').mkdir()
++            elif mutation=='condition-child': (root/'outputs/condition/unregistered').mkdir()
++            elif mutation=='branch-mode': (root/'outputs/condition/work').chmod(0o700)
++            elif mutation=='branch-replace':
++                os.rename(root/'outputs/condition/work',root/'outputs/condition/quarantine/retained-work')
++                (root/'outputs/condition/work').mkdir()
++            else:
++                os.rename(root/'outputs',root/'retained-outputs')
++                (root/'outputs').mkdir()
++            with pytest.raises(RuntimeError): held.recheck()
++    require_entered(rejection,fds)
++    assert not owned_fds(root)
++    closed_fds(fds)
++
++
++def test_single_slot_has_no_mutable_public_context_and_tampering_poison():
++    fixture=authored()
++    baseline=live_fds()
++    fds=None
++    with pytest.raises(RuntimeError) as rejection:
++        with lease(fixture) as held:
++            fds=retained_fds(held,fixture[0],baseline)
++            with pytest.raises(AttributeError): held.context={}
++            held._context['run_id']=SOURCE
++            with pytest.raises(RuntimeError): held.recheck()
++            with pytest.raises(RuntimeError): held.source_m
++    require_entered(rejection,fds)
++    assert not owned_fds(fixture[0])
++    closed_fds(fds)
++
++
++def test_wrong_case_actual_namespace_and_excessive_deadline_refuse_before_yield():
++    fixture=authored()
++    root,adm,case,*_=fixture
++    module=api()
++    for where,case_id,deadline in (
++        (str(root),case['case_id']+'-different',time.monotonic()+60),
++        ('/actual/source',case['case_id'],time.monotonic()+60),
++        (str(root),case['case_id'],time.monotonic()+301),
++    ):
++        with pytest.raises(ValueError):
++            with module._open_authored_source_vnext(where,adm,case_id=case_id,deadline=deadline):
++                pytest.fail('caller-supplied authority changed source binding')
++    assert not owned_fds(root)
++
++
++def test_decode_error_remains_primary_through_multiple_real_context_exits(monkeypatch):
++    module=api()
++    original=module.compact.bound_payload
++    class FailingExit:
++        def __init__(self,manager): self.manager=manager
++        def __enter__(self): return self.manager.__enter__()
++        def __exit__(self,*args):
++            try: return self.manager.__exit__(*args)
++            finally: raise OSError('deterministic exit after real closure')
++    monkeypatch.setattr(module.compact,'bound_payload',lambda *a,**k:FailingExit(original(*a,**k)))
++    def edit(role,value):
++        if role=='snapshot': value['native_sha256']='0'*64
++    fixture=authored(edit=edit)
++    baseline=live_fds()
++    with pytest.raises(ValueError,match='Invalid authored opaque native bytes') as result:
++        with lease(fixture): pytest.fail('invalid decoded source yielded')
++    assert len(result.value.__notes__)>=3
++    assert not owned_fds(fixture[0])
++    assert live_fds() <= baseline
++
++
++@pytest.mark.parametrize('primitive,stage', [
++    ('bootstrap','entry'),('bootstrap','body'),('bootstrap','recheck'),('bootstrap','teardown'),
++    ('strong','entry'),('strong','body'),('strong','recheck'),('strong','guard'),
++    ('strong','read'),('strong','teardown')])
++@pytest.mark.parametrize('fault_count',[1,2])
++def test_internal_close_faults_attempt_all_real_fds_and_preserve_primary(monkeypatch,primitive,stage,fault_count):
++    module=api()
++    fixture=authored()
++    root,admission,*_=fixture
++    d=copy.deepcopy(admission)
++    if stage=='entry': d['sha256']='0'*64
++    baseline=live_fds()
++    actual_close=os.close
++    attempted=[]
++    owned=set()
++    primary=LookupError('genuine primitive body primary')
++    entered=False
++    def close_then_fail(fd):
++        owned.update(live_fds()-baseline)
++        attempted.append(fd)
++        actual_close(fd)
++        if len(attempted)<=fault_count:
++            raise OSError(f'injected internal close failure {len(attempted)} after closing FD')
++    expected=ValueError if stage=='entry' else LookupError if stage=='body' else OSError if stage=='teardown' else RuntimeError
++    with monkeypatch.context() as patch:
++        patch.setattr(os,'close',close_then_fail)
++        manager=module.compact.bound_payload(root,d,MIB,time.monotonic()+60) if primitive=='bootstrap' else module.custody.HeldReplayFiles(root,[d],time.monotonic()+60)
++        with pytest.raises(expected) as rejection:
++            with manager as held:
++                entered=True
++                owned.update(live_fds()-baseline)
++                if stage=='body': raise primary
++                if stage in ('recheck','guard','read'):
++                    with (root/admission['path']).open('r+b') as stream: stream.write(b'x')
++                    if primitive=='bootstrap': held[2]()
++                    elif stage=='guard': held.fd_path(admission['path'])
++                    elif stage=='read': held.read(admission['path'],MIB)
++                    else: held.recheck()
++    if stage!='entry' and not entered:
++        raise rejection.value
++    assert entered == (stage!='entry')
++    assert owned and set(attempted)==owned
++    assert len(attempted)==len(owned)  # Each close is attempted once; no blind retry.
++    closed_fds(owned)
++    if stage=='body': assert rejection.value is primary
++    notes=getattr(rejection.value,'__notes__',[])
++    assert len(notes)>=fault_count-(1 if stage=='teardown' else 0)
++    assert not owned_fds(root)
