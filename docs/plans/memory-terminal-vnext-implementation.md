@@ -430,7 +430,7 @@ Task5's authored proof/sealer-reader tests may use Task1/2a-produced fixture evi
 ## Task 6a.1: Fixed authored source custody prerequisite
 
 Root accepts the exact narrow contract in
-[authored-source-contract-addendum.md](../reports/memory-terminal-custody-preflight-2026-11-06/authored-source-contract-addendum.md),
+[authored-source-contract-addendum-var-tmp.md](../reports/memory-terminal-custody-preflight-2026-11-06/authored-source-contract-addendum-var-tmp.md),
 including predecode SNP expansion limits and the distinction between current
 root custody and unproved exclusive creation history. It supersedes the older
 preflight's unbound/rebinding suggestion only for this authored slice. Ownership
