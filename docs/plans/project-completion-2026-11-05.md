@@ -29,6 +29,48 @@ Proof dependencies: the initial automatic upstream cache fetch breached the orig
 ## Verification policy
 Use actual red/green focused tests for new source. Preserve all raw historical evidence and source/profile pins. Source tests never grant actual-study qualification. Every new study needs a prospective frozen protocol, source/runtime/input identities, complete accounting, independent review and required operator GO. Stop at a failed gate or resource cap and retain incomplete/failed outcomes; never mark project complete around a passing subset.
 
+## Current conditional memory implementation milestone, 6 November 2026
+
+Transition witnesses, private synchronous persistence, conditional terminal replay
+and a distinct PURE compact numeric codec have independent scoped approval.
+The codec retains the supplied sixteen base arrays, three numeric companions,
+selected camera pixels and recording bytes. A plain reader checks stored format
+and commitments; it cannot authenticate all original row values or timing data.
+Conversion/proof compares against supplied raw. Actual raw origin, source/model
+qualification and publication authority remain separate and unverified.
+
+The codec's own suite passed68 tests. Its four-file verification recorded236
+passes and126 historical skips:124 source-dependent legacy assertions and2
+existing skips. These are not qualification passes. The reviewed pin-policy
+repair preserved frozen JSON and production refusal, kept the original mixed
+closure assertion historically, and executed an active metadata/trust counterpart.
+Fresh policy checks passed31 mechanics/history tests and54 active checks with4
+historical skips. These scopes overlap and must not be added together. See
+[conditional codec and verification evidence](../reports/memory-terminal-numeric-pure-review-2026-11-06/README.md).
+
+Main delivery through PR187 is merge5547efc; its exact automatic hosted run
+42150187681 passed7104 tests with318 skips,48 preflight checks and frontend.
+This does not cover the later local terminal branch. See
+[exact merge evidence](../reports/hosted-space-floor-repair-2026-11-06/postmerge-readback.md).
+
+No actual preservation check or memory study ran for this milestone. The
+authored900-row example exceeds the unchanged5MiB event limit; a fitting900-row
+positive conversion and actual corpus fit remain unestablished. Raw deletion
+stays disabled, including after any future preservation pass until separately
+authorized. Next actual adapters need a fresh canonical-ID source epoch,
+genuine replay/qualification backend, complete lifetime/accounting and a reviewed
+input/output namespace. The source-only
+[custody preflight](../reports/memory-terminal-custody-preflight-2026-11-06/README.md)
+is unadopted and does not supply those capabilities.
+
+The previously charged audit subtotal remains1222.455497 CPU seconds; it is not
+evidence of complete whole-operation accounting under the later source contract.
+Unknown controller/final-reader tails remain unknown, without fabricated debits
+or an asserted whole-operation upper bound. The prospective provider-boundary
+choice, sealed source03 probe approval and namespace inputs remain pending.
+All actual study, held-out, human/operator, rights, reproducibility and final
+paper/release gates above remain open. The project is not complete.
+
 The user reports approximately3,000 included GitHub Actions minutes. Complete local checks first, then use one final hosted validation wave and cancel a duplicate event for the same exact head. Billing/account quota remains independently unverified. CI authorization grants neither paid compute nor research/protected-read/deletion permission.
 
 ## Verified proof milestone, 5 November 2026
