@@ -433,6 +433,25 @@ def _file_identity(value):
             value.st_mtime_ns, value.st_ctime_ns, value.st_nlink)
 
 
+def _close_bound_fds(opened, primary):
+    """Attempt every owned close once; never replace a reached primary error."""
+    failures = []
+    for fd in reversed(opened):
+        try:
+            os.close(fd)
+        except BaseException as error:
+            failures.append(error)
+    if not failures:
+        return
+    if primary is None:
+        primary = failures.pop(0)
+        for error in failures:
+            primary.add_note(f'Bound payload close failure: {type(error).__name__}: {error}')
+        raise primary
+    for error in failures:
+        primary.add_note(f'Bound payload close failure: {type(error).__name__}: {error}')
+
+
 @contextmanager
 def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
                   staged=True, allow_empty=False, raw_run=None):
@@ -461,6 +480,7 @@ def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
     root = artifacts._safe_path(root)
     parts = PurePosixPath(relative).parts
     opened, edges = [], []
+    primary = None
     def edge(value):
         return value.st_dev, value.st_ino, value.st_mode
     def check_deadline():
@@ -511,9 +531,11 @@ def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
         recheck()
         yield fd, payload, recheck
         recheck()
+    except BaseException as error:
+        primary = error
+        raise
     finally:
-        for fd in reversed(opened):
-            os.close(fd)
+        _close_bound_fds(opened, primary)
 
 def _project_rows(rows, operation):
     import numpy as np
