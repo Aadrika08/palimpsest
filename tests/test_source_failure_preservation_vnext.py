@@ -251,9 +251,13 @@ def test_canonical_engine_handoff_preserves_real_writer_manifest_failure(route, 
     engine = route.open()
     assert type(engine.writer) is RunWriter
     pending = route.output / 'manifest.tmp'
+    original = DiskFailure('authored partial write')
+    # The fault fixture raises this exact object; the group must retain it.
+    monkeypatch.setitem(globals(), 'DiskFailure', lambda message: original)
     fail_io(monkeypatch, pending, 'write')
-    with pytest.raises(DiskFailure):
+    with pytest.raises(BaseExceptionGroup) as caught:
         engine.close()
+    assert caught.value.exceptions == (original,)
     assert len(pending.read_bytes()) == 11
     assert engine.writer._events.closed and engine.env.closed
     assert json.loads((route.output / 'manifest.json').read_text())['status'] == 'running'

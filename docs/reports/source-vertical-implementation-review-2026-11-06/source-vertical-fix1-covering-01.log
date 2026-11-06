@@ -1,0 +1,251 @@
+.......................................................EEEE............. [ 30%]
+........................................................................ [ 61%]
+........................................................................ [ 92%]
+.................                                                        [100%]
+==================================== ERRORS ====================================
+_____ ERROR at setup of test_single_trace_checks_every_row_and_restoration _____
+
+tmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertic...ddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope='module')
+    def fixture_class(tmp_path_factory):
+        import test_flynn
+        directory=tmp_path_factory.mktemp('retained-tiny-model')
+        class RetainedDirectory:
+            def __init__(self,*args,**kwargs): self.name=str(directory)
+            def cleanup(self): pass
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(test_flynn.tempfile,'TemporaryDirectory',RetainedDirectory)
+>           test_flynn.FlynnTests.setUpClass()
+
+tests/test_memory_source_replay_custody_vnext.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_flynn.py:49: in setUpClass
+    cls.utils = import_upstream(REPO, "core.utils")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+module_name = 'core.utils'
+
+    def import_upstream(repo_root: Path, module_name: str):
+        """Use the upstream import graph in the isolated simulation worker."""
+        upstream = (Path(repo_root) / "upstream/fly-gym").resolve()
+        if not upstream.is_dir():
+            raise FileNotFoundError(f"Missing upstream checkout: {upstream}")
+        if str(upstream) not in sys.path:
+            sys.path.insert(0, str(upstream))
+        module = importlib.import_module(module_name)
+        if not Path(module.__file__).resolve().is_relative_to(upstream):
+>           raise ImportError(f"{module_name} was imported outside pinned upstream: {module.__file__}")
+E           ImportError: core.utils was imported outside pinned upstream: /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py
+
+src/palimpsest/flynn.py:21: ImportError
+_ ERROR at setup of test_custody_body_failure_still_restores_and_final_checks __
+
+tmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertic...ddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope='module')
+    def fixture_class(tmp_path_factory):
+        import test_flynn
+        directory=tmp_path_factory.mktemp('retained-tiny-model')
+        class RetainedDirectory:
+            def __init__(self,*args,**kwargs): self.name=str(directory)
+            def cleanup(self): pass
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(test_flynn.tempfile,'TemporaryDirectory',RetainedDirectory)
+>           test_flynn.FlynnTests.setUpClass()
+
+tests/test_memory_source_replay_custody_vnext.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_flynn.py:49: in setUpClass
+    cls.utils = import_upstream(REPO, "core.utils")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+module_name = 'core.utils'
+
+    def import_upstream(repo_root: Path, module_name: str):
+        """Use the upstream import graph in the isolated simulation worker."""
+        upstream = (Path(repo_root) / "upstream/fly-gym").resolve()
+        if not upstream.is_dir():
+            raise FileNotFoundError(f"Missing upstream checkout: {upstream}")
+        if str(upstream) not in sys.path:
+            sys.path.insert(0, str(upstream))
+        module = importlib.import_module(module_name)
+        if not Path(module.__file__).resolve().is_relative_to(upstream):
+>           raise ImportError(f"{module_name} was imported outside pinned upstream: {module.__file__}")
+E           ImportError: core.utils was imported outside pinned upstream: /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py
+
+src/palimpsest/flynn.py:21: ImportError
+_____ ERROR at setup of test_bad_custody_callable_refuses_before_mutation ______
+
+tmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertic...ddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope='module')
+    def fixture_class(tmp_path_factory):
+        import test_flynn
+        directory=tmp_path_factory.mktemp('retained-tiny-model')
+        class RetainedDirectory:
+            def __init__(self,*args,**kwargs): self.name=str(directory)
+            def cleanup(self): pass
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(test_flynn.tempfile,'TemporaryDirectory',RetainedDirectory)
+>           test_flynn.FlynnTests.setUpClass()
+
+tests/test_memory_source_replay_custody_vnext.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_flynn.py:49: in setUpClass
+    cls.utils = import_upstream(REPO, "core.utils")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+module_name = 'core.utils'
+
+    def import_upstream(repo_root: Path, module_name: str):
+        """Use the upstream import graph in the isolated simulation worker."""
+        upstream = (Path(repo_root) / "upstream/fly-gym").resolve()
+        if not upstream.is_dir():
+            raise FileNotFoundError(f"Missing upstream checkout: {upstream}")
+        if str(upstream) not in sys.path:
+            sys.path.insert(0, str(upstream))
+        module = importlib.import_module(module_name)
+        if not Path(module.__file__).resolve().is_relative_to(upstream):
+>           raise ImportError(f"{module_name} was imported outside pinned upstream: {module.__file__}")
+E           ImportError: core.utils was imported outside pinned upstream: /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py
+
+src/palimpsest/flynn.py:21: ImportError
+_ ERROR at setup of test_legacy_none_core_still_computes_whole_trace_and_restores _
+
+tmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertic...ddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope='module')
+    def fixture_class(tmp_path_factory):
+        import test_flynn
+        directory=tmp_path_factory.mktemp('retained-tiny-model')
+        class RetainedDirectory:
+            def __init__(self,*args,**kwargs): self.name=str(directory)
+            def cleanup(self): pass
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(test_flynn.tempfile,'TemporaryDirectory',RetainedDirectory)
+>           test_flynn.FlynnTests.setUpClass()
+
+tests/test_memory_source_replay_custody_vnext.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_flynn.py:49: in setUpClass
+    cls.utils = import_upstream(REPO, "core.utils")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite')
+module_name = 'core.utils'
+
+    def import_upstream(repo_root: Path, module_name: str):
+        """Use the upstream import graph in the isolated simulation worker."""
+        upstream = (Path(repo_root) / "upstream/fly-gym").resolve()
+        if not upstream.is_dir():
+            raise FileNotFoundError(f"Missing upstream checkout: {upstream}")
+        if str(upstream) not in sys.path:
+            sys.path.insert(0, str(upstream))
+        module = importlib.import_module(module_name)
+        if not Path(module.__file__).resolve().is_relative_to(upstream):
+>           raise ImportError(f"{module_name} was imported outside pinned upstream: {module.__file__}")
+E           ImportError: core.utils was imported outside pinned upstream: /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py
+
+src/palimpsest/flynn.py:21: ImportError
+=============================== warnings summary ===============================
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[actual-entry]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[actual-entry]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_authority_domain_and_froz0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[auth-fixture]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[auth-fixture]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_authority_domain_and_froz1/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[output-extra]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[output-extra]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_authority_domain_and_froz2/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[job-bool]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[job-bool]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_authority_domain_and_froz3/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_real_owner_early_termination_retains_failure_prefix_without_completion
+tests/test_memory_source_parent_entry_vnext.py::test_real_owner_early_termination_retains_failure_prefix_without_completion
+tests/test_memory_source_parent_entry_vnext.py::test_real_owner_early_termination_retains_failure_prefix_without_completion
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_real_owner_early_terminat0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-owner]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[tensor-replay]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_loaded_tensor_mutati1/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-owner]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_loaded_tensor_mutati2/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[provenance-replay]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_loaded_tensor_mutati3/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-owner]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_loaded_tensor_mutati4/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[training-replay]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_loaded_tensor_mutati5/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_submit_mutation_refuses_advance_and_drains_pending_command
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_submit_mutation_refuses_advance_and_drains_pending_command
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_submit_mutation_refuses_advance_and_drains_pending_command
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01/test_fix1_submit_mutation_refu0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+ERROR tests/test_memory_source_replay_custody_vnext.py::test_custody_body_failure_still_restores_and_final_checks
+ERROR tests/test_memory_source_replay_custody_vnext.py::test_bad_custody_callable_refuses_before_mutation
+ERROR tests/test_memory_source_replay_custody_vnext.py::test_legacy_none_core_still_computes_whole_trace_and_restores
+229 passed, 41 warnings, 4 errors in 58.65s

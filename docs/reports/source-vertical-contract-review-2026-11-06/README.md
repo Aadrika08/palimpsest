@@ -20,6 +20,11 @@ at3994d6aa; [its test evidence](../source-failure-preservation-review-2026-11-06
 does not establish any other mechanism in this contract. Those mechanisms and
 their positive authored integration remain to be implemented and verified.
 
+[Implementation rulings](implementation-rulings.md) add the authored model
+identity attachment and package-local cleanup helper decisions. They are outside
+the original eight-artifact manifest and require implementation review; the
+reviewed contract and original reviews remain unchanged.
+
 No execution backend, accounting-policy adoption, authorized namespace exports,
 actual load/resource/capacity admission, exact GO, accepted Q, L/F/R, measured
 source cost, memory study or completed paper follows from this review. Raw

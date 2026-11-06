@@ -1,0 +1,38 @@
+
+==================================== ERRORS ====================================
+_____ ERROR collecting tests/test_memory_source_directory_closure_vnext.py _____
+ImportError while importing test module '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_directory_closure_vnext.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_source_directory_closure_vnext.py:5: in <module>
+    from scripts.memory_source_parent_entry_vnext import _HeldDirectoryClosure, _SourcePathRegistry, _DIRECTORY_TOKEN, _REGISTRY_TOKEN
+E   ModuleNotFoundError: No module named 'scripts.memory_source_parent_entry_vnext'
+_______ ERROR collecting tests/test_memory_source_parent_entry_vnext.py ________
+ImportError while importing test module '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_parent_entry_vnext.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_source_parent_entry_vnext.py:2: in <module>
+    from scripts import memory_source_parent_entry_vnext as parent
+E   ImportError: cannot import name 'memory_source_parent_entry_vnext' from 'scripts' (unknown location)
+____ ERROR collecting tests/test_memory_source_control_rendezvous_vnext.py _____
+ImportError while importing test module '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_control_rendezvous_vnext.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_source_control_rendezvous_vnext.py:2: in <module>
+    from scripts import memory_source_parent_entry_vnext as parent
+E   ImportError: cannot import name 'memory_source_parent_entry_vnext' from 'scripts' (unknown location)
+=========================== short test summary info ============================
+ERROR tests/test_memory_source_directory_closure_vnext.py
+ERROR tests/test_memory_source_parent_entry_vnext.py
+ERROR tests/test_memory_source_control_rendezvous_vnext.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+3 errors in 0.16s

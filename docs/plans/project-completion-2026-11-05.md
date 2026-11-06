@@ -1,5 +1,19 @@
 # Palimpsest proof-first completion implementation
 
+Latest local software milestone, 6 November: the integrated conditional source
+owner/custody/raw-audit/16+3 codec/fresh-policy replay path passed independent
+implementation review after four grouped corrections. A generated model with
+4813 inputs and state width 12 exercises the full authored path across 20 rows,
+including per-command/per-row
+identity checks, before-write storage admission, restoration and custody drain.
+See [reviewed implementation and retained failures](../reports/source-vertical-implementation-review-2026-11-06/README.md).
+This is conditional software and authored unit evidence, not actual source
+qualification, experiment cost, accepted Q/L/F/R, execution backend or study
+completion. CPU-policy adoption, authorized exports, actual input/load/resource/
+cost admission and exact execution GO remain absent. All empirical, human,
+rights, reproducibility and final delivery gates remain open; raw deletion stays
+disabled. The full objective and fixed CPU lane caps are unchanged.
+
 Latest local prerequisite, 6 November: the canonical prepared source path now
 selects opt-in failure-byte retention in the real recorder, with the same option
 available in the original SNP saver. Final dedicated tests passed63 checks;

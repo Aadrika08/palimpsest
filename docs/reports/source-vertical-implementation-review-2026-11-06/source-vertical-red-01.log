@@ -1,0 +1,27 @@
+
+==================================== ERRORS ====================================
+______ ERROR collecting tests/test_memory_family_source_records_vnext.py _______
+ImportError while importing test module '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_family_source_records_vnext.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_family_source_records_vnext.py:3: in <module>
+    from scripts import memory_family_source_records_vnext as records
+E   ImportError: cannot import name 'memory_family_source_records_vnext' from 'scripts' (unknown location)
+______ ERROR collecting tests/test_memory_source_policy_release_vnext.py _______
+ImportError while importing test module '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_policy_release_vnext.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_memory_source_policy_release_vnext.py:3: in <module>
+    from scripts.memory_family_source_runtime_vnext import _OwnedPolicyReferences, _release_source_owned_policy_refs
+E   ModuleNotFoundError: No module named 'scripts.memory_family_source_runtime_vnext'
+=========================== short test summary info ============================
+ERROR tests/test_memory_family_source_records_vnext.py
+ERROR tests/test_memory_source_policy_release_vnext.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.19s

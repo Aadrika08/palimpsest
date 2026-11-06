@@ -1,0 +1,62 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_single_trace_checks_every_row_and_restoration ______________
+
+sample = {'condition': [{'action': array([-0.2755113 , -0.01285736], dtype=float32), 'encoded_input': array([ 0.0000000e+00,  0...0296281e-01], dtype=float32), 'episode': 0, 'raw_output': array([-0.09219162, -0.00410585], dtype=float32), ...}], ...}
+
+    def test_single_trace_checks_every_row_and_restoration(sample):
+        calls=[]; policy=sample['policy']; before=policy_state_digest(policy)
+>       result=replay._replay_rows(**request(sample), custody_check=lambda: calls.append(policy_state_digest(policy)))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _replay_rows() got an unexpected keyword argument 'custody_check'
+
+tests/test_memory_source_replay_custody_vnext.py:10: TypeError
+__________ test_custody_body_failure_still_restores_and_final_checks ___________
+
+sample = {'condition': [{'action': array([-0.2755113 , -0.01285736], dtype=float32), 'encoded_input': array([ 0.0000000e+00,  0...0296281e-01], dtype=float32), 'episode': 0, 'raw_output': array([-0.09219162, -0.00410585], dtype=float32), ...}], ...}
+
+    def test_custody_body_failure_still_restores_and_final_checks(sample):
+        policy=sample['policy']; before=policy_state_digest(policy); calls=[]
+        body=KeyboardInterrupt('row custody'); tail=OSError('exit custody')
+        def check():
+            calls.append(1)
+            if len(calls)==4: raise body
+            if len(calls)==5: raise tail
+        with pytest.raises(BaseExceptionGroup) as caught:
+>           replay._replay_rows(**request(sample),custody_check=check)
+E           TypeError: _replay_rows() got an unexpected keyword argument 'custody_check'
+
+tests/test_memory_source_replay_custody_vnext.py:24: TypeError
+______________ test_bad_custody_callable_refuses_before_mutation _______________
+
+sample = {'condition': [{'action': array([-0.2755113 , -0.01285736], dtype=float32), 'encoded_input': array([ 0.0000000e+00,  0...0296281e-01], dtype=float32), 'episode': 0, 'raw_output': array([-0.09219162, -0.00410585], dtype=float32), ...}], ...}
+
+    def test_bad_custody_callable_refuses_before_mutation(sample):
+        before=policy_state_digest(sample['policy'])
+>       with pytest.raises(ValueError): replay._replay_rows(**request(sample),custody_check=True)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _replay_rows() got an unexpected keyword argument 'custody_check'
+
+tests/test_memory_source_replay_custody_vnext.py:33: TypeError
+=============================== warnings summary ===============================
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+tests/test_memory_source_replay_custody_vnext.py::test_custody_body_failure_still_restores_and_final_checks
+tests/test_memory_source_replay_custody_vnext.py::test_bad_custody_callable_refuses_before_mutation
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+FAILED tests/test_memory_source_replay_custody_vnext.py::test_custody_body_failure_still_restores_and_final_checks
+FAILED tests/test_memory_source_replay_custody_vnext.py::test_bad_custody_callable_refuses_before_mutation
+3 failed, 6 warnings in 2.33s

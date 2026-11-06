@@ -526,9 +526,27 @@ class Engine:
                          lock_sha256=sha256_file(root / "uv.lock"),
                          source_sha256={str(path.relative_to(root)): sha256_file(path)
                                         for path in sorted((root / "src/palimpsest").glob("*.py"))})
-            return cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
+            instance = cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
                        restore_snapshot=restore_snapshot, replace_controller=replace_controller, memory_u=memory_u)
+            if canonical_prepared: instance._source_structured_close = True
+            return instance
         except BaseException as error:
+            if canonical_prepared:
+                from .records import _source_errors as errors
+                failures = [error]
+                try: writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
+                except BaseException as failure: failures.append(failure)
+                if env is not None:
+                    try:
+                        renderer = getattr(env, 'renderer', None)
+                        if renderer is not None: renderer.close()
+                    except BaseException as failure: failures.append(failure)
+                    try: env.close()
+                    except BaseException as failure: failures.append(failure)
+                try: writer.close()
+                except BaseException as failure: failures.append(failure)
+                if len(failures)>1: raise errors('Source Engine open', failures)
+                raise
             try:
                 writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
             finally:
@@ -1726,6 +1744,36 @@ class Engine:
     def close(self):
         self._owner_only()
         if self._closed:
+            return
+        if getattr(self, '_source_structured_close', False):
+            from .records import _source_errors as errors
+            self._closed = True
+            failures = []
+            while self._pending:
+                command = self._pending.popleft()
+                if not self._recording_failed:
+                    try: self._command_result(command, 'rejected', reason='engine closed before application')
+                    except BaseException as error:
+                        failures.append(error)
+                        try: self._fail(error)
+                        except BaseException as failure: failures.append(failure)
+            try:
+                renderer = getattr(self.env, 'renderer', None)
+                if renderer is not None: renderer.close()
+            except BaseException as error: failures.append(error)
+            try: self.env.close()
+            except BaseException as error: failures.append(error)
+            if not self._recording_failed:
+                try:
+                    self.writer.finish({'run_id': self.run_id, 'parent_run_id': self.parent_run_id,
+                        'parent_event_prefix': self.parent_event_prefix, 'final_phase': self.phase,
+                        'last_outcome': self.last_outcome, 'metrics': self.metrics,
+                        'total_tick': self.total_tick, 'close_reason': 'operator_closed'},
+                        status='failed' if failures or self.phase == 'failed' else 'completed')
+                except BaseException as error: failures.append(error)
+            try: self.writer.close()
+            except BaseException as error: failures.append(error)
+            if failures: raise errors('Source Engine close', failures)
             return
         error = None
         try:

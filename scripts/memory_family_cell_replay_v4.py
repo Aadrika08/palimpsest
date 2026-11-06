@@ -48,8 +48,8 @@ def _runtime(policy, snapshot):
     _equal(snapshots._torch_profile(), snapshot['identity']['torch'], 'runtime profile')
 
 
-def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
-                 input_width, deadline):
+def _replay_rows_inner(*, policy, rows, source_snapshot, operation, first_tick,
+                 input_width, deadline, custody_check=None):
     """Numerical core on the actual guarded policy; dimension-general for tests."""
     import numpy as np
     audit._public_deadline(deadline)
@@ -77,6 +77,7 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
     torch = policy.torch
     hidden = (torch.zeros_like(staged[0]) if operation == 'source' else staged[0].clone())
     try:
+        if custody_check is not None: custody_check()
         policy.failure_diagnostics = {}
         policy._current_raw_output = None
         cell._cached_alphas = None
@@ -84,6 +85,7 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
         with torch.inference_mode():
             for offset, row in enumerate(rows):
                 audit._deadline(deadline)
+                if custody_check is not None: custody_check()
                 if (type(row) is not dict or not {'encoded_input', 'raw_output', 'action'} <= set(row)
                         or type(row.get('episode')) is not int
                         or row['episode'] != 0 or type(row.get('tick')) is not int
@@ -106,6 +108,7 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
                 if (raw_array[0].tobytes() != raw_expected.tobytes()
                         or action_array[0].tobytes() != action_expected.tobytes()):
                     raise ValueError(f'Cell replay raw output or action differs at tick {row["tick"]}')
+                if custody_check is not None: custody_check()
             if operation == 'source' and hidden_array.tobytes() != end_hidden.tobytes():
                 raise ValueError('Cell replay acquired source endpoint differs')
         _runtime(policy, source_snapshot)
@@ -114,19 +117,60 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
                 or rows_before != snapshots.state_digest(rows)):
             raise ValueError('Cell replay supplied state/rows changed during replay')
         audit._deadline(deadline)
+        if custody_check is not None: custody_check()
         return {'rows_checked': len(rows), 'raw_output_equal': True, 'action_equal': True,
                 'source_endpoint_verified': operation == 'source',
                 'initial_hidden_sha256': snapshots.state_digest(
                     np.zeros_like(end_hidden) if operation == 'source' else end_hidden),
                 'final_hidden_sha256': snapshots.state_digest(hidden_array)}
     finally:
-        policy._restore(previous)
-        for target, saved in ((policy, attributes), (cell, cache)):
-            for name, (present, value) in saved.items():
-                if present:
-                    setattr(target, name, value)
-                elif hasattr(target, name):
-                    delattr(target, name)
+        if custody_check is None:
+            policy._restore(previous)
+            for target, saved in ((policy, attributes), (cell, cache)):
+                for name, (present, value) in saved.items():
+                    if present:
+                        setattr(target, name, value)
+                    elif hasattr(target, name):
+                        delattr(target, name)
+        else:
+            from scripts.memory_family_source_records_vnext import errors
+            primary = sys.exception()
+            failures = [primary] if primary is not None else []
+            try: custody_check()
+            except BaseException as error: failures.append(error)
+            try: policy._restore(previous)
+            except BaseException as error: failures.append(error)
+            for target, saved in ((policy, attributes), (cell, cache)):
+                for name, (present, value) in saved.items():
+                    try:
+                        if present: setattr(target, name, value)
+                        elif hasattr(target, name): delattr(target, name)
+                    except BaseException as error: failures.append(error)
+            try: custody_check()
+            except BaseException as error: failures.append(error)
+            if failures and (len(failures)>1 or primary is None):
+                raise errors('Source cell replay restoration', failures)
+
+
+def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
+                 input_width, deadline, custody_check=None):
+    if custody_check is not None and not callable(custody_check):
+        raise ValueError('Source custody check must be callable')
+    if custody_check is None:
+        return _replay_rows_inner(policy=policy, rows=rows, source_snapshot=source_snapshot,
+            operation=operation, first_tick=first_tick, input_width=input_width, deadline=deadline)
+    # The outer seam also covers staging failures before any mutable state exists.
+    try:
+        custody_check()
+        return _replay_rows_inner(policy=policy, rows=rows, source_snapshot=source_snapshot,
+            operation=operation, first_tick=first_tick, input_width=input_width,
+            deadline=deadline, custody_check=custody_check)
+    except BaseException as primary:
+        try: custody_check()
+        except BaseException as failure:
+            from scripts.memory_family_source_records_vnext import errors
+            raise errors('Source cell replay exit', [primary, failure])
+        raise
 
 
 def _pinned_policy(policy):

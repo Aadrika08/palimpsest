@@ -1,0 +1,70 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________ test_replay_holder_structured_body_and_all_fd_failures ____________
+
+tmp_path = PosixPath('/var/tmp/source-vertical-red-20261106-02/test_replay_holder_structured_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbb61bb1990>
+
+    def test_replay_holder_structured_body_and_all_fd_failures(tmp_path, monkeypatch):
+        leaf = tmp_path / 'leaf'; leaf.write_bytes(b'authored')
+>       holder = HeldReplayFiles(str(tmp_path), [dict(path='leaf', size_bytes=8,
+            sha256=hashlib.sha256(b'authored').hexdigest())], time.monotonic()+30,
+            structured_teardown=True)
+E       TypeError: HeldReplayFiles.__init__() got an unexpected keyword argument 'structured_teardown'
+
+tests/test_memory_source_structured_teardown_vnext.py:19: TypeError
+_________________ test_exact_bool_optins_before_acquisition[0] _________________
+
+tmp_path = PosixPath('/var/tmp/source-vertical-red-20261106-02/test_exact_bool_optins_before_0')
+bad = 0
+
+    @pytest.mark.parametrize('bad', [0, 1, None, 'true'])
+    def test_exact_bool_optins_before_acquisition(tmp_path, bad):
+        with pytest.raises(ValueError, match='bool'):
+>           HeldReplayFiles(str(tmp_path), [], 0, structured_teardown=bad)
+E           TypeError: HeldReplayFiles.__init__() got an unexpected keyword argument 'structured_teardown'
+
+tests/test_memory_source_structured_teardown_vnext.py:41: TypeError
+_________________ test_exact_bool_optins_before_acquisition[1] _________________
+
+tmp_path = PosixPath('/var/tmp/source-vertical-red-20261106-02/test_exact_bool_optins_before_1')
+bad = 1
+
+    @pytest.mark.parametrize('bad', [0, 1, None, 'true'])
+    def test_exact_bool_optins_before_acquisition(tmp_path, bad):
+        with pytest.raises(ValueError, match='bool'):
+>           HeldReplayFiles(str(tmp_path), [], 0, structured_teardown=bad)
+E           TypeError: HeldReplayFiles.__init__() got an unexpected keyword argument 'structured_teardown'
+
+tests/test_memory_source_structured_teardown_vnext.py:41: TypeError
+_______________ test_exact_bool_optins_before_acquisition[None] ________________
+
+tmp_path = PosixPath('/var/tmp/source-vertical-red-20261106-02/test_exact_bool_optins_before_2')
+bad = None
+
+    @pytest.mark.parametrize('bad', [0, 1, None, 'true'])
+    def test_exact_bool_optins_before_acquisition(tmp_path, bad):
+        with pytest.raises(ValueError, match='bool'):
+>           HeldReplayFiles(str(tmp_path), [], 0, structured_teardown=bad)
+E           TypeError: HeldReplayFiles.__init__() got an unexpected keyword argument 'structured_teardown'
+
+tests/test_memory_source_structured_teardown_vnext.py:41: TypeError
+_______________ test_exact_bool_optins_before_acquisition[true] ________________
+
+tmp_path = PosixPath('/var/tmp/source-vertical-red-20261106-02/test_exact_bool_optins_before_3')
+bad = 'true'
+
+    @pytest.mark.parametrize('bad', [0, 1, None, 'true'])
+    def test_exact_bool_optins_before_acquisition(tmp_path, bad):
+        with pytest.raises(ValueError, match='bool'):
+>           HeldReplayFiles(str(tmp_path), [], 0, structured_teardown=bad)
+E           TypeError: HeldReplayFiles.__init__() got an unexpected keyword argument 'structured_teardown'
+
+tests/test_memory_source_structured_teardown_vnext.py:41: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_structured_teardown_vnext.py::test_replay_holder_structured_body_and_all_fd_failures
+FAILED tests/test_memory_source_structured_teardown_vnext.py::test_exact_bool_optins_before_acquisition[0]
+FAILED tests/test_memory_source_structured_teardown_vnext.py::test_exact_bool_optins_before_acquisition[1]
+FAILED tests/test_memory_source_structured_teardown_vnext.py::test_exact_bool_optins_before_acquisition[None]
+FAILED tests/test_memory_source_structured_teardown_vnext.py::test_exact_bool_optins_before_acquisition[true]
+5 failed in 0.08s

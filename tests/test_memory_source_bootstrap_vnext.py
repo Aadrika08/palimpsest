@@ -457,8 +457,11 @@ def test_real_writer_diagnostics_event_error_still_finishes_and_closes(route):
 def test_close_error_preserves_failed_recording_and_environment_cleanup(route):
     route.stage.fail = 'close'
     engine = route.open()
-    with pytest.raises(BoundaryFailure, match='renderer close boundary'):
+    with pytest.raises(BaseExceptionGroup) as caught:
         engine.close()
+    assert len(caught.value.exceptions) == 1
+    failure, = caught.value.exceptions
+    assert type(failure) is BoundaryFailure and str(failure) == 'renderer close boundary'
     assert route.envs[0].closed and engine._closed and engine.writer._events.closed
     manifest = json.loads((route.output / 'manifest.json').read_text())
     assert manifest['status'] == 'failed' and manifest['run_id'] == RUN_ID
@@ -534,9 +537,14 @@ def assert_failed_writer_closed(error):
 
 def test_open_failure_with_renderer_close_error_still_closes_env_and_real_writer(route):
     route.stage.fail, route.stage.close_error = 'policy', True
-    with pytest.raises(BoundaryFailure, match='renderer close boundary') as caught:
+    with pytest.raises(BaseExceptionGroup) as caught:
         route.open()
-    assert_failed_writer_closed(caught.value)
+    assert len(caught.value.exceptions) == 2
+    body, teardown = caught.value.exceptions
+    assert type(body) is type(teardown) is BoundaryFailure
+    assert [str(body), str(teardown)] == ['policy boundary', 'renderer close boundary']
+    assert_failed_writer_closed(body)
+    assert_failed_writer_closed(teardown)
     assert route.envs[0].closed
     manifest = json.loads((route.output / 'manifest.json').read_text())
     assert manifest['status'] == 'failed' and manifest['error']['message'] == 'policy boundary'
@@ -591,17 +599,21 @@ def test_writer_constructor_validation_retains_ordinary_no_cleanup_policy(route)
 
 
 def test_real_writer_broken_budget_keeps_original_failure_semantics(route):
+    original = RuntimeError('authored storage quota refusal')
     class Budget:
         calls = 0
         def check(self, count, *, path):
             self.calls += 1
             if self.calls == 2:
-                raise RuntimeError('authored storage quota refusal')
-    with pytest.raises(ValueError, match='writer is closed or finished') as caught:
+                raise original
+    with pytest.raises(BaseExceptionGroup) as caught:
         route.open(storage_budget=Budget())
-    assert_failed_writer_closed(caught.value)
-    assert isinstance(caught.value.__context__, RuntimeError)
-    assert str(caught.value.__context__) == 'authored storage quota refusal'
+    assert len(caught.value.exceptions) == 2
+    body, failed_manifest = caught.value.exceptions
+    assert body is original
+    assert type(failed_manifest) is ValueError and str(failed_manifest) == 'run writer is closed or finished'
+    assert_failed_writer_closed(body)
+    assert_failed_writer_closed(failed_manifest)
     # Existing broken writers cannot publish a terminal manifest; preserve the prefix.
     manifest = json.loads((route.output / 'manifest.json').read_text())
     assert manifest['status'] == 'running' and manifest['run_id'] == RUN_ID

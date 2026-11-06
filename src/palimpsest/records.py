@@ -19,6 +19,22 @@ _NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]*\Z")
 _RESERVED = {"episode", "tick", "file", "allow_pickle"}
 
 
+
+def _source_errors(label, items):
+    """Preserve original objects, flatten only our own groups, deduplicate identity."""
+    leaves = []; seen = set()
+    def add(item):
+        if item is None: return
+        if isinstance(item, BaseExceptionGroup) and getattr(item, '_source_teardown', False):
+            for child in item.exceptions: add(child)
+        elif id(item) not in seen:
+            seen.add(id(item)); leaves.append(item)
+    for item in items: add(item)
+    group = BaseExceptionGroup(label, leaves)
+    group._source_teardown = True
+    return group
+
+
 def _json(value):
     return json.dumps(value, allow_nan=False, sort_keys=True)
 
@@ -196,20 +212,21 @@ class RunWriter:
             self._background.queue.join()
             self._raise_background_error()
 
-    def _check_budget(self, additional):
+    def _check_budget(self, additional, *, target=None):
         try:
             pending = 0 if self._background is None else self._background.pending_bytes
             if self._max_bytes is not None and self._bytes + additional > self._max_bytes:
                 raise RuntimeError("Recording quota exceeded before publication")
             if self.storage_budget is not None:
-                self.storage_budget.check(additional + pending, path=self.path)
+                self.storage_budget.check(additional + pending, path=self.path if target is None else target)
         except (OSError, ValueError, RuntimeError):
             self._broken = True
             raise
 
     def _write_manifest(self, value):
         payload = (_json(value) + "\n").encode("utf-8")
-        self._check_budget(len(payload))  # The old manifest survives until atomic replacement.
+        if self._preserve_failed: self._check_budget(len(payload), target=self.path / "manifest.json")
+        else: self._check_budget(len(payload))  # Legacy call and old manifest survive unchanged.
         try:
             _atomic_manifest(self.path / "manifest.json", payload, preserve_failed=self._preserve_failed)
         except OSError:
@@ -229,7 +246,8 @@ class RunWriter:
             raise ValueError("event requires a kind and cannot override its sequence")
         payload = _json({**data, "sequence": self._sequence, "kind": kind}) + "\n"
         payload_bytes = len(payload.encode("utf-8"))
-        self._check_budget(payload_bytes)
+        if self._preserve_failed: self._check_budget(payload_bytes, target=self.path / "events.jsonl")
+        else: self._check_budget(payload_bytes)
         if self._background is not None:
             self._sequence += 1
             self._bytes += payload_bytes
@@ -296,6 +314,10 @@ class RunWriter:
                                start=self._buffer[0][0], count=len(self._buffer), arrays=self._schema)
             event_bytes = len((_json({**chunk_event, "sequence": self._sequence, "kind": "chunk"}) + "\n").encode("utf-8"))
             self._check_budget(len(payload) + event_bytes)
+            if self._preserve_failed:
+                # Both physical leaves are admitted before the chunk allocation.
+                self._check_budget(len(payload), target=path)
+                self._check_budget(event_bytes, target=self.path / 'events.jsonl')
             if self._background is not None:
                 self._background.put(("chunk", path, payload), len(payload))
             else:
@@ -353,6 +375,22 @@ class RunWriter:
 
     def close(self):
         """Publish pending ticks, retaining a running status unless finish succeeded."""
+        if self._preserve_failed:
+            failures = []
+            if not self._events.closed:
+                if not self._broken and (self._background is None or self._background.error is None):
+                    try: self._flush()
+                    except BaseException as error: failures.append(error)
+                try: self._stop_background()
+                except BaseException as error: failures.append(error)
+                try: self._events.close()
+                except BaseException as error: failures.append(error)
+                background = self._background
+                if background is not None and background.error is not None and not background.surfaced:
+                    try: self._raise_background_error()
+                    except BaseException as error: failures.append(error)
+            if failures: raise _source_errors('Source writer close', failures)
+            return
         if not self._events.closed:
             try:
                 if not self._broken and (self._background is None or self._background.error is None):

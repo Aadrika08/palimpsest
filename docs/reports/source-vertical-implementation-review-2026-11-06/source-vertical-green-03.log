@@ -1,0 +1,1674 @@
+........................................................................ [ 21%]
+........................................................................ [ 43%]
+............F........FFFFFFFFFF..FFFF.................FFFFF............. [ 65%]
+........................................................................ [ 87%]
+.................................F........                               [100%]
+=================================== FAILURES ===================================
+_______ test_real_writer_broken_budget_keeps_original_failure_semantics ________
+
+self = <test_memory_source_bootstrap_vnext.test_real_writer_broken_budget_keeps_original_failure_semantics.<locals>.Budget object at 0x7ff3fafaf810>
+count = 3238
+
+    def check(self, count, *, path):
+        self.calls += 1
+        if self.calls == 2:
+>           raise RuntimeError('authored storage quota refusal')
+E           RuntimeError: authored storage quota refusal
+
+tests/test_memory_source_bootstrap_vnext.py:607: RuntimeError
+
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/engine.py", line 483, in open
+    writer.event("diagnostics", run_id=writer.manifest["run_id"], report=diagnosis)
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 248, in event
+    self._check_budget(payload_bytes)
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 221, in _check_budget
+    self.storage_budget.check(additional + pending, path=self.path)
+  File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_bootstrap_vnext.py", line 607, in check
+    raise RuntimeError('authored storage quota refusal')
+RuntimeError: authored storage quota refusal
+
+During handling of the above exception, another exception occurred:
+
+  + Exception Group Traceback (most recent call last):
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_bootstrap_vnext.py", line 609, in test_real_writer_broken_budget_keeps_original_failure_semantics
+  |     route.open(storage_budget=Budget())
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_bootstrap_vnext.py", line 211, in opened
+  |     return Engine.open(repo_arg, asset_arg, output, **options)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/engine.py", line 548, in open
+  |     if len(failures)>1: raise errors('Source Engine open', failures)
+  |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  | ExceptionGroup: Source Engine open (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/engine.py", line 483, in open
+    |     writer.event("diagnostics", run_id=writer.manifest["run_id"], report=diagnosis)
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 248, in event
+    |     self._check_budget(payload_bytes)
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 221, in _check_budget
+    |     self.storage_budget.check(additional + pending, path=self.path)
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_bootstrap_vnext.py", line 607, in check
+    |     raise RuntimeError('authored storage quota refusal')
+    | RuntimeError: authored storage quota refusal
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/engine.py", line 537, in open
+    |     try: writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 352, in finish
+    |     self._active()
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 239, in _active
+    |     raise ValueError("run writer is closed or finished")
+    | ValueError: run writer is closed or finished
+    +------------------------------------
+____________ test_retained_unqualified_never_grants_load_authority _____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_retained_unqualified_neve0')
+
+    def test_retained_unqualified_never_grants_load_authority(tmp_path):
+        p = authored(tmp_path)
+>       with holder(p) as held:
+
+tests/test_memory_source_runtime_closure_v1.py:228: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:782: in __exit__
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f21c6110>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_______________ test_complete_tree_empty_directories_and_aliases _______________
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fb0a1410>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+>           self._check_dirs()
+
+src/palimpsest/puck_execution_files.py:275: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fb0a1410>
+
+    def _check_dirs(self):
+        for key,(fd,parent,name,expected) in self._dirs.items():
+            self._clock(); wanted = self._edge(key,expected)
+            if (self._edge(key,_identity(os.fstat(fd))) != wanted
+                    or self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False))) != wanted):
+>               raise RuntimeError('Source directory identity changed')
+E               RuntimeError: Source directory identity changed
+
+scripts/memory_source_runtime_closure_v1.py:548: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3fb1297d0>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fb0a1410>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_complete_tree_empty_direc0')
+
+    def test_complete_tree_empty_directories_and_aliases(tmp_path):
+        p = authored(tmp_path)
+        with pytest.raises(RuntimeError, match='failed before context exit'):
+          with holder(p) as held:
+            (tmp_path/'irrelevant').write_bytes(b'x'); held.recheck()
+            (tmp_path/'runtime/empty/new').write_bytes(b'x')
+>           with pytest.raises((ValueError,RuntimeError)): held.recheck()
+                                                           ^^^^^^^^^^^^^^
+
+tests/test_memory_source_runtime_closure_v1.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fb0a1410>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_______ test_poison_on_replacement_mutation_restore_or_teardown[replace] _______
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abe710>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+>           self._check_dirs()
+
+src/palimpsest/puck_execution_files.py:275: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abe710>
+
+    def _check_dirs(self):
+        for key,(fd,parent,name,expected) in self._dirs.items():
+            self._clock(); wanted = self._edge(key,expected)
+            if (self._edge(key,_identity(os.fstat(fd))) != wanted
+                    or self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False))) != wanted):
+>               raise RuntimeError('Source directory identity changed')
+E               RuntimeError: Source directory identity changed
+
+scripts/memory_source_runtime_closure_v1.py:548: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f8abe210>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abe710>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_poison_on_replacement_mut0')
+change = 'replace'
+
+    @pytest.mark.parametrize('change', ['replace','restore','hardlink','symlink','emptydir'])
+    def test_poison_on_replacement_mutation_restore_or_teardown(tmp_path, change):
+        p = authored(tmp_path); before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+            with holder(p) as held:
+                path = tmp_path/'runtime/owner.py'
+                if change == 'replace': path.unlink(); path.write_bytes(b'x')
+                elif change == 'restore': path.write_bytes(b'z'); path.write_bytes(b'x')
+                elif change == 'hardlink': os.link(path, tmp_path/'alias2')
+                elif change == 'symlink': path.unlink(); path.symlink_to(tmp_path/'evidence')
+                else: (tmp_path/'runtime/empty').rmdir()
+>               held.recheck()
+
+tests/test_memory_source_runtime_closure_v1.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abe710>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_______ test_poison_on_replacement_mutation_restore_or_teardown[restore] _______
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abd3d0>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+            self._check_dirs()
+            self._check_subtrees()
+            for relative in self._entries:
+>               self._check_file(relative)
+
+src/palimpsest/puck_execution_files.py:278: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abd3d0>
+relative = 'home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_poison_on_replacement_mut1/runtime/owner.py'
+
+    def _check_file(self, relative, *, copy_bytes=False):
+        entry = self._entries[relative]
+        fd, parent, name, expected = self._files[relative]
+        if (_identity(os.fstat(fd)) != expected
+                or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+>           raise RuntimeError('Collection input file edge or metadata changed while held')
+E           RuntimeError: Collection input file edge or metadata changed while held
+
+src/palimpsest/puck_execution_files.py:182: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3faf565d0>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abd3d0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_poison_on_replacement_mut1')
+change = 'restore'
+
+    @pytest.mark.parametrize('change', ['replace','restore','hardlink','symlink','emptydir'])
+    def test_poison_on_replacement_mutation_restore_or_teardown(tmp_path, change):
+        p = authored(tmp_path); before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+            with holder(p) as held:
+                path = tmp_path/'runtime/owner.py'
+                if change == 'replace': path.unlink(); path.write_bytes(b'x')
+                elif change == 'restore': path.write_bytes(b'z'); path.write_bytes(b'x')
+                elif change == 'hardlink': os.link(path, tmp_path/'alias2')
+                elif change == 'symlink': path.unlink(); path.symlink_to(tmp_path/'evidence')
+                else: (tmp_path/'runtime/empty').rmdir()
+>               held.recheck()
+
+tests/test_memory_source_runtime_closure_v1.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abd3d0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+______ test_poison_on_replacement_mutation_restore_or_teardown[hardlink] _______
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8a14bd0>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+            self._check_dirs()
+>           self._check_subtrees()
+
+src/palimpsest/puck_execution_files.py:276: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8a14bd0>
+
+    def _check_subtrees(self):
+        for key, expected in self._children.items():
+            self._clock(); directory = self._directory(key)
+            scan = os.open('.', os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW, dir_fd=directory)
+            names = set()
+            try:
+                with os.scandir(scan) as iterator:
+                    for item in iterator:
+                        self._clock()
+                        if item.name not in expected or item.name in names:
+                            raise ValueError('Source namespace has an unexpected entry')
+                        names.add(item.name)
+                        state = item.stat(follow_symlinks=False)
+                        matches = (stat.S_ISDIR(state.st_mode) if expected[item.name] == 'directory'
+                                   else stat.S_ISREG(state.st_mode) and state.st_nlink == 1)
+>                       if not matches: raise ValueError('Source namespace entry type differs')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                       ValueError: Source namespace entry type differs
+
+scripts/memory_source_runtime_closure_v1.py:565: ValueError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f8a16ad0>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8a14bd0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_poison_on_replacement_mut2')
+change = 'hardlink'
+
+    @pytest.mark.parametrize('change', ['replace','restore','hardlink','symlink','emptydir'])
+    def test_poison_on_replacement_mutation_restore_or_teardown(tmp_path, change):
+        p = authored(tmp_path); before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+            with holder(p) as held:
+                path = tmp_path/'runtime/owner.py'
+                if change == 'replace': path.unlink(); path.write_bytes(b'x')
+                elif change == 'restore': path.write_bytes(b'z'); path.write_bytes(b'x')
+                elif change == 'hardlink': os.link(path, tmp_path/'alias2')
+                elif change == 'symlink': path.unlink(); path.symlink_to(tmp_path/'evidence')
+                else: (tmp_path/'runtime/empty').rmdir()
+>               held.recheck()
+
+tests/test_memory_source_runtime_closure_v1.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8a14bd0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_______ test_poison_on_replacement_mutation_restore_or_teardown[symlink] _______
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d18390>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+>           self._check_dirs()
+
+src/palimpsest/puck_execution_files.py:275: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d18390>
+
+    def _check_dirs(self):
+        for key,(fd,parent,name,expected) in self._dirs.items():
+            self._clock(); wanted = self._edge(key,expected)
+            if (self._edge(key,_identity(os.fstat(fd))) != wanted
+                    or self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False))) != wanted):
+>               raise RuntimeError('Source directory identity changed')
+E               RuntimeError: Source directory identity changed
+
+scripts/memory_source_runtime_closure_v1.py:548: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f8d19b10>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d18390>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_poison_on_replacement_mut3')
+change = 'symlink'
+
+    @pytest.mark.parametrize('change', ['replace','restore','hardlink','symlink','emptydir'])
+    def test_poison_on_replacement_mutation_restore_or_teardown(tmp_path, change):
+        p = authored(tmp_path); before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+            with holder(p) as held:
+                path = tmp_path/'runtime/owner.py'
+                if change == 'replace': path.unlink(); path.write_bytes(b'x')
+                elif change == 'restore': path.write_bytes(b'z'); path.write_bytes(b'x')
+                elif change == 'hardlink': os.link(path, tmp_path/'alias2')
+                elif change == 'symlink': path.unlink(); path.symlink_to(tmp_path/'evidence')
+                else: (tmp_path/'runtime/empty').rmdir()
+>               held.recheck()
+
+tests/test_memory_source_runtime_closure_v1.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d18390>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+______ test_poison_on_replacement_mutation_restore_or_teardown[emptydir] _______
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f9155610>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+>           self._check_dirs()
+
+src/palimpsest/puck_execution_files.py:275: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f9155610>
+
+    def _check_dirs(self):
+        for key,(fd,parent,name,expected) in self._dirs.items():
+            self._clock(); wanted = self._edge(key,expected)
+            if (self._edge(key,_identity(os.fstat(fd))) != wanted
+                    or self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False))) != wanted):
+>               raise RuntimeError('Source directory identity changed')
+E               RuntimeError: Source directory identity changed
+
+scripts/memory_source_runtime_closure_v1.py:548: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f9157990>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f9155610>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_poison_on_replacement_mut4')
+change = 'emptydir'
+
+    @pytest.mark.parametrize('change', ['replace','restore','hardlink','symlink','emptydir'])
+    def test_poison_on_replacement_mutation_restore_or_teardown(tmp_path, change):
+        p = authored(tmp_path); before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+            with holder(p) as held:
+                path = tmp_path/'runtime/owner.py'
+                if change == 'replace': path.unlink(); path.write_bytes(b'x')
+                elif change == 'restore': path.write_bytes(b'z'); path.write_bytes(b'x')
+                elif change == 'hardlink': os.link(path, tmp_path/'alias2')
+                elif change == 'symlink': path.unlink(); path.symlink_to(tmp_path/'evidence')
+                else: (tmp_path/'runtime/empty').rmdir()
+>               held.recheck()
+
+tests/test_memory_source_runtime_closure_v1.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f9155610>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+______________________ test_manifest_is_held_before_parse ______________________
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f91bc850>
+
+    def __enter__(self):
+        if self._state != 'new': raise RuntimeError('Runtime custody can only be entered once')
+        try:
+            self._clock()
+            ref = self._reference
+            metadata = self._acquire([ref[k] for k in ('recipe','manifest','ledger')], [])
+            manifest_raw = metadata._read_metadata(ref['manifest']['path'])
+            self._manifest = validate_runtime_manifest(manifest_raw, ref,
+                required_roots=self._required_roots, required_pins=self._required_pins, output_root=self._output_root)
+            self._clock()
+            self._recipe = validate_preparation_recipe(metadata._read_metadata(ref['recipe']['path']), ref, self._manifest)
+            self._ledger_raw = metadata._read_metadata(ref['ledger']['path'])
+            self._accounting = validate_preparation_ledger(self._ledger_raw, ref, self._manifest, self._recipe)
+            self._ledger = _json(self._ledger_raw, ref['ledger'], 'ledger')
+            evidence = self._ledger['retained_files']
+            if any(_overlap(r['path'],self._output_root) for r in evidence):
+                raise ValueError('Evidence overlaps output')
+            self._records = _runtime_records(self._manifest)
+            self._alias = _alias_identity(self._manifest['pins'],self._clock)
+            self._acquire(list(self._records.values())+evidence, self._manifest['roots'])
+>           self._aliases()
+
+scripts/memory_source_runtime_closure_v1.py:696: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f91bc850>
+
+    def _aliases(self):
+        seen = set()
+        for held in self._holders:
+            for fd, _, _, expected in held._files.values():
+                self._clock()
+                identity = _identity(os.fstat(fd))
+                if identity != expected or identity[:2] in seen:
+>                   raise ValueError('Global runtime/metadata inode alias or mutation')
+E                   ValueError: Global runtime/metadata inode alias or mutation
+
+scripts/memory_source_runtime_closure_v1.py:673: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_manifest_is_held_before_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff3f91bd190>
+
+    def test_manifest_is_held_before_parse(tmp_path, monkeypatch):
+        p = authored(tmp_path); m = p[0]; original = m.validate_runtime_manifest
+        def replace_then_validate(*args, **kwargs):
+            path = tmp_path/'manifest.json'; raw = path.read_bytes(); path.unlink(); path.write_bytes(raw)
+            return original(*args, **kwargs)
+        monkeypatch.setattr(m, 'validate_runtime_manifest', replace_then_validate)
+        with pytest.raises((ValueError,RuntimeError)):
+>           with holder(p): pass
+
+tests/test_memory_source_runtime_closure_v1.py:276: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:700: in __enter__
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f91bd650>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+______________ test_deadline_and_callback_cover_read_hash_census _______________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_deadline_and_callback_cov0')
+
+    def test_deadline_and_callback_cover_read_hash_census(tmp_path):
+        p = authored(tmp_path); calls = []
+        def check(): calls.append(1)
+>       with holder(p, check=check) as held:
+
+tests/test_memory_source_runtime_closure_v1.py:282: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:782: in __exit__
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f9335b50>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_________________ test_partial_acquisition_closes_descriptors __________________
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f936b9d0>
+
+    def __enter__(self):
+        if self._state != 'new': raise RuntimeError('Runtime custody can only be entered once')
+        try:
+            self._clock()
+            ref = self._reference
+            metadata = self._acquire([ref[k] for k in ('recipe','manifest','ledger')], [])
+            manifest_raw = metadata._read_metadata(ref['manifest']['path'])
+            self._manifest = validate_runtime_manifest(manifest_raw, ref,
+                required_roots=self._required_roots, required_pins=self._required_pins, output_root=self._output_root)
+            self._clock()
+            self._recipe = validate_preparation_recipe(metadata._read_metadata(ref['recipe']['path']), ref, self._manifest)
+            self._ledger_raw = metadata._read_metadata(ref['ledger']['path'])
+            self._accounting = validate_preparation_ledger(self._ledger_raw, ref, self._manifest, self._recipe)
+            self._ledger = _json(self._ledger_raw, ref['ledger'], 'ledger')
+            evidence = self._ledger['retained_files']
+            if any(_overlap(r['path'],self._output_root) for r in evidence):
+                raise ValueError('Evidence overlaps output')
+            self._records = _runtime_records(self._manifest)
+>           self._alias = _alias_identity(self._manifest['pins'],self._clock)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:694: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:587: in _alias_identity
+    if alias.resolve(strict=True) != Path(pins['python_elf']['path']):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_partial_acquisition_close0/alias')
+strict = True
+
+    def resolve(self, strict=False):
+        """
+        Make the path absolute, resolving all symlinks on the way and also
+        normalizing it.
+        """
+    
+        def check_eloop(e):
+            winerror = getattr(e, 'winerror', 0)
+            if e.errno == ELOOP or winerror == _WINERROR_CANT_RESOLVE_FILENAME:
+                raise RuntimeError("Symlink loop from %r" % e.filename)
+    
+        try:
+>           s = os.path.realpath(self, strict=strict)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_partial_acquisition_close0/runtime/owner.py'
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:993: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_partial_acquisition_close0')
+
+    def test_partial_acquisition_closes_descriptors(tmp_path):
+        p = authored(tmp_path); (tmp_path/'runtime/owner.py').unlink()
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+>           with holder(p): pass
+
+tests/test_memory_source_runtime_closure_v1.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:700: in __enter__
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f936bd90>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+___ test_empty_selected_root_is_censused_and_nested_required_root_is_covered ___
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abfe50>
+
+    def recheck(self):
+        self._active()
+        try:
+            self._clock()
+>           self._check_dirs()
+
+src/palimpsest/puck_execution_files.py:275: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abfe50>
+
+    def _check_dirs(self):
+        for key,(fd,parent,name,expected) in self._dirs.items():
+            self._clock(); wanted = self._edge(key,expected)
+            if (self._edge(key,_identity(os.fstat(fd))) != wanted
+                    or self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False))) != wanted):
+>               raise RuntimeError('Source directory identity changed')
+E               RuntimeError: Source directory identity changed
+
+scripts/memory_source_runtime_closure_v1.py:548: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f916e110>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abfe50>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_empty_selected_root_is_ce0')
+
+    def test_empty_selected_root_is_censused_and_nested_required_root_is_covered(tmp_path):
+        p = authored(tmp_path)
+        p[2]['roots'].append(dict(root=str(tmp_path/'zero'), kind='complete', files=[], directories=[]))
+        p[3]['intended_roots'].append(str(tmp_path/'zero'))
+        p[1]['recipe'] = descriptor(p[1]['recipe']['path'], canonical(p[3])); p[2]['recipe'] = p[1]['recipe']; p[4]['recipe'] = p[1]['recipe']
+        repin_manifest(p)
+        for key, value in [('recipe',p[3]),('manifest',p[2]),('ledger',p[4])]: (tmp_path/(key+'.json')).write_bytes(canonical(value))
+        (tmp_path/'zero').mkdir()
+        with pytest.raises((ValueError, RuntimeError)):
+            with holder(p) as held:
+                assert held.summary()['directory_count'] == 3
+                (tmp_path/'zero/extra').write_bytes(b'x')
+>               held.recheck()
+
+tests/test_memory_source_runtime_closure_v1.py:328: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8abfe50>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_____ test_global_inode_aliases_refuse_across_holders_and_roots[metadata] ______
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d8efd0>
+
+    def __enter__(self):
+        if self._state != 'new':
+            raise RuntimeError('Collection file custody can only be entered once')
+        try:
+            self._clock()
+            root_key = self.root.parts[1:]
+            self._directory(root_key)
+>           self._check_subtrees()
+
+src/palimpsest/puck_execution_files.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d8efd0>
+
+    def _check_subtrees(self):
+        for key, expected in self._children.items():
+            self._clock(); directory = self._directory(key)
+            scan = os.open('.', os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW, dir_fd=directory)
+            names = set()
+            try:
+                with os.scandir(scan) as iterator:
+                    for item in iterator:
+                        self._clock()
+                        if item.name not in expected or item.name in names:
+                            raise ValueError('Source namespace has an unexpected entry')
+                        names.add(item.name)
+                        state = item.stat(follow_symlinks=False)
+                        matches = (stat.S_ISDIR(state.st_mode) if expected[item.name] == 'directory'
+                                   else stat.S_ISREG(state.st_mode) and state.st_nlink == 1)
+>                       if not matches: raise ValueError('Source namespace entry type differs')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                       ValueError: Source namespace entry type differs
+
+scripts/memory_source_runtime_closure_v1.py:565: ValueError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f8d8fbd0>
+
+    def __enter__(self):
+        if self._state != 'new': raise RuntimeError('Runtime custody can only be entered once')
+        try:
+            self._clock()
+            ref = self._reference
+            metadata = self._acquire([ref[k] for k in ('recipe','manifest','ledger')], [])
+            manifest_raw = metadata._read_metadata(ref['manifest']['path'])
+            self._manifest = validate_runtime_manifest(manifest_raw, ref,
+                required_roots=self._required_roots, required_pins=self._required_pins, output_root=self._output_root)
+            self._clock()
+            self._recipe = validate_preparation_recipe(metadata._read_metadata(ref['recipe']['path']), ref, self._manifest)
+            self._ledger_raw = metadata._read_metadata(ref['ledger']['path'])
+            self._accounting = validate_preparation_ledger(self._ledger_raw, ref, self._manifest, self._recipe)
+            self._ledger = _json(self._ledger_raw, ref['ledger'], 'ledger')
+            evidence = self._ledger['retained_files']
+            if any(_overlap(r['path'],self._output_root) for r in evidence):
+                raise ValueError('Evidence overlaps output')
+            self._records = _runtime_records(self._manifest)
+            self._alias = _alias_identity(self._manifest['pins'],self._clock)
+>           self._acquire(list(self._records.values())+evidence, self._manifest['roots'])
+
+scripts/memory_source_runtime_closure_v1.py:695: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:663: in _acquire
+    held.__enter__()
+src/palimpsest/puck_execution_files.py:268: in __enter__
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d8efd0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_global_inode_aliases_refu0')
+alias = 'metadata'
+
+    @pytest.mark.parametrize('alias', ['metadata', 'cross-root'])
+    def test_global_inode_aliases_refuse_across_holders_and_roots(tmp_path, alias):
+        p = authored(tmp_path)
+        path = tmp_path/'runtime/owner.py'
+        if alias == 'metadata':
+            # Equal authored evidence/runtime bytes still represent two forbidden links.
+            path.unlink(); os.link(tmp_path/'evidence', path)
+            p[2]['roots'][0]['files'][0] = descriptor('owner.py', b'e')
+            pin = descriptor(path,b'e')
+            p[5].clear(); p[5].update(python_alias=str(tmp_path/'alias'), python_elf=pin,
+                owner_source=pin, pyvenv_config=pin, required_sources=[pin])
+            p[2]['pins'] = p[5]
+        else:
+            other = tmp_path/'zero'; other.mkdir(); os.link(path,other/'owner.py')
+            p[2]['roots'].append(dict(root=str(other),kind='complete',files=[descriptor('owner.py', b'x')],directories=[]))
+            p[3]['intended_roots'].append(str(other))
+            p[1]['recipe'] = descriptor(p[1]['recipe']['path'],canonical(p[3])); p[2]['recipe']=p[1]['recipe']; p[4]['recipe']=p[1]['recipe']
+        repin_manifest(p)
+        for key, value in [('recipe',p[3]),('manifest',p[2]),('ledger',p[4])]: (tmp_path/(key+'.json')).write_bytes(canonical(value))
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError,RuntimeError)):
+>           with holder(p): pass
+
+tests/test_memory_source_runtime_closure_v1.py:355: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:700: in __enter__
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8d8efd0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+____ test_global_inode_aliases_refuse_across_holders_and_roots[cross-root] _____
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f21c5e50>
+
+    def __enter__(self):
+        if self._state != 'new':
+            raise RuntimeError('Collection file custody can only be entered once')
+        try:
+            self._clock()
+            root_key = self.root.parts[1:]
+            self._directory(root_key)
+>           self._check_subtrees()
+
+src/palimpsest/puck_execution_files.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f21c5e50>
+
+    def _check_subtrees(self):
+        for key, expected in self._children.items():
+            self._clock(); directory = self._directory(key)
+            scan = os.open('.', os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW, dir_fd=directory)
+            names = set()
+            try:
+                with os.scandir(scan) as iterator:
+                    for item in iterator:
+                        self._clock()
+                        if item.name not in expected or item.name in names:
+                            raise ValueError('Source namespace has an unexpected entry')
+                        names.add(item.name)
+                        state = item.stat(follow_symlinks=False)
+                        matches = (stat.S_ISDIR(state.st_mode) if expected[item.name] == 'directory'
+                                   else stat.S_ISREG(state.st_mode) and state.st_nlink == 1)
+>                       if not matches: raise ValueError('Source namespace entry type differs')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                       ValueError: Source namespace entry type differs
+
+scripts/memory_source_runtime_closure_v1.py:565: ValueError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f21c6290>
+
+    def __enter__(self):
+        if self._state != 'new': raise RuntimeError('Runtime custody can only be entered once')
+        try:
+            self._clock()
+            ref = self._reference
+            metadata = self._acquire([ref[k] for k in ('recipe','manifest','ledger')], [])
+            manifest_raw = metadata._read_metadata(ref['manifest']['path'])
+            self._manifest = validate_runtime_manifest(manifest_raw, ref,
+                required_roots=self._required_roots, required_pins=self._required_pins, output_root=self._output_root)
+            self._clock()
+            self._recipe = validate_preparation_recipe(metadata._read_metadata(ref['recipe']['path']), ref, self._manifest)
+            self._ledger_raw = metadata._read_metadata(ref['ledger']['path'])
+            self._accounting = validate_preparation_ledger(self._ledger_raw, ref, self._manifest, self._recipe)
+            self._ledger = _json(self._ledger_raw, ref['ledger'], 'ledger')
+            evidence = self._ledger['retained_files']
+            if any(_overlap(r['path'],self._output_root) for r in evidence):
+                raise ValueError('Evidence overlaps output')
+            self._records = _runtime_records(self._manifest)
+            self._alias = _alias_identity(self._manifest['pins'],self._clock)
+>           self._acquire(list(self._records.values())+evidence, self._manifest['roots'])
+
+scripts/memory_source_runtime_closure_v1.py:695: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:663: in _acquire
+    held.__enter__()
+src/palimpsest/puck_execution_files.py:268: in __enter__
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f21c5e50>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_global_inode_aliases_refu1')
+alias = 'cross-root'
+
+    @pytest.mark.parametrize('alias', ['metadata', 'cross-root'])
+    def test_global_inode_aliases_refuse_across_holders_and_roots(tmp_path, alias):
+        p = authored(tmp_path)
+        path = tmp_path/'runtime/owner.py'
+        if alias == 'metadata':
+            # Equal authored evidence/runtime bytes still represent two forbidden links.
+            path.unlink(); os.link(tmp_path/'evidence', path)
+            p[2]['roots'][0]['files'][0] = descriptor('owner.py', b'e')
+            pin = descriptor(path,b'e')
+            p[5].clear(); p[5].update(python_alias=str(tmp_path/'alias'), python_elf=pin,
+                owner_source=pin, pyvenv_config=pin, required_sources=[pin])
+            p[2]['pins'] = p[5]
+        else:
+            other = tmp_path/'zero'; other.mkdir(); os.link(path,other/'owner.py')
+            p[2]['roots'].append(dict(root=str(other),kind='complete',files=[descriptor('owner.py', b'x')],directories=[]))
+            p[3]['intended_roots'].append(str(other))
+            p[1]['recipe'] = descriptor(p[1]['recipe']['path'],canonical(p[3])); p[2]['recipe']=p[1]['recipe']; p[4]['recipe']=p[1]['recipe']
+        repin_manifest(p)
+        for key, value in [('recipe',p[3]),('manifest',p[2]),('ledger',p[4])]: (tmp_path/(key+'.json')).write_bytes(canonical(value))
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises((ValueError,RuntimeError)):
+>           with holder(p): pass
+
+tests/test_memory_source_runtime_closure_v1.py:355: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:700: in __enter__
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f21c5e50>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_______ test_teardown_close_failure_poison_closes_remaining_descriptors ________
+
+fd = 328
+
+    def close(fd):
+        real_close(fd)
+        if not failed:
+>           failed.append(fd); raise OSError('authored close failure')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: authored close failure
+
+tests/test_memory_source_runtime_closure_v1.py:365: OSError
+
+During handling of the above exception, another exception occurred:
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f8d1b310>
+
+    def recheck(self) -> None:
+        self._active()
+        try:
+            self._clock()
+>           for held in self._holders: held.recheck()
+                                       ^^^^^^^^^^^^^^
+
+scripts/memory_source_runtime_closure_v1.py:707: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_execution_files.py:282: in recheck
+    self._failed()
+scripts/memory_source_runtime_closure_v1.py:514: in _failed
+    if not self._structured_teardown: return super()._failed()
+                                             ^^^^^^^^^^^^^^^^^
+src/palimpsest/puck_execution_files.py:130: in _failed
+    self._close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fafdea90>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_teardown_close_failure_po0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff3f8d1b150>
+
+    def test_teardown_close_failure_poison_closes_remaining_descriptors(tmp_path, monkeypatch):
+        p = authored(tmp_path); m = p[0]; real_close = os.close; failed = []
+        held = holder(p); held.__enter__(); before = len(os.listdir('/proc/self/fd'))
+        def close(fd):
+            real_close(fd)
+            if not failed:
+                failed.append(fd); raise OSError('authored close failure')
+        monkeypatch.setattr(m.os, 'close', close)
+>       with pytest.raises(OSError,match='authored close failure'): held.__exit__(None,None,None)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_source_runtime_closure_v1.py:367: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:776: in __exit__
+    self.recheck()
+scripts/memory_source_runtime_closure_v1.py:713: in recheck
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fafdea90>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+__ test_handle_accounting_requires_prior_dictionaries_and_poisons[None-None] ___
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f91bc8d0>
+
+    def accounting(self, *, prior_charge_reference: dict, prior_cpu: dict) -> dict:
+        self._active()
+        try:
+            if type(prior_charge_reference) is not dict or type(prior_cpu) is not dict:
+>               raise ValueError('Required prior charge and CPU must be dictionaries')
+E               ValueError: Required prior charge and CPU must be dictionaries
+
+scripts/memory_source_runtime_closure_v1.py:748: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_handle_accounting_require0')
+charge = None, cpu = None
+
+    @pytest.mark.parametrize('charge,cpu', [(None,None), (None,{}), ({},None), ([],{}), ({},[])])
+    def test_handle_accounting_requires_prior_dictionaries_and_poisons(tmp_path, charge, cpu):
+        p = authored(tmp_path)
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises(RuntimeError, match='failed before context exit'):
+            with holder(p) as held:
+                with pytest.raises(ValueError):
+>                   held.accounting(prior_charge_reference=charge, prior_cpu=cpu)
+
+tests/test_memory_source_runtime_closure_v1.py:493: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:756: in accounting
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f91bd9d0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+__ test_handle_accounting_requires_prior_dictionaries_and_poisons[None-cpu1] ___
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3f8dd2e90>
+
+    def accounting(self, *, prior_charge_reference: dict, prior_cpu: dict) -> dict:
+        self._active()
+        try:
+            if type(prior_charge_reference) is not dict or type(prior_cpu) is not dict:
+>               raise ValueError('Required prior charge and CPU must be dictionaries')
+E               ValueError: Required prior charge and CPU must be dictionaries
+
+scripts/memory_source_runtime_closure_v1.py:748: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_handle_accounting_require1')
+charge = None, cpu = {}
+
+    @pytest.mark.parametrize('charge,cpu', [(None,None), (None,{}), ({},None), ([],{}), ({},[])])
+    def test_handle_accounting_requires_prior_dictionaries_and_poisons(tmp_path, charge, cpu):
+        p = authored(tmp_path)
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises(RuntimeError, match='failed before context exit'):
+            with holder(p) as held:
+                with pytest.raises(ValueError):
+>                   held.accounting(prior_charge_reference=charge, prior_cpu=cpu)
+
+tests/test_memory_source_runtime_closure_v1.py:493: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:756: in accounting
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8df8810>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_ test_handle_accounting_requires_prior_dictionaries_and_poisons[charge2-None] _
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3faf844d0>
+
+    def accounting(self, *, prior_charge_reference: dict, prior_cpu: dict) -> dict:
+        self._active()
+        try:
+            if type(prior_charge_reference) is not dict or type(prior_cpu) is not dict:
+>               raise ValueError('Required prior charge and CPU must be dictionaries')
+E               ValueError: Required prior charge and CPU must be dictionaries
+
+scripts/memory_source_runtime_closure_v1.py:748: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_handle_accounting_require2')
+charge = {}, cpu = None
+
+    @pytest.mark.parametrize('charge,cpu', [(None,None), (None,{}), ({},None), ([],{}), ({},[])])
+    def test_handle_accounting_requires_prior_dictionaries_and_poisons(tmp_path, charge, cpu):
+        p = authored(tmp_path)
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises(RuntimeError, match='failed before context exit'):
+            with holder(p) as held:
+                with pytest.raises(ValueError):
+>                   held.accounting(prior_charge_reference=charge, prior_cpu=cpu)
+
+tests/test_memory_source_runtime_closure_v1.py:493: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:756: in accounting
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3faf85fd0>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_ test_handle_accounting_requires_prior_dictionaries_and_poisons[charge3-cpu3] _
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3fafad550>
+
+    def accounting(self, *, prior_charge_reference: dict, prior_cpu: dict) -> dict:
+        self._active()
+        try:
+            if type(prior_charge_reference) is not dict or type(prior_cpu) is not dict:
+>               raise ValueError('Required prior charge and CPU must be dictionaries')
+E               ValueError: Required prior charge and CPU must be dictionaries
+
+scripts/memory_source_runtime_closure_v1.py:748: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_handle_accounting_require3')
+charge = [], cpu = {}
+
+    @pytest.mark.parametrize('charge,cpu', [(None,None), (None,{}), ({},None), ([],{}), ({},[])])
+    def test_handle_accounting_requires_prior_dictionaries_and_poisons(tmp_path, charge, cpu):
+        p = authored(tmp_path)
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises(RuntimeError, match='failed before context exit'):
+            with holder(p) as held:
+                with pytest.raises(ValueError):
+>                   held.accounting(prior_charge_reference=charge, prior_cpu=cpu)
+
+tests/test_memory_source_runtime_closure_v1.py:493: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:756: in accounting
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3fafb2a90>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_ test_handle_accounting_requires_prior_dictionaries_and_poisons[charge4-cpu4] _
+
+self = <runtime_reference_task1.RuntimeHandle object at 0x7ff3fb095090>
+
+    def accounting(self, *, prior_charge_reference: dict, prior_cpu: dict) -> dict:
+        self._active()
+        try:
+            if type(prior_charge_reference) is not dict or type(prior_cpu) is not dict:
+>               raise ValueError('Required prior charge and CPU must be dictionaries')
+E               ValueError: Required prior charge and CPU must be dictionaries
+
+scripts/memory_source_runtime_closure_v1.py:748: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_handle_accounting_require4')
+charge = {}, cpu = []
+
+    @pytest.mark.parametrize('charge,cpu', [(None,None), (None,{}), ({},None), ([],{}), ({},[])])
+    def test_handle_accounting_requires_prior_dictionaries_and_poisons(tmp_path, charge, cpu):
+        p = authored(tmp_path)
+        before = len(os.listdir('/proc/self/fd'))
+        with pytest.raises(RuntimeError, match='failed before context exit'):
+            with holder(p) as held:
+                with pytest.raises(ValueError):
+>                   held.accounting(prior_charge_reference=charge, prior_cpu=cpu)
+
+tests/test_memory_source_runtime_closure_v1.py:493: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_runtime_closure_v1.py:756: in accounting
+    self._poison()
+scripts/memory_source_runtime_closure_v1.py:657: in _poison
+    self._release()
+scripts/memory_source_runtime_closure_v1.py:649: in _release
+    raise first
+scripts/memory_source_runtime_closure_v1.py:644: in _release
+    try: held._close()
+         ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <runtime_reference_task1._SourceNamespaceFiles object at 0x7ff3f8a66290>
+primary = None
+
+    def _close(self, primary=None):
+>       if not self._structured_teardown: return super()._close(primary)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _HeldFileCore._close() takes 1 positional argument but 2 were given
+
+scripts/memory_source_runtime_closure_v1.py:505: TypeError
+_____ test_canonical_engine_handoff_preserves_real_writer_manifest_failure _____
+  + Exception Group Traceback (most recent call last):
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_source_failure_preservation_vnext.py", line 256, in test_canonical_engine_handoff_preserves_real_writer_manifest_failure
+  |     engine.close()
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/engine.py", line 1776, in close
+  |     if failures: raise errors('Source Engine close', failures)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  | ExceptionGroup: Source Engine close (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/engine.py", line 1768, in close
+    |     self.writer.finish({'run_id': self.run_id, 'parent_run_id': self.parent_run_id,
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 360, in finish
+    |     self._write_manifest(manifest)
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 230, in _write_manifest
+    |     _atomic_manifest(self.path / "manifest.json", payload, preserve_failed=self._preserve_failed)
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src/palimpsest/records.py", line 46, in _atomic_manifest
+    |     stream.write(payload)
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_source_failure_preservation_vnext.py", line 37, in write
+    |     raise DiskFailure('authored partial write')
+    | test_source_failure_preservation_vnext.DiskFailure: authored partial write
+    +------------------------------------
+=============================== warnings summary ===============================
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+tests/test_memory_source_replay_custody_vnext.py::test_custody_body_failure_still_restores_and_final_checks
+tests/test_memory_source_replay_custody_vnext.py::test_bad_custody_callable_refuses_before_mutation
+tests/test_memory_source_replay_custody_vnext.py::test_legacy_none_core_still_computes_whole_trace_and_restores
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+  /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_source_replay_custody_vnext.py::test_single_trace_checks_every_row_and_restoration
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_memory_family_source_numeric_vnext.py::test_numeric_npz_rejects_bad_array_headers_before_comparison[duplicate]
+  /home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/zipfile.py:1580: UserWarning: Duplicate name: 'latency.npy'
+    return self._open_to_write(zinfo, force_zip64=force_zip64)
+
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[actual-entry]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[actual-entry]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_authority_domain_and_froz0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[auth-fixture]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[auth-fixture]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_authority_domain_and_froz1/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[output-extra]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[output-extra]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_authority_domain_and_froz2/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[job-bool]
+tests/test_memory_source_parent_entry_vnext.py::test_authority_domain_and_frozen_refusals_precede_runtime_or_output[job-bool]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03/test_authority_domain_and_froz3/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_real_writer_broken_budget_keeps_original_failure_semantics
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_retained_unqualified_never_grants_load_authority
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_complete_tree_empty_directories_and_aliases
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_poison_on_replacement_mutation_restore_or_teardown[replace]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_poison_on_replacement_mutation_restore_or_teardown[restore]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_poison_on_replacement_mutation_restore_or_teardown[hardlink]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_poison_on_replacement_mutation_restore_or_teardown[symlink]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_poison_on_replacement_mutation_restore_or_teardown[emptydir]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_manifest_is_held_before_parse
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_deadline_and_callback_cover_read_hash_census
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_partial_acquisition_closes_descriptors
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_empty_selected_root_is_censused_and_nested_required_root_is_covered
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_global_inode_aliases_refuse_across_holders_and_roots[metadata]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_global_inode_aliases_refuse_across_holders_and_roots[cross-root]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_teardown_close_failure_poison_closes_remaining_descriptors
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_handle_accounting_requires_prior_dictionaries_and_poisons[None-None]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_handle_accounting_requires_prior_dictionaries_and_poisons[None-cpu1]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_handle_accounting_requires_prior_dictionaries_and_poisons[charge2-None]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_handle_accounting_requires_prior_dictionaries_and_poisons[charge3-cpu3]
+FAILED tests/test_memory_source_runtime_closure_v1.py::test_handle_accounting_requires_prior_dictionaries_and_poisons[charge4-cpu4]
+FAILED tests/test_source_failure_preservation_vnext.py::test_canonical_engine_handoff_preserves_real_writer_manifest_failure
+21 failed, 309 passed, 20 warnings in 34.33s

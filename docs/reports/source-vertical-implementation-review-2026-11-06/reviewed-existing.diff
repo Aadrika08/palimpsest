@@ -1,0 +1,532 @@
+diff --git c/scripts/memory_family_cell_replay_v4.py w/scripts/memory_family_cell_replay_v4.py
+index c02215c..0bf08bc 100644
+--- c/scripts/memory_family_cell_replay_v4.py
++++ w/scripts/memory_family_cell_replay_v4.py
+@@ -48,8 +48,8 @@ def _runtime(policy, snapshot):
+     _equal(snapshots._torch_profile(), snapshot['identity']['torch'], 'runtime profile')
+ 
+ 
+-def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
+-                 input_width, deadline):
++def _replay_rows_inner(*, policy, rows, source_snapshot, operation, first_tick,
++                 input_width, deadline, custody_check=None):
+     """Numerical core on the actual guarded policy; dimension-general for tests."""
+     import numpy as np
+     audit._public_deadline(deadline)
+@@ -77,6 +77,7 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
+     torch = policy.torch
+     hidden = (torch.zeros_like(staged[0]) if operation == 'source' else staged[0].clone())
+     try:
++        if custody_check is not None: custody_check()
+         policy.failure_diagnostics = {}
+         policy._current_raw_output = None
+         cell._cached_alphas = None
+@@ -84,6 +85,7 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
+         with torch.inference_mode():
+             for offset, row in enumerate(rows):
+                 audit._deadline(deadline)
++                if custody_check is not None: custody_check()
+                 if (type(row) is not dict or not {'encoded_input', 'raw_output', 'action'} <= set(row)
+                         or type(row.get('episode')) is not int
+                         or row['episode'] != 0 or type(row.get('tick')) is not int
+@@ -106,6 +108,7 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
+                 if (raw_array[0].tobytes() != raw_expected.tobytes()
+                         or action_array[0].tobytes() != action_expected.tobytes()):
+                     raise ValueError(f'Cell replay raw output or action differs at tick {row["tick"]}')
++                if custody_check is not None: custody_check()
+             if operation == 'source' and hidden_array.tobytes() != end_hidden.tobytes():
+                 raise ValueError('Cell replay acquired source endpoint differs')
+         _runtime(policy, source_snapshot)
+@@ -114,19 +117,60 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
+                 or rows_before != snapshots.state_digest(rows)):
+             raise ValueError('Cell replay supplied state/rows changed during replay')
+         audit._deadline(deadline)
++        if custody_check is not None: custody_check()
+         return {'rows_checked': len(rows), 'raw_output_equal': True, 'action_equal': True,
+                 'source_endpoint_verified': operation == 'source',
+                 'initial_hidden_sha256': snapshots.state_digest(
+                     np.zeros_like(end_hidden) if operation == 'source' else end_hidden),
+                 'final_hidden_sha256': snapshots.state_digest(hidden_array)}
+     finally:
+-        policy._restore(previous)
+-        for target, saved in ((policy, attributes), (cell, cache)):
+-            for name, (present, value) in saved.items():
+-                if present:
+-                    setattr(target, name, value)
+-                elif hasattr(target, name):
+-                    delattr(target, name)
++        if custody_check is None:
++            policy._restore(previous)
++            for target, saved in ((policy, attributes), (cell, cache)):
++                for name, (present, value) in saved.items():
++                    if present:
++                        setattr(target, name, value)
++                    elif hasattr(target, name):
++                        delattr(target, name)
++        else:
++            from scripts.memory_family_source_records_vnext import errors
++            primary = sys.exception()
++            failures = [primary] if primary is not None else []
++            try: custody_check()
++            except BaseException as error: failures.append(error)
++            try: policy._restore(previous)
++            except BaseException as error: failures.append(error)
++            for target, saved in ((policy, attributes), (cell, cache)):
++                for name, (present, value) in saved.items():
++                    try:
++                        if present: setattr(target, name, value)
++                        elif hasattr(target, name): delattr(target, name)
++                    except BaseException as error: failures.append(error)
++            try: custody_check()
++            except BaseException as error: failures.append(error)
++            if failures and (len(failures)>1 or primary is None):
++                raise errors('Source cell replay restoration', failures)
++
++
++def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
++                 input_width, deadline, custody_check=None):
++    if custody_check is not None and not callable(custody_check):
++        raise ValueError('Source custody check must be callable')
++    if custody_check is None:
++        return _replay_rows_inner(policy=policy, rows=rows, source_snapshot=source_snapshot,
++            operation=operation, first_tick=first_tick, input_width=input_width, deadline=deadline)
++    # The outer seam also covers staging failures before any mutable state exists.
++    try:
++        custody_check()
++        return _replay_rows_inner(policy=policy, rows=rows, source_snapshot=source_snapshot,
++            operation=operation, first_tick=first_tick, input_width=input_width,
++            deadline=deadline, custody_check=custody_check)
++    except BaseException as primary:
++        try: custody_check()
++        except BaseException as failure:
++            from scripts.memory_family_source_records_vnext import errors
++            raise errors('Source cell replay exit', [primary, failure])
++        raise
+ 
+ 
+ def _pinned_policy(policy):
+diff --git c/scripts/memory_family_replay_custody_v4.py w/scripts/memory_family_replay_custody_v4.py
+index 9daa79a..49e5a8f 100644
+--- c/scripts/memory_family_replay_custody_v4.py
++++ w/scripts/memory_family_replay_custody_v4.py
+@@ -51,7 +51,9 @@ class HeldReplayFiles:
+     final admission decision. A returned path does not itself bind a later reopen.
+     """
+ 
+-    def __init__(self, root, entries, deadline, exact_subtrees=()):
++    def __init__(self, root, entries, deadline, exact_subtrees=(), *, structured_teardown=False):
++        if type(structured_teardown) is not bool: raise ValueError("structured_teardown must be exact bool")
++        self._structured_teardown = structured_teardown
+         raw_root = os.fspath(root)
+         if (type(raw_root) is not str or not raw_root.startswith('/')
+                 or any(part in ('.', '..') for part in raw_root.split('/'))):
+@@ -118,6 +120,11 @@ class HeldReplayFiles:
+                 os.close(fd)
+             except BaseException as error:
+                 failures.append(error)
++        if self._structured_teardown:
++            if failures:
++                from scripts.memory_family_source_records_vnext import errors
++                raise errors("Source replay custody teardown", [primary, *failures])
++            return
+         if not failures:
+             return
+         if primary is None:
+@@ -153,11 +160,11 @@ class HeldReplayFiles:
+         return fd
+ 
+     def _check_dirs(self):
+-        for fd, parent, name, expected in self._dirs.values():
++        for key, (fd, parent, name, expected) in self._dirs.items():
+             self._clock()
+             if (_identity(os.fstat(fd)) != expected
+                     or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+-                raise RuntimeError('Replay root or ancestor changed while held')
++                raise RuntimeError('Replay root or ancestor changed while held: /' + '/'.join(key))
+ 
+     def _hash(self, fd, maximum, *, copy_bytes=False):
+         os.lseek(fd, 0, os.SEEK_SET)
+@@ -329,6 +336,21 @@ class HeldReplayFiles:
+             if kind is None:
+                 raise RuntimeError('Replay custody failed before context exit')
+             return False
++        if self._structured_teardown:
++            from scripts.memory_family_source_records_vnext import errors
++            failures = [error] if error is not None else []
++            try:
++                self.recheck()
++            except BaseException as failure:
++                failures.append(failure)
++            self._state = 'closed' if not failures else 'failed'
++            try:
++                self._close()
++            except BaseException as failure:
++                failures.append(failure)
++            if failures and (len(failures) > 1 or error is None):
++                raise errors('Source replay custody exit', failures)
++            return False
+         primary = error
+         try:
+             self.recheck()
+diff --git c/scripts/memory_source_runtime_closure_v1.py w/scripts/memory_source_runtime_closure_v1.py
+index e164440..206190e 100644
+--- c/scripts/memory_source_runtime_closure_v1.py
++++ w/scripts/memory_source_runtime_closure_v1.py
+@@ -472,7 +472,9 @@ def validate_preparation_ledger(raw: bytes, reference: dict, manifest: dict, rec
+ class _SourceNamespaceFiles(_HeldFileCore):
+     """Local source adapter: exact selected trees, edge-only ancestors."""
+ 
+-    def __init__(self, entries, roots, deadline, check):
++    def __init__(self, entries, roots, deadline, check, *, structured_teardown=False):
++        if type(structured_teardown) is not bool: raise ValueError("structured_teardown must be exact bool")
++        self._structured_teardown = structured_teardown
+         self._budget_check = check
+         self._selected = tuple(tuple(_path(r['root']).split('/')[1:]) for r in roots)
+         self._children = {}
+@@ -499,6 +501,22 @@ class _SourceNamespaceFiles(_HeldFileCore):
+                                  PROFILE['input_bytes_max']+PROFILE['retained_bytes_max']+
+                                  sum(PROFILE[k+'_bytes_max'] for k in ('recipe','manifest','ledger'))))
+ 
++    def _close(self, primary=None):
++        if not self._structured_teardown: return super()._close()
++        from scripts.memory_family_source_records_vnext import errors
++        failures = []
++        while self._fds:
++            try: os.close(self._fds.pop())
++            except BaseException as failure: failures.append(failure)
++        if failures: raise errors('Source namespace FD teardown', [primary, *failures])
++
++    def _failed(self, primary=None):
++        if not self._structured_teardown: return super()._failed()
++        import sys
++        if primary is None: primary = sys.exception()
++        self._state = 'failed'
++        self._close(primary)
++
+     def _clock(self):
+         self._budget_check()
+         super()._clock()
+@@ -584,7 +602,9 @@ def _alias_identity(pins, check):
+ class RuntimeHandle:
+     """One-shot current-byte custody; no import or execution capability."""
+ 
+-    def __init__(self, reference, *, required_roots, required_pins, output_root, deadline, check):
++    def __init__(self, reference, *, required_roots, required_pins, output_root, deadline, check, structured_teardown=False):
++        if type(structured_teardown) is not bool: raise ValueError("structured_teardown must be exact bool")
++        self._structured_teardown = structured_teardown
+         self._reference = validate_runtime_reference(reference)
+         if type(required_roots) is not tuple or not required_roots: raise ValueError('Required roots missing')
+         self._required_roots = tuple(_path(r) for r in required_roots)
+@@ -606,7 +626,17 @@ class RuntimeHandle:
+     def _active(self):
+         if self._state != 'active': raise RuntimeError('Runtime custody is closed, failed or not entered')
+ 
+-    def _release(self):
++    def _release(self, primary=None):
++        if self._structured_teardown:
++            from scripts.memory_family_source_records_vnext import errors
++            failures = []
++            while self._holders:
++                held = self._holders.pop()
++                held._state = 'failed' if self._state == 'failed' else 'closed'
++                try: held._close()
++                except BaseException as failure: failures.append(failure)
++            if failures: raise errors('Source runtime teardown', [primary, *failures])
++            return
+         first = None
+         while self._holders:
+             held = self._holders.pop()
+@@ -620,10 +650,15 @@ class RuntimeHandle:
+ 
+     def _poison(self):
+         self._state = 'failed'; self._checked = False
+-        self._release()
++        if self._structured_teardown:
++            import sys
++            self._release(sys.exception())
++        else:
++            self._release()
+ 
+     def _acquire(self, entries, roots):
+-        held = _SourceNamespaceFiles(entries, roots, self._deadline, self._clock)
++        held = _SourceNamespaceFiles(entries, roots, self._deadline, self._clock,
++            **({"structured_teardown": True} if self._structured_teardown else {}))
+         self._holders.append(held)
+         held.__enter__()
+         return held
+@@ -725,6 +760,18 @@ class RuntimeHandle:
+         if self._state != 'active':
+             if kind is None: raise RuntimeError('Runtime custody failed before context exit')
+             return False
++        if self._structured_teardown:
++            from scripts.memory_family_source_records_vnext import errors
++            failures = [error] if error is not None else []
++            try: self.recheck()
++            except BaseException as failure: failures.append(failure)
++            self._state = 'failed' if failures else 'closed'
++            self._checked = False
++            try: self._release()
++            except BaseException as failure: failures.append(failure)
++            if failures and (len(failures)>1 or error is None):
++                raise errors('Source runtime exit', failures)
++            return False
+         try:
+             self.recheck()
+             self._state = 'closed'
+@@ -737,6 +784,8 @@ class RuntimeHandle:
+ 
+ 
+ def hold_runtime_manifest(reference: dict, *, required_roots: tuple[str, ...], required_pins: dict,
+-                          output_root: str, deadline: float, check: Callable[[], None]) -> RuntimeHandle:
++                          output_root: str, deadline: float, check: Callable[[], None],
++                          structured_teardown=False) -> RuntimeHandle:
+     return RuntimeHandle(reference, required_roots=required_roots, required_pins=required_pins,
+-                         output_root=output_root, deadline=deadline, check=check)
++                         output_root=output_root, deadline=deadline, check=check,
++                         **({"structured_teardown": structured_teardown} if structured_teardown is not False else {}))
+diff --git c/src/palimpsest/engine.py w/src/palimpsest/engine.py
+index d1ea40e..e79e586 100644
+--- c/src/palimpsest/engine.py
++++ w/src/palimpsest/engine.py
+@@ -526,9 +526,27 @@ class Engine:
+                          lock_sha256=sha256_file(root / "uv.lock"),
+                          source_sha256={str(path.relative_to(root)): sha256_file(path)
+                                         for path in sorted((root / "src/palimpsest").glob("*.py"))})
+-            return cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
++            instance = cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
+                        restore_snapshot=restore_snapshot, replace_controller=replace_controller, memory_u=memory_u)
++            if canonical_prepared: instance._source_structured_close = True
++            return instance
+         except BaseException as error:
++            if canonical_prepared:
++                from .records import _source_errors as errors
++                failures = [error]
++                try: writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
++                except BaseException as failure: failures.append(failure)
++                if env is not None:
++                    try:
++                        renderer = getattr(env, 'renderer', None)
++                        if renderer is not None: renderer.close()
++                    except BaseException as failure: failures.append(failure)
++                    try: env.close()
++                    except BaseException as failure: failures.append(failure)
++                try: writer.close()
++                except BaseException as failure: failures.append(failure)
++                if len(failures)>1: raise errors('Source Engine open', failures)
++                raise
+             try:
+                 writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
+             finally:
+@@ -1727,6 +1745,36 @@ class Engine:
+         self._owner_only()
+         if self._closed:
+             return
++        if getattr(self, '_source_structured_close', False):
++            from .records import _source_errors as errors
++            self._closed = True
++            failures = []
++            while self._pending:
++                command = self._pending.popleft()
++                if not self._recording_failed:
++                    try: self._command_result(command, 'rejected', reason='engine closed before application')
++                    except BaseException as error:
++                        failures.append(error)
++                        try: self._fail(error)
++                        except BaseException as failure: failures.append(failure)
++            try:
++                renderer = getattr(self.env, 'renderer', None)
++                if renderer is not None: renderer.close()
++            except BaseException as error: failures.append(error)
++            try: self.env.close()
++            except BaseException as error: failures.append(error)
++            if not self._recording_failed:
++                try:
++                    self.writer.finish({'run_id': self.run_id, 'parent_run_id': self.parent_run_id,
++                        'parent_event_prefix': self.parent_event_prefix, 'final_phase': self.phase,
++                        'last_outcome': self.last_outcome, 'metrics': self.metrics,
++                        'total_tick': self.total_tick, 'close_reason': 'operator_closed'},
++                        status='failed' if failures or self.phase == 'failed' else 'completed')
++                except BaseException as error: failures.append(error)
++            try: self.writer.close()
++            except BaseException as error: failures.append(error)
++            if failures: raise errors('Source Engine close', failures)
++            return
+         error = None
+         try:
+             try:
+diff --git c/src/palimpsest/records.py w/src/palimpsest/records.py
+index d384acb..eea78ab 100644
+--- c/src/palimpsest/records.py
++++ w/src/palimpsest/records.py
+@@ -19,6 +19,22 @@ _NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]*\Z")
+ _RESERVED = {"episode", "tick", "file", "allow_pickle"}
+ 
+ 
++
++def _source_errors(label, items):
++    """Preserve original objects, flatten only our own groups, deduplicate identity."""
++    leaves = []; seen = set()
++    def add(item):
++        if item is None: return
++        if isinstance(item, BaseExceptionGroup) and getattr(item, '_source_teardown', False):
++            for child in item.exceptions: add(child)
++        elif id(item) not in seen:
++            seen.add(id(item)); leaves.append(item)
++    for item in items: add(item)
++    group = BaseExceptionGroup(label, leaves)
++    group._source_teardown = True
++    return group
++
++
+ def _json(value):
+     return json.dumps(value, allow_nan=False, sort_keys=True)
+ 
+@@ -196,20 +212,21 @@ class RunWriter:
+             self._background.queue.join()
+             self._raise_background_error()
+ 
+-    def _check_budget(self, additional):
++    def _check_budget(self, additional, *, target=None):
+         try:
+             pending = 0 if self._background is None else self._background.pending_bytes
+             if self._max_bytes is not None and self._bytes + additional > self._max_bytes:
+                 raise RuntimeError("Recording quota exceeded before publication")
+             if self.storage_budget is not None:
+-                self.storage_budget.check(additional + pending, path=self.path)
++                self.storage_budget.check(additional + pending, path=self.path if target is None else target)
+         except (OSError, ValueError, RuntimeError):
+             self._broken = True
+             raise
+ 
+     def _write_manifest(self, value):
+         payload = (_json(value) + "\n").encode("utf-8")
+-        self._check_budget(len(payload))  # The old manifest survives until atomic replacement.
++        if self._preserve_failed: self._check_budget(len(payload), target=self.path / "manifest.json")
++        else: self._check_budget(len(payload))  # Legacy call and old manifest survive unchanged.
+         try:
+             _atomic_manifest(self.path / "manifest.json", payload, preserve_failed=self._preserve_failed)
+         except OSError:
+@@ -229,7 +246,8 @@ class RunWriter:
+             raise ValueError("event requires a kind and cannot override its sequence")
+         payload = _json({**data, "sequence": self._sequence, "kind": kind}) + "\n"
+         payload_bytes = len(payload.encode("utf-8"))
+-        self._check_budget(payload_bytes)
++        if self._preserve_failed: self._check_budget(payload_bytes, target=self.path / "events.jsonl")
++        else: self._check_budget(payload_bytes)
+         if self._background is not None:
+             self._sequence += 1
+             self._bytes += payload_bytes
+@@ -296,6 +314,10 @@ class RunWriter:
+                                start=self._buffer[0][0], count=len(self._buffer), arrays=self._schema)
+             event_bytes = len((_json({**chunk_event, "sequence": self._sequence, "kind": "chunk"}) + "\n").encode("utf-8"))
+             self._check_budget(len(payload) + event_bytes)
++            if self._preserve_failed:
++                # Both physical leaves are admitted before the chunk allocation.
++                self._check_budget(len(payload), target=path)
++                self._check_budget(event_bytes, target=self.path / 'events.jsonl')
+             if self._background is not None:
+                 self._background.put(("chunk", path, payload), len(payload))
+             else:
+@@ -353,6 +375,22 @@ class RunWriter:
+ 
+     def close(self):
+         """Publish pending ticks, retaining a running status unless finish succeeded."""
++        if self._preserve_failed:
++            failures = []
++            if not self._events.closed:
++                if not self._broken and (self._background is None or self._background.error is None):
++                    try: self._flush()
++                    except BaseException as error: failures.append(error)
++                try: self._stop_background()
++                except BaseException as error: failures.append(error)
++                try: self._events.close()
++                except BaseException as error: failures.append(error)
++                background = self._background
++                if background is not None and background.error is not None and not background.surfaced:
++                    try: self._raise_background_error()
++                    except BaseException as error: failures.append(error)
++            if failures: raise _source_errors('Source writer close', failures)
++            return
+         if not self._events.closed:
+             try:
+                 if not self._broken and (self._background is None or self._background.error is None):
+diff --git c/tests/test_memory_source_bootstrap_vnext.py w/tests/test_memory_source_bootstrap_vnext.py
+index 5a91b41..8d5dc79 100644
+--- c/tests/test_memory_source_bootstrap_vnext.py
++++ w/tests/test_memory_source_bootstrap_vnext.py
+@@ -457,8 +457,11 @@ def test_real_writer_diagnostics_event_error_still_finishes_and_closes(route):
+ def test_close_error_preserves_failed_recording_and_environment_cleanup(route):
+     route.stage.fail = 'close'
+     engine = route.open()
+-    with pytest.raises(BoundaryFailure, match='renderer close boundary'):
++    with pytest.raises(BaseExceptionGroup) as caught:
+         engine.close()
++    assert len(caught.value.exceptions) == 1
++    failure, = caught.value.exceptions
++    assert type(failure) is BoundaryFailure and str(failure) == 'renderer close boundary'
+     assert route.envs[0].closed and engine._closed and engine.writer._events.closed
+     manifest = json.loads((route.output / 'manifest.json').read_text())
+     assert manifest['status'] == 'failed' and manifest['run_id'] == RUN_ID
+@@ -534,9 +537,14 @@ def assert_failed_writer_closed(error):
+ 
+ def test_open_failure_with_renderer_close_error_still_closes_env_and_real_writer(route):
+     route.stage.fail, route.stage.close_error = 'policy', True
+-    with pytest.raises(BoundaryFailure, match='renderer close boundary') as caught:
++    with pytest.raises(BaseExceptionGroup) as caught:
+         route.open()
+-    assert_failed_writer_closed(caught.value)
++    assert len(caught.value.exceptions) == 2
++    body, teardown = caught.value.exceptions
++    assert type(body) is type(teardown) is BoundaryFailure
++    assert [str(body), str(teardown)] == ['policy boundary', 'renderer close boundary']
++    assert_failed_writer_closed(body)
++    assert_failed_writer_closed(teardown)
+     assert route.envs[0].closed
+     manifest = json.loads((route.output / 'manifest.json').read_text())
+     assert manifest['status'] == 'failed' and manifest['error']['message'] == 'policy boundary'
+@@ -591,17 +599,21 @@ def test_writer_constructor_validation_retains_ordinary_no_cleanup_policy(route)
+ 
+ 
+ def test_real_writer_broken_budget_keeps_original_failure_semantics(route):
++    original = RuntimeError('authored storage quota refusal')
+     class Budget:
+         calls = 0
+         def check(self, count, *, path):
+             self.calls += 1
+             if self.calls == 2:
+-                raise RuntimeError('authored storage quota refusal')
+-    with pytest.raises(ValueError, match='writer is closed or finished') as caught:
++                raise original
++    with pytest.raises(BaseExceptionGroup) as caught:
+         route.open(storage_budget=Budget())
+-    assert_failed_writer_closed(caught.value)
+-    assert isinstance(caught.value.__context__, RuntimeError)
+-    assert str(caught.value.__context__) == 'authored storage quota refusal'
++    assert len(caught.value.exceptions) == 2
++    body, failed_manifest = caught.value.exceptions
++    assert body is original
++    assert type(failed_manifest) is ValueError and str(failed_manifest) == 'run writer is closed or finished'
++    assert_failed_writer_closed(body)
++    assert_failed_writer_closed(failed_manifest)
+     # Existing broken writers cannot publish a terminal manifest; preserve the prefix.
+     manifest = json.loads((route.output / 'manifest.json').read_text())
+     assert manifest['status'] == 'running' and manifest['run_id'] == RUN_ID
+diff --git c/tests/test_source_failure_preservation_vnext.py w/tests/test_source_failure_preservation_vnext.py
+index 7bfe819..98afc72 100644
+--- c/tests/test_source_failure_preservation_vnext.py
++++ w/tests/test_source_failure_preservation_vnext.py
+@@ -251,9 +251,13 @@ def test_canonical_engine_handoff_preserves_real_writer_manifest_failure(route,
+     engine = route.open()
+     assert type(engine.writer) is RunWriter
+     pending = route.output / 'manifest.tmp'
++    original = DiskFailure('authored partial write')
++    # The fault fixture raises this exact object; the group must retain it.
++    monkeypatch.setitem(globals(), 'DiskFailure', lambda message: original)
+     fail_io(monkeypatch, pending, 'write')
+-    with pytest.raises(DiskFailure):
++    with pytest.raises(BaseExceptionGroup) as caught:
+         engine.close()
++    assert caught.value.exceptions == (original,)
+     assert len(pending.read_bytes()) == 11
+     assert engine.writer._events.closed and engine.env.closed
+     assert json.loads((route.output / 'manifest.json').read_text())['status'] == 'running'

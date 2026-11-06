@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_real_authored_source_writer_snp_audit_codec_and_independent_cell _____
+  + Exception Group Traceback (most recent call last):
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_parent_entry_vnext.py", line 21, in test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  |     result=parent._run_authored_attempt(fixture.job_bytes,fixture.authorization_bytes)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_source_parent_entry_vnext.py", line 397, in _run_authored_attempt
+  |     return _run_attempt_core(job_bytes,authorization_bytes,_AUTHORED_TOKEN)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_source_parent_entry_vnext.py", line 406, in _run_attempt_core
+  |     return _execute(job,authorization,metadata,lease)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_source_parent_entry_vnext.py", line 470, in _execute
+  |     raise wire.errors('Source attempt failed',failures)
+  | ExceptionGroup: Source attempt failed (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_source_parent_entry_vnext.py", line 442, in _execute
+    |     closed=producer(job,lease); lease._closed_source=closed
+    |            ^^^^^^^^^^^^^^^^^^^
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_family_source_runtime_vnext.py", line 76, in _produce_authored_source
+    |     _require_role(job,live_inputs,'producer',True); return _produce_source_core(job,live_inputs)
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_source_parent_entry_vnext.py", line 313, in _require_role
+    |     wire.schema(job,'job',authored); lease._check(job,phase); lease.recheck()
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_family_source_records_vnext.py", line 126, in schema
+    |     if type(claims) is not dict or set(claims)!=set(CLAIMS) or any(item is not False for item in claims.values()): raise ValueError('Source claims differ')
+    |                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | ValueError: Source claims differ
+    +------------------------------------
+=============================== warnings summary ===============================
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /var/tmp/source-vertical-integration-20261106-03/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /var/tmp/source-vertical-integration-20261106-03/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+1 failed, 2 warnings in 11.33s
