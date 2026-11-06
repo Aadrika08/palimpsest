@@ -27,6 +27,12 @@ def _seed(value):
     return value
 
 
+def _runtime_diagnostics_ok(diagnosis):
+    required = [check for check in diagnosis["checks"]
+                if check["name"] in {"python", "upstream"} or check["name"].startswith("dependency:")]
+    return all(check["status"] == "ok" for check in required)
+
+
 def _action(value, manual=False):
     import numpy as np
 
@@ -340,14 +346,24 @@ class Engine:
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
              storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None,
-             restore_snapshot=None, replace_controller=False, memory_u=None, diagnostics=None):
+             restore_snapshot=None, replace_controller=False, memory_u=None, diagnostics=None,
+             source_bootstrap_mode=None):
         """Create an actual pinned runtime. The caller owns its process watchdog.
 
         ``diagnostics`` defaults to the ambient doctor. A held worker instead passes
         its exact HeldProvenance record, which replaces doctor and inspects nothing.
+        ``source_bootstrap_mode='canonical-prepared-vnext-v1'`` requires a fresh
+        family-v3 case, canonical UUID and held diagnostics with read-only prepared
+        assets. It is creation configuration, not source admission or qualification.
         """
+        if source_bootstrap_mode is not None and (
+                type(source_bootstrap_mode) is not str or source_bootstrap_mode != 'canonical-prepared-vnext-v1'):
+            raise ValueError('unsupported source_bootstrap_mode')
+        canonical_prepared = source_bootstrap_mode is not None
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         if diagnostics is None:
+            if canonical_prepared:
+                raise ValueError('canonical prepared source requires exact held provenance diagnostics')
             from .doctor import diagnose
         else:
             from .held_provenance import HeldProvenance
@@ -363,6 +379,14 @@ class Engine:
         if controller not in MALE_CONTROLLERS and expected_policy_identity is not None:
             raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
+        if canonical_prepared:
+            if (scenario, texture, controller, device) != ('memory-decision-v2', 'checker', 'flynn', 'cpu'):
+                raise ValueError('canonical prepared source requires memory-decision-v2/checker/CPU FLYNN')
+            if (restore_snapshot is not None or replace_controller is not False or memory_u is not None
+                    or research_binding is not None or expected_policy_identity is not None):
+                raise ValueError('canonical prepared source requires a fresh case without continuation or research binding')
+            if type(memory_case) is not dict or type(memory_case.get('version')) is not int or memory_case['version'] != 3:
+                raise ValueError('canonical prepared source requires an exact family version3 case')
         from .memory_reference import REFERENCES
         if scenario == 'memory-decision-v2':
             from .profiles import validate_decision
@@ -385,7 +409,30 @@ class Engine:
             from .memory import sha256
             case_manifest = {'memory_case': memory_case, 'memory_case_sha256': sha256(memory_case),
                 'acquisition_protocol_sha256': memory_case['acquisition_protocol_sha256']}
-        run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
+        if canonical_prepared:
+            if type(run_id) is not str:
+                raise ValueError('canonical prepared source requires a canonical UUID run_id')
+            try:
+                canonical_id = str(uuid.UUID(run_id))
+            except ValueError as error:
+                raise ValueError('canonical prepared source requires a canonical UUID run_id') from error
+            if canonical_id != run_id:
+                raise ValueError('canonical prepared source requires a canonical UUID run_id')
+            for value in (repo_root, asset_root):
+                try:
+                    spelling = os.fspath(value)
+                except TypeError as error:
+                    raise ValueError('canonical prepared source requires canonical absolute roots') from error
+                if (not isinstance(spelling, str) or not spelling.startswith('/')
+                        or (spelling != '/' and any(part in ('', '.', '..') for part in spelling[1:].split('/')))):
+                    raise ValueError('canonical prepared source requires canonical absolute roots')
+            diagnosis = diagnostics.report()
+            if not _runtime_diagnostics_ok(diagnosis):
+                raise RuntimeError("runtime diagnostics failed; see diagnostics event")
+            from .assets import resolve_prepared_assets_readonly
+            prepared = resolve_prepared_assets_readonly(repo_root, asset_root)
+        else:
+            run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
         root, assets = Path(repo_root).resolve(), Path(asset_root).resolve()
         research_manifest = {}
         if research_binding is not None:
@@ -426,14 +473,14 @@ class Engine:
                 "scope": "matching software/hardware regime; compare before claiming repeatability",
                 "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled"},
             **case_manifest, **research_manifest,
+            **({'source_bootstrap_epoch': source_bootstrap_mode} if canonical_prepared else {}),
         }, max_bytes=max_bytes, storage_budget=storage_budget)
         env = None
         try:
-            diagnosis = diagnose(root, assets) if diagnostics is None else diagnostics.report()
+            if not canonical_prepared:
+                diagnosis = diagnose(root, assets) if diagnostics is None else diagnostics.report()
             writer.event("diagnostics", run_id=writer.manifest["run_id"], report=diagnosis)
-            required = [check for check in diagnosis["checks"]
-                        if check["name"] in {"python", "upstream"} or check["name"].startswith("dependency:")]
-            if any(check["status"] != "ok" for check in required):
+            if not _runtime_diagnostics_ok(diagnosis):
                 raise RuntimeError("runtime diagnostics failed; see diagnostics event")
             import numpy as np
             import random
@@ -452,11 +499,15 @@ class Engine:
             configure_world(env)
             policy = teacher = None
             if controller == "flynn":
-                if not verify_assets(root, assets)["ok"]:
-                    raise ValueError("missing or corrupt pinned model assets")
-                edge = prepare_graph(root, assets)
-                item = next(item for item in load_manifest(root)["files"] if item["id"] == "checkpoint")
-                policy = load_policy(root, edge, assets / item["path"], device, seed)
+                if canonical_prepared:
+                    edge, checkpoint = prepared['edge'], prepared['checkpoint']
+                else:
+                    if not verify_assets(root, assets)["ok"]:
+                        raise ValueError("missing or corrupt pinned model assets")
+                    edge = prepare_graph(root, assets)
+                    item = next(item for item in load_manifest(root)["files"] if item["id"] == "checkpoint")
+                    checkpoint = assets / item["path"]
+                policy = load_policy(root, edge, checkpoint, device, seed)
                 writer.event("policy_loaded", run_id=writer.manifest["run_id"], provenance=policy.provenance)
             elif controller == "teacher":
                 teacher = reference.PlannerAnalyticTeacher(arena_half_extent=env.arena, device="cpu")
