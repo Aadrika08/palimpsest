@@ -2,7 +2,14 @@ import hashlib
 import os
 import time
 import pytest
-from scripts.memory_source_parent_entry_vnext import _HeldDirectoryClosure, _SourcePathRegistry, _DIRECTORY_TOKEN, _REGISTRY_TOKEN
+from scripts.memory_family_source_custody_vnext import _HeldDirectoryClosure, _SourcePathRegistry, _DIRECTORY_TOKEN, _REGISTRY_TOKEN
+
+
+def test_source_parent_reexports_shared_custody_types():
+    from scripts import memory_source_parent_entry_vnext as parent
+
+    assert parent._HeldDirectoryClosure is _HeldDirectoryClosure
+    assert parent._SourcePathRegistry is _SourcePathRegistry
 
 
 def registry(): return _SourcePathRegistry(_REGISTRY_TOKEN,time.monotonic_ns()+30_000_000_000)
