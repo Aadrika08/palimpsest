@@ -427,6 +427,31 @@ Task5's authored proof/sealer-reader tests may use Task1/2a-produced fixture evi
 - [ ] Keep source V2 layout and numerical proof primitives; do not introduce a merged19-array carrier merely to fit old41. A packed carrier would create another format/qualification burden without resolving global byte/custody constraints and is rejected from this plan unless V2 later proves impossible for an independent reason requiring a new reviewed decision. New finite **file/directory census** is an explicit unqualified software-policy proposal under root's design ruling; it changes no old count cap or actual authority. Existing byte/CPU/wall/RSS and1MiB overhead ceilings remain. An over-byte/unknown-accounting case refuses even if it fits this count proposal; no failed/partial raw is removed to fit.
 - [ ] Run Task6 green including source consumer live-custody checks and failed copy/marker/fsync/teardown. Independently review exact source/schema/census/byte closure. Keep actual acceptance sets empty and retain all staged/final/raw failures. Commit only reviewed Task6 files after authorization.
 
+## Task 6a.1: Fixed authored source custody prerequisite
+
+Root accepts the exact narrow contract in
+[authored-source-contract-addendum.md](../reports/memory-terminal-custody-preflight-2026-11-06/authored-source-contract-addendum.md),
+including predecode SNP expansion limits and the distinction between current
+root custody and unproved exclusive creation history. It supersedes the older
+preflight's unbound/rebinding suggestion only for this authored slice. Ownership
+is exactly `scripts/memory_family_source_consumer_vnext.py` and its focused test.
+Implement one genuine private authored opener and fixed holder, one immutable
+condition slot, actual held files/decoded nonempty source/derived Context,
+complete rechecks/detached views and teardown. Public actual factories and
+Engine opt-in remain absent; no actual Q/L/R/admission-shaped fixtures.
+
+- [ ] Genuine authored positive and OS custody/role/source/slot/lifetime negatives.
+- [ ] Required TDD and focused software checks; independent spec/code review.
+
+Order for this bounded prerequisite is 6a.1 before later separately reviewed
+3b/4b/2b and Task5/6b integration. It does not make actual6a.2 or those adapters
+implementation-ready. Actual source production/bootstrap, replay qualification,
+namespace/capacity, complete finite process accounting and accepted final
+endpoints remain required. A source-production lifetime record cannot cover
+later finalization, registrations, holders or bespoke final-reader CPU.
+No provider exemption, accounting policy, global census, study or deletion
+authority is adopted. The full completion objective and all other gates stand.
+
 ## Task 2b (after6): Authentic opt-in and integrated strict4 Engine branch
 
 **Files:** ownership table Task2b. **Consumes:** Task1 strict4 APIs, Task2a persistence/default guard, Task6's actual fixed `HeldSourceVnext` class/private constructor/recheck logic. **Produces:** `Engine.configure_memory_terminal_vnext(context:dict,*,held_source:HeldSourceVnext)->None` and the integrated private `_advance_memory_terminal_vnext(packet:dict,reach:Reach)->None`. Before this task these interfaces do not exist as integrated public capabilities. Import the exact Task6 class only inside this new opt-in path after its module exists; legacy import/default path has no eager Task6 dependency. No duck typing, class stub, dynamic loader override or caller-provided sink.
