@@ -282,23 +282,27 @@ def _circles(value):
             raise ValueError('Reach requires plain finite float64 circle triples')
 
 
-def validate_reach_vnext(reach, *, context, subjects):
+def _validate_reach_refs(reach):
     memory._fields(reach,'cue_event gate_event intervention_event sensed_event before_occupancy after_occupancy actual_circles')
-    c=validate_context_vnext(context)
     refs=[]
     for key in ('cue_event','gate_event','intervention_event','sensed_event'):
         value=reach[key]
         if value is not None: _ref(value); refs.append(value)
         elif key=='sensed_event': raise ValueError('Reach requires current sensed event')
     sequences=[v['sequence'] for v in refs]
-    if len(set(sequences))!=len(sequences) or refs[-1]!=reach['sensed_event'] or any(v['sequence']>=reach['sensed_event']['sequence'] for v in refs[:-1]):
+    if len(set(sequences))!=len(sequences) or any(v['sequence']>=reach['sensed_event']['sequence'] for v in refs[:-1]):
         raise ValueError('Contradictory event reference order')
     if len({v['sha256'] for v in refs})!=len(refs): raise ValueError('Aliased event references')
+    if (reach['gate_event'] is None)!=(reach['intervention_event'] is None): raise ValueError('Incomplete gate edit references')
+    if reach['gate_event'] is not None and reach['cue_event'] is None: raise ValueError('Gate has no reached cue event')
+
+
+def validate_reach_vnext(reach, *, context, subjects):
+    _validate_reach_refs(reach)
+    c=validate_context_vnext(context)
     if c['kind'] in ('null','no-event') and (reach['gate_event'] is not None or reach['intervention_event'] is not None):
         raise ValueError('Null/no-event has no gate intervention')
     if c['kind']=='no-event' and reach['cue_event'] is not None: raise ValueError('No-event has no cue event')
-    if (reach['gate_event'] is None)!=(reach['intervention_event'] is None): raise ValueError('Incomplete gate edit references')
-    if reach['gate_event'] is not None and reach['cue_event'] is None: raise ValueError('Gate has no reached cue event')
     maps=(reach['before_occupancy'],reach['after_occupancy'])
     if (maps[0] is None)!=(maps[1] is None): raise ValueError('Partial occupancy maps')
     if maps[0] is not None:
@@ -499,6 +503,9 @@ def advance_transition_vnext(state4,packet, *, context,oracle_binding,reach,job_
         if s['selector']['condition']=='oracle': _binding_matches(oracle_binding,c,s)
         elif oracle_binding is not None: raise ValueError('Nonoracle received evaluator binding')
         reach=validate_reach_vnext(reach,context=c,subjects=[f['subject_id'] for f in s['m']['facts']])
+        expected_count=1 if s['terminal_lifecycle']['status']=='selected' else 0
+        if chain[0]!=expected_count:
+            raise ValueError('Input Lifecycle contradicts persisted witness count')
         cursor=s['cursor']; tick=p['tick']
         if cursor is not None and tick==cursor['tick']:
             if memory.sha256(p)!=cursor['packet_sha256']: raise ValueError('Packet boundary reused with different content')
@@ -509,9 +516,6 @@ def advance_transition_vnext(state4,packet, *, context,oracle_binding,reach,job_
         if cursor is None or tick!=cursor['tick']+1 or s['supervisor']['continuation_start_tick'] is None:
             raise ValueError('Terminal transition requires armed consecutive continuation')
         if s['supervisor']['phase'] in ('goal','failure'): raise ValueError('Terminal cannot consume further packets')
-        expected_count=1 if s['terminal_lifecycle']['status']=='selected' else 0
-        if chain[0]!=expected_count:
-            raise ValueError('Input Lifecycle contradicts persisted witness count')
     except Exception as error:
         return _result('rejected',error=error)
     builder=_TransitionBuilder(s,p,c,oracle_binding,reach,job_sha256,chain)
@@ -522,19 +526,29 @@ def advance_transition_vnext(state4,packet, *, context,oracle_binding,reach,job_
         if reach['before_occupancy'] is not None or reach['after_occupancy'] is not None:
             raise _Rejected('Input Reach occupancy must be unresolved before detector cut')
         proposed,bearing,decisions=decision._advance_memory_core(s,p,builder)
-        emit=builder.oracle_trigger or proposed['supervisor']['phase']=='failure'
-        witness=builder.witness('returned',None) if emit else None
-        return _result('witnessed-return' if emit else 'ordinary-return',proposed_state=proposed,bearing=bearing,decisions=decisions,
-            input_lifecycle=builder.input_state['terminal_lifecycle'],local_lifecycle=proposed['terminal_lifecycle'],witness=witness)
     except Exception as error:
         status='rejected' if isinstance(error,_Rejected) or builder.oracle_trigger and len(builder.stages)<4 else 'raised'
         try: witness=builder.witness('rejected' if status=='rejected' else 'raised',error)
         except Exception as bound_error:
-            # No bounded local record exists: serialization/cap refusal is
-            # infrastructure without a witness, never a truncated natural error.
-            return _result('rejected',error=bound_error)
+            # The local snapshot exists, but cannot supply a bounded serialized
+            # Witness. Keep tiny detached lifecycle evidence and refuse.
+            return _result('rejected',input_lifecycle=builder.input_state['terminal_lifecycle'],
+                local_lifecycle=builder.local_state['terminal_lifecycle'],error=bound_error)
         return _result(status,input_lifecycle=builder.input_state['terminal_lifecycle'],
             local_lifecycle=builder.local_state['terminal_lifecycle'],witness=witness,error=error)
+    # This fixed terminal-only phase is outside ordinary-core exception
+    # classification. Output validation/cap/serialization failure is always an
+    # infrastructure refusal without Witness; preserve its original exception.
+    # The legacy worker still validates at its original return cut.
+    try:
+        proposed=validate_terminal_state_vnext(proposed,context=c)
+        emit=builder.oracle_trigger or proposed['supervisor']['phase']=='failure'
+        witness=builder.witness('returned',None) if emit else None
+    except Exception as error:
+        return _result('rejected',input_lifecycle=builder.input_state['terminal_lifecycle'],
+            local_lifecycle=builder.local_state['terminal_lifecycle'],error=error)
+    return _result('witnessed-return' if emit else 'ordinary-return',proposed_state=proposed,bearing=bearing,decisions=decisions,
+        input_lifecycle=builder.input_state['terminal_lifecycle'],local_lifecycle=proposed['terminal_lifecycle'],witness=witness)
 
 
 def _validate_witness_record(body):
@@ -551,7 +565,8 @@ def _validate_witness_record(body):
     if (before['status']=='not-oracle')!=(after['status']=='not-oracle'):
         raise ValueError('Lifecycle changed condition')
     if before['status']=='selected' and after!=before: raise ValueError('Selected Lifecycle changed')
-    if body['index']==1 and before['status']!='selected': raise ValueError('Second witness lacks prior oracle selection')
+    if (body['index']==1)!=(before['status']=='selected'):
+        raise ValueError('Witness input Lifecycle contradicts index')
     memory._enum(body['result'],('returned','raised','rejected'))
     if (body['result']=='returned')!=(body['exception'] is None): raise ValueError('Witness result/exception disagree')
     if body['exception'] is not None:
@@ -559,13 +574,7 @@ def _validate_witness_record(body):
         for text in body['exception'].values():
             if type(text) is not str or len(text.encode('utf-8'))>512: raise ValueError('Exception text exceeds bound')
     r=body['reach']
-    memory._fields(r,'cue_event gate_event intervention_event sensed_event before_occupancy after_occupancy actual_circles')
-    refs=[]
-    for k in ('cue_event','gate_event','intervention_event','sensed_event'):
-        if r[k] is not None: _ref(r[k]); refs.append(r[k])
-    if r['sensed_event'] is None or len({x['sequence'] for x in refs})!=len(refs) or len({x['sha256'] for x in refs})!=len(refs):
-        raise ValueError('Missing or aliased event reference')
-    if any(x['sequence']>=r['sensed_event']['sequence'] for x in refs[:-1]): raise ValueError('Reference is not earlier than sensing')
+    _validate_reach_refs(r)
     _circles(r['actual_circles'])
     memory._list(body['stages'],4)
     names=[]

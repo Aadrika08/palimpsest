@@ -547,3 +547,80 @@ def test_exact_engine_envelope_refuses_bad_counters(field,value):
     fields={'sequence':49999,'run_id':c['run_id'],'episode':0,'tick':r.witness['tick'],'episode_step':r.witness['tick']+1}
     with pytest.raises(ValueError):
         v.terminal_event_bytes_vnext('memory_transition_witness_vnext',r.witness,**fields)
+
+
+def test_round1_selected_duplicate_requires_persisted_selection_count():
+    v,_,state,c,b,case=at_trigger()
+    first,p=step(v,state,c,b,case,token=1)
+    with patch.object(memory_experiment,'selection_for_condition',wraps=memory_experiment.selection_for_condition) as select:
+        valid=v.advance_transition_vnext(first.proposed_state,p,context=c,oracle_binding=b,reach=reach_for(case,event=True),
+            job_sha256='f'*64,chain=(1,memory.sha256(first.witness)))
+        contradictory=v.advance_transition_vnext(first.proposed_state,p,context=c,oracle_binding=b,reach=reach_for(case,event=True),
+            job_sha256='f'*64,chain=(0,memory.sha256(c)))
+    assert select.call_count==0
+    assert valid.status=='idempotent' and valid.idempotent and valid.witness is None and valid.decisions==[]
+    assert contradictory.status=='rejected' and not contradictory.idempotent and contradictory.witness is None
+    assert contradictory.proposed_state is None and contradictory.bearing is None and contradictory.decisions==[]
+
+
+def test_round1_witness_input_selected_requires_index_one_bidirectionally():
+    v,_,state,c,b,case=at_trigger()
+    first,_=step(v,state,c,b,case,token=1)
+    assert first.witness['index']==0 and first.witness['input_lifecycle']['status']=='pending'
+    assert first.witness['local_lifecycle']['status']=='selected'
+    later,_=step(v,first.proposed_state,c,b,case,token=1,missing=True,chain=(1,memory.sha256(first.witness)))
+    w=copy.deepcopy(later.witness)
+    assert w['input_lifecycle']['status']=='selected'
+    assert v.terminal_event_bytes_vnext('memory_transition_witness_vnext',w,sequence=49999,
+        run_id=c['run_id'],episode=0,tick=w['tick'],episode_step=w['tick'])
+    w.update(index=0,previous_sha256=memory.sha256(c))
+    with pytest.raises(ValueError):
+        v.terminal_event_bytes_vnext('memory_transition_witness_vnext',w,sequence=49999,
+            run_id=c['run_id'],episode=0,tick=w['tick'],episode_step=w['tick'])
+
+
+@pytest.mark.parametrize('mutation',[
+    lambda r:r.update(gate_event=None),
+    lambda r:r.update(intervention_event=None),
+    lambda r:r.update(cue_event=None),
+    lambda r:r['gate_event'].update(sequence=r['intervention_event']['sequence']),
+    lambda r:r['gate_event'].update(sha256=r['intervention_event']['sha256']),
+    lambda r:r['gate_event'].update(sequence=r['sensed_event']['sequence']+1),
+])
+def test_round1_reach_ref_invariants_match_admission_and_encoding(mutation):
+    v,_,state,c,b,case=at_trigger()
+    first,_=step(v,state,c,b,case,token=1)
+    w=copy.deepcopy(first.witness); mutation(w['reach'])
+    with pytest.raises(ValueError):
+        v.validate_reach_vnext(w['reach'],context=c,subjects=case['subjects_by_side'])
+    with pytest.raises(ValueError):
+        v.terminal_event_bytes_vnext('memory_transition_witness_vnext',w,sequence=49999,
+            run_id=c['run_id'],episode=0,tick=w['tick'],episode_step=w['tick'])
+
+
+def test_round1_valid_input_output_decision_cap_is_rejected_without_witness():
+    v,source,state,c,b,case=fixture(condition='no-U',kind='no-event')
+    state['last_decisions']=['x'*65520]
+    original=copy.deepcopy(state)
+    assert len(memory.canonical_bytes(state['last_decisions']))==65524
+    assert v.validate_terminal_state_vnext(state,context=c)==state
+    legacy_input=legacy.configure_selector(source,state['selector'],state['u'])
+    legacy_input=legacy.arm(legacy_input,c['schedule']['boundary_tick'])
+    legacy_input['last_decisions']=copy.deepcopy(state['last_decisions'])
+    legacy_original=copy.deepcopy(legacy_input)
+    assert legacy.validate_state(legacy_input)==legacy_input
+    p=packet(state,state['cursor']['tick']+1)
+    with pytest.raises(ValueError) as old_error:
+        legacy.advance_memory(legacy_input,p)
+    with patch.object(memory_experiment,'selection_for_condition',wraps=memory_experiment.selection_for_condition) as select:
+        r,_=step(v,state,c,b,case)
+    assert select.call_count==0 and state==original and legacy_input==legacy_original
+    assert r.status=='rejected' and r.witness is None and not r.idempotent
+    assert r.proposed_state is None and r.bearing is None and r.decisions==[]
+    assert r.input_lifecycle==r.local_lifecycle==state['terminal_lifecycle']
+    assert r.input_lifecycle is not r.local_lifecycle and r.input_lifecycle is not state['terminal_lifecycle']
+    assert type(r.error.original_exception) is type(old_error.value) is ValueError
+    assert str(r.error.original_exception)==str(old_error.value)=='Memory JSON exceeds byte limit'
+    with pytest.raises(ValueError) as rethrown:
+        v.rethrow_transition_error_vnext(r)
+    assert rethrown.value is r.error.original_exception

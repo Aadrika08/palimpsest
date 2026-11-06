@@ -505,8 +505,9 @@ def _advance_memory_core(state,packet,terminal=None):
     state['last_decisions']=(state['last_decisions']+copy.deepcopy(audit))[-64:]
     if terminal is None:
         return validate_state(state),bearing,audit
-    from .memory_transition_vnext import validate_terminal_state_vnext
-    return validate_terminal_state_vnext(state,context=terminal.context),bearing,audit
+    # The fixed terminal wrapper validates this output in its explicit refusal
+    # phase; ordinary core exceptions and output-cap failures must not mix.
+    return state,bearing,audit
 
 
 def goal_allowed(state):
