@@ -2,6 +2,17 @@ import pytest
 from scripts import memory_source_parent_entry_vnext as parent
 
 
+@pytest.fixture
+def tmp_path():
+    """Authored attempts only admit registered evidence roots, so these tests
+    allocate one under /var/tmp/source-vertical-* whatever the run's basetemp."""
+    import shutil, tempfile
+    from pathlib import Path
+    root = Path(tempfile.mkdtemp(prefix='source-vertical-test-', dir='/var/tmp'))
+    yield root
+    shutil.rmtree(root, ignore_errors=True)
+
+
 def test_entry_rejects_noncanonical_before_output():
     with pytest.raises(ValueError): parent.run_attempt(b'{}',b'{}')
     with pytest.raises(ValueError): parent._run_authored_attempt(b'{}',b'{}')

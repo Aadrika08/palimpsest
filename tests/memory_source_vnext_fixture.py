@@ -277,6 +277,9 @@ def observer(fixture):
                 if time.monotonic()>deadline: raise TimeoutError('Authored observer owner wait')
                 time.sleep(.002)
             owner_d=wire.describe(owner,_initial_bytes(str(root/owner),16384)); started=time.monotonic_ns()
+            # The producer run itself can exceed 10 s under load; wait for its report
+            # within the attempt's 120 s authorization, not the owner-wait budget.
+            deadline=time.monotonic()+90
             while not (root/(k+'cleanup.json')).exists():
                 if time.monotonic()>deadline: raise TimeoutError('Authored observer report wait')
                 if list((root/f'output/controls/{run}/failures').glob('*/failure.json')): return

@@ -358,7 +358,7 @@ class HeldReplayFiles:
             if primary is None:
                 primary = failure
             else:
-                primary.add_note(f'Replay exit recheck failure: {type(failure).__name__}: {failure}')
+                primary.add_note(f'Replay custody teardown recheck failure: {type(failure).__name__}: {failure}')
                 for note in getattr(failure, '__notes__', ()):
                     primary.add_note(note)
         finally:
