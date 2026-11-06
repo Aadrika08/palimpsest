@@ -1,0 +1,66 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 2354,
+      "sha256": "cbf165b33ec912395622d908a1201a162634ad36f167e3f3e2ddc1f9357b2379"
+    },
+    {
+      "path": "hosted-failure.json",
+      "size_bytes": 4751,
+      "sha256": "50ca783a12a4a3e5508215ff4a910e093ff09818901450da2579b285596b643e"
+    },
+    {
+      "path": "hosted-failure.log",
+      "size_bytes": 216879,
+      "sha256": "a149cf7033fda88a0222e65520fc396d7db1524e5e050bc3fca85dbcac7ef26e"
+    },
+    {
+      "path": "isolated.log",
+      "size_bytes": 114,
+      "sha256": "1cd27964ba9b6715ea7b884c7e02b2d9d95c24eea1e64e3313061df551419e3c"
+    },
+    {
+      "path": "isolated-command.sh",
+      "size_bytes": 1404,
+      "sha256": "32d31d9e76a4de1a6a3c77d07733c8b29a44c22bbc41a16306e93ab26ff6fb1b"
+    },
+    {
+      "path": "runner.log",
+      "size_bytes": 99,
+      "sha256": "4fec7220c3e0c678e8314c20ccd3fdd80d2359bf71f30d39a9c1afff3197ef31"
+    },
+    {
+      "path": "implementer-report.md",
+      "size_bytes": 2516,
+      "sha256": "23592ca5de7b8f2985fb51a54cf3aeb0ea476785396c8091a1bb92452d056f88"
+    },
+    {
+      "path": "review.md",
+      "size_bytes": 2616,
+      "sha256": "2aef435dff475c796ce8e521a2d0ff47063748a8422f599d12bb8f31dc1b1ab7"
+    },
+    {
+      "path": "verification.json",
+      "size_bytes": 894,
+      "sha256": "7fe00bf52c95e67a223605c53b586b1a0f3e317282393938e546636e3524a0a3"
+    }
+  ],
+  "named_source_checks": [
+    {
+      "path": "scripts/run_tests.sh",
+      "size_bytes": 2888,
+      "sha256": "565174e1c8df2cdb4085bb70e165ba77686a452b4b9eb74d557712b789f448d3"
+    },
+    {
+      "path": "docs/testing.md",
+      "size_bytes": 7768,
+      "sha256": "58552549edc7568424bcc2a7a97156e54f68365325ee3db338ed0abca4f8c98b"
+    },
+    {
+      "path": "tests/test_test_runner.py",
+      "size_bytes": 3230,
+      "sha256": "b01f0b6addadc6cc039014135a49a289c823b0a431a95e1b553178cf5b80a5ad"
+    }
+  ]
+}
