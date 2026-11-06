@@ -51,9 +51,71 @@ def _accounting():
 
 
 def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
-            accounting_defect=None, final_check=False, controlled_home=False):
+            accounting_defect=None, final_check=False, controlled_home=False, cpu_requests=None,
+            reference=None):
     p = parent()
-    freeze, path, digest = write_freeze(tmp_path, monkeypatch, complete=True)
+    if reference is None:
+        freeze, path, digest = write_freeze(tmp_path, monkeypatch, complete=True)
+    else:
+        freeze, path, digest = reference_freeze(tmp_path, monkeypatch)
+        freeze['job']['immutable']['python_alias'] = sys.executable
+        freeze['job']['immutable']['runtime_requirements']['pyvenv_config']['path'] = str(Path(sys.executable).parent.parent/'pyvenv.cfg')
+        authored_control = tmp_path/'authored-external-controls.json'
+        authored_control.write_bytes(b'{"authored":true}')
+        descriptor = p._descriptor(authored_control, tmp_path, logical=str(authored_control))
+        freeze['namespace_projections'] = {name: copy.deepcopy(descriptor) for name in p.LOGICAL_SOURCES}
+        freeze['lifetime_contract'] = copy.deepcopy(descriptor)
+        path.write_bytes(memory.canonical_bytes(freeze))
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        reference.update(contexts=[], layouts=[], admissions=[], close_faults=[])
+        class Handle:
+            active = False
+            def __enter__(self):
+                self.active = True; self.recheck()
+                return self
+            def recheck(self):
+                assert self.active
+                self.check()
+            def descriptor(self, path):
+                self.recheck()
+                return copy.deepcopy(next(row for row in [self.pins[k] for k in
+                    ('python_elf','owner_source','pyvenv_config')] + self.pins['required_sources'] if row['path'] == path))
+            def accounting(self, **kw):
+                self.recheck()
+                assert kw['prior_charge_reference'] == freeze['prior_charge_reference']
+                return dict(runtime_input_bytes=12, external_input_bytes=25,
+                    project_cpu_ns=0, memory_cpu_ns=0, accounting_authority_qualified=False)
+            def summary(self):
+                self.recheck()
+                return dict(schema='memory-source-runtime-current-bytes-v1',
+                    manifest_sha256=freeze['runtime_accounting']['reference']['manifest']['sha256'],
+                    profile_sha256=runtime().closure.PROFILE_SHA256, load_policy='retained-unqualified-v1',
+                    root_count=5, file_count=6, directory_count=5, input_bytes=12,
+                    current_bytes_checked=True, runtime_qualified=False,
+                    source_qualified=False, execution_authorized=False)
+            def __exit__(self, *exc):
+                try:
+                    self.recheck()
+                    party = 'parent' if reference['contexts'][0] is self else 'child'
+                    if reference.get('close_error') == party:
+                        reference['close_faults'].append({'party': party,
+                            'provisional_marker_exists': (numeric_candidate(freeze)/'commit.json').exists()})
+                        raise OSError(f'authored {party} reference close failure')
+                finally:
+                    self.active = False
+        def factory(ref, **kw):
+            handle = Handle(); handle.check = kw['check']; handle.pins = kw['required_pins']
+            handle.kw = kw; handle.ref = ref
+            reference['contexts'].append(handle)
+            return handle
+        reference['factory'] = factory
+        monkeypatch.setattr(p.closure, 'hold_runtime_manifest', factory)
+        monkeypatch.setattr(p, '_alias_identity', lambda job: ['authored alias identity'])
+        monkeypatch.setattr(p, '_check_reference_layout', lambda *a: reference['layouts'].append('parent'), raising=False)
+        monkeypatch.setattr(runtime(), '_check_reference_layout', lambda *a: reference['layouts'].append('child'))
+        from scripts import memory_family_allocation_v3 as allocation
+        monkeypatch.setattr(allocation, '_coverage_contract', lambda: {'sources': []})
+        monkeypatch.setattr(p, '_bind_namespaces', lambda *a: [], raising=False)
     if controlled_home:
         monkeypatch.setenv('HOME', freeze['environment']['HOME'])
     import test_memory_family_raw_audit_v4 as authored_raw
@@ -70,6 +132,8 @@ def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
         return StorageBudget([output], StorageLimits(max_bytes=p.ALLOCATION['max_bytes'], min_free_bytes=0),
             headroom_bytes=p.ALLOCATION['headroom_bytes'])
     def runner(command, **kwargs):
+        if cpu_requests is not None:
+            cpu_requests.append(kwargs['cpu_seconds'])
         role = 'owner' if '-c' in command else 'audit'
         calls.append(role)
         if role == 'audit':
@@ -93,8 +157,18 @@ def harness(tmp_path, monkeypatch, *, corrupt=None, owner_failure=False,
         value = p._read(Path(command[-3]), command[-2])
         storage = budget(Path(value['paths']['evidence_root']))
         monkeypatch.setattr(runtime(), '_capture', lambda engine: {'application': engine.application_state()})
-        outcome = runtime()._run_admitted(value, storage,
-            lambda *a, **kw: AuthoredEngine(value), lambda: None)
+        if reference is None:
+            outcome = runtime()._run_admitted(value, storage,
+                lambda *a, **kw: AuthoredEngine(value), lambda: None)
+        else:
+            reference['admissions'].append(copy.deepcopy(value['parent_admission']))
+            assert reference['contexts'][0].active
+            def loader():
+                assert len(reference['contexts']) == 2
+                assert all(context.active for context in reference['contexts'])
+                return lambda *a, **kw: AuthoredEngine(value)
+            outcome = runtime()._run_reference_admitted(value, storage, check=lambda: None,
+                runtime_handle_factory=reference['factory'], engine_loader=loader)
         if owner_failure:
             outcome['status'], outcome['report'] = 'failed', None
         p._write(Path(command[-1]), outcome, storage)
@@ -813,3 +887,369 @@ def test_fresh_controlled_home_bootstraps_before_parent_lease(tmp_path, monkeypa
     assert all(d['size_bytes'] == 0 for d in leases)
     assert result['actual_source_qualified'] is False
     assert result['parent_lifetime_reconciled'] is False
+
+
+def test_parent_records_and_passes_inherited_cpu_clamp(tmp_path, monkeypatch):
+    p = parent()
+    getrlimit = p.resource.getrlimit
+    monkeypatch.setattr(p.resource, 'getrlimit', lambda kind:
+        (10, 10) if kind == p.resource.RLIMIT_CPU else getrlimit(kind))
+    requests = []
+    freeze, result, calls = harness(tmp_path, monkeypatch, cpu_requests=requests)
+    assert calls == ['owner', 'audit']
+    assert requests == [9, 9]
+    assert [item['cpu_seconds'] for item in result['jobs']] == [9, 9]
+    control = Path(freeze['job']['paths']['control_root'])
+    assert [p._read(control / (role + '-launch.json'))['cpu_seconds']
+            for role in calls] == [9, 9]
+    assert result['qualification_claims'] is False
+
+
+def reference_freeze(tmp_path, monkeypatch, *, metadata=False):
+    from test_memory_family_source_runtime_v2 import reference_job
+    p = parent()
+    freeze, path, _ = write_freeze(tmp_path, monkeypatch, complete=True)
+    freeze['schema'] = 'memory-family-source-freeze-v4'
+    freeze['job'] = reference_job(tmp_path)
+    freeze['job']['parent_admission'] = None
+    if metadata:
+        fake_root = tmp_path / 'metadata-root'
+        old = freeze['job']['paths']['evidence_root']
+        for key, item in freeze['job']['paths'].items():
+            if item.startswith(old):
+                freeze['job']['paths'][key] = item.replace(old,
+                    str(fake_root / 'runs/memory-family-source-v2-authored'), 1)
+        monkeypatch.setattr(p, 'ROOT', fake_root)
+    freeze['environment'] = p._environment(freeze['job'])
+    freeze['runtime_roots'] = copy.deepcopy(freeze['job']['immutable']['runtime_requirements']['roots'])
+    freeze['runtime_accounting'] = {'classification': 'prospective-shared-input-B',
+        'reference': copy.deepcopy(freeze['job']['immutable']['runtime_manifest'])}
+    freeze['prior_charge_reference'] = {'evidence': {'path': str(tmp_path / 'prior.json'),
+        'size_bytes': 1, 'sha256': 'c'*64}, 'project_cpu_ns': 0, 'memory_cpu_ns': 0}
+    freeze['prior_cpu'] = {'project_seconds': 0.0, 'memory_seconds': 0.0}
+    path.write_bytes(memory.canonical_bytes(freeze))
+    return freeze, path, hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+@pytest.mark.parametrize('freeze_version,job_version,valid', [(3,2,True), (4,3,True),
+    (3,3,False), (4,2,False)])
+def test_version_pair_matrix_has_no_fallback(tmp_path, monkeypatch, freeze_version, job_version, valid):
+    p = parent()
+    freeze, _, _ = reference_freeze(tmp_path, monkeypatch)
+    old, _, _ = write_freeze(tmp_path, monkeypatch)
+    if freeze_version == 3:
+        freeze = {**old, 'job': freeze['job']}
+    if job_version == 2:
+        freeze['job'] = old['job']
+    if valid:
+        p._numeric_profile(freeze)
+    else:
+        with pytest.raises(ValueError, match='pair|V3|V4'):
+            p._numeric_profile(freeze)
+
+
+def test_v4_verify_never_opens_external_manifest_recipe_ledger(tmp_path, monkeypatch):
+    p = parent()
+    freeze, path, digest = reference_freeze(tmp_path, monkeypatch, metadata=True)
+    external = {freeze['runtime_accounting']['reference'][key]['path'] for key in ('recipe','manifest','ledger')}
+    external.add(freeze['prior_charge_reference']['evidence']['path'])
+    original = os.open
+    def guarded(name, *a, **kw):
+        assert str(name) not in external, 'metadata verify opened external payload'
+        return original(name, *a, **kw)
+    monkeypatch.setattr(os, 'open', guarded)
+    monkeypatch.setattr(runtime().closure, 'hold_runtime_manifest', lambda *a, **k: pytest.fail('verify constructed holder'))
+    result = p.verify_freeze(path, digest)
+    assert result['payloads_opened'] is False and result['execution_authorized'] is False
+    assert any('retained-unqualified' in b for b in result['blockers'])
+    assert any('collector' in b for b in result['blockers'])
+
+
+def test_v4_has_explicit_preparation_result_labels(tmp_path, monkeypatch):
+    p = parent()
+    _, path, digest = reference_freeze(tmp_path, monkeypatch, metadata=True)
+    result = p.verify_freeze(path, digest)
+    assert result['schema'] == 'memory-family-source-preparation-v4'
+    assert result['runtime_accounting']['accounting_authority_qualified'] is False
+    assert result['runtime_accounting']['external_inputs_opened'] is False
+
+
+def test_actual_v4_execute_refuses_before_runtime_and_output(tmp_path, monkeypatch):
+    p = parent()
+    freeze, path, digest = reference_freeze(tmp_path, monkeypatch, metadata=True)
+    for module, name in [(p, '_fresh_output'), (p, '_execute_core'), (p, '_bind_inputs'),
+                         (runtime().closure, 'hold_runtime_manifest'), (runtime(), '_load_engine')]:
+        monkeypatch.setattr(module, name, lambda *a, **k: pytest.fail('actual V4 reached effects'))
+    with pytest.raises(PermissionError, match='retained-unqualified'):
+        p.execute_freeze(path, digest, go_path=tmp_path/'not-read', expected_go_sha256='a'*64)
+    with pytest.raises(PermissionError, match='retained-unqualified'):
+        p._execute(freeze, path, digest)
+    # Caller assertions cannot remove the unconditional real-entry refusal.
+    monkeypatch.setattr(p, 'verify_freeze', lambda *a: {'freeze': freeze, 'blockers': [],
+        'execution_authorized': True, 'qualification_claims': True})
+    with pytest.raises(PermissionError, match='retained-unqualified'):
+        p.execute_freeze(path, digest)
+    assert not Path(freeze['job']['paths']['evidence_root']).exists()
+
+
+def test_v3_still_rejects_old_bytecode(tmp_path):
+    root = tmp_path / 'old-runtime'; root.mkdir()
+    (root/'retained.pyc').write_bytes(b'authored bytecode-shaped data')
+    with pytest.raises(ValueError, match='old bytecode'):
+        parent()._runtime_census([str(root)])
+
+
+def test_v4_frozen_roots_equal_job_requirements(tmp_path, monkeypatch):
+    p = parent()
+    freeze, path, _ = reference_freeze(tmp_path, monkeypatch, metadata=True)
+    freeze['runtime_roots'] = [str(tmp_path/'different-complete-root')]
+    path.write_bytes(memory.canonical_bytes(freeze))
+    with pytest.raises(ValueError, match='roots|requirements'):
+        p.verify_freeze(path, hashlib.sha256(path.read_bytes()).hexdigest())
+
+
+def test_v4_parent_and_child_hold_independently_same_deadline(tmp_path, monkeypatch):
+    reference = {}
+    freeze, result, calls = harness(tmp_path, monkeypatch, reference=reference)
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    assert result['schema'] == 'memory-family-source-parent-result-v4'
+    assert calls == ['owner','audit']
+    contexts = reference['contexts']
+    assert len(contexts) == 2 and contexts[0] is not contexts[1]
+    assert contexts[0].kw['deadline'] == contexts[1].kw['deadline'] == reference['admissions'][0]['runtime_deadline_monotonic']
+    assert reference['admissions'][0]['deadline_monotonic'] <= contexts[0].kw['deadline']
+    assert all(not context.active for context in contexts)
+    assert {'parent','child'} <= set(reference['layouts'])
+    for context in contexts:
+        assert context.kw['required_roots'] == tuple(freeze['runtime_roots'])
+        assert context.kw['required_pins'] == runtime()._runtime_requirements(freeze['job'])[1]
+    assert result['runtime_summary']['runtime_qualified'] is False
+    assert result['runtime_accounting']['accounting_authority_qualified'] is False
+
+
+def test_v4_ledger_prior_sum_and_lane_exact_boundary(tmp_path):
+    from test_memory_source_runtime_closure_v1 import authored, descriptor, canonical, holder
+    package = authored(tmp_path)
+    m, ref, manifest, recipe, ledger, pins = package
+    ns = 41400*10**9
+    ledger['baseline'].update(project_cpu_ns=ns-1, memory_cpu_ns=ns-1)
+    ledger['totals'].update(project_cpu_ns=ns, memory_cpu_ns=ns)
+    ledger['cumulative_charge_reference'].update(project_cpu_ns=ns, memory_cpu_ns=ns)
+    payload = canonical(ledger)
+    (tmp_path/'ledger.json').write_bytes(payload)
+    ref['ledger'] = descriptor(str(tmp_path/'ledger.json'), payload)
+    value = {'prior_charge_reference': copy.deepcopy(ledger['cumulative_charge_reference']),
+             'prior_cpu': {'project_seconds': 41400.0, 'memory_seconds': 41400.0}}
+    with holder(package) as held:
+        result = parent()._validate_reference_accounting(value, held)
+        assert result['memory_cpu_ns'] == result['project_cpu_ns'] == ns
+        assert result['external_input_bytes'] == sum(ref[k]['size_bytes'] for k in ('recipe','manifest','ledger')) + 3
+        assert result['accounting_authority_qualified'] is False
+    for defect in ('one-ns-over','sum','float','bool'):
+        changed = copy.deepcopy(value)
+        if defect == 'one-ns-over':
+            changed['prior_charge_reference']['memory_cpu_ns'] += 1
+            changed['prior_charge_reference']['project_cpu_ns'] += 1
+            import math
+            changed['prior_cpu'] = dict(project_seconds=math.nextafter(41400.0,math.inf),
+                                       memory_seconds=math.nextafter(41400.0,math.inf))
+        elif defect == 'sum': changed['prior_charge_reference']['project_cpu_ns'] -= 1
+        elif defect == 'float': changed['prior_cpu']['project_seconds'] = 41400
+        else: changed['prior_charge_reference']['project_cpu_ns'] = True
+        with pytest.raises(ValueError):
+            with holder(package) as held:
+                parent()._validate_reference_accounting(changed, held)
+
+
+def test_v4_full_combined_metadata_sum_includes_freeze_job_logs_tail(tmp_path, monkeypatch):
+    from scripts import memory_family_source_seal_v2 as public
+    seal = public.seal_numeric_source_v2
+    observed = []
+    def seal_observed(**kw):
+        result = seal(**kw)
+        observed.append((copy.deepcopy(result), copy.deepcopy(kw['additional_controls'])))
+        return result
+    monkeypatch.setattr(public, 'seal_numeric_source_v2', seal_observed)
+    freeze, result, _ = harness(tmp_path, monkeypatch, reference={})
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    sealed, controls = observed[0]
+    ledger = sealed['byte_ledger']
+    # Independently sum actual serialized files and numeric metadata, excluding
+    # dense/event/pixel domains and SNP; reservations stay strictly positive.
+    external = ledger['physical_domains']['registered_external']
+    assert len({row['path'] for row in external}) == len(external)
+    output = Path(freeze['job']['paths']['evidence_root'])
+    external_bytes = sum((output/row['path']).stat().st_size for row in external)
+    bundle_bytes = sum((output/row['path']).stat().st_size for row in ledger['physical_domains']['bundle'])
+    metadata = bundle_bytes - ledger['dense_bytes'] - ledger['selected_pixel_bytes'] - ledger['event_bytes']
+    reserves = sum(public.RESERVES.values())
+    original = (tmp_path/'freeze.json').stat().st_size
+    assert all(n > 0 for n in public.RESERVES.values())
+    total = original + external_bytes + metadata + reserves
+    assert result['combined_metadata']['combined_bytes'] == total <= 1024**2
+    names = {Path(row['path']).name for row in controls}
+    assert {'freeze.json','runtime-reference.json','runtime-summary.json','runtime-accounting.json',
+            'owner-launch.json','audit.stdout','audit-supervisor.json'} <= names
+    assert any(Path(row['path']).name == 'job.json' for row in external)
+    assert original == next(row['size_bytes'] for row in controls if Path(row['path']).name == 'freeze.json')
+    # Derive a new pure candidate ledger from actual bytes, including an authored
+    # extra serialized metadata copy. Do not fake a larger ledger scalar.
+    spare = 1024**2-total
+    padding = tmp_path/'boundary-padding.json'
+    padding.write_bytes(memory.canonical_bytes({'authored_padding': 'x'*(spare-len(memory.canonical_bytes({'authored_padding': ''})))}))
+    assert padding.stat().st_size == spare
+    prefix = Path(sealed['candidate_path'])
+    bundle = {str(Path(row['path']).relative_to(prefix)): (output/row['path']).read_bytes()
+              for row in ledger['physical_domains']['bundle']}
+    receipt = parent()._read(output/sealed['conversion']['raw_audit']['path'])
+    from scripts import memory_family_numeric_preservation_v2 as numeric
+    adjusted = numeric.account_candidate(bundle, raw_audit_receipt=receipt,
+        external_overhead_bytes=external_bytes+reserves+len(padding.read_bytes()))
+    assert parent()._reference_combined_metadata(original, adjusted)['combined_bytes'] == 1024**2
+    padding.write_bytes(memory.canonical_bytes({'authored_padding': 'x'*(spare-len(memory.canonical_bytes({'authored_padding': ''}))+1)}))
+    assert padding.stat().st_size == spare+1
+    adjusted = numeric.account_candidate(bundle, raw_audit_receipt=receipt,
+        external_overhead_bytes=external_bytes+reserves+len(padding.read_bytes()))
+    with pytest.raises(ValueError, match='combined|1 MiB'):
+        parent()._reference_combined_metadata(original, adjusted)
+
+
+@pytest.mark.parametrize('count,size,accepted', [(1,150000,True),(2,150000,True),(1,950000,False)])
+def test_v4_new_copy_and_stage_created_manifest_remain_charged(tmp_path, monkeypatch, count, size, accepted):
+    copies = []
+    def copy_manifest(job):
+        for index in range(count):
+            path = Path(job['paths']['control_root'])/f'authored-attempt-manifest-{index}.json'
+            path.write_bytes(b'x'*size)
+            copies.append(path)
+    freeze, result, _ = harness(tmp_path, monkeypatch, reference={}, corrupt=copy_manifest)
+    assert all(path.stat().st_size == size for path in copies)
+    if accepted:
+        assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+        assert result['combined_metadata']['combined_bytes'] >= count*size
+    else:
+        assert result['status'] == 'stopped'
+    assert Path(freeze['job']['paths']['snapshot']).is_file()
+
+
+def test_v4_one_byte_over_retains_failure(tmp_path, monkeypatch):
+    p = parent()
+    account = p._reference_combined_metadata
+    def overflow(original, ledger):
+        return account(original, {**ledger, 'overhead_bytes': 1024**2-original+1}
+                       if 'physical_domains' in ledger else ledger)
+    monkeypatch.setattr(p, '_reference_combined_metadata', overflow)
+    freeze, result, _ = harness(tmp_path, monkeypatch, reference={})
+    assert result['status'] == 'stopped'
+    assert (numeric_candidate(freeze)/'commit.json').is_file()
+    assert (numeric_candidate(freeze)/'quarantine.json').is_file()
+    assert Path(freeze['job']['paths']['snapshot']).is_file()
+    assert Path(freeze['job']['paths']['raw'],'worker-report.json').is_file()
+
+
+def test_v4_consistent_json_cannot_qualify_accounting_backend(tmp_path, monkeypatch):
+    freeze, result, _ = harness(tmp_path, monkeypatch, reference={})
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    assert result['actual_source_qualified'] is result['runtime_qualified'] is result['execution_authorized'] is False
+    assert result['runtime_accounting']['accounting_authority_qualified'] is False
+    assert result['precompletion_verified'] is False
+    assert 'collector' in result['runtime_limitations']
+
+
+def test_v4_added_requirements_copies_count_in_combined_metadata(tmp_path, monkeypatch):
+    freeze, result, _ = harness(tmp_path, monkeypatch, reference={})
+    assert result['status'] == 'preserved-awaiting-lifetime-reconciliation', result
+    control = Path(freeze['job']['paths']['control_root'])
+    required = memory.canonical_bytes(freeze['job']['immutable']['runtime_requirements'])
+    assert required in (tmp_path/'freeze.json').read_bytes()
+    assert required in (control/'freeze.json').read_bytes()
+    assert required in (control/'job.json').read_bytes()
+    assert result['combined_metadata']['original_freeze_bytes'] == (tmp_path/'freeze.json').stat().st_size
+    assert result['combined_metadata']['combined_bytes'] > 3*len(required)
+
+
+@pytest.mark.parametrize('party', ['parent','child'])
+def test_v4_parent_and_child_check_their_own_layout(tmp_path, monkeypatch, party):
+    p = parent()
+    freeze, _, _ = reference_freeze(tmp_path, monkeypatch)
+    roots, pins = runtime()._runtime_requirements(freeze['job'])
+    # The other process's independently frozen installation cannot cover ours.
+    module = p if party == 'parent' else runtime()
+    name = 'ROOT' if party == 'parent' else 'REPO_ROOT'
+    monkeypatch.setattr(module, name, tmp_path/'different-checkout')
+    check = p._check_reference_layout if party == 'parent' else runtime()._check_reference_layout
+    with pytest.raises(ValueError, match='layout|prefix'):
+        check(freeze['job'], roots, pins)
+
+
+@pytest.mark.parametrize('defect', ['space','duplicate','surrogate','extra','classification','prior-float','negative-zero','charge-bool'])
+def test_v4_metadata_is_canonical_exact_and_has_no_authority_switch(tmp_path, monkeypatch, defect):
+    freeze, path, _ = reference_freeze(tmp_path, monkeypatch, metadata=True)
+    if defect == 'extra': freeze['runtime_accounting']['accounting_authority_qualified'] = True
+    elif defect == 'classification': freeze['runtime_accounting']['classification'] = 'attempt-output-free'
+    elif defect == 'prior-float': freeze['prior_cpu']['project_seconds'] = 0
+    elif defect == 'negative-zero': freeze['prior_cpu']['project_seconds'] = -0.0
+    elif defect == 'charge-bool': freeze['prior_charge_reference']['project_cpu_ns'] = False
+    raw = memory.canonical_bytes(freeze)
+    if defect == 'space': raw += b' '
+    elif defect == 'duplicate': raw = b'{"schema":"ignored",'+raw[1:]
+    elif defect == 'surrogate': raw = raw.replace(b'"prepared"', b'"\\ud800"')
+    path.write_bytes(raw)
+    with pytest.raises(ValueError):
+        parent().verify_freeze(path, hashlib.sha256(raw).hexdigest())
+
+
+@pytest.mark.parametrize('root', ['src','scripts','paper/studies/change_audit_v1','venv','base'])
+def test_v4_parent_requires_each_independent_live_prefix(tmp_path, monkeypatch, root):
+    p = parent()
+    freeze, _, _ = reference_freeze(tmp_path, monkeypatch)
+    roots, pins = runtime()._runtime_requirements(freeze['job'])
+    monkeypatch.setattr(p.sys, 'prefix', str(tmp_path/'venv'))
+    monkeypatch.setattr(p.sys, 'base_prefix', str(tmp_path/'base'))
+    missing = tmp_path/root if root in ('venv','base') else p.ROOT/root
+    with pytest.raises(ValueError, match='layout'):
+        p._check_reference_layout(freeze['job'], tuple(r for r in roots if r != str(missing)), pins)
+
+
+@pytest.mark.parametrize('name', ['memory_family_source_runtime_v2.py','qualify_memory_family_source_v2.py',
+    'memory_source_runtime_closure_v1.py','memory_family_source_seal_v2.py',
+    'memory_family_numeric_preservation_v2.py','memory_directory_census_v1.py'])
+def test_v4_parent_requires_each_independent_live_source(tmp_path, monkeypatch, name):
+    p = parent()
+    freeze, _, _ = reference_freeze(tmp_path, monkeypatch)
+    roots, pins = runtime()._runtime_requirements(freeze['job'])
+    monkeypatch.setattr(p.sys, 'prefix', str(tmp_path/'venv'))
+    monkeypatch.setattr(p.sys, 'base_prefix', str(tmp_path/'base'))
+    pins['required_sources'] = [row for row in pins['required_sources'] if Path(row['path']).name != name]
+    with pytest.raises(ValueError, match='helper'):
+        p._check_reference_layout(freeze['job'], roots, pins)
+
+
+def test_v4_handle_teardown_failure_cannot_return_preserved(tmp_path, monkeypatch):
+    reference = {'close_error': 'child'}
+    freeze, result, calls = harness(tmp_path, monkeypatch, reference=reference)
+    assert calls == ['owner']
+    assert reference['close_faults'] == [{'party': 'child', 'provisional_marker_exists': False}]
+    assert result['status'] == 'stopped'
+    assert result['actual_source_qualified'] is result['execution_authorized'] is False
+    assert Path(freeze['job']['paths']['raw'],'worker-report.json').is_file()
+    assert Path(freeze['job']['paths']['snapshot']).is_file()
+
+
+def test_v4_parent_only_late_close_retains_and_quarantines_provisional_marker(tmp_path, monkeypatch):
+    reference = {'close_error': 'parent'}
+    freeze, result, calls = harness(tmp_path, monkeypatch, reference=reference)
+    assert calls == ['owner', 'audit']
+    assert [row['role'] for row in result['jobs']] == calls
+    assert all(row['accounting']['status'] == 'completed'
+               and row['accounting']['accounting_complete'] is True
+               and row['accounting']['returncode'] == 0 for row in result['jobs'])
+    assert result['status'] == 'stopped'
+    assert result['teardown_error'] == {'type': 'OSError', 'message': 'authored parent reference close failure'}
+    assert reference['close_faults'] == [{'party': 'parent', 'provisional_marker_exists': True}]
+    assert (numeric_candidate(freeze)/'commit.json').is_file()
+    assert (numeric_candidate(freeze)/'quarantine.json').is_file()
+    assert Path(freeze['job']['paths']['raw'],'worker-report.json').is_file()
+    assert Path(freeze['job']['paths']['snapshot']).is_file()
+    assert all(not held.active for held in reference['contexts'])
+    assert result['actual_source_qualified'] is result['execution_authorized'] is False

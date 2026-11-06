@@ -3,7 +3,7 @@
 #
 #   scripts/run_tests.sh                 # every non-integration test, four passes
 #   scripts/run_tests.sh --integration   # the *_integration.py files (runs/ basetemp)
-#   scripts/run_tests.sh -- tests/test_x.py -k name   # chosen tests, pass 1 rules
+#   scripts/run_tests.sh -- tests/test_x.py -k name   # chosen tests only
 #
 # Environment overrides: PALIMPSEST_PYTHON (default: <repo>/.venv, else the main
 # checkout's .venv), PALIMPSEST_TEST_BASETEMP (default: ~/.cache/palimpsest-pytest) and
@@ -48,8 +48,8 @@ elif [ "${1:-}" = "--" ]; then
   shift; run "$OUTSIDE-selected" "$@" || status=$?
 else
   mapfile -t files < <(ls "$ROOT"/tests/test_*.py | grep -v '_integration\.py$')
-  run "$OUTSIDE" -m "not runs_basetemp and not tmpfs_basetemp and not process_isolated" "$@" "${files[@]}" || status=$?
   run "$OUTSIDE-isolated" -m process_isolated "$@" "${files[@]}" || status=$?
+  run "$OUTSIDE" -m "not runs_basetemp and not tmpfs_basetemp and not process_isolated" "$@" "${files[@]}" || status=$?
   run "$INSIDE" -m runs_basetemp "$@" "${files[@]}" || status=$?
   run "$TMPFS" -m tmpfs_basetemp "$@" "${files[@]}" || status=$?
 fi

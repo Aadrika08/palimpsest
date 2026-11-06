@@ -19,6 +19,7 @@ import resource
 import stat
 import sys
 import time
+from typing import Callable
 
 if __package__ in (None, ''):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -26,6 +27,7 @@ if __package__ in (None, ''):
 
 from palimpsest import memory
 from scripts import memory_family_source_runtime_v2 as owner
+from scripts import memory_source_runtime_closure_v1 as closure
 from paper.studies.change_audit_v1.process import run_accounted
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +41,7 @@ ALLOCATION = {'wall_seconds': 900, 'cpu_seconds': 1800,
 FREEZE_FIELDS = {'schema', 'state', 'job', 'allocation', 'environment',
     'runtime_roots', 'namespace_projections',
     'prior_cpu', 'peak_bytes', 'runtime_cgroup', 'lifetime_contract', 'numeric_profile'}
+REFERENCE_FREEZE_FIELDS = FREEZE_FIELDS | {'runtime_accounting', 'prior_charge_reference'}
 LOGICAL_SOURCES = ('pre-heldout-development-history', 'training-namespace')
 MAX_JSON = 1024 * 1024
 PARENT_TERMINAL_MAX_BYTES = 65536
@@ -54,6 +57,21 @@ def _number(value, label):
     if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
         raise ValueError(label + ' must be a known finite nonnegative number')
     return value
+
+
+def _worker_cpu_budget(remaining_cpu_seconds, inherited_hard_limit):
+    """Fit the unchanged supervisor's soft/hard pair to the observed ceiling."""
+    if (type(remaining_cpu_seconds) not in (int, float)
+            or not math.isfinite(remaining_cpu_seconds)
+            or not 0 < remaining_cpu_seconds <= ALLOCATION['cpu_seconds']):
+        raise ValueError('Remaining worker CPU must be known, finite and within allocation')
+    if type(inherited_hard_limit) is not int:
+        raise ValueError('Inherited hard CPU limit must be a known integer')
+    if inherited_hard_limit == resource.RLIM_INFINITY:
+        return remaining_cpu_seconds
+    if inherited_hard_limit < 2:
+        raise ValueError('Inherited hard CPU limit cannot fit supervisor soft/hard pair')
+    return min(remaining_cpu_seconds, inherited_hard_limit - 1)
 
 
 def _deadline(deadline):
@@ -87,6 +105,10 @@ def _read(path, expected=None, maximum=MAX_JSON):
             raise ValueError('Pinned control bytes differ')
         value = artifacts._json(payload)
         owner._json(value)
+        if (type(value) is dict and value.get('schema') in (
+                'memory-family-source-freeze-v4', 'memory-family-source-job-v3')
+                and payload != memory.canonical_bytes(value)):
+            raise ValueError('Reference metadata must have canonical actual JSON bytes')
         return value
     finally:
         os.close(fd)
@@ -140,9 +162,15 @@ def _numeric_profile(value):
     Only the new immutable on-disk profile is admitted. The external freeze pins
     its actual bytes; an already imported Python constant cannot replace that read.
     """
-    _fields(value, FREEZE_FIELDS, 'Source freeze')
-    if value['schema'] != 'memory-family-source-freeze-v3' or value['state'] != 'prepared':
-        raise ValueError('Closed or unknown source freeze; V3 is mandatory')
+    reference = type(value) is dict and value.get('schema') == 'memory-family-source-freeze-v4'
+    _fields(value, REFERENCE_FREEZE_FIELDS if reference else FREEZE_FIELDS, 'Source freeze')
+    if value['schema'] not in ('memory-family-source-freeze-v3', 'memory-family-source-freeze-v4') or value['state'] != 'prepared':
+        raise ValueError('Closed or unknown source freeze; V3/V4 is mandatory')
+    expected_job = 'memory-family-source-job-v3' if reference else 'memory-family-source-job-v2'
+    if type(value['job']) is not dict or value['job'].get('schema') != expected_job:
+        raise ValueError('Source freeze/job version pair differs; no V3/V4 fallback')
+    if reference:
+        _verify_reference_metadata(value)
     item = value['numeric_profile']
     _fields(item, {'path', 'size_bytes', 'sha256'}, 'Numeric profile descriptor')
     if (item['path'] != NUMERIC_PROFILE or type(item['size_bytes']) is not int
@@ -160,6 +188,51 @@ def _numeric_profile(value):
             or numeric_source.RESERVES['future_parent_terminal'] != PARENT_TERMINAL_MAX_BYTES):
         raise ValueError('Public numeric profile differs from implementing helper')
     return absolute
+
+
+def _verify_reference_metadata(value: dict) -> dict:
+    """Pure bindings and integer consistency; no external preparation payload IO."""
+    _fields(value, REFERENCE_FREEZE_FIELDS, 'Reference source freeze')
+    if (value['schema'] != 'memory-family-source-freeze-v4' or value['state'] != 'prepared'
+            or value['job']['schema'] != 'memory-family-source-job-v3'):
+        raise ValueError('V4 freeze requires a V3 reference job')
+    job = owner.validate_source_template(value['job'])
+    runtime = value['runtime_accounting']
+    _fields(runtime, {'classification', 'reference'}, 'Runtime accounting')
+    reference = closure.validate_runtime_reference(runtime['reference'])
+    if (runtime['classification'] != 'prospective-shared-input-B'
+            or reference != job['immutable']['runtime_manifest']):
+        raise ValueError('Prospective fixed input classification/reference differs')
+    roots, _ = owner._runtime_requirements(job)
+    if value['runtime_roots'] != list(roots):
+        raise ValueError('Freeze runtime roots must equal job requirements exactly')
+    charge = closure._charge(value['prior_charge_reference'])
+    closure._prior(charge, charge, value['prior_cpu'])
+    output = job['paths']['evidence_root']
+    if closure._overlap(charge['evidence']['path'], output):
+        raise ValueError('Prior accounting evidence overlaps fresh output')
+    return {'classification': runtime['classification'], 'reference': reference,
+        'prior_charge_reference': charge, 'external_inputs_opened': False,
+        'precompletion_verified': False, 'accounting_authority_qualified': False}
+
+
+def _validate_reference_accounting(value: dict, handle: closure.RuntimeHandle) -> dict:
+    """Use held arithmetic without exporting the manifest, ledger or FD roster."""
+    accounting = handle.accounting(prior_charge_reference=value['prior_charge_reference'],
+                                   prior_cpu=value['prior_cpu'])
+    _fields(accounting, {'runtime_input_bytes', 'external_input_bytes', 'project_cpu_ns',
+                        'memory_cpu_ns', 'accounting_authority_qualified'}, 'Held accounting')
+    charge = closure._charge(value['prior_charge_reference'])
+    closure._prior(charge, charge, value['prior_cpu'])
+    for key in ('runtime_input_bytes', 'external_input_bytes', 'project_cpu_ns', 'memory_cpu_ns'):
+        if type(accounting[key]) is not int or accounting[key] < 0:
+            raise ValueError('Held accounting requires exact nonnegative integers')
+    if (accounting['accounting_authority_qualified'] is not False
+            or accounting['external_input_bytes'] < accounting['runtime_input_bytes']
+            or any(accounting[lane+'_cpu_ns'] != charge[lane+'_cpu_ns'] for lane in ('project', 'memory'))
+            or len(memory.canonical_bytes(accounting)) > 2048):
+        raise ValueError('Held accounting differs or claims collector authority')
+    return copy.deepcopy(accounting)
 
 
 def verify_freeze(path, expected_sha256):
@@ -235,10 +308,20 @@ def verify_freeze(path, expected_sha256):
         blockers.append('External parent process-lifetime accounting contract missing')
     if any(item is None for item in prior.values()):
         blockers.append('Prior aggregate/memory-lane CPU reconciliation missing')
-    return {'schema': 'memory-family-source-preparation-v3', 'status': 'metadata-verified',
+    reference = value['schema'] == 'memory-family-source-freeze-v4'
+    if reference:
+        blockers.extend([
+            'retained-unqualified-v1 current bytes grant no actual runtime/source execution authority',
+            'External accounting collector/prior completeness and preparation publication/freeze tail remain unqualified',
+            'Complete model/graph/asset descriptor coverage remains unqualified; required runtime prefixes do not establish it',
+            'Actual runtime profile, namespace, native closure, resource/lifetime and exact-stage GO gates remain closed'])
+    result = {'schema': 'memory-family-source-preparation-v4' if reference else 'memory-family-source-preparation-v3', 'status': 'metadata-verified',
         'freeze_sha256': expected_sha256, 'freeze': value, 'blockers': blockers,
         'payloads_opened': False, 'worker_invocations': 0, 'output_created': False,
         'qualification_claims': False, 'execution_authorized': False}
+    if reference:
+        result['runtime_accounting'] = _verify_reference_metadata(value)
+    return result
 
 
 def _closed_accounting(value):
@@ -398,6 +481,14 @@ def _bind_inputs(value, lifetime):
     config = str(Path(job['immutable']['python_alias']).parent.parent / 'pyvenv.cfg')
     if config not in roster:
         raise ValueError('Venv prefix configuration missing from exact closure')
+    checks.extend(_bind_namespaces(value, lifetime, coverage_contract))
+    return checks
+
+
+def _bind_namespaces(value, lifetime, coverage_contract):
+    """Identical independent namespace custody for both finite freeze formats."""
+    from scripts import memory_family_allocation_v3 as allocation
+    job = value['job']
     sets = {name: set() for name in ('known_sources', 'historical_run_ids',
         'historical_authored_ids', 'training_seeds')}
     from scripts.memory_family_producer_v3 import _case_ids
@@ -426,9 +517,82 @@ def _bind_inputs(value, lifetime):
             or _case_ids(job['case']).intersection(sets['historical_authored_ids'])
             or job['case']['seed'] in sets['training_seeds']):
         raise ValueError('Selected source collides with historical/training namespace')
-    checks.append(namespace_recheck)
     lifetime.callback(namespace_recheck)
-    return checks
+    return [namespace_recheck]
+
+
+def _check_reference_layout(job, roots, pins):
+    """Check this parent's layout independently of the child and manifest."""
+    python = f'python{sys.version_info.major}.{sys.version_info.minor}'
+    required = [ROOT/'src', ROOT/'scripts', ROOT/'paper/studies/change_audit_v1',
+                Path(sys.prefix)/'lib'/python/'site-packages', Path(sys.base_prefix)/'lib'/python]
+    if any(not any(path.is_relative_to(Path(root)) for root in roots) for path in required):
+        raise ValueError('Frozen runtime roots do not cover this parent layout')
+    names = ('memory_family_source_runtime_v2.py', 'qualify_memory_family_source_v2.py',
+             'memory_source_runtime_closure_v1.py', 'memory_family_source_seal_v2.py',
+             'memory_family_numeric_preservation_v2.py', 'memory_directory_census_v1.py')
+    sources = {row['path'] for row in pins['required_sources']}
+    if any(str(ROOT/'scripts'/name) not in sources for name in names):
+        raise ValueError('Frozen required sources omit this parent layout helper')
+    if (sys.executable != pins['python_alias']
+            or Path(pins['python_alias']).resolve(strict=True) != Path(pins['python_elf']['path'])
+            or Path('/proc/self/exe').resolve() != Path(pins['python_elf']['path'])):
+        raise PermissionError('Executing parent interpreter alias or ELF differs')
+    for name in ('repo', 'assets'):
+        if not owner._safe_path(job['paths'][name]).is_dir():
+            raise ValueError('Pinned parent runtime/asset directory is absent')
+
+
+def _bind_reference_inputs(value: dict, lifetime, *, deadline: float,
+                           check: Callable[[], None]) -> tuple[closure.RuntimeHandle, list[Callable[[], None]]]:
+    """Private post-gate custody; no public actual execution admission."""
+    _verify_reference_metadata(value)
+    from scripts import memory_family_allocation_v3 as allocation
+    coverage_contract = allocation._coverage_contract()
+    if type(deadline) not in (int, float) or not math.isfinite(deadline):
+        raise ValueError('Reference enclosing deadline must be finite')
+    def bounded_check():
+        _deadline(deadline)
+        check()
+        _deadline(deadline)
+    bounded_check()
+    roots, pins = owner._runtime_requirements(value['job'])
+    _check_reference_layout(value['job'], roots, pins)
+    alias = _alias_identity(value['job'])
+    held = lifetime.enter_context(closure.hold_runtime_manifest(
+        value['job']['immutable']['runtime_manifest'], required_roots=roots, required_pins=pins,
+        output_root=value['job']['paths']['evidence_root'], deadline=deadline, check=bounded_check))
+    def identity():
+        bounded_check()
+        _check_reference_layout(value['job'], roots, pins)
+        if _alias_identity(value['job']) != alias:
+            raise ValueError('Parent executable alias changed after reference admission')
+        # Entry validates every redundant pin against the manifest. One full
+        # recheck retains that binding without per-descriptor full-tree rechecks.
+        held.recheck()
+        bounded_check()
+    identity()
+    checks = [identity]
+    for item in [*value['namespace_projections'].values(), value['lifetime_contract']]:
+        bounded_check()
+        checks.append(lifetime.enter_context(_hold_file(item)))
+        bounded_check()
+    checks.extend(_bind_namespaces(value, lifetime, coverage_contract))
+    lifetime.callback(identity)
+    return held, checks
+
+
+def _reference_combined_metadata(original_freeze_bytes, numeric_ledger):
+    """All emitted copies plus numeric metadata/reserves, and original freeze."""
+    overhead = numeric_ledger['overhead_bytes']
+    if any(type(n) is not int or n < 0 for n in (original_freeze_bytes, overhead)):
+        raise ValueError('Combined metadata requires exact byte counts')
+    total = original_freeze_bytes + overhead
+    if total > MiB:
+        raise ValueError('V4 combined metadata and positive tail reserves exceed 1 MiB')
+    return {'original_freeze_bytes': original_freeze_bytes,
+            'numeric_and_emitted_metadata_with_reserves_bytes': overhead,
+            'combined_bytes': total, 'maximum_bytes': MiB}
 
 
 def _enforcement(value):
@@ -464,6 +628,8 @@ def _validate_go(path, expected_sha, freeze_sha, job):
 
 
 def _execute_admission(value, freeze_sha, lifetime, *, go_path=None, go_sha=None):
+    if value['schema'] == 'memory-family-source-freeze-v4':
+        raise PermissionError('retained-unqualified-v1 has no actual accounting/load execution backend')
     # Existing canonical coverage is unresolved: refuse before any external
     # namespace/runtime payload. Even future coverage needs a real outer owner.
     from scripts import memory_family_allocation_v3 as allocation
@@ -529,6 +695,9 @@ def _make_budget(output):
 def execute_freeze(path, expected_sha256, *, go_path=None, expected_go_sha256=None):
     """Explicit real entry. There is no arbitrary command or loader option."""
     prepared = verify_freeze(path, expected_sha256)
+    if prepared['freeze']['schema'] == 'memory-family-source-freeze-v4':
+        raise PermissionError('retained-unqualified-v1 has no actual accounting/load execution backend; '
+            'collector/prior completeness and preparation publication/freeze tail remain unqualified')
     if prepared['blockers']:
         raise PermissionError('; '.join(prepared['blockers']))
     if go_path is None or expected_go_sha256 is None:
@@ -594,6 +763,8 @@ def _execute(value, freeze_path, freeze_sha, *, _runner=run_accounted,
              _clock=time.monotonic, _cpu_meter=_cpu):
     # No fresh output, admission, or owner call before mandatory public metadata.
     profile = _numeric_profile(value)
+    if value['schema'] == 'memory-family-source-freeze-v4' and _admit is _execute_admission:
+        raise PermissionError('retained-unqualified-v1 has no actual accounting/load execution backend')
     attempt = {}
     with ExitStack() as lifetime:
         lifetime.enter_context(_hold_file(profile))
@@ -622,16 +793,24 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
     started, cpu_started = _clock(), _cpu_meter()
     deadline = started + ALLOCATION['wall_seconds']
     job = copy.deepcopy(value['job'])
+    reference = value['schema'] == 'memory-family-source-freeze-v4'
     if value['environment'] != _environment(job):
         raise ValueError('Frozen source environment differs before output preparation')
     output = _fresh_output(job['paths']['evidence_root'])
     output.mkdir(exist_ok=False)
     _attempt['created'] = True
     budget = _budget_factory(output)
-    report = {'schema': 'memory-family-source-parent-result-v3', 'status': 'stopped',
+    report = {'schema': 'memory-family-source-parent-result-v4' if reference else 'memory-family-source-parent-result-v3', 'status': 'stopped',
         'qualification_claims': False, 'science_qualified': False, 'pruning_authorized': False,
         'actual_source_qualified': False, 'jobs': [], 'error': None,
         'parent_lifetime_reconciled': False, 'accounting_complete': True}
+    if reference:
+        report.update(runtime_reference=copy.deepcopy(value['runtime_accounting']['reference']),
+            runtime_summary=None, runtime_accounting=None, runtime_qualified=False,
+            execution_authorized=False, precompletion_verified=False,
+            runtime_limitations='retained-unqualified-v1; collector authority/prior completeness, '
+                'preparation publication/freeze tail, pre-import isolation, native closure, '
+                'complete model/graph/asset descriptor coverage, resource/lifetime and exact-stage GO remain unresolved')
     control = Path(job['paths']['control_root'])
     control.mkdir(parents=True, exist_ok=False)
     # The real frozen HOME is fresh too: lock() creates .cache without parents.
@@ -722,10 +901,24 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
             return sorted(extras, key=lambda d: d['path']), leases
         expected_outputs = None
         try:
+            original_freeze_bytes = Path(freeze_path).stat().st_size
             checks.append(lifetime.enter_context(_hold_file({'path': str(freeze_path),
-                'size_bytes': Path(freeze_path).stat().st_size, 'sha256': freeze_sha})))
+                'size_bytes': original_freeze_bytes, 'sha256': freeze_sha})))
             emit(control / 'freeze.json', value)
             checks.extend(_admit(value, freeze_sha, lifetime))
+            if reference:
+                runtime_handle, reference_checks = _bind_reference_inputs(value, lifetime,
+                    deadline=deadline, check=check)
+                checks.extend(reference_checks)
+                report['runtime_accounting'] = _validate_reference_accounting(value, runtime_handle)
+                report['runtime_summary'] = runtime_handle.summary()
+                emit(control / 'runtime-reference.json', {
+                    'schema': 'memory-family-source-runtime-binding-v4',
+                    'runtime_accounting': copy.deepcopy(value['runtime_accounting']),
+                    'prior_charge_reference': copy.deepcopy(value['prior_charge_reference']),
+                    'precompletion_verified': False, 'execution_authorized': False})
+                emit(control / 'runtime-summary.json', report['runtime_summary'])
+                emit(control / 'runtime-accounting.json', report['runtime_accounting'])
             def recheck():
                 check()
                 if _read(freeze_path, freeze_sha) != value:
@@ -734,7 +927,7 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
                     callback()
                 check()
             recheck()
-            if (value['prior_cpu']['project_seconds'] + ALLOCATION['cpu_seconds'] > 24*3600
+            if not reference and (value['prior_cpu']['project_seconds'] + ALLOCATION['cpu_seconds'] > 24*3600
                     or value['prior_cpu']['memory_seconds'] + ALLOCATION['cpu_seconds'] > 12*3600):
                 raise PermissionError('Full fixed allocation plus prior charges does not fit')
             # Already-written controls occupy the frozen controls allowance.
@@ -744,6 +937,11 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
                 'admitted': True, 'run_id': job['run_id'], 'job_sha256': owner.job_sha256(job),
                 'allocation_sha256': memory.sha256(value['allocation']),
                 'deadline_monotonic': min(deadline - 10, _clock() + 360)}
+            if reference:
+                job['parent_admission'].update(schema='memory-family-source-parent-admission-v3',
+                    runtime_manifest_sha256=value['runtime_accounting']['reference']['manifest']['sha256'],
+                    runtime_profile_sha256=value['runtime_accounting']['reference']['profile_sha256'],
+                    runtime_deadline_monotonic=deadline)
             owner.validate_source_job(job)
             emit(control / 'job.json', job)
             def launch(role, command, seconds):
@@ -752,7 +950,9 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
                 if remaining <= seconds:
                     raise TimeoutError('Insufficient wall for fixed job plus cleanup/publication')
                 phase_before = check()
-                remaining_cpu = ALLOCATION['cpu_seconds'] - phase_before
+                remaining_cpu = _worker_cpu_budget(
+                    ALLOCATION['cpu_seconds'] - phase_before,
+                    resource.getrlimit(resource.RLIMIT_CPU)[1])
                 record = {'role': role, 'command': command, 'environment': value['environment'],
                     'wall_seconds': seconds, 'cpu_seconds': remaining_cpu,
                     'accounting': None}
@@ -794,7 +994,7 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
             owner_record = launch('owner', owner_command, 360)
             outcome = _read(control / 'owner-outcome.json')
             _fields(outcome, {'schema', 'status', 'run_id', 'report', 'error_path', 'qualification_claims'}, 'Owner outcome')
-            if (outcome['schema'] != 'memory-family-source-owner-outcome-v2'
+            if (outcome['schema'] != ('memory-family-source-owner-outcome-v3' if reference else 'memory-family-source-owner-outcome-v2')
                     or outcome['status'] != 'recorded' or outcome['run_id'] != job['run_id']
                     or outcome['error_path'] is not None or outcome['qualification_claims'] is not False
                     or type(outcome['report']) is not dict
@@ -863,10 +1063,21 @@ def _execute_core(value, freeze_path, freeze_sha, *, _lifetime, _attempt, _runne
             _output_census(output, pre_outputs)
             request = dict(evidence_root=output, registration=registration_descriptor, additional_controls=extras,
                            case_id=case_id, deadline=min(deadline - 10, time.monotonic() + 299))
+            if reference:
+                # Bound known metadata before conversion; candidate metadata is
+                # added by the unchanged sealer and checked again below.
+                known = {d['path']: d for d in [*extras, *controls.values(), owner_descriptor,
+                    pins[Path(job['paths']['raw']) / 'worker-report.json']]}
+                _reference_combined_metadata(original_freeze_bytes, {'overhead_bytes':
+                    sum(d['size_bytes'] for d in known.values()) + sum(producer.RESERVES.values())})
             recheck()
-            producer.seal_numeric_source_v2(**request)
+            tentative = producer.seal_numeric_source_v2(**request)
+            if reference:
+                report['combined_metadata'] = _reference_combined_metadata(original_freeze_bytes, tentative['byte_ledger'])
             recheck()
             sealed = producer.read_numeric_source_v2(**request)
+            if reference:
+                report['combined_metadata'] = _reference_combined_metadata(original_freeze_bytes, sealed['byte_ledger'])
             recheck()
             if audit._inventory(raw, 'source', deadline) != before:
                 raise ValueError('Raw bytes changed during preservation')

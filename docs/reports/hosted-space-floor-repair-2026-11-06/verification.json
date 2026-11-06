@@ -1,0 +1,32 @@
+{
+  "baseline_commit": "1743647922e739efd819bc3d67ffc1856b9a9d9f",
+  "hosted_failure_run": 42136045205,
+  "hosted_failure": "free-space floor before child launch",
+  "hosted_full_counts": {
+    "passed": 7103,
+    "skipped": 318,
+    "failed": 1
+  },
+  "local_isolated": {
+    "passed": 7,
+    "deselected": 138,
+    "seconds": 0.52,
+    "exit_code": 0,
+    "source_commit": "caf919b18817c44304a0bc4fe19ffefd3284e7e1",
+    "source_test_continuity_with_baseline_verified": true
+  },
+  "local_runner": {
+    "passed": 12,
+    "seconds": 0.6,
+    "exit_code": 0,
+    "uses_modified_runner": true
+  },
+  "shell_syntax_exit_code": 0,
+  "scoped_whitespace_exit_code": 0,
+  "full_canonical_after_repair_verified": false,
+  "hosted_after_repair_verified": false,
+  "actual_research_execution": false,
+  "source03_execution": false,
+  "raw_deletion": false,
+  "qualification_authority_granted": false
+}

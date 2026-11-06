@@ -155,9 +155,9 @@ def test_stage_retains_failed_child_without_publishing_a_wheel(tmp_path):
         value.run_stage([sys.executable, "-I", "-S", "-B", "-c", "print('partial'); raise SystemExit(7)"],
             stage, ROOT, time.monotonic() + 5, time.monotonic() + 8, {})
     observation = json.loads((stage / "supervision.json").read_text())
-    assert observation["status"] == "failed"
-    assert observation["returncode"] == 7
-    assert observation["matching_survivors"] == []
+    assert observation["status"] == "failed", observation
+    assert observation["returncode"] == 7, observation
+    assert observation["matching_survivors"] == [], observation
     assert (stage / "stdout.log").read_text() == "partial\n"
     assert list(stage.glob("*.whl")) == []
 

@@ -22,6 +22,54 @@
 - No actual model/raw/SNP/protected namespace reads, native owner, research invocation, trust-pin issuance, deletion or pruning during implementation/tests. Authored fixtures only. Source parent remains closed on its unresolved whole-lifetime/pre-import/namespace/runtime/resource/GO gates. Research lanes stay audit1h/memory12h/puck5h/navigation4h/final2h,24h total; ordinary software tests excluded.
 - Real source sealing consumes the already closed owner and independently validated raw-audit registration. It does **not** require a completed preservation result as a prerequisite to creating that result. Source qualification/independent lifetime acceptance follows later; no circular requirement for a previously qualified compact source or an extra owner/V1 seal.
 
+## Prospective runtime-reference B boundary
+
+The source-only reference migration adds exact V4-freeze/V3-job metadata beside
+the unchanged V3-freeze/V2-job inline branch. V4 uses preparation/parent-result V4,
+parent admission and owner outcome/failure V3; old branches retain their original
+labels and caps. Mixed pairs, inline/reference mixtures and schema fallback
+refuse. `runtime_accounting` is exactly `{classification, reference}`, with
+`prospective-shared-input-B` and the same job runtime reference. The independently
+frozen job requirements roots equal freeze roots exactly; parent and child each
+check their own live layout under separate holders and the same original absolute
+runtime deadline. The tighter source deadline and CPU compatibility helper stay.
+
+`memory-source-runtime-profile-v1-proposed` is a prospective software profile,
+not an adopted actual policy: 1–16 complete roots, 0–1024 standalones, 32768 global
+files, 60000 census entries, 16 GiB global runtime input, 2 GiB per file; manifest
+16 MiB/1000000 nodes, recipe64 KiB/8192, ledger256 KiB/32768, inline cumulative
+reference8192 bytes/64 nodes, JSON/path depth32 and UTF-8 path/component bounds
+4096/255. Retained preparation evidence is at most1024 files/16 MiB total/1 MiB
+each. No existing numeric/Puck profile, allocation or trust pin changes.
+
+B represents only asserted separately completed immutable inputs predating the
+freeze; completion and global prior completeness are never inferred from caller
+JSON or mtime. Every actual external runtime/recipe/manifest/ledger/evidence byte
+and physical copy belongs in preparation/full-project accounting, including
+failed preparation and publication/freeze tails. Integer baseline/operation sums,
+identical cumulative reference and canonical upward binary64 prior seconds are
+checked without collector authority. Fixed 1800-second lane admission uses
+integer nanoseconds, with no floating-point reconstruction or epsilon.
+
+Every attempt-created reference, manifest copy, job, freeze, provenance, summary,
+accounting record, log and custody/control copy stays in the unchanged combined
+1 MiB overhead envelope. The parent separately counts the original pinned freeze
+and its emitted copy; the numeric sealer receives all emitted descriptors through
+unchanged complete controls and combines them with actual candidate metadata and
+strictly positive terminal/atomic/failure reserves. Different physical paths
+count even with equal SHA. Known metadata is bounded before conversion; late
+complete-overhead overflow quarantines any provisional marker and retains all
+raw/SNP/partials. Controls8 MiB and headroom64 MiB create no metadata exemption.
+
+Public V4 verification opens no external recipe/manifest/ledger/evidence payload;
+actual V4 execution always refuses on retained-unqualified before runtime,
+loader, GO or output effects. All qualification/execution flags remain false.
+Collector authority/prior completeness, preparation publication/freeze tail,
+namespace authorization, pre-import/load isolation, native closure, complete
+model/graph/asset descriptor coverage, resource/lifetime acceptance and GO remain
+UNQUALIFIED. Authored tests establish software behavior only; they create no real
+preparation, manifest, package qualification or research authorization.
+
 ## Review focus
 
 1. Candidate with rehashed descriptors but changed timing/population bits must fail comparison against raw at the exact field/tick.

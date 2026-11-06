@@ -10,16 +10,19 @@ or a production qualification pin. This owner never creates an allocation.
 from __future__ import annotations
 
 import copy
+from collections.abc import Callable
 import hashlib
 import math
 import os
 from pathlib import Path
 import stat
+import sys
 import time
 import uuid
 
 from palimpsest import memory, memory_decision_world as world
 from scripts.memory_family_compact_v4 import PROTOCOL, PROTOCOL_SHA256
+from scripts import memory_source_runtime_closure_v1 as closure
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MiB = 1024**2
@@ -95,13 +98,40 @@ def _descriptor(value):
         raise ValueError('Immutable descriptor size is invalid')
 
 
+def _runtime_requirements(job: dict) -> tuple[tuple[str, ...], dict]:
+    """Validate independently frozen expectations; never derive pins from bytes."""
+    immutable = job['immutable']
+    value = immutable['runtime_requirements']
+    _fields(value, {'roots', 'pyvenv_config', 'required_sources'}, 'Runtime requirements')
+    roots = value['roots']
+    if type(roots) is not list or not 1 <= len(roots) <= 16:
+        raise ValueError('Runtime requirements need 1–16 complete prefixes')
+    roots = tuple(closure._path(root) for root in roots)
+    if (list(roots) != sorted(set(roots)) or any(_overlap(Path(a), Path(b))
+            for i, a in enumerate(roots) for b in roots[i+1:])):
+        raise ValueError('Runtime roots must be sorted, distinct and nonoverlapping')
+    pins = closure.validate_runtime_pin_requirements({
+        key: immutable[key] for key in ('python_alias', 'python_elf', 'owner_source')
+    } | {key: value[key] for key in ('pyvenv_config', 'required_sources')})
+    if pins['pyvenv_config']['path'] != str(Path(pins['python_alias']).parent.parent / 'pyvenv.cfg'):
+        raise ValueError('Runtime config must be the lexical venv config path')
+    seen = {}
+    for row in [pins['python_elf'], pins['owner_source'], pins['pyvenv_config'], *pins['required_sources']]:
+        if row['path'] in seen and seen[row['path']] != row:
+            raise ValueError('Repeated runtime pins contradict one another')
+        seen[row['path']] = row
+    return roots, pins
+
+
 def _validate_metadata(value: dict) -> dict:
     """Common metadata checks; never supplies parent execution admission."""
     _fields(value, JOB_FIELDS, 'Source job')
+    if value['schema'] not in ('memory-family-source-job-v2', 'memory-family-source-job-v3'):
+        raise ValueError('Unknown source job schema')
     job_sha256(value)
     job = copy.deepcopy(value)
-    if (job['schema'] != 'memory-family-source-job-v2'
-            or job['operation'] != 'source' or job['condition'] is not None
+    reference_job = job['schema'] == 'memory-family-source-job-v3'
+    if (job['operation'] != 'source' or job['condition'] is not None
             or job['split'] != 'development' or job['kind'] != 'change'
             or type(job['block']) is not int or job['block'] != 0
             or type(job['row']) is not int or job['row'] != 0
@@ -118,22 +148,39 @@ def _validate_metadata(value: dict) -> dict:
         raise ValueError('Source run requires canonical UUID hex')
     memory._digest(job['source_identity_sha256'])
     immutable = job['immutable']
-    _fields(immutable, {'python_alias', 'python_elf', 'owner_source', 'closure'}, 'Immutable runtime')
-    inputs = [_path(immutable['python_alias'])]
-    if type(immutable['closure']) is not list or not 1 <= len(immutable['closure']) <= 4096:
-        raise ValueError('An externally pinned bounded immutable closure is required')
-    descriptors = [immutable['python_elf'], immutable['owner_source'], *immutable['closure']]
-    for descriptor in descriptors:
-        _descriptor(descriptor)
-    files = [_path(descriptor['path']) for descriptor in descriptors]
-    if (len(files) != len(set(files)) or immutable['closure'] != sorted(
-            immutable['closure'], key=lambda row: row['path'])):
-        raise ValueError('Immutable file descriptors alias one another')
-    if (files[1] != Path(__file__).resolve()
+    if reference_job:
+        _fields(immutable, {'python_alias', 'python_elf', 'owner_source', 'runtime_manifest',
+                           'runtime_requirements'}, 'Immutable runtime')
+        reference = closure.validate_runtime_reference(immutable['runtime_manifest'])
+        roots, pins = _runtime_requirements(job)
+        descriptors = [pins['python_elf'], pins['owner_source'], pins['pyvenv_config'],
+                       *pins['required_sources'], *(reference[k] for k in ('recipe', 'manifest', 'ledger'))]
+        inputs = [Path(pins['python_alias']), *(Path(root) for root in roots)]
+        files = [Path(row['path']) for row in descriptors]
+        owner_path = REPO_ROOT / 'scripts/memory_family_source_runtime_v2.py'
+        if len(memory.canonical_bytes(job)) > 256 * 1024:
+            raise ValueError('Complete admitted source job exceeds 256 KiB')
+    else:
+        _fields(immutable, {'python_alias', 'python_elf', 'owner_source', 'closure'}, 'Immutable runtime')
+        inputs = [_path(immutable['python_alias'])]
+        if type(immutable['closure']) is not list or not 1 <= len(immutable['closure']) <= 4096:
+            raise ValueError('An externally pinned bounded immutable closure is required')
+        descriptors = [immutable['python_elf'], immutable['owner_source'], *immutable['closure']]
+        for descriptor in descriptors:
+            _descriptor(descriptor)
+        files = [_path(descriptor['path']) for descriptor in descriptors]
+        if (len(files) != len(set(files)) or immutable['closure'] != sorted(
+                immutable['closure'], key=lambda row: row['path'])):
+            raise ValueError('Immutable file descriptors alias one another')
+        owner_path = Path(__file__).resolve()
+    if (files[1] != owner_path
             or immutable['owner_source']['sha256'] != job['source_identity_sha256']):
         raise ValueError('Owner source identity differs from its pinned descriptor')
     paths = job['paths']
     _fields(paths, {'repo', 'assets', 'evidence_root', 'control_root', 'raw', 'snapshot', 'owner', 'error'}, 'Source paths')
+    if reference_job:
+        for path in paths.values():
+            closure._path(path)
     parsed = {key: _path(item) for key, item in paths.items()}
     evidence, control = parsed['evidence_root'], parsed['control_root']
     base = evidence / '.pending' / expected['case_id']
@@ -171,16 +218,30 @@ def validate_source_job(value: dict) -> dict:
     admission = job['parent_admission']
     if admission is None:
         raise PermissionError('Missing enclosing source admission')
-    _fields(admission, {'schema', 'admitted', 'run_id', 'job_sha256',
-                        'allocation_sha256', 'deadline_monotonic'}, 'Parent admission')
+    reference_job = job['schema'] == 'memory-family-source-job-v3'
+    fields = {'schema', 'admitted', 'run_id', 'job_sha256', 'allocation_sha256', 'deadline_monotonic'}
+    if reference_job:
+        fields |= {'runtime_manifest_sha256', 'runtime_profile_sha256', 'runtime_deadline_monotonic'}
+    _fields(admission, fields, 'Parent admission')
     memory._digest(admission['allocation_sha256'])
     deadline = admission['deadline_monotonic']
-    if (admission['schema'] != 'memory-family-source-parent-admission-v2'
+    schema = 'memory-family-source-parent-admission-v3' if reference_job else 'memory-family-source-parent-admission-v2'
+    if (admission['schema'] != schema
             or admission['admitted'] is not True or admission['run_id'] != job['run_id']
             or admission['job_sha256'] != digest
             or type(deadline) not in (int, float) or not math.isfinite(deadline)
             or deadline <= time.monotonic()):
         raise PermissionError('Enclosing source admission differs from this frozen job')
+    if reference_job:
+        runtime_deadline = admission['runtime_deadline_monotonic']
+        reference = job['immutable']['runtime_manifest']
+        now = time.monotonic()
+        if (admission['runtime_manifest_sha256'] != reference['manifest']['sha256']
+                or admission['runtime_profile_sha256'] != reference['profile_sha256']
+                or type(runtime_deadline) not in (int, float) or not math.isfinite(runtime_deadline)
+                or not now < runtime_deadline <= now + 900
+                or not deadline <= min(runtime_deadline, now + LIMITS['internal_seconds'])):
+            raise PermissionError('Enclosing runtime admission bindings or deadlines differ')
     return job
 
 
@@ -289,6 +350,14 @@ def _register_snapshot(engine, job, storage):
 
 def _run_admitted(job, storage, open_engine, check_identity):
     """Owner core; authored tests supply objects here, never through public CLI."""
+    if job['schema'] == 'memory-family-source-job-v2':
+        outcome_schema = 'memory-family-source-owner-outcome-v2'
+        failure_schema = 'memory-family-source-owner-failure-v2'
+    elif job['schema'] == 'memory-family-source-job-v3':
+        outcome_schema = 'memory-family-source-owner-outcome-v3'
+        failure_schema = 'memory-family-source-owner-failure-v3'
+    else:
+        raise ValueError('Unknown source job schema')
     from scripts.memory_decision_pilot import audit_policy, policy_step
     from palimpsest import memory_decision
     started = time.monotonic()
@@ -378,24 +447,91 @@ def _run_admitted(job, storage, open_engine, check_identity):
         # A report written before a failed final recheck must not remain accepted.
         # Preserve its bytes by retaining a separate explicit failure marker;
         # the parent may never export/audit/seal a failed owner outcome.
-        failure = {'schema': 'memory-family-source-owner-failure-v2',
+        failure = {'schema': failure_schema,
             'run_id': job['run_id'], 'job_sha256': job_sha256(job), 'status': 'failed',
             'error': {'type': type(error).__name__, 'message': str(error)},
             'qualification_claims': False}
         error_path = _safe_path(paths['error'])
         error_path.parent.mkdir(parents=True, exist_ok=True)
         _write_json(error_path, failure, storage)
-        return {'schema': 'memory-family-source-owner-outcome-v2', 'status': 'failed',
+        return {'schema': outcome_schema, 'status': 'failed',
                 'run_id': job['run_id'], 'report': None, 'error_path': str(error_path),
                 'qualification_claims': False}
-    return {'schema': 'memory-family-source-owner-outcome-v2', 'status': 'recorded',
+    return {'schema': outcome_schema, 'status': 'recorded',
             'run_id': job['run_id'], 'report': report, 'error_path': None,
             'qualification_claims': False}
+
+
+def _check_reference_layout(job, roots, pins):
+    """Post-gate checks of this process's layout, never a new expected digest."""
+    python = f'python{sys.version_info.major}.{sys.version_info.minor}'
+    required = [REPO_ROOT/'src', REPO_ROOT/'scripts', REPO_ROOT/'paper/studies/change_audit_v1',
+                Path(sys.prefix)/'lib'/python/'site-packages', Path(sys.base_prefix)/'lib'/python]
+    if any(not any(path.is_relative_to(Path(root)) for root in roots) for path in required):
+        raise ValueError('Frozen runtime roots do not cover this owner layout')
+    sources = {row['path'] for row in pins['required_sources']}
+    names = ('memory_family_source_runtime_v2.py', 'qualify_memory_family_source_v2.py',
+             'memory_source_runtime_closure_v1.py', 'memory_family_source_seal_v2.py',
+             'memory_family_numeric_preservation_v2.py', 'memory_directory_census_v1.py')
+    if any(str(REPO_ROOT/'scripts'/name) not in sources for name in names):
+        raise ValueError('Frozen required sources omit this owner layout helper')
+    if (sys.executable != pins['python_alias']
+            or Path(pins['python_alias']).resolve(strict=True) != Path(pins['python_elf']['path'])
+            or Path('/proc/self/exe').resolve() != Path(pins['python_elf']['path'])):
+        raise PermissionError('Executing interpreter alias or ELF differs from frozen runtime')
+    for name in ('repo', 'assets'):
+        if not _safe_path(job['paths'][name]).is_dir():
+            raise ValueError('Pinned runtime/asset directory is absent')
+
+
+def _run_reference_admitted(job: dict, storage, *, check: Callable[[], None],
+        runtime_handle_factory=closure.hold_runtime_manifest, engine_loader=_load_engine) -> dict:
+    """Private authored seam; current-byte custody cannot authorize public V3."""
+    job = validate_source_job(job)
+    if job['schema'] != 'memory-family-source-job-v3':
+        raise ValueError('Reference custody requires a V3 source job')
+    roots, pins = _runtime_requirements(job)
+    admission = job['parent_admission']
+    source_deadline = admission['deadline_monotonic']
+    runtime_deadline = admission['runtime_deadline_monotonic']
+
+    def bounded_check():
+        if time.monotonic() >= min(source_deadline, runtime_deadline):
+            raise TimeoutError('Source enclosing deadline includes runtime custody and teardown')
+        check()
+        if time.monotonic() >= min(source_deadline, runtime_deadline):
+            raise TimeoutError('Source enclosing deadline includes runtime custody and teardown')
+
+    bounded_check()
+    _check_reference_layout(job, roots, pins)
+    with runtime_handle_factory(job['immutable']['runtime_manifest'], required_roots=roots,
+            required_pins=pins, output_root=job['paths']['evidence_root'],
+            deadline=runtime_deadline, check=bounded_check) as held:
+        for row in [pins['python_elf'], pins['owner_source'], pins['pyvenv_config'], *pins['required_sources']]:
+            if held.descriptor(row['path']) != row:
+                raise ValueError('Held runtime descriptor differs from frozen owner pin')
+
+        def identity():
+            bounded_check()
+            _check_reference_layout(job, roots, pins)
+            held.recheck()
+            bounded_check()
+
+        identity()
+        opener = engine_loader()
+        identity()
+        outcome = _run_admitted(job, storage, opener, identity)
+        identity()
+    # A failed final recheck/release propagates, preserving any core failure bytes.
+    bounded_check()
+    return outcome
 
 
 def run_source(job: dict) -> dict:
     """Internal parent-only owner. The enclosing parent supplies execution GO."""
     job = validate_source_job(job)
+    if job['schema'] == 'memory-family-source-job-v3':
+        raise PermissionError('retained-unqualified runtime has no actual execution authority')
     # Loading is deferred even past filesystem/source admission.
     _check_identity(job)
     for key in ('raw', 'snapshot', 'owner', 'error'):

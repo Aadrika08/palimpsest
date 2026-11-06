@@ -4,7 +4,7 @@ Use the canonical runner. It runs every non-integration test file in four passes
 
 ```sh
 scripts/run_tests.sh                       # the whole non-integration suite
-scripts/run_tests.sh -- tests/test_x.py -k name   # chosen tests, pass-1 rules
+scripts/run_tests.sh -- tests/test_x.py -k name   # chosen tests only
 scripts/run_tests.sh --integration         # the *_integration.py files
 ```
 
@@ -60,8 +60,18 @@ in each run, with their separate 45-check preflights and frontend checks passing
     any `__pycache__` ("Qualification source has unbound bytecode").
   - If a crashed run leaves caches behind, remove them before running again:
     `find src scripts -name __pycache__ -prune -exec rm -rf {} +`.
-- **Four passes and three basetemps.**
-  - **Pass 1:** every test with none of the `runs_basetemp`, `tmpfs_basetemp` or
+- **Four passes with separate basetemps.**
+  - **Pass 1:** the tests marked `process_isolated`, in their own process with
+    an outside-repository basetemp (`~/.cache/palimpsest-pytest/...-isolated`).
+    Five test functions check that nothing imported torch
+    or left threads or children: "Auditor must have no children or other
+    threads", "Unexpected admission child process", and
+    `'torch' not in sys.modules`. After hundreds of earlier tests in the same
+    process, that is not true, although each passes alone.
+    This pass runs first so its fixed 2 GiB free-space floor is checked before
+    the ordinary pass accumulates temporary files. Every pass's fixtures remain
+    until the runner's normal final cleanup; the production floor is unchanged.
+  - **Pass 2:** every test with none of the `runs_basetemp`, `tmpfs_basetemp` or
     `process_isolated` markers,
     with `--basetemp` outside the repository, on the project disk
     (`~/.cache/palimpsest-pytest/...`).
@@ -70,16 +80,10 @@ in each run, with their separate 45-check preflights and frontend checks passing
     - Namespace and bwrap tests refuse `/tmp`, because it overlaps the fixed
       sandbox `/tmp` and a private tmpfs mount.
     - Keeping it off `/tmp` also preserves tmpfs headroom.
-  - **Pass 1b:** the tests marked `process_isolated`, in their own process with
-    the same basetemp. Five test functions check that nothing imported torch
-    or left threads or children: "Auditor must have no children or other
-    threads", "Unexpected admission child process", and
-    `'torch' not in sys.modules`. After hundreds of earlier tests in the same
-    process, that is not true, although each passes alone.
-  - **Pass 2:** the tests marked `runs_basetemp`, with `--basetemp` under the
+  - **Pass 3:** the tests marked `runs_basetemp`, with `--basetemp` under the
     repository's ignored `runs/` directory. These five tests assert "Use
     persistent runs/ basetemp".
-  - **Pass 3:** the tests marked `tmpfs_basetemp`, with `--basetemp` on tmpfs
+  - **Pass 4:** the tests marked `tmpfs_basetemp`, with `--basetemp` on tmpfs
     (`/tmp/palimpsest-pytest/...`). These 25 test functions hold dependency files
     whose native identity requires tmpfs ("Native identity requires tmpfs"), or
     check raw tmpfs inode identity ("V3 owner transaction namespace changed").

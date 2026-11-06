@@ -1,4 +1,4 @@
-# Single source preservation parent (V2 entry, V3 freeze)
+# Single source preservation parent (V2 entry, V3/V4 freezes)
 
 The actual source stage remains INCOMPLETE at the namespace and external lifetime gates.
 The numeric codec, public source API and parent integration are authored software,
@@ -27,14 +27,14 @@ opens projections, GO, lifetime records or protected catalogs, creates output, o
 starts a subprocess. `validate_source_job` still requires a matching live parent
 assertion; verification never creates a successful-looking placeholder admission.
 
-The freeze schema is `memory-family-source-freeze-v3`, with exact keys declared in
+The old inline freeze schema is `memory-family-source-freeze-v3`, with exact keys declared in
 `FREEZE_FIELDS`. The mandatory `numeric_profile` descriptor is exactly the
 relative public path `docs/plans/memory-family-numeric-compact-v2-protocol.json`,
 its actual byte size and SHA256. Bounded on-disk public metadata is checked before
 loading the new helper, owner admission or creating any output; the original
 profile descriptor is held through parent finalization. Missing, changed, wrong
 profiles and old V2 prepared freezes refuse; there is no fallback. Preparation and
-parent-result schemas are also V3. The script/API names, existing owner-job V2,
+parent-result schemas on this old path are also V3. The script/API names, existing owner-job V2,
 closed-owner export V4 and all existing V1/V4 profiles and trust pins stay unchanged.
 
 The freeze binds the template, environment, source/runtime file roster,
@@ -75,6 +75,111 @@ Verification of namespace metadata does not establish authorization,
 namespace coverage or dependency completeness. Those require the real supplied
 package and independent review. No actual execution freeze is delivered by these
 software fixtures.
+
+## Prospective reference format and continued closed execution
+
+Only these exact pairs are accepted; inline/reference mixtures and every mixed
+version pair refuse without fallback.
+
+| Freeze | Job | Preparation / parent result | Runtime custody |
+| --- | --- | --- | --- |
+| V3 | V2 | V3 / V3 | Old inline closure, 4096 files; old bytecode rejects |
+| V4 | V3 | V4 / V4 | Prospective manifest reference, retained-unqualified |
+| Other or mixed | Any | Refused | No upgrade or fallback |
+
+V4 has precisely the old `FREEZE_FIELDS` plus `runtime_accounting` and
+`prior_charge_reference`; state remains `prepared`. `runtime_accounting` has
+exactly `{classification, reference}`, with classification
+`prospective-shared-input-B` and reference equal to
+`job.immutable.runtime_manifest`. The frozen runtime root list must equal
+`job.immutable.runtime_requirements.roots` exactly. Requirements contain the
+independently frozen roots, lexical venv config descriptor and required source
+descriptors; pins are never derived from the referenced manifest itself.
+
+Verification checks only freeze/public numeric metadata and pure reference,
+requirements and cumulative-charge consistency. It never constructs a holder or
+opens the external recipe, manifest, ledger or accounting evidence. It reports
+`precompletion_verified:false`, `accounting_authority_qualified:false` and
+`execution_authorized:false`. The actual V4 execute entry unconditionally refuses
+on `retained-unqualified-v1` before external payloads, GO, loaders or output
+creation, even if caller JSON asserts otherwise. V3 retains all its old gates.
+
+The private authored V4 seam gives parent and child separate process-local
+current-byte holders with the identical original 900-second absolute deadline.
+The child also retains the tighter existing source-work deadline. Each process
+checks its own source, paper, venv/site-packages and base-stdlib prefixes and all
+six named owner/parent/runtime/numeric/census sources. Nested required prefixes
+may be covered by an outer selected complete root; no obligation is dropped.
+The parent holds namespace/lifetime input descriptors and preserves the existing
+independent historical/training namespace checks. Alias identity, acquisitions,
+hashes, parses, censuses and repeated checks remain inside the existing CPU/wall
+containment; no repeated work is treated as free. The parent uses a full holder
+recheck rather than one full-tree recheck for each redundant descriptor lookup.
+No FD map or runtime roster is emitted.
+
+The new literal profile `memory-source-runtime-profile-v1-proposed` is software
+policy only. It is not an adopted actual ceiling and changes no old Puck holder
+or source allocation. Its SHA binds these prospective limits:
+
+| Dimension | Proposed bound |
+| --- | --- |
+| Complete roots / outside-root standalones | 1–16 / 0–1024 |
+| Global regular files / census entries | 1–32768 / 60000, including root directories |
+| Global runtime bytes / per root / per file | 16 GiB / 16 GiB subject to global sum / 0–2 GiB |
+| Manifest bytes / nodes | 1 byte–16 MiB / 1000000 |
+| Recipe bytes / nodes | 1 byte–64 KiB / 8192 |
+| Ledger bytes / nodes | 1 byte–256 KiB / 32768 |
+| Inline cumulative charge bytes / nodes | At most 8192 / 64 |
+| JSON depth / path-relative depth | 32 / 32 components |
+| UTF-8 absolute path / component / other strings | 4096 / 255 / 1024 bytes, with tighter ID rules |
+| Ledger operations / retained evidence files | At most 1024 each |
+| Retained preparation evidence bytes | At most 16 MiB total, 1 MiB each |
+
+V4 represents and holds retained `.pyc`/`.pyo`, headers and `.pth` as current
+bytes. Their hashes, `-B` and the profile grant no import/startup authority.
+
+Accounting B applies only to separately completed immutable preparation inputs
+predating the source freeze. The reference is an assertion of that class, not
+authenticated creation-time or prior-completeness evidence; neither path mtime
+nor a caller's completed label establishes it. The described external input cost
+includes all unique runtime paths, recipe, manifest, final ledger descriptor
+size and retained evidence. Different physical paths count as different copies
+even when their digests match. Preparation CPU, failed operations, all physical
+copies and preparation/publication/accounting tails belong to preparation/full
+project accounting. Nothing may relabel attempt-created copies as free input.
+
+Ledger baseline plus distinct enclosing operation charges must equal integer
+cumulative totals and the freeze's exact cumulative-charge reference. No
+inclusive parent/descendant double addition is permitted. `prior_cpu` uses the
+least binary64 float at least each integer nanosecond total divided by 1e9;
+V4 rejects integer/bool/negative-zero/inexact values. Fixed admission uses
+integer `prior_ns + 1800e9 <= lane_ns`, preserving the exact boundary without
+rounding gain. Live float monitors remain conservative containment. Arithmetic
+and descriptor agreement do not qualify an accounting collector.
+
+All attempt-created freeze/job/reference/provenance/summary/accounting/log/custody
+copies remain in the single unchanged 1 MiB combined metadata envelope. The
+parent charges the pinned original freeze separately from its emitted copy.
+The unchanged numeric sealer receives every emitted descriptor in the complete
+controls and adds actual candidate metadata plus positive conversion/commit,
+terminal, atomic and failure reserves. Parent prechecks known control costs,
+then checks original freeze plus the complete numeric overhead after write/read.
+A late overflow stops and quarantines a provisional marker; raw/SNP/partials
+remain retained. Identical physical paths deduplicate only with identical pins;
+distinct copies never deduplicate by digest. Controls8 MiB and headroom64 MiB
+grant no additional metadata allowance. The terminal's 64 KiB reserve includes
+its bounded reference, summary and accounting copies. Creation-time pins and
+checked input teardown remain binding before provisional terminal publication.
+
+Actual namespace authorization, collector authority/prior completeness,
+preparation publication/freeze tail, pre-import/load isolation, native closure,
+complete model/graph/asset descriptor coverage, resource/FD/RSS/time fit,
+whole-parent lifetime acceptance and exact-stage GO remain UNQUALIFIED. Required
+runtime prefixes and an existing assets directory prove no complete asset
+dependency inventory. Explicit additional manifest roots/standalones can represent
+selected assets, but this software migration creates no qualified package.
+V4 terminals keep `actual_source_qualified`, `runtime_qualified` and
+`execution_authorized` false; no real preparation or research execution follows.
 
 ## Proposed maximum allocation
 

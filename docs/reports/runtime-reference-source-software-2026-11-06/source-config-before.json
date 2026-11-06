@@ -1,0 +1,91 @@
+{
+  "files": {
+    "docs/plans/memory-family-compact-evidence-v4-case-publication-v1-protocol.json": {
+      "sha256": "84ab31e256880723a08ffda265898d560f1b130b498630086c315196321b3285",
+      "size_bytes": 29963
+    },
+    "docs/plans/memory-family-numeric-compact-v2-protocol.json": {
+      "sha256": "cb78245b01772c78f18a8e9b0d5fc29064359fa4f7c97b5e1786f081899865ef",
+      "size_bytes": 5116
+    },
+    "paper/studies/change_audit_v1/process.py": {
+      "sha256": "9c095d0fa314fa16bcfa183ac86720a60a78a60ffcea877591a01e3a46e344cf",
+      "size_bytes": 22080
+    },
+    "pyproject.toml": {
+      "sha256": "13732ced452f853e68be7a7f26cb74e7f18d460f16ff965eca5d5871936a6d70",
+      "size_bytes": 1454
+    },
+    "scripts/memory_directory_census_v1.py": {
+      "sha256": "aff665d544f6847b04bf205fa139613f41d01e693467d19540377f50060d0e6d",
+      "size_bytes": 3982
+    },
+    "scripts/memory_family_allocation_v3.py": {
+      "sha256": "acef75aab6900c4659e7044dce9dcfa7c7133da50b565be72fdd9d64a71749ca",
+      "size_bytes": 40924
+    },
+    "scripts/memory_family_numeric_preservation_v2.py": {
+      "sha256": "fac133107c35f1f0c08b944a5f21211f69ed3479f7c4a5846f74a54241cf00ef",
+      "size_bytes": 17905
+    },
+    "scripts/memory_family_raw_audit_v4.py": {
+      "sha256": "ab81420e39258351ac0892a6f9ec6b915d9882a5b2307d0040c0f5a13e32968b",
+      "size_bytes": 52908
+    },
+    "scripts/memory_family_source_runtime_v2.py": {
+      "sha256": "3954f193d4005915f72e368b02a39d632b0debb0912d63600ccccb16ba2312c2",
+      "size_bytes": 27338
+    },
+    "scripts/memory_family_source_seal_v2.py": {
+      "sha256": "b8bf738ac113186520d9cd893f7a1c6e0b28d94720a305511887f52583068e88",
+      "size_bytes": 30125
+    },
+    "scripts/memory_source_runtime_closure_v1.py": {
+      "sha256": "97d54b6b9c3a785483d74e189707a1b15c13ae9a27a887630db612bb25a6752f",
+      "size_bytes": 35864
+    },
+    "scripts/qualify_memory_family_source_v2.py": {
+      "sha256": "0eedbcf633da02b4f54de3159a6a4ff9da2d89d6d519c5432f9456841c747a1e",
+      "size_bytes": 67831
+    },
+    "scripts/run_tests.sh": {
+      "sha256": "51e44636db6f88b7ffc2a9b9060bb1b31c19a9a1881518b230f57a3b78a462d3",
+      "size_bytes": 2897
+    },
+    "src/palimpsest/puck_execution_files.py": {
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    "src/palimpsest/puck_retained_installation.py": {
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+      "size_bytes": 6213
+    },
+    "tests/test_memory_family_source_qualification_v2.py": {
+      "sha256": "bcb06140d8a2a32edd394be74d073f68e9dc338335f5e642314777404c68583a",
+      "size_bytes": 69628
+    },
+    "tests/test_memory_family_source_runtime_v2.py": {
+      "sha256": "c7f0197edea724b9e1781a190a09417d8853bf890884abd3d1559fe3af715df0",
+      "size_bytes": 53408
+    },
+    "tests/test_memory_family_source_seal_v2.py": {
+      "sha256": "99ec6a0733ae51323f298941c630672eabeea66473550659ae4f0a036293f287",
+      "size_bytes": 36188
+    },
+    "tests/test_memory_source_cpu_limits.py": {
+      "sha256": "bb227d57c1089823352d7961d67d3d6429c2ac239b1cec5b61a927eb2a2b81d0",
+      "size_bytes": 3442
+    },
+    "tests/test_memory_source_runtime_closure_v1.py": {
+      "sha256": "45ffb2fbafeabe9855c408be87bf9a1a404d029f0c346d94855e3dbe039f7a76",
+      "size_bytes": 27169
+    },
+    "uv.lock": {
+      "sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+      "size_bytes": 160034
+    }
+  },
+  "head": "afacfbfc3d2ffbfa1af0dca3a70fb5e0940be207",
+  "schema": "named-source-config-continuity-v1",
+  "scope": "Only 21 explicitly named source/config files; no model/data or installed runtime inventory."
+}

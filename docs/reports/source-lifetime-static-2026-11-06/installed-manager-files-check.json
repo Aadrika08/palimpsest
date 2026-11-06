@@ -1,0 +1,31 @@
+{
+  "actual_source_qualified": false,
+  "files": [
+    {
+      "package_mtree_match": true,
+      "path": "/usr/lib/systemd/systemd",
+      "sha256": "0870c4fb212fdf8a88e1644ed61f30a6ef97b2cc17204a1c17ea57830bd94bdf",
+      "size_bytes": 176520
+    },
+    {
+      "package_mtree_match": true,
+      "path": "/usr/lib/systemd/libsystemd-core-262.1-1.so",
+      "sha256": "7d072ccb5b4181bcac26d76a5a1110050c1fe33a8b9f443a66907decd71da477",
+      "size_bytes": 2988368
+    },
+    {
+      "package_mtree_match": true,
+      "path": "/usr/lib/systemd/libsystemd-shared-262.1-1.so",
+      "sha256": "35062156eb1f1bfa478fa7477714cec702d990a15fa825790c58a3f6a63f6f05",
+      "size_bytes": 6297480
+    }
+  ],
+  "keyring": "installed Arch public keyring converted to task-local binary format; no user keyring edits",
+  "native_owner_invocations": 0,
+  "package_signature_gpgv_corrected_exit": 0,
+  "pkgbuild_sha256_matches_BUILDINFO": true,
+  "running_manager_binary_mapping_verified": false,
+  "running_manager_maps_access": "PermissionError for /proc/1161/maps; no escalation or mapped-file verification",
+  "scope": "named installed OS infrastructure integrity/source investigation; not a research or native owner run",
+  "whole_lifetime_qualified": false
+}
