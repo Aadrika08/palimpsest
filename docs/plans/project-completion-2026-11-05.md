@@ -88,6 +88,20 @@ factories/Engine opt-in remain absent. Raw deletion stays disabled. No new
 research/probe/CI run or research CPU debit follows from these ordinary tests;
 all empirical/human/rights/reproducibility/final paper gates remain open.
 
+## Conditional pair mapping milestone, 6 November 2026
+
+Task5a closes the registered-resource mapping gap beyond terminal replay:
+independent E-only refits, exact nine-way selector/U/history formulas and fresh
+whole-proof equality passed159 local checks with no skips, followed by independent
+SPEC PASS/QUALITY APPROVED. See [retained evidence and limits](../reports/memory-terminal-pair-pure-review-2026-11-06/README.md).
+
+This conditional proof does not authenticate supplied history origin or actual
+source/recording/model/native state. Cross-condition own/sham and all-nine
+no-event equality remain complete-family gates. Actual integration, replay,
+sealing/publication, accounting, compact-evidence adequacy and the full study
+remain unverified; no actual research or CI execution follows from these tests.
+Raw deletion remains disabled and the full project remains incomplete.
+
 ## Verified proof milestone, 5 November 2026
 
 The standalone nine-module package and final Lake build passed, followed by an independent parent build and kernel check. All 17 exported axiom reports use only the standard allowed axioms. The retained package checksum manifest verifies 269 files. The numerical exporter also passed 31 Python tests and independent Lean compilation of synthetic negative and nonnegative fixtures, including their axiom reports. These are arithmetic fixtures; sampling eligibility and empirical improvement remain unverified. Runtime qualification, memory publication and all empirical/human delivery gates remain open. Research execution CPU used remains zero; proof builds and ordinary tests are excluded. See `formal/change-audit/evidence/verification-summary.json` and `paper/studies/change_audit_v1/independent-emitter-verification/verification.json`.

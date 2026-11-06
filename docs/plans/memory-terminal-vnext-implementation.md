@@ -428,9 +428,12 @@ origin, seed/relation/profile registration and custody are not certified.
 Oracle remains pending until reached gold is independently reconstructed;
 no prior-own receipt, loader, qualified flag or actual adapter is introduced.
 
-- [ ] Genuine authored held-source positive, all-nine mapping/forgery negatives,
+- [x] Genuine authored held-source positive, all-nine mapping/forgery negatives,
   zero/short natural endpoint cases and input preservation.
-- [ ] Required focused TDD and independent spec/code review.
+- [x] Required focused TDD and independent spec/code review.
+
+Accepted conditional source: [Task5a evidence and limitations](../reports/memory-terminal-pair-pure-review-2026-11-06/README.md);
+159 passes/no skips, independent SPEC PASS/QUALITY APPROVED.
 
 Pair equality does not establish cross-condition equality. Own/sham and all-nine
 no-event checks remain complete-family6b/7 obligations, including terminal/count/

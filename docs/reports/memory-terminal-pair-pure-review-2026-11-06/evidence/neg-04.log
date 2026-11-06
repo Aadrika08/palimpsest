@@ -1,0 +1,32 @@
+........................................................................ [ 55%]
+.............F
+=================================== FAILURES ===================================
+__ test_source_bindings_and_terminal_relabels_still_reach_task3a[application] __
+
+base = {'context': {'case_id': 'memory-family-v3-a54cb2f83098a2346a9cc46e-change', 'case_sha256': 'f46f57340b58b7b7b7c15bc71e...3333333333333333333333333333333333333333333333333333333333333333'}, 'episode': 0, 'episode_finished': False, ...}, ...}
+defect = 'application'
+
+    @pytest.mark.parametrize('defect', ('application', 'm', 'world', 'normal-relabel', 'retained', 'source-view'))
+    def test_source_bindings_and_terminal_relabels_still_reach_task3a(base, defect):
+        api()
+        h = histories()
+        sample = condition_evidence(base, h)
+        proof = prove(sample)
+        if defect in ('application', 'm', 'world'):
+            key = {'application':'source_application_sha256', 'm':'source_m_sha256', 'world':'source_world_sha256'}[defect]
+            sample['context'][key] = '0'*64
+        elif defect == 'normal-relabel': sample['raw']['manifest'].update(status='completed', final_phase='terminated')
+        elif defect == 'retained': next(e for e in sample['raw']['events'] if e['kind']=='memory_selector_configured')['retained_memory_sha256'] = '0'*64
+        else: sample['source_application']['memory']['selector']['provenance_sha256'] = '0'*64
+        rebind(sample)
+        with patch.object(audit, 'prove_terminal_vnext', wraps=audit.prove_terminal_vnext) as replay:
+            with pytest.raises(ValueError): pair(sample, h, proof)
+>           assert replay.call_count == 1
+E           AssertionError: assert 0 == 1
+E            +  where 0 = <MagicMock name='prove_terminal_vnext' id='140557306625168'>.call_count
+
+tests/test_memory_family_terminal_condition_vnext.py:358: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_terminal_condition_vnext.py::test_source_bindings_and_terminal_relabels_still_reach_task3a[application]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 85 passed, 9 deselected in 25.87s

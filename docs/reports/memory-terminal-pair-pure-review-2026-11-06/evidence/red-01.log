@@ -1,0 +1,11 @@
+F
+=================================== FAILURES ===================================
+__________ test_all_nine_registered_mappings_replay_whole_proof[own] ___________
+No module named 'scripts.memory_family_terminal_condition_vnext'
+
+During handling of the above exception, another exception occurred:
+Task5a registered conditional pair API is missing
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_terminal_condition_vnext.py::test_all_nine_registered_mappings_replay_whole_proof[own]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 0.44s
