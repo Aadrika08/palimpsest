@@ -318,7 +318,8 @@ def _recording(manifest_bytes,event_bytes,c,p):
     trigger=any(e['witness']['trigger'] is not None for e in witnesses) or any(
         e['kind']=='memory_decision' and e.get('detail',{}).get('kind')=='memory_trigger' for e in events)
     _same(p['trigger_reached'],trigger)
-    _require(len(legacy._policy_calls(events))==n,'PURE policy count differs')
+    _require([event['tick'] for event in legacy._policy_calls(events)]==list(range(b,b+n)),
+        'PURE policy interval differs')
     failures=[e for e in events if e['kind']=='runtime_failure']
     if tail:
         _require(len(failures)==1 and not any(e['kind']=='episode_finished' for e in events), 'PURE failure count differs')

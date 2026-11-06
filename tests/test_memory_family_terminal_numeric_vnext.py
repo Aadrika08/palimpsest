@@ -491,6 +491,22 @@ def test_read_checks_bound_witness_packet_and_reference_roles(defect):
     with pytest.raises(ValueError): api().read_terminal_numeric_vnext(changed,receipt=proof,external_overhead_bytes=parts[3]+1024)
 
 
+def test_read_refuses_rebound_policy_call_outside_exact_motor_interval():
+    codec=api(); parts=sample(1); bundle=convert(parts)
+    result=read(bundle,parts)
+    assert result['manifest']['first_tick']==result['manifest']['last_tick']==20
+    assert result['preservation']['raw_comparison_performed'] is False
+    assert result['preservation']['actual_acceptance'] is False
+    def change(events):
+        policy=next(event for event in events if event['kind']=='neural_policy_call')
+        policy['tick']=policy['episode_step']=2099
+    changed,proof=_rebind_recorded_events(bundle,parts[1],change)
+    # Descriptors/proof are rebound deliberately: this is stored structural
+    # coherence, never a claim that the mutated proof still passed Task3a replay.
+    with pytest.raises(ValueError,match='PURE policy interval differs'):
+        codec.read_terminal_numeric_vnext(changed,receipt=proof,external_overhead_bytes=parts[3]+1024)
+
+
 @pytest.mark.parametrize('over',[0,1])
 def test_inherited_event_line_cap_refuses_even_a_genuine_conditional_proof(over):
     api(); built = fixture('own','change',1)
