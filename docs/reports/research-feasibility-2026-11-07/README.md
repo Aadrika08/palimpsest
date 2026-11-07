@@ -50,3 +50,28 @@ held-out input was opened. These are planning findings, not measured study costs
 All prior study figures are wall seconds; no process CPU has been measured for
 memory, puck or MaleCNS. Research CPU charged to date: audit 1,222.455497 s;
 final 158.40 s (fresh reproduction v2); other lanes 0.
+
+## Lost frozen inputs (finding added later on 7 November)
+
+The former `/home/utkarsh/Work/shraddha/brain` checkout, including every
+`.worktrees/*/runs/` directory and the pinned interpreters, no longer exists. No
+copy was found on any of 248 local/remote Git refs, the Codex `brain` clones,
+archives, or the plocate index (updated 2026-11-07 00:20).
+
+- **Still present with matching SHA-256:** MaleCNS reduced graph
+  (`data/assets/flynn/male-reduced-v1/source-graph.json`), graph manifest
+  (`data/manifests/malecns-reduced-neighborhood-v1.json`), FLYNN cell source
+  (submodule `8d96459`), puck model index and training report documents.
+- **Lost:** MaleCNS training corpus manifest `47c4523c…`, old manifest `402d2676…`,
+  `historical-arrays.npz`, `historical-result.json` and ~1.79 GB of raw recordings;
+  puck seed-21/22/23 `checkpoint.npz`/`protocol.json`/`report.json` and the
+  teacher-collection-v2 recordings.
+- **Not bit-reconstructable:** producing commits still exist, but the pinned files
+  embed `uuid4` run IDs, `perf_counter` latencies, absolute paths, elapsed times and
+  EGL-rendered features; no repeat run ever demonstrated hash equality.
+- **Consequence:** MaleCNS v3 (attempts 1/2 already consumed) and puck v3 cannot
+  run as frozen. Their protocols and all prior results stay unchanged as history.
+  Owner directed (2026-11-07): if not reconstructable, write new prospective
+  protocols. Any regenerated corpus is a new input set requiring a new versioned
+  protocol, independent review and per-stage owner GO; thresholds stay 3/4
+  development per model/seed and 6/8 held-out.
