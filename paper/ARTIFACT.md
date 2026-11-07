@@ -138,6 +138,13 @@ prepared first and a separately bounded fresh output directory. Do not relabel
 this failed follow-up or the incomplete original unit as successful. Independent
 machine/operator reproduction also remains open.
 
+That next attempt ran on 7 November 2026 as a separately labelled v2 at commit
+`94c5488`: cache prepared first, then fresh offline checkout/install, UI build,
+API smoke and a 55-second CPU full-FLYNN verification inside a network namespace,
+all passed (158.40 CPU-seconds, final lane). See
+[`docs/reports/fresh-reproduction-v2-2026-11-07/`](../docs/reports/fresh-reproduction-v2-2026-11-07/README.md).
+It does not relabel the earlier attempts; second-machine reproduction stays open.
+
 Raw campaign outputs are local ignored artifacts. Compact evidence and the
 frozen protocol support review without silently redistributing third-party
 assets. Check `THIRD_PARTY_NOTICES.md` and source terms before public deposit of

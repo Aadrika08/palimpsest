@@ -1,0 +1,110 @@
+[
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/2b926a59fbe34ccabb8f38be939f1865/failure-observation.json",
+    "error_type": "ValueError",
+    "error_message": "Out of range float values are not JSON compliant",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": true
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/4e4fb1a693214d1d9097f46d29b1ca2a/failure-observation.json",
+    "error_type": "FileNotFoundError",
+    "error_message": "[Errno 2] No such file or directory: '/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/4e4fb1a693214d1d9097f46d29b1ca2a/repo/uv.lock'",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": true
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/820199013f534b13965fd127baac3e57/failure-observation.json",
+    "error_type": "BoundaryFailure",
+    "error_message": "policy boundary",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": true
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/8e591e51f3f049f6a13758a5734b7447/failure-observation.json",
+    "error_type": "BoundaryFailure",
+    "error_message": "allocation boundary",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": null
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/9251dc2ccd7a434681b3fdb52b3552a8/failure-observation.json",
+    "error_type": "BoundaryFailure",
+    "error_message": "renderer close boundary",
+    "context_type": "BoundaryFailure",
+    "context_message": "policy boundary",
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": true
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/a0c6e505a64747f1ac84fedb18a66b1d/failure-observation.json",
+    "error_type": "ValueError",
+    "error_message": "Unexpected pinned cylinder type/radius",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": true
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/a7adda3162b541dbb85f7c0fd97d590f/failure-observation.json",
+    "error_type": "ValueError",
+    "error_message": "run writer is closed or finished",
+    "context_type": "RuntimeError",
+    "context_message": "authored storage quota refusal",
+    "manifest_status": "running",
+    "events_stream_closed": true,
+    "writer_broken": true,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": null
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/c254b67568614509b168c0416f019b4e/failure-observation.json",
+    "error_type": "TypeError",
+    "error_message": "authored diagnostics storage callback failure",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": null
+  },
+  {
+    "path": "/var/tmp/palimpsest-bootstrap-final-20261106-4ae275f6/cc15e3731d414d20955c5895bde0dc43/failure-observation.json",
+    "error_type": "ValueError",
+    "error_message": "this profile requires a 0.02-second control interval",
+    "context_type": null,
+    "context_message": null,
+    "manifest_status": "failed",
+    "events_stream_closed": true,
+    "writer_broken": false,
+    "closed_fileno_error": "I/O operation on closed file",
+    "environment_closed": true
+  }
+]

@@ -1,0 +1,172 @@
+{
+  "contract_commit": "7846555",
+  "files": [
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-report.md",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/implementation.md",
+      "sha256": "65056d57260ba1716cb11cad52bb8719770aa7c3efa373e11a36c779e9080883",
+      "size_bytes": 18998
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/tests-settled.diff",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/tests-settled.diff",
+      "sha256": "e0dbf6893973e27ac2db8ce3d130360001d376aba28e747a630088fbce36dc6b",
+      "size_bytes": 37642
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/shared-drain-final.diff",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/shared-drain-final.diff",
+      "sha256": "9da5c7d7f31848dee5758c788d82e4743458d60693f2b9d47741824e148e1477",
+      "size_bytes": 6816
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/final-20261106T113051810785239.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/final-20261106T113051810785239.log",
+      "sha256": "9a9cbe1c4df68c3384bdbd321cce79531a66636bc04af88073f7bf14188c37e6",
+      "size_bytes": 180
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/settled-close-20261106T114839014156420.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/settled-close-20261106T114839014156420.log",
+      "sha256": "156db33476e2fce7280e14e1e1cc67d4be98bf8bf5c32a610ab48e6e23533f47",
+      "size_bytes": 982
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/close-green-20261106T114731774869986.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/close-green-20261106T114731774869986.log",
+      "sha256": "6cddc742295413033cff56096d9ec9ea5d60c2cde4e2ba34c1e6aa61f8293000",
+      "size_bytes": 99
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/close-red-20261106T114519521788567.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/close-red-20261106T114519521788567.log",
+      "sha256": "084b4669edc25d31c337c629ad70d88d612145357dbb6b61fe69fb333f94b688",
+      "size_bytes": 93122
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/green-output-20261106T112726197665838.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/green-output-20261106T112726197665838.log",
+      "sha256": "b497eccd0e1a8de1deed9828f0e4e8558b4c32e3a1a9c0861a360747c11fb6ea",
+      "size_bytes": 113
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/corrected-final-20261106T113848234725187.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/corrected-final-20261106T113848234725187.log",
+      "sha256": "110f2e438c38f34dce0431e89395107b8be34d48bcb15d174161dd1f06a07aa2",
+      "size_bytes": 180
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/tests-final.diff",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/tests-final.diff",
+      "sha256": "cd218324e3dfd2f1a96692bab35811e8c45107348e505902e157f6c7db841f9e",
+      "size_bytes": 34394
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/red-output-20261106T112635056612184.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/red-output-20261106T112635056612184.log",
+      "sha256": "bba090aa229f68964974499004a66b356f4cb52deb1331a76b041ab2befe0fee",
+      "size_bytes": 5921
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/fd-precision-identity.json",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/fd-precision-identity.json",
+      "sha256": "923217b7fbd037f89133d1b5dbb01a871cfc433d38cefe0d91cf1768bb68c794",
+      "size_bytes": 3521
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/green-boundaries-20261106T112559785157863.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/green-boundaries-20261106T112559785157863.log",
+      "sha256": "d164307bca6614138acf19728b786276e3e71ef69a370777039ba4daf06ba76b",
+      "size_bytes": 2351
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/fd-precision-20261106T113425835966276.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/fd-precision-20261106T113425835966276.log",
+      "sha256": "ae1afa9524e3ed0cbf0b39ba2168a851934ecd99b71a4fa3c8c983a84242991f",
+      "size_bytes": 2416
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/red-boundaries-20261106T111518580567306.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/red-boundaries-20261106T111518580567306.log",
+      "sha256": "b05f1964ce0f71fbab67903ced79e5696e62885542a2dad38f20d49a0b5aa7a6",
+      "size_bytes": 3815
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/tests.diff",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/tests.diff",
+      "sha256": "76ca4daaffc041126c95fcb0bf57210a6d688ccbd0b5ab898ac58a315a094b93",
+      "size_bytes": 33343
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/green-20261106T111330026277158.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/green-20261106T111330026277158.log",
+      "sha256": "b7b3c3cd4222d3736ffb11bc3f62a68f16223540a9ed199c41d8596bbd536180",
+      "size_bytes": 99
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/source.diff",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/source.diff",
+      "sha256": "933d2f4a1f373ab878cb6a886e878a5666383a0025381ad526713113f21d6069",
+      "size_bytes": 34051
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/green-20261106T111305766674367.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/green-20261106T111305766674367.log",
+      "sha256": "f4fa19e0a0a1406b030eed283f9fd3167296ad86bcafa1dd0d22010760e00373",
+      "size_bytes": 3162
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/green-20261106T111159720806711.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/green-20261106T111159720806711.log",
+      "sha256": "d1a43ef71b9a62d8f8cdbde2bbddcc754dc36fdcede7850bbca19f207b61a3ad",
+      "size_bytes": 3664
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/red-20261106T110843596553089.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/red-20261106T110843596553089.log",
+      "sha256": "135aac6b38e38d04d992127c3b72b472ab8c425c780d5b03809e2ae60295190c",
+      "size_bytes": 6540
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-6a1-evidence/red-20261106T110652184588371.log",
+      "path": "docs/reports/memory-source-authored-holder-review-2026-11-06/evidence/red-20261106T110652184588371.log",
+      "sha256": "bb2c7f868c1d8696b16df8805caa7b56c9419a01df3f670481627191c3d325fe",
+      "size_bytes": 25348
+    }
+  ],
+  "implementation_commit": "9d2b88779e586328c76ddf76e105ff16e2256cec",
+  "schema": "authored-source-software-evidence-archive-v1",
+  "scope": "source/authored software only; independent review pending; no actual source/model/scientific/deletion authority",
+  "settled_result": {
+    "historical_skipped": 2,
+    "passed": 208,
+    "seconds": 37.95
+  },
+  "source_references": [
+    {
+      "path": "scripts/memory_family_source_consumer_vnext.py",
+      "sha256": "501de64b6a91ffa421576904cda0efe5a06941ce077ff1a5c3709881c51ec471",
+      "size_bytes": 33207
+    },
+    {
+      "path": "tests/test_memory_family_source_consumer_vnext.py",
+      "sha256": "5d7ff1316ab1558abcfd44ba17a71c9c0fddad6c8328d9c8e914cc8f62d882f7",
+      "size_bytes": 36681
+    },
+    {
+      "path": "scripts/memory_family_compact_v4.py",
+      "sha256": "758838127cc036ada3a2c1fbe6bfcf3d1c9bd21f71ff8d6357863a9a2b944e8d",
+      "size_bytes": 42867
+    },
+    {
+      "path": "scripts/memory_family_replay_custody_v4.py",
+      "sha256": "2dac6176ab77ae560d0e998e53afb719c6f8e409a5a4efa6ca614f71cf8d26e8",
+      "size_bytes": 14609
+    },
+    {
+      "path": "tests/test_memory_family_replay_custody_v4.py",
+      "sha256": "1754b4e8897f3473d1e7cf84b519ab7b9ec26e0a397bd612c574f8af29a1cc6d",
+      "size_bytes": 13143
+    }
+  ]
+}

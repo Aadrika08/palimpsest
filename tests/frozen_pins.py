@@ -67,6 +67,26 @@ def _memory_v4_pins():
     return {row['path']: row['sha256'] for row in rows}
 
 
+def merge_pin_rows(*groups):
+    """Union declared source pins without silently choosing conflicting bytes."""
+    result = {}
+    for rows in groups:
+        for row in rows:
+            path, digest = row['path'], row['sha256']
+            if path in result and result[path] != digest:
+                raise ValueError('Conflicting frozen pin: ' + path)
+            result[path] = digest
+    return result
+
+
+def _memory_case_publication_pins():
+    return merge_pin_rows(
+        _json('docs/plans/memory-family-compact-evidence-v4-case-publication-v1-protocol.json')['behavior_sources'],
+        _json('docs/plans/memory-condition-seal-v1-case-publication-v1-protocol.json')['source_pins'],
+        _json('docs/plans/memory-case-publication-v1-protocol.json')['source_pins'],
+    )
+
+
 def _memory_directory_census_pins():
     rows = _json('docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json')['behavior_sources']
     return {row['path']: row['sha256'] for row in rows}
@@ -102,6 +122,109 @@ def _full_cell_root():
 
 # name -> (byte pins loader or None, frozen repository root loader or None, affected tests)
 PROTOCOLS = {
+    # Case-publication has its own historical closure, including this helper.
+    'memory-family-compact-v4-case-publication-v1': (_memory_case_publication_pins, None, (
+        'tests/test_memory_case_publication_profile_v1.py::test_prospective_profiles_exist_and_bind_exact_current_source',
+        'tests/test_memory_case_publication_profile_v1.py::test_profile_generator_checks_without_rewriting_registered_bytes',
+        'tests/test_memory_case_publication_profile_v1.py::test_initializer_source_binding_does_not_relax_evidence_paths',
+        'tests/test_memory_case_publication_profile_v1.py::test_complete_declared_closure_excludes_output_cycles_and_real_trust',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_exact_roundtrip_and_partial_partition',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_converter_refuses_numeric_domain_without_coercion',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_population_other_domains_are_ineligible',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_envelope_exact_schema_and_bijection',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_rehashed_companion_archive_corruption',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_unchanged_public_raw_receipt_and_all_row_proof',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_rehashed_numeric_bits_fail_at_exact_field_tick',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_population_row_and_column_permutation_fail_raw_proof',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_old_base_proof_is_not_bypassed',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_actual_serialized_byte_accounting_and_external_combined_bound',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_each_partial_companion_matches_independent_zip_npy_size_model',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_complete_operation_maximum_has_every_row_and_actual_serialized_ledger',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_nested_exact_schema_fields',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_sign_of_zero_is_preserved_and_not_equated_in_raw_proof',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_valid_v1_metadata_can_exhaust_combined_v2_budget_without_padding_conversion_json',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_rehashed_receipt_counts_must_match_the_exact_base',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_numpy_timing_scalars_are_exact_but_python_values_are_not_coerced',
+        'tests/test_memory_family_numeric_preservation_v2.py::test_raw_audit_declaration_has_its_original_canonical_byte_bound',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_normal_episode_terminal_spliced_before_natural_failure',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_inexact_sensor_only_natural_failure',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_external_hardlink_to_any_raw_file',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_undeclared_policy_sensor_even_when_hash_is_rebound',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_invalid_or_unbound_all_tick_values',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_terminal_and_condition_oracle_mismatch',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_source_restore_lineage_or_snapshot_mutation',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_size_caps_before_hashing_oversized_file[recording]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_size_caps_before_hashing_oversized_file[events]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_size_caps_before_hashing_oversized_file[report]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_wrong_run_case_condition_or_source_identity[case_id]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_wrong_run_case_condition_or_source_identity[condition]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_wrong_run_case_condition_or_source_identity[source_run_id]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_wrong_run_case_condition_or_source_identity[source_snapshot_sha256]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_wrong_run_case_condition_or_source_identity[source_identity_sha256]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_mutated_spliced_or_aliased_raw_tree[chunk-byte]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_mutated_spliced_or_aliased_raw_tree[foreign-event]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_mutated_spliced_or_aliased_raw_tree[eyes-event]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_mutated_spliced_or_aliased_raw_tree[hardlink-alias]',
+        'tests/test_memory_family_raw_audit_v4.py::test_rejects_mutated_spliced_or_aliased_raw_tree[extra-file]',
+        'tests/test_memory_family_source_qualification_v2.py::test_terminal_export_control_identity_corruption_prevents_seal',
+        'tests/test_memory_family_source_qualification_v2.py::test_postseal_final_read_failure_quarantines_without_deletion',
+        'tests/test_memory_family_source_qualification_v2.py::test_held_input_exit_failure_is_quarantined_before_terminal',
+        'tests/test_memory_family_source_qualification_v2.py::test_controls_remain_bound_after_creation_until_export',
+        'tests/test_memory_family_source_qualification_v2.py::test_original_freeze_teardown_drift_is_caught_under_lease',
+        'tests/test_memory_family_source_qualification_v2.py::test_parent_calls_real_public_numeric_writer_and_rereader',
+        'tests/test_memory_family_source_qualification_v2.py::test_parent_censuses_ancillary_control_prefix_and_zero_leases',
+        'tests/test_memory_family_source_qualification_v2.py::test_parent_complete_census_refuses_unaccounted_or_oversize_outputs',
+        'tests/test_memory_family_source_qualification_v2.py::test_control_census_stays_held_across_real_numeric_publication',
+        'tests/test_memory_family_source_qualification_v2.py::test_terminal_failure_quarantines_numeric_candidate',
+        'tests/test_memory_family_source_qualification_v2.py::test_indeterminate_public_writer_is_stopped_and_never_resumed_by_reader',
+        'tests/test_memory_family_source_qualification_v2.py::test_writer_lease_teardown_error_is_not_a_successful_parent',
+        'tests/test_memory_family_source_qualification_v2.py::test_fresh_controlled_home_bootstraps_before_parent_lease',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_parent_and_child_hold_independently_same_deadline',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_full_combined_metadata_sum_includes_freeze_job_logs_tail',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_new_copy_and_stage_created_manifest_remain_charged',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_one_byte_over_retains_failure',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_consistent_json_cannot_qualify_accounting_backend',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_added_requirements_copies_count_in_combined_metadata',
+        'tests/test_memory_family_source_qualification_v2.py::test_v4_parent_only_late_close_retains_and_quarantines_provisional_marker',
+        'tests/test_memory_family_source_qualification_v2.py::test_raw_and_snapshot_remain_after_pass_or_failure[False]',
+        'tests/test_memory_family_source_qualification_v2.py::test_actual_new_profile_file_bytes_are_checked_and_held[True]',
+        'tests/test_memory_family_source_qualification_v2.py::test_independent_auditor_rejects_corrupt_authored_source[raw-hash]',
+        'tests/test_memory_family_source_qualification_v2.py::test_independent_auditor_rejects_corrupt_authored_source[event-mapping]',
+        'tests/test_memory_family_source_qualification_v2.py::test_independent_auditor_rejects_corrupt_authored_source[snapshot-prefix]',
+        'tests/test_memory_family_source_qualification_v2.py::test_rewritten_control_cannot_be_rebound_into_export[cleanup.json]',
+        'tests/test_memory_family_source_runtime_v2.py::test_acquired_source_emits_exact_v4_manifest_and_report',
+        'tests/test_memory_family_source_runtime_v2.py::test_invalid_prefix_is_rejected_by_unchanged_raw_audit',
+        'tests/test_memory_family_source_seal_v2.py::test_public_numeric_source_roundtrip_retains_originals',
+        'tests/test_memory_family_source_seal_v2.py::test_source_fixture_is_accepted_by_unchanged_public_raw_audit',
+        'tests/test_memory_family_source_seal_v2.py::test_change_and_restore_during_final_rename_is_refused',
+        'tests/test_memory_family_source_seal_v2.py::test_invalid_input_fails_before_candidate_writes',
+        'tests/test_memory_family_source_seal_v2.py::test_occupied_or_aliased_namespace_is_never_reused',
+        'tests/test_memory_family_source_seal_v2.py::test_publication_failures_preserve_raw_and_partials',
+        'tests/test_memory_family_source_seal_v2.py::test_rehashed_numeric_candidate_must_match_raw',
+        'tests/test_memory_family_source_seal_v2.py::test_actual_disk_reread_detects_changed_candidate',
+        'tests/test_memory_family_source_seal_v2.py::test_raw_backed_reader_retains_input_witnesses_until_return',
+        'tests/test_memory_family_source_seal_v2.py::test_reader_rejects_changed_disk_or_unknown_members',
+        'tests/test_memory_family_source_seal_v2.py::test_deadline_never_returns_accepted_result',
+        'tests/test_memory_family_source_seal_v2.py::test_late_descriptor_close_failure_is_quarantined',
+        'tests/test_memory_family_source_seal_v2.py::test_quarantine_failure_is_indeterminate_and_retains_evidence',
+        'tests/test_memory_family_source_seal_v2.py::test_ledger_accounts_unique_physical_paths_and_all_reserved_metadata',
+        'tests/test_memory_family_source_seal_v2.py::test_valid_raw_that_cannot_fit_combined_metadata_is_retained_failure',
+        'tests/test_memory_family_source_seal_v2.py::test_rehashed_published_numeric_bits_reach_raw_comparison',
+        'tests/test_memory_family_source_seal_v2.py::test_candidate_file_witness_survives_final_rename',
+        'tests/test_memory_family_source_seal_v2.py::test_additional_controls_are_held_charged_and_bound_in_conversion',
+        'tests/test_memory_family_source_seal_v2.py::test_auxiliary_control_can_make_combined_overhead_ineligible',
+        'tests/test_memory_family_source_seal_v2.py::test_auxiliary_control_change_and_restore_at_rename_is_refused',
+        'tests/test_memory_family_source_seal_v2.py::test_duplicate_registered_physical_role_counts_once_but_real_copy_counts_twice',
+        'tests/test_memory_family_source_seal_v2.py::test_invalid_additional_controls_fail_before_writes',
+        'tests/test_memory_family_source_seal_v2.py::test_evidence_root_replacement_and_restore_is_refused',
+        'tests/test_memory_family_source_seal_v2.py::test_unbounded_disk_inventory_is_refused_before_opening_payloads',
+        'tests/test_memory_family_source_seal_v2.py::test_indeterminate_writer_marker_never_proves_process_success',
+        'tests/test_memory_family_source_seal_v2.py::test_rehashed_base_snapshot_metadata_must_match_held_original_snp',
+        'tests/test_memory_family_source_seal_v2.py::test_registration_preflight_rejects_nondevelopment_before_case_construction',
+        'tests/test_memory_family_source_seal_v2.py::test_registration_descriptor_root_is_refused_before_any_payload_open',
+        'tests/test_memory_family_source_seal_v2.py::test_control_descriptor_roots_are_refused_before_control_payload_open',
+        'tests/test_memory_family_source_seal_v2.py::test_review_fix1_prepared_marker_change_restore_during_real_rename_is_refused',
+    )),
     'memory-family-compact-v4-directory-census-v1': (_memory_directory_census_pins, None, ()),
     'memory-family-compact-v4': (_memory_v4_pins, None, (
         # These assert the preceding profile's exact pointer and source identity.
@@ -285,11 +408,21 @@ def skip_reason(name):
 
 
 def affected_tests():
-    """Each listed test node id (without parameters) mapped to its protocol name."""
+    """Each explicit function or exact parameter node mapped to one historical owner."""
     result = {}
     for name, (_, _, tests) in PROTOCOLS.items():
         for test in tests:
             if test in result:
                 raise ValueError('Test listed under two frozen protocols: ' + test)
             result[test] = name
+    for test in result:
+        base = test.split('[', 1)[0]
+        if base != test and base in result:
+            raise ValueError('Ambiguous frozen protocol function/exact node: ' + test)
     return result
+
+
+def protocol_for(nodeid, affected=None):
+    """Prefer exact collected identity, then its unparametrized function entry."""
+    affected = affected_tests() if affected is None else affected
+    return affected.get(nodeid, affected.get(nodeid.split('[', 1)[0]))

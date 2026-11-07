@@ -1,0 +1,17 @@
+Spec compliance for F1–F3: **PASS**. Scoped fix quality: **APPROVED**.
+
+Reviewed `7f3c783868f8c878426e9ee02b44c86a125353c6` → `5d9c204fcfa861e390dafbbfdaeec94bb71375ec` only, with the appended Round 1 report and retained raw RED/focused/final logs. No saved fix diff was present, so I read the exact commit-to-commit source/test diff and compared the two protocol JSON objects. No new tests were run.
+
+- **F1 PASS — invariant check now precedes idempotence.** `src/palimpsest/memory_transition_vnext.py:506` checks selected/count1 versus pending-or-not-oracle/count0 before the duplicate-packet return. It does not move continuation-only schedule/terminal checks ahead of valid duplicate handling. `tests/test_memory_transition_vnext.py:552` proves valid selected duplicates remain idempotent with no selector call/Witness and contradictory count0 duplicates reject without a proposed state.
+- **F2 PASS — symmetric chain rule and shared Ref validation.** `src/palimpsest/memory_transition_vnext.py:568` now enforces index1 iff the **input** Lifecycle is selected, preserving first-trigger pending→selected index0. The fixed helper at `:285`, reused by standalone Witness validation at `:577`, uniformly checks required sensed Ref, gate/intervention pairing, gate-requires-cue, distinct hashes/sequences and prior-to-sensed ordering. Removing the old redundant `refs[-1] == sensed_event` comparison is safe because the fixed iteration visits required sensed_event last. Regression cases at `tests/test_memory_transition_vnext.py:566` and `:590` cover the reported contradictions and already-valid Ref guards. No event-body authentication claim was added.
+- **F3 PASS — output validation is separated from ordinary exceptions.** `src/palimpsest/memory_transition_vnext.py:544` validates terminal output and encodes any returned Witness in a separate refusal phase; failures return rejected/no Witness while retaining detached available Lifecycles and the original error token. `src/palimpsest/memory_decision.py:507` preserves legacy validation at the unchanged legacy return cut. `tests/test_memory_transition_vnext.py:601` reproduces the actual 65,524-byte-input/next-append cap case, verifies rejected/null proposal/no Witness, input detachment, unchanged legacy ValueError class/message and rethrow of the same captured exception object. The retained focused run also includes the existing genuine CueUnavailable raised-Witness path and valid consumed-packet idempotence.
+
+Evidence read directly:
+
+- `task-1-evidence/round1-red-01.log`: **6 failed, 3 passed, 61 deselected in 1.84s**, all six expected pre-fix assertion failures corresponding to F1/F2/F3; no fixture/import failure.
+- `task-1-evidence/round1-green-focused-01.log`: **11 passed, 59 deselected in 2.07s**.
+- `task-1-evidence/round1-green-final-01.log`: **104 passed in 18.74s**, no warning output; unchanged complete encoded size measurements of Witness12,244 / Context4,782 / Commit793 bytes.
+
+Critical/Important/Minor introduced findings: **none found in this scoped fix**. The three protocol changes accurately document the corrected boundaries and preserve its proposed/unqualified status. This closes the initial review's F1–F3; it is not a fresh whole-branch review or source/Engine/scientific qualification. Later-task dependencies and root-owned unstaged plan amendments remain outside this approval.
+
+🟢 F1–F3 fix review passed; scoped changes approved.

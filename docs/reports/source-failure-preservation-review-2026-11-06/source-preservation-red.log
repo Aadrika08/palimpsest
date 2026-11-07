@@ -1,0 +1,718 @@
+FFFFFFFFFF.F.F.F.FFFF................FFFFFFFFFFFFFFFFFFFFFFFFF.          [100%]
+=================================== FAILURES ===================================
+____ test_exact_bool_refuses_before_serialization_and_output[snapshot-None] ____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before0')
+bad = None, api = 'snapshot'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+>               snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+E               TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:77: TypeError
+_____ test_exact_bool_refuses_before_serialization_and_output[snapshot-0] ______
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before1')
+bad = 0, api = 'snapshot'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+>               snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+E               TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:77: TypeError
+_____ test_exact_bool_refuses_before_serialization_and_output[snapshot-1] ______
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before2')
+bad = 1, api = 'snapshot'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+>               snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+E               TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:77: TypeError
+______ test_exact_bool_refuses_before_serialization_and_output[snapshot-] ______
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before3')
+bad = '', api = 'snapshot'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+>               snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+E               TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:77: TypeError
+____ test_exact_bool_refuses_before_serialization_and_output[snapshot-bad4] ____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before4')
+bad = np.True_, api = 'snapshot'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+>               snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+E               TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:77: TypeError
+_____ test_exact_bool_refuses_before_serialization_and_output[writer-None] _____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before5')
+bad = None, api = 'writer'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+                snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+            else:
+>               RunWriter(destination, {'unserializable': object()}, preserve_failed=bad)
+E               TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:79: TypeError
+______ test_exact_bool_refuses_before_serialization_and_output[writer-0] _______
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before6')
+bad = 0, api = 'writer'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+                snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+            else:
+>               RunWriter(destination, {'unserializable': object()}, preserve_failed=bad)
+E               TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:79: TypeError
+______ test_exact_bool_refuses_before_serialization_and_output[writer-1] _______
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before7')
+bad = 1, api = 'writer'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+                snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+            else:
+>               RunWriter(destination, {'unserializable': object()}, preserve_failed=bad)
+E               TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:79: TypeError
+_______ test_exact_bool_refuses_before_serialization_and_output[writer-] _______
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before8')
+bad = '', api = 'writer'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+                snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+            else:
+>               RunWriter(destination, {'unserializable': object()}, preserve_failed=bad)
+E               TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:79: TypeError
+_____ test_exact_bool_refuses_before_serialization_and_output[writer-bad4] _____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_exact_bool_refuses_before9')
+bad = np.True_, api = 'writer'
+
+    @pytest.mark.parametrize('bad', [None, 0, 1, '', np.bool_(True)])
+    @pytest.mark.parametrize('api', ['snapshot', 'writer'])
+    def test_exact_bool_refuses_before_serialization_and_output(tmp_path, bad, api):
+        destination = tmp_path / 'absent'
+        with pytest.raises(ValueError, match='preserve_failed'):
+            if api == 'snapshot':
+                snapshots.save_snapshot(object(), destination, preserve_failed=bad)
+            else:
+>               RunWriter(destination, {'unserializable': object()}, preserve_failed=bad)
+E               TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:79: TypeError
+_ test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes[write-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_snapshot_disk_failure_ret1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0e2c990>
+preserve = True, phase = 'write'
+
+    @pytest.mark.parametrize('preserve', [None, True])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync'])
+    def test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes(tmp_path, monkeypatch, preserve, phase):
+        destination = tmp_path / 'initial.snp'
+        fail_io(monkeypatch, destination, phase)
+        with pytest.raises(DiskFailure):
+>           snapshots.save_snapshot({'authored': np.arange(3, dtype=np.int16)}, destination, **options(preserve))
+E           TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:89: TypeError
+_ test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes[flush-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_snapshot_disk_failure_ret3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0fc3e50>
+preserve = True, phase = 'flush'
+
+    @pytest.mark.parametrize('preserve', [None, True])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync'])
+    def test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes(tmp_path, monkeypatch, preserve, phase):
+        destination = tmp_path / 'initial.snp'
+        fail_io(monkeypatch, destination, phase)
+        with pytest.raises(DiskFailure):
+>           snapshots.save_snapshot({'authored': np.arange(3, dtype=np.int16)}, destination, **options(preserve))
+E           TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:89: TypeError
+_ test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes[fsync-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_snapshot_disk_failure_ret5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0e10590>
+preserve = True, phase = 'fsync'
+
+    @pytest.mark.parametrize('preserve', [None, True])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync'])
+    def test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes(tmp_path, monkeypatch, preserve, phase):
+        destination = tmp_path / 'initial.snp'
+        fail_io(monkeypatch, destination, phase)
+        with pytest.raises(DiskFailure):
+>           snapshots.save_snapshot({'authored': np.arange(3, dtype=np.int16)}, destination, **options(preserve))
+E           TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:89: TypeError
+_____________ test_snapshot_never_removes_preexisting_target[True] _____________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_snapshot_never_removes_pr1')
+preserve = True
+
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_snapshot_never_removes_preexisting_target(tmp_path, preserve):
+        destination = tmp_path / 'initial.snp'
+        destination.write_bytes(b'preexisting failed snapshot')
+        with pytest.raises(FileExistsError):
+>           snapshots.save_snapshot({'authored': 1}, destination, **options(preserve))
+E           TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:104: TypeError
+_________________ test_successful_snapshot_bytes_are_unchanged _________________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_successful_snapshot_bytes0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0f8e150>
+
+    def test_successful_snapshot_bytes_are_unchanged(tmp_path, monkeypatch):
+        # ZIP's clock is incidental, so hold it fixed for an exact encoder comparison.
+        monkeypatch.setattr(snapshots.zipfile.time, 'localtime', lambda *args: (2026, 1, 2, 3, 4, 6, 4, 2, -1))
+        value = {'authored': np.arange(3, dtype=np.float32), 'bytes': b'tiny', 'scalar': 3}
+        default, preserved = tmp_path / 'default.snp', tmp_path / 'preserved.snp'
+>       assert snapshots.save_snapshot(value, default) == snapshots.save_snapshot(value, preserved, preserve_failed=True)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:113: TypeError
+_________ test_successful_writer_bytes_and_drain_are_unchanged[False] __________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_successful_writer_bytes_a0')
+background = False
+
+    @pytest.mark.parametrize('background', [False, True])
+    def test_successful_writer_bytes_and_drain_are_unchanged(tmp_path, background):
+        paths = [tmp_path / 'default', tmp_path / 'preserved']
+        for path, kwargs in zip(paths, [{}, {'preserve_failed': True}]):
+>           writer = RunWriter(path, {'authored': True}, **kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:124: TypeError
+__________ test_successful_writer_bytes_and_drain_are_unchanged[True] __________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_successful_writer_bytes_a1')
+background = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    def test_successful_writer_bytes_and_drain_are_unchanged(tmp_path, background):
+        paths = [tmp_path / 'default', tmp_path / 'preserved']
+        for path, kwargs in zip(paths, [{}, {'preserve_failed': True}]):
+>           writer = RunWriter(path, {'authored': True}, **kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:124: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-write-manifest-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile16')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc608bb50>
+background = False, kind = 'manifest', phase = 'write', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-write-manifest-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile17')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc6097190>
+background = True, kind = 'manifest', phase = 'write', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-write-chunk-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile18')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc6051ad0>
+background = False, kind = 'chunk', phase = 'write', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-write-chunk-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile19')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0e13050>
+background = True, kind = 'chunk', phase = 'write', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-flush-manifest-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile20')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc6071050>
+background = False, kind = 'manifest', phase = 'flush', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-flush-manifest-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile21')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc60b4250>
+background = True, kind = 'manifest', phase = 'flush', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-flush-chunk-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile22')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0fe8890>
+background = False, kind = 'chunk', phase = 'flush', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-flush-chunk-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile23')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc603e410>
+background = True, kind = 'chunk', phase = 'flush', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-manifest-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile24')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc605e7d0>
+background = False, kind = 'manifest', phase = 'fsync', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-manifest-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile25')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0f8e650>
+background = True, kind = 'manifest', phase = 'fsync', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-chunk-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile26')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc6089a90>
+background = False, kind = 'chunk', phase = 'fsync', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-chunk-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile27')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc60aa990>
+background = True, kind = 'chunk', phase = 'fsync', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-replace-manifest-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile28')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0e13b10>
+background = False, kind = 'manifest', phase = 'replace', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-replace-manifest-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile29')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc6088c90>
+background = True, kind = 'manifest', phase = 'replace', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-replace-chunk-False] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile30')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0feadd0>
+background = False, kind = 'chunk', phase = 'replace', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_real_writer_retains_failed_pending_without_qualified_success[True-replace-chunk-True] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_real_writer_retains_faile31')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0fcc3d0>
+background = True, kind = 'chunk', phase = 'replace', preserve = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    @pytest.mark.parametrize('kind', ['manifest', 'chunk'])
+    @pytest.mark.parametrize('phase', ['write', 'flush', 'fsync', 'replace'])
+    @pytest.mark.parametrize('preserve', [None, True])
+    def test_real_writer_retains_failed_pending_without_qualified_success(tmp_path, monkeypatch, background, kind, phase, preserve):
+>       writer = RunWriter(tmp_path / 'run', {}, **options(preserve))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:146: TypeError
+_ test_preexisting_pending_is_never_reused_or_unlinked_in_preservation_mode[_atomic_manifest] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_preexisting_pending_is_ne0')
+helper = <function _atomic_manifest at 0x7f4cc3d8cea0>
+
+    @pytest.mark.parametrize('helper', [records._atomic_manifest, records._publish_chunk])
+    def test_preexisting_pending_is_never_reused_or_unlinked_in_preservation_mode(tmp_path, helper):
+        target = tmp_path / 'target.json'
+        pending = target.with_suffix('.tmp')
+        target.write_bytes(b'published prefix')
+        pending.write_bytes(b'failed pending')
+        for _ in range(2):
+            with pytest.raises(FileExistsError):
+>               helper(target, b'replacement forbidden', preserve_failed=True)
+E               TypeError: _atomic_manifest() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:190: TypeError
+_ test_preexisting_pending_is_never_reused_or_unlinked_in_preservation_mode[_publish_chunk] _
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_preexisting_pending_is_ne1')
+helper = <function _publish_chunk at 0x7f4cc3d8d080>
+
+    @pytest.mark.parametrize('helper', [records._atomic_manifest, records._publish_chunk])
+    def test_preexisting_pending_is_never_reused_or_unlinked_in_preservation_mode(tmp_path, helper):
+        target = tmp_path / 'target.json'
+        pending = target.with_suffix('.tmp')
+        target.write_bytes(b'published prefix')
+        pending.write_bytes(b'failed pending')
+        for _ in range(2):
+            with pytest.raises(FileExistsError):
+>               helper(target, b'replacement forbidden', preserve_failed=True)
+E               TypeError: _publish_chunk() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:190: TypeError
+___ test_writer_refuses_preexisting_chunk_pending_and_does_not_retry[False] ____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_writer_refuses_preexistin0')
+background = False
+
+    @pytest.mark.parametrize('background', [False, True])
+    def test_writer_refuses_preexisting_chunk_pending_and_does_not_retry(tmp_path, background):
+>       writer = RunWriter(tmp_path / 'run', {}, preserve_failed=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:197: TypeError
+____ test_writer_refuses_preexisting_chunk_pending_and_does_not_retry[True] ____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_writer_refuses_preexistin1')
+background = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    def test_writer_refuses_preexisting_chunk_pending_and_does_not_retry(tmp_path, background):
+>       writer = RunWriter(tmp_path / 'run', {}, preserve_failed=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:197: TypeError
+__________________ test_initial_manifest_failure_is_retained ___________________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_initial_manifest_failure_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc60b6bd0>
+
+    def test_initial_manifest_failure_is_retained(tmp_path, monkeypatch):
+        run = tmp_path / 'run'
+        pending = run / 'manifest.tmp'
+        fail_io(monkeypatch, pending, 'write')
+        with pytest.raises(DiskFailure):
+>           RunWriter(run, {}, preserve_failed=True)
+E           TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:217: TypeError
+____________ test_preservation_does_not_bypass_writer_quota[False] _____________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_preservation_does_not_byp0')
+background = False
+
+    @pytest.mark.parametrize('background', [False, True])
+    def test_preservation_does_not_bypass_writer_quota(tmp_path, background):
+>       writer = RunWriter(tmp_path / 'run', {}, max_bytes=500, preserve_failed=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:227: TypeError
+_____________ test_preservation_does_not_bypass_writer_quota[True] _____________
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_preservation_does_not_byp1')
+background = True
+
+    @pytest.mark.parametrize('background', [False, True])
+    def test_preservation_does_not_bypass_writer_quota(tmp_path, background):
+>       writer = RunWriter(tmp_path / 'run', {}, max_bytes=500, preserve_failed=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: RunWriter.__init__() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:227: TypeError
+____ test_retained_snapshot_bytes_remain_chargeable_to_real_storage_budget _____
+
+tmp_path = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/test_retained_snapshot_bytes_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0e99fd0>
+
+    def test_retained_snapshot_bytes_remain_chargeable_to_real_storage_budget(tmp_path, monkeypatch):
+        budget = StorageBudget([tmp_path], StorageLimits(max_bytes=4096, min_free_bytes=0))
+        destination = tmp_path / 'initial.snp'
+        fail_io(monkeypatch, destination, 'write')
+        with pytest.raises(DiskFailure):
+>           snapshots.save_snapshot({'authored': 1}, destination, storage_budget=budget, preserve_failed=True)
+E           TypeError: save_snapshot() got an unexpected keyword argument 'preserve_failed'
+
+tests/test_source_failure_preservation_vnext.py:243: TypeError
+_____ test_canonical_engine_handoff_preserves_real_writer_manifest_failure _____
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/fa0f9afa03c546dea6e399000bb17335...source_bootstrap_vnext.Environment object at 0x7f4cc6053b50>], open=<function route.<locals>.opened at 0x7f4cc0f6c180>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4cc0e10e90>
+
+    def test_canonical_engine_handoff_preserves_real_writer_manifest_failure(route, monkeypatch):
+        engine = route.open()
+        assert type(engine.writer) is RunWriter
+        pending = route.output / 'manifest.tmp'
+        fail_io(monkeypatch, pending, 'write')
+        with pytest.raises(DiskFailure):
+            engine.close()
+>       assert len(pending.read_bytes()) == 11
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_source_failure_preservation_vnext.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1050: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+tests/test_source_failure_preservation_vnext.py:49: in opened
+    stream = original_open(path, mode, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/fa0f9afa03c546dea6e399000bb17335/run/manifest.tmp')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/var/tmp/palimpsest-source-preservation-red-LD8wwox3/pytest/fa0f9afa03c546dea6e399000bb17335/run/manifest.tmp'
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[snapshot-None]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[snapshot-0]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[snapshot-1]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[snapshot-]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[snapshot-bad4]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[writer-None]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[writer-0]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[writer-1]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[writer-]
+FAILED tests/test_source_failure_preservation_vnext.py::test_exact_bool_refuses_before_serialization_and_output[writer-bad4]
+FAILED tests/test_source_failure_preservation_vnext.py::test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes[write-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes[flush-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_snapshot_disk_failure_retains_only_opted_in_exclusive_bytes[fsync-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_snapshot_never_removes_preexisting_target[True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_successful_snapshot_bytes_are_unchanged
+FAILED tests/test_source_failure_preservation_vnext.py::test_successful_writer_bytes_and_drain_are_unchanged[False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_successful_writer_bytes_and_drain_are_unchanged[True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-write-manifest-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-write-manifest-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-write-chunk-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-write-chunk-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-flush-manifest-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-flush-manifest-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-flush-chunk-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-flush-chunk-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-manifest-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-manifest-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-chunk-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-fsync-chunk-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-replace-manifest-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-replace-manifest-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-replace-chunk-False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_real_writer_retains_failed_pending_without_qualified_success[True-replace-chunk-True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_preexisting_pending_is_never_reused_or_unlinked_in_preservation_mode[_atomic_manifest]
+FAILED tests/test_source_failure_preservation_vnext.py::test_preexisting_pending_is_never_reused_or_unlinked_in_preservation_mode[_publish_chunk]
+FAILED tests/test_source_failure_preservation_vnext.py::test_writer_refuses_preexisting_chunk_pending_and_does_not_retry[False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_writer_refuses_preexisting_chunk_pending_and_does_not_retry[True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_initial_manifest_failure_is_retained
+FAILED tests/test_source_failure_preservation_vnext.py::test_preservation_does_not_bypass_writer_quota[False]
+FAILED tests/test_source_failure_preservation_vnext.py::test_preservation_does_not_bypass_writer_quota[True]
+FAILED tests/test_source_failure_preservation_vnext.py::test_retained_snapshot_bytes_remain_chargeable_to_real_storage_budget
+FAILED tests/test_source_failure_preservation_vnext.py::test_canonical_engine_handoff_preserves_real_writer_manifest_failure
+42 failed, 21 passed in 0.70s

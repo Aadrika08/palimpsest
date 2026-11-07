@@ -1,0 +1,582 @@
+{
+  "version": 1,
+  "status": "passed",
+  "host_net": "net:[4026531833]",
+  "host_user": "user:[4026531837]",
+  "child_net": "net:[4026533020]",
+  "child_user": "user:[4026533019]",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488",
+      "started_unix": 1794007610.8849773,
+      "returncode": 0,
+      "wall_seconds": 0.10935451700061094
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "94c548865bdae90fb38d32a9a8947ab1c8b18d75"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007611.0010257,
+      "returncode": 0,
+      "wall_seconds": 5.159681709001234
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "submodule.upstream/fly-gym.url",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007616.1636617,
+      "returncode": 0,
+      "wall_seconds": 0.10912808700049936
+    },
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/upstream/fly-gym",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/upstream/fly-gym"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007616.273714,
+      "returncode": 0,
+      "wall_seconds": 0.1098834660006105
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "8d964599119b420de67ee259434d273651a1a76d"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/upstream/fly-gym",
+      "started_unix": 1794007616.384699,
+      "returncode": 0,
+      "wall_seconds": 0.10937944600118499
+    },
+    {
+      "argv": [
+        "git",
+        "submodule",
+        "status"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007616.495062,
+      "returncode": 0,
+      "wall_seconds": 0.10983321099956811
+    },
+    {
+      "argv": [
+        "uv",
+        "--version"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007616.615211,
+      "returncode": 0,
+      "wall_seconds": 0.1103866459998244
+    },
+    {
+      "argv": [
+        "uv",
+        "sync",
+        "--locked",
+        "--offline",
+        "--extra",
+        "simulation",
+        "--extra",
+        "lab"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007616.7265468,
+      "returncode": 0,
+      "wall_seconds": 0.6677744150001672
+    },
+    {
+      "argv": [
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+        "--version"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007617.3954482,
+      "returncode": 0,
+      "wall_seconds": 0.10921594999854278
+    },
+    {
+      "argv": [
+        "uv",
+        "pip",
+        "freeze",
+        "--offline",
+        "--python",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007617.505846,
+      "returncode": 0,
+      "wall_seconds": 0.11061216100097226
+    },
+    {
+      "argv": [
+        "mise",
+        "exec",
+        "node@24.21.0",
+        "--",
+        "node",
+        "--version"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007617.6176925,
+      "returncode": 0,
+      "wall_seconds": 0.10943033800140256
+    },
+    {
+      "argv": [
+        "mise",
+        "exec",
+        "node@24.21.0",
+        "--",
+        "npm",
+        "ci",
+        "--offline",
+        "--ignore-scripts"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/ui",
+      "started_unix": 1794007617.7283294,
+      "returncode": 0,
+      "wall_seconds": 0.9870987849990343
+    },
+    {
+      "argv": [
+        "mise",
+        "exec",
+        "node@24.21.0",
+        "--",
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/ui",
+      "started_unix": 1794007618.716889,
+      "returncode": 0,
+      "wall_seconds": 0.5478601360009634
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "--offline",
+        "--no-sync",
+        "palimpsest",
+        "--help"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007619.265936,
+      "returncode": 0,
+      "wall_seconds": 0.10976506699989841
+    },
+    {
+      "argv": [
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+        "-c",
+        "import pathlib,palimpsest; print(pathlib.Path(palimpsest.__file__).resolve()); assert pathlib.Path(palimpsest.__file__).resolve().is_relative_to(pathlib.Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/src'))"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007619.3770483,
+      "returncode": 0,
+      "wall_seconds": 0.10843917900092492
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "--submodule=short"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007619.486636,
+      "returncode": 0,
+      "wall_seconds": 0.11089284699846758
+    },
+    {
+      "argv": [
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/scripts/verify_lab.py",
+        "--repo",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+        "--assets",
+        "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+        "--controller",
+        "flynn",
+        "--output",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/full-flynn"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007619.6048062,
+      "returncode": 0,
+      "wall_seconds": 96.06163976899916
+    },
+    {
+      "argv": [
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/scripts/verify_endurance.py",
+        "--repo",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+        "--assets",
+        "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+        "--output",
+        "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/api-smoke",
+        "--duration",
+        "55.0",
+        "--cycle-seconds",
+        "15",
+        "--pause-seconds",
+        "0",
+        "--sample-seconds",
+        "2",
+        "--controllers",
+        "manual",
+        "teacher"
+      ],
+      "cwd": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout",
+      "started_unix": 1794007715.6682715,
+      "returncode": 0,
+      "wall_seconds": 56.22974745799911
+    }
+  ],
+  "uid_map": [
+    "0",
+    "1000",
+    "1"
+  ],
+  "network_owned_by_child_user": true,
+  "interfaces": [
+    {
+      "ifindex": 1,
+      "ifname": "lo",
+      "flags": [
+        "LOOPBACK",
+        "UP",
+        "LOWER_UP"
+      ],
+      "mtu": 65536,
+      "qdisc": "noqueue",
+      "operstate": "UNKNOWN",
+      "group": "default",
+      "txqlen": 1000,
+      "link_type": "loopback",
+      "address": "00:00:00:00:00:00",
+      "broadcast": "00:00:00:00:00:00",
+      "addr_info": [
+        {
+          "family": "inet",
+          "local": "127.0.0.1",
+          "prefixlen": 8,
+          "scope": "host",
+          "label": "lo",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        },
+        {
+          "family": "inet6",
+          "local": "::1",
+          "prefixlen": 128,
+          "scope": "host",
+          "protocol": "kernel_lo",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        }
+      ]
+    }
+  ],
+  "routes_v4": [
+    {
+      "type": "local",
+      "dst": "127.0.0.0/8",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "scope": "host",
+      "prefsrc": "127.0.0.1",
+      "flags": []
+    },
+    {
+      "type": "local",
+      "dst": "127.0.0.1",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "scope": "host",
+      "prefsrc": "127.0.0.1",
+      "flags": []
+    },
+    {
+      "type": "broadcast",
+      "dst": "127.255.255.255",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "scope": "link",
+      "prefsrc": "127.0.0.1",
+      "flags": []
+    },
+    {
+      "type": "local",
+      "dst": "::1",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "metric": 0,
+      "flags": [],
+      "pref": "medium"
+    }
+  ],
+  "routes_v6": [
+    {
+      "type": "local",
+      "dst": "::1",
+      "dev": "lo",
+      "table": "local",
+      "protocol": "kernel",
+      "metric": 0,
+      "flags": [],
+      "pref": "medium"
+    }
+  ],
+  "external_connects": [
+    {
+      "address": "1.1.1.1",
+      "errno": 101,
+      "message": "[Errno 101] Network is unreachable"
+    },
+    {
+      "address": "2606:4700:4700::1111",
+      "errno": 101,
+      "message": "[Errno 101] Network is unreachable"
+    }
+  ],
+  "observed_processes": [
+    {
+      "pid": 69551,
+      "command": "git clone --shared --no-checkout /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69554,
+      "command": "git checkout --detach 94c548865bdae90fb38d32a9a8947ab1c8b18d75 ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69623,
+      "command": "git checkout --detach 8d964599119b420de67ee259434d273651a1a76d ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69651,
+      "command": "git submodule status ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69685,
+      "command": "uv sync --locked --offline --extra simulation --extra lab ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69715,
+      "command": "/home/utkarsh/.cache/uv/builds-v0/.tmpuW03LR/bin/python -c import sys\n\nif sys.path[0] == \"\":\n    sys.path.pop(0)\n\nsys.path = [] + sys.path\n\nimport hatchling.build as backend\n\n\nwheel_filename = backend.build_editable(\"/home/utkarsh/.cache/uv/builds-v0/.tmplH9SV3\", {}, None)\nwith open(\"/home/utkarsh/.cache/uv/builds-v0/.tmpuW03LR/build_editable.txt\", \"w\") as fp:\n    fp.write(wheel_filename)\n ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69717,
+      "command": "uv pip freeze --offline --python /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69721,
+      "command": "mise exec node@24.21.0 -- node --version ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69738,
+      "command": "npm ci                                                                                                                                                                                               ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69773,
+      "command": "npm run build                                                                                                                                                                    ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69804,
+      "command": "node /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/ui/node_modules/.bin/vite build ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69805,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/ui/node_modules/@typescript/typescript-linux-x64/lib/tsc --noEmit ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69875,
+      "command": "uv run --offline --no-sync palimpsest --help ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69880,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c import pathlib,palimpsest; print(pathlib.Path(palimpsest.__file__).resolve()); assert pathlib.Path(palimpsest.__file__).resolve().is_relative_to(pathlib.Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/src')) ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69883,
+      "command": "git diff --exit-code --submodule=short ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69906,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/scripts/verify_lab.py --repo /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout --assets /home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn --controller flynn --output /home/utkarsh/Work/shraddha/palimpsest-aut",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69908,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(9) ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69909,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=10, pipe_handle=18) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69916,
+      "command": "nvidia-smi --query-gpu=name,driver_version,memory.total,memory.free --format=csv,noheader,nounits ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 69965,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=10, pipe_handle=20) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70368,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=10, pipe_handle=22) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70426,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=10, pipe_handle=24) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70435,
+      "command": "nvidia-smi --query-gpu=name,driver_version,memory.total,memory.free --format=csv,noheader,nounits ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70479,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=10, pipe_handle=26) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70488,
+      "command": "nvidia-smi --query-gpu=name,driver_version,memory.total,memory.free --format=csv,noheader,nounits ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70524,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/scripts/verify_endurance.py --repo /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout --assets /home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn --output /home/utkarsh/Work/shraddha/palimpsest-authored-test-ev",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70526,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -m palimpsest --repo /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout --assets /home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn lab --port 39417 --runs /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/api-smoke/runs --exports /home/utkarsh/Work/shraddha/palimpsest",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70534,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(15) ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70535,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=24) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70577,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=26) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70599,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=28) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70616,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=30) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70639,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=32) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70646,
+      "command": "nvidia-smi --query-gpu=name,driver_version,memory.total,memory.free --format=csv,noheader,nounits ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70660,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=34) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70689,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=36) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70715,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=38) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70736,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=40) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70774,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=38) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70794,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=27) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    },
+    {
+      "pid": 70813,
+      "command": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488/checkout/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=16, pipe_handle=27) --multiprocessing-fork ",
+      "net": "net:[4026533020]"
+    }
+  ],
+  "all_observed_descendants_isolated": true,
+  "smoke_returncode": 0
+}

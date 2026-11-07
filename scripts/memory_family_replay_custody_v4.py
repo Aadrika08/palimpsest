@@ -51,7 +51,9 @@ class HeldReplayFiles:
     final admission decision. A returned path does not itself bind a later reopen.
     """
 
-    def __init__(self, root, entries, deadline, exact_subtrees=()):
+    def __init__(self, root, entries, deadline, exact_subtrees=(), *, structured_teardown=False):
+        if type(structured_teardown) is not bool: raise ValueError("structured_teardown must be exact bool")
+        self._structured_teardown = structured_teardown
         raw_root = os.fspath(root)
         if (type(raw_root) is not str or not raw_root.startswith('/')
                 or any(part in ('.', '..') for part in raw_root.split('/'))):
@@ -110,21 +112,32 @@ class HeldReplayFiles:
         if self._state != 'active':
             raise RuntimeError('Replay file custody is closed, failed or not entered')
 
-    def _close(self):
-        first = None
+    def _close(self, primary=None):
+        failures = []
         while self._fds:
             fd = self._fds.pop()
             try:
                 os.close(fd)
-            except OSError as error:
-                if first is None:
-                    first = error
-        if first is not None:
-            raise first
+            except BaseException as error:
+                failures.append(error)
+        if self._structured_teardown:
+            if failures:
+                from scripts.memory_family_source_records_vnext import errors
+                raise errors("Source replay custody teardown", [primary, *failures])
+            return
+        if not failures:
+            return
+        if primary is None:
+            primary = failures.pop(0)
+            for error in failures:
+                primary.add_note(f'Replay FD close failure: {type(error).__name__}: {error}')
+            raise primary
+        for error in failures:
+            primary.add_note(f'Replay FD close failure: {type(error).__name__}: {error}')
 
-    def _failed(self):
+    def _failed(self, primary):
         self._state = 'failed'
-        self._close()
+        self._close(primary)
 
     def _directory(self, key):
         if key in self._dirs:
@@ -147,11 +160,11 @@ class HeldReplayFiles:
         return fd
 
     def _check_dirs(self):
-        for fd, parent, name, expected in self._dirs.values():
+        for key, (fd, parent, name, expected) in self._dirs.items():
             self._clock()
             if (_identity(os.fstat(fd)) != expected
                     or _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
-                raise RuntimeError('Replay root or ancestor changed while held')
+                raise RuntimeError('Replay root or ancestor changed while held: /' + '/'.join(key))
 
     def _hash(self, fd, maximum, *, copy_bytes=False):
         os.lseek(fd, 0, os.SEEK_SET)
@@ -260,8 +273,8 @@ class HeldReplayFiles:
             self._state = 'active'
             self.recheck()
             return self
-        except BaseException:
-            self._failed()
+        except BaseException as error:
+            self._failed(error)
             raise
 
     def recheck(self):
@@ -274,8 +287,8 @@ class HeldReplayFiles:
                 self._check_file(relative)
             self._check_dirs()
             self._clock()
-        except BaseException:
-            self._failed()
+        except BaseException as error:
+            self._failed(error)
             raise
 
     def _guard(self, relative):
@@ -290,8 +303,8 @@ class HeldReplayFiles:
             self._check_file(relative)
             self._check_dirs()
             self._clock()
-        except BaseException:
-            self._failed()
+        except BaseException as error:
+            self._failed(error)
             raise
         return relative
 
@@ -307,8 +320,8 @@ class HeldReplayFiles:
             self._check_dirs()
             self._clock()
             return payload
-        except BaseException:
-            self._failed()
+        except BaseException as error:
+            self._failed(error)
             raise
 
     def path(self, relative):
@@ -323,10 +336,35 @@ class HeldReplayFiles:
             if kind is None:
                 raise RuntimeError('Replay custody failed before context exit')
             return False
+        if self._structured_teardown:
+            from scripts.memory_family_source_records_vnext import errors
+            failures = [error] if error is not None else []
+            try:
+                self.recheck()
+            except BaseException as failure:
+                failures.append(failure)
+            self._state = 'closed' if not failures else 'failed'
+            try:
+                self._close()
+            except BaseException as failure:
+                failures.append(failure)
+            if failures and (len(failures) > 1 or error is None):
+                raise errors('Source replay custody exit', failures)
+            return False
+        primary = error
         try:
             self.recheck()
+        except BaseException as failure:
+            if primary is None:
+                primary = failure
+            else:
+                primary.add_note(f'Replay custody teardown recheck failure: {type(failure).__name__}: {failure}')
+                for note in getattr(failure, '__notes__', ()):
+                    primary.add_note(note)
         finally:
             if self._state == 'active':
                 self._state = 'closed'
-            self._close()
+            self._close(primary)
+        if error is None and primary is not None:
+            raise primary
         return False

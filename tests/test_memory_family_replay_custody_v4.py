@@ -193,14 +193,19 @@ def test_contract_equality_without_materializing_gib_graphs(tmp_path):
         assert held.read(entries[0]['path'], MiB) == payload
 
 
-def test_exit_drift_rechecked_even_when_body_raises(tmp_path):
+def test_exit_drift_rechecked_without_replacing_body_error(tmp_path):
     root, leaf, entries = sample(tmp_path)
     held = open_files(root, entries)
     before = len(os.listdir('/proc/self/fd'))
-    with pytest.raises((RuntimeError, ValueError), match='changed|differs'):
+    primary = LookupError('caller body failed')
+    with pytest.raises(LookupError) as rejection:
         with held:
             leaf.write_bytes(b'mutated')
-            raise LookupError('caller body failed')
+            raise primary
+    assert rejection.value is primary
+    assert any(('RuntimeError' in note or 'ValueError' in note)
+               and ('changed' in note or 'differs' in note)
+               for note in primary.__notes__)
     assert len(os.listdir('/proc/self/fd')) == before
     with pytest.raises(RuntimeError): held.path(entries[0]['path'])
 

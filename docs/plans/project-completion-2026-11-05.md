@@ -1,5 +1,31 @@
 # Palimpsest proof-first completion implementation
 
+Latest local software milestone, 6 November: the integrated conditional source
+owner/custody/raw-audit/16+3 codec/fresh-policy replay path passed independent
+implementation review after four grouped corrections. A generated model with
+4813 inputs and state width 12 exercises the full authored path across 20 rows,
+including per-command/per-row
+identity checks, before-write storage admission, restoration and custody drain.
+See [reviewed implementation and retained failures](../reports/source-vertical-implementation-review-2026-11-06/README.md).
+This is conditional software and authored unit evidence, not actual source
+qualification, experiment cost, accepted Q/L/F/R, execution backend or study
+completion. CPU-policy adoption, authorized exports, actual input/load/resource/
+cost admission and exact execution GO remain absent. All empirical, human,
+rights, reproducibility and final delivery gates remain open; raw deletion stays
+disabled. The full objective and fixed CPU lane caps are unchanged.
+
+Latest local prerequisite, 6 November: the canonical prepared source path now
+selects opt-in failure-byte retention in the real recorder, with the same option
+available in the original SNP saver. Final dedicated tests passed63 checks;
+covering bootstrap/recorder tests passed119 checks. Independent review and a
+test-only scoped correction both completed; no production findings remain.
+See [preservation evidence](../reports/source-failure-preservation-review-2026-11-06/README.md).
+This is ordinary authored software evidence, not experiment cost or source
+qualification. The complete provider-neutral producer/auditor/codec/qualifier
+contract is under amendment after independent review; actual backend, accounting,
+namespace exports, input/resource admission, exact GO and all study gates remain
+open. No research attempt or raw deletion follows from this prerequisite.
+
 Approved in conversation on 5 November 2026. Baselines: main 12ba63c947213b794a0a8cfcb7b965fe6b18dacf; paper branch 6a7273249e197b7017c3879e81c36890097ab236.
 
 ## Goal and constraints
@@ -29,7 +55,88 @@ Proof dependencies: the initial automatic upstream cache fetch breached the orig
 ## Verification policy
 Use actual red/green focused tests for new source. Preserve all raw historical evidence and source/profile pins. Source tests never grant actual-study qualification. Every new study needs a prospective frozen protocol, source/runtime/input identities, complete accounting, independent review and required operator GO. Stop at a failed gate or resource cap and retain incomplete/failed outcomes; never mark project complete around a passing subset.
 
+## Current conditional memory implementation milestone, 6 November 2026
+
+Transition witnesses, private synchronous persistence, conditional terminal replay
+and a distinct PURE compact numeric codec have independent scoped approval.
+The codec retains the supplied sixteen base arrays, three numeric companions,
+selected camera pixels and recording bytes. A plain reader checks stored format
+and commitments; it cannot authenticate all original row values or timing data.
+Conversion/proof compares against supplied raw. Actual raw origin, source/model
+qualification and publication authority remain separate and unverified.
+
+The codec's own suite passed68 tests. Its four-file verification recorded236
+passes and126 historical skips:124 source-dependent legacy assertions and2
+existing skips. These are not qualification passes. The reviewed pin-policy
+repair preserved frozen JSON and production refusal, kept the original mixed
+closure assertion historically, and executed an active metadata/trust counterpart.
+Fresh policy checks passed31 mechanics/history tests and54 active checks with4
+historical skips. These scopes overlap and must not be added together. See
+[conditional codec and verification evidence](../reports/memory-terminal-numeric-pure-review-2026-11-06/README.md).
+
+Main delivery through PR187 is merge5547efc; its exact automatic hosted run
+42150187681 passed7104 tests with318 skips,48 preflight checks and frontend.
+This does not cover the later local terminal branch. See
+[exact merge evidence](../reports/hosted-space-floor-repair-2026-11-06/postmerge-readback.md).
+
+No actual preservation check or memory study ran for this milestone. The
+authored900-row example exceeds the unchanged5MiB event limit; a fitting900-row
+positive conversion and actual corpus fit remain unestablished. Raw deletion
+stays disabled, including after any future preservation pass until separately
+authorized. Next actual adapters need a fresh canonical-ID source epoch,
+genuine replay/qualification backend, complete lifetime/accounting and a reviewed
+input/output namespace. The source-only
+[custody preflight](../reports/memory-terminal-custody-preflight-2026-11-06/README.md)
+is unadopted and does not supply those capabilities.
+
+The previously charged audit subtotal remains1222.455497 CPU seconds; it is not
+evidence of complete whole-operation accounting under the later source contract.
+Unknown controller/final-reader tails remain unknown, without fabricated debits
+or an asserted whole-operation upper bound. The prospective provider-boundary
+choice, sealed source03 probe approval and namespace inputs remain pending.
+All actual study, held-out, human/operator, rights, reproducibility and final
+paper/release gates above remain open. The project is not complete.
+
 The user reports approximately3,000 included GitHub Actions minutes. Complete local checks first, then use one final hosted validation wave and cancel a duplicate event for the same exact head. Billing/account quota remains independently unverified. CI authorization grants neither paid compute nor research/protected-read/deletion permission.
+
+## Authored source custody milestone, 6 November 2026
+
+Task6a.1 now has a real fixed authored holder and independently reviewed
+teardown repair:208 local passes,2 historical pin skips,37.95s. All112 new
+holder cases execute; the skips lose old identity coverage. This establishes
+bounded authored file/value custody, not actual source authentication or model
+qualification. See [evidence and limits](../reports/memory-source-authored-holder-review-2026-11-06/README.md).
+
+The local unpublished branch still lacks actual source/bootstrap/replay
+qualification, complete lifetime/accounting, integrated condition admission,
+actual compact-evidence adequacy and full-study execution. Public actual source
+factories/Engine opt-in remain absent. Raw deletion stays disabled. No new
+research/probe/CI run or research CPU debit follows from these ordinary tests;
+all empirical/human/rights/reproducibility/final paper gates remain open.
+
+## Conditional pair mapping milestone, 6 November 2026
+
+Task5a closes the registered-resource mapping gap beyond terminal replay:
+independent E-only refits, exact nine-way selector/U/history formulas and fresh
+whole-proof equality passed159 local checks with no skips, followed by independent
+SPEC PASS/QUALITY APPROVED. See [retained evidence and limits](../reports/memory-terminal-pair-pure-review-2026-11-06/README.md).
+
+This conditional proof does not authenticate supplied history origin or actual
+source/recording/model/native state. Cross-condition own/sham and all-nine
+no-event equality remain complete-family gates. Actual integration, replay,
+sealing/publication, accounting, compact-evidence adequacy and the full study
+remain unverified; no actual research or CI execution follows from these tests.
+Raw deletion remains disabled and the full project remains incomplete.
+
+## Canonical source creation mechanism, 6 November 2026
+
+The shared Engine now has an explicit canonical-UUID/read-only-prepared bootstrap
+configuration, with101 controlled source-unit passes and independent approval.
+Default legacy creation remains unchanged. See [evidence and scope](../reports/canonical-source-bootstrap-review-2026-11-06/README.md).
+This completes creation mechanics only: actual source owner/backend/replay,
+accounting/namespace/GO, strict4 integration, measured experiment cost and all
+study/human/rights/reproduction/paper gates remain open. No research launched;
+raw deletion stays disabled and the full project remains incomplete.
 
 ## Verified proof milestone, 5 November 2026
 

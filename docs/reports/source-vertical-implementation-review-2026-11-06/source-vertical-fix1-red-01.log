@@ -1,0 +1,620 @@
+FFFFFFFFFFFFFFFFF                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_fix1_actual_coverage_metadata_refuses_before_any_payload[third] _____
+
+defect = 'third'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9076073550>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_____ test_fix1_actual_coverage_metadata_refuses_before_any_payload[kind] ______
+
+defect = 'kind'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90760a1a10>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_____ test_fix1_actual_coverage_metadata_refuses_before_any_payload[extra] _____
+
+defect = 'extra'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f907671e690>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_____ test_fix1_actual_coverage_metadata_refuses_before_any_payload[bool] ______
+
+defect = 'bool'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90764d1390>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_____ test_fix1_actual_coverage_metadata_refuses_before_any_payload[large] _____
+
+defect = 'large'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90761733d0>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_ test_fix1_actual_coverage_metadata_refuses_before_any_payload[expected-extra] _
+
+defect = 'expected-extra'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90764d0810>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_ test_fix1_actual_coverage_metadata_refuses_before_any_payload[expected-bool] _
+
+defect = 'expected-bool'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9076138810>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+___ test_fix1_actual_coverage_metadata_refuses_before_any_payload[bad-hash] ____
+
+defect = 'bad-hash'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90760a39d0>
+
+    @pytest.mark.parametrize('defect',['third','kind','extra','bool','large','expected-extra','expected-bool','bad-hash'])
+    def test_fix1_actual_coverage_metadata_refuses_before_any_payload(defect,monkeypatch):
+        from scripts import memory_source_parent_entry_vnext as parent
+        value=actual_coverage_metadata()
+        if defect=='third': value['sources'].append(copy.deepcopy(value['sources'][0]))
+        elif defect=='kind': value['sources'][0]['kind']='training'
+        elif defect=='extra': value['sources'][0]['extra']=True
+        elif defect=='bool': value['max_values']=True
+        elif defect=='large': value['max_metadata_bytes']=33554433
+        elif defect=='expected-extra': value['sources'][1]['expected']['extra']=0
+        elif defect=='expected-bool': value['sources'][0]['expected']['entries']=True
+        else: value['sources'][0]['expected']['export_sha256']='BAD'
+        def forbidden(*args,**kwargs): pytest.fail('Metadata validator opened a payload')
+        monkeypatch.setattr(parent.RuntimeHandle,'__enter__',forbidden)
+        monkeypatch.setattr(parent.os,'open',forbidden)
+>       with pytest.raises(ValueError): records._validate_actual_namespace_coverage(value)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_family_source_records_vnext' has no attribute '_validate_actual_namespace_coverage'
+
+tests/test_memory_family_source_records_vnext.py:71: AttributeError
+_______ test_fix1_raw_leaf_admission_before_writer_publication[manifest] _______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_raw_leaf_admission_b0')
+operation = 'manifest'
+
+    @pytest.mark.parametrize('operation',['manifest','event','chunk-event'])
+    def test_fix1_raw_leaf_admission_before_writer_publication(tmp_path,operation):
+        from palimpsest.records import RunWriter
+        from scripts import memory_family_source_records_vnext as wire
+        import numpy as np
+        class FixedTargetBudget:
+            def check(self,size,*,path):
+                if path.name in ('manifest.json','events.jsonl') or path.suffix=='.npz':
+                    owner._validate_raw_write_target(tmp_path/'recording',path,size)
+        if operation=='manifest':
+>           with pytest.raises(ValueError): RunWriter(tmp_path/'recording',{'oversized':'x'*65536},preserve_failed=True,storage_budget=FixedTargetBudget())
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_source_runtime_vnext.py:35: Failed
+________ test_fix1_raw_leaf_admission_before_writer_publication[event] _________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_raw_leaf_admission_b1')
+operation = 'event'
+
+    @pytest.mark.parametrize('operation',['manifest','event','chunk-event'])
+    def test_fix1_raw_leaf_admission_before_writer_publication(tmp_path,operation):
+        from palimpsest.records import RunWriter
+        from scripts import memory_family_source_records_vnext as wire
+        import numpy as np
+        class FixedTargetBudget:
+            def check(self,size,*,path):
+                if path.name in ('manifest.json','events.jsonl') or path.suffix=='.npz':
+                    owner._validate_raw_write_target(tmp_path/'recording',path,size)
+        if operation=='manifest':
+            with pytest.raises(ValueError): RunWriter(tmp_path/'recording',{'oversized':'x'*65536},preserve_failed=True,storage_budget=FixedTargetBudget())
+            assert not (tmp_path/'recording/manifest.json').exists() and not (tmp_path/'recording/manifest.tmp').exists()
+            return
+        writer=RunWriter(tmp_path/'recording',{},preserve_failed=True,storage_budget=FixedTargetBudget())
+        if operation=='chunk-event': writer.tick(0,0,action=np.zeros(2,dtype='<f4'))
+        with writer._events_path.open('wb') if hasattr(writer,'_events_path') else (writer.path/'events.jsonl').open('r+b') as stream:
+            stream.truncate(7*wire.MiB-1)
+        before=(writer.path/'events.jsonl').stat().st_size
+        try:
+>           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_source_runtime_vnext.py:44: Failed
+_____ test_fix1_raw_leaf_admission_before_writer_publication[chunk-event] ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_raw_leaf_admission_b2')
+operation = 'chunk-event'
+
+    @pytest.mark.parametrize('operation',['manifest','event','chunk-event'])
+    def test_fix1_raw_leaf_admission_before_writer_publication(tmp_path,operation):
+        from palimpsest.records import RunWriter
+        from scripts import memory_family_source_records_vnext as wire
+        import numpy as np
+        class FixedTargetBudget:
+            def check(self,size,*,path):
+                if path.name in ('manifest.json','events.jsonl') or path.suffix=='.npz':
+                    owner._validate_raw_write_target(tmp_path/'recording',path,size)
+        if operation=='manifest':
+            with pytest.raises(ValueError): RunWriter(tmp_path/'recording',{'oversized':'x'*65536},preserve_failed=True,storage_budget=FixedTargetBudget())
+            assert not (tmp_path/'recording/manifest.json').exists() and not (tmp_path/'recording/manifest.tmp').exists()
+            return
+        writer=RunWriter(tmp_path/'recording',{},preserve_failed=True,storage_budget=FixedTargetBudget())
+        if operation=='chunk-event': writer.tick(0,0,action=np.zeros(2,dtype='<f4'))
+        with writer._events_path.open('wb') if hasattr(writer,'_events_path') else (writer.path/'events.jsonl').open('r+b') as stream:
+            stream.truncate(7*wire.MiB-1)
+        before=(writer.path/'events.jsonl').stat().st_size
+        try:
+>           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_source_runtime_vnext.py:44: Failed
+________ test_fix1_publication_preserves_body_and_close_objects[write] _________
+
+fd = 12, payload = <memory at 0x7f9073fa3dc0>
+
+    def write(fd,payload):
+>       if stage=='write': real_write(fd,payload[:1]); raise body
+                                                       ^^^^^^^^^^
+E       KeyboardInterrupt: publication body
+
+tests/test_memory_source_control_rendezvous_vnext.py:49: KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_publication_preserve0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9073b17890>
+stage = 'write'
+
+    @pytest.mark.parametrize('stage',['write','pending-fsync','parent-fsync'])
+    def test_fix1_publication_preserves_body_and_close_objects(tmp_path,monkeypatch,stage):
+        import os,uuid
+        from scripts import memory_family_source_records_vnext as wire
+        root=tmp_path/'attempt'; root.mkdir(); run=str(uuid.uuid4())
+        job=dict(workspace_root=str(root),case=dict(case_id='authored'),source_run_id=run,schema=wire.record_schema('job',True),limits=wire.LIMITS.copy())
+        for directory in wire.reserved_directories(job): (root/directory).mkdir(exist_ok=True)
+        relative=f'output/controls/{run}/producer/stdout'; roster={row['path']:row for row in wire.output_roster('authored',run)}
+        body=KeyboardInterrupt('publication body'); closing=OSError('publication close'); real_write=os.write; real_fsync=os.fsync; real_close=os.close
+        syncs=[]; closes=[]
+        def write(fd,payload):
+            if stage=='write': real_write(fd,payload[:1]); raise body
+            return real_write(fd,payload)
+        def fsync(fd):
+            syncs.append(fd)
+            if stage=='pending-fsync' or stage=='parent-fsync' and len(syncs)==2: raise body
+            real_fsync(fd)
+        def close(fd):
+            closes.append(fd); real_close(fd)
+            if stage!='parent-fsync' or len(closes)==2: raise closing
+        monkeypatch.setattr(os,'write',write); monkeypatch.setattr(os,'fsync',fsync); monkeypatch.setattr(os,'close',close)
+>       with pytest.raises(BaseExceptionGroup) as caught: parent._publish_bytes(job,relative,b'authored',roster)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_source_control_rendezvous_vnext.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_parent_entry_vnext.py:411: in _publish_bytes
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        closes.append(fd); real_close(fd)
+>       if stage!='parent-fsync' or len(closes)==2: raise closing
+                                                    ^^^^^^^^^^^^^
+E       OSError: publication close
+
+tests/test_memory_source_control_rendezvous_vnext.py:57: OSError
+____ test_fix1_publication_preserves_body_and_close_objects[pending-fsync] _____
+
+fd = 12
+
+    def fsync(fd):
+        syncs.append(fd)
+>       if stage=='pending-fsync' or stage=='parent-fsync' and len(syncs)==2: raise body
+                                                                              ^^^^^^^^^^
+E       KeyboardInterrupt: publication body
+
+tests/test_memory_source_control_rendezvous_vnext.py:53: KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_publication_preserve1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90762948d0>
+stage = 'pending-fsync'
+
+    @pytest.mark.parametrize('stage',['write','pending-fsync','parent-fsync'])
+    def test_fix1_publication_preserves_body_and_close_objects(tmp_path,monkeypatch,stage):
+        import os,uuid
+        from scripts import memory_family_source_records_vnext as wire
+        root=tmp_path/'attempt'; root.mkdir(); run=str(uuid.uuid4())
+        job=dict(workspace_root=str(root),case=dict(case_id='authored'),source_run_id=run,schema=wire.record_schema('job',True),limits=wire.LIMITS.copy())
+        for directory in wire.reserved_directories(job): (root/directory).mkdir(exist_ok=True)
+        relative=f'output/controls/{run}/producer/stdout'; roster={row['path']:row for row in wire.output_roster('authored',run)}
+        body=KeyboardInterrupt('publication body'); closing=OSError('publication close'); real_write=os.write; real_fsync=os.fsync; real_close=os.close
+        syncs=[]; closes=[]
+        def write(fd,payload):
+            if stage=='write': real_write(fd,payload[:1]); raise body
+            return real_write(fd,payload)
+        def fsync(fd):
+            syncs.append(fd)
+            if stage=='pending-fsync' or stage=='parent-fsync' and len(syncs)==2: raise body
+            real_fsync(fd)
+        def close(fd):
+            closes.append(fd); real_close(fd)
+            if stage!='parent-fsync' or len(closes)==2: raise closing
+        monkeypatch.setattr(os,'write',write); monkeypatch.setattr(os,'fsync',fsync); monkeypatch.setattr(os,'close',close)
+>       with pytest.raises(BaseExceptionGroup) as caught: parent._publish_bytes(job,relative,b'authored',roster)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_source_control_rendezvous_vnext.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_parent_entry_vnext.py:411: in _publish_bytes
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        closes.append(fd); real_close(fd)
+>       if stage!='parent-fsync' or len(closes)==2: raise closing
+                                                    ^^^^^^^^^^^^^
+E       OSError: publication close
+
+tests/test_memory_source_control_rendezvous_vnext.py:57: OSError
+_____ test_fix1_publication_preserves_body_and_close_objects[parent-fsync] _____
+
+fd = 12
+
+    def fsync(fd):
+        syncs.append(fd)
+>       if stage=='pending-fsync' or stage=='parent-fsync' and len(syncs)==2: raise body
+                                                                              ^^^^^^^^^^
+E       KeyboardInterrupt: publication body
+
+tests/test_memory_source_control_rendezvous_vnext.py:53: KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_publication_preserve2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f907352b610>
+stage = 'parent-fsync'
+
+    @pytest.mark.parametrize('stage',['write','pending-fsync','parent-fsync'])
+    def test_fix1_publication_preserves_body_and_close_objects(tmp_path,monkeypatch,stage):
+        import os,uuid
+        from scripts import memory_family_source_records_vnext as wire
+        root=tmp_path/'attempt'; root.mkdir(); run=str(uuid.uuid4())
+        job=dict(workspace_root=str(root),case=dict(case_id='authored'),source_run_id=run,schema=wire.record_schema('job',True),limits=wire.LIMITS.copy())
+        for directory in wire.reserved_directories(job): (root/directory).mkdir(exist_ok=True)
+        relative=f'output/controls/{run}/producer/stdout'; roster={row['path']:row for row in wire.output_roster('authored',run)}
+        body=KeyboardInterrupt('publication body'); closing=OSError('publication close'); real_write=os.write; real_fsync=os.fsync; real_close=os.close
+        syncs=[]; closes=[]
+        def write(fd,payload):
+            if stage=='write': real_write(fd,payload[:1]); raise body
+            return real_write(fd,payload)
+        def fsync(fd):
+            syncs.append(fd)
+            if stage=='pending-fsync' or stage=='parent-fsync' and len(syncs)==2: raise body
+            real_fsync(fd)
+        def close(fd):
+            closes.append(fd); real_close(fd)
+            if stage!='parent-fsync' or len(closes)==2: raise closing
+        monkeypatch.setattr(os,'write',write); monkeypatch.setattr(os,'fsync',fsync); monkeypatch.setattr(os,'close',close)
+>       with pytest.raises(BaseExceptionGroup) as caught: parent._publish_bytes(job,relative,b'authored',roster)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_source_control_rendezvous_vnext.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_parent_entry_vnext.py:423: in _publish_bytes
+    finally: os.close(parent)
+             ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        closes.append(fd); real_close(fd)
+>       if stage!='parent-fsync' or len(closes)==2: raise closing
+                                                    ^^^^^^^^^^^^^
+E       OSError: publication close
+
+tests/test_memory_source_control_rendezvous_vnext.py:57: OSError
+___________ test_fix1_failure_inventory_error_cannot_replace_primary ___________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_failure_inventory_er0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f90711fcb50>
+
+>   ???
+
+/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_control_rendezvous_vnext.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/memory_source_parent_entry_vnext.py:664: in _failure
+    try: state=os.stat(job['workspace_root']+'/'+row['path'],follow_symlinks=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_failure_inventory_er0/output/controls/7a533180-6aef-430b-9dff-b9fac811cb8a/acceptance/stderr',)
+kwargs = {'follow_symlinks': False}
+
+>   ???
+E   PermissionError: stat
+
+/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/tests/test_memory_source_control_rendezvous_vnext.py:72: PermissionError
+__ test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner] ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9073bd7e90>
+boundary = 'owner'
+
+    @pytest.mark.parametrize('boundary',['owner','replay'])
+    def test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains(tmp_path,monkeypatch,boundary):
+        from memory_source_vnext_fixture import build,observer,AuthoredEnvironment
+        from palimpsest import flynn
+        fixture=build(tmp_path/'attempt',monkeypatch); policies=[]; steps=[]; rows=[]; original_load=flynn.load_policy; original_step=AuthoredEnvironment.step
+        def load(*args,**kwargs):
+            policy=original_load(*args,**kwargs); policies.append(policy)
+            if boundary=='replay' and len(policies)==2:
+                def mutate(cell,inputs,outputs):
+                    rows.append(1)
+                    with policy.torch.no_grad(): policy.agent.r_scale.add_(1)
+                policy.agent.cell.register_forward_hook(mutate)
+            return policy
+        def step(env,action):
+            steps.append(1); result=original_step(env,action)
+            if boundary=='owner':
+                with policies[0].torch.no_grad(): policies[0].agent.r_scale.add_(1)
+            return result
+        monkeypatch.setattr(flynn,'load_policy',load); monkeypatch.setattr(AuthoredEnvironment,'step',step)
+        thread,failures=observer(fixture)
+        try:
+            with pytest.raises(BaseExceptionGroup): parent._run_authored_attempt(fixture.job_bytes,fixture.authorization_bytes)
+        finally: thread.join(timeout=12)
+        assert not failures and not thread.is_alive()
+>       assert len(steps)==1 if boundary=='owner' else len(rows)==1
+E       assert False
+
+tests/test_memory_source_parent_entry_vnext.py:119: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Edge path:  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/connections_princeton.csv
+[edge_list] Loaded 12 edges with 12 unique nodes.
+Built sparse W matrix
+[spectral] scaled W by 13.2891 to target 0.9 (est 0.0677)
+[io] Loaded 5 wind sensing neurons.
+[io] Loading cell types from /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/consolidated_cell_types.csv...
+[cell_types] Loaded 1 unique types.
+[cell_types] Assigned types to 12/12 neurons. (Rest are 'Unknown')
+N=12 | Nin=4813 | outputs=2
+Edge path:  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/connections_princeton.csv
+[edge_list] Loaded 12 edges with 12 unique nodes.
+Built sparse W matrix
+[spectral] scaled W by 13.2891 to target 0.9 (est 0.0677)
+[io] Loaded 5 wind sensing neurons.
+[io] Loading cell types from /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/consolidated_cell_types.csv...
+[cell_types] Loaded 1 unique types.
+[cell_types] Assigned types to 12/12 neurons. (Rest are 'Unknown')
+N=12 | Nin=4813 | outputs=2
+__ test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[replay] __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8f51d3afd0>
+boundary = 'replay'
+
+    @pytest.mark.parametrize('boundary',['owner','replay'])
+    def test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains(tmp_path,monkeypatch,boundary):
+        from memory_source_vnext_fixture import build,observer,AuthoredEnvironment
+        from palimpsest import flynn
+        fixture=build(tmp_path/'attempt',monkeypatch); policies=[]; steps=[]; rows=[]; original_load=flynn.load_policy; original_step=AuthoredEnvironment.step
+        def load(*args,**kwargs):
+            policy=original_load(*args,**kwargs); policies.append(policy)
+            if boundary=='replay' and len(policies)==2:
+                def mutate(cell,inputs,outputs):
+                    rows.append(1)
+                    with policy.torch.no_grad(): policy.agent.r_scale.add_(1)
+                policy.agent.cell.register_forward_hook(mutate)
+            return policy
+        def step(env,action):
+            steps.append(1); result=original_step(env,action)
+            if boundary=='owner':
+                with policies[0].torch.no_grad(): policies[0].agent.r_scale.add_(1)
+            return result
+        monkeypatch.setattr(flynn,'load_policy',load); monkeypatch.setattr(AuthoredEnvironment,'step',step)
+        thread,failures=observer(fixture)
+        try:
+            with pytest.raises(BaseExceptionGroup): parent._run_authored_attempt(fixture.job_bytes,fixture.authorization_bytes)
+        finally: thread.join(timeout=12)
+        assert not failures and not thread.is_alive()
+>       assert len(steps)==1 if boundary=='owner' else len(rows)==1
+E       assert False
+
+tests/test_memory_source_parent_entry_vnext.py:119: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Edge path:  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati1/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/connections_princeton.csv
+[edge_list] Loaded 12 edges with 12 unique nodes.
+Built sparse W matrix
+[spectral] scaled W by 13.2891 to target 0.9 (est 0.0677)
+[io] Loaded 5 wind sensing neurons.
+[io] Loading cell types from /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati1/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/consolidated_cell_types.csv...
+[cell_types] Loaded 1 unique types.
+[cell_types] Assigned types to 12/12 neurons. (Rest are 'Unknown')
+N=12 | Nin=4813 | outputs=2
+Edge path:  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati1/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/connections_princeton.csv
+[edge_list] Loaded 12 edges with 12 unique nodes.
+Built sparse W matrix
+[spectral] scaled W by 13.2891 to target 0.9 (est 0.0677)
+[io] Loaded 5 wind sensing neurons.
+[io] Loading cell types from /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati1/attempt/freeze/assets/graph-d6b42c697e63ef197fc727c1a089fd21737f82c37c3ae166e5e5e735d3045e5b/consolidated_cell_types.csv...
+[cell_types] Loaded 1 unique types.
+[cell_types] Assigned types to 12/12 neurons. (Rest are 'Unknown')
+N=12 | Nin=4813 | outputs=2
+=============================== warnings summary ===============================
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati0/attempt/freeze/repo/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+  /home/utkarsh/Work/shraddha/palimpsest/.venv/lib/python3.11/site-packages/torch/__init__.py:1551: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+    return _C._get_float32_matmul_precision()
+
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[replay]
+tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[replay]
+  /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01/test_fix1_loaded_tensor_mutati1/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[third]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[kind]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[extra]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[bool]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[large]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[expected-extra]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[expected-bool]
+FAILED tests/test_memory_family_source_records_vnext.py::test_fix1_actual_coverage_metadata_refuses_before_any_payload[bad-hash]
+FAILED tests/test_memory_family_source_runtime_vnext.py::test_fix1_raw_leaf_admission_before_writer_publication[manifest]
+FAILED tests/test_memory_family_source_runtime_vnext.py::test_fix1_raw_leaf_admission_before_writer_publication[event]
+FAILED tests/test_memory_family_source_runtime_vnext.py::test_fix1_raw_leaf_admission_before_writer_publication[chunk-event]
+FAILED tests/test_memory_source_control_rendezvous_vnext.py::test_fix1_publication_preserves_body_and_close_objects[write]
+FAILED tests/test_memory_source_control_rendezvous_vnext.py::test_fix1_publication_preserves_body_and_close_objects[pending-fsync]
+FAILED tests/test_memory_source_control_rendezvous_vnext.py::test_fix1_publication_preserves_body_and_close_objects[parent-fsync]
+FAILED tests/test_memory_source_control_rendezvous_vnext.py::test_fix1_failure_inventory_error_cannot_replace_primary
+FAILED tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[owner]
+FAILED tests/test_memory_source_parent_entry_vnext.py::test_fix1_loaded_tensor_mutation_refuses_next_operation_and_drains[replay]
+17 failed, 30 deselected, 10 warnings in 18.20s

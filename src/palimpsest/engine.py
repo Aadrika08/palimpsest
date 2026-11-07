@@ -27,6 +27,12 @@ def _seed(value):
     return value
 
 
+def _runtime_diagnostics_ok(diagnosis):
+    required = [check for check in diagnosis["checks"]
+                if check["name"] in {"python", "upstream"} or check["name"].startswith("dependency:")]
+    return all(check["status"] == "ok" for check in required)
+
+
 def _action(value, manual=False):
     import numpy as np
 
@@ -340,14 +346,24 @@ class Engine:
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
              storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None,
-             restore_snapshot=None, replace_controller=False, memory_u=None, diagnostics=None):
+             restore_snapshot=None, replace_controller=False, memory_u=None, diagnostics=None,
+             source_bootstrap_mode=None):
         """Create an actual pinned runtime. The caller owns its process watchdog.
 
         ``diagnostics`` defaults to the ambient doctor. A held worker instead passes
         its exact HeldProvenance record, which replaces doctor and inspects nothing.
+        ``source_bootstrap_mode='canonical-prepared-vnext-v1'`` requires a fresh
+        family-v3 case, canonical UUID and held diagnostics with read-only prepared
+        assets. It is creation configuration, not source admission or qualification.
         """
+        if source_bootstrap_mode is not None and (
+                type(source_bootstrap_mode) is not str or source_bootstrap_mode != 'canonical-prepared-vnext-v1'):
+            raise ValueError('unsupported source_bootstrap_mode')
+        canonical_prepared = source_bootstrap_mode is not None
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         if diagnostics is None:
+            if canonical_prepared:
+                raise ValueError('canonical prepared source requires exact held provenance diagnostics')
             from .doctor import diagnose
         else:
             from .held_provenance import HeldProvenance
@@ -363,6 +379,14 @@ class Engine:
         if controller not in MALE_CONTROLLERS and expected_policy_identity is not None:
             raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
+        if canonical_prepared:
+            if (scenario, texture, controller, device) != ('memory-decision-v2', 'checker', 'flynn', 'cpu'):
+                raise ValueError('canonical prepared source requires memory-decision-v2/checker/CPU FLYNN')
+            if (restore_snapshot is not None or replace_controller is not False or memory_u is not None
+                    or research_binding is not None or expected_policy_identity is not None):
+                raise ValueError('canonical prepared source requires a fresh case without continuation or research binding')
+            if type(memory_case) is not dict or type(memory_case.get('version')) is not int or memory_case['version'] != 3:
+                raise ValueError('canonical prepared source requires an exact family version3 case')
         from .memory_reference import REFERENCES
         if scenario == 'memory-decision-v2':
             from .profiles import validate_decision
@@ -385,7 +409,30 @@ class Engine:
             from .memory import sha256
             case_manifest = {'memory_case': memory_case, 'memory_case_sha256': sha256(memory_case),
                 'acquisition_protocol_sha256': memory_case['acquisition_protocol_sha256']}
-        run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
+        if canonical_prepared:
+            if type(run_id) is not str:
+                raise ValueError('canonical prepared source requires a canonical UUID run_id')
+            try:
+                canonical_id = str(uuid.UUID(run_id))
+            except ValueError as error:
+                raise ValueError('canonical prepared source requires a canonical UUID run_id') from error
+            if canonical_id != run_id:
+                raise ValueError('canonical prepared source requires a canonical UUID run_id')
+            for value in (repo_root, asset_root):
+                try:
+                    spelling = os.fspath(value)
+                except TypeError as error:
+                    raise ValueError('canonical prepared source requires canonical absolute roots') from error
+                if (not isinstance(spelling, str) or not spelling.startswith('/')
+                        or (spelling != '/' and any(part in ('', '.', '..') for part in spelling[1:].split('/')))):
+                    raise ValueError('canonical prepared source requires canonical absolute roots')
+            diagnosis = diagnostics.report()
+            if not _runtime_diagnostics_ok(diagnosis):
+                raise RuntimeError("runtime diagnostics failed; see diagnostics event")
+            from .assets import resolve_prepared_assets_readonly
+            prepared = resolve_prepared_assets_readonly(repo_root, asset_root)
+        else:
+            run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
         root, assets = Path(repo_root).resolve(), Path(asset_root).resolve()
         research_manifest = {}
         if research_binding is not None:
@@ -426,14 +473,15 @@ class Engine:
                 "scope": "matching software/hardware regime; compare before claiming repeatability",
                 "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled"},
             **case_manifest, **research_manifest,
-        }, max_bytes=max_bytes, storage_budget=storage_budget)
+            **({'source_bootstrap_epoch': source_bootstrap_mode} if canonical_prepared else {}),
+        }, max_bytes=max_bytes, storage_budget=storage_budget,
+            **({'preserve_failed': True} if canonical_prepared else {}))
         env = None
         try:
-            diagnosis = diagnose(root, assets) if diagnostics is None else diagnostics.report()
+            if not canonical_prepared:
+                diagnosis = diagnose(root, assets) if diagnostics is None else diagnostics.report()
             writer.event("diagnostics", run_id=writer.manifest["run_id"], report=diagnosis)
-            required = [check for check in diagnosis["checks"]
-                        if check["name"] in {"python", "upstream"} or check["name"].startswith("dependency:")]
-            if any(check["status"] != "ok" for check in required):
+            if not _runtime_diagnostics_ok(diagnosis):
                 raise RuntimeError("runtime diagnostics failed; see diagnostics event")
             import numpy as np
             import random
@@ -452,11 +500,15 @@ class Engine:
             configure_world(env)
             policy = teacher = None
             if controller == "flynn":
-                if not verify_assets(root, assets)["ok"]:
-                    raise ValueError("missing or corrupt pinned model assets")
-                edge = prepare_graph(root, assets)
-                item = next(item for item in load_manifest(root)["files"] if item["id"] == "checkpoint")
-                policy = load_policy(root, edge, assets / item["path"], device, seed)
+                if canonical_prepared:
+                    edge, checkpoint = prepared['edge'], prepared['checkpoint']
+                else:
+                    if not verify_assets(root, assets)["ok"]:
+                        raise ValueError("missing or corrupt pinned model assets")
+                    edge = prepare_graph(root, assets)
+                    item = next(item for item in load_manifest(root)["files"] if item["id"] == "checkpoint")
+                    checkpoint = assets / item["path"]
+                policy = load_policy(root, edge, checkpoint, device, seed)
                 writer.event("policy_loaded", run_id=writer.manifest["run_id"], provenance=policy.provenance)
             elif controller == "teacher":
                 teacher = reference.PlannerAnalyticTeacher(arena_half_extent=env.arena, device="cpu")
@@ -474,9 +526,27 @@ class Engine:
                          lock_sha256=sha256_file(root / "uv.lock"),
                          source_sha256={str(path.relative_to(root)): sha256_file(path)
                                         for path in sorted((root / "src/palimpsest").glob("*.py"))})
-            return cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
+            instance = cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
                        restore_snapshot=restore_snapshot, replace_controller=replace_controller, memory_u=memory_u)
+            if canonical_prepared: instance._source_structured_close = True
+            return instance
         except BaseException as error:
+            if canonical_prepared:
+                from .records import _source_errors as errors
+                failures = [error]
+                try: writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
+                except BaseException as failure: failures.append(failure)
+                if env is not None:
+                    try:
+                        renderer = getattr(env, 'renderer', None)
+                        if renderer is not None: renderer.close()
+                    except BaseException as failure: failures.append(failure)
+                    try: env.close()
+                    except BaseException as failure: failures.append(failure)
+                try: writer.close()
+                except BaseException as failure: failures.append(failure)
+                if len(failures)>1: raise errors('Source Engine open', failures)
+                raise
             try:
                 writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
             finally:
@@ -502,6 +572,151 @@ class Engine:
     def _event(self, kind, **data):
         self.writer.event(kind, run_id=self.run_id, episode=self.episode, tick=self.total_tick,
                           episode_step=self.episode_step, **data)
+
+    def _require_memory_transition_mode(self):
+        # These finite fields are reserved for the later admitted strict4 path.
+        # Presence, including a lost/null binding, must never select legacy [].
+        marked = isinstance(self.memory, dict) and (self.memory.get('version') == 4 or
+            'terminal_context_sha256' in self.memory or 'terminal_lifecycle' in self.memory)
+        bound = any(hasattr(self, '_memory_terminal_vnext_' + field) for field in
+                    ('mode', 'context', 'job_sha256', 'chain', 'failed', 'route_anchor'))
+        manifest = self.writer.manifest
+        if (marked or bound or 'memory_terminal_vnext_context_sha256' in manifest
+                or 'memory_terminal_vnext_mode' in manifest):
+            self._memory_terminal_vnext_failed = True
+            raise RuntimeError('Terminal vnext Engine path is not integrated')
+        if self.scenario == 'memory-decision-v2':
+            from . import memory_decision
+            memory_decision.validate_state(self.memory)
+
+    def _persist_terminal_transition_vnext(self, result, *, context, job_sha256, chain):
+        """Persist one private authored transaction; this grants no admission.
+
+        Task2b must bind the Context/job/chain and same-sensing-cut route anchor
+        while authentic source custody is active. There is no public opt-in.
+        The failure latch deliberately survives partial writes and assignment.
+        """
+        from . import memory, memory_transition_vnext as terminal
+        from .records import RunWriter
+
+        try:
+            self._active()
+            if getattr(self, '_memory_terminal_vnext_failed', False):
+                raise RuntimeError('Terminal vnext transaction already failed; continuation forbidden')
+            if type(self.writer) is not RunWriter or self.writer._background is not None:
+                raise RuntimeError('Terminal vnext requires the fixed synchronous RunWriter')
+            self.writer._active()
+            c = terminal.validate_context_vnext(context)
+            context_hash = memory.sha256(c)
+            memory._digest(job_sha256)
+            if (self.scenario != 'memory-decision-v2'
+                    or getattr(self, '_memory_terminal_vnext_mode', None) != 'memory-terminal-vnext-v1'
+                    or getattr(self, '_memory_terminal_vnext_context', None) != c
+                    or getattr(self, '_memory_terminal_vnext_job_sha256', None) != job_sha256
+                    or getattr(self, '_memory_terminal_vnext_chain', None) != chain
+                    or self.writer.manifest.get('memory_terminal_vnext_context_sha256') != context_hash
+                    or self.writer.manifest.get('memory_terminal_vnext_mode') != 'memory-terminal-vnext-v1'
+                    or self.writer.manifest.get('run_id') != c['run_id'] or self.run_id != c['run_id']):
+                raise ValueError('Terminal vnext bound Context/job/mode/manifest identity differs')
+            state = terminal.validate_terminal_state_vnext(self.memory, context=c)
+            if (type(chain) is not tuple or len(chain) != 2 or type(chain[0]) is not int
+                    or chain[0] not in (0, 1)):
+                raise ValueError('Terminal vnext chain exceeds bounded transaction count')
+            memory._digest(chain[1])
+            if ((chain[0] == 0) != (chain[1] == context_hash)
+                    or chain[0] != (1 if state['terminal_lifecycle']['status'] == 'selected' else 0)):
+                raise ValueError('Terminal vnext chain contradicts input Lifecycle')
+            if (type(self.episode) is not int or self.episode != 0
+                    or type(self.total_tick) is not int or type(self.episode_step) is not int
+                    or self.total_tick != self.episode_step
+                    or not c['schedule']['boundary_tick'] <= self.total_tick <= min(2100, c['schedule']['boundary_tick'] + 900)):
+                raise ValueError('Terminal vnext Engine counters differ from continuation')
+            if type(result) is not terminal.TransitionResult or result.status not in (
+                    'ordinary-return', 'witnessed-return', 'idempotent', 'raised', 'rejected'):
+                raise ValueError('Invalid terminal TransitionResult')
+            returned = result.status in ('ordinary-return', 'witnessed-return', 'idempotent')
+            if type(result.idempotent) is not bool or result.idempotent != (result.status == 'idempotent'):
+                raise ValueError('Terminal result idempotence contradicts status')
+            if result.input_lifecycle != state['terminal_lifecycle'] and not (
+                    result.status == 'rejected' and result.input_lifecycle is None and result.local_lifecycle is None):
+                raise ValueError('Terminal result input Lifecycle differs')
+            decisions = copy.deepcopy(result.decisions)
+            if type(decisions) is not list:
+                raise ValueError('Terminal decisions must be a list')
+            memory._bounded(decisions, 65536)
+            witness = copy.deepcopy(result.witness)
+            if returned:
+                proposed = terminal.validate_terminal_state_vnext(result.proposed_state, context=c)
+                if (result.error is not None or result.local_lifecycle != proposed['terminal_lifecycle']
+                        or type(result.bearing) is not list or len(result.bearing) != 2
+                        or any(type(x) is not float or not math.isfinite(x) for x in result.bearing)
+                        or proposed['cursor']['bearing'] != result.bearing
+                        or proposed['cursor']['tick'] != self.total_tick):
+                    raise ValueError('Terminal returned state/Lifecycle/bearing differs')
+                if result.idempotent:
+                    if proposed != state or decisions or witness is not None:
+                        raise ValueError('Idempotent result contains new effects')
+                elif state['cursor']['tick'] + 1 != self.total_tick:
+                    raise ValueError('Terminal returned transition is not consecutive')
+                if (result.status == 'witnessed-return') != (witness is not None):
+                    raise ValueError('Returned result contradicts witnessed status')
+                if witness is None and result.local_lifecycle != result.input_lifecycle:
+                    raise ValueError('Unwitnessed result changed Lifecycle')
+                reached = (result.local_lifecycle != result.input_lifecycle
+                           or proposed['supervisor']['phase'] == 'failure')
+                if not result.idempotent and (witness is not None) != reached:
+                    raise ValueError('Terminal returned result contradicts required Witness predicate')
+            elif (result.proposed_state is not None or result.bearing is not None or decisions
+                    or type(result.error) is not terminal._ExceptionToken
+                    or result.status == 'raised' and witness is None):
+                raise ValueError('Terminal exception result contains invented return effects')
+            anchor = None
+            if returned and decisions:
+                anchor = copy.deepcopy(getattr(self, '_memory_terminal_vnext_route_anchor', None))
+                memory._fields(anchor, 'tick stage xy')
+                if (type(anchor['tick']) is not int or anchor['tick'] != self.total_tick
+                        or anchor['stage'] != 'pre-control' or type(anchor['xy']) is not list
+                        or len(anchor['xy']) != 2 or any(type(x) is not float or not math.isfinite(x) for x in anchor['xy'])):
+                    raise ValueError('Terminal decision route anchor differs from sensing cut')
+            commit = None
+            if witness is not None:
+                if (witness['context_sha256'] != context_hash or witness['job_sha256'] != job_sha256
+                        or (witness['index'], witness['previous_sha256']) != chain
+                        or witness['input_memory_sha256'] != memory.sha256(state)
+                        or witness['input_lifecycle'] != result.input_lifecycle
+                        or witness['local_lifecycle'] != result.local_lifecycle
+                        or witness['result'] != ('returned' if returned else result.status)):
+                    raise ValueError('Terminal Witness differs from result/input/chain')
+                if returned and (witness['local_memory_sha256'] != memory.sha256(proposed)
+                        or witness['local_decisions_sha256'] != memory.sha256(decisions)
+                        or witness['packet_sha256'] != proposed['cursor']['packet_sha256']):
+                    raise ValueError('Terminal Witness differs from actual returned effects')
+                terminal.terminal_event_bytes_vnext('memory_transition_witness_vnext', witness,
+                    sequence=self.writer._sequence, run_id=self.run_id, episode=self.episode,
+                    tick=self.total_tick, episode_step=self.episode_step)
+                if returned:
+                    commit = {'schema': terminal.COMMIT_SCHEMA, 'context_sha256': context_hash,
+                        'witness_sha256': memory.sha256(witness), 'tick': self.total_tick,
+                        'memory_sha256': memory.sha256(proposed), 'lifecycle': copy.deepcopy(result.local_lifecycle)}
+                    terminal.terminal_event_bytes_vnext('memory_transition_commit_vnext', commit,
+                        sequence=self.writer._sequence + 1, run_id=self.run_id, episode=self.episode,
+                        tick=self.total_tick, episode_step=self.episode_step)
+                self._event('memory_transition_witness_vnext', witness=witness)
+                # Synchronous event() has flushed and fsynced the real bytes.
+                self._memory_terminal_vnext_chain = (chain[0] + 1, memory.sha256(witness))
+            if not returned:
+                terminal.rethrow_transition_error_vnext(result)
+            self.memory = copy.deepcopy(proposed)
+            if commit is not None:
+                self._event('memory_transition_commit_vnext', commit=commit)
+            for decision in decisions:
+                self._event('memory_decision', detail=decision,
+                    route_anchor={'stage': 'pre-control', 'xy': copy.deepcopy(anchor['xy'])})
+            if self.memory['supervisor']['phase'] == 'failure':
+                self._memory_terminal_vnext_failed = True
+        except BaseException:
+            self._memory_terminal_vnext_failed = True
+            raise
 
     def _reset_world(self, *, calibration_session=None):
         # Fixture environments reset themselves; the production environment uses real MjData.
@@ -809,6 +1024,7 @@ class Engine:
             self._recording_failed = True
 
     def _step(self, action_override=None):
+        self._require_memory_transition_mode()
         import numpy as np
         from .evaluate import outcome
 
@@ -1528,6 +1744,36 @@ class Engine:
     def close(self):
         self._owner_only()
         if self._closed:
+            return
+        if getattr(self, '_source_structured_close', False):
+            from .records import _source_errors as errors
+            self._closed = True
+            failures = []
+            while self._pending:
+                command = self._pending.popleft()
+                if not self._recording_failed:
+                    try: self._command_result(command, 'rejected', reason='engine closed before application')
+                    except BaseException as error:
+                        failures.append(error)
+                        try: self._fail(error)
+                        except BaseException as failure: failures.append(failure)
+            try:
+                renderer = getattr(self.env, 'renderer', None)
+                if renderer is not None: renderer.close()
+            except BaseException as error: failures.append(error)
+            try: self.env.close()
+            except BaseException as error: failures.append(error)
+            if not self._recording_failed:
+                try:
+                    self.writer.finish({'run_id': self.run_id, 'parent_run_id': self.parent_run_id,
+                        'parent_event_prefix': self.parent_event_prefix, 'final_phase': self.phase,
+                        'last_outcome': self.last_outcome, 'metrics': self.metrics,
+                        'total_tick': self.total_tick, 'close_reason': 'operator_closed'},
+                        status='failed' if failures or self.phase == 'failed' else 'completed')
+                except BaseException as error: failures.append(error)
+            try: self.writer.close()
+            except BaseException as error: failures.append(error)
+            if failures: raise errors('Source Engine close', failures)
             return
         error = None
         try:

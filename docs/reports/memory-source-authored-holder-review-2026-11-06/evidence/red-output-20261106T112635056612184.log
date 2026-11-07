@@ -1,0 +1,100 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_output_ancestors_and_precreated_branch_edges_remain_bound[outputs-child] _
+
+mutation = 'outputs-child'
+
+    @pytest.mark.parametrize('mutation',['outputs-child','condition-child','branch-mode','branch-replace','outputs-replace'])
+    def test_output_ancestors_and_precreated_branch_edges_remain_bound(mutation):
+        fixture=authored()
+        root=fixture[0]
+        with pytest.raises(RuntimeError):
+            with lease(fixture) as held:
+                if mutation=='outputs-child': (root/'outputs/unregistered').mkdir()
+                elif mutation=='condition-child': (root/'outputs/condition/unregistered').mkdir()
+                elif mutation=='branch-mode': (root/'outputs/condition/work').chmod(0o700)
+                elif mutation=='branch-replace':
+                    os.rename(root/'outputs/condition/work',root/'outputs/condition/quarantine/retained-work')
+                    (root/'outputs/condition/work').mkdir()
+                else:
+                    os.rename(root/'outputs',root/'retained-outputs')
+                    (root/'outputs').mkdir()
+>               with pytest.raises(RuntimeError): held.recheck()
+E               Failed: DID NOT RAISE <class 'RuntimeError'>
+
+tests/test_memory_family_source_consumer_vnext.py:516: Failed
+_ test_output_ancestors_and_precreated_branch_edges_remain_bound[condition-child] _
+
+mutation = 'condition-child'
+
+    @pytest.mark.parametrize('mutation',['outputs-child','condition-child','branch-mode','branch-replace','outputs-replace'])
+    def test_output_ancestors_and_precreated_branch_edges_remain_bound(mutation):
+        fixture=authored()
+        root=fixture[0]
+        with pytest.raises(RuntimeError):
+            with lease(fixture) as held:
+                if mutation=='outputs-child': (root/'outputs/unregistered').mkdir()
+                elif mutation=='condition-child': (root/'outputs/condition/unregistered').mkdir()
+                elif mutation=='branch-mode': (root/'outputs/condition/work').chmod(0o700)
+                elif mutation=='branch-replace':
+                    os.rename(root/'outputs/condition/work',root/'outputs/condition/quarantine/retained-work')
+                    (root/'outputs/condition/work').mkdir()
+                else:
+                    os.rename(root/'outputs',root/'retained-outputs')
+                    (root/'outputs').mkdir()
+>               with pytest.raises(RuntimeError): held.recheck()
+E               Failed: DID NOT RAISE <class 'RuntimeError'>
+
+tests/test_memory_family_source_consumer_vnext.py:516: Failed
+_ test_output_ancestors_and_precreated_branch_edges_remain_bound[branch-mode] __
+
+mutation = 'branch-mode'
+
+    @pytest.mark.parametrize('mutation',['outputs-child','condition-child','branch-mode','branch-replace','outputs-replace'])
+    def test_output_ancestors_and_precreated_branch_edges_remain_bound(mutation):
+        fixture=authored()
+        root=fixture[0]
+        with pytest.raises(RuntimeError):
+            with lease(fixture) as held:
+                if mutation=='outputs-child': (root/'outputs/unregistered').mkdir()
+                elif mutation=='condition-child': (root/'outputs/condition/unregistered').mkdir()
+                elif mutation=='branch-mode': (root/'outputs/condition/work').chmod(0o700)
+                elif mutation=='branch-replace':
+                    os.rename(root/'outputs/condition/work',root/'outputs/condition/quarantine/retained-work')
+                    (root/'outputs/condition/work').mkdir()
+                else:
+                    os.rename(root/'outputs',root/'retained-outputs')
+                    (root/'outputs').mkdir()
+>               with pytest.raises(RuntimeError): held.recheck()
+E               Failed: DID NOT RAISE <class 'RuntimeError'>
+
+tests/test_memory_family_source_consumer_vnext.py:516: Failed
+_ test_output_ancestors_and_precreated_branch_edges_remain_bound[branch-replace] _
+
+mutation = 'branch-replace'
+
+    @pytest.mark.parametrize('mutation',['outputs-child','condition-child','branch-mode','branch-replace','outputs-replace'])
+    def test_output_ancestors_and_precreated_branch_edges_remain_bound(mutation):
+        fixture=authored()
+        root=fixture[0]
+        with pytest.raises(RuntimeError):
+            with lease(fixture) as held:
+                if mutation=='outputs-child': (root/'outputs/unregistered').mkdir()
+                elif mutation=='condition-child': (root/'outputs/condition/unregistered').mkdir()
+                elif mutation=='branch-mode': (root/'outputs/condition/work').chmod(0o700)
+                elif mutation=='branch-replace':
+                    os.rename(root/'outputs/condition/work',root/'outputs/condition/quarantine/retained-work')
+                    (root/'outputs/condition/work').mkdir()
+                else:
+                    os.rename(root/'outputs',root/'retained-outputs')
+                    (root/'outputs').mkdir()
+>               with pytest.raises(RuntimeError): held.recheck()
+E               Failed: DID NOT RAISE <class 'RuntimeError'>
+
+tests/test_memory_family_source_consumer_vnext.py:516: Failed
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_output_ancestors_and_precreated_branch_edges_remain_bound[outputs-child]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_output_ancestors_and_precreated_branch_edges_remain_bound[condition-child]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_output_ancestors_and_precreated_branch_edges_remain_bound[branch-mode]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_output_ancestors_and_precreated_branch_edges_remain_bound[branch-replace]
+4 failed, 1 passed, 80 deselected in 2.90s

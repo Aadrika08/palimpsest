@@ -1,0 +1,83 @@
+F
+=================================== FAILURES ===================================
+____ test_prepared_paths_and_all_seven_original_crlf_pairs_remain_unchanged ____
+
+prepared = {'directory': PosixPath('/var/tmp/palimpsest-readonly-red-jqabCYBv/fixtures/cccb377c2b3d4a5e8b90d346d1ac8a9f/assets/gr...d_cell_types.csv', 'sha256': '86a8f2a5bc336105e91b9aace70efe306d882acd069b6dc813f514e7a4db1606', ...}, ...], ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6761fd5e10>
+
+    def test_prepared_paths_and_all_seven_original_crlf_pairs_remain_unchanged(prepared, monkeypatch):
+        # Catches preparer reuse, omitted mappings, wrong return roles and rewriting.
+>       result = guarded_resolve(prepared, monkeypatch)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_assets_prepared_readonly.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'directory': PosixPath('/var/tmp/palimpsest-readonly-red-jqabCYBv/fixtures/cccb377c2b3d4a5e8b90d346d1ac8a9f/assets/gr...d_cell_types.csv', 'sha256': '86a8f2a5bc336105e91b9aace70efe306d882acd069b6dc813f514e7a4db1606', ...}, ...], ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6761fd5e10>
+repo = None, root = None
+
+    def guarded_resolve(case, monkeypatch, repo=None, root=None, *, reject_metadata_open=False):
+        """Deny mutation/acquisition during the real call and compare retained trees."""
+        before = snapshot(case["home"])
+        reads = []
+        original_open, original_io_open, original_os_open = builtins.open, io.open, os.open
+    
+        def denied(*args, **kwargs):
+            raise AssertionError("Resolver attempted mutation or acquisition")
+    
+        def safe_open(original):
+            def opened(path, mode="r", *args, **kwargs):
+                assert not any(char in mode for char in "wax+"), mode
+                if not isinstance(path, int):
+                    candidate = Path(path)
+                    assert candidate.is_relative_to(case["home"]), candidate
+                    if candidate == case["paths"]["metadata"]:
+                        assert not reject_metadata_open, "Oversized metadata was opened"
+                        stream = original(path, mode, *args, **kwargs)
+    
+                        class BoundedReader:
+                            def __enter__(self):
+                                return self
+    
+                            def __exit__(self, *exc):
+                                stream.close()
+    
+                            def read(self, count=-1):
+                                assert 0 <= count <= LIMIT + 1, count
+                                reads.append(count)
+                                return stream.read(count)
+    
+                        return BoundedReader()
+                return original(path, mode, *args, **kwargs)
+            return opened
+    
+        def safe_os_open(path, flags, *args, **kwargs):
+            assert not flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND)
+            return original_os_open(path, flags, *args, **kwargs)
+    
+        try:
+            with monkeypatch.context() as patch:
+                patch.setattr(builtins, "open", safe_open(original_open))
+                patch.setattr(io, "open", safe_open(original_io_open))
+                patch.setattr(os, "open", safe_os_open)
+                for name in ("mkdir", "makedirs", "rename", "replace", "remove", "unlink", "rmdir",
+                             "link", "symlink", "chmod", "chown", "truncate", "utime", "write"):
+                    patch.setattr(os, name, denied)
+                for name in ("copyfile", "copy", "copy2", "copytree", "move", "rmtree", "unpack_archive"):
+                    patch.setattr(shutil, name, denied)
+                for name in ("prepare_graph", "fetch_assets", "urlopen"):
+                    patch.setattr(assets, name, denied)
+                patch.setattr(assets.importlib, "import_module", denied)
+>               return assets.resolve_prepared_assets_readonly(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    case["repo"] if repo is None else repo,
+                    case["root"] if root is None else root,
+                )
+E               AttributeError: module 'palimpsest.assets' has no attribute 'resolve_prepared_assets_readonly'
+
+tests/test_assets_prepared_readonly.py:141: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_assets_prepared_readonly.py::test_prepared_paths_and_all_seven_original_crlf_pairs_remain_unchanged
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 0.10s

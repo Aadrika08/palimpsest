@@ -1,0 +1,11 @@
+{
+  "error_type": "ValueError",
+  "error_message": "run writer is closed or finished",
+  "context_type": "RuntimeError",
+  "context_message": "authored storage quota refusal",
+  "manifest_status": "running",
+  "events_stream_closed": true,
+  "writer_broken": true,
+  "closed_fileno_error": "I/O operation on closed file",
+  "environment_closed": null
+}

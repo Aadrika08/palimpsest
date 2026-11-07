@@ -1,0 +1,186 @@
+diff --git i/scripts/memory_family_compact_v4.py w/scripts/memory_family_compact_v4.py
+index 852cd08..6701ad2 100644
+--- i/scripts/memory_family_compact_v4.py
++++ w/scripts/memory_family_compact_v4.py
+@@ -433,6 +433,25 @@ def _file_identity(value):
+             value.st_mtime_ns, value.st_ctime_ns, value.st_nlink)
+ 
+ 
++def _close_bound_fds(opened, primary):
++    """Attempt every owned close once; never replace a reached primary error."""
++    failures = []
++    for fd in reversed(opened):
++        try:
++            os.close(fd)
++        except BaseException as error:
++            failures.append(error)
++    if not failures:
++        return
++    if primary is None:
++        primary = failures.pop(0)
++        for error in failures:
++            primary.add_note(f'Bound payload close failure: {type(error).__name__}: {error}')
++        raise primary
++    for error in failures:
++        primary.add_note(f'Bound payload close failure: {type(error).__name__}: {error}')
++
++
+ @contextmanager
+ def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
+                   staged=True, allow_empty=False, raw_run=None):
+@@ -461,6 +480,7 @@ def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
+     root = artifacts._safe_path(root)
+     parts = PurePosixPath(relative).parts
+     opened, edges = [], []
++    primary = None
+     def edge(value):
+         return value.st_dev, value.st_ino, value.st_mode
+     def check_deadline():
+@@ -511,9 +531,11 @@ def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
+         recheck()
+         yield fd, payload, recheck
+         recheck()
++    except BaseException as error:
++        primary = error
++        raise
+     finally:
+-        for fd in reversed(opened):
+-            os.close(fd)
++        _close_bound_fds(opened, primary)
+ 
+ def _project_rows(rows, operation):
+     import numpy as np
+diff --git i/scripts/memory_family_replay_custody_v4.py w/scripts/memory_family_replay_custody_v4.py
+index a5d5ff2..9daa79a 100644
+--- i/scripts/memory_family_replay_custody_v4.py
++++ w/scripts/memory_family_replay_custody_v4.py
+@@ -110,21 +110,27 @@ class HeldReplayFiles:
+         if self._state != 'active':
+             raise RuntimeError('Replay file custody is closed, failed or not entered')
+ 
+-    def _close(self):
+-        first = None
++    def _close(self, primary=None):
++        failures = []
+         while self._fds:
+             fd = self._fds.pop()
+             try:
+                 os.close(fd)
+-            except OSError as error:
+-                if first is None:
+-                    first = error
+-        if first is not None:
+-            raise first
++            except BaseException as error:
++                failures.append(error)
++        if not failures:
++            return
++        if primary is None:
++            primary = failures.pop(0)
++            for error in failures:
++                primary.add_note(f'Replay FD close failure: {type(error).__name__}: {error}')
++            raise primary
++        for error in failures:
++            primary.add_note(f'Replay FD close failure: {type(error).__name__}: {error}')
+ 
+-    def _failed(self):
++    def _failed(self, primary):
+         self._state = 'failed'
+-        self._close()
++        self._close(primary)
+ 
+     def _directory(self, key):
+         if key in self._dirs:
+@@ -260,8 +266,8 @@ class HeldReplayFiles:
+             self._state = 'active'
+             self.recheck()
+             return self
+-        except BaseException:
+-            self._failed()
++        except BaseException as error:
++            self._failed(error)
+             raise
+ 
+     def recheck(self):
+@@ -274,8 +280,8 @@ class HeldReplayFiles:
+                 self._check_file(relative)
+             self._check_dirs()
+             self._clock()
+-        except BaseException:
+-            self._failed()
++        except BaseException as error:
++            self._failed(error)
+             raise
+ 
+     def _guard(self, relative):
+@@ -290,8 +296,8 @@ class HeldReplayFiles:
+             self._check_file(relative)
+             self._check_dirs()
+             self._clock()
+-        except BaseException:
+-            self._failed()
++        except BaseException as error:
++            self._failed(error)
+             raise
+         return relative
+ 
+@@ -307,8 +313,8 @@ class HeldReplayFiles:
+             self._check_dirs()
+             self._clock()
+             return payload
+-        except BaseException:
+-            self._failed()
++        except BaseException as error:
++            self._failed(error)
+             raise
+ 
+     def path(self, relative):
+@@ -323,10 +329,20 @@ class HeldReplayFiles:
+             if kind is None:
+                 raise RuntimeError('Replay custody failed before context exit')
+             return False
++        primary = error
+         try:
+             self.recheck()
++        except BaseException as failure:
++            if primary is None:
++                primary = failure
++            else:
++                primary.add_note(f'Replay exit recheck failure: {type(failure).__name__}: {failure}')
++                for note in getattr(failure, '__notes__', ()):
++                    primary.add_note(note)
+         finally:
+             if self._state == 'active':
+                 self._state = 'closed'
+-            self._close()
++            self._close(primary)
++        if error is None and primary is not None:
++            raise primary
+         return False
+diff --git i/tests/test_memory_family_replay_custody_v4.py w/tests/test_memory_family_replay_custody_v4.py
+index 9687888..1fcdc0d 100644
+--- i/tests/test_memory_family_replay_custody_v4.py
++++ w/tests/test_memory_family_replay_custody_v4.py
+@@ -193,14 +193,19 @@ def test_contract_equality_without_materializing_gib_graphs(tmp_path):
+         assert held.read(entries[0]['path'], MiB) == payload
+ 
+ 
+-def test_exit_drift_rechecked_even_when_body_raises(tmp_path):
++def test_exit_drift_rechecked_without_replacing_body_error(tmp_path):
+     root, leaf, entries = sample(tmp_path)
+     held = open_files(root, entries)
+     before = len(os.listdir('/proc/self/fd'))
+-    with pytest.raises((RuntimeError, ValueError), match='changed|differs'):
++    primary = LookupError('caller body failed')
++    with pytest.raises(LookupError) as rejection:
+         with held:
+             leaf.write_bytes(b'mutated')
+-            raise LookupError('caller body failed')
++            raise primary
++    assert rejection.value is primary
++    assert any(('RuntimeError' in note or 'ValueError' in note)
++               and ('changed' in note or 'differs' in note)
++               for note in primary.__notes__)
+     assert len(os.listdir('/proc/self/fd')) == before
+     with pytest.raises(RuntimeError): held.path(entries[0]['path'])
+ 

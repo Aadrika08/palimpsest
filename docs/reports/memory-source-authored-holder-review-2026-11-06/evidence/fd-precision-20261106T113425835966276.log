@@ -1,0 +1,41 @@
+..........F...........                                                   [100%]
+=================================== FAILURES ===================================
+______ test_real_filesystem_mutation_permanently_poisons[absolute-parent] ______
+
+mutation = 'absolute-parent'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','input-directory','symlink','ancestor','absolute-parent'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+        fixture = authored()
+        root, adm, *_ = fixture
+        baseline=live_fds()
+        with pytest.raises((ValueError, RuntimeError, OSError)):
+            with lease(fixture) as held:
+                fds=retained_fds(held,root,baseline)
+                path = root/adm['path']
+                if mutation=='bytes':
+                    with path.open('r+b') as stream: stream.write(b'x')
+                elif mutation=='replace':
+                    sibling = root/'outputs/condition/work/replacement'
+                    sibling.write_bytes(path.read_bytes())
+                    os.replace(sibling, path)
+                elif mutation=='root-child': (root/'unexpected').mkdir()
+                elif mutation=='input-child': (root/'inputs/meta/unexpected').write_text('x')
+                elif mutation=='input-directory': (root/'inputs/unexpected').mkdir()
+                elif mutation=='absolute-parent': (root.parent/('task-6a1-parent-mutation-'+str(uuid.uuid4()))).mkdir()
+                elif mutation=='symlink':
+                    target = root/'outputs/condition/work/admission'
+                    os.rename(path, target)
+                    path.symlink_to(target)
+                else: os.rename(root/'inputs/registrations', root/'inputs/registrations-replaced')
+                with pytest.raises((ValueError,RuntimeError,OSError)): held.context
+                with pytest.raises(RuntimeError): held.context
+        assert not owned_fds(root)
+>       closed_fds(fds)
+                   ^^^
+E       UnboundLocalError: cannot access local variable 'fds' where it is not associated with a value
+
+tests/test_memory_family_source_consumer_vnext.py:332: UnboundLocalError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[absolute-parent]
+1 failed, 21 passed in 12.96s

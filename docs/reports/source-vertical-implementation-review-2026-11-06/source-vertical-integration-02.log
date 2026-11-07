@@ -1,0 +1,53 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_real_authored_source_writer_snp_audit_codec_and_independent_cell _____
+
+tmp_path = PosixPath('/var/tmp/source-vertical-integration-20261106-02/test_real_authored_source_writ0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3ef58ba9d0>
+
+    def test_real_authored_source_writer_snp_audit_codec_and_independent_cell(tmp_path,monkeypatch):
+        from memory_source_vnext_fixture import build,observer
+        fixture=build(tmp_path/'attempt',monkeypatch)
+        thread,failures=observer(fixture)
+        try:
+>           result=parent._run_authored_attempt(fixture.job_bytes,fixture.authorization_bytes)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_source_parent_entry_vnext.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_source_parent_entry_vnext.py:397: in _run_authored_attempt
+    return _run_attempt_core(job_bytes,authorization_bytes,_AUTHORED_TOKEN)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_source_parent_entry_vnext.py:403: in _run_attempt_core
+    job,authorization,metadata=wire.validate_attempt(job_bytes,authorization_bytes,authored,_initial_bytes)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_source_records_vnext.py:351: in validate_attempt
+    load=metadata['load_environment']; _load(load,authored)
+                                       ^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_source_records_vnext.py:301: in _load
+    for key,item in value['environment'].items(): text(key); text(item)
+                                                             ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = '', maximum = 4096
+
+    def text(value, maximum=4096):
+        if (type(value) is not str or not value or len(value.encode('utf-8')) > maximum
+>               or not value.isprintable()): raise ValueError('Invalid bounded printable text')
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: Invalid bounded printable text
+
+scripts/memory_family_source_records_vnext.py:37: ValueError
+=============================== warnings summary ===============================
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /var/tmp/source-vertical-integration-20261106-02/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+  /var/tmp/source-vertical-integration-20261106-02/test_real_authored_source_writ0/attempt/freeze/repo/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_parent_entry_vnext.py::test_real_authored_source_writer_snp_audit_codec_and_independent_cell
+1 failed, 2 warnings in 11.40s

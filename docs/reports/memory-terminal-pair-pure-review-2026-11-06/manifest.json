@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-report.md",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/implementation.md",
+      "sha256": "914712c83b85f93c358bb48d224657b95065b06ff83c68e16cce341d7b50adaa",
+      "size_bytes": 9988
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-review.md",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/independent-review.md",
+      "sha256": "522198fca6000a7716c5d59972ae3dfaa44bc8737625529947688de53288bceb",
+      "size_bytes": 6285
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-evidence/final-06.log",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/evidence/final-06.log",
+      "sha256": "73d50be8285dd16796e12050d159cad49ca30f99d65eaedd194bf25f9e6a15ec",
+      "size_bytes": 261
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-evidence/focus-05.log",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/evidence/focus-05.log",
+      "sha256": "a3217fe82e9547317a4543b02547020ee16a9229797169f509f5a4a37f4b2dc4",
+      "size_bytes": 114
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-evidence/neg-04.log",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/evidence/neg-04.log",
+      "sha256": "6a3df051988031e17fdfde7b2ea35981ef9ac9b2b3d26936b7459e4472575eeb",
+      "size_bytes": 2222
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-evidence/fd-03.log",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/evidence/fd-03.log",
+      "sha256": "a8d4ee9f335f31716a366a3c4ac88eba463d58fde24c3ded32ed1109864c96b6",
+      "size_bytes": 114
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-evidence/focus-02.log",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/evidence/focus-02.log",
+      "sha256": "20d533554c494695268f65212c38f194216939f4f1af68712458d4f00007cf75",
+      "size_bytes": 114
+    },
+    {
+      "original": ".superpowers/sdd/memory-terminal-vnext-implementation/task-5a-evidence/red-01.log",
+      "path": "docs/reports/memory-terminal-pair-pure-review-2026-11-06/evidence/red-01.log",
+      "sha256": "e0bf8d22754fc5a1c811f7eae4fb659d5710f0191b683e99abf95a6650404f21",
+      "size_bytes": 647
+    }
+  ],
+  "implementation_commit": "8b1ed1db568ab93a2d45e5534ec1632c3fd50ae6",
+  "independent_review": "SPEC PASS; QUALITY APPROVED; no actionable findings; no reviewer test rerun",
+  "parent_contract_commit": "aeb27496d6b397ee4019df74e0a9c288c82cfe5e",
+  "schema": "conditional-pair-source-evidence-archive-v1",
+  "scope": "conditional pure pair only; no actual source/history/model/scientific/qualification/deletion authority",
+  "settled_result": {
+    "passed": 159,
+    "seconds": 48.56,
+    "skipped": 0
+  },
+  "source_references": [
+    {
+      "path": "scripts/memory_family_terminal_condition_vnext.py",
+      "sha256": "1f25c72a60eb94aa714527c4d344f759a68d8f26cdbdc38a58146a4eb392d650",
+      "size_bytes": 4536
+    },
+    {
+      "path": "tests/test_memory_family_terminal_condition_vnext.py",
+      "sha256": "f57e82850b6ba20d8309db1270f0003914bcc53169c5b8751d87300b8f570b0a",
+      "size_bytes": 28518
+    }
+  ]
+}

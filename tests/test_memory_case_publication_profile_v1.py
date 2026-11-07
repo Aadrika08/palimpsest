@@ -133,3 +133,33 @@ def test_generator_refuses_accepted_source_refresh_before_access(tmp_path,monkey
     with pytest.raises(PermissionError):
         generator.build_profiles(tmp_path/'absent',write=True)
     assert not (tmp_path/'absent').exists()
+
+
+def test_declared_profile_metadata_and_empty_real_trust_remain_active():
+    """Check declared metadata and empty trust despite current source drift.
+
+    This does not establish completeness of the current import closure.
+    """
+    base,condition,pub=read(BASE),read(CONDITION),read(PUBLICATION)
+    paths=[row['path'] for row in base['behavior_sources']]
+    assert len(paths)==len(set(paths))
+    required={
+        'scripts/memory_family_case_publication_v1.py',
+        'scripts/memory_family_case_custody_v1.py',
+        'scripts/memory_family_retained_case_v1.py',
+        'scripts/memory_condition_replay_admission_v1.py',
+        'tests/test_memory_family_case_publisher_v1.py',
+        'tests/test_memory_case_publication_profile_v1.py',
+        'tests/test_memory_family_producer_v4.py',
+        'tests/test_memory_family_condition_close_v4.py',
+        'tests/test_memory_family_retained_case_v1.py',
+        'tests/memory_publication_authored_profiles.py',
+        'tests/frozen_pins.py',
+        'scripts/build_memory_case_publication_profile_v1.py'}
+    assert required<=set(paths)
+    excluded={BASE,CONDITION,PUBLICATION,publication.EXECUTION_POLICY_PATH,publication.QUALIFICATION_POLICY_PATH}
+    for rows in (base['behavior_sources'],condition['source_pins'],pub['source_pins']):
+        assert not excluded & {row['path'] for row in rows}
+    assert [r['path'] for r in pub['source_pins']]==sorted(set(r['path'] for r in pub['source_pins']))
+    assert execution.ACCEPTED_EXECUTION_AUDIT_SHA256==frozenset()
+    assert admission.TRUSTED_QUALIFICATION_PINS==()

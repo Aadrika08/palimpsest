@@ -1,0 +1,100 @@
+FFFFFFFFFFFFFFFF                                                         [100%]
+=================================== FAILURES ===================================
+_______ test_real_authored_lease_derives_detached_context_and_closes_fds _______
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+___ test_record_equality_and_authored_domain_refuse[admission-claims-value0] ___
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[admission-schema-actual-source-admission-v1] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[admission-source_run_id-00000000000000000000000000000001] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[raw_manifest-row_count-True] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[source_raw_audit-trace_digest-0000000000000000000000000000000000000000000000000000000000000000] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[owner_record-snapshot-value5] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[source_numeric_commit-status-accepted] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+___________ test_real_filesystem_mutation_permanently_poisons[bytes] ___________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+__________ test_real_filesystem_mutation_permanently_poisons[replace] __________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+________ test_real_filesystem_mutation_permanently_poisons[root-child] _________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+________ test_real_filesystem_mutation_permanently_poisons[input-child] ________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+__________ test_real_filesystem_mutation_permanently_poisons[symlink] __________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_________ test_real_filesystem_mutation_permanently_poisons[ancestor] __________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+___________ test_private_constructor_and_arbitrary_authority_refuse ____________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+___________ test_cross_thread_poison_and_original_body_error_survive ___________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_authored_lease_derives_detached_context_and_closes_fds
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[admission-claims-value0]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[admission-schema-actual-source-admission-v1]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[admission-source_run_id-00000000000000000000000000000001]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[raw_manifest-row_count-True]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[source_raw_audit-trace_digest-0000000000000000000000000000000000000000000000000000000000000000]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[owner_record-snapshot-value5]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[source_numeric_commit-status-accepted]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[bytes]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[replace]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[root-child]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[input-child]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[symlink]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[ancestor]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_private_constructor_and_arbitrary_authority_refuse
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_cross_thread_poison_and_original_body_error_survive
+16 failed in 3.08s

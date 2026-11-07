@@ -472,7 +472,9 @@ def validate_preparation_ledger(raw: bytes, reference: dict, manifest: dict, rec
 class _SourceNamespaceFiles(_HeldFileCore):
     """Local source adapter: exact selected trees, edge-only ancestors."""
 
-    def __init__(self, entries, roots, deadline, check):
+    def __init__(self, entries, roots, deadline, check, *, structured_teardown=False):
+        if type(structured_teardown) is not bool: raise ValueError("structured_teardown must be exact bool")
+        self._structured_teardown = structured_teardown
         self._budget_check = check
         self._selected = tuple(tuple(_path(r['root']).split('/')[1:]) for r in roots)
         self._children = {}
@@ -498,6 +500,22 @@ class _SourceNamespaceFiles(_HeldFileCore):
                                  PROFILE['file_bytes_max'],
                                  PROFILE['input_bytes_max']+PROFILE['retained_bytes_max']+
                                  sum(PROFILE[k+'_bytes_max'] for k in ('recipe','manifest','ledger'))))
+
+    def _close(self, primary=None):
+        if not self._structured_teardown: return super()._close()
+        from scripts.memory_family_source_records_vnext import errors
+        failures = []
+        while self._fds:
+            try: os.close(self._fds.pop())
+            except BaseException as failure: failures.append(failure)
+        if failures: raise errors('Source namespace FD teardown', [primary, *failures])
+
+    def _failed(self, primary=None):
+        if not self._structured_teardown: return super()._failed()
+        import sys
+        if primary is None: primary = sys.exception()
+        self._state = 'failed'
+        self._close(primary)
 
     def _clock(self):
         self._budget_check()
@@ -584,7 +602,9 @@ def _alias_identity(pins, check):
 class RuntimeHandle:
     """One-shot current-byte custody; no import or execution capability."""
 
-    def __init__(self, reference, *, required_roots, required_pins, output_root, deadline, check):
+    def __init__(self, reference, *, required_roots, required_pins, output_root, deadline, check, structured_teardown=False):
+        if type(structured_teardown) is not bool: raise ValueError("structured_teardown must be exact bool")
+        self._structured_teardown = structured_teardown
         self._reference = validate_runtime_reference(reference)
         if type(required_roots) is not tuple or not required_roots: raise ValueError('Required roots missing')
         self._required_roots = tuple(_path(r) for r in required_roots)
@@ -606,7 +626,17 @@ class RuntimeHandle:
     def _active(self):
         if self._state != 'active': raise RuntimeError('Runtime custody is closed, failed or not entered')
 
-    def _release(self):
+    def _release(self, primary=None):
+        if self._structured_teardown:
+            from scripts.memory_family_source_records_vnext import errors
+            failures = []
+            while self._holders:
+                held = self._holders.pop()
+                held._state = 'failed' if self._state == 'failed' else 'closed'
+                try: held._close()
+                except BaseException as failure: failures.append(failure)
+            if failures: raise errors('Source runtime teardown', [primary, *failures])
+            return
         first = None
         while self._holders:
             held = self._holders.pop()
@@ -620,10 +650,15 @@ class RuntimeHandle:
 
     def _poison(self):
         self._state = 'failed'; self._checked = False
-        self._release()
+        if self._structured_teardown:
+            import sys
+            self._release(sys.exception())
+        else:
+            self._release()
 
     def _acquire(self, entries, roots):
-        held = _SourceNamespaceFiles(entries, roots, self._deadline, self._clock)
+        held = _SourceNamespaceFiles(entries, roots, self._deadline, self._clock,
+            **({"structured_teardown": True} if self._structured_teardown else {}))
         self._holders.append(held)
         held.__enter__()
         return held
@@ -725,6 +760,18 @@ class RuntimeHandle:
         if self._state != 'active':
             if kind is None: raise RuntimeError('Runtime custody failed before context exit')
             return False
+        if self._structured_teardown:
+            from scripts.memory_family_source_records_vnext import errors
+            failures = [error] if error is not None else []
+            try: self.recheck()
+            except BaseException as failure: failures.append(failure)
+            self._state = 'failed' if failures else 'closed'
+            self._checked = False
+            try: self._release()
+            except BaseException as failure: failures.append(failure)
+            if failures and (len(failures)>1 or error is None):
+                raise errors('Source runtime exit', failures)
+            return False
         try:
             self.recheck()
             self._state = 'closed'
@@ -737,6 +784,8 @@ class RuntimeHandle:
 
 
 def hold_runtime_manifest(reference: dict, *, required_roots: tuple[str, ...], required_pins: dict,
-                          output_root: str, deadline: float, check: Callable[[], None]) -> RuntimeHandle:
+                          output_root: str, deadline: float, check: Callable[[], None],
+                          structured_teardown=False) -> RuntimeHandle:
     return RuntimeHandle(reference, required_roots=required_roots, required_pins=required_pins,
-                         output_root=output_root, deadline=deadline, check=check)
+                         output_root=output_root, deadline=deadline, check=check,
+                         **({"structured_teardown": structured_teardown} if structured_teardown is not False else {}))

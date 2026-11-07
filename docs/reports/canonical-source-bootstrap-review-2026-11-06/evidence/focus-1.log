@@ -1,0 +1,26 @@
+........................................................................ [ 80%]
+.........F.......                                                        [100%]
+=================================== FAILURES ===================================
+_ test_failures_after_writer_creation_keep_failed_manifest_and_close_resources[episode-ValueError-Out of range float-True] _
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-focus-20261106-1/fc3b0dc0ffb5485b8c6ac8e173b506e1'), repo=Posi...source_bootstrap_vnext.Environment object at 0x7f5467db00d0>], open=<function route.<locals>.opened at 0x7f5467dcc400>)
+stage = 'episode', error = <class 'ValueError'>, reason = 'Out of range float'
+allocated = True
+
+    @pytest.mark.parametrize('stage,error,reason,allocated', [
+        ('allocation', BoundaryFailure, 'allocation boundary', False),
+        ('configure', ValueError, 'cylinder type/radius', True),
+        ('policy', BoundaryFailure, 'policy boundary', True),
+        ('provenance', FileNotFoundError, 'uv.lock', True),
+        ('init', ValueError, '0.02-second', True),
+        ('episode', ValueError, 'Out of range float', True),
+    ])
+    def test_failures_after_writer_creation_keep_failed_manifest_and_close_resources(route, stage, error, reason, allocated):
+        route.stage.fail = stage
+>       with pytest.raises(error, match=reason):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_source_bootstrap_vnext.py:411: Failed
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_failures_after_writer_creation_keep_failed_manifest_and_close_resources[episode-ValueError-Out of range float-True]
+1 failed, 88 passed in 1.01s

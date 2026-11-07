@@ -1,0 +1,6 @@
+........................................................................ [ 34%]
+........................................................................ [ 68%]
+........................ss........................................       [100%]
+=========================== short test summary info ============================
+SKIPPED [2] tests/test_memory_family_compact_v4.py: historical frozen pin (memory-family-compact-v4): scripts/memory_family_compact_v4.py differs from its pin f70b50e56fb2; scripts/memory_family_oracle_admission_v4.py differs from its pin 12557a862d95; scripts/memory_family_producer_v4.py differs from its pin 441a784681d1; scripts/memory_family_retained_condition_v1.py differs from its pin ab66f2a3c2bd; src/palimpsest/engine.py differs from its pin f3a3cbf35375. The protocol stays bound to its commit; resume it on main by re-pinning through a new prospective amendment (docs/plans/frozen-source-pins-after-integration.md).
+208 passed, 2 skipped in 37.95s

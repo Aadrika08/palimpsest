@@ -142,10 +142,21 @@ def _validate_graph(graph,m):
             raise ValueError('Invalid public edge length')
 
 
+STATE_FIELDS = 'version m e u initial_m episode_id detector cursor requests active last_decisions selector graph supervisor'
+
+
 def validate_state(state):
-    memory._fields(state,'version m e u initial_m episode_id detector cursor requests active last_decisions selector graph supervisor')
-    if type(state['version']) is not int or state['version'] != 3:
-        raise ValueError('Memory-v2 requires task state version 3')
+    return _validate_state_fields(state, 3)
+
+
+def _validate_state_fields(state, version):
+    # Fixed strict entry wrappers select 3 or 4; the marker is never stripped.
+    if type(version) is not int or version not in (3, 4):
+        raise ValueError('Unsupported private memory state version')
+    fields = STATE_FIELDS + (' terminal_context_sha256 terminal_lifecycle' if version == 4 else '')
+    memory._fields(state, fields)
+    if type(state['version']) is not int or state['version'] != version:
+        raise ValueError('Memory-v2 requires task state version '+str(version))
     memory._bounded(state,memory.MAX_STATE_BYTES+64*1024)
     result = copy.deepcopy(state)
     for key,validator in (('m',memory.validate_m),('initial_m',memory.validate_m),('e',memory.validate_e),('u',memory.validate_u)):
@@ -267,6 +278,10 @@ def validate_state(state):
 
 def acquired_boundary(state):
     state=validate_state(state)
+    return _acquired_boundary_validated(state)
+
+
+def _acquired_boundary_validated(state):
     s=state['supervisor']
     return s['phase']=='await_decision' and s['decision_tick'] is None and all(
         f['status']=='observed' and f['estimate']=='open' and f['evidence']['episode_id']==state['episode_id'] for f in state['m']['facts'])
@@ -283,12 +298,17 @@ def configure_selector(state,config,u=None):
 
 def arm(state,boundary_tick):
     state=validate_state(state)
+    _arm_validated(state,boundary_tick)
+    return validate_state(state)
+
+
+def _arm_validated(state,boundary_tick):
     memory._int(boundary_tick)
-    if not acquired_boundary(state) or state['cursor']['tick'] != boundary_tick-1:
+    if not _acquired_boundary_validated(state) or state['cursor']['tick'] != boundary_tick-1:
         raise ValueError('Decision arm requires explicit acquired paused boundary')
     decision_offset = world.registered_profile(state['graph']['profile_sha256'])['arm_schedule']['decision_offset']
     state['supervisor'].update(continuation_start_tick=boundary_tick,decision_tick=boundary_tick+decision_offset)
-    return validate_state(state)
+    return state
 
 
 def _transition(sup,phase,tick,audit,reason=None):
@@ -357,6 +377,16 @@ def _validate_packet(packet,state):
 def advance_memory(state,packet):
     state=validate_state(state)
     _validate_packet(packet,state)
+    return _advance_memory_core(state,packet)
+
+
+def _advance_memory_core(state,packet,terminal=None):
+    # This worker receives only detached validated inputs from the two fixed
+    # entry points. No supplied callable or interchangeable observer is accepted.
+    if terminal is not None:
+        from .memory_transition_vnext import _TransitionBuilder
+        if type(terminal) is not _TransitionBuilder or state['version'] != 4:
+            raise ValueError('Invalid fixed terminal worker')
     tick,digest=packet['tick'],memory.sha256(packet)
     cursor=state['cursor']
     if cursor is not None and tick==cursor['tick']:
@@ -369,6 +399,9 @@ def advance_memory(state,packet):
     if sup['phase'] in ('goal','failure'):
         raise ValueError('Terminal memory-v2 cannot consume further packets')
     audit=[]
+    if terminal is not None:
+        terminal.local_state=state
+        terminal.local_decisions=audit
     previous={c['id']:c for c in state['detector']['cues']}
     if state['detector']['tick']==tick-1:
         from .memory_experiment import selection_for_condition
@@ -380,8 +413,12 @@ def advance_memory(state,packet):
                     'before':before['state'],'after':cue['state'],'before_observation_id':before['observation_id'],
                     'observation_id':memory_task._sensor_id(state['episode_id'],tick,'cue',cue['id'])}
                 cfg=state['selector']
-                selection=selection_for_condition(cfg['condition'],state['m'],trigger,limit=cfg['limit'],
-                    **memory_task.selector_resources(cfg,state['u']))
+                if terminal is None:
+                    selection=selection_for_condition(cfg['condition'],state['m'],trigger,limit=cfg['limit'],
+                        **memory_task.selector_resources(cfg,state['u']))
+                else:
+                    from .memory_transition_vnext import _select_terminal_vnext
+                    selection=_select_terminal_vnext(terminal,state,packet,trigger,before,cue)
                 state['m'],revisions,requests=memory.revise(state['m'],trigger,selection,[],episode_id=state['episode_id'],tick=tick)
                 audit += [{'kind':'memory_trigger','tick':tick,'trigger':trigger},{'kind':'memory_selection','tick':tick,'selection':selection}]
                 audit += [{'kind':'memory_revision','tick':tick,'revision':item} for item in revisions]
@@ -466,11 +503,19 @@ def advance_memory(state,packet):
     state['cursor']={'episode_id':state['episode_id'],'tick':tick,'packet_sha256':digest,
         'common_goal_id':packet['common_goal_id'],'bearing':bearing.copy()}
     state['last_decisions']=(state['last_decisions']+copy.deepcopy(audit))[-64:]
-    return validate_state(state),bearing,audit
+    if terminal is None:
+        return validate_state(state),bearing,audit
+    # The fixed terminal wrapper validates this output in its explicit refusal
+    # phase; ordinary core exceptions and output-cap failures must not mix.
+    return state,bearing,audit
 
 
 def goal_allowed(state):
     state=validate_state(state)
+    return _goal_allowed_validated(state)
+
+
+def _goal_allowed_validated(state):
     s=state['supervisor']
     return s['phase']=='follow_route' and s['inspection_authorized'] and s['waypoint_ids'][s['waypoint_index']]==state['graph']['common_goal_id']
 

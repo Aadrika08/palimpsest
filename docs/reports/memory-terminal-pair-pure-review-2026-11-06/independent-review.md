@@ -1,0 +1,31 @@
+# Task5a independent specification and quality review
+
+SPEC: PASS
+QUALITY: APPROVED
+
+Reviewed head `8b1ed1db568ab93a2d45e5534ec1632c3fd50ae6` against parent `aeb27496d6b397ee4019df74e0a9c288c82cfe5e`. The worktree was clean when inspected. The change is exactly two new files, 585 lines (76 source, 509 tests). Read the complete supplied diff, review brief, implementation report, all 159 lines of the binding contract, and all six retained test logs. Read unchanged validators/replay/authored helpers only where needed to establish compatibility. No tests were rerun, source was edited, or additional agents were started.
+
+## Findings
+
+No actionable correctness, scope, or evidence-boundary findings in the reviewed change. No severity-ranked change request is warranted.
+
+## Specification evidence
+
+- `scripts/memory_family_terminal_condition_vnext.py:17-44` validates exact outer dictionary shapes, Context, both histories, complete E-only refits, canonical bundle descriptor bytes, positive bounded sizes, distinct paths, and complete entity/evidence ID disjointness. Existing validators enforce exact scalar types and reject opaque/nonfinite JSON data. Histories are checked even in slots that do not use them.
+- `scripts/memory_family_terminal_condition_vnext.py:46-63` implements the binding table exactly: own/sham use own U and bundle provenance; swapped uses swapped U/provenance; retrieval uses empty U plus complete own E/provenance; hand-authored uses local-cue U and protocol provenance; no-U/history-independent/traversal use empty U and protocol provenance; oracle uses empty U, pending `[]`, and the acyclic pending helper. Canonical complete selector/U equality rejects bool-as-int and body substitutions. Context restricts the condition to the registered nine slots. No prior-own API/path is present.
+- `scripts/memory_family_terminal_condition_vnext.py:64-66` calls the existing Task3a implementation directly with the original condition and source application/events/raw rows, then compares all canonical proof bytes. The unchanged Task3a replay still checks Context resources, retained memory and source-view consistency through real configuration. Caller endpoints/reached flags cannot replace replay.
+- `scripts/memory_family_terminal_condition_vnext.py:67-76` copies the exact endpoint fields from the fresh proof, only renames row_count, binds the complete Context/proof and both descriptors, applies the 1 MiB bound, rechecks the deadline, and detaches the result. It introduces no second endpoint/score/goal formula and performs no input writes, loaders, actual adapters, model/native calls, receipt reinterpretation, or authority flags.
+
+## Test and evidence quality
+
+- `tests/test_memory_family_terminal_condition_vnext.py:203-242,385-395,499-509` covers all nine positives, all nine mapping-negative categories, unused-history refits, and all-nine endpoint/reached-flag forgeries. Mapping negatives rebind Context/resources and manifest descriptors and require the mapping-specific refusal before replay; they cannot pass merely because replay rejects a stale hash.
+- `tests/test_memory_family_terminal_condition_vnext.py:245-290,343-362,398-432` covers history refit/hash/descriptor/alias/ID/role failures, every proof key, natural short failures, selected change and null gold with no commit, no-event pending oracle, outer schema differences, and source/relabel failures. The corrected source-binding test asserts entry into both fresh replay and its source checker. No-event ordinary decision reach is allowed while selection/resolution stays absent.
+- `tests/test_memory_family_terminal_condition_vnext.py:293-330` uses the unchanged real authored lease and source FD path, freezes resources before opening, asserts exact held Context equality, checks entry, and rechecks custody before/after use. The zero-only patch transforms a returned projected fixture value before the unchanged authored helper constructs raw rows or serializes evidence. It does not patch production guards/auditors/stat witnesses, mutate a held source, or relabel an existing witness. The new condition helper calls real configure/arm/advance/inspect operations and produces fresh W/C under the exact Context. These remain authored values, not native placement evidence.
+- `tests/test_memory_family_terminal_condition_vnext.py:373-382,435-496` checks detached output and input nonmutation, deadline recheck after replay, no file-open call during pair use, bool selector fields, opaque arrays without conversion hooks, and forwarding original raw objects. The unchanged lease diagnostic catch re-raises; it does not turn infrastructure failures into passing negatives.
+- Retained `task-5a-evidence/final-06.log` reports **159 passed in 48.56s**, no skips/deselections. This is retained execution evidence, not a reviewer rerun. The earlier logs support the report's missing-module RED, 14-test focus, two authored-FD positives, one failed replay-entry assertion, and corrected 42-test focus. The intermediate failure is explicitly disclosed and consistent with the final source-binding test's switch to own plus full rebinding.
+
+## Limits and unchanged gates
+
+This approves only the conditional pure pair mapping and fresh-proof check under the supplied decoded premises. It does not establish actual history origin, accepted registration, donor independence, live custody, job-body correspondence, actual recording/native/model equality, Engine ownership, qualification, or publication. One pair does not prove cross-condition equality; the exact nine-slot/common-source/distinct-run and own/sham/no-event endpoint comparisons remain future 6b/7 gates. The test-only source coordinates and opaque authored SNP establish no physical or native state.
+
+No actual payload/model/native/probe/service/network/CI/dependency/cleanup/research work was performed in this review. Unchanged suites were not rerun. The full 48 development plus 48 held-out families across three kinds and nine conditions, separate held-out GO, physical ledger completeness, whole CPU/upper bounds, rights/provider and human/paper gates remain open. Raw deletion remains disabled and source03/provider choice remains pending. Only this ignored review file was written; root retains integration ownership.

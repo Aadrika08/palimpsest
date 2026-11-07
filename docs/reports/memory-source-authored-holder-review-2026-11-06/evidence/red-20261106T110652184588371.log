@@ -1,0 +1,448 @@
+FFFFFFFFFFFFFFFF                                                         [100%]
+=================================== FAILURES ===================================
+_______ test_real_authored_lease_derives_detached_context_and_closes_fds _______
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+___ test_record_equality_and_authored_domain_refuse[admission-claims-value0] ___
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[admission-schema-actual-source-admission-v1] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[admission-source_run_id-00000000000000000000000000000001] _
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+_ test_record_equality_and_authored_domain_refuse[raw_manifest-row_count-True] _
+
+role = 'raw_manifest', field = 'row_count', value = True
+
+    @pytest.mark.parametrize('role,field,value', [
+        ('admission','claims', {**CLAIMS,'actual_acceptance': True}),
+        ('admission','schema','actual-source-admission-v1'),
+        ('admission','source_run_id',SOURCE.replace('-','')),
+        ('raw_manifest','row_count', True),
+        ('source_raw_audit','trace_digest','0'*64),
+        ('owner_record','snapshot', {'path':'wrong.snp','size_bytes':1,'sha256':'0'*64}),
+        ('source_numeric_commit','status','accepted'),
+    ])
+    def test_record_equality_and_authored_domain_refuse(role, field, value):
+        def edit(name, v):
+            if name == role: v[field] = value
+>       fixture = authored(edit=edit)
+                  ^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:156: in authored
+    frame_d = put('audit_frames', b + '/numeric/audit-frames.npz', frames, npz_size(compact.FRAME_FIELDS, len(ticks)))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'audit_frames'
+path = 'inputs/cases/memory-family-v3-a54cb2f83098a2346a9cc46e-change/numeric/audit-frames.npz'
+value = b"PK\x03\x04-\x00\x00\x00\x00\x00\x00\x00!\x00\x1f\xf47\xd4\xff\xff\xff\xff\xff\xff\xff\xff\x08\x00\x14\x00tick.npy\x0...x00\x80\x01\xb4A\x05\x00raw_cam_right.npyPK\x05\x06\x00\x00\x00\x00\x03\x00\x03\x00\xb3\x00\x00\x00w\x82\n\x00\x00\x00"
+maximum = 688960, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+_ test_record_equality_and_authored_domain_refuse[source_raw_audit-trace_digest-0000000000000000000000000000000000000000000000000000000000000000] _
+
+role = 'source_raw_audit', field = 'trace_digest'
+value = '0000000000000000000000000000000000000000000000000000000000000000'
+
+    @pytest.mark.parametrize('role,field,value', [
+        ('admission','claims', {**CLAIMS,'actual_acceptance': True}),
+        ('admission','schema','actual-source-admission-v1'),
+        ('admission','source_run_id',SOURCE.replace('-','')),
+        ('raw_manifest','row_count', True),
+        ('source_raw_audit','trace_digest','0'*64),
+        ('owner_record','snapshot', {'path':'wrong.snp','size_bytes':1,'sha256':'0'*64}),
+        ('source_numeric_commit','status','accepted'),
+    ])
+    def test_record_equality_and_authored_domain_refuse(role, field, value):
+        def edit(name, v):
+            if name == role: v[field] = value
+>       fixture = authored(edit=edit)
+                  ^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+_ test_record_equality_and_authored_domain_refuse[owner_record-snapshot-value5] _
+
+role = 'owner_record', field = 'snapshot'
+value = {'path': 'wrong.snp', 'sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'size_bytes': 1}
+
+    @pytest.mark.parametrize('role,field,value', [
+        ('admission','claims', {**CLAIMS,'actual_acceptance': True}),
+        ('admission','schema','actual-source-admission-v1'),
+        ('admission','source_run_id',SOURCE.replace('-','')),
+        ('raw_manifest','row_count', True),
+        ('source_raw_audit','trace_digest','0'*64),
+        ('owner_record','snapshot', {'path':'wrong.snp','size_bytes':1,'sha256':'0'*64}),
+        ('source_numeric_commit','status','accepted'),
+    ])
+    def test_record_equality_and_authored_domain_refuse(role, field, value):
+        def edit(name, v):
+            if name == role: v[field] = value
+>       fixture = authored(edit=edit)
+                  ^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+_ test_record_equality_and_authored_domain_refuse[source_numeric_commit-status-accepted] _
+
+role = 'source_numeric_commit', field = 'status', value = 'accepted'
+
+    @pytest.mark.parametrize('role,field,value', [
+        ('admission','claims', {**CLAIMS,'actual_acceptance': True}),
+        ('admission','schema','actual-source-admission-v1'),
+        ('admission','source_run_id',SOURCE.replace('-','')),
+        ('raw_manifest','row_count', True),
+        ('source_raw_audit','trace_digest','0'*64),
+        ('owner_record','snapshot', {'path':'wrong.snp','size_bytes':1,'sha256':'0'*64}),
+        ('source_numeric_commit','status','accepted'),
+    ])
+    def test_record_equality_and_authored_domain_refuse(role, field, value):
+        def edit(name, v):
+            if name == role: v[field] = value
+>       fixture = authored(edit=edit)
+                  ^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:242: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+___________ test_real_filesystem_mutation_permanently_poisons[bytes] ___________
+
+mutation = 'bytes'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','symlink','ancestor'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+__________ test_real_filesystem_mutation_permanently_poisons[replace] __________
+
+mutation = 'replace'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','symlink','ancestor'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+________ test_real_filesystem_mutation_permanently_poisons[root-child] _________
+
+mutation = 'root-child'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','symlink','ancestor'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+________ test_real_filesystem_mutation_permanently_poisons[input-child] ________
+
+mutation = 'input-child'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','symlink','ancestor'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+__________ test_real_filesystem_mutation_permanently_poisons[symlink] __________
+
+mutation = 'symlink'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','symlink','ancestor'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+_________ test_real_filesystem_mutation_permanently_poisons[ancestor] __________
+
+mutation = 'ancestor'
+
+    @pytest.mark.parametrize('mutation', ['bytes','replace','root-child','input-child','symlink','ancestor'])
+    def test_real_filesystem_mutation_permanently_poisons(mutation):
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+___________ test_private_constructor_and_arbitrary_authority_refuse ____________
+No module named 'scripts.memory_family_source_consumer_vnext'
+
+During handling of the above exception, another exception occurred:
+Fixed authored source holder is missing
+___________ test_cross_thread_poison_and_original_body_error_survive ___________
+
+    def test_cross_thread_poison_and_original_body_error_survive():
+>       fixture = authored()
+                  ^^^^^^^^^^
+
+tests/test_memory_family_source_consumer_vnext.py:285: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_source_consumer_vnext.py:85: in authored
+    profile = put('profile', 'inputs/meta/profile.json', codec.TERMINAL_PATH.read_bytes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+role = 'profile', path = 'inputs/meta/profile.json'
+value = b'{"canonical":{"body":"memory.canonical_bytes: UTF-8 finite JSON, sorted keys, compact separators, nesting<=32","even...7":"Versioned codecs/publication/census/analysis and separately reviewed qualified adoption; not implemented here"}}\n'
+maximum = 1048576, middle = None
+
+    def put(role, path, value, maximum=MIB, middle=None):
+        if middle:
+            value = {'schema': f'memory-source-authored-{middle}-vnext-v1', **value, 'claims': copy.deepcopy(CLAIMS)}
+        if edit:
+            replacement = edit(role, value)
+            if replacement is not None:
+                value = replacement
+        payload = memory.canonical_bytes(value) if type(value) is dict else value
+        with (root / path).open('xb') as stream:
+>           stream.write(payload)
+E           OSError: [Errno 122] Disk quota exceeded
+
+tests/test_memory_family_source_consumer_vnext.py:77: OSError
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_authored_lease_derives_detached_context_and_closes_fds
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[admission-claims-value0]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[admission-schema-actual-source-admission-v1]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[admission-source_run_id-00000000000000000000000000000001]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[raw_manifest-row_count-True]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[source_raw_audit-trace_digest-0000000000000000000000000000000000000000000000000000000000000000]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[owner_record-snapshot-value5]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_record_equality_and_authored_domain_refuse[source_numeric_commit-status-accepted]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[bytes]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[replace]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[root-child]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[input-child]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[symlink]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_real_filesystem_mutation_permanently_poisons[ancestor]
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_private_constructor_and_arbitrary_authority_refuse
+FAILED tests/test_memory_family_source_consumer_vnext.py::test_cross_thread_poison_and_original_body_error_survive
+16 failed in 1.07s

@@ -1,0 +1,243 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+______ test_canonical_open_traverses_shared_constructor_world_and_writer _______
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/0471dc58cba44808a981289f3a30ebec'), repo=PosixP...7f401ef21a80>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401ef23560>)
+
+    def test_canonical_open_traverses_shared_constructor_world_and_writer(route):
+        before = {name: path.read_bytes() for name, path in route.paths.items()}
+>       engine = route.open()
+                 ^^^^^^^^^^^^
+
+tests/test_memory_source_bootstrap_vnext.py:215: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401ef...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/0471dc58cba44808a981289f3a30ebec/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/0471dc58cba44808a981289f3a30ebec/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_______ test_unknown_mode_refuses_before_payload_output_or_allocation[] ________
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/94c3613df04c49f199ab3792742b221e'), repo=PosixP...7f401efa2b60>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401efa31a0>)
+mode = ''
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': ''}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401e9...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/94c3613df04c49f199ab3792742b221e/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/94c3613df04c49f199ab3792742b221e/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_ test_unknown_mode_refuses_before_payload_output_or_allocation[canonical-prepared-vnext-v2] _
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/755c7b47146b40599852034e08d381f3'), repo=PosixP...7f401efa3240>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401efa2980>)
+mode = 'canonical-prepared-vnext-v2'
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': 'canonical-prepared-vnext-v2'}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401ef...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/755c7b47146b40599852034e08d381f3/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/755c7b47146b40599852034e08d381f3/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_____ test_unknown_mode_refuses_before_payload_output_or_allocation[False] _____
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/b78946bf336246e7bf073f53bd2c8001'), repo=PosixP...7f401efa3a60>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401efa2de0>)
+mode = False
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': False}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401e9...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/b78946bf336246e7bf073f53bd2c8001/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/b78946bf336246e7bf073f53bd2c8001/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_______ test_unknown_mode_refuses_before_payload_output_or_allocation[1] _______
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/2c747fb202ec47f8ba4be916df53d282'), repo=PosixP...7f401efa3ec0>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401ef21b20>)
+mode = 1
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': 1}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401ef...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/2c747fb202ec47f8ba4be916df53d282/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/2c747fb202ec47f8ba4be916df53d282/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_____ test_unknown_mode_refuses_before_payload_output_or_allocation[mode4] _____
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/55b5455e1aff4304a9069839a7bb7539'), repo=PosixP...7f401efa34c0>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401ef38360>)
+mode = []
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': []}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401e9...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/55b5455e1aff4304a9069839a7bb7539/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/55b5455e1aff4304a9069839a7bb7539/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_____ test_unknown_mode_refuses_before_payload_output_or_allocation[mode5] _____
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/f0512d97a7f64b3bb302c73df8566cbe'), repo=PosixP...7f401ef38180>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401ef38860>)
+mode = {}
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': {}}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401ef...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/f0512d97a7f64b3bb302c73df8566cbe/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/f0512d97a7f64b3bb302c73df8566cbe/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+_ test_unknown_mode_refuses_before_payload_output_or_allocation[canonical-prepared-vnext-v1] _
+
+route = namespace(home=PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/48fb6a50bbb345a58bad536ce8057a9f'), repo=PosixP...7f401ef38720>), stage=namespace(fail=None), trace=[], envs=[], open=<function route.<locals>.opened at 0x7f401ef38ea0>)
+mode = b'canonical-prepared-vnext-v1'
+
+    @pytest.mark.parametrize('mode', ['', 'canonical-prepared-vnext-v2', False, 1, [], {}, b'canonical-prepared-vnext-v1'])
+    def test_unknown_mode_refuses_before_payload_output_or_allocation(route, mode):
+        with pytest.raises(ValueError, match='source_bootstrap_mode'):
+>           route.open(source_bootstrap_mode=mode)
+
+tests/test_memory_source_bootstrap_vnext.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+changes = {'source_bootstrap_mode': b'canonical-prepared-vnext-v1'}
+options = {'controller': 'flynn', 'device': 'cpu', 'diagnostics': <palimpsest.held_provenance.HeldProvenance object at 0x7f401e9...99b37b144864a9c368384ea719ba8d8', 'block': 0, 'case_id': 'memory-family-v3-0279abe602574cd4166b0a86-change', ...}, ...}
+repo_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/48fb6a50bbb345a58bad536ce8057a9f/repo')
+asset_arg = PosixPath('/var/tmp/palimpsest-bootstrap-red-20261106-1/48fb6a50bbb345a58bad536ce8057a9f/assets')
+
+    def opened(**changes):
+        options = dict(controller='flynn', device='cpu', seed=case['seed'], scenario='memory-decision-v2',
+                       texture='checker', run_id=RUN_ID, memory_case=case, diagnostics=record,
+                       source_bootstrap_mode=MODE)
+        repo_arg, asset_arg = changes.pop('repo_root', repo), changes.pop('asset_root', root)
+        options.update(changes)
+>       return Engine.open(repo_arg, asset_arg, output, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Engine.open() got an unexpected keyword argument 'source_bootstrap_mode'
+
+tests/test_memory_source_bootstrap_vnext.py:203: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_canonical_open_traverses_shared_constructor_world_and_writer
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[]
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[canonical-prepared-vnext-v2]
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[False]
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[1]
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[mode4]
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[mode5]
+FAILED tests/test_memory_source_bootstrap_vnext.py::test_unknown_mode_refuses_before_payload_output_or_allocation[canonical-prepared-vnext-v1]
+8 failed in 0.30s

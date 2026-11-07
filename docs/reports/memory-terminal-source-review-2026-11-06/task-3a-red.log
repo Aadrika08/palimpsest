@@ -1,0 +1,246 @@
+.FFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+___ test_round1_complete_source_event_bytes_bound_valid_prefix_and_suffix[1] ___
+
+over = 1
+
+    @pytest.mark.parametrize('over', (0, 1))
+    def test_round1_complete_source_event_bytes_bound_valid_prefix_and_suffix(over):
+        sample = fixture(count=0)
+        source_events = sample['source_events']
+        prefix = copy.deepcopy(sample['source_application']['event_prefix'])
+        suffix = {'sequence': len(source_events), 'kind': 'diagnostic', 'run_id': SOURCE,
+            'episode': 0, 'episode_step': sample['context']['schedule']['boundary_tick'],
+            'tick': sample['context']['schedule']['boundary_tick'], 'message': ''}
+        limit = 7 * 1024**2
+        before = sum(len(encoded(e)) for e in source_events)
+        suffix['message'] = 'x' * (limit + over - before - len(encoded(suffix)))
+        source_events.append(suffix)
+        assert sum(len(encoded(e)) for e in source_events) == limit + over
+        assert sample['source_application']['event_prefix'] == prefix
+        if over:
+            from scripts import memory_family_oracle_v3 as oracle
+            with patch.object(oracle, '_source_evidence', side_effect=AssertionError('source replay must follow whole-stream cap')):
+                with pytest.raises(ValueError, match='source event byte ceiling'):
+>                   prove(sample)
+
+tests/test_memory_family_terminal_audit_vnext.py:489: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_family_terminal_audit_vnext.py:225: in prove
+    return api().prove_terminal_vnext(sample['raw'], context=sample['context'],
+scripts/memory_family_terminal_audit_vnext.py:428: in prove_terminal_vnext
+    case, source, source_world, source_projection = _source(source_application, source_events, source_rows, c)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/memory_family_terminal_audit_vnext.py:149: in _source
+    oracle._source_evidence(case, application, events, projection)
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='_source_evidence' id='140182468285648'>
+args = ({'acquisition': True, 'acquisition_protocol_sha256': '4273a6211c76ddb7974cf80f98e8aa3859d11fb9250cd7882c3f5c13d485190...2.472023773508, 2.7628697287095143], 'pose': [-2.223951197296, -2.797578261234, -2.8805238775816218], 'tick': 5}, ...])
+kwargs = {}
+effect = AssertionError('source replay must follow whole-stream cap')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: source replay must follow whole-stream cap
+
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: AssertionError
+____ test_round1_normal_event_only_numeric_aliases_refuse[outcome-episode] _____
+
+group = 'outcome', field = 'episode'
+
+    @pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+        ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+    def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+        sample = fixture(count=4, normal=True)
+        manifest = copy.deepcopy(sample['raw']['manifest'])
+        event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+        event['outcome'] = copy.deepcopy(event['outcome'])
+        event['metrics'] = copy.deepcopy(event['metrics'])
+        original = event[group][field]
+        event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+        assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert sample['raw']['manifest'] == manifest
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:508: Failed
+_____ test_round1_normal_event_only_numeric_aliases_refuse[outcome-steps] ______
+
+group = 'outcome', field = 'steps'
+
+    @pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+        ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+    def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+        sample = fixture(count=4, normal=True)
+        manifest = copy.deepcopy(sample['raw']['manifest'])
+        event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+        event['outcome'] = copy.deepcopy(event['outcome'])
+        event['metrics'] = copy.deepcopy(event['metrics'])
+        original = event[group][field]
+        event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+        assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert sample['raw']['manifest'] == manifest
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:508: Failed
+_ test_round1_normal_event_only_numeric_aliases_refuse[outcome-final_distance] _
+
+group = 'outcome', field = 'final_distance'
+
+    @pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+        ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+    def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+        sample = fixture(count=4, normal=True)
+        manifest = copy.deepcopy(sample['raw']['manifest'])
+        event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+        event['outcome'] = copy.deepcopy(event['outcome'])
+        event['metrics'] = copy.deepcopy(event['metrics'])
+        original = event[group][field]
+        event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+        assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert sample['raw']['manifest'] == manifest
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:508: Failed
+_____ test_round1_normal_event_only_numeric_aliases_refuse[metrics-reward] _____
+
+group = 'metrics', field = 'reward'
+
+    @pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+        ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+    def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+        sample = fixture(count=4, normal=True)
+        manifest = copy.deepcopy(sample['raw']['manifest'])
+        event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+        event['outcome'] = copy.deepcopy(event['outcome'])
+        event['metrics'] = copy.deepcopy(event['metrics'])
+        original = event[group][field]
+        event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+        assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert sample['raw']['manifest'] == manifest
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:508: Failed
+_ test_round1_normal_event_only_numeric_aliases_refuse[metrics-contact_ticks] __
+
+group = 'metrics', field = 'contact_ticks'
+
+    @pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+        ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+    def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+        sample = fixture(count=4, normal=True)
+        manifest = copy.deepcopy(sample['raw']['manifest'])
+        event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+        event['outcome'] = copy.deepcopy(event['outcome'])
+        event['metrics'] = copy.deepcopy(event['metrics'])
+        original = event[group][field]
+        event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+        assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert sample['raw']['manifest'] == manifest
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:508: Failed
+__ test_round1_normal_event_only_numeric_aliases_refuse[metrics-path_length] ___
+
+group = 'metrics', field = 'path_length'
+
+    @pytest.mark.parametrize('group,field', (('outcome', 'episode'), ('outcome', 'steps'),
+        ('outcome', 'final_distance'), ('metrics', 'reward'), ('metrics', 'contact_ticks'), ('metrics', 'path_length')))
+    def test_round1_normal_event_only_numeric_aliases_refuse(group, field):
+        sample = fixture(count=4, normal=True)
+        manifest = copy.deepcopy(sample['raw']['manifest'])
+        event = next(e for e in sample['raw']['events'] if e['kind'] == 'episode_finished')
+        event['outcome'] = copy.deepcopy(event['outcome'])
+        event['metrics'] = copy.deepcopy(event['metrics'])
+        original = event[group][field]
+        event[group][field] = False if field in ('episode', 'contact_ticks') else float(original) if field == 'steps' else int(original)
+        assert event[group] == (manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert memory.canonical_bytes(event[group]) != memory.canonical_bytes(manifest['last_outcome'] if group == 'outcome' else manifest['metrics'])
+        assert sample['raw']['manifest'] == manifest
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:508: Failed
+_________ test_round1_hash_bound_source_eye_numeric_aliases_refuse[1] __________
+
+flag = 1
+
+    @pytest.mark.parametrize('flag', (1, 1.0))
+    def test_round1_hash_bound_source_eye_numeric_aliases_refuse(flag):
+        original_application = _application
+        def inexact_application(*args, **kwargs):
+            application = original_application(*args, **kwargs)
+            application['eyes'] = {'left': flag, 'right': flag}
+            return application
+        with patch(__name__ + '._application', side_effect=inexact_application):
+            sample = fixture(count=0)
+        restored = next(e for e in sample['raw']['events'] if e['kind'] == 'application_restored')
+        restored['eyes'] = {'left': True, 'right': True}
+        assert sample['context']['source_application_sha256'] == memory.sha256(sample['source_application'])
+        assert type(sample['source_application']['eyes']['left']) is type(flag)
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:526: Failed
+________ test_round1_hash_bound_source_eye_numeric_aliases_refuse[1.0] _________
+
+flag = 1.0
+
+    @pytest.mark.parametrize('flag', (1, 1.0))
+    def test_round1_hash_bound_source_eye_numeric_aliases_refuse(flag):
+        original_application = _application
+        def inexact_application(*args, **kwargs):
+            application = original_application(*args, **kwargs)
+            application['eyes'] = {'left': flag, 'right': flag}
+            return application
+        with patch(__name__ + '._application', side_effect=inexact_application):
+            sample = fixture(count=0)
+        restored = next(e for e in sample['raw']['events'] if e['kind'] == 'application_restored')
+        restored['eyes'] = {'left': True, 'right': True}
+        assert sample['context']['source_application_sha256'] == memory.sha256(sample['source_application'])
+        assert type(sample['source_application']['eyes']['left']) is type(flag)
+        rebind(sample)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_audit_vnext.py:526: Failed
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_complete_source_event_bytes_bound_valid_prefix_and_suffix[1]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_normal_event_only_numeric_aliases_refuse[outcome-episode]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_normal_event_only_numeric_aliases_refuse[outcome-steps]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_normal_event_only_numeric_aliases_refuse[outcome-final_distance]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_normal_event_only_numeric_aliases_refuse[metrics-reward]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_normal_event_only_numeric_aliases_refuse[metrics-contact_ticks]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_normal_event_only_numeric_aliases_refuse[metrics-path_length]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_hash_bound_source_eye_numeric_aliases_refuse[1]
+FAILED tests/test_memory_family_terminal_audit_vnext.py::test_round1_hash_bound_source_eye_numeric_aliases_refuse[1.0]
+9 failed, 1 passed, 113 deselected in 3.18s

@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_read_refuses_rebound_policy_call_outside_exact_motor_interval ______
+
+    def test_read_refuses_rebound_policy_call_outside_exact_motor_interval():
+        codec=api(); parts=sample(1); bundle=convert(parts)
+        result=read(bundle,parts)
+        assert result['manifest']['first_tick']==result['manifest']['last_tick']==20
+        assert result['preservation']['raw_comparison_performed'] is False
+        assert result['preservation']['actual_acceptance'] is False
+        def change(events):
+            policy=next(event for event in events if event['kind']=='neural_policy_call')
+            policy['tick']=policy['episode_step']=2099
+        changed,proof=_rebind_recorded_events(bundle,parts[1],change)
+        # Descriptors/proof are rebound deliberately: this is stored structural
+        # coherence, never a claim that the mutated proof still passed Task3a replay.
+>       with pytest.raises(ValueError,match='PURE policy interval differs'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_family_terminal_numeric_vnext.py:506: Failed
+=========================== short test summary info ============================
+FAILED tests/test_memory_family_terminal_numeric_vnext.py::test_read_refuses_rebound_policy_call_outside_exact_motor_interval
+1 failed, 67 deselected in 0.52s

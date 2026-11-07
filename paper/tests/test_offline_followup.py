@@ -14,6 +14,17 @@ m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 
 
+@pytest.fixture(autouse=True)
+def clock_before_frozen_deadline(monkeypatch):
+    """The follow-up's ORIGINAL_DEADLINE is a frozen historical instant; run the
+    fixtures one hour before it so they keep testing guards, not today's date."""
+    import time as real
+    start, base = real.time(), m.ORIGINAL_DEADLINE - 3600
+    monkeypatch.setattr(m, 'time', SimpleNamespace(**{
+        k: getattr(real, k) for k in dir(real) if not k.startswith('_') and k != 'time'},
+        time=lambda: base + (real.time() - start)))
+
+
 def test_deadline_never_extends_unit_or_original_budget():
     assert m.deadline(100., 2000.) == 1000.
     assert m.deadline(m.ORIGINAL_DEADLINE - 100, m.ORIGINAL_DEADLINE + 200) == m.ORIGINAL_DEADLINE
