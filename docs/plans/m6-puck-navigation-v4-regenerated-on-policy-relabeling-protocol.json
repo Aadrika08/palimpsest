@@ -1,0 +1,783 @@
+{
+  "id": "M6-PUCK-NAV-V4-REGENERATED-ON-POLICY-RELABEL-1",
+  "version": 1,
+  "state": "prospective-docs-only; no source or numerical execution authorized",
+  "drafted_at_commit": "eb6b48d67fe2e82d560a53ea69a7d219949473d7",
+  "date": "2026-11-07",
+  "companion_markdown": "docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling.md",
+  "v3_status": "immutable-unexecutable-lost-inputs",
+  "predecessor": {
+    "protocol_json": {
+      "path": "docs/plans/m6-puck-navigation-v3-on-policy-relabeling-protocol.json",
+      "sha256": "fe8b2615f965a114274a13aeb2d49c26d3f79e0920eee72bce4eb671adff3d13"
+    },
+    "protocol_markdown": {
+      "path": "docs/plans/m6-puck-navigation-v3-on-policy-relabeling.md",
+      "sha256": "355e2e3aed465c448ca14bbcef6c184d0fae88f0b3879650bfa5b831f40aac8e"
+    },
+    "lost_inputs_record": {
+      "path": "docs/reports/research-feasibility-2026-11-07/README.md",
+      "sha256": "673072f106b7636e3c167c3c3dcc7a874d0ea5d673654766fc33f4401c6055cf"
+    },
+    "lost": [
+      "seed-21/22/23 checkpoint.npz, protocol.json, report.json",
+      "teacher-collection-v2 recordings",
+      "teacher-collection-v2 and training-v2 outer launchers under the former brain checkout"
+    ],
+    "no_v3_stage_attempted": true,
+    "relationship": "v4 preserves v3's question, intervention, gates and fitting settings; v3 and all prior results remain unchanged history."
+  },
+  "owner_direction": {
+    "path": "docs/reports/user-authority-2026-11-07/README.md",
+    "sha256": "d5908b0702b18697d7477c59fab2135cf125881abfa9f504ffe03c02945fda4e",
+    "stage_go_authority": "Utkarsh (owner), single GO authority, acceptor and registrar",
+    "held_out_read": "requires a separate explicit owner GO"
+  },
+  "question": "Does one fixed round of unchanged analytic-teacher labels on states visited by regenerated base puck students 21/22/23 produce three freshly fitted models that each reach at least three of four goals on fresh disjoint development scenes?",
+  "scope": "One simulator-only offline aggregation round for the existing puck task on regenerated inputs; no production, UI, physical, biological, safety, or automatic release qualification.",
+  "differences_from_v3": [
+    "Stage 0 regenerates the teacher corpus and base students with existing pipelines and pins new hashes before use.",
+    "Fresh scene IDs 6510-6513 / 6520-6523 replace 6110-6113 / 6120-6123; held-out roster is open decision D1.",
+    "Lane admission rule with cgroup one-CPU quota replaces v3's unfit worst-case stage sum.",
+    "Measured-bytes retention admission and a post-S0 bytes check replace v3 unfit worst-case retention plan; v3 per-owner and stage caps are kept."
+  ],
+  "evidence_basis": {
+    "support_gap_report": {
+      "path": "docs/reports/m6-puck-student-diagnosis.md",
+      "sha256": "ae54e2de43536141736e677d68e835c3dd5f9fdd2b51fb8b542d71de5d79084e",
+      "teacher_training_rows": 0,
+      "student_development_rows": 1575,
+      "interpretation": "Measured support gap and plausible compounding-error mechanism, not causal proof."
+    },
+    "teacher_collection_v2": {
+      "path": "docs/reports/m6-puck-teacher-collection-v2.json",
+      "sha256": "2dbd6c6e143dd489218acfcc4a5852df4ea4b43e48351adafb343b7c113e25bf",
+      "producer_commit": "69fd44504f8c7cd836c0f53176cfea881e848912",
+      "owners": 20,
+      "train_rows": 5710,
+      "recorded_dev_rows": 1314,
+      "outer_wall_seconds": 159.6070453870052,
+      "retained_bytes": 865192450
+    },
+    "training_v2": {
+      "path": "docs/reports/m6-puck-training-v2.json",
+      "sha256": "c0d941eedf3aa3e7a20bc3788348b877ce70e8deed225c31e0a7e3cf404dc48c",
+      "producer_commit": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+      "outer_wall_seconds": 59.81978900899412
+    },
+    "historical_model_index": {
+      "path": "docs/plans/m6-puck-student-models-v1.json",
+      "sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f",
+      "use": "history only; never edited; checkpoints it pins are lost"
+    },
+    "immutable_protocols": {
+      "learning_v2": {
+        "path": "docs/plans/m6-puck-learning-v2.json",
+        "sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354"
+      },
+      "task_v5": {
+        "path": "docs/plans/m6-puck-pushing-protocol-v5.json",
+        "sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30"
+      },
+      "historical_development": {
+        "path": "docs/plans/m6-puck-student-development-v1.json",
+        "sha256": "2857cfc1c5fe18e9d5f34fe30fdc4fc56467110f69424b8efb82bf77b1f2a370"
+      }
+    },
+    "prior_capability_results": "Original and balanced students each 0/4 on 6100-6103; held-out never opened."
+  },
+  "single_intervention": {
+    "name": "one on-policy student-state teacher-relabel aggregation round",
+    "collector": "Regenerated base models 21, 22, 23 from Stage 0 (pinned by S0c)",
+    "labeler": "Unchanged analytic-puck-behind-align-push-v5 teacher queried once per pre-action student state",
+    "training_change": "Append every admitted teacher-labelled student-state row to the regenerated base training split in one fixed order shared by all three fresh fits.",
+    "world_action": "Only the student's predicted action advances the world during collection.",
+    "excluded": [
+      "balanced loss or row weights",
+      "state or label filtering",
+      "coverage-censoring stop",
+      "teacher takeover, prefix, blend, action override, noise, rescue, or reset",
+      "feature, architecture, loss, optimizer, epoch, batch, seed, or selection change",
+      "winning collector/model selection",
+      "second aggregation round",
+      "warm start"
+    ],
+    "estimand_limitation": "Estimates the complete fixed aggregation procedure; cannot isolate targeted joint-state coverage, other new states, data volume, or extra updates."
+  },
+  "stage_0_regeneration": {
+    "interpreter": {
+      "path": "/home/utkarsh/Work/shraddha/palimpsest/.venv",
+      "python": "3.11.15",
+      "numpy": "2.2.5",
+      "torch": "2.9.0",
+      "mujoco": "3.3.6",
+      "evidence": "pyvenv.cfg version_info and site-packages dist-info names; nothing imported while drafting"
+    },
+    "S0a": {
+      "pipeline": "scripts/collect_puck_teachers.py",
+      "current_sha256": "c021864215c02548992e9dfb2478221945a556fb973f877db930839e2e58b8bd",
+      "unchanged_since_producer": "69fd445",
+      "owners": 20,
+      "train_scenes": "6000-6015",
+      "recorded_dev_scenes": "6016-6019",
+      "admission": "Unchanged learning-v2 complete-batch admission: every owner natural goal; each train owner >=32 ticks, >=10 contact intervals, >=10 terminal exact-zero labels; teacher/sensor mode agreement on every row.",
+      "bounds_seconds": {
+        "inner": 1500,
+        "term": 1560,
+        "kill_grace": 15,
+        "supervised": 1580
+      },
+      "launcher": "Lost outer launcher (sha256 b23b4c991315077bf82949aedd5b5b61c65f1f60145f47d7d7bcf1ebed33b5ce) must be re-authored thin with identical bounds and independently reviewed.",
+      "thread_note": "Collector sets OMP/OPENBLAS/MKL threads to 2; the one-CPU cgroup quota may throttle it.",
+      "publishes_at_close": [
+        "gate report sha256",
+        "train/recorded-dev feature and target array sha256",
+        "row counts N_train, N_dev",
+        "motivating-condition row count in teacher corpus is computed by S0c"
+      ]
+    },
+    "S0b": {
+      "pipeline": "scripts/train_puck.py",
+      "current_sha256": "a1dfc8c42a04f5b51217c261a0ea3f159b31d547e9ba0ff0b6005a2338be1b1f",
+      "difference_from_producer_82e2bd9": "Adds only an opt-in balanced path; default path used here.",
+      "seeds": [
+        21,
+        22,
+        23
+      ],
+      "outer_supervised_seconds": 680,
+      "input_admission": "Accepts only the S0a-published report bytes via the existing expected_sha256 argument.",
+      "determinism": "One thread, use_deterministic_algorithms; fit ladder reproduced all historical epoch losses exactly on identical inputs."
+    },
+    "S0c": {
+      "purpose": "Pin S0b outputs before any later use and run a descriptive offline regression.",
+      "pins": [
+        "three bundle file hashes",
+        "new v4 model index (historical index untouched)"
+      ],
+      "pin_order": "S0a close pins corpus hashes; S0b admits only those bytes; S0c pins bundles and model index; later stages admit only S0a/S0c-pinned bytes.",
+      "descriptive_teacher_corpus_motivating_condition_rows": "reported; historically 0",
+      "descriptive_comparisons": {
+        "historical_train_inputs_sha256": "4a679026d062947a694753becc0e3990c39749e3bc17fc7888a476cc5b3e1b45",
+        "historical_train_targets_sha256": "f46827ed652373e860dfe449bf82b97c2abc9d76b4bdad034fe310859d7ed91e",
+        "historical_dev_inputs_sha256": "b502f4b6c8dd7fa56927c2f83fb936993a4b7b8f322a44e117e90b701196ef54",
+        "historical_dev_targets_sha256": "4bcf8d8302a70d2dd25b4db77343ea300d4b8a432b7b843702de1542ff4cf98b",
+        "historical_selected_epochs": {
+          "21": 30,
+          "22": 27,
+          "23": 26
+        },
+        "historical_epoch_losses": "docs/reports/m6-puck-training-v2.json models[].history"
+      },
+      "gate": false
+    },
+    "S0d": {
+      "decision": "included, descriptive only",
+      "justification": "6100-6103 are not reused by any v4 gate, so a closed-loop regression there cannot contaminate v4; it is the only behavioural link between regenerated and lost original students; prior wall cost ~195 s.",
+      "procedure": "Existing 12-owner student-development-v1 evaluation (scene 6100-6103 x seeds 21,22,23) via a v4 model-index binding only.",
+      "bounds_seconds": {
+        "inner": 1200,
+        "term": 1260,
+        "kill_grace": 15,
+        "enclosing": 1280
+      },
+      "descriptive_student_motivating_condition_rows": "reported; historical diagnosis 1575",
+      "cannot_alter_later_stages": true,
+      "margin_calibration": "Report max owner wall and CPU under the one-CPU quota; if any S0d owner wall exceeds 90 s (50% of the 180 s per-owner bound), stop as blocked before S3; any bound change needs a versioned protocol.",
+      "compare": "Per owner ticks, end reason, end goal distance, contact intervals versus docs/reports/m6-puck-student-development.md (historically 0/4 per model, all 600 ticks).",
+      "stop_on_difference": false,
+      "stop_on_operational_failure": true,
+      "owner_may_drop": "D3"
+    },
+    "honest_reproduction": "New bytes will differ from old pins (uuid4 run IDs, perf_counter latencies, elapsed times, absolute paths, EGL native rendering, possible container timestamps). Hash equality was never demonstrated. Equality or inequality is reported, never a gate. New hashes are pinned after generation and before use.",
+    "row_count_rule": "If N_train != 5710, maxima are recomputed mechanically: N_train + 7200 rows; ceil(rows/64) updates per epoch; x30 per model."
+  },
+  "scene_reservations": {
+    "collection": [
+      6510,
+      6511,
+      6512,
+      6513
+    ],
+    "development": [
+      6520,
+      6521,
+      6522,
+      6523
+    ],
+    "held_out_options": {
+      "authored_task_v5_never_run": [
+        6200,
+        6201,
+        6202,
+        6203,
+        6204,
+        6205,
+        6206,
+        6207
+      ],
+      "fresh": [
+        6600,
+        6601,
+        6602,
+        6603,
+        6604,
+        6605,
+        6606,
+        6607
+      ]
+    },
+    "held_out_choice": "D1 open; reviewer recommends authored 6200-6207",
+    "max_historical_puck_id": 6207,
+    "geometry": {
+      "collection": "v3 reviewed puck_on_policy._PARAMETER_DOMAIN slots 0-3 (never minted or executed under v3)",
+      "development": "same domain slots 4-7",
+      "held_out_authored": "unchanged task-v5 authored rows",
+      "held_out_fresh": "new 8-slot domain frozen at source freeze before Stage 0; minted (S8a) only after held-out GO"
+    },
+    "known_prior_ranges": {
+      "puck": [
+        "6000-6019",
+        "6100-6103",
+        "6110-6113 (v3, occupied)",
+        "6120-6123 (v3, occupied)",
+        "6200-6207"
+      ],
+      "other_lanes": [
+        "1000-1015",
+        "1100-1103",
+        "1200-1207",
+        "3100-3103",
+        "3110-3113",
+        "3120-3127",
+        "3130-3133"
+      ]
+    },
+    "planning_screen": {
+      "scope": "Context-filtered (seed/scene/layout/split/held-out/roster/reservation) scan of tracked docs, src, scripts, tests at HEAD; git grep of the same paths at 186 unique tips of 248 refs, lines truncated to 400 characters.",
+      "result": "Zero context hits for all 16 candidates.",
+      "positive_controls": {
+        "6110": 100,
+        "6120": 16,
+        "6200": 57,
+        "3130": 10,
+        "ref_tips_6120_6123_on_40_tips": 37
+      },
+      "status": "Candidate screen only; not the required admission."
+    }
+  },
+  "contamination_admission_before_mint": {
+    "stage": "S1",
+    "procedure": "v3 contamination admission with one frozen exception: all reachable commits under local/remote refs, fresh remote advertisements and worktrees; typed scene-field parsing in tracked documents and surviving raw registries; reject any exact ID reuse outside v4 lineage; atomically publish one reservation for every v4 ID.",
+    "intentional_reuse_exceptions": {
+      "6000-6019": "S0a regenerates the same teacher train/recorded-dev splits",
+      "6100-6103": "S0d descriptive regression"
+    },
+    "lost_root_exception": {
+      "root": "/home/utkarsh/Work/shraddha/brain (including every .worktrees/*/runs/ registry)",
+      "treatment": "Declared lost and excluded by name; never treated as clean.",
+      "risk": "An ID or payload recorded only in those lost raw registries would go undetected.",
+      "mitigation": "Every executed puck roster appears in tracked reports, all historical puck IDs are <= 6207, and v4 collection/development IDs are >= 6510."
+    },
+    "ordering": "Drafted after S0; D9 asks whether to run S1 first (S1 has no S0 dependency; S2 does).",
+    "payload_disjointness": {
+      "S2": "Reject duplicate canonical scene, scientific initial state, or payload against regenerated S0a train/recorded-dev payloads, authored 6100-6103, among the 8 new payloads, and authored 6200-6207 only as the pure comparison under D2.",
+      "S8a_only_if_D1_fresh": "Same set plus the 8 S2 collection/development payloads, authored 6200-6207 (pure comparison), and among the 8 held-out payloads."
+    },
+    "collision_disposition": "Stop v4; never substitute IDs; versioned protocol plus independent review."
+  },
+  "collection": {
+    "stage": "S3",
+    "order": "scene 6510,6511,6512,6513; within each scene model 21,22,23",
+    "owners": 12,
+    "maximum_ticks": 7200,
+    "max_ticks_per_owner": 600,
+    "attempts": 1,
+    "semantics": "Identical to v3 collection: pre-action float32 sensors[8] and student_inputs[9]; one isolated teacher query; one student inference; student-only action; commit after complete interval; mode agreement; no reset, retry, rescue or coverage-triggered stop.",
+    "coverage_predicate": "Own BEFORE-mode approach, contact true, axial distance in [0.35,0.63] m, absolute lateral distance <= 0.06 m, behind-point distance > 0.08 m (unchanged task-v5 arithmetic).",
+    "coverage_gate": "All 12 owners normal and admitted, and at least one motivating-condition row from each collector model 21,22,23. Zero for any model is a valid failed result and forbids training.",
+    "coverage_non_use": "Counts cannot filter, crop, weight, select a collector, extend a trajectory, or authorize another round."
+  },
+  "data": {
+    "stage": "S4",
+    "base_train": "Regenerated S0a train split (6000-6015), N_train rows pinned by S0c (historically 5710)",
+    "recorded_dev": "Regenerated S0a recorded-dev split (6016-6019), N_dev rows pinned by S0c (historically 1314); per-epoch selection only",
+    "new_row_count_minimum": 12,
+    "new_row_count_maximum": 7200,
+    "maximum_augmented_train_rows_if_N_train_5710": 12910,
+    "ordering": "Exact base order then all admitted collection sources in fixed scene/model order; within-source completed-interval order.",
+    "forbidden": "No development or held-out row, row dropping, weighting, oversampling, target mixing, or loader fallback."
+  },
+  "learning": {
+    "stage": "S5",
+    "new_models": 3,
+    "training_seeds": [
+      21,
+      22,
+      23
+    ],
+    "paired_baselines": "Regenerated S0b base students; not refit after S0b.",
+    "initialization": "Fresh deterministic make_model initialization per seed; no warm start.",
+    "architecture": [
+      9,
+      32,
+      32,
+      2
+    ],
+    "parameter_count": 1442,
+    "activation": "tanh",
+    "parameter_and_forward_dtype": "float32",
+    "target_dtype": "float64",
+    "action_scaling": "float64 0.4 after promoting normalized float32 output; no clipping or fallback",
+    "loss": "Unweighted mean over rows and both components of ((prediction-target)/0.4)^2 in float64",
+    "epochs": 30,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "gradient_norm_cap": 1.0,
+    "device": "CPU",
+    "cpu_threads": 1,
+    "selection": "Earliest strict minimum recorded-dev mean loss independently per seed",
+    "maximum_updates_per_epoch_if_N_train_5710": 202,
+    "maximum_updates_per_model_if_N_train_5710": 6060,
+    "per_seed_bounds_seconds": {
+      "internal": 120,
+      "term": 180,
+      "kill_grace": 15,
+      "supervised": 200
+    }
+  },
+  "mechanism_admission": {
+    "stage": "S6",
+    "model_seed": 21,
+    "scene_id": 6510,
+    "procedure": "v3 four-owner contract unchanged: source (5-120 intervals, initial+tick1), native continuation (4 intervals), saved-action replay (0 predictions), policy replay; relabeled-v4 model 21 on spent collection row 6510.",
+    "purpose": "Operational compatibility only; not a scientific arm or task-success result."
+  },
+  "development": {
+    "stage": "S7",
+    "scenes": [
+      6520,
+      6521,
+      6522,
+      6523
+    ],
+    "arms": [
+      "regenerated-base",
+      "relabeled-v4"
+    ],
+    "order": "scene increasing; model 21,22,23; regenerated-base then relabeled-v4",
+    "owners": 24,
+    "maximum_ticks": 14400,
+    "attempts": 1,
+    "initial_matching": "Within each scene all six owners match the exact scientific initial state before action 1.",
+    "goal_definition": "Unchanged native final_state.reason == 'puck_goal' within 600 ticks.",
+    "gate": "All 24 owners normal and admitted, and each relabeled-v4 model independently reaches at least 3 of 4 goals.",
+    "attribution_rule": "Pre-registered: if a seed's regenerated-base arm also reaches >=3/4 on 6520-6523, that seed's relabeled pass is reported as not attributable to the intervention; the gate verdict is still computed as written.",
+    "timeout_classification": "Any wall-clock timeout is an operational failure, never a natural non-goal.",
+    "baseline_reporting": "Descriptive only; no comparative threshold, pooling, or winning model."
+  },
+  "held_out": {
+    "stages": "S8b only if D1 authored 6200-6207; S8a+S8b if D1 fresh 6600-6607",
+    "scenes": "D1 open: authored task-v5 6200-6207 (never run; reviewer recommendation) or fresh 6600-6607 (minted only after GO)",
+    "prerequisites": "Passed immutable development report, separate held-out protocol and execution manifest, disjointness proof, joint lane and retention admission, independent review, explicit owner GO.",
+    "later_owners": 48,
+    "later_maximum_ticks": 28800,
+    "later_gate": "All 48 owners normal and admitted, and each relabeled-v4 model independently reaches at least 6 of 8 goals.",
+    "forbidden": "No pooling, winning model, replacement, retry, tuning, rescue, or threshold change."
+  },
+  "lane_admission": {
+    "lane": "puck",
+    "lane_cpu_seconds": 18000,
+    "charged_at_drafting": 0,
+    "charged_basis": "docs/reports/research-feasibility-2026-11-07/README.md (other lanes 0); re-read from the authoritative ledger at S0a admission",
+    "worst_case_formula": "(enclosing hard deadline + 120 s audit allowance) x cgroup CPU quota (1 CPU)",
+    "rule": "Admit a stage only if no unknown tail exists so far, measured charge + worst case <= remaining lane, retention admission passes, reviewed manifest exists, and owner GO is given; else stop and publish blocked with the numbers. Never reorder, skip, split, or raise caps to fit.",
+    "held_out_joint_admission": "If D1 is fresh, S8a and S8b are admitted together; held-out geometry is never minted without lane to evaluate it.",
+    "pre_held_out_worst_case_total": 15790,
+    "pre_held_out_fits_lane_at_worst_case": true,
+    "held_out_worst_case_total": {
+      "D1_authored": 8870,
+      "D1_fresh": 10540
+    },
+    "held_out_requires_measured_charge_at_most": {
+      "D1_authored": 9130,
+      "D1_fresh": 7460
+    },
+    "v3_problem_resolved": "v3 worst-case stage sum 19,440 s exceeded 18,000 s with no admission rule."
+  },
+  "cpu_census": {
+    "mechanism": "Per-stage cgroup-v2 leaf containing launcher, children, the /proc PID+start-time sampler, and audits; cpu.max one CPU.",
+    "sampler_location": "Inside the stage leaf (its CPU counted and bounded); it also detects descendants outside the leaf.",
+    "final_read": "After the leaf is empty, the registrar's reader runs outside it, reads cpu.stat usage_usec once, and adds its own getrusage CPU to the charge.",
+    "audit_deadline": "Local and root audits combined run after stage publication with a hard 120 s kill; a killed audit is an operational failure.",
+    "unknown_tail": "Descendant observed outside the cgroup, failed census read, or sampled per-process CPU exceeding the cgroup total. Reported as unknown, never excluded; blocks all later admissions.",
+    "unit_note": "All prior figures are wall seconds; no puck process CPU has been measured.",
+    "availability": "cgroup-v2 delegation not verified while drafting; absence blocks execution (D4)."
+  },
+  "expected_cost_table": {
+    "unit_of_priors": "wall seconds from single historical runs, not CPU seconds",
+    "pre_held_out": [
+      {
+        "stage": "S0a",
+        "name": "teacher_corpus_regeneration",
+        "enclosing_hard_seconds": 1580,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 1700,
+        "output_cap_bytes": 4294967296,
+        "output_cap_source": "existing learning-v2 teacher pipeline cap (unchanged)",
+        "prior_wall_seconds_not_cpu": 189.6,
+        "prior_basis": "teacher-collection-v2 outer 159.607 + local 16.719 + root 13.263 audits"
+      },
+      {
+        "stage": "S0b",
+        "name": "base_student_training",
+        "enclosing_hard_seconds": 680,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 800,
+        "output_cap_bytes": 67108864,
+        "output_cap_source": "existing training-v2 aggregate cap (unchanged)",
+        "prior_wall_seconds_not_cpu": 73.1,
+        "prior_basis": "training-v2 outer 59.820 + audits 11.905 + 1.368"
+      },
+      {
+        "stage": "S0c",
+        "name": "input_pin_and_offline_regression",
+        "enclosing_hard_seconds": 240,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 360,
+        "output_cap_bytes": 67108864,
+        "output_cap_source": "v3 small-stage cap",
+        "prior_wall_seconds_not_cpu": null,
+        "prior_basis": "no direct prior; comparable audits 12-17 wall-s"
+      },
+      {
+        "stage": "S0d",
+        "name": "base_regression_on_6100_6103_descriptive",
+        "enclosing_hard_seconds": 1280,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 1400,
+        "output_cap_bytes": 3221225472,
+        "output_cap_source": "existing student-development-v1 cap (unchanged); pinned bound inner 1200 / TERM 1260+15 / enclosing 1280",
+        "prior_wall_seconds_not_cpu": 221.5,
+        "prior_basis": "student-development launcher 194.751 + audits 12.548 + 14.110"
+      },
+      {
+        "stage": "S1",
+        "name": "ref_registry_admission_and_reservation",
+        "enclosing_hard_seconds": 660,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 780,
+        "output_cap_bytes": 67108864,
+        "output_cap_source": "v3 cap",
+        "prior_wall_seconds_not_cpu": null,
+        "prior_basis": "no prior; unknown"
+      },
+      {
+        "stage": "S2",
+        "name": "collection_development_scene_mint",
+        "enclosing_hard_seconds": 1550,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 1670,
+        "output_cap_bytes": 268435456,
+        "output_cap_source": "v3 cap",
+        "prior_wall_seconds_not_cpu": null,
+        "prior_basis": "no prior; pure arithmetic expected small; unknown"
+      },
+      {
+        "stage": "S3",
+        "name": "on_policy_collection",
+        "enclosing_hard_seconds": 2270,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 2390,
+        "output_cap_bytes": 3221225472,
+        "output_cap_source": "v3 cap (12 x 160 MiB + 1,152 MiB parent/ledger/census headroom)",
+        "prior_wall_seconds_not_cpu": 195.0,
+        "prior_basis": "analogy to 12-owner x 600-tick student development 194.751; teacher-query overhead unknown"
+      },
+      {
+        "stage": "S4",
+        "name": "data_preparation",
+        "enclosing_hard_seconds": 240,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 360,
+        "output_cap_bytes": 67108864,
+        "output_cap_source": "v3 cap",
+        "prior_wall_seconds_not_cpu": null,
+        "prior_basis": "no prior; unknown"
+      },
+      {
+        "stage": "S5",
+        "name": "relabeled_training",
+        "enclosing_hard_seconds": 710,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 830,
+        "output_cap_bytes": 67108864,
+        "output_cap_source": "v3 cap",
+        "prior_wall_seconds_not_cpu": 134.0,
+        "prior_basis": "training-v2 59.820 x at most 2.2444 update ratio"
+      },
+      {
+        "stage": "S6",
+        "name": "mechanism_admission",
+        "enclosing_hard_seconds": 830,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 950,
+        "output_cap_bytes": 1073741824,
+        "output_cap_source": "v3 cap (4 x 160 MiB + 384 MiB headroom)",
+        "prior_wall_seconds_not_cpu": 27.4,
+        "prior_basis": "prior student mechanism attempt launcher 27.407"
+      },
+      {
+        "stage": "S7",
+        "name": "development",
+        "enclosing_hard_seconds": 4430,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 4550,
+        "output_cap_bytes": 4294967296,
+        "output_cap_source": "v3 cap (24 x 160 MiB + 256 MiB headroom)",
+        "prior_wall_seconds_not_cpu": 436.0,
+        "prior_basis": "2 x 194.751 + ~46 audits (balanced-development audits 22.863 + 23.126)"
+      }
+    ],
+    "held_out_after_separate_go": [
+      {
+        "stage": "S8a",
+        "name": "held_out_mint_after_separate_go_only_if_D1_fresh",
+        "enclosing_hard_seconds": 1550,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 1670,
+        "output_cap_bytes": 268435456,
+        "output_cap_source": "v3 mint cap",
+        "prior_wall_seconds_not_cpu": null,
+        "prior_basis": "no prior; unknown"
+      },
+      {
+        "stage": "S8b",
+        "name": "held_out_evaluation_after_separate_go",
+        "enclosing_hard_seconds": 8750,
+        "audit_allowance_seconds": 120,
+        "worst_case_cpu_seconds_at_one_cpu_quota": 8870,
+        "output_cap_bytes": 8589934592,
+        "output_cap_source": "v3 cap (48 x 160 MiB + 512 MiB headroom)",
+        "prior_wall_seconds_not_cpu": 780.0,
+        "prior_basis": "4 x 194.751 + audits"
+      }
+    ],
+    "pre_held_out_known_prior_wall_seconds_approx": 1277,
+    "unknown_prior_stages": [
+      "S0c",
+      "S1",
+      "S2",
+      "S4",
+      "S8a"
+    ],
+    "held_out_options": {
+      "D1_authored_6200_6207": {
+        "stages": [
+          "S8b"
+        ],
+        "worst_case": 8870,
+        "admissible_if_measured_charge_at_most": 9130
+      },
+      "D1_fresh_6600_6607": {
+        "stages": [
+          "S8a",
+          "S8b"
+        ],
+        "worst_case": 10540,
+        "admissible_if_measured_charge_at_most": 7460
+      }
+    }
+  },
+  "retention": {
+    "retained_run_cap_bytes": 17179869184,
+    "minimum_free_bytes": 1073741824,
+    "measured_bytes_admission": "Before each stage: measured v4 retained bytes + stage cap + 1 GiB floor <= 16 GiB, and measured free space >= stage cap + floor; else blocked.",
+    "per_native_owner_bytes": 167772160,
+    "per_owner_choice": "Keep v3 160 MiB and v3 stage caps (which include parent report/ledger/census headroom). The earlier 128 MiB proposal was based on the teacher recorder, not the on-policy recorder, and is withdrawn; tightening requires D7 and a synthetic 600-tick S3 recorder measurement before freeze.",
+    "stage_headroom_above_owner_caps_bytes": {
+      "S3": 1207959552,
+      "S6": 402653184,
+      "S7": 268435456,
+      "S8b": 536870912
+    },
+    "existing_pipeline_caps_unchanged": {
+      "S0a": 4294967296,
+      "S0b": 67108864,
+      "S0d": 3221225472
+    },
+    "s1_to_s7_caps_total_bytes": 9059696640,
+    "post_s0_check": {
+      "rule": "After S0 and before the next non-S0 stage, measured S0 retained bytes must be <= 6.5625 GiB so no pre-held-out stage can be retention-blocked; otherwise stop as blocked.",
+      "limit_bytes": 7046430720,
+      "note": "Replaces the earlier 3.25 GiB figure, which assumed the withdrawn 128 MiB caps."
+    },
+    "held_out_capacity": "No static guarantee; requires measured retained bytes before held-out <= 7 GiB (authored) or <= 6.75 GiB (fresh, S8a+S8b).",
+    "expected_bytes": {
+      "S0a": "0.806 GiB measured (teacher-collection-v2 outer bytes)",
+      "S0b": "bounded by 64 MiB cap; checkpoints ~7 KB each (training-v2)",
+      "S0d_S3": "~0.83 GiB each, unsourced extrapolation at 123,177 B/teacher interval",
+      "S7": "~1.65 GiB, unsourced extrapolation",
+      "note": "No development report records byte totals."
+    },
+    "deletion": "None; raw deletion remains disabled.",
+    "rejected_alternative": "Compact gate-only recording: needs a new recorder mode and weakens independent raw-data audits.",
+    "v3_problem_resolved": "v3 worst-case retention 17.4375 GiB exceeded the 16 GiB cap."
+  },
+  "attempts_and_atomic_publication": {
+    "per_stage_attempts": 1,
+    "no_retry": true,
+    "reservation": "Durable attempt receipt fsynced before first input/runtime access; crash, timeout, partial output or outer termination consumes the attempt.",
+    "success": "Last fallible action after final source/input/cap recheck, fsync and atomic rename, process and descendant drain, census close, and lease release.",
+    "per_stage_requirements": [
+      "reviewed hash-bound execution manifest",
+      "independent review",
+      "explicit owner GO"
+    ]
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "torch": "2.9.0",
+    "mujoco": "3.3.6",
+    "backend": "egl",
+    "device": "cpu",
+    "training_and_inference_threads": 1
+  },
+  "planned_source": {
+    "reuse": [
+      "src/palimpsest/puck_on_policy.py (v3 path) with a versioned v4 ID binding; v3 IDs treated as occupied",
+      "puck_scene_* registry/inventory modules",
+      "puck_collection_close/ledger",
+      "explicit-layout seam in puck_profile.authored_reset",
+      "scripts/collect_puck_teachers.py",
+      "scripts/train_puck.py",
+      "scripts/evaluate_puck_development.py"
+    ],
+    "create": [
+      "thin S0a/S0b/S0d launchers replacing lost outer launchers",
+      "v4 model index binding",
+      "frozen held-out slot domain (only if D1 fresh)",
+      "frozen lost-root exception",
+      "cgroup CPU census, lane admission ledger and 120 s audit kill",
+      "measured-bytes retention admission and post-S0 check"
+    ],
+    "preserve": [
+      "all historical loaders, protocols, models index, reports and evidence",
+      "production Engine and UI paths",
+      "task, physics, sensors, contacts, features, model, loss, and training clock"
+    ]
+  },
+  "tests_before_execution_freeze": [
+    "All v3 synthetic tests, rebound to v4 IDs.",
+    "Lane admission: exact-fit accepted, one second over refused; joint held-out admission; unknown tail blocks later stages.",
+    "Retention admission boundaries with measured bytes and free space, including the post-S0 6.5625 GiB check.",
+    "Any wall-clock timeout is classified as operational failure, never a natural non-goal.",
+    "Audit hard 120 s kill boundary.",
+    "S0 pin-before-use: no later stage admits unpinned or changed inputs.",
+    "Held-out IDs and domain unreachable before held-out GO."
+  ],
+  "related_work": [
+    {
+      "cite": "Ross and Bagnell, Efficient Reductions for Imitation Learning, AISTATS 2010, PMLR 9:661-668",
+      "url": "https://proceedings.mlr.press/v9/ross10a.html",
+      "verified": "2026-11-07 web search"
+    },
+    {
+      "cite": "Ross, Gordon and Bagnell, A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning (DAgger), AISTATS 2011, PMLR 15:627-635",
+      "url": "https://proceedings.mlr.press/v15/ross11a.html",
+      "verified": "2026-11-07 web search"
+    },
+    {
+      "cite": "Laskey, Lee, Fox, Dragan and Goldberg, DART: Noise Injection for Robust Imitation Learning, CoRL 2017, PMLR 78:143-156",
+      "url": "https://proceedings.mlr.press/v78/laskey17a.html",
+      "verified": "2026-11-07 web search"
+    },
+    {
+      "cite": "de Haan, Jayaraman and Levine, Causal Confusion in Imitation Learning, NeurIPS 2019",
+      "url": "https://papers.nips.cc/paper/9343-causal-confusion-in-imitation-learning",
+      "verified": "2026-11-07 web search"
+    },
+    {
+      "cite": "Wang and Chen, FLYNN: Robust Neural Network for Robot Navigation using Fly Brain Topology, arXiv:2607.00025",
+      "url": "https://arxiv.org/abs/2607.00025",
+      "verified": "2026-11-07 web search (abstract level); DAgger detail from in-repo upstream/fly-gym README"
+    }
+  ],
+  "neuromechfly_v2": "Not the puck simulator lineage (puck task derives from FLYNN upstream/fly-gym MuJoCo rover XML); not cited as a basis.",
+  "novelty_claim": "None; standard single DAgger-style aggregation step; one round with pure student roll-in carries no DAgger guarantee.",
+  "evidence_boundary": {
+    "development_pass": "Supports only simulator capability of the fixed one-round procedure on four fresh development scenes.",
+    "later_held_out_pass": "Would support only the separately authorized eight-scene simulator criterion.",
+    "unsupported": [
+      "causal proof that the support gap caused prior failure",
+      "isolation of targeted-state labels from other new states, data volume, or extra updates",
+      "bit-identity with or substitution for lost original inputs",
+      "analytic-teacher correctness or complete student observability",
+      "benefit from another aggregation round",
+      "benefit relative to v3",
+      "physical, biological, safety, UI, release, or general-purpose capability"
+    ]
+  },
+  "open_owner_decisions": {
+    "status": "All open. D1-D9 must be resolved and this protocol re-hashed before source freeze.",
+    "D1": {
+      "decision": "Held-out roster: authored task-v5 6200-6207 or fresh 6600-6607.",
+      "reviewer_default": "6200-6207: keeps v3 held-out unchanged and saves the 1,670 CPU-s mint; held-out W 8,870, admissible if measured CPU before it <= 9,130."
+    },
+    "D2": {
+      "decision": "Scope of comparison against authored 6200-6207 in S2/S8a.",
+      "reviewer_default": "Define held-out read as executing or loading those scenes; the pure ID/payload comparison runs under an explicit GO."
+    },
+    "D3": {
+      "decision": "Keep S0d (W 1,400 CPU-s) or drop it.",
+      "reviewer_default": "Keep."
+    },
+    "D4": {
+      "decision": "One-CPU cgroup-v2 quota as census and CPU bound.",
+      "reviewer_default": "Yes, after verifying cgroup-v2 delegation."
+    },
+    "D5": {
+      "decision": "Independent manifest reviewer.",
+      "reviewer_default": "Must be independent of the protocol drafter."
+    },
+    "D6": {
+      "decision": "Blocked is final: no larger retention contract or lane borrowing.",
+      "reviewer_default": "Yes."
+    },
+    "D7": {
+      "decision": "Per-owner byte cap and stage headroom.",
+      "reviewer_default": "Keep 160 MiB and v3 stage caps; tighten only after a synthetic 600-tick S3 recorder measurement."
+    },
+    "D8": {
+      "decision": "Hard 120 s audit deadline (prior audits <= 23.1 wall-s); kill is an operational failure.",
+      "reviewer_default": null
+    },
+    "D9": {
+      "decision": "Run S1 before S0 so an ID collision stops v4 before ~4,260 worst-case CPU-s of S0.",
+      "reviewer_default": null
+    }
+  },
+  "execution_stops": [
+    "Do not implement or execute from an unreviewed or changed protocol.",
+    "Do not open registries, retained inputs, models, Torch, MuJoCo, the minter, or a simulator before the stage-specific reservation, reviewed manifest, and owner GO.",
+    "Stop on any ref inventory, ID, scene, initial, payload, source, runtime, model, data, order, count, dtype, query-isolation, cursor, finite, deadline, CPU-census, RSS, storage, publication, or cleanup mismatch.",
+    "Failed S0a/S0b admission or coverage gate forbids later stages; failed training/mechanism forbids development; failed development keeps held-out locked.",
+    "No repair, retry, replacement, tuning, second round, threshold change, winning model, consumed-attempt reopening, evidence deletion, cap relaxation, lane borrowing, or held-out access without separate GO."
+  ],
+  "forbidden_access_in_this_planning_commit": {
+    "retained_raw_inputs": false,
+    "raw_scene_registries_or_manifests": false,
+    "models_or_checkpoints": false,
+    "torch_imported": false,
+    "mujoco_imported": false,
+    "simulator_executed": false,
+    "collection_executed": false,
+    "training_executed": false,
+    "development_executed": false,
+    "held_out_accessed": false
+  },
+  "qualification_claims": []
+}

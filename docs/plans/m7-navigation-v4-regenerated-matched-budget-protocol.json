@@ -1,0 +1,818 @@
+{
+  "id": "M7-NAV-V4-REGEN-MATCHED-BUDGET-1",
+  "version": 1,
+  "state": "prospective documentation-only draft; source implementation, dependency installation, corpus generation, Torch/MuJoCo import, model construction, fitting, inference, simulator execution, fresh-scene generation and held-out access are not authorized; revised after independent review (APPROVE WITH CHANGES)",
+  "base_commit": "eb6b48d67fe2e82d560a53ea69a7d219949473d7",
+  "supersedes_nothing": true,
+  "v3_status": "immutable-unexecutable-lost-inputs",
+  "v3_relationship": "V3 (M7-NAV-V3-MATCHED-BUDGET-1) stays unchanged history; attempts 1 and 2 are consumed; its pinned corpus is lost. V4 does not amend, repair, retry or reinterpret v3 or any v2 result. The v4 regenerated corpus is a new corpus, not v3's.",
+  "owner": {
+    "name": "Utkarsh",
+    "role": "sole stage-GO authority, acceptor and registrar",
+    "authority_record": {
+      "path": "docs/reports/user-authority-2026-11-07/README.md",
+      "sha256": "d5908b0702b18697d7477c59fab2135cf125881abfa9f504ffe03c02945fda4e"
+    }
+  },
+  "question": "Under one deterministic matched training-and-selection clock on the unchanged ORIGINAL MaleCNS topology, does the regenerated-then-frozen advice-augmented corpus meet the unchanged per-seed fresh-scene simulator capability gates?",
+  "single_intervention": {
+    "name": "matched training-and-selection clock (unchanged from v3)",
+    "with": "Exactly 46,080 real loss-bearing row presentations and 1,440 optimizer updates of exactly 32 real rows for every old-corpus and augmented model; only the terminal update-1,440 checkpoint is selectable.",
+    "causal_limit": "Same as v3: the complete clock (row/update budget, tail handling, packing, terminal selection) is one inseparable intervention."
+  },
+  "evidence_basis": {
+    "v3_plan": {
+      "path": "docs/plans/m7-navigation-v3-matched-budget.md",
+      "sha256": "2caca6d5077eb6cbc1f21325efa468e72cd7ab8a14357992a9cc573c815a0db8"
+    },
+    "v3_protocol": {
+      "path": "docs/plans/m7-navigation-v3-matched-budget-protocol.json",
+      "sha256": "ecfafd2b6bedaf5d073e0bf32571d1978084ec7ddfb0e8c6c98a298d38d70732"
+    },
+    "v3_attempt_1": {
+      "path": "docs/reports/m7-navigation-v3-matched-budget-attempt-1.md",
+      "sha256": "a0230698ef610b514730dbc7b0b6f226560d1a014f69a5d1de97a110bb767629",
+      "service_cpu_seconds": 0.431
+    },
+    "v3_attempt_2": {
+      "path": "docs/reports/m7-navigation-v3-matched-budget-attempt-2.md",
+      "sha256": "f0b82b7805261bb2068b9293f36a9069ffec1e4cce81aa0f8fc4b7e5a32c29c5",
+      "service_cpu_seconds": 1.401
+    },
+    "feasibility_and_lost_inputs": {
+      "path": "docs/reports/research-feasibility-2026-11-07/README.md",
+      "sha256": "673072f106b7636e3c167c3c3dcc7a874d0ea5d673654766fc33f4401c6055cf"
+    },
+    "lost_v3_inputs": [
+      "data manifest 47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+      "old manifest 402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014",
+      "historical-arrays.npz a15f4b9267de04a2f952c19e6ddc65b8338696977b764e7418f044b25e6a5271",
+      "historical-result.json 363445d80f13814804768a791bdff859e644f75dc39923daf762884fed70b2db",
+      "~1.79 GB raw recordings",
+      "recovery research checkpoints bound by data/manifests/male-recovery-research-development-v1.json"
+    ]
+  },
+  "present_inputs": {
+    "graph": {
+      "path": "data/assets/flynn/male-reduced-v1/source-graph.json",
+      "bytes": 101560,
+      "sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0"
+    },
+    "graph_manifest": {
+      "path": "data/manifests/malecns-reduced-neighborhood-v1.json",
+      "bytes": 5364,
+      "sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f"
+    },
+    "cell_source": {
+      "path": "upstream/fly-gym/models/connectome_rnn_model.py",
+      "bytes": 11055,
+      "sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+    },
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+    "recovery_research_index": {
+      "path": "data/manifests/male-recovery-research-development-v1.json",
+      "sha256": "cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5",
+      "note": "present, but the checkpoints it binds lived in the lost checkout"
+    }
+  },
+  "runtime": {
+    "interpreter": "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "torch_distribution": "2.9.0",
+    "torch_build": "2.9.0+cu128",
+    "device": "cpu",
+    "threads": 1,
+    "cuda": "hidden and uninitialized",
+    "dtype": "float32",
+    "deterministic_algorithms": true,
+    "mujoco": "3.3.6 (pyproject.toml / uv.lock)",
+    "mujoco_gl": "egl",
+    "egl_mesa_gpu_driver_identity": "unknown now; recorded by P and every S0-S3 stage",
+    "per_producer_threads": {
+      "collect_male_recovery.py (S0b)": "OMP_NUM_THREADS=2 (lines 426, 515)",
+      "collect_male_navigation_v2.py (S0e)": "OMP_NUM_THREADS=1 (line 467); torch one thread (line 331)",
+      "collect_male_teachers.py (S0a)": "not set by producer; recorded by P",
+      "torch training stages": "1"
+    },
+    "interpreter_path_assertions": "P checks whether any producer asserts an interpreter path (producers originally ran under ../lab-hardening/.venv)"
+  },
+  "regenerated_corpus_honesty": {
+    "statement": "Regenerated bytes will differ from v3 pins: producers embed uuid4 run IDs, perf_counter latencies, absolute paths and elapsed times, and features are EGL-rendered; advice learners are retrained from regenerated data, so advice rollouts and source lengths are expected to differ. No producer ever demonstrated hash-equal repeats.",
+    "pin_rule": "Hash every Stage 0 output after generation; bind those pins in the next sub-stage manifest before it opens any input; S0z freezes the v4 data manifest SHA and source rosters before any training reads them.",
+    "comparability": "V4 data is a new corpus. V4 outcomes neither confirm nor overturn v2/v3 data or results."
+  },
+  "stages": [
+    {
+      "id": "P",
+      "name": "dependency-closure import probe",
+      "scientific_attempt": false,
+      "reservation": "none; runs before any reservation and opens no corpus, checkpoint, scene or held-out path",
+      "method": "One fresh `python -I` child per S0-S3 entrypoint imports the module and its transitive local closure without calling main; records sys.modules, versions, thread settings, CUDA-uninitialized state; creates and frees one offscreen EGL context with no model loaded. Runs from each stage's worktree; also records MuJoCo version, per-producer thread environment, EGL vendor/Mesa/GPU-driver identity and any interpreter-path assertion.",
+      "must_cover": "v2 trainer -> recovery trainer/data/collector -> body-adaptation/runtime verification -> scripts/verify_endurance.py -> import httpx (declared httpx==0.28.1 in pyproject.toml/uv.lock)",
+      "on_failure": "Report blocked. Environment repair and any re-probe require a new manifest and owner GO; every probe is charged."
+    },
+    {
+      "id": "S0a",
+      "name": "teacher collection",
+      "producer": "scripts/collect_male_teachers.py",
+      "producing_commit": "cc1cea93d4c3333a0ee2a091dd34fff0b2986887",
+      "scene_ids": {
+        "train": [
+          1000,
+          1001,
+          1002,
+          1003,
+          1004,
+          1005,
+          1006,
+          1007
+        ],
+        "recorded_dev": [
+          1008,
+          1009,
+          1010,
+          1011
+        ]
+      },
+      "known_drift": "HEAD differs from cc1cea9 by research-module injection refactor 6a5cb7e; review must confirm unchanged behavior route",
+      "scope": "development teacher stage only (train + recorded-dev); held_out teacher scenes 1012-1015 are not run",
+      "run_from": "detached worktree at producing commit cc1cea9"
+    },
+    {
+      "id": "S0b",
+      "name": "recovery first-cycle collection",
+      "producer": "scripts/collect_male_recovery.py",
+      "producing_commit": "c382c86781a7a5d6651af721119789729cc890ae",
+      "seeds": [
+        2100,
+        2101
+      ],
+      "note": "not in the originally listed producing commits but required: the old arm's two 67-row sources come from this stage",
+      "run_from": "detached worktree at producing commit c382c86"
+    },
+    {
+      "id": "S0c",
+      "name": "recovery data preparation",
+      "producer": "scripts/prepare_male_recovery_data.py",
+      "producing_commit": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+      "run_from": "detached worktree at producing commit 7d5fc1f"
+    },
+    {
+      "id": "S0d",
+      "name": "recovery training (advice learners)",
+      "producer": "scripts/train_male_recovery.py",
+      "producing_commit": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+      "learners": "ORIGINAL graph seeds 10/11/12",
+      "by_products": "rewired fits are retained, never evaluated or cited (owner decision 2)",
+      "run_from": "detached worktree at producing commit 19d275d"
+    },
+    {
+      "id": "S0e",
+      "name": "navigation advice collection",
+      "producer": "scripts/collect_male_navigation_v2.py",
+      "producing_commit": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
+      "cases": "scenes 3100..3103 then learners 10,11,12",
+      "contact_profile_sha256": "1593421ae2cc1a12b0d9aeae6646fda77da1d11a885ffac3406e52dc6af12186",
+      "run_from": "detached worktree at producing commit 736e0cf"
+    },
+    {
+      "id": "S0f",
+      "name": "navigation data preparation",
+      "producer": "scripts/prepare_male_navigation_v2.py",
+      "producing_commit": "4ecb354efa4223abdbe3d09be118fe5402fec1a1",
+      "run_from": "detached worktree at producing commit 4ecb354",
+      "historical_reader_root": "detached worktree at 217cbee8399dcb25045a079af012beecbbdae29e"
+    },
+    {
+      "id": "S0z",
+      "name": "pin and independent compact audit",
+      "output": "v4 data manifest SHA plus old/augmented/recorded-dev rosters",
+      "census": "runs inside a census unit; reviewer audits likewise"
+    },
+    {
+      "id": "S1",
+      "name": "six-model matched-clock training",
+      "producer": "v4 trainer derived from scripts/train_male_navigation_v3.py (which pins lost 47c4523c... and must be re-pinned)"
+    },
+    {
+      "id": "S2",
+      "name": "fresh development",
+      "producer": "v4 evaluator (new; scripts/evaluate_male_navigation_v3.py never existed)"
+    },
+    {
+      "id": "S3",
+      "name": "fresh held-out",
+      "producer": "v4 evaluator held-out route",
+      "requires": "S2 pass and a separate explicit owner GO"
+    }
+  ],
+  "corpora": {
+    "structural_admission": {
+      "old_corpus": "8 teacher train sources (1000-1007) then 2 recovery sources (2100, 2101), in that order",
+      "augmented": "exact old prefix then 12 advice sources in scene/learner order 3100/10,11,12 ... 3103/10,11,12",
+      "recorded_development": "4 teacher dev sources (1008-1011), equal in both arms",
+      "held_out_rows": 0,
+      "targets": "old: executed float32 actions; advice: exact recorded float32 nav_advice_action",
+      "source_inclusion": "decided only by the unchanged preparer admission; any other shape stops v4 as blocked",
+      "scope_note": "S0a runs only the development teacher stage"
+    },
+    "forbidden_changes": [
+      "filtering",
+      "source replacement",
+      "target relabeling",
+      "source weighting",
+      "source shuffle",
+      "recollection after S0",
+      "held-out data access"
+    ]
+  },
+  "matched_budget": {
+    "optimizer_updates_per_model": 1440,
+    "real_loss_bearing_rows_per_update": 32,
+    "real_loss_bearing_row_presentations_per_model": 46080,
+    "models": 6,
+    "total_optimizer_updates": 8640,
+    "total_training_row_presentations": 276480,
+    "budget_anchor": "Predeclared constant carried from v3; independent of regenerated row counts; no alternate budget after results."
+  },
+  "sampler": {
+    "schedule_version": "matched-real-row-v1 (v3 rule, unchanged)",
+    "derived_after_pin": [
+      "per-arm N",
+      "q,r = divmod(46080, N)",
+      "Hamilton largest-remainder allocations (ties to lower manifest index)",
+      "per-source totals",
+      "seed-specific remainder starts",
+      "fragment list",
+      "schedule SHA-256"
+    ],
+    "derivation_timing": "Computed by pure source from the S0z-pinned manifest and published in the S1 execution manifest before any fitting.",
+    "remainder_start_input_bytes": "UTF-8('M7-NAV-V4-REGEN-MATCHED-BUDGET-1') + NUL + ASCII decimal training seed + NUL + UTF-8 source identity",
+    "remainder_start_formula": "first eight SHA-256 digest bytes, unsigned big-endian, modulo source length; arm absent",
+    "hidden_state": "reset at every source start, full-sweep restart, remainder start and wrap; detach once at optimizer boundaries; no cross-source carry",
+    "padding_rows": 0,
+    "dropped_rows": 0,
+    "loss_denominator_per_update": 32
+  },
+  "training": {
+    "pair_order": [
+      {
+        "seed": 10,
+        "arms": [
+          "old-corpus",
+          "augmented"
+        ]
+      },
+      {
+        "seed": 11,
+        "arms": [
+          "old-corpus",
+          "augmented"
+        ]
+      },
+      {
+        "seed": 12,
+        "arms": [
+          "old-corpus",
+          "augmented"
+        ]
+      }
+    ],
+    "model": {
+      "graph_variant": "original",
+      "feature_count": 388,
+      "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+    },
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "gradient_norm_cap": 1.0,
+    "loss": "mean(0.5*((velocity_error/3)^2 + 1 - cos(heading_error_radians))) over exactly 32 real rows per update",
+    "selected_checkpoint": "terminal state after update 1,440 only; recorded-dev loss is measured once afterward and cannot alter selection"
+  },
+  "fresh_evaluation": {
+    "generator": "unchanged v3 generator bindings at upstream 8d964599; scenario reproduction, checker, 128x128, 20 obstacles, 7.0 m half-extent, 600 max ticks, control dt 0.02, frame_skip 10, end_on_collision false",
+    "development": {
+      "scene_ids": [
+        3160,
+        3161,
+        3162,
+        3163
+      ],
+      "case_order": "scene increasing; training seed 10,11,12; old-corpus then augmented",
+      "owners": 24,
+      "maximum_ticks": 14400,
+      "gate": "all 24 owners normal and admitted, and each augmented training seed independently >= 3 of 4 goals (last_outcome.reason == 'goal' within 600 ticks)",
+      "failure": "any augmented seed below 3/4, incomplete owner or admission failure permanently keeps held-out locked; a wall-clock kill/timeout is an operational failure, never a non-goal"
+    },
+    "held_out": {
+      "scene_ids": [
+        3170,
+        3171,
+        3172,
+        3173,
+        3174,
+        3175,
+        3176,
+        3177
+      ],
+      "state": "reserved, locked, unopened",
+      "separate_go": "requires a complete S2 pass, a separate held-out execution manifest, review, lane admission and an explicit separate owner GO before any geometry generation or payload access",
+      "owners": 48,
+      "maximum_ticks": 28800,
+      "gate": "all 48 owners normal and admitted, and each augmented training seed independently >= 6 of 8 goals",
+      "threshold_change": false
+    },
+    "episode": "fresh zero-hidden teacher-free episode; one checkpoint inference per interval; no teacher query, privileged input, override, reset, rescue, retry or replacement scene",
+    "reporting": "every natural outcome, per-seed counts for both arms and paired per-scene differences; no pooling or winning seed"
+  },
+  "scene_id_disjointness": {
+    "candidate_screen": {
+      "scope": "drafting screen: tracked text at eb6b48d under docs/, data/manifests/, scripts/, src/, tests/, paper/, plus docs/ and data/manifests/ on all 248 local/remote refs; independent review: both ranges verified clean across all 186 distinct ref tips including scripts/, src/, tests/, paper/",
+      "result": "3160-3163 and 3170-3177 occur only as incidental byte sizes, hash substrings or SWC coordinates; never as scene, seed or family IDs",
+      "used_ranges_on_record": [
+        "1000-1015",
+        "1100-1103",
+        "1200-1207",
+        "2100-2101",
+        "3100-3103",
+        "3110-3113",
+        "3120-3127 (v3 reserved held-out, never generated)",
+        "3130-3133 (v3 reserved development, never generated)",
+        "5990-5994",
+        "6000-6019",
+        "6100-6103",
+        "6110-6113",
+        "6120-6123",
+        "6200-6207"
+      ]
+    },
+    "preparation_time_proof_required": "Before generation, repeat the exact ID-roster scan over all refs, worktrees and retained evidence roots. After generation, reject canonical-scene, scientific-initial and complete-payload duplicates against every generatable or retained prior scene, including all S0 scenes. Never-generated reserved IDs are compared by ID only and must not be generated.",
+    "known_limit": "Raw scene registries in the lost brain checkout cannot be scanned; this is reported, not assumed away."
+  },
+  "lane_budget": {
+    "lane": "MaleCNS",
+    "cap_cpu_seconds": 14400,
+    "prior_charge_cpu_seconds": 1.832,
+    "prior_charge_basis": "systemd-reported service CPU of v3 attempt 1 (0.431) and attempt 2 (1.401); feasibility ledger listed this lane at 0, so v4 charges it conservatively pending owner confirmation",
+    "remaining_at_start_cpu_seconds": 14398.168,
+    "accounting": "cgroup/process-tree CPU census (cpu.stat usage_usec) of each stage's transient systemd unit with RuntimeMaxSec = kill target and CPUQuota = k x 100%; worst-case CPU = k x kill target. S0z and all reviewer audits run inside census units.",
+    "unknown_tails": "processes outside units and GPU/EGL driver time are reported as unknown; never excluded, never imputed",
+    "prior_figures_are_wall_seconds": true,
+    "stage_costs_seconds": [
+      {
+        "stage": "P",
+        "expected": 30,
+        "expected_basis": "estimate; no prior",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 120,
+        "worst_case_cpu": 120,
+        "worst_case_basis": "protocol-declared"
+      },
+      {
+        "stage": "S0a",
+        "expected": 277.697,
+        "expected_basis": "Stage-A supervised wall",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 1260,
+        "worst_case_cpu": 1260,
+        "worst_case_basis": "m7-training-v2-protocol.json collection_limits development_seconds 1200 + outer_grace_seconds 60"
+      },
+      {
+        "stage": "S0b",
+        "expected": 15.565,
+        "expected_basis": "recovery coverage v3 outer wall",
+        "cpu_quota_k": 2,
+        "runtime_max_sec_kill_target": 480,
+        "worst_case_cpu": 960,
+        "worst_case_basis": "collect_male_recovery.py:46 outer_timeout_seconds; k=2 for OMP_NUM_THREADS=2"
+      },
+      {
+        "stage": "S0c",
+        "expected": 13.701,
+        "expected_basis": "recovery data launch/cleanup wall",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 180,
+        "worst_case_cpu": 180,
+        "worst_case_basis": "m7-recovery-learning-protocol.json preparation_limits.seconds"
+      },
+      {
+        "stage": "S0d",
+        "expected": 194.681,
+        "expected_basis": "recovery training enclosing wall",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 2160,
+        "worst_case_cpu": 2160,
+        "worst_case_basis": "recovery training stage enclosing bound (2,100/2,160)"
+      },
+      {
+        "stage": "S0e",
+        "expected": 543.022,
+        "expected_basis": "navigation collection v2 launcher wall",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 2240,
+        "worst_case_cpu": 2240,
+        "worst_case_basis": "v2 normal-through-return 2,210 + 30 s kill margin; must stay <= 2,565 to keep S0-S2 admissible at limits"
+      },
+      {
+        "stage": "S0f",
+        "expected": 79.46,
+        "expected_basis": "navigation data v2 pre-publication wall",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 263,
+        "worst_case_cpu": 263,
+        "worst_case_basis": "m7-navigation-data-v2-protocol.json nominal_failure_envelope_seconds"
+      },
+      {
+        "stage": "S0z",
+        "expected": 82,
+        "expected_basis": "approximate sum of prior root audits (wall)",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 300,
+        "worst_case_cpu": 300,
+        "worst_case_basis": "about 3.7x the prior audit sum; declared"
+      },
+      {
+        "stage": "S1",
+        "expected": 480,
+        "expected_basis": "v3 planning estimate 240-480 s",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 2160,
+        "worst_case_cpu": 2160,
+        "worst_case_basis": "v3 training enclosing_hard_target_seconds"
+      },
+      {
+        "stage": "S2",
+        "expected": 988.524,
+        "expected_basis": "v2 development host-observed wall",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 4430,
+        "worst_case_cpu": 4430,
+        "worst_case_basis": "v3 development enclosing_hard_target_seconds"
+      },
+      {
+        "stage": "S3",
+        "expected": 1977,
+        "expected_basis": "2x development (estimate)",
+        "cpu_quota_k": 1,
+        "runtime_max_sec_kill_target": 8750,
+        "worst_case_cpu": 8750,
+        "worst_case_basis": "v3 held-out enclosing_hard_target_seconds"
+      }
+    ],
+    "expected_total": 4681.65,
+    "worst_case_total": 22823,
+    "worst_case_through_S2": 14073,
+    "admission_rule": "Before each stage: remaining = 14400 - 1.832 - sum of census CPU of every earlier v4 stage including failures and audits. Admit only if the stage's worst_case_cpu <= remaining; otherwise stop and report blocked-on-budget. No threshold or limit change.",
+    "consequence": "Worst case through S2 is 14073 <= 14398.168 (slack 325.168), so S0-S2 are admissible even at limits; S3 is admitted only if measured charge through S2 <= 5648.168 CPU-s.",
+    "storage": "producer caps for S0; S2 4 GiB, S3 8 GiB; 1 GiB free floor; measured free space at run time; raw deletion disabled",
+    "throttling_risk": "CPUQuota can stretch wall time of supervisors with samplers or extra threads whose internal deadlines were calibrated unthrottled; manifest review must justify k; a resulting kill is an operational failure"
+  },
+  "stage_governance": {
+    "per_stage": [
+      "reviewed execution manifest binding source closure, argv/env/cwd, inputs, outputs and limits",
+      "lane admission check",
+      "explicit owner GO naming the manifest digest",
+      "durable fsynced attempt reservation before any input is opened"
+    ],
+    "attempts": "one per stage; first fault stops v4, is retained, and leaves later stages not_started; a failure ends v4 and any further work needs a new versioned protocol",
+    "no_retry": true,
+    "no_replacement_cases": true,
+    "threshold_change": false,
+    "timeouts": "A wall-clock kill or timeout is an operational failure that ends v4; it is never scored as a non-goal."
+  },
+  "estimands": {
+    "capability": "Primary: absolute fresh-scene simulator capability of the fixed v4 augmented-corpus ORIGINAL-topology matched-clock procedure under the per-seed gates.",
+    "data_contrast": "Secondary descriptive: old vs augmented as complete procedures.",
+    "topology": "Excluded."
+  },
+  "not_claimed": [
+    "topology: no rewired model is evaluated, compared or cited",
+    "biology: no correspondence to MaleCNS or Drosophila neural function or behavior",
+    "physical: no rover, hardware, contact-safety or operator-readiness claim",
+    "mechanism inside the matched clock",
+    "advice expert-correctness or student observability",
+    "equivalence with or correction of v2/v3 data or results",
+    "generality beyond these seeds, scenes and the single 1,440-update budget",
+    "automatic R3 completion",
+    "novelty"
+  ],
+  "related_work": [
+    {
+      "cite": "Ross, Gordon, Bagnell. A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning. AISTATS 2011, PMLR 15:627-635.",
+      "relation": "one fixed round of teacher labels on learner-visited states; the analytic teacher is history-dependent (private recovery counter), unlike DAgger's state-wise expert; no iterated no-regret guarantee"
+    },
+    {
+      "cite": "Wang, Chen. FLYNN: Robust Neural Network for Robot Navigation using Fly Brain Topology. arXiv:2607.00025 (2026); github.com/ben-gitdev/fly-gym",
+      "relation": "pinned upstream 8d96459 supplies environment and cell: two-wheeled two-camera MuJoCo robot, DAgger-style imitation, FlyWire FAFB v783 connectivity; v4 substitutes a reduced MaleCNS graph"
+    },
+    {
+      "cite": "Berg et al. Sexual dimorphism in the complete connectome of the Drosophila male central nervous system. bioRxiv 2025. doi:10.1101/2025.10.09.680999",
+      "relation": "source dataset of the reduced neighborhood (male-cns:v1.0 per graph manifest)"
+    },
+    {
+      "cite": "Lappalainen et al. Connectome-constrained networks predict neural activity across the fly visual system. Nature 634:1132-1140 (2024). doi:10.1038/s41586-024-07939-3",
+      "relation": "structure from wiring, train remaining parameters; no neural-activity claim here"
+    },
+    {
+      "cite": "Dorkenwald et al. Neuronal wiring diagram of an adult brain. Nature 634:124-138 (2024). doi:10.1038/s41586-024-07558-y",
+      "relation": "whole-brain FlyWire context; no biological claim here"
+    },
+    {
+      "cite": "Lucic, Kurach, Michalski, Gelly, Bousquet. Are GANs Created Equal? A Large-Scale Study. NeurIPS 2018.",
+      "relation": "budget-controlled comparison: apparent differences shrink under matched hyperparameter-search budgets"
+    },
+    {
+      "cite": "Dehghani, Arnab, Beyer, Vaswani, Tay. The Efficiency Misnomer. ICLR 2022.",
+      "relation": "report more than one cost indicator; v4 matches rows and updates and reports CPU and wall"
+    },
+    {
+      "cite": "Wang-Chen et al. NeuroMechFly v2: simulating embodied sensorimotor control in adult Drosophila. Nature Methods 21:2353-2362 (2024). doi:10.1038/s41592-024-02497-y",
+      "relation": "legged fly-body simulation; NOT this environment; cited only to mark the distinction"
+    }
+  ],
+  "open_owner_decisions": [
+    {
+      "n": 1,
+      "decision": "Stage 0 route",
+      "recommended_default": "producing-commit worktrees + data/path-only overlay; rejection blocks v4"
+    },
+    {
+      "n": 2,
+      "decision": "S0d rewired by-product fits",
+      "recommended_default": "run unchanged, retain, never evaluate or cite"
+    },
+    {
+      "n": 3,
+      "decision": "prior 1.832 CPU-s charge",
+      "recommended_default": "count it"
+    },
+    {
+      "n": 4,
+      "decision": "scene IDs",
+      "recommended_default": "adopt 3160-3163 development and 3170-3177 held-out"
+    },
+    {
+      "n": 5,
+      "decision": "S0 GO granularity",
+      "recommended_default": "one GO per S0 sub-stage"
+    },
+    {
+      "n": 6,
+      "decision": "reserve for unknown tails",
+      "recommended_default": "none; report as unknown"
+    },
+    {
+      "n": 7,
+      "decision": "CPUQuota multipliers",
+      "recommended_default": "k=2 for S0b, k=1 elsewhere unless manifest review shows need"
+    },
+    {
+      "n": 8,
+      "decision": "S0e kill target",
+      "recommended_default": "2,240 s (must be <= 2,565)"
+    }
+  ],
+  "unresolved_risks": [
+    "Regenerated source lengths and learner rollouts may differ structurally; the structural admission may then block v4.",
+    "Stage-A producer identity cc1cea9 -> collect_male_teachers.py is inferred from the repo, not from the stage-a index.",
+    "Current-source drift since the producing commits must be reviewed as behavior-neutral.",
+    "Advice labels remain privileged and query-history dependent.",
+    "Unknown wall-to-CPU transfer; GPU/EGL time is not CPU-accounted.",
+    "CPUQuota throttling may cause operational kills of supervisors calibrated unthrottled.",
+    "Overlay rebinding may miss a by-value copy of a pin; tests must prove every read site."
+  ],
+  "qualification_claims": [],
+  "new_relative_to_v3": [
+    "regenerated corpus and pins",
+    "regenerated advice learners (S0d), so advice rows come from different learners",
+    "project interpreter and MuJoCo 3.3.6 / EGL / Mesa / GPU-driver stack",
+    "source drift between producing commits and HEAD",
+    "Stage 0 data/path pin overlay",
+    "re-pinned v4 trainer and new v4 evaluator",
+    "remainder-hash domain string M7-NAV-V4-REGEN-MATCHED-BUDGET-1",
+    "post-pin derivation of all per-arm arrays (N, q, r, allocations, totals, starts)"
+  ],
+  "inference_scope": {
+    "within_v4_contrast": "Old vs augmented stays unconfounded by the new elements: both arms share the regenerated prefix, clock, learners and runtime.",
+    "vs_v2": "Differences between v4 and v2 cannot be attributed to the clock; corpus, learners, runtime and source changed jointly.",
+    "anchor_note": "1,440 updates stays a predeclared constant; under regenerated N it no longer equals the old arm's v2 20-epoch full fit."
+  },
+  "stage_0_route": {
+    "recommended": "Run each S0 producer from a detached worktree at its producing commit (all seven commits incl. 217cbee exist locally) so source-behaviour guards pass on unchanged bytes. A reviewed v4 driver imports the unchanged producer module and rebinds only data/path constants, before any dependent import or read, to v4 copies of pinning documents that differ only in data/path fields. Producer file bytes never change.",
+    "setup": "bounded local setup initializes upstream/fly-gym at 8d96459 and assets in each worktree",
+    "rejected_alternative": "running at HEAD would require overriding source-behaviour pins as well",
+    "if_rejected": "v4 is blocked at Stage 0"
+  },
+  "stage_0_pin_inventory": [
+    {
+      "stage": "S0a",
+      "site": "scripts/collect_male_teachers.py:36; src/palimpsest/male_research.py:8-9",
+      "field": "research.PROTOCOL_SHA256 8f360289... over docs/plans/m7-training-v2-protocol.json",
+      "class": "source-behaviour",
+      "overlay": "none expected"
+    },
+    {
+      "stage": "S0a",
+      "site": "src/palimpsest/male_research.py:327-329",
+      "field": "research_sources (protocol, train_male_reduced.py, collect_male_teachers.py, ...)",
+      "class": "source-behaviour",
+      "overlay": "none"
+    },
+    {
+      "stage": "S0b",
+      "site": "scripts/collect_male_recovery.py:26,62",
+      "field": "TEACHER_SHA256 5edca9a5...",
+      "class": "source-behaviour",
+      "overlay": "none"
+    },
+    {
+      "stage": "S0b",
+      "site": "scripts/collect_male_recovery.py:51",
+      "field": "PROTOCOL_SHA256 of inline PROTOCOL",
+      "class": "source-behaviour",
+      "overlay": "none"
+    },
+    {
+      "stage": "S0c",
+      "site": "scripts/prepare_male_recovery_data.py:15-16,21",
+      "field": "PROTOCOL_PATH / PROTOCOL_SHA256 091c4e98... (m7-recovery-learning-protocol.json)",
+      "class": "protocol-wrapper (overlay rebinds to v4 copy differing only in data/path fields)",
+      "overlay": "rebind to v4 copy"
+    },
+    {
+      "stage": "S0c,S0d",
+      "site": "scripts/prepare_male_recovery_data.py:31-35 (via protocol source_code_sha256)",
+      "field": "six pinned source files; artifacts.py, male_research.py, records.py differ at HEAD",
+      "class": "source-behaviour",
+      "overlay": "none; passes only at producing commit"
+    },
+    {
+      "stage": "S0c",
+      "site": "scripts/prepare_male_recovery_data.py:154,212",
+      "field": "baseline_collection_sha256 72da787b...",
+      "class": "data-identity",
+      "overlay": "v4 pin from S0a"
+    },
+    {
+      "stage": "S0c",
+      "site": "scripts/prepare_male_recovery_data.py:155,213",
+      "field": "recovery_report_sha256 01251434...",
+      "class": "data-identity",
+      "overlay": "v4 pin from S0b"
+    },
+    {
+      "stage": "S0c",
+      "site": "scripts/prepare_male_recovery_data.py:182",
+      "field": "per-case result_sha256",
+      "class": "data-identity",
+      "overlay": "v4 pins from S0b"
+    },
+    {
+      "stage": "S0c",
+      "site": "docs/plans/m7-recovery-learning-protocol.json:69",
+      "field": "recovery_protocol_sha256 e41ebb10...",
+      "class": "source-behaviour",
+      "overlay": "none expected; verify in review"
+    },
+    {
+      "stage": "S0d",
+      "site": "scripts/train_male_recovery.py:19,54,75",
+      "field": "DATA_SHA256 402d2676...",
+      "class": "data-identity",
+      "overlay": "v4 pin from S0c"
+    },
+    {
+      "stage": "S0d",
+      "site": "scripts/train_male_recovery.py:20",
+      "field": "FITTER_SHA256 75d3fc1f... (train_male_reduced.py)",
+      "class": "source-behaviour",
+      "overlay": "none"
+    },
+    {
+      "stage": "S0d",
+      "site": "scripts/train_male_recovery.py:28-39",
+      "field": "data_reader.reader_identity() source pins",
+      "class": "source-behaviour",
+      "overlay": "none"
+    },
+    {
+      "stage": "S0e",
+      "site": "scripts/collect_male_navigation_v2.py:20-21,31",
+      "field": "PLAN / PLAN_SHA 29039e94... (m7-navigation-contact-v2-protocol.json)",
+      "class": "protocol-wrapper (overlay rebinds to v4 copy differing only in data/path fields)",
+      "overlay": "rebind to v4 copy"
+    },
+    {
+      "stage": "S0e",
+      "site": "docs/plans/m7-navigation-contact-v2-protocol.json:72-77",
+      "field": "fixed_source_models.index_sha256 cf50fd2f..., producer_root ../task-phases, pair_report_sha256 {10,11,12}",
+      "class": "data-identity + path",
+      "overlay": "v4 recovery index and pair-report pins from S0d; v4 producer root"
+    },
+    {
+      "stage": "S0e",
+      "site": "scripts/collect_male_navigation_v2.py:326,446,458,485",
+      "field": "Binding of data/manifests/male-recovery-research-development-v1.json and producer-root resolution",
+      "class": "data-identity + path",
+      "overlay": "v4 recovery index"
+    },
+    {
+      "stage": "S0e",
+      "site": "scripts/collect_male_navigation_v2.py:23",
+      "field": "PROFILE_SHA 1593421a... (contact profile)",
+      "class": "source-behaviour",
+      "overlay": "none"
+    },
+    {
+      "stage": "S0f",
+      "site": "scripts/prepare_male_navigation_v2.py:19",
+      "field": "PROTOCOL_SHA d2b998cd... (m7-navigation-data-v2-protocol.json)",
+      "class": "protocol-wrapper (overlay rebinds to v4 copy differing only in data/path fields)",
+      "overlay": "rebind to v4 copy"
+    },
+    {
+      "stage": "S0f",
+      "site": "scripts/prepare_male_navigation_v2.py:55-68",
+      "field": "historical_identity root (absolute brain/.worktrees/task-phases)",
+      "class": "path",
+      "overlay": "217cbee worktree path"
+    },
+    {
+      "stage": "S0f",
+      "site": "scripts/prepare_male_navigation_v2.py:55-68",
+      "field": "historical head 217cbee, 70-file Python inventory canonical_map_sha256, adapter_sha256, per-file code pins",
+      "class": "source-behaviour",
+      "overlay": "none; passes at 217cbee worktree"
+    },
+    {
+      "stage": "S0f",
+      "site": "scripts/prepare_male_navigation_v2.py:91-104,158,179-195",
+      "field": "immutable_inputs absolute brain paths and sha256 (old_manifest 402d2676..., accepted_collection, collection_terminal, collection_enclosing, collector_supervisor, launcher_supervisor, exec_drain, root_raw_audit, published_collection_index)",
+      "class": "data-identity + path",
+      "overlay": "v4 pins/paths from S0c-S0e"
+    },
+    {
+      "stage": "S0f",
+      "site": "scripts/prepare_male_navigation_v2.py:252",
+      "field": "historical feature_target_sha256 per source",
+      "class": "data-identity",
+      "overlay": "v4 pins from S0c"
+    },
+    {
+      "stage": "S1",
+      "site": "scripts/train_male_navigation_v3.py:24-26",
+      "field": "PROTOCOL_PATH/PROTOCOL_SHA (v3 protocol ecfafd2b...), DATA_SHA 47c4523c...",
+      "class": "data-identity + source-behaviour",
+      "overlay": "not overlaid; replaced by a reviewed v4 trainer"
+    },
+    {
+      "stage": "S1-S2",
+      "site": "src/palimpsest/male_navigation_research.py:17,19",
+      "field": "INDEX_SHA256 f938d979..., PROTOCOL_SHA256 76a502de... (v2 training index/protocol)",
+      "class": "data-identity",
+      "overlay": "v4 trainer/evaluator must not route through v2 index"
+    }
+  ],
+  "tests_before_execution_freeze": [
+    "Overlay: rebinds exactly the listed data/path pins before any dependent import or read; every read site observes the v4 value; no other module attribute changes.",
+    "Overlay: producer file bytes and all source-behaviour guards are unchanged at each producing-commit worktree (including the 217cbee historical reader).",
+    "v4 pinning-document copies differ from originals only in declared data/path fields (field-level diff fixture).",
+    "Pin hand-off: each S0 manifest refuses any input not matching the previous sub-stage's pin record.",
+    "Structural admission refuses any roster other than 8+2 old, +12 advice, 4 dev, 0 held-out.",
+    "Schedule derivation from the pinned manifest is pure, Torch-free and byte-identical on replay; all v3 sampler fixtures pass with v4 arrays and domain string.",
+    "v4 trainer refuses 47c4523c..., the v3 protocol and any unpinned corpus; one zero_grad/backward/clip/step per 32 real rows; terminal-only publication.",
+    "v4 evaluator: exact 3160-3163 case order, all-six scientific-initial matching, disjointness, native goal scoring, 3/4 per-seed reduction; held-out route unreachable without separate GO and fixes 3170-3177 with 6/8.",
+    "Ledger fixtures: RuntimeMaxSec kill, CPUQuota k, census reading and admission arithmetic; a kill is operational failure, never a non-goal.",
+    "P probe fixture reproduces the v3 httpx chain failure in a stub environment and passes in the locked environment."
+  ],
+  "implementation_files": {
+    "planned_create": [
+      "scripts/regenerate_male_navigation_v4.py (overlay driver)",
+      "docs/plans/m7-navigation-v4-pins/ (v4 copies of recovery-learning, contact-v2, data-v2 protocols and recovery index)",
+      "src/palimpsest/male_matched_budget_v4.py or a parameterized derivation",
+      "scripts/train_male_navigation_v4.py",
+      "scripts/evaluate_male_navigation_v4.py",
+      "tests/test_male_navigation_v4_overlay.py",
+      "tests/test_male_navigation_v4.py",
+      "tests/test_male_navigation_development_v4.py",
+      "scripts/probe_male_navigation_v4_imports.py"
+    ],
+    "planned_preserve": [
+      "every producing-commit file byte",
+      "scripts/train_male_navigation_v3.py and all v3 documents",
+      "all v2 manifests, models, reports and evidence"
+    ]
+  },
+  "execution_stops": [
+    "No stage without reviewed manifest, lane admission, explicit owner GO and durable reservation.",
+    "P failure blocks v4; repair and re-probe need new manifest and GO.",
+    "Any S0 producer refusal, guard mismatch, overlay mismatch, pin mismatch or structural-admission failure ends v4; no substitution, filtering or recollection.",
+    "S1 does not start before S0z review passes and derived arrays are published.",
+    "First wrong count, nonfinite value, source drift, RuntimeMaxSec kill, RSS/storage breach ends v4; later stages not_started.",
+    "S2 does not start without six admitted terminal checkpoints.",
+    "S3 requires a complete S2 pass, separate manifest, lane admission (charge through S2 <= 5648.168) and a separate explicit owner GO.",
+    "No threshold, budget, sampler, checkpoint rule, seed, source, model or topology change after any numerical result."
+  ]
+}
