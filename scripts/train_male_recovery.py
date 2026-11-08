@@ -16,7 +16,7 @@ import prepare_male_recovery_data as data_reader
 from train_male_reduced import fit, evaluate, make_model, rewire, load_graph
 
 ROOT=Path(__file__).resolve().parents[1]
-DATA_SHA256='402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014'
+DATA_SHA256=json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['data_manifest']['sha256']
 FITTER_SHA256='75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a'
 MAX_FILE=8*1024**2
 MAX_REPORT=4*1024**2
@@ -74,10 +74,10 @@ def prepare(args,deadline):
     data_path=artifacts._safe_path(args.data_manifest)
     manifest=data_reader.frozen_json(data_path,DATA_SHA256)
     if (manifest['status']!='prepared-research-only' or manifest['protocol_sha256']!=data_reader.PROTOCOL_SHA256 or
-            manifest['counts']!={'train':2117,'dev':1228,'held_out':0} or
+            manifest['counts']!={'train':data_reader.protocol()['counts']['train'],'dev':data_reader.protocol()['counts']['dev'],'held_out':0} or
             {key:len(value) for key,value in manifest['ordered_sources'].items()}!={'train':10,'dev':4,'held_out':0} or
             len(manifest['recovery_admission'])!=2 or
-            any(row['windows']!=[32,32,3] or row['ending']!='right_censored_coverage_complete'
+            any(row['windows']!=(lambda n:[32]*(n//32)+[n%32]*(n%32>0))(data_reader.protocol()['recovery_ticks_each'][manifest['recovery_admission'].index(row)]) or row['ending']!='right_censored_coverage_complete'
                 for row in manifest['recovery_admission'])):raise ValueError('Fixed prepared research data differs')
     output=output_path(args.output,args.training_seed,data_path,manifest)
     data,admitted=data_reader.prepare(Path(manifest['baseline_collection']['path']),
@@ -120,7 +120,7 @@ def validate_fit(result):
         raise ValueError('All 20 frozen epochs required')
     for row in history:
         if (type(row.get('train_ticks')) is not int or type(row.get('dev',{}).get('ticks')) is not int or
-                row['train_ticks']!=2117 or row['dev']['ticks']!=1228):raise ValueError('Epoch data counts differ')
+                row['train_ticks']!=data_reader.protocol()['counts']['train'] or row['dev']['ticks']!=data_reader.protocol()['counts']['dev']):raise ValueError('Epoch data counts differ')
         for value in (row.get('train_loss'),row['dev'].get('loss'),row['dev'].get('velocity_mae'),row['dev'].get('wrapped_heading_mae_radians')):
             if type(value) not in (int,float) or not math.isfinite(value) or value<0:raise ValueError('Nonfinite/invalid fit metric')
     if type(result.get('selected_epoch')) is not int or result['selected_epoch']!=min(range(1,21),key=lambda epoch:history[epoch-1]['dev']['loss']):
@@ -205,7 +205,7 @@ def train(args):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--data-manifest',type=Path,default=ROOT/'runs/m7-recovery-learning-data-development-7d5fc1f-20261003/data-manifest.json')
+    parser.add_argument('--data-manifest',type=Path,default=Path(json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['data_manifest']['path']))
     parser.add_argument('--training-seed',type=int,choices=(10,11,12),required=True)
     parser.add_argument('--graph',type=Path,default=ROOT/'data/assets/flynn/male-reduced-v1/source-graph.json')
     parser.add_argument('--graph-manifest',type=Path,default=ROOT/'data/manifests/malecns-reduced-neighborhood-v1.json')
