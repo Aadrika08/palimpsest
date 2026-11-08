@@ -10,6 +10,13 @@ in-process overlay cannot reach (copied pins, inline pinned literals, import-tim
 child re-execution of a rebound module); (5) imports the producer closure and rebinds
 EXACTLY the declared data/path module attributes before any dependent import.
 
+Amendment 1 (owner decision A1): S0c-S0f run instead from committed port trees
+(``port/male-v4-<tree>``, see ``docs/plans/m7-navigation-v4-pins/ports.json``). For those
+stages the worktree HEAD must be the recorded port branch commit (and the branch must still
+point at it) before anything is planned; the port's H1 hunks read every pin from a locator
+document named by ``PALIMPSEST_M7_V4_PINS``, written by this driver next to the pin record,
+so no attribute is rebound in-process.
+
 ``--plan-only`` prints what would run and never imports or executes a producer and never
 opens a data input. Execution requires ``--go`` naming a GO record whose content names the
 exact stage and the protocol sha256; anything else is refused. After a normal producer
@@ -33,6 +40,11 @@ ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL_PATH = 'docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json'
 PROTOCOL_SHA256 = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
 PINS_DIR = ROOT/'docs/plans/m7-navigation-v4-pins'
+# Amendment 1 (owner decision A1): S0c-S0f run from committed port trees listed here.
+PORTS_PATH = PINS_DIR/'ports.json'
+PORTS_SCHEMA = 'm7-navigation-v4-ports-1'
+PORT_LOCATOR_SCHEMA = 'm7-navigation-v4-port-pins-1'
+PORT_LOCATOR_ENV = 'PALIMPSEST_M7_V4_PINS'
 DECLARATION_SCHEMA = 'm7-navigation-v4-pin-declarations-1'
 RECORD_SCHEMA = 'm7-navigation-v4-pin-record-1'
 PENDING = 'PENDING-'
@@ -44,6 +56,8 @@ RECOVERY_LEARNING = 'm7-recovery-learning-protocol.json'
 CONTACT_V2 = 'm7-navigation-contact-v2-protocol.json'
 DATA_V2 = 'm7-navigation-data-v2-protocol.json'
 RECOVERY_INDEX = 'male-recovery-research-development-v1.json'
+STUDY_PLAN = 'm7-navigation-study-protocol.json'
+PORT_READER_SHA = 'ad05bfecb866cd7c47205321c5cf885cf349d44707e046cb4a7c1acece7a4567'
 ORIGINAL_RECOVERY_LEARNING_SHA = '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28'
 ORIGINAL_DATA_SHA = '402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014'
 ORIGINAL_INDEX_SHA = 'cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5'
@@ -89,6 +103,7 @@ STAGES = {
             'producer_sha256': '2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca',
             'source_guards': dict(READER_SOURCES), 'documents': [RECOVERY_LEARNING],
             'rebinds': RECOVERY_PROTOCOL_REBINDS, 'upstream_values': [], 'execution': 'in-process',
+            'port_tree': 'T-c', 'port_producer_sha256': PORT_READER_SHA, 'port_documents': [RECOVERY_LEARNING],
             'args': {'--baseline-collection': {'kind': 'record', 'stage': 'S0a'},
                      '--recovery-report': {'kind': 'record', 'stage': 'S0b'}, '--output': OUTPUT}},
     'S0d': {'stage': 'S0d', 'producer': 'scripts/train_male_recovery.py', 'module': 'train_male_recovery',
@@ -103,6 +118,9 @@ STAGES = {
                 {'module': 'train_male_recovery', 'attribute': 'DATA_SHA256', 'kind': 'output-sha256',
                  'stage': 'S0c', 'output': 'data-manifest.json'}],
             'upstream_values': [], 'execution': 'in-process',
+            'port_tree': 'T-d', 'port_producer_sha256': 'b9cc181f7caec71cbd890fdb17d4cdaa73c1b0a847e4a3d6b437b2d3be0bed37',
+            'port_source_guards': {'scripts/prepare_male_recovery_data.py': PORT_READER_SHA},
+            'port_documents': [RECOVERY_LEARNING],
             'args': {'--data-manifest': {'kind': 'record', 'stage': 'S0c'},
                      '--training-seed': {'kind': 'value', 'allowed': ['10', '11', '12']},
                      '--graph': {'kind': 'fixed-file', 'optional': True,
@@ -117,6 +135,12 @@ STAGES = {
             'producer_sha256': '21d2cb104dfe0ea34e52b5d93c835affb9cebeb7bccb85b7314f18404971053f',
             'source_guards': {'scripts/collect_male_navigation.py':
                               'd0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f'},
+            # Port tree T-e: the v1 collector reached via source_pins is the port (PLAN/PLAN_SHA -> v4 study-plan
+            # copy); contact-v2 /prior_version/collector_sha256 cascades to these bytes (amendment_1_pending).
+            'port_tree': 'T-e', 'port_producer_sha256': '5d7ddef2104a2ec9bb9446aaaa2e8b8db6c77b23ce0d3afd903abc6c6c074a09',
+            'port_source_guards': {'scripts/collect_male_navigation.py':
+                                   '705f4f82c8db4b59b14b3b232c6b3c5b946f26f3f01c709826e3c3150061b018'},
+            'port_documents': [CONTACT_V2, RECOVERY_INDEX, RECOVERY_LEARNING, STUDY_PLAN],
             'documents': [CONTACT_V2, RECOVERY_INDEX],
             # The recovery index pin lives in male_recovery_research (not in the protocol inventory).
             'rebinds': [{'module': 'palimpsest.male_recovery_research', 'attribute': 'INDEX_PATH',
@@ -129,6 +153,9 @@ STAGES = {
             'commit': '4ecb354efa4223abdbe3d09be118fe5402fec1a1',
             'producer_sha256': 'ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333',
             'historical_commit': '217cbee8399dcb25045a079af012beecbbdae29e',
+            'port_tree': 'T-f', 'historical_port_tree': 'T-h',
+            'port_producer_sha256': 'b819af261cea449aae01cae90e994aeebefba672b1bbbad43099bc64fab449e0',
+            'port_documents': [DATA_V2, RECOVERY_LEARNING],
             'source_guards': {}, 'documents': [DATA_V2, CONTACT_V2],
             # The S0e report carries the v4 contact-plan sha, which this reader compares to PLAN_SHA.
             'rebinds': CONTACT_REBINDS + [
@@ -343,7 +370,8 @@ def _hash_tree(output_root):
     return outputs
 
 
-def make_pin_record(spec, stage, worktree, output_root, previous, *, protocol_sha256, overlay=None, go_sha256=None):
+def make_pin_record(spec, stage, worktree, output_root, previous, *, protocol_sha256, overlay=None, go_sha256=None,
+                    port=None):
     output_root, worktree = Path(output_root).resolve(), Path(worktree).resolve()
     outputs = _hash_tree(output_root)
     own = {'producing_commit': spec['commit'], 'worktree': str(worktree), 'output_root': str(output_root), 'outputs': outputs}
@@ -351,7 +379,7 @@ def make_pin_record(spec, stage, worktree, output_root, previous, *, protocol_sh
             'producer_sha256': spec['producer_sha256'], 'go_sha256': go_sha256,
             'previous_record_sha256': None if previous is None else sha256_bytes(canonical(previous)),
             'chain': json.loads(json.dumps({**({} if previous is None else previous['chain']), stage: own})),
-            'overlay': overlay, 'qualification_claims': []}
+            'overlay': overlay, 'qualification_claims': [], **({} if port is None else {'port': port})}
 
 
 def write_pin_record(path, record):
@@ -470,6 +498,71 @@ def verify_worktree(worktree, spec, *, commit=None):
                 raise Refusal(f'Pinned source guard differs: {rel}')
         report['source_guards'] = dict(spec['source_guards'])
     return report
+
+
+# --------------------------------------------------------------------------- Amendment 1 port trees
+
+def load_ports(path=PORTS_PATH, protocol_sha256=PROTOCOL_SHA256):
+    value = json.loads(read_bounded(path))
+    if value.get('schema') != PORTS_SCHEMA or value.get('protocol_sha256') != protocol_sha256 or \
+            value.get('locator', {}).get('env') != PORT_LOCATOR_ENV:
+        raise Refusal('v4 port manifest does not bind this protocol')
+    return value
+
+
+def port_spec(spec, ports):
+    """The stage as run from its port tree: port commit, port bytes, no in-process rebinding.
+
+    H1 hunks read every pin from the locator document instead of rebound attributes, so the
+    overlay's rebinds and stale-value scan do not apply; documents are the tree's locator set."""
+    tree = ports['trees'][spec['port_tree']]
+    if tree['base'] != spec['commit']: raise Refusal(f'{spec["port_tree"]} is not based on the producing commit {spec["commit"]}')
+    derived = {**spec, 'commit': tree['port_commit'], 'base_commit': spec['commit'],
+               'producer_sha256': spec['port_producer_sha256'],
+               'source_guards': {**spec['source_guards'], **spec.get('port_source_guards', {})},
+               'documents': list(spec['port_documents']), 'rebinds': [], 'upstream_values': [],
+               'port': {'tree': spec['port_tree'], 'branch': tree['branch'], 'base': tree['base'],
+                        'locator_values': list(tree.get('locator_values', []))}}
+    if 'historical_port_tree' in spec:
+        historical = ports['trees'][spec['historical_port_tree']]
+        if historical['base'] != spec['historical_commit']:
+            raise Refusal(f'{spec["historical_port_tree"]} is not based on {spec["historical_commit"]}')
+        derived['historical_commit'] = historical['port_commit']
+        derived['port']['historical_tree'] = spec['historical_port_tree']
+    return derived
+
+
+def port_stages(stages, ports):
+    return {name: port_spec(spec, ports) if 'port_tree' in spec else spec for name, spec in stages.items()}
+
+
+def verify_port_tree(worktree, tree_id, ports, *, repo=ROOT):
+    """The worktree HEAD must be the expected port branch commit (detached, clean)."""
+    tree = ports['trees'][tree_id]
+    expected, branch = tree.get('port_commit'), tree['branch']
+    if not expected: raise Refusal(f'{tree_id} has no recorded port commit; build the port branches first')
+    actual = _git(repo, 'rev-parse', '--verify', '-q', f'refs/heads/{branch}^{{commit}}').stdout.strip()
+    if actual != expected:
+        raise Refusal(f'Port branch {branch} is at {actual or "nothing"}, not the recorded port commit {expected}')
+    parents = _git(repo, 'rev-list', '--parents', '-n', '1', expected).stdout.split()[1:]
+    if parents != [tree['base']]: raise Refusal(f'Port commit {expected} is not a child of the producing commit')
+    head = _git(worktree, 'rev-parse', 'HEAD').stdout.strip()
+    if head != expected:
+        raise Refusal(f'Worktree HEAD {head or "?"} is not the port branch commit {expected} ({branch})')
+    report = verify_worktree(worktree, {}, commit=expected)
+    return {**report, 'tree': tree_id, 'branch': branch, 'base': tree['base']}
+
+
+def port_locator(spec, documents, chain):
+    """The locator the H1 hunks read: v4 documents (path, sha256) and upstream output pins."""
+    value = {'schema': PORT_LOCATOR_SCHEMA, 'documents': {k: dict(v) for k, v in documents.items()}}
+    for name in spec['port']['locator_values']:
+        if name != 'data_manifest': raise Refusal(f'Unknown locator value {name}')
+        record = _outputs(chain, 'S0c', 'data_manifest')
+        if 'data-manifest.json' not in record['outputs']: raise Refusal('S0c recorded no data-manifest.json')
+        value['data_manifest'] = {'path': str(Path(record['output_root'])/'data-manifest.json'),
+                                  'sha256': record['outputs']['data-manifest.json']['sha256']}
+    return value
 
 
 def _module_paths(name):
@@ -668,12 +761,17 @@ def _emit(value):
 
 
 def prepare(spec, stage, worktree, previous_path, producer_args, *, stages, pins_dir, protocol_sha256,
-            historical_worktree, execute):
+            historical_worktree, execute, ports=None, repo=ROOT):
     report = {'stage': stage, 'protocol_sha256': protocol_sha256, 'producing_commit': spec['commit'],
               'worktree': str(Path(worktree).resolve()), 'producer': spec['producer'], 'execution': spec['execution']}
+    if 'port' in spec:  # Amendment 1: the port tree's HEAD is checked before anything is planned.
+        report['port_check'] = verify_port_tree(worktree, spec['port']['tree'], ports, repo=repo)
     report['worktree_check'] = verify_worktree(worktree, spec)
     if 'historical_commit' in spec:
         if historical_worktree is None: raise Refusal(f'{stage} requires --historical-worktree')
+        if 'port' in spec:
+            report['historical_port_check'] = verify_port_tree(historical_worktree, spec['port']['historical_tree'],
+                                                               ports, repo=repo)
         report['historical_check'] = verify_worktree(historical_worktree, {}, commit=spec['historical_commit'])
     previous, chain = None, {}
     if previous_path is not None:
@@ -690,6 +788,8 @@ def prepare(spec, stage, worktree, previous_path, producer_args, *, stages, pins
     findings = static_reachability(read, spec, original_values(spec, read)) if spec['rebinds'] else []
     if findings: raise Refusal('Overlay cannot reach every read site: ' + ' | '.join(findings))
     report['rebinds'] = [{**r, 'value': values[(r['module'], r['attribute'])]} for r in spec['rebinds']]
+    if 'port' in spec:
+        report['locator'] = {'env': PORT_LOCATOR_ENV, 'value': port_locator(spec, documents, chain)}
     report['arguments'] = check_arguments(spec, producer_args, worktree, chain, open_inputs=execute)
     if spec['execution'] == 'subprocess':
         report['would_run'] = [sys.executable, str(Path(worktree).resolve()/spec['producer']), *producer_args]
@@ -698,13 +798,16 @@ def prepare(spec, stage, worktree, previous_path, producer_args, *, stages, pins
     return report, previous, values
 
 
-def _run(spec, worktree, values, producer_args):
+def _run(spec, worktree, values, producer_args, locator_path=None):
     worktree = Path(worktree).resolve()
+    if 'port' in spec:  # H1 hunks read the locator, at import time where the original read a literal
+        if locator_path is None: raise Refusal('A port stage needs its locator document')
+        os.environ[PORT_LOCATOR_ENV] = str(locator_path)
     if spec['execution'] == 'subprocess':
         thread_env = probe.ENTRYPOINTS.get(spec['stage'], {}).get('thread_env', {})
         env = {'PATH': '/usr/bin:/bin', 'HOME': os.environ.get('HOME', '/nonexistent'), 'LANG': 'C.UTF-8',
                'MUJOCO_GL': 'egl', 'CUDA_VISIBLE_DEVICES': '', 'PYTHONPATH': f'{worktree/"src"}:{worktree/"scripts"}',
-               **thread_env}
+               **thread_env, **({PORT_LOCATOR_ENV: str(locator_path)} if 'port' in spec else {})}
         done = subprocess.run([sys.executable, str(worktree/spec['producer']), *producer_args], cwd=worktree, env=env)
         return done.returncode, None
     module, overlay = apply_overlay(worktree, spec, values)
@@ -716,8 +819,9 @@ def _run(spec, worktree, values, producer_args):
     return (0 if code is None else code if isinstance(code, int) else 1), overlay
 
 
-def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=None):
+def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=None, ports=None, repo=None):
     stages = STAGES if stages is None else stages
+    repo = ROOT if repo is None else Path(repo)
     pins_dir = PINS_DIR if pins_dir is None else Path(pins_dir)
     own, producer_args = _split(list(sys.argv[1:] if argv is None else argv))
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
@@ -736,6 +840,11 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
     if args.plan_only and args.go is not None: return refused('--plan-only and --go are mutually exclusive')
     if not args.plan_only and args.go is None:
         return refused('Default is refusal: pass --plan-only, or --go with an owner GO record')
+    if any('port_tree' in s for s in stages.values()):
+        try:
+            ports = load_ports(protocol_sha256=protocol_sha256) if ports is None else ports
+            stages = port_stages(stages, ports)
+        except (Refusal, OSError, ValueError, KeyError) as error: return refused(f'Port manifest: {error}')
     spec = stages[args.stage]
     first = list(stages).index(args.stage) == 0
     if first != (args.previous_pins is None):
@@ -749,20 +858,30 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
     try:
         plan, previous, values = prepare(spec, args.stage, args.worktree, args.previous_pins, producer_args,
                                          stages=stages, pins_dir=pins_dir, protocol_sha256=protocol_sha256,
-                                         historical_worktree=args.historical_worktree, execute=not args.plan_only)
+                                         historical_worktree=args.historical_worktree, execute=not args.plan_only,
+                                         ports=ports, repo=repo)
     except (Refusal, OSError, ValueError, KeyError) as error:
         _emit({'mode': 'plan-only' if args.plan_only else 'go', 'status': 'refused', 'stage': args.stage,
                'reason': f'{type(error).__name__}: {error}' if not isinstance(error, Refusal) else str(error)})
         return 3
     if args.plan_only:
         _emit({'mode': 'plan-only', 'status': 'admissible', **plan}); return 0
-    code, overlay = _run(spec, args.worktree, values, producer_args)
+    port = None
+    if 'port' in spec:
+        locator_path = args.pin_record_out.with_name(args.pin_record_out.name + '.port-pins.json')
+        payload = canonical(plan['locator']['value'])
+        with locator_path.open('xb') as stream:
+            stream.write(payload); stream.flush(); os.fsync(stream.fileno())
+        port = {'tree': spec['port']['tree'], 'branch': spec['port']['branch'], 'head': spec['commit'],
+                'base_commit': spec['base_commit'], 'locator_path': str(locator_path.resolve()),
+                'locator_sha256': sha256_bytes(payload)}
+    code, overlay = _run(spec, args.worktree, values, producer_args, None if port is None else port['locator_path'])
     output = plan['arguments'].get('--output', {}).get('path')
     if code != 0 or output is None:
         _emit({'mode': 'go', 'status': 'producer-failed', 'stage': args.stage, 'returncode': code}); return 1
     verify_worktree(args.worktree, spec)
     record = make_pin_record(spec, args.stage, args.worktree, output, previous, protocol_sha256=protocol_sha256,
-                             overlay=overlay, go_sha256=go_sha)
+                             overlay=overlay, go_sha256=go_sha, port=port)
     write_pin_record(args.pin_record_out, record)
     _emit({'mode': 'go', 'status': 'completed', 'stage': args.stage, 'pin_record': str(args.pin_record_out),
            'outputs': len(record['outputs'])})

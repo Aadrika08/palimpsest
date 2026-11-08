@@ -712,3 +712,169 @@ def test_s0f_off_v2_lengths_are_admitted_with_matching_pins(tmp_path, locator, s
     assert accepted[0] == 'ok', accepted
     assert json.loads(accepted[1])['counts']['new_advice_train_rows'] == sum(advice)
     assert run(orig, 'orig')[0] == 'refused'
+
+
+# =================================================================== driver: port-branch awareness
+
+import regenerate_male_navigation_v4 as driver  # noqa: E402
+
+DECLARED = json.loads((ROOT/'docs/plans/m7-navigation-v4-pins/declared-fields.json').read_text())
+
+
+def test_real_port_stages_pin_port_bytes_and_the_s0e_collector_cascade():
+    for stage, tree_id in (('S0c', 'T-c'), ('S0d', 'T-d'), ('S0e', 'T-e'), ('S0f', 'T-f')):
+        spec, tree = driver.STAGES[stage], SPEC['trees'][tree_id]
+        assert spec['port_tree'] == tree_id and spec['commit'] == tree['base']
+        assert spec['port_producer_sha256'] == sha(blob(tree['branch'], spec['producer']))
+        for rel, pin in spec.get('port_source_guards', {}).items():
+            assert rel in tree['files'] and pin == sha(blob(tree['branch'], rel)), (stage, rel)
+        assert sorted(spec['port_documents']) == sorted(tree['documents'])
+    assert driver.STAGES['S0f']['historical_port_tree'] == 'T-h'
+    assert not any('port_tree' in driver.STAGES[s] for s in ('S0a', 'S0b'))
+    # :118 cascade: the S0e guard, the T-e port bytes and the staged contact-v2 prior_version value agree.
+    collector = sha(blob(SPEC['trees']['T-e']['branch'], 'scripts/collect_male_navigation.py'))
+    assert driver.STAGES['S0e']['port_source_guards'] == {'scripts/collect_male_navigation.py': collector}
+    assert driver.STAGES['S0d']['port_source_guards'] == {
+        'scripts/prepare_male_recovery_data.py': sha(blob(SPEC['trees']['T-d']['branch'], 'scripts/prepare_male_recovery_data.py'))}
+    pending = DECLARED['amendment_1_pending']
+    assert pending['status'].startswith('inactive')
+    field = next(f for f in pending['pending_fields'][driver.CONTACT_V2] if f['pointer'] == '/prior_version/collector_sha256')
+    assert field['cascade_value'] == collector and field['placeholder'] == 'PENDING-S0e'
+
+
+def test_study_plan_copy_differs_only_in_pending_fields_and_holds_placeholders():
+    item = DECLARED['amendment_1_pending']['pending_documents'][driver.STUDY_PLAN]
+    original = (ROOT/item['original_path']).read_bytes()
+    assert sha(original) == item['original_sha256'] == 'a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f'
+    copy_bytes = (ROOT/'docs/plans/m7-navigation-v4-pins'/driver.STUDY_PLAN).read_bytes()
+    assert driver.field_diff(json.loads(original), json.loads(copy_bytes)) == {f['pointer'] for f in item['fields']}
+    doc = json.loads(copy_bytes)
+    for field in item['fields']:
+        assert driver.pointer_get(doc, field['pointer']) == field['placeholder'] == 'PENDING-' + field['stage']
+    with pytest.raises(driver.Refusal, match='PENDING'):
+        driver.check_pin_document(original, copy_bytes, item, consumer=True)
+    # Inactive: the copy is not an active pin document, so no stage can consume it yet.
+    assert driver.STUDY_PLAN not in DECLARED['documents']
+    assert field_of(item, '/current_reusable_source_sha256/src~1palimpsest~1male_recovery_research.py')['cascade_value'] == \
+        sha(blob(SPEC['trees']['T-e']['branch'], 'src/palimpsest/male_recovery_research.py'))
+
+
+def field_of(item, pointer):
+    return next(f for f in item['fields'] if f['pointer'] == pointer)
+
+
+def port_repo(tmp_path):
+    """A producing commit, its port branch and a manifest naming it; the repo doubles as the worktree."""
+    repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+    producer = ('import json, os\nfrom pathlib import Path\nimport argparse\n'
+                'PIN = {pin}\n'
+                'def main(argv=None):\n'
+                '    parser = argparse.ArgumentParser(); parser.add_argument("--output", type=Path, required=True)\n'
+                '    args = parser.parse_args(argv); args.output.mkdir()\n'
+                '    (args.output/"result.json").write_text(json.dumps({{"pin": PIN}}))\n')
+    (repo/'scripts/fake_port_producer.py').write_text(producer.format(pin="'original-pin'"))
+    git(tmp_path, 'init', '-q', str(repo)); git(repo, 'add', '-A'); git(repo, 'commit', '-q', '-m', 'producing')
+    base = git(repo, 'rev-parse', 'HEAD')
+    git(repo, 'checkout', '-q', '-b', 'port/male-v4-t-x')
+    (repo/'scripts/fake_port_producer.py').write_text(producer.format(
+        pin=f"json.loads(Path(os.environ['{ENV}']).read_bytes())['schema']"))
+    git(repo, 'commit', '-qam', 'port'); port = git(repo, 'rev-parse', 'HEAD')
+    git(repo, 'checkout', '-q', '--detach', port)
+    manifest = {'schema': ports.SCHEMA, 'protocol_sha256': ports.PROTOCOL_SHA256, 'locator': SPEC['locator'],
+                'trees': {'T-x': {'base': base, 'branch': 'port/male-v4-t-x', 'port_commit': port, 'stage': 'S0x',
+                                  'files': ['scripts/fake_port_producer.py'], 'documents': []}}}
+    stage = {'stage': 'S0x', 'producer': 'scripts/fake_port_producer.py', 'module': 'fake_port_producer', 'commit': base,
+             'producer_sha256': sha(git(repo, 'show', f'{base}:scripts/fake_port_producer.py').encode() + b'\n'),
+             'port_producer_sha256': sha((repo/'scripts/fake_port_producer.py').read_bytes()), 'port_tree': 'T-x',
+             'port_documents': [], 'source_guards': {}, 'documents': [],
+             'rebinds': [{'module': 'fake_port_producer', 'attribute': 'PIN', 'kind': 'document-path', 'document': 'x'}],
+             'upstream_values': [], 'execution': 'in-process', 'args': {'--output': {'kind': 'output'}}}
+    return repo, base, port, manifest, {'S0x': stage}
+
+
+def test_port_tree_head_must_be_the_expected_port_branch_commit(tmp_path):
+    repo, base, port, manifest, _ = port_repo(tmp_path)
+    report = driver.verify_port_tree(repo, 'T-x', manifest, repo=repo)
+    assert report['head'] == port and report['branch'] == 'port/male-v4-t-x'
+    git(repo, 'checkout', '-q', '--detach', base)
+    with pytest.raises(driver.Refusal, match='not the port branch commit'):
+        driver.verify_port_tree(repo, 'T-x', manifest, repo=repo)
+    git(repo, 'checkout', '-q', 'port/male-v4-t-x')
+    with pytest.raises(driver.Refusal, match='detached'):
+        driver.verify_port_tree(repo, 'T-x', manifest, repo=repo)
+    git(repo, 'checkout', '-q', '--detach', port)
+    moved = copy.deepcopy(manifest); moved['trees']['T-x']['port_commit'] = base
+    with pytest.raises(driver.Refusal, match='branch port/male-v4-t-x is at'):
+        driver.verify_port_tree(repo, 'T-x', moved, repo=repo)
+    unbuilt = copy.deepcopy(manifest); unbuilt['trees']['T-x']['port_commit'] = None
+    with pytest.raises(driver.Refusal, match='no recorded port commit'):
+        driver.verify_port_tree(repo, 'T-x', unbuilt, repo=repo)
+    git(repo, 'branch', '-q', '-f', 'port/male-v4-t-x', base)
+    with pytest.raises(driver.Refusal, match='branch port/male-v4-t-x is at'):
+        driver.verify_port_tree(repo, 'T-x', manifest, repo=repo)
+
+
+def test_plan_only_verifies_the_port_tree_before_planning(tmp_path, capsys):
+    repo, base, port, manifest, stages = port_repo(tmp_path)
+    argv = ['--stage', 'S0x', '--worktree', str(repo), '--plan-only', '--', '--output', str(tmp_path/'out')]
+    run = lambda: driver.main(argv, stages=stages, pins_dir=tmp_path, protocol_sha256=SPEC['protocol_sha256'],
+                              ports=manifest, repo=repo)
+    assert run() == 0
+    plan = json.loads(capsys.readouterr().out)
+    assert plan['status'] == 'admissible' and plan['port_check']['head'] == port
+    assert plan['rebinds'] == [] and plan['locator']['env'] == ENV
+    assert plan['worktree_check']['producer_sha256'] == stages['S0x']['port_producer_sha256']
+    git(repo, 'checkout', '-q', '--detach', base)
+    assert run() == 3
+    assert 'not the port branch commit' in json.loads(capsys.readouterr().out)['reason']
+
+
+def test_go_runs_the_port_with_the_locator_and_publishes_a_record(tmp_path, capsys, monkeypatch):
+    repo, base, port, manifest, stages = port_repo(tmp_path)
+    go = tmp_path/'go.json'
+    go.write_text(json.dumps({'decision': 'GO', 'stage': 'S0x', 'protocol_sha256': SPEC['protocol_sha256']}))
+    saved = list(sys.path), Path.cwd(), list(sys.argv)
+    monkeypatch.delenv(ENV, raising=False)
+    try:
+        code = driver.main(['--stage', 'S0x', '--worktree', str(repo), '--go', str(go), '--pin-record-out',
+                            str(tmp_path/'record.json'), '--', '--output', str(tmp_path/'out')],
+                           stages=stages, pins_dir=tmp_path, protocol_sha256=SPEC['protocol_sha256'], ports=manifest, repo=repo)
+    finally:
+        sys.modules.pop('fake_port_producer', None); sys.path[:] = saved[0]; __import__('os').chdir(saved[1]); sys.argv[:] = saved[2]
+    assert code == 0, capsys.readouterr().out
+    assert json.loads((tmp_path/'out/result.json').read_text()) == {'pin': SPEC['locator']['schema']}
+    record = json.loads((tmp_path/'record.json').read_text())
+    assert record['producing_commit'] == port and record['port']['tree'] == 'T-x'
+    locator_file = Path(record['port']['locator_path'])
+    assert sha(locator_file.read_bytes()) == record['port']['locator_sha256']
+
+
+def test_real_cli_refuses_a_port_stage_worktree_that_is_not_its_port_branch(tmp_path, capsys):
+    repo, *_ = port_repo(tmp_path)
+    argv = ['--stage', 'S0c', '--worktree', str(repo), '--previous-pins', str(tmp_path/'never-read.json'), '--plan-only',
+            '--', '--output', str(tmp_path/'x')]
+    assert driver.main(argv) == 3  # refused at the port check, before the previous record is opened
+    assert 'not the port branch commit' in json.loads(capsys.readouterr().out)['reason']
+
+
+# =================================================================== probe: port entry points
+
+import probe_male_navigation_v4_imports as probe  # noqa: E402
+
+
+def test_probe_declares_port_entry_points_and_refuses_wrong_head_without_child(tmp_path, monkeypatch):
+    table = probe.ENTRYPOINTS
+    assert {k: v['port_tree'] for k, v in table.items() if v.get('port_tree')} == {
+        'S0c-port': 'T-c', 'S0d-port': 'T-d', 'S0e-port': 'T-e', 'S0f-port': 'T-f', 'S0f-historical-port': 'T-h'}
+    assert all(table[k]['module'] == table[k[:-5]]['module'] for k in table if k.endswith('-port'))
+    assert probe.port_commit('T-e') == SPEC['trees']['T-e']['port_commit']
+    calls = []
+    monkeypatch.setattr(probe, 'probe_entry', lambda *a, **k: calls.append((a, k)) or {'status': 'passed'})
+    repo, *_ = port_repo(tmp_path)
+    result = probe.probe_stage(sys.executable, 'S0c-port', repo)
+    assert result['status'] == 'refused' and calls == [] and 'port' in result['reasons'][0]
+    monkeypatch.setattr(probe, 'git_head', lambda worktree: SPEC['trees']['T-c']['port_commit'])
+    (repo/'scripts/prepare_male_recovery_data.py').write_text('')
+    assert probe.probe_stage(sys.executable, 'S0c-port', repo, port_pins=tmp_path/'pins.json')['status'] == 'passed'
+    assert calls[0][1]['extra_env'] == {ENV: str(tmp_path/'pins.json')}
+    assert probe.probe_stage(sys.executable, 'S0c-port', repo)['status'] == 'refused'  # locator required
