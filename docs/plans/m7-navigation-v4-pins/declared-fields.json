@@ -545,30 +545,37 @@
             "class": "sha256",
             "stage": "S0e",
             "placeholder": "PENDING-S0e",
-            "note": "T-e port bytes"
+            "note": "T-e port bytes",
+            "cascade_value": "0dfbbaf4492e6e2ce92941ccd8836ba5a66b0eece341e24cbf696eb34fe0db61",
+            "cascade_note": "T-e port bytes (port/male-v4-t-e); fixed by docs/plans/m7-navigation-v4-pins/ports.json"
           },
           {
             "pointer": "/current_reusable_source_sha256/scripts~1prepare_male_recovery_data.py",
             "class": "sha256",
             "stage": "S0e",
             "placeholder": "PENDING-S0e",
-            "note": "port bytes"
+            "note": "port bytes",
+            "cascade_value": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+            "cascade_note": "T-e does not port the reader (not imported at 736e0cf); collect_male_navigation.py:46-47 digests the unchanged tracked bytes"
           },
           {
             "pointer": "/current_reusable_source_sha256/data~1manifests~1male-recovery-research-development-v1.json",
             "class": "doc-sha256",
             "stage": "S0d",
             "placeholder": "PENDING-S0d",
-            "note": "cascade of v4 recovery index"
+            "note": "cascade of v4 recovery index",
+            "cascade_note": "collect_male_navigation.py:46-47 (T-e) digests Path(root)/name; the v4 copy is supplied by path and is not at this tracked path, so only the unchanged tracked original can satisfy this pin (spec gap; see ports.json spec_gaps)"
           },
           {
             "pointer": "/current_reusable_source_sha256/docs~1plans~1m7-recovery-learning-protocol.json",
             "class": "doc-sha256",
             "stage": "S0b",
             "placeholder": "PENDING-S0b",
-            "note": "cascade of v4 recovery-learning copy"
+            "note": "cascade of v4 recovery-learning copy",
+            "cascade_note": "collect_male_navigation.py:46-47 (T-e) digests Path(root)/name; the v4 copy is supplied by path and is not at this tracked path, so only the unchanged tracked original can satisfy this pin (spec gap; see ports.json spec_gaps)"
           }
-        ]
+        ],
+        "copy_path": "docs/plans/m7-navigation-v4-pins/m7-navigation-study-protocol.json"
       }
     },
     "pending_fields": {
@@ -594,21 +601,25 @@
           "class": "doc-path",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "v4 study-plan copy"
+          "site": "v4 study-plan copy",
+          "cascade_note": "the validated v4 study-plan copy (copy_path above) once its PENDING fields are filled"
         },
         {
           "pointer": "/prior_version/protocol_sha256",
           "class": "doc-sha256",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "v4 study-plan copy"
+          "site": "v4 study-plan copy",
+          "cascade_note": "the validated v4 study-plan copy (copy_path above) once its PENDING fields are filled"
         },
         {
           "pointer": "/prior_version/collector_sha256",
           "class": "sha256",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "collect_male_navigation_v2.py:42 (736e0cf); T-e ported collect_male_navigation.py"
+          "site": "collect_male_navigation_v2.py:42 (736e0cf); T-e ported collect_male_navigation.py",
+          "cascade_value": "705f4f82c8db4b59b14b3b232c6b3c5b946f26f3f01c709826e3c3150061b018",
+          "cascade_note": "T-e ported scripts/collect_male_navigation.py; equals the S0e port_source_guards pin in scripts/regenerate_male_navigation_v4.py"
         }
       ],
       "m7-navigation-data-v2-protocol.json": [
@@ -686,6 +697,7 @@
         }
       ]
     },
-    "note": "old_historical_reader/root is already declared (stage S0f). Adding these fields to the active documents block requires regenerating the copies and updating tests (implementation follow-up)."
+    "note": "old_historical_reader/root is already declared (stage S0f). Adding these fields to the active documents block requires regenerating the copies and updating tests (implementation follow-up).",
+    "port_manifest": "docs/plans/m7-navigation-v4-pins/ports.json"
   }
 }

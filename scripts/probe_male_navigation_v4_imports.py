@@ -24,6 +24,8 @@ import sys
 PROTOCOL_SHA256 = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
 MARKER = '@@M7-NAV-V4-PROBE-RESULT@@ '
 DEFAULT_TIMEOUT = 120.0
+PORTS_PATH = Path(__file__).resolve().parents[1]/'docs/plans/m7-navigation-v4-pins/ports.json'
+PORT_LOCATOR_ENV = 'PALIMPSEST_M7_V4_PINS'
 
 ENTRYPOINTS = {
     'S0a': {'module': 'collect_male_teachers', 'commit': 'cc1cea93d4c3333a0ee2a091dd34fff0b2986887', 'thread_env': {}},
@@ -38,6 +40,14 @@ ENTRYPOINTS = {
     # The S0f historical child imports the old reader from the 217cbee root.
     'S0f-historical': {'module': 'prepare_male_recovery_data', 'commit': '217cbee8399dcb25045a079af012beecbbdae29e',
                        'thread_env': {}},
+    # Amendment 1 port trees (docs/plans/m7-navigation-v4-pins/ports.json): the same entry modules at the
+    # recorded port branch commits; their H1 hunks read the locator named by PORT_LOCATOR_ENV at import.
+    'S0c-port': {'module': 'prepare_male_recovery_data', 'commit': None, 'port_tree': 'T-c', 'thread_env': {}},
+    'S0d-port': {'module': 'train_male_recovery', 'commit': None, 'port_tree': 'T-d', 'thread_env': {'OMP_NUM_THREADS': '1'}},
+    'S0e-port': {'module': 'collect_male_navigation_v2', 'commit': None, 'port_tree': 'T-e',
+                 'thread_env': {'OMP_NUM_THREADS': '1'}},
+    'S0f-port': {'module': 'prepare_male_navigation_v2', 'commit': None, 'port_tree': 'T-f', 'thread_env': {}},
+    'S0f-historical-port': {'module': 'prepare_male_recovery_data', 'commit': None, 'port_tree': 'T-h', 'thread_env': {}},
     # Planned v4 entry points live on the v4 branch; absent files are refused.
     'S1': {'module': 'train_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
     'S2': {'module': 'evaluate_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
@@ -248,7 +258,7 @@ def _egl_identity(reasons):
 # --------------------------------------------------------------------------- parent
 
 def probe_entry(python, root, module, *, thread_env=None, forbid=(), egl=False, local_names=(),
-                timeout=DEFAULT_TIMEOUT):
+                timeout=DEFAULT_TIMEOUT, extra_env=None):
     """One fresh ``python -I`` child for one entry module; never calls ``main``."""
     python, root = Path(python), Path(root).resolve()
     base = {'entry': module, 'root': str(root), 'python': str(python)}
@@ -257,7 +267,8 @@ def probe_entry(python, root, module, *, thread_env=None, forbid=(), egl=False, 
     config = {'root': str(root), 'module': module, 'forbid': [str(p) for p in forbid], 'egl': bool(egl),
               'local_names': list(local_names)}
     env = {'PATH': '/usr/bin:/bin', 'HOME': os.environ.get('HOME', '/nonexistent'), 'LANG': 'C.UTF-8',
-           'MUJOCO_GL': 'egl', 'CUDA_VISIBLE_DEVICES': '', 'PYTHONDONTWRITEBYTECODE': '1', **(thread_env or {})}
+           'MUJOCO_GL': 'egl', 'CUDA_VISIBLE_DEVICES': '', 'PYTHONDONTWRITEBYTECODE': '1', **(thread_env or {}),
+           **(extra_env or {})}
     try:
         done = subprocess.run([str(python), '-I', str(Path(__file__).resolve()), '--child', json.dumps(config)],
                               cwd=root, env=env, capture_output=True, text=True, timeout=timeout)
@@ -279,17 +290,31 @@ def git_head(worktree):
         return None
 
 
-def probe_stage(python, stage, worktree, *, forbid=(), egl=False, timeout=DEFAULT_TIMEOUT):
-    """A declared entry point in the stage's own worktree (producing commit for S0)."""
+def port_commit(tree_id, path=PORTS_PATH):
+    """The recorded port branch commit of an Amendment 1 port tree."""
+    tree = json.loads(Path(path).read_text())['trees'][tree_id]
+    return tree.get('port_commit')
+
+
+def probe_stage(python, stage, worktree, *, forbid=(), egl=False, timeout=DEFAULT_TIMEOUT, port_pins=None):
+    """A declared entry point in the stage's own worktree (producing commit, or port commit for a port tree)."""
     entry = ENTRYPOINTS[stage]; worktree = Path(worktree).resolve()
     base = {'stage': stage, 'entry': entry['module'], 'root': str(worktree), 'python': str(python)}
-    if entry['commit'] is not None and git_head(worktree) != entry['commit']:
-        return {**base, 'status': 'refused', 'reasons': [f'{stage} worktree is not at {entry["commit"]}']}
+    commit, extra_env = entry['commit'], {}
+    if entry.get('port_tree'):
+        commit = port_commit(entry['port_tree'])
+        if not commit or git_head(worktree) != commit:
+            return {**base, 'status': 'refused', 'reasons': [f'{stage} worktree is not at port branch commit {commit}']}
+        if port_pins is None:
+            return {**base, 'status': 'refused', 'reasons': [f'{stage} needs --port-pins (the {PORT_LOCATOR_ENV} locator)']}
+        extra_env = {PORT_LOCATOR_ENV: str(port_pins)}
+    elif commit is not None and git_head(worktree) != commit:
+        return {**base, 'status': 'refused', 'reasons': [f'{stage} worktree is not at {commit}']}
     if not (worktree/'scripts'/(entry['module'] + '.py')).is_file():
         return {**base, 'status': 'refused', 'reasons': [f'{stage} entry point {entry["module"]} is not present']}
     result = probe_entry(python, worktree, entry['module'], thread_env=entry['thread_env'], forbid=forbid,
-                         egl=egl, timeout=timeout)
-    return {'stage': stage, 'commit': entry['commit'], **result}
+                         egl=egl, timeout=timeout, **({'extra_env': extra_env} if extra_env else {}))
+    return {'stage': stage, 'commit': commit, **result}
 
 
 def main(argv=None):
@@ -308,6 +333,7 @@ def main(argv=None):
     parser.add_argument('--forbid', action='append', default=[], help='Data root that must never be opened')
     parser.add_argument('--egl', action='store_true', help='Record EGL identity from one offscreen context')
     parser.add_argument('--timeout', type=float, default=DEFAULT_TIMEOUT)
+    parser.add_argument('--port-pins', type=Path, help='Port locator document for *-port stages')
     args = parser.parse_args(argv)
     python = Path(args.python)
     if not python.is_absolute() or not python.exists():
@@ -318,7 +344,8 @@ def main(argv=None):
         stage, _, worktree = item.partition('=')
         if stage not in ENTRYPOINTS or not worktree:
             print(json.dumps({'status': 'refused', 'reasons': [f'Undeclared stage entry {item}']})); return 2
-        results.append(probe_stage(python, stage, worktree, forbid=args.forbid, egl=args.egl, timeout=args.timeout))
+        results.append(probe_stage(python, stage, worktree, forbid=args.forbid, egl=args.egl, timeout=args.timeout,
+                                   port_pins=args.port_pins))
     if args.root or args.module:
         if not (args.root and args.module):
             print(json.dumps({'status': 'refused', 'reasons': ['--root and --module go together']})); return 2
