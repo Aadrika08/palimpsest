@@ -1,0 +1,508 @@
+{
+ "schema": "m7-navigation-v4-ports-1",
+ "protocol_path": "docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json",
+ "protocol_sha256": "238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8",
+ "amendment": "amendment_1 (revision 2), owner decision A1 approved 2026-11-08",
+ "locator": {
+  "env": "PALIMPSEST_M7_V4_PINS",
+  "schema": "m7-navigation-v4-port-pins-1",
+  "note": "H1 hunks read v4 pin documents (path, sha256) and the S0c data-manifest pin from the JSON file named by this variable; subprocesses inherit it (bounded_process env=None or {**os.environ}); -I does not drop it"
+ },
+ "commit_identity": {
+  "name": "MaleCNS v4 port builder",
+  "email": "ports@palimpsest.invalid",
+  "date": "2026-11-08T00:00:00+00:00"
+ },
+ "files": {
+  "scripts/prepare_male_recovery_data.py": {
+   "base_sha256": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+   "hunks": [
+    {
+     "spec_lines": "15-16",
+     "class": "H1",
+     "start": 15,
+     "old": [
+      "PROTOCOL_PATH = 'docs/plans/m7-recovery-learning-protocol.json'",
+      "PROTOCOL_SHA256 = '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28'"
+     ],
+     "new": [
+      "PROTOCOL_PATH = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path']",
+      "PROTOCOL_SHA256 = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256']"
+     ],
+     "what": "PROTOCOL_PATH/PROTOCOL_SHA256 -> v4 recovery-learning copy (import-time read kept)"
+    },
+    {
+     "spec_lines": "90",
+     "class": "H3",
+     "start": 90,
+     "old": [
+      "    if len(raw_rows) != 67 or len(result['rows']) != 67:"
+     ],
+     "new": [
+      "    p = protocol(); n = p['recovery_ticks_each'][[x['run_id'] for x in p['recovery_sources']].index(run_id)]",
+      "    if type(n) is not int or not 0 < n <= 120 or len(raw_rows) != n or len(result['rows']) != n:"
+     ],
+     "what": "67 raw/result rows per recovery source -> S0b per-source pin (0 < n <= 120)"
+    },
+    {
+     "spec_lines": "140",
+     "class": "H3",
+     "start": 140,
+     "old": [
+      "    if check_counts and counts != {'train': 2117, 'dev': 1228, 'held_out': 0}:"
+     ],
+     "new": [
+      "    p = protocol() if check_counts else None; s = p and p['counts']['per_source']; r = p and p['recovery_ticks_each']",
+      "    if check_counts and (len(s['baseline_train']) != 8 or len(s['dev']) != 4 or len(r) != 2 or",
+      "            any(type(n) is not int or n <= 0 for n in s['baseline_train']+s['dev']+r) or max(r) > 120 or",
+      "            {k: p['counts'].get(k) for k in ('baseline_train', 'dev', 'held_out', 'recovery_train', 'train')} !=",
+      "            {'baseline_train': sum(s['baseline_train']), 'dev': sum(s['dev']), 'held_out': 0,",
+      "             'recovery_train': sum(r), 'train': sum(s['baseline_train'])+sum(r)} or",
+      "            [len(ep['targets']) for ep in data['train']] != s['baseline_train']+r or",
+      "            [len(ep['targets']) for ep in data['dev']] != s['dev'] or",
+      "            counts != {'train': p['counts']['train'], 'dev': p['counts']['dev'], 'held_out': 0}):"
+     ],
+     "what": "{'train':2117,'dev':1228,'held_out':0} -> S0c counts from S0a/S0b pins; structural invariants; per-source order-preserving equality"
+    },
+    {
+     "spec_lines": "160",
+     "class": "H3",
+     "start": 160,
+     "old": [
+      "            observed['numeric_ticks'] != 134 or observed['owners_completed'] != 2 or"
+     ],
+     "new": [
+      "            observed['numeric_ticks'] != sum(p['recovery_ticks_each']) or observed['owners_completed'] != 2 or"
+     ],
+     "what": "numeric_ticks 134 -> S0b pinned ticks; owners_completed 2 kept"
+    },
+    {
+     "spec_lines": "177",
+     "class": "H3",
+     "start": 177,
+     "old": [
+      "    if sum(len(ep['targets']) for ep in data['train']) != 1983 or sum(len(ep['targets']) for ep in data['dev']) != 1228:"
+     ],
+     "new": [
+      "    if [len(ep['targets']) for ep in data['train']] != p['counts']['per_source']['baseline_train'] or [len(ep['targets']) for ep in data['dev']] != p['counts']['per_source']['dev']:"
+     ],
+     "what": "1983/1228 sums -> S0a per-source ordered pins"
+    },
+    {
+     "spec_lines": "198",
+     "class": "H3",
+     "start": 198,
+     "old": [
+      "                manifest.get('initial_memory') is not None or manifest['recorded_ticks'] != 67 or"
+     ],
+     "new": [
+      "                manifest.get('initial_memory') is not None or manifest['recorded_ticks'] != p['recovery_ticks_each'][p['recovery_sources'].index(expected)] or"
+     ],
+     "what": "recorded_ticks 67 -> S0b per-source pin"
+    }
+   ]
+  },
+  "scripts/train_male_recovery.py": {
+   "base_sha256": "1b828d68daf4db6186d5ccc0804d35ce6a8918279cb74834d16291f6d5679877",
+   "hunks": [
+    {
+     "spec_lines": "19",
+     "class": "H1",
+     "start": 19,
+     "old": [
+      "DATA_SHA256='402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014'"
+     ],
+     "new": [
+      "DATA_SHA256=json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['data_manifest']['sha256']"
+     ],
+     "what": "DATA_SHA256 -> S0c pin (import-time read kept)"
+    },
+    {
+     "spec_lines": "77",
+     "class": "H3",
+     "start": 77,
+     "old": [
+      "            manifest['counts']!={'train':2117,'dev':1228,'held_out':0} or"
+     ],
+     "new": [
+      "            manifest['counts']!={'train':data_reader.protocol()['counts']['train'],'dev':data_reader.protocol()['counts']['dev'],'held_out':0} or"
+     ],
+     "what": "manifest counts 2117/1228/0 -> S0c pins"
+    },
+    {
+     "spec_lines": "80",
+     "class": "H3",
+     "start": 80,
+     "old": [
+      "            any(row['windows']!=[32,32,3] or row['ending']!='right_censored_coverage_complete'"
+     ],
+     "new": [
+      "            any(row['windows']!=(lambda n:[32]*(n//32)+[n%32]*(n%32>0))(data_reader.protocol()['recovery_ticks_each'][manifest['recovery_admission'].index(row)]) or row['ending']!='right_censored_coverage_complete'"
+     ],
+     "what": "windows [32,32,3] -> [32]*floor(n/32) + [n mod 32 if > 0] per pinned recovery length"
+    },
+    {
+     "spec_lines": "123",
+     "class": "H3",
+     "start": 123,
+     "old": [
+      "                row['train_ticks']!=2117 or row['dev']['ticks']!=1228):raise ValueError('Epoch data counts differ')"
+     ],
+     "new": [
+      "                row['train_ticks']!=data_reader.protocol()['counts']['train'] or row['dev']['ticks']!=data_reader.protocol()['counts']['dev']):raise ValueError('Epoch data counts differ')"
+     ],
+     "what": "per-epoch train_ticks 2117 / dev ticks 1228 -> S0c pins"
+    },
+    {
+     "spec_lines": "208",
+     "class": "H1",
+     "start": 208,
+     "old": [
+      "    parser.add_argument('--data-manifest',type=Path,default=ROOT/'runs/m7-recovery-learning-data-development-7d5fc1f-20261003/data-manifest.json')"
+     ],
+     "new": [
+      "    parser.add_argument('--data-manifest',type=Path,default=Path(json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['data_manifest']['path']))"
+     ],
+     "what": "default --data-manifest path -> v4 S0c output path"
+    }
+   ],
+   "retained": "FITTER_SHA256 (line 20) and all fitting code"
+  },
+  "src/palimpsest/male_recovery_research.py": {
+   "base_sha256": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+   "hunks": [
+    {
+     "spec_lines": "10-11",
+     "class": "H1",
+     "start": 10,
+     "old": [
+      "INDEX_PATH='data/manifests/male-recovery-research-development-v1.json'",
+      "INDEX_SHA256='cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5'"
+     ],
+     "new": [
+      "INDEX_PATH=__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path']",
+      "INDEX_SHA256=__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['sha256']"
+     ],
+     "what": "INDEX_PATH/INDEX_SHA256 -> v4 recovery index (import-time read kept)"
+    },
+    {
+     "spec_lines": "71",
+     "class": "H3",
+     "start": 71,
+     "old": [
+      "    if (data.get('status')!='prepared-research-only' or data.get('counts')!={'train':2117,'dev':1228,'held_out':0} or"
+     ],
+     "new": [
+      "    learning=read_pin(Path(__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path']),__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],65536);c=learning['counts'];r=learning['recovery_ticks_each']",
+      "    if (data.get('status')!='prepared-research-only' or data.get('counts')!={'train':c['train'],'dev':c['dev'],'held_out':0} or",
+      "            len(r)!=2 or any(type(n) is not int or not 0<n<=120 for n in r) or",
+      "            [s.get('ticks') for s in data.get('ordered_sources',{}).get('train',[])]!=c['per_source']['baseline_train']+r or",
+      "            [s.get('ticks') for s in data.get('ordered_sources',{}).get('dev',[])]!=c['per_source']['dev'] or"
+     ],
+     "what": "data counts 2117/1228/0 -> S0c pins (v4 recovery-learning copy); per-source ordered equality"
+    },
+    {
+     "spec_lines": "73",
+     "class": "H3",
+     "start": 73,
+     "old": [
+      "            [r.get('windows') for r in data.get('recovery_admission',[])]!=[[32,32,3],[32,32,3]]):"
+     ],
+     "new": [
+      "            [x.get('windows') for x in data.get('recovery_admission',[])]!=[[32]*(n//32)+[n%32]*(n%32>0) for n in r]):"
+     ],
+     "what": "recovery windows [[32,32,3],[32,32,3]] -> derived from S0b pins"
+    },
+    {
+     "spec_lines": "85",
+     "class": "H3",
+     "start": 85,
+     "old": [
+      "        if type(row.get('train_ticks')) is not int or row['train_ticks']!=2117 or type(dev.get('ticks')) is not int or dev['ticks']!=1228:"
+     ],
+     "new": [
+      "        c=read_pin(Path(__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path']),__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],65536)['counts']",
+      "        if type(row.get('train_ticks')) is not int or row['train_ticks']!=c['train'] or type(dev.get('ticks')) is not int or dev['ticks']!=c['dev']:"
+     ],
+     "what": "history train_ticks 2117 / dev 1228 -> S0c pins"
+    },
+    {
+     "spec_lines": "114,117",
+     "class": "H1",
+     "start": 113,
+     "old": [
+      "    learning=read_pin(Path(root)/'docs/plans/m7-recovery-learning-protocol.json',",
+      "        '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28',65536)"
+     ],
+     "new": [
+      "    learning=read_pin(Path(root)/__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path'],",
+      "        __import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],65536)"
+     ],
+     "what": "hard-coded recovery-learning path (line 113) and sha (line 114) -> v4 copy; range fixed to 113-114"
+    },
+    {
+     "spec_lines": "114,117",
+     "class": "H1",
+     "start": 117,
+     "old": [
+      "        '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28',"
+     ],
+     "new": [
+      "        __import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],"
+     ],
+     "what": "hard-coded research_protocol_sha256 091c4e98... -> v4 copy"
+    }
+   ]
+  },
+  "scripts/collect_male_navigation_v2.py": {
+   "base_sha256": "21d2cb104dfe0ea34e52b5d93c835affb9cebeb7bccb85b7314f18404971053f",
+   "hunks": [
+    {
+     "spec_lines": "20-21",
+     "class": "H1",
+     "start": 20,
+     "old": [
+      "PLAN = 'docs/plans/m7-navigation-contact-v2-protocol.json'",
+      "PLAN_SHA = '29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0'"
+     ],
+     "new": [
+      "PLAN = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-contact-v2-protocol.json']['path']",
+      "PLAN_SHA = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-contact-v2-protocol.json']['sha256']"
+     ],
+     "what": "PLAN/PLAN_SHA -> v4 contact-v2 copy (import-time read kept)"
+    },
+    {
+     "spec_lines": "50",
+     "class": "H1",
+     "start": 50,
+     "old": [],
+     "new": [],
+     "empty": true,
+     "unchanged_line_contains": "CONTACTS = plan()['contacts']",
+     "what": "empty: CONTACTS = plan()['contacts'] still runs at import and reads the v4 plan through the 20-21 hunk"
+    },
+    {
+     "spec_lines": "326,458,485",
+     "class": "H1",
+     "start": 326,
+     "old": [
+      "        binding=Binding(root/'data/manifests/male-recovery-research-development-v1.json',"
+     ],
+     "new": [
+      "        binding=Binding(root/json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path'],"
+     ],
+     "what": "inline recovery index path -> v4 index path"
+    },
+    {
+     "spec_lines": "326,458,485",
+     "class": "H1",
+     "start": 458,
+     "old": [
+      "            identities={seed:resolve(root,assets,root/'data/manifests/male-recovery-research-development-v1.json',"
+     ],
+     "new": [
+      "            identities={seed:resolve(root,assets,root/json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path'],"
+     ],
+     "what": "inline recovery index path -> v4 index path"
+    },
+    {
+     "spec_lines": "466",
+     "class": "H2",
+     "start": 466,
+     "old": [],
+     "new": [],
+     "empty": true,
+     "unchanged_line_contains": "str(Path(__file__).resolve())",
+     "what": "empty: the worker child relaunches this file via __file__ at its original relative path, i.e. the port"
+    },
+    {
+     "spec_lines": "326,458,485",
+     "class": "H1",
+     "start": 485,
+     "old": [
+      "            report['identities_after']={seed:resolve(root,assets,root/'data/manifests/male-recovery-research-development-v1.json',"
+     ],
+     "new": [
+      "            report['identities_after']={seed:resolve(root,assets,root/json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path'],"
+     ],
+     "what": "inline recovery index path -> v4 index path"
+    }
+   ]
+  },
+  "scripts/collect_male_navigation.py": {
+   "base_sha256": "d0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f",
+   "hunks": [
+    {
+     "spec_lines": "26-27",
+     "class": "H1",
+     "start": 26,
+     "old": [
+      "PLAN = 'docs/plans/m7-navigation-study-protocol.json'",
+      "PLAN_SHA = 'a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f'"
+     ],
+     "new": [
+      "PLAN = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-study-protocol.json']['path']",
+      "PLAN_SHA = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-study-protocol.json']['sha256']"
+     ],
+     "what": "PLAN/PLAN_SHA a3612cdc... -> v4 study-plan copy (import-time read kept)"
+    }
+   ]
+  },
+  "scripts/prepare_male_navigation_v2.py": {
+   "base_sha256": "ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333",
+   "hunks": [
+    {
+     "spec_lines": "19",
+     "class": "H1",
+     "start": 18,
+     "old": [
+      "PROTOCOL = 'docs/plans/m7-navigation-data-v2-protocol.json'",
+      "PROTOCOL_SHA = 'd2b998cdd4763a4b173bfe712ba0c50d19c7cfd56b68e44c395c575cdcfa2feb'"
+     ],
+     "new": [
+      "PROTOCOL = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-data-v2-protocol.json']['path']",
+      "PROTOCOL_SHA = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-data-v2-protocol.json']['sha256']"
+     ],
+     "what": "PROTOCOL_SHA (line 19) -> v4 data-v2 copy; range fixed to 18-19 because the copy is supplied by path"
+    },
+    {
+     "spec_lines": "327",
+     "class": "H3",
+     "start": 327,
+     "old": [
+      "            report.get('owners_completed')!=12 or type(report.get('numeric_ticks')) is not int or report['numeric_ticks']!=5080 or"
+     ],
+     "new": [
+      "            report.get('owners_completed')!=12 or type(report.get('numeric_ticks')) is not int or report['numeric_ticks']!=sum(p['counts']['per_source']['advice']) or"
+     ],
+     "what": "numeric_ticks 5080 -> S0e pinned per-source advice ticks; owners_completed 12 kept"
+    },
+    {
+     "spec_lines": "422",
+     "class": "H2",
+     "start": 422,
+     "old": [],
+     "new": [],
+     "empty": true,
+     "unchanged_line_contains": "[sys.executable,'-I',str(SCRIPT),'--historical-old-data-child'",
+     "what": "empty: the -I historical child relaunches SCRIPT = Path(__file__) at its original relative path, i.e. the port"
+    },
+    {
+     "spec_lines": "430",
+     "class": "H3",
+     "start": 430,
+     "old": [
+      "    if old.validate_splits(data)!={'train':2117,'dev':1228,'held_out':0}: raise ValueError('Old fixed arm counts differ')"
+     ],
+     "new": [
+      "    s=p['counts']['per_source']",
+      "    if (old.validate_splits(data)!={'train':p['counts']['old_train_rows'],'dev':p['counts']['recorded_dev_rows'],'held_out':0} or",
+      "            len(s['old_train'])!=10 or len(s['dev'])!=4 or any(type(n) is not int or n<=0 for n in s['old_train']+s['dev']) or max(s['old_train'][8:])>120 or",
+      "            [len(ep['targets']) for ep in data['train']]!=s['old_train'] or [len(ep['targets']) for ep in data['dev']]!=s['dev']): raise ValueError('Old fixed arm counts differ')"
+     ],
+     "what": "old 2117/1228 -> S0c pins; 8 teacher + 2 recovery (<=120) train sources, 4 dev; per-source ordered equality"
+    },
+    {
+     "spec_lines": "464",
+     "class": "H3",
+     "start": 464,
+     "old": [
+      "    if old.validate_splits(augmented,check_counts=False)!={'train':7197,'dev':1228,'held_out':0}: raise ValueError('Augmented exact arm counts differ')"
+     ],
+     "new": [
+      "    c=p['counts']",
+      "    if (old.validate_splits(augmented,check_counts=False)!={'train':c['augmented_train_rows'],'dev':c['recorded_dev_rows'],'held_out':0} or",
+      "            len(s['advice'])!=12 or any(type(n) is not int or not 0<n<=600 for n in s['advice']) or",
+      "            c['old_train_rows']!=sum(s['old_train']) or c['recorded_dev_rows']!=sum(s['dev']) or c['new_advice_train_rows']!=sum(s['advice']) or",
+      "            c['augmented_train_rows']!=c['old_train_rows']+c['new_advice_train_rows'] or c['combined_rows']!=c['augmented_train_rows']+c['recorded_dev_rows'] or",
+      "            (c['old_sources'],c['new_sources'],c['combined_unique_sources'],c['held_out_sources'],c['held_out_rows'])!=(14,12,26,0,0) or",
+      "            [len(ep['targets']) for ep in augmented['train']]!=s['old_train']+s['advice'] or [len(ep['targets']) for ep in augmented['dev']]!=s['dev']): raise ValueError('Augmented exact arm counts differ')"
+     ],
+     "what": "augmented 7197/1228 -> S0c train + S0e ticks, S0c dev; 12 advice sources (<=600) in case order; per-source ordered equality"
+    }
+   ],
+   "retained_structural": "len(mapping)==14 (:203,:231), len(checks)==26 (:463)"
+  }
+ },
+ "trees": {
+  "T-c": {
+   "base": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+   "stage": "S0c",
+   "files": [
+    "scripts/prepare_male_recovery_data.py"
+   ],
+   "documents": [
+    "m7-recovery-learning-protocol.json"
+   ],
+   "branch": "port/male-v4-t-c",
+   "port_commit": "d99bc333f5a93aa051c16677790349ceb805f592"
+  },
+  "T-d": {
+   "base": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+   "stage": "S0d",
+   "files": [
+    "scripts/prepare_male_recovery_data.py",
+    "scripts/train_male_recovery.py"
+   ],
+   "documents": [
+    "m7-recovery-learning-protocol.json"
+   ],
+   "locator_values": [
+    "data_manifest"
+   ],
+   "branch": "port/male-v4-t-d",
+   "port_commit": "f67c8c2377a2d0bd4aae8f81c79c80277915bcb7"
+  },
+  "T-e": {
+   "base": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
+   "stage": "S0e",
+   "files": [
+    "src/palimpsest/male_recovery_research.py",
+    "scripts/collect_male_navigation_v2.py",
+    "scripts/collect_male_navigation.py"
+   ],
+   "documents": [
+    "m7-navigation-contact-v2-protocol.json",
+    "male-recovery-research-development-v1.json",
+    "m7-recovery-learning-protocol.json",
+    "m7-navigation-study-protocol.json"
+   ],
+   "reader_port": "not imported at 736e0cf (scripts/prepare_male_recovery_data.py is only read as bytes under producer_root at male_recovery_research.py:64); not ported",
+   "branch": "port/male-v4-t-e",
+   "port_commit": "813b80c396eeb5496dbb9a91920ac08a92df8d9f"
+  },
+  "T-h": {
+   "base": "217cbee8399dcb25045a079af012beecbbdae29e",
+   "stage": "S0f-historical",
+   "files": [
+    "scripts/prepare_male_recovery_data.py"
+   ],
+   "documents": [
+    "m7-recovery-learning-protocol.json"
+   ],
+   "branch": "port/male-v4-t-h",
+   "port_commit": "c9045ebb41a76d3140c6bd6f7a1ee8e6b6210ba8"
+  },
+  "T-f": {
+   "base": "4ecb354efa4223abdbe3d09be118fe5402fec1a1",
+   "stage": "S0f",
+   "files": [
+    "scripts/prepare_male_navigation_v2.py",
+    "scripts/prepare_male_recovery_data.py"
+   ],
+   "documents": [
+    "m7-navigation-data-v2-protocol.json",
+    "m7-recovery-learning-protocol.json"
+   ],
+   "branch": "port/male-v4-t-f",
+   "port_commit": "e71c026bf7ab806e3c6cc52d99abe3f8bec40663"
+  }
+ },
+ "spec_gaps": [
+  "scripts/prepare_male_recovery_data.py:116 still emits windows [32,32,3] (no listed hunk); the ported checks at train_male_recovery.py:80 (T-d) and male_recovery_research.py:73 (T-e) derive windows from the pinned lengths, so any pinned recovery length other than 67 is refused (fail-closed) until an amendment adds that site.",
+  "T-f imports its own scripts/collect_male_navigation_v2.py (helpers :76; bytes identical to 736e0cf) and compares nav.PLAN_SHA with the S0e report study_sha256 at prepare_male_navigation_v2.py:325; the spec ports no T-f collector, so S0f refuses a T-e collection (fail-closed) until an amendment ports collect_male_navigation_v2.py:20-21 into T-f.",
+  "collect_male_navigation.py:46-47 (T-e) digests Path(root)/name for each study-plan current_reusable_source_sha256 key; the v4 recovery index and recovery-learning copy are supplied by path and are not at those tracked paths, so the declared PENDING-S0d/PENDING-S0b cascades for those two keys cannot be satisfied (the tracked originals are what is digested). scripts/prepare_male_recovery_data.py is not ported in T-e, so its declared cascade value is the unchanged 2b5c7b78... rather than port bytes.",
+  "Hunk ranges fixed beyond the listed line numbers: prepare_male_navigation_v2.py 19 -> 18-19 (PROTOCOL path, because the data-v2 copy is supplied by path); male_recovery_research.py 114 -> 113-114 (the hard-coded path is on line 113).",
+  "collect_male_navigation_v2.py:50 needs no bytes: the 20-21 hunk already makes the import-time plan() read the v4 copy."
+ ]
+}
