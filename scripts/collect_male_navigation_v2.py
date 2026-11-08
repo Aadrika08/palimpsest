@@ -17,8 +17,8 @@ from collect_male_navigation import (MiB, ROOT, ISOLATION, ROBOT, OBSTACLES, CAS
     check_case, initial_match, input_row, input_hashes, isolation, overlay,
     check_isolation, expected_control, hashes_array, natural_boundary, publish, run_cases)
 
-PLAN = 'docs/plans/m7-navigation-contact-v2-protocol.json'
-PLAN_SHA = '29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0'
+PLAN = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-contact-v2-protocol.json']['path']
+PLAN_SHA = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-contact-v2-protocol.json']['sha256']
 PROFILE = 'male-learner-advice-navigation-v2'
 PROFILE_SHA = '1593421ae2cc1a12b0d9aeae6646fda77da1d11a885ffac3406e52dc6af12186'
 TYPES = ('wheel_floor_support', 'non_wheel_floor', 'robot_obstacle', 'robot_wall', 'world_only')
@@ -323,7 +323,7 @@ def worker(config):
         if mujoco.get_mjcb_control() is not None: raise ValueError('Existing control callback refused')
         budget.check(admission()['recording_bytes']+16*MiB,path=run)
         run.mkdir(exist_ok=False)
-        binding=Binding(root/'data/manifests/male-recovery-research-development-v1.json',
+        binding=Binding(root/json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path'],
             plan(root)['fixed_source_models']['index_sha256'],config['case']['learner_seed'])
         engine=Engine.open(root,Path(config['assets']),run/'recording',controller='male-original',device='cpu',
             seed=config['case']['scene_seed'],scenario='reproduction',texture='checker',run_id=run.name,
@@ -455,7 +455,7 @@ def verify(args):
             budget.check(admission()['aggregate_bytes'],path=output)
             report['assets_before']=verify_assets(root,assets)
             if not report['assets_before']['ok']:raise ValueError('Frozen assets unavailable')
-            identities={seed:resolve(root,assets,root/'data/manifests/male-recovery-research-development-v1.json',
+            identities={seed:resolve(root,assets,root/json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path'],
                 p['fixed_source_models']['index_sha256'],seed,'male-original')[0] for seed in (10,11,12)}
             scene_initials={}
             def owner(case,item):
@@ -482,7 +482,7 @@ def verify(args):
             if report['assets_before']!=report['assets_after']:raise ValueError('Assets changed')
             if report['status']=='completed-collection' and (report['owners_completed']!=12 or len(list(output.rglob('*.snp')))!=12):raise ValueError('Incomplete fixed owner/snapshot plan')
             report['identities_before']=identities
-            report['identities_after']={seed:resolve(root,assets,root/'data/manifests/male-recovery-research-development-v1.json',
+            report['identities_after']={seed:resolve(root,assets,root/json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path'],
                 p['fixed_source_models']['index_sha256'],seed,'male-original')[0] for seed in (10,11,12)}
             if report['identities_before']!=report['identities_after']:raise ValueError('Frozen learner source changed')
             report['artifacts_sha256']={k:v for k,v in file_hashes(output).items() if k not in ('progress.json','.palimpsest-storage.lock')}

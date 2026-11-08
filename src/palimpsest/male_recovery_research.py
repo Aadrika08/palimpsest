@@ -7,8 +7,8 @@ from pathlib import Path
 import platform
 from . import artifacts,male_model,male_policy,male_research
 
-INDEX_PATH='data/manifests/male-recovery-research-development-v1.json'
-INDEX_SHA256='cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5'
+INDEX_PATH=__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['path']
+INDEX_SHA256=__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['male-recovery-research-development-v1.json']['sha256']
 PROTOCOL_PATH='docs/plans/m7-recovery-development-protocol.json'
 PROTOCOL_SHA256='eebc94145507cffe26965704ed33b9be68cb91558bde0f5aa1b1d3cf90fcdcba'
 PAIR_SEEDS=male_research.PAIR_SEEDS
@@ -68,9 +68,13 @@ def _gate(root,index):
     if male_policy._sha(artifacts._read(Path(root)/'src/palimpsest/male_model.py',MAX_JSON))!=reader['current_reader_sources']['src/palimpsest/male_model.py']:
         raise ValueError('Current numerical model differs from admitted training')
     data=read_pin(producer/index['data_manifest']['path'],index['data_manifest']['sha256'])
-    if (data.get('status')!='prepared-research-only' or data.get('counts')!={'train':2117,'dev':1228,'held_out':0} or
+    learning=read_pin(Path(__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path']),__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],65536);c=learning['counts'];r=learning['recovery_ticks_each']
+    if (data.get('status')!='prepared-research-only' or data.get('counts')!={'train':c['train'],'dev':c['dev'],'held_out':0} or
+            len(r)!=2 or any(type(n) is not int or not 0<n<=120 for n in r) or
+            [s.get('ticks') for s in data.get('ordered_sources',{}).get('train',[])]!=c['per_source']['baseline_train']+r or
+            [s.get('ticks') for s in data.get('ordered_sources',{}).get('dev',[])]!=c['per_source']['dev'] or
             {key:len(val) for key,val in data.get('ordered_sources',{}).items()}!={'train':10,'dev':4,'held_out':0} or
-            [r.get('windows') for r in data.get('recovery_admission',[])]!=[[32,32,3],[32,32,3]]):
+            [x.get('windows') for x in data.get('recovery_admission',[])]!=[[32]*(n//32)+[n%32]*(n%32>0) for n in r]):
         raise ValueError('Exact executed-target censored data required')
     return producer,data,terminal
 
@@ -82,7 +86,8 @@ def _history(model):
         raise ValueError('Every fixed recovery training epoch required')
     for row in rows:
         dev=row.get('dev',{})
-        if type(row.get('train_ticks')) is not int or row['train_ticks']!=2117 or type(dev.get('ticks')) is not int or dev['ticks']!=1228:
+        c=read_pin(Path(__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path']),__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],65536)['counts']
+        if type(row.get('train_ticks')) is not int or row['train_ticks']!=c['train'] or type(dev.get('ticks')) is not int or dev['ticks']!=c['dev']:
             raise ValueError('Recovery epoch counts differ')
         for val in (row.get('train_loss'),dev.get('loss'),dev.get('velocity_mae'),dev.get('wrapped_heading_mae_radians')):
             if type(val) not in (int,float) or not math.isfinite(val) or val<0:raise ValueError('Invalid recovery fit metric')
@@ -110,11 +115,11 @@ def _bundle(root,index,seed,variant,graph_path,graph_manifest):
             training.get('runtime')!=index['runtime'] or training.get('feature_protocol')!=male_model.FEATURE_PROTOCOL):
         raise ValueError('Recovery report/data/source/protocol differs')
     # Frozen semantic settings come from the tracked preregistration, not the live producer module.
-    learning=read_pin(Path(root)/'docs/plans/m7-recovery-learning-protocol.json',
-        '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28',65536)
+    learning=read_pin(Path(root)/__import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path'],
+        __import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],65536)
     expected={**learning['training'],'training_seed':seed,'rewiring_seed':seed,'variants':list(male_policy.VARIANTS),
         'data_manifest_sha256':index['data_manifest']['sha256'],'research_protocol_sha256':
-        '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28',
+        __import__('json').loads(Path(__import__('os').environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256'],
         'order':learning['ordering'],'hidden_state':learning['right_censoring'],'wall_budget_seconds':600,
         'output_limit_bytes':64*1024**2,'qualification_claims':[]}
     if training.get('training')!=expected:raise ValueError('Frozen recovery fitting settings differ')

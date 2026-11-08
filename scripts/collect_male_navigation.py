@@ -23,8 +23,8 @@ from verify_body_calibration import sample
 from verify_endurance import source_identity
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAN = 'docs/plans/m7-navigation-study-protocol.json'
-PLAN_SHA = 'a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f'
+PLAN = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-study-protocol.json']['path']
+PLAN_SHA = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-study-protocol.json']['sha256']
 PROFILE = 'male-learner-advice-navigation-v1'
 MiB = 1024**2
 ISOLATION = ('native', 'model', 'environment', 'rng', 'student_input', 'student_hidden')
@@ -43,8 +43,9 @@ def plan(root=ROOT):
 def source_pins(root=ROOT):
     p = plan(root)
     expected = p['current_reusable_source_sha256']
+    v4 = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']; v4 = {'data/manifests/male-recovery-research-development-v1.json': v4['male-recovery-research-development-v1.json']['path'], 'docs/plans/m7-recovery-learning-protocol.json': v4['m7-recovery-learning-protocol.json']['path']}
     for name, pin in expected.items():
-        if digest(Path(root)/name) != pin: raise ValueError('Pinned study reader source differs: '+name)
+        if digest(Path(root)/v4.get(name, name)) != pin: raise ValueError('Pinned study reader source differs: '+name)
     for name, pin in p['generator']['source_sha256'].items():
         if digest(Path(root)/'upstream/fly-gym'/name) != pin: raise ValueError('Pinned study generator differs: '+name)
     helpers = ('collect_male_navigation.py', 'collect_male_recovery.py', 'verify_task_starts.py',
