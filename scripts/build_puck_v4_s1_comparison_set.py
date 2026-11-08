@@ -5,8 +5,10 @@ and writes a fresh canonical JSON declaration for scripts/admit_puck_v4_scene_id
 Unknown siblings of the palimpsest checkout are refused rather than silently dropped.
 """
 import argparse
+import difflib
 import json
 import os
+import re
 import sys
 
 SHRADDHA = '/home/utkarsh/Work/shraddha'
@@ -33,6 +35,10 @@ UNRELATED_PROJECTS = {
 }
 HELD_OUT_RUNS = ('.worktrees', 'authority-study-final')
 LOST_ROOT_NAME = 'brain'
+VENV_NAMES = {'.venv', 'venv'}  # excluded only when they hold a pyvenv.cfg
+ASSET_REASON = 'third-party FlyWire/FLYNN asset copy, not a scene registry'
+ASSET_DIR = re.compile(r'graph-[0-9a-f]{64}')
+CONNECTOME_DIR = 'drosophila adult connectome'
 
 
 def _raise(error):
@@ -48,7 +54,8 @@ def _env_excludes(tree, skip=()):
             full = os.path.join(directory, name)
             if name == '.git' or full in skip or os.path.islink(full):
                 continue
-            if name in ENV_DIRS:
+            if name in ENV_DIRS and (name not in VENV_NAMES
+                                     or os.path.isfile(os.path.join(full, 'pyvenv.cfg'))):
                 rows.append({'path': full, 'reason': ENV_DIRS[name]})
             else:
                 keep.append(name)
@@ -79,7 +86,8 @@ def _children(path):
 
 
 def build(*, shraddha=SHRADDHA, main=MAIN, codex_worktrees=CODEX_WORKTREES, advertisement,
-          submodule_advertisement=None):
+          submodule_advertisement=None, ephemeral=None):
+    ephemeral = EPHEMERAL if ephemeral is None else tuple(ephemeral)
     roots, unscanned = [], []
     trees = [('palimpsest', main)]
     containers = [os.path.join(main, c) for c in WORKTREE_CONTAINERS
@@ -138,7 +146,9 @@ def build(*, shraddha=SHRADDHA, main=MAIN, codex_worktrees=CODEX_WORKTREES, adve
                if child.startswith('puck-v4-s1-')]  # ledger is excluded before it exists
         roots.append(_directory(EVIDENCE, evidence, exclude=_env_excludes(
             evidence, {row['path'] for row in own}) + own))
-    _hazard_excludes(roots)
+    areas = _hazard_excludes(roots, ephemeral)
+    known_paths = {row['path'] for row in unscanned}
+    unscanned.extend(row for path, row in sorted(areas.items()) if path not in known_paths)
     return {'kind': 'puck-v4-s1-comparison-set-v1', 'version': 1, 'roots': roots,
             'unscanned': unscanned}
 
@@ -176,15 +186,37 @@ def _git_covered(full, directory, gits):
     return False
 
 
-def _hazard_excludes(roots):
+def _ephemeral_area(target, ephemeral):
+    """The temp-storage area a symlink points into, with an explicit reason."""
+    prefix = next(e for e in ephemeral if _under(target, e))
+    rest = target[len(prefix):].strip('/').split('/', 1)[0]
+    area = prefix.rstrip('/') + ('/' + rest if rest else '')
+    if rest.startswith('pytest-of-'):
+        reason = ('pytest temporary base directory (synthetic fixtures written by test runs); '
+                  'reached only through symlinks in declared roots, not a scene registry')
+    else:
+        reason = ('temporary storage reached only through symlinks in declared roots; '
+                  'not a scene registry')
+    return area, {'path': area, 'reason': reason}
+
+
+def _is_asset_copy(full):
+    return (ASSET_DIR.fullmatch(os.path.basename(full)) is not None
+            and os.path.isdir(os.path.join(full, CONNECTOME_DIR)))
+
+
+def _hazard_excludes(roots, ephemeral):
     """Metadata-only pass so admission never meets a hazard only at execute time.
 
     Out-of-root symlinks are excluded only when dangling or pointing into ephemeral
-    temp storage; `.git` entries not covered by a git root are excluded only for
-    lost-root clones and fresh-reproduction checkouts. Anything else is refused.
+    temp storage (whose area is then recorded as unscanned); `.git` entries not
+    covered by a git root are excluded only for lost-root clones, shared clones and
+    pytest fixture repositories; third-party connectome asset copies are excluded
+    with a fixed reason. Anything else is refused. Returns unscanned areas.
     """
     declared = [os.path.realpath(r['path']) for r in roots]
     gits = [os.path.realpath(r['path']) for r in roots if r['kind'] == 'git']
+    areas = {}
     for root in roots:
         if root['kind'] != 'directory':
             continue
@@ -194,6 +226,11 @@ def _hazard_excludes(roots):
                                                       onerror=_raise):
             dirnames[:] = sorted(n for n in dirnames
                                  if not any(_under(os.path.join(directory, n), s) for s in skip))
+            for name in list(dirnames):
+                full = os.path.join(directory, name)
+                if not os.path.islink(full) and _is_asset_copy(full):
+                    added.append({'path': full, 'reason': ASSET_REASON})
+                    dirnames.remove(name)
             for name in sorted(dirnames + filenames):
                 full = os.path.join(directory, name)
                 if name == '.git' and not _git_covered(full, directory, gits):
@@ -218,13 +255,16 @@ def _hazard_excludes(roots):
                         continue
                     if not os.path.lexists(target):
                         reason = 'dangling symlink (target absent); nothing behind it to scan'
-                    elif any(_under(target, e) for e in EPHEMERAL):
-                        reason = (f'symlink into ephemeral temp storage {target}; '
-                                  'outside declared roots, not a scene registry')
+                    elif any(_under(target, e) for e in ephemeral):
+                        area, row = _ephemeral_area(target, ephemeral)
+                        areas[area] = row
+                        reason = (f'symlink into ephemeral temp storage {target}; its area '
+                                  f'{area} is recorded as unscanned')
                     else:
                         raise ValueError(f'symlink {full} -> {target} leaves declared roots')
                     added.append({'path': full, 'reason': reason})
         root['exclude'] = sorted(root['exclude'] + added, key=lambda row: row['path'])
+    return areas
 
 
 def render(declaration):
@@ -240,13 +280,28 @@ def main(argv=None):
                         help='fresh `ls-remote` output for the palimpsest origin')
     parser.add_argument('--submodule-advertisement',
                         help='fresh `ls-remote` output for the upstream/fly-gym origin')
-    parser.add_argument('--output', required=True)
+    target = parser.add_mutually_exclusive_group(required=True)
+    target.add_argument('--output', help='write a fresh declaration here')
+    target.add_argument('--compare-manifest',
+                        help='rebuild and diff against this reviewed declaration; exit 0 only '
+                             'if byte-identical (run immediately before execute)')
     args = parser.parse_args(argv)
-    if os.path.lexists(args.output):
+    if args.output and os.path.lexists(args.output):
         parser.error(f'output must be a fresh path: {args.output}')
     raw = render(build(shraddha=args.shraddha, main=args.main,
                        codex_worktrees=args.codex_worktrees, advertisement=args.advertisement,
                        submodule_advertisement=args.submodule_advertisement))
+    if args.compare_manifest:
+        with open(args.compare_manifest, 'rb') as stream:
+            reviewed = stream.read()
+        if reviewed == raw:
+            print(f'identical to reviewed declaration {args.compare_manifest}')
+            return 0
+        sys.stdout.writelines(difflib.unified_diff(
+            reviewed.decode(errors='replace').splitlines(True),
+            raw.decode(errors='replace').splitlines(True),
+            fromfile=args.compare_manifest, tofile='rebuilt'))
+        return 1
     descriptor = os.open(args.output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
     try:
         os.write(descriptor, raw)

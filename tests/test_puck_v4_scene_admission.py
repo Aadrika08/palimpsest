@@ -663,9 +663,9 @@ def test_attempt_receipt_written_before_reads_and_second_attempt_refused(tmp_pat
     seen = []
     original = s1._Scan.scan_directory
 
-    def spy(self, root):
+    def spy(self, root, *args):
         seen.append((ledger / s1.ATTEMPT_RECEIPT_NAME).exists())
-        return original(self, root)
+        return original(self, root, *args)
     monkeypatch.setattr(s1._Scan, 'scan_directory', spy)
     _, output = _admit(tmp_path, [_dir_root(tree)], ledger=ledger)
     assert seen == [True]
@@ -750,3 +750,211 @@ def test_plan_reports_lost_root_clones(tmp_path):
     result, output = _admit(tmp_path, [flagged], lost_root=str(lost))
     assert result['verdict'] == 'admitted'
     assert _report(output)['lost_root']['clones_scanned'] == [str(clone)]
+
+
+# Round 3: full inventory before the receipt, in plan-only too ---------------------
+
+def _hazard(tree, kind, tmp_path):
+    if kind == 'oversize':
+        _write(tree / 'big.json', '{"x": "' + 'a' * 300 + '"}')
+    elif kind == 'unreadable-file':
+        _write(tree / 'secret.json', '{}').chmod(0)
+    elif kind == 'unreadable-dir':
+        (tree / 'locked').mkdir()
+        (tree / 'locked').chmod(0)
+    elif kind == 'symlink':
+        (tree / 'escape').symlink_to(_write(tmp_path / 'outside' / 'x.md', 'x\n'))
+    elif kind == 'git':
+        (tree / 'vendored' / '.git').mkdir(parents=True)
+
+
+@pytest.mark.parametrize('kind, message', [
+    ('oversize', 'exceeds'), ('unreadable-file', 'unreadable'), ('unreadable-dir', 'walk'),
+    ('symlink', 'symlink'), ('git', 'git storage')])
+def test_inventory_hazards_are_plan_blockers_and_refused_before_receipt(
+        tmp_path, monkeypatch, kind, message):
+    monkeypatch.setattr(s1, 'MAX_FILE_BYTES', 256)
+    tree = _prior_tree(tmp_path)
+    _hazard(tree, kind, tmp_path)
+    try:
+        plan = _plan(tmp_path, [_dir_root(tree)])
+        assert any(message in blocker for blocker in plan['blockers'])
+        ledger = tmp_path / 'ledger-x'
+        with pytest.raises(s1.AdmissionRefused, match=message):
+            _admit(tmp_path, [_dir_root(tree)], ledger=ledger)
+        assert not (ledger / s1.ATTEMPT_RECEIPT_NAME).exists()
+    finally:
+        for path in (tree / 'secret.json', tree / 'locked'):
+            if path.exists():
+                path.chmod(0o755)
+
+
+def test_undecodable_file_name_is_a_blocker(tmp_path):
+    tree = _prior_tree(tmp_path)
+    with open(os.fsencode(tree) + b'/bad-\xff.json', 'wb') as stream:
+        stream.write(b'{}')
+    plan = _plan(tmp_path, [_dir_root(tree)])
+    assert any('UTF-8' in blocker for blocker in plan['blockers'])
+
+
+# Round 3: post-receipt crash safety -------------------------------------------------
+
+def test_read_error_after_receipt_is_a_recorded_refusal(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    original = Path.read_bytes
+
+    def failing(self):
+        if self.name == 'dev.md':
+            raise PermissionError('vanished permission')
+        return original(self)
+    monkeypatch.setattr(Path, 'read_bytes', failing)
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    report = _report(output)
+    assert result['verdict'] == 'refused' and report['reservation'] is None
+    assert any('vanished permission' in reason for reason in report['refusal_reasons'])
+
+
+def test_change_after_receipt_is_a_recorded_refusal(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    original = s1._Scan.document
+
+    def mutate(self, root, relative, raw, oid=None):
+        _write(tree / 'late.json', {'x': 1})
+        return original(self, root, relative, raw, oid)
+    monkeypatch.setattr(s1._Scan, 'document', mutate)
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'refused'
+    assert any('changed' in reason for reason in _report(output)['refusal_reasons'])
+
+
+def test_oversized_csv_field_is_ambiguous_not_a_crash(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'wide.csv', 'scene,notes\n6512,"' + 'x' * 200000 + '"\n')
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'refused'
+    assert _report(output)['ambiguous'][0]['path'] == 'wide.csv'
+
+
+def test_deep_json_is_unparsed_and_ambiguous_not_a_crash(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'deep.json', '[' * 100000 + '6510' + ']' * 100000)
+    _write(tree / 'deep-clean.json', '[' * 100000 + '1' + ']' * 100000)
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    report = _report(output)
+    assert result['verdict'] == 'refused'
+    assert [row['path'] for row in report['ambiguous']] == ['deep.json']
+    assert {row['path'] for row in report['unparsed_documents']} >= {'deep.json'}
+
+
+def test_walk_recursion_error_is_contained(monkeypatch):
+    def boom(*args, **kwargs):
+        raise RecursionError('too deep')
+    monkeypatch.setattr(s1, '_walk', boom)
+    assert s1._parse_document('a.json', b'{"scene_id": 6510}') is None
+
+
+# Round 3: numeric keys holding geometry ---------------------------------------------
+
+@pytest.mark.parametrize('content, scene_id', [
+    ({'6510': {'puck_xy': [0.1, 0.2]}}, 6510),
+    ({'rows': {'6511': {'rover_pose': [0.0, 0.0, 0.0]}}}, 6511),
+])
+def test_numeric_key_with_geometry_child_is_a_typed_scene_id(tmp_path, content, scene_id):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'layouts.json', content)
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'refused'
+    assert [row['scene_id'] for row in _report(output)['collisions']] == [scene_id]
+
+
+def test_numeric_key_with_held_out_geometry_is_a_held_out_payload(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'catalog.json', {'rows': {'6203': {'goal_xy': [1.0, 1.0]}}})
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'refused'
+    assert _report(output)['held_out_payload_objects_not_compared'][0]['scene_id'] == 6203
+
+
+# Round 3: raw-byte prefilter and throughput ----------------------------------------
+
+@pytest.mark.parametrize('raw, hit', [
+    (b'{"a": 1, "date": "2026-11-07"}', False),
+    (b'{"scene_id": 6512}', True),
+    (b'{"scene_id": 6205}', True),
+    (b'{"scene_ids": "5000-7000"}', True),
+    (b'{"scene_ids": "5000\xe2\x80\x937000"}', True),
+    (b'{"scene_id": 6.51e3}', True),
+    (b'{"h": "a6512b", "n": 16512}', False),
+])
+def test_prefilter(raw, hit):
+    assert s1.prefilter_hit(raw) is hit
+
+
+def test_prefiltered_files_are_digested_but_not_parsed(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'plain.json', {'note': 'nothing numeric here'})
+    parsed = []
+    original = s1._parse_document
+    monkeypatch.setattr(s1, '_parse_document',
+                        lambda relative, raw: parsed.append(relative) or original(relative, raw))
+    _, output = _admit(tmp_path, [_dir_root(tree)])
+    report = _report(output)
+    assert 'plain.json' not in parsed and 'docs/plans/v3.json' in parsed
+    assert report['roots'][0]['files_scanned'] == 6
+    assert report['roots'][0]['files_parsed_after_prefilter'] == len(parsed)
+
+
+def test_typed_exponent_and_float_forms_collide(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'float.json', '{"scene_id": 6.51e3}')
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'refused'
+    assert _report(output)['collisions'][0]['scene_id'] == 6510
+
+
+def test_plan_projects_throughput_and_blocks_above_80_percent(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    plan = _plan(tmp_path, [_dir_root(tree)])
+    estimate = plan['throughput']
+    assert estimate['limit_seconds'] == 660 and estimate['blocker_fraction'] == 0.8
+    assert estimate['bytes_by_suffix']['.json'] > 0 and estimate['sample_mb_per_s'] > 0
+    assert estimate['projected_cpu_seconds'] < 528
+    monkeypatch.setattr(s1, '_sample_rate', lambda: 1e-9)
+    plan = _plan(tmp_path, [_dir_root(tree)])
+    assert any('throughput' in blocker for blocker in plan['blockers'])
+
+
+# Round 3: execution requirements and smaller items ---------------------------------
+
+def test_execution_requirements_in_report_and_bytecode_required(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    _, output = _admit(tmp_path, [_dir_root(tree)])
+    requirements = _report(output)['execution_requirements']
+    assert any('-B' in row for row in requirements)
+    assert any('no other process' in row.lower() for row in requirements)
+    assert '-B' in s1.build_parser().format_help()
+    monkeypatch.setattr(s1, '_bytecode_disabled', lambda: False)
+    with pytest.raises(s1.AdmissionRefused, match='-B'):
+        _admit(tmp_path, [_dir_root(tree)], output=tmp_path / 'o2' / 'r.json')
+
+
+def test_empty_advertisement_is_a_blocker(tmp_path):
+    repo = _repo(tmp_path, [{'a.json': {'scene_id': 6100}}])
+    _git(repo, 'remote', 'add', 'origin', str(tmp_path / 'nowhere'))
+    advert = _write(tmp_path / 'advert.txt', '')
+    plan = _plan(tmp_path, [_git_root(repo, advert), _dir_root(repo, name='work')])
+    assert any('empty' in blocker for blocker in plan['blockers'])
+
+
+def test_supersession_string_is_frozen():
+    assert s1.SUPERSEDED_PROTOCOL_STATE == (
+        'prospective-docs-only; no source or numerical execution authorized')
+    assert json.loads(PROTOCOL.read_bytes())['state'] == s1.SUPERSEDED_PROTOCOL_STATE
+
+
+def test_sources_bind_package_init_and_interpreter(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _, output = _admit(tmp_path, [_dir_root(tree)])
+    sources = _report(output)['sources']
+    assert 'src/palimpsest/__init__.py' in sources
+    assert sources['interpreter'] == {'path': sys.executable, 'version': sys.version}

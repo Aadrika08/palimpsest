@@ -25,12 +25,14 @@ import csv
 import hashlib
 import io
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
 import stat
 import subprocess
 import sys
+import time
 
 from .puck_scene_markdown import parse_puck_markdown_document
 
@@ -72,9 +74,25 @@ MAX_OUTPUT_BYTES = 64 * 1024 ** 2  # protocol S1 output_cap_bytes 67108864
 MAX_RANGE = 4096
 GIT = '/usr/bin/git'
 _REPO = Path(__file__).resolve().parents[2]
-SOURCE_FILES = ('src/palimpsest/puck_v4_scene_admission.py',
+SOURCE_FILES = ('src/palimpsest/__init__.py',
+                'src/palimpsest/puck_v4_scene_admission.py',
                 'src/palimpsest/puck_scene_markdown.py',
                 'scripts/admit_puck_v4_scene_ids.py')
+SUPERSEDED_PROTOCOL_STATE = 'prospective-docs-only; no source or numerical execution authorized'
+THROUGHPUT_BLOCKER_FRACTION = 0.8
+EXECUTION_REQUIREMENTS = (
+    'No other process may write in any declared root (or the attempt ledger) during '
+    'execute; the inventory change check refuses, it does not tolerate, concurrent writes.',
+    'The launcher keeps its logs and any temporary files outside every declared root.',
+    'Run Python with -B (no bytecode writes into the source tree); execute refuses otherwise.',
+    'Execute only the reviewed declaration: rebuild with build_puck_v4_s1_comparison_set.py '
+    '--compare-manifest <reviewed> immediately before execute.',
+)
+PREFILTER_RESIDUAL = (
+    'Files are parsed only if their raw bytes contain a decimal 6xxx token (leading zeros '
+    'allowed), any exponent-form number, or a numeric range whose bounds could cover '
+    '6000-6999. Undetectable residual: IDs written only via JSON \\u escapes, non-ASCII '
+    'digits, words, arithmetic, or split across lines.')
 
 _SCENE_TOKENS = {'scene', 'scenes', 'layout', 'layouts', 'seed', 'seeds', 'roster', 'rosters',
                  'split', 'splits', 'reservation', 'reservations', 'collection',
@@ -311,7 +329,8 @@ def _load_go(path, stage, label, protocol_state):
         raise AdmissionRefused(f'{label} needs granted_by and granted_at text')
     supersedes = 'supersedes_protocol_state' in record
     if supersedes and (stage != S1_GO_STAGE
-                       or record['supersedes_protocol_state'] != protocol_state):
+                       or record['supersedes_protocol_state'] != SUPERSEDED_PROTOCOL_STATE
+                       or protocol_state != SUPERSEDED_PROTOCOL_STATE):
         raise AdmissionRefused(f'{label} may supersede only the exact protocol state, '
                                'and only in the S1 GO')
     return raw, {'path': str(path), 'sha256': _sha(raw),
@@ -358,7 +377,7 @@ def _object_present(repo, oid):
                           capture_output=True, env={'PATH': '/usr/bin:/bin'}).returncode == 0
 
 
-def _git_blobs(repo, tips):
+def _git_wanted(repo, tips):
     listing = _git(repo, 'rev-list', '--objects', '--stdin',
                    stdin=''.join(tip + '\n' for tip in tips).encode())
     wanted = {}
@@ -366,6 +385,28 @@ def _git_blobs(repo, tips):
         oid, _, path = line.partition(' ')
         if path.endswith(SCANNED_SUFFIXES) and oid not in wanted:
             wanted[oid] = path
+    return wanted
+
+
+def _git_blob_sizes(repo, tips):
+    """Object headers only: [(path, oid, size)] for scanned-suffix blobs."""
+    wanted = _git_wanted(repo, tips)
+    if not wanted:
+        return []
+    check = _git(repo, 'cat-file', '--batch-check',
+                 stdin=''.join(o + '\n' for o in sorted(wanted)).encode())
+    rows = []
+    for line in check.decode().splitlines():
+        parts = line.split()
+        if len(parts) < 3 or parts[1] == 'missing':
+            raise AdmissionRefused(f'git object {parts[0]} is missing: incomplete history')
+        if parts[1] == 'blob':
+            rows.append((wanted[parts[0]], parts[0], int(parts[2])))
+    return rows
+
+
+def _git_blobs(repo, tips):
+    wanted = _git_wanted(repo, tips)
     if not wanted:
         return []
     oids = sorted(wanted)
@@ -419,6 +460,8 @@ def _git_preflight(root, directories, lost_root):
             blockers.append(str(error))
             advert = b''
         advert_sha = _sha(advert) if advert else None
+        if not advert.strip() and os.path.isfile(root['advertisement']):
+            blockers.append(f'remote advertisement for {root["name"]} is empty')
         for line in advert.decode(errors='replace').splitlines():
             oid = line.split('\t')[0].strip()
             if not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', oid):
@@ -541,20 +584,26 @@ def _walk(value, pointer, typed, occurrences, held_out_payloads):
             held_out_payloads.append((pointer, next(
                 item for item in ids if type(item) is int and item in HELD_OUT_SCENE_IDS)))
         for key, child in value.items():
-            if typed and re.fullmatch(r'\d{1,7}', key):
-                occurrences.append((pointer + '/' + key, int(key)))
+            child_pointer = pointer + '/' + _escape(key)
+            child_geometry = type(child) is dict and bool(_GEOMETRY_KEYS & set(child))
+            if re.fullmatch(r'\d{1,7}', key) and (typed or child_geometry):
+                # A numeric key is a scene ID in typed context, or when it maps to geometry.
+                occurrences.append((child_pointer, int(key)))
+                if child_geometry and int(key) in HELD_OUT_SCENE_IDS:
+                    held_out_payloads.append((child_pointer, int(key)))
             child_typed = (typed or _key_is_scene(key)) and not _key_is_non_scene(key)
             if geometry and key in _ID_KEYS:
                 child_typed = True  # bare id beside geometry is a scene identity
             if key in _GEOMETRY_KEYS:
                 child_typed = False  # geometry values are never scene IDs nor compared
-            _walk(child, pointer + '/' + _escape(key), child_typed, occurrences,
-                  held_out_payloads)
+            _walk(child, child_pointer, child_typed, occurrences, held_out_payloads)
     elif type(value) is list:
         for index, child in enumerate(value):
             _walk(child, f'{pointer}/{index}', typed, occurrences, held_out_payloads)
     elif typed and type(value) is int:
         occurrences.append((pointer, value))
+    elif typed and type(value) is float and math.isfinite(value) and value.is_integer():
+        occurrences.append((pointer, int(value)))  # e.g. 6510.0 or 6.51e3
     elif typed and type(value) is str:
         occurrences.extend((pointer, item) for item in _ids_in_text(value))
 
@@ -564,7 +613,10 @@ def _raw_only_hits(relative, raw):
     text = raw.decode('utf-8', errors='replace')
     ambiguous, non_scene = set(), set()
     if relative.endswith('.csv'):
-        rows = list(csv.reader(io.StringIO(text)))
+        try:
+            rows = list(csv.reader(io.StringIO(text)))
+        except csv.Error:
+            return set(_ids_in_text(text)) & set(NEW_SCENE_IDS), set()  # raw-scan only
         header = rows[0] if rows else []
         for number, row in enumerate(rows):
             for column, cell in enumerate(row):
@@ -602,27 +654,54 @@ def _parse_document(relative, raw):
                           occurrences, held_out)
         else:
             _walk(_strict_json(raw, 'json'), '', False, occurrences, held_out)
-    except (ValueError, AdmissionRefused):
+    except (ValueError, AdmissionRefused, RecursionError):
         return None
     return occurrences, held_out, unsupported
 
 
+_PRE_TOKEN = re.compile(rb'(?<![0-9A-Za-z_])0*6\d{3}(?![0-9A-Za-z_])')
+_PRE_EXPONENT = re.compile(rb'\d(?:\.\d*)?[eE][+-]?\d')
+_PRE_RANGE = re.compile(rb'(?<![0-9A-Za-z_.])(\d{1,7})\s*(?:-|\.\.|\xe2\x80[\x90-\x95]|'
+                        rb'\xe2\x88\x92)\s*(\d{1,7})(?![0-9A-Za-z_])')
+
+
+def prefilter_hit(raw):
+    """Cheap raw-byte test: could typed detection find any puck-namespace ID here?
+
+    Typed detection only fires where decimal digits appear in the text, so files
+    without a 6xxx token, an exponent-form number, or a range whose bounds could
+    cover 6000-6999 cannot yield a new, reused, held-out, or mitigation-relevant ID.
+    """
+    if _PRE_TOKEN.search(raw) or _PRE_EXPONENT.search(raw):
+        return True
+    for match in _PRE_RANGE.finditer(raw):
+        low, high = int(match[1]), int(match[2])
+        if (low <= high and high - low <= MAX_RANGE
+                and low <= PUCK_NAMESPACE[1] and high >= PUCK_NAMESPACE[0]):
+            return True
+    return False
+
+
+def _utf8(path):
+    try:
+        path.encode('utf-8')
+        return True
+    except UnicodeEncodeError:
+        return False
+
+
 # Root scanning -------------------------------------------------------------------
-
-def _walk_error(error):
-    raise AdmissionRefused(f'directory walk failed (refusing, not skipping): {error}')
-
 
 class _Scan:
     def __init__(self, lost_root, roots, git_covered):
         self.lost_root = lost_root
-        self.directories = [root for root in roots if root['kind'] == 'directory']
         self.root_paths = [root['path'] for root in roots]
         self.git_covered = git_covered  # git root paths and their registered worktrees
         self.collisions, self.ambiguous, self.untyped = [], [], []
         self.reuse, self.held_out_ids, self.held_out_payloads = {}, {}, []
         self.lineage, self.unparsed, self.max_puck = [], [], None
-        self.clones = []
+        self.clones, self.errors = [], []
+        self.parsed = self.prefiltered = 0
 
     def document(self, root, relative, raw, oid=None):
         where = {'root': root, 'path': relative}
@@ -632,6 +711,10 @@ class _Scan:
         if digest in LINEAGE_SHA256:
             self.lineage.append({**where, 'sha256': digest, 'lineage': LINEAGE_SHA256[digest]})
             return
+        if not prefilter_hit(raw):
+            self.prefiltered += 1
+            return
+        self.parsed += 1
         raw_new = _raw_new_ids(raw)
         if relative.endswith(RAW_SUFFIXES):
             ambiguous, non_scene = _raw_only_hits(relative, raw)
@@ -671,7 +754,7 @@ class _Scan:
         for pointer, scene_id in held_out:
             self.held_out_payloads.append({**where, 'pointer': pointer, 'scene_id': scene_id})
 
-    def _git_storage(self, root, directory, full):
+    def _git_storage(self, root, directory, full, problems):
         if directory in self.git_covered:
             return 'covered'
         if os.path.isfile(full) and not os.path.islink(full):
@@ -679,30 +762,37 @@ class _Scan:
             if target is not None and _under(target, self.lost_root) and root['lost_root_clone']:
                 self.clones.append(directory)
                 return 'lost-root-clone'
-        raise AdmissionRefused(f'git storage at {full} is not covered by a declared git root')
+        problems.append(f'git storage at {full} is not covered by a declared git root')
+        return 'uncovered'
 
-    def _symlink(self, root, full):
+    def _symlink(self, full, problems):
         target = os.path.realpath(full)
         if not any(_under(target, path) for path in self.root_paths):
-            raise AdmissionRefused(f'symlink {full} -> {target} leaves the declared roots; '
-                                   'exclude it with a reason')
+            problems.append(f'symlink {full} -> {target} leaves the declared roots; '
+                            'exclude it with a reason')
 
-    def _inventory(self, root):
+    def _inventory(self, root, problems):
+        """Metadata-only walk; every hazard is appended to problems, never skipped."""
         base = root['path']
         files, symlinks, skipped, git_storage = [], [], 0, []
-        for directory, dirnames, filenames in os.walk(base, followlinks=False,
-                                                      onerror=_walk_error):
+
+        def onerror(error):
+            problems.append(f'directory walk failed under {root["name"]} '
+                            f'(refusing, not skipping): {error}')
+        for directory, dirnames, filenames in os.walk(base, followlinks=False, onerror=onerror):
             keep = []
             for name in sorted(dirnames):
                 full = os.path.join(directory, name)
                 if _excluded(full, root):
                     continue
-                if os.path.islink(full):
-                    self._symlink(root, full)
+                if not _utf8(full):
+                    problems.append(f'path is not UTF-8 (not scannable): {full!r}')
+                elif os.path.islink(full):
+                    self._symlink(full, problems)
                     symlinks.append(os.path.relpath(full, base))
                 elif name == '.git':
                     git_storage.append([os.path.relpath(full, base),
-                                        self._git_storage(root, directory, full)])
+                                        self._git_storage(root, directory, full, problems)])
                 else:
                     keep.append(name)
             dirnames[:] = keep
@@ -710,41 +800,61 @@ class _Scan:
                 full = os.path.join(directory, name)
                 if _excluded(full, root):
                     continue
+                if not _utf8(full):
+                    problems.append(f'path is not UTF-8 (not scannable): {full!r}')
+                    continue
                 relative = os.path.relpath(full, base)
-                info = os.lstat(full)
+                try:
+                    info = os.lstat(full)
+                except OSError as error:
+                    problems.append(f'stat failed for {full}: {error}')
+                    continue
                 if stat.S_ISLNK(info.st_mode):
-                    self._symlink(root, full)
+                    self._symlink(full, problems)
                     symlinks.append(relative)
                 elif name == '.git':
-                    git_storage.append([relative, self._git_storage(root, directory, full)])
+                    git_storage.append([relative,
+                                        self._git_storage(root, directory, full, problems)])
                 elif not stat.S_ISREG(info.st_mode):
                     continue
                 elif name.endswith(SCANNED_SUFFIXES):
+                    if info.st_size > MAX_FILE_BYTES:
+                        problems.append(f'{root["name"]}:{relative} exceeds {MAX_FILE_BYTES} '
+                                        'bytes; exclude it with a reason')
+                    elif not os.access(full, os.R_OK):
+                        problems.append(f'unreadable file {full}')
                     files.append([relative, info.st_size, info.st_mtime_ns, info.st_ino])
                 else:
                     skipped += 1
         return {'files': sorted(files), 'symlinks': sorted(symlinks), 'skipped': skipped,
                 'git_storage': sorted(git_storage)}
 
-    def scan_directory(self, root):
-        before = self._inventory(root)
+    def scan_directory(self, root, before):
+        parsed = self.parsed
         digest_rows = []
-        for relative, size, _, _ in before['files']:
-            if size > MAX_FILE_BYTES:
-                raise AdmissionRefused(f'{root["name"]}:{relative} exceeds {MAX_FILE_BYTES} bytes')
-            raw = Path(root['path'], relative).read_bytes()
+        for relative, _, _, _ in before['files']:
+            try:
+                raw = Path(root['path'], relative).read_bytes()
+            except OSError as error:
+                self.errors.append(f'read failed for {root["name"]}:{relative}: {error}')
+                continue
+            if len(raw) > MAX_FILE_BYTES:
+                self.errors.append(f'{root["name"]}:{relative} grew past {MAX_FILE_BYTES} bytes')
+                continue
             digest_rows.append([relative, _sha(raw), len(raw)])
             self.document(root['name'], relative, raw)
-        clones_before = list(self.clones)
-        after = self._inventory(root)
-        self.clones = clones_before
-        if after != before:
-            raise AdmissionRefused(f'root {root["name"]} changed during inventory')
+        problems, clones = [], list(self.clones)
+        after = self._inventory(root, problems)
+        self.clones = clones
+        if problems or after != before:
+            self.errors.append(f'root {root["name"]} changed during inventory'
+                               + (f': {"; ".join(problems)}' if problems else ''))
         return {'name': root['name'], 'kind': 'directory', 'path': root['path'],
                 'held_out_payloads': root['held_out_payloads'],
                 'lost_root_clone': root['lost_root_clone'],
                 'excluded': sorted(root['exclude'], key=lambda row: row['path']),
                 'files_scanned': len(before['files']),
+                'files_parsed_after_prefilter': self.parsed - parsed,
                 'files_skipped_by_suffix': before['skipped'],
                 'unfollowed_symlinks': before['symlinks'],
                 'git_storage': before['git_storage'],
@@ -753,20 +863,82 @@ class _Scan:
                 'content_digest': _sha(canonical_bytes(digest_rows))}
 
     def scan_git(self, root, record):
-        repo = root['path']
+        repo, parsed = root['path'], self.parsed
         before = {'refs': record['refs'], 'worktrees': _git_worktrees(repo)}
         if _git_refs(repo) != record['refs']:
-            raise AdmissionRefused(f'git root {root["name"]} refs changed since preflight')
+            self.errors.append(f'git root {root["name"]} refs changed since preflight')
         blobs = _git_blobs(repo, record['scanned_tips'])
         for path, oid, raw in blobs:
             self.document(root['name'], path, raw, oid)
         after = {'refs': _git_refs(repo), 'worktrees': _git_worktrees(repo)}
         if after != before:
-            raise AdmissionRefused(f'git root {root["name"]} changed during inventory')
+            self.errors.append(f'git root {root["name"]} changed during inventory')
         return {**record, 'blobs_scanned': len(blobs),
+                'files_parsed_after_prefilter': self.parsed - parsed,
                 'inventory_before_sha256': _sha(canonical_bytes(before)),
                 'inventory_after_sha256': _sha(canonical_bytes(after)),
                 'content_digest': _sha(canonical_bytes(sorted(oid for _, oid, _ in blobs)))}
+
+
+# Throughput projection -------------------------------------------------------------
+
+_RATE_CACHE = []
+
+
+def _synthetic_sample():
+    """Deterministic bundled sample; every document hits the prefilter (conservative)."""
+    docs = []
+    for index in range(48):
+        rows = [{'scene_id': 6000 + i % 20, 'seed': i, 'rover_pose': [0.1 * i, 0.2, 0.3],
+                 'note': 'sample ' * 6, 'date': '2026-11-07'} for i in range(60)]
+        payload = {'scene_reservations': {'collection': [6000 + index % 20, 6100],
+                                          'development': '6120-6123'}, 'rows': rows}
+        docs.append((f'sample/{index}.json', json.dumps(payload).encode()))
+        docs.append((f'sample/{index}.md', ('# Sample\nScene IDs: 6100..6103\n' + (
+            'Prose that mentions 6512 bytes on 2026-11-07, for timing only.\n' * 100)).encode()))
+        docs.append((f'sample/{index}.jsonl', b'\n'.join(json.dumps(
+            {'tick': i, 'scene_id': 6001, 'inputs': [0.5] * 9}).encode() for i in range(80))))
+    return docs
+
+
+def _sample_rate():
+    """Measured CPU throughput of the full per-document pipeline, in MB per CPU-second."""
+    if not _RATE_CACHE:
+        docs = _synthetic_sample()
+        scan = _Scan('/nonexistent-lost-root', [], set())
+        start = time.process_time()
+        for relative, raw in docs:
+            scan.document('sample', relative, raw)
+        elapsed = max(time.process_time() - start, 1e-6)
+        _RATE_CACHE.append(sum(len(raw) for _, raw in docs) / elapsed / 1e6)
+    return _RATE_CACHE[0]
+
+
+def _suffix(path):
+    return next(s for s in sorted(SCANNED_SUFFIXES, key=len, reverse=True) if path.endswith(s))
+
+
+def _throughput(protocol, inventories, git_sizes):
+    by_suffix = {}
+    for inventory in inventories.values():
+        for relative, size, _, _ in inventory['files']:
+            by_suffix[_suffix(relative)] = by_suffix.get(_suffix(relative), 0) + size
+    for rows in git_sizes.values():
+        for path, _, size in rows:
+            by_suffix[_suffix(path)] = by_suffix.get(_suffix(path), 0) + size
+    limit = next(row['enclosing_hard_seconds'] for row in
+                 protocol['expected_cost_table']['pre_held_out'] if row['stage'] == 'S1')
+    rate = _sample_rate()
+    total = sum(by_suffix.values())
+    projected = total / (rate * 1e6)
+    return {'bytes_by_suffix': dict(sorted(by_suffix.items())), 'total_bytes': total,
+            'sample_mb_per_s': rate, 'projected_cpu_seconds': projected,
+            'limit_seconds': limit, 'blocker_fraction': THROUGHPUT_BLOCKER_FRACTION,
+            'method': 'every scanned byte is costed at the measured CPU rate of the full '
+                      'digest+prefilter+parse pipeline on a bundled synthetic sample that '
+                      'always passes the prefilter (conservative); walking and git object '
+                      'reads are not separately costed',
+            'blocked': projected > THROUGHPUT_BLOCKER_FRACTION * limit}
 
 
 # Publication ---------------------------------------------------------------------
@@ -810,7 +982,12 @@ def _source_hashes():
     version = subprocess.run([GIT, '--version'], capture_output=True, text=True,
                              env={'PATH': '/usr/bin:/bin'})
     hashes['git_version'] = version.stdout.strip()
+    hashes['interpreter'] = {'path': sys.executable, 'version': sys.version}
     return hashes
+
+
+def _bytecode_disabled():
+    return bool(sys.flags.dont_write_bytecode)
 
 
 def _inside_unexcluded(path, roots):
@@ -820,7 +997,8 @@ def _inside_unexcluded(path, roots):
 
 # Entry points --------------------------------------------------------------------
 
-def _preflight(roots, lost_root, ledger):
+def _preflight(protocol, roots, lost_root, ledger):
+    """Everything checkable without reading root file contents: plan and execute share it."""
     blockers = [problem for root in roots for problem in _root_problems(root, lost_root)]
     directories = [root for root in roots if root['kind'] == 'directory']
     clones, git_records, lost_worktrees, git_covered = [], {}, [], set()
@@ -843,13 +1021,37 @@ def _preflight(roots, lost_root, ledger):
         blockers.extend(problems)
         git_covered.update([root['path'], *record['worktrees_covered'],
                             *record['worktrees_excluded']])
+    scan = _Scan(lost_root, roots, git_covered)
+    inventories, git_sizes = {}, {}
+    for root in directories:
+        if not _root_problems(root, lost_root):
+            inventories[root['name']] = scan._inventory(root, blockers)
+    for name, record in git_records.items():
+        try:
+            git_sizes[name] = _git_blob_sizes(record['path'], record['scanned_tips'])
+        except AdmissionRefused as error:
+            blockers.append(str(error))
+            continue
+        blockers.extend(f'git blob {oid} ({path}) exceeds {MAX_FILE_BYTES} bytes'
+                        for path, oid, size in git_sizes[name] if size > MAX_FILE_BYTES)
+    throughput = _throughput(protocol, inventories, git_sizes)
+    if throughput['blocked']:
+        blockers.append(f'throughput projection {throughput["projected_cpu_seconds"]:.0f} CPU-s '
+                        f'exceeds {THROUGHPUT_BLOCKER_FRACTION:.0%} of the '
+                        f'{throughput["limit_seconds"]} s S1 limit')
     if os.path.lexists(os.path.join(ledger, ATTEMPT_RECEIPT_NAME)):
         blockers.append(f'the single S1 attempt is already consumed: {ledger}/'
                         f'{ATTEMPT_RECEIPT_NAME} exists')
     if _inside_unexcluded(ledger, roots) or _under(ledger, lost_root):
         blockers.append(f'attempt ledger {ledger} lies inside a comparison root outside its '
                         'exclusions')
-    return blockers, clones, git_records, sorted(lost_worktrees), git_covered
+    return {'blockers': blockers, 'clones': clones, 'git': git_records, 'scan': scan,
+            'lost_worktrees': sorted(lost_worktrees), 'inventories': inventories,
+            'throughput': throughput}
+
+
+_SCAN_FAILURES = (OSError, ValueError, RecursionError, csv.Error, UnicodeError, MemoryError,
+                  subprocess.SubprocessError, AdmissionRefused)
 
 
 def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
@@ -864,20 +1066,23 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
     ledger = _canonical_path(attempt_ledger or DEFAULT_ATTEMPT_LEDGER, 'attempt ledger')
     lost = _lost_root_record(protocol, lost_root, derived)
     roots = declaration['roots']
-    blockers, clones, git_records, lost_worktrees, git_covered = _preflight(
-        roots, lost_root, ledger)
+    pre = _preflight(protocol, roots, lost_root, ledger)
+    blockers = pre['blockers']
     if lost['status'] == 'present-refused':
         blockers.append(f'frozen lost root {lost_root} is present; its exception premise fails')
     needs_held_out_go = any(root['held_out_payloads'] for root in roots)
     if not execute:
         return {'mode': 'plan-only', 'stage': S1_GO_STAGE, 'writes': [], 'contents_read': False,
-                'git_metadata_read': bool(git_records),
+                'metadata_read': 'stat/walk of directory roots; git refs, worktrees, object '
+                                 'headers and advertised OIDs',
                 'protocol_sha256': PROTOCOL_SHA256, 'comparison_set_sha256': _sha(declaration_raw),
                 'roster': roster, 'roots': [{key: root[key] for key in ('name', 'kind', 'path')}
                                             for root in roots],
-                'git': list(git_records.values()), 'unscanned': declaration['unscanned'],
-                'lost_root': {**lost, 'git_worktrees_excluded': lost_worktrees},
-                'lost_root_clones': clones, 'blockers': blockers,
+                'git': list(pre['git'].values()), 'unscanned': declaration['unscanned'],
+                'lost_root': {**lost, 'git_worktrees_excluded': pre['lost_worktrees']},
+                'lost_root_clones': pre['clones'], 'blockers': blockers,
+                'throughput': pre['throughput'],
+                'execution_requirements': list(EXECUTION_REQUIREMENTS),
                 'required_go': {'stage': S1_GO_STAGE, 'scope': S1_GO_STAGE,
                                 'protocol_sha256': PROTOCOL_SHA256},
                 'required_held_out_go': ({'stage': HELD_OUT_GO_STAGE, 'scope': S1_GO_STAGE,
@@ -892,6 +1097,9 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
     if needs_held_out_go and held_raw is None:
         raise AdmissionRefused('a root declares held-out payloads; D2 requires a separate '
                                f'{HELD_OUT_GO_STAGE!r} GO record with scope S1')
+    if not _bytecode_disabled():
+        raise AdmissionRefused('execute requires the interpreter to run with -B '
+                               '(no bytecode writes into declared roots)')
     output = Path(_canonical_path(os.path.abspath(output_path), 'output'))
     if os.path.lexists(output):
         raise AdmissionRefused(f'output must be a fresh path: {output}')
@@ -914,15 +1122,17 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
     except FileExistsError as error:
         raise AdmissionRefused('the single S1 attempt is already consumed') from error
 
-    scan = _Scan(lost_root, roots, git_covered)
-    root_reports = []
-    for root in roots:
-        if root['kind'] == 'directory':
-            root_reports.append(scan.scan_directory(root))
-        else:
-            root_reports.append(scan.scan_git(root, git_records[root['name']]))
-
-    reasons = []
+    # From here on every failure becomes a recorded refusal in the published report.
+    scan, root_reports, reasons = pre['scan'], [], []
+    try:
+        for root in roots:
+            if root['kind'] == 'directory':
+                root_reports.append(scan.scan_directory(root, pre['inventories'][root['name']]))
+            else:
+                root_reports.append(scan.scan_git(root, pre['git'][root['name']]))
+    except _SCAN_FAILURES as error:
+        reasons.append(f'scan aborted: {type(error).__name__}: {error}')
+    reasons.extend(scan.errors)
     if scan.collisions:
         reasons.append(f'{len(scan.collisions)} new scene-ID collision(s) outside v4 lineage')
     if scan.ambiguous:
@@ -933,8 +1143,20 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
                        'lost-root mitigation premise fails')
     if scan.held_out_payloads and held_raw is None:
         reasons.append('held-out 6200-6207 payload objects found without the D2 GO record')
+    for path, raw in ((protocol_path, protocol_raw), (comparison_set_path, declaration_raw),
+                      (go_record_path, go_raw), (held_out_go_record_path, held_raw)):
+        try:
+            if raw is not None and Path(path).read_bytes() != raw:
+                reasons.append(f'input changed during admission: {path}')
+        except OSError as error:
+            reasons.append(f'input unreadable at final recheck: {path}: {error}')
+    try:
+        if _source_hashes() != sources:
+            reasons.append('admission source changed during the attempt')
+    except (OSError, AdmissionRefused) as error:
+        reasons.append(f'source recheck failed: {error}')
     verdict = 'refused' if reasons else 'admitted'
-    lost.update({'git_worktrees_excluded': lost_worktrees,
+    lost.update({'git_worktrees_excluded': pre['lost_worktrees'],
                  'clones_scanned': sorted(set(scan.clones)),
                  'max_observed_prior_puck_id': scan.max_puck, 'mitigation_holds': mitigation})
 
@@ -950,6 +1172,7 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
             'go_record': go_input, 'held_out_go_record': held_input,
         },
         'sources': sources,
+        'execution_requirements': list(EXECUTION_REQUIREMENTS),
         'attempt': {'receipt_name': ATTEMPT_RECEIPT_NAME, 'receipt_sha256': _sha(receipt_raw),
                     'ledger_is_default': ledger == DEFAULT_ATTEMPT_LEDGER},
         'roster': roster,
@@ -970,15 +1193,18 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
             for (stage, scene_id), count in sorted(scan.reuse.items())],
         'held_out_id_occurrences': dict(sorted(scan.held_out_ids.items())),
         'held_out_payload_objects_not_compared': sorted(scan.held_out_payloads, key=key),
+        'prefilter': {'files_parsed': scan.parsed, 'files_prefiltered_out': scan.prefiltered,
+                      'rule_and_residual': PREFILTER_RESIDUAL},
         'scope': {
             'typed_suffixes': list(TYPED_SUFFIXES), 'raw_suffixes': list(RAW_SUFFIXES),
             'puck_namespace': list(PUCK_NAMESPACE),
             'typed_fields': 'JSON keys with scene/layout/seed/roster/split/held_out/'
                             'reservation/collection/development tokens (not model/training/rng '
-                            'seeds, not counts/bytes/hashes), their descendants, and bare ids '
-                            'beside geometry; Markdown via puck_scene_markdown',
+                            'seeds, not counts/bytes/hashes), their descendants, bare ids '
+                            'beside geometry, numeric keys mapping to geometry, and integral '
+                            'floats; Markdown via puck_scene_markdown',
             'raw_formats': 'yaml/yml/toml/csv/txt hits are ambiguous unless keyed or headed '
-                           'as non-scene',
+                           'as non-scene; malformed CSV falls back to raw-scan (ambiguous)',
             'untyped_mentions': 'diagnostic only, never collisions (v3 semantic parsing rule)',
             'content_digests': 'hash every scanned file, including held-out task-v5 copies',
         },
@@ -986,12 +1212,6 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
                    'scenes_minted': False, 'simulator_executed': False,
                    'models_loaded': False, 'qualification_claims': []},
     }
-    for path, raw in ((protocol_path, protocol_raw), (comparison_set_path, declaration_raw),
-                      (go_record_path, go_raw), (held_out_go_record_path, held_raw)):
-        if raw is not None and Path(path).read_bytes() != raw:
-            raise AdmissionRefused(f'input changed during admission: {path}')
-    if _source_hashes() != sources:
-        raise AdmissionRefused('admission source changed during the attempt')
     raw = canonical_bytes(report)
     if len(raw) > MAX_OUTPUT_BYTES:
         raise AdmissionRefused(f'report of {len(raw)} bytes exceeds the S1 output cap '
@@ -1001,16 +1221,25 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
             'refusal_reasons': reasons}
 
 
-def main(argv=None, *, attempt_ledger=None):
-    parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
+def build_parser():
+    parser = argparse.ArgumentParser(
+        description=__doc__.split('\n')[0] + ' Default --plan-only; execute needs python -B.',
+        epilog='Execution requirements:\n' + '\n'.join(
+            f'  - {row}' for row in EXECUTION_REQUIREMENTS),
+        formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--protocol', required=True)
     parser.add_argument('--comparison-set', required=True)
     parser.add_argument('--output', required=True)
     parser.add_argument('--execute', action='store_true',
-                        help='run the admission (default: --plan-only)')
+                        help='run the admission (default: --plan-only); requires python -B')
     parser.add_argument('--plan-only', action='store_true', help='default; never writes')
     parser.add_argument('--go-record')
     parser.add_argument('--held-out-go-record')
+    return parser
+
+
+def main(argv=None, *, attempt_ledger=None):
+    parser = build_parser()
     args = parser.parse_args(argv)
     if args.execute and args.plan_only:
         parser.error('--execute and --plan-only are exclusive')
