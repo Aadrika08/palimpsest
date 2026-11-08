@@ -1119,10 +1119,11 @@ def _calibration_fixture(tmp_path):
     return plain, held, repo
 
 
-def _calibrated_plan(tmp_path, roots):
+def _calibrated_plan(tmp_path, roots, held_out_go=None):
     return s1.admit(protocol_path=PROTOCOL, comparison_set_path=_declaration(tmp_path, roots),
                     output_path=tmp_path / 'out.json', lost_root=str(tmp_path / 'lost-brain'),
-                    attempt_ledger=str(tmp_path / 'ledger'), calibrate=True)
+                    attempt_ledger=str(tmp_path / 'ledger'), calibrate=True,
+                    held_out_go_record_path=held_out_go)
 
 
 def test_calibration_never_reads_held_out_roots_or_git_blobs(tmp_path, monkeypatch):
@@ -1215,3 +1216,21 @@ def test_execute_uses_only_a_matching_calibration_record(tmp_path, monkeypatch):
     _write(plain / 'late.json', {'value': 1})
     with pytest.raises(s1.AdmissionRefused, match='calibration record'):
         run(tmp_path / 'stale' / 'r.json')
+
+
+
+def test_d2_go_scoped_s1_lets_calibration_sample_held_out_roots_but_never_git_blobs(
+        tmp_path, monkeypatch):
+    plain, held, repo = _calibration_fixture(tmp_path)
+    monkeypatch.setattr(s1, '_git_blobs', lambda *a: (_ for _ in ()).throw(
+        AssertionError('calibration read git blobs')))
+    roots = [_git_root(repo), _dir_root(repo, name='work'),
+             _dir_root(held, name='held', held_out_payloads=True)]  # only held is eligible
+    plan = _calibrated_plan(tmp_path, roots,
+                            held_out_go=_go(tmp_path, stage=s1.HELD_OUT_GO_STAGE, name='ho.json'))
+    calibration = plan['throughput']['calibration']
+    assert 'held' in calibration['read_scope'] and calibration['held_out_roots_read'] is True
+    assert 'held-out-flagged roots under a D2 GO' in plan['contents_read']
+    with pytest.raises(s1.AdmissionRefused):
+        _calibrated_plan(tmp_path / 'x', roots, held_out_go=_go(
+            tmp_path, stage=s1.HELD_OUT_GO_STAGE, scope='S2', name='ho2.json'))

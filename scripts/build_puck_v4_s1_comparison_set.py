@@ -45,6 +45,27 @@ def _raise(error):
     raise ValueError(f'directory listing failed: {error}')
 
 
+PYTEST_TEMP_REASON = ('pytest temporary tree (synthetic test fixtures); neither a tracked '
+                      'document nor a surviving raw registry, so outside the protocol S1 scope')
+_PYTEST_CASE = re.compile(r'^test_[A-Za-z0-9_]*\d+$')  # pytest tmp_path: name truncated + index
+
+
+def _pytest_temp(directory, name):
+    """pytest-of-* roots, or a basetemp dir holding pytest per-test dirs (test_<name><n>)."""
+    if name.startswith('pytest-of-'):
+        return True
+    if '/runs/' not in directory + '/':
+        return False
+    full = os.path.join(directory, name)
+    try:
+        children = os.listdir(full)
+    except OSError:
+        return False
+    cases = [c for c in children if _PYTEST_CASE.match(c) and os.path.isdir(os.path.join(full, c))]
+    return bool(cases) and len(cases) == len([c for c in children
+                                               if os.path.isdir(os.path.join(full, c))])
+
+
 def _env_excludes(tree, skip=()):
     """Bounded name-only walk that finds environment directories to exclude."""
     rows = []
@@ -57,6 +78,8 @@ def _env_excludes(tree, skip=()):
             if name in ENV_DIRS and (name not in VENV_NAMES
                                      or os.path.isfile(os.path.join(full, 'pyvenv.cfg'))):
                 rows.append({'path': full, 'reason': ENV_DIRS[name]})
+            elif _pytest_temp(directory, name):
+                rows.append({'path': full, 'reason': PYTEST_TEMP_REASON})
             else:
                 keep.append(name)
         dirnames[:] = keep

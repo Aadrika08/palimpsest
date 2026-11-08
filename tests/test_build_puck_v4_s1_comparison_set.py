@@ -213,3 +213,17 @@ def test_compare_manifest_accepts_identical_and_rejects_drift(tmp_path, capsys):
     (Path(paths['main']) / '.worktrees/new-tree').mkdir()
     assert builder.main(argv) == 1
     assert 'new-tree' in capsys.readouterr().out
+
+
+def test_pytest_basetemp_trees_under_runs_are_excluded_but_mixed_dirs_are_not(tmp_path):
+    paths = _machine(tmp_path)
+    main = Path(paths['main'])
+    _touch(main / 'runs/paper-tests/test_campaign_identity_binds_c0/x.json', '{}')
+    _touch(main / 'runs/paper-tests/test_other0/y.json', '{}')
+    _touch(main / 'runs/registry/test_roster0/r.json', '{}')
+    _touch(main / 'runs/registry/scenes/s.json', '{}')
+    declaration = builder.build(**paths)
+    excluded = {row['path']: row['reason'] for row in
+                {r['name']: r for r in declaration['roots']}['palimpsest-main']['exclude']}
+    assert 'pytest temporary tree' in excluded[str(main / 'runs/paper-tests')]
+    assert str(main / 'runs/registry') not in excluded

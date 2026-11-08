@@ -1032,7 +1032,8 @@ def _clean_tracked(worktree):
     return tracked
 
 
-def _throughput(protocol, roots, inventories, git_records, git_sizes, calibrate=False):
+def _throughput(protocol, roots, inventories, git_records, git_sizes, calibrate=False,
+                held_out_reads=False):
     raw, unique, covered, notes = {}, {}, 0, []
 
     def add(table, suffix, size):
@@ -1064,7 +1065,7 @@ def _throughput(protocol, roots, inventories, git_records, git_sizes, calibrate=
                 covered += size
             else:
                 add(unique, suffix, size)
-                if not root['held_out_payloads']:
+                if held_out_reads or not root['held_out_payloads']:
                     eligible.append((root['name'], full, suffix, size))
     limit = next(row['enclosing_hard_seconds'] for row in
                  protocol['expected_cost_table']['pre_held_out'] if row['stage'] == 'S1')
@@ -1093,8 +1094,8 @@ def _throughput(protocol, roots, inventories, git_records, git_sizes, calibrate=
 
 
 CALIBRATION_RULE = (
-    'Contents are read only from directory roots with held_out_payloads=false (never '
-    'held-out-flagged roots, never git blobs). Per suffix, eligible files (unique bytes in '
+    'Contents are read only from directory roots with held_out_payloads=false, or also from '
+    'held-out-flagged directory roots when a D2 GO scoped to S1 is supplied (never git blobs). Per suffix, eligible files (unique bytes in '
     'those roots) are ordered by sha256 of their absolute path and taken until the sample '
     'covers >= 10% of the eligible bytes (all, if smaller). Measured: the byte fraction '
     'passing the prefilter per suffix; the digest+prefilter rate on sampled prefilter misses '
@@ -1239,7 +1240,8 @@ def _load_calibration_record(path, declaration_raw):
     return raw, record
 
 
-def _preflight(protocol, roots, lost_root, ledger, *, calibrate=False, calibration=None):
+def _preflight(protocol, roots, lost_root, ledger, *, calibrate=False, calibration=None,
+               held_out_reads=False):
     """Everything checkable without reading root file contents (except the opt-in plan-time
     calibration sample from non-held-out directory roots): plan and execute share it."""
     blockers = [problem for root in roots for problem in _root_problems(root, lost_root)]
@@ -1278,7 +1280,7 @@ def _preflight(protocol, roots, lost_root, ledger, *, calibrate=False, calibrati
         blockers.extend(f'git blob {oid} ({path}) exceeds {MAX_FILE_BYTES} bytes'
                         for path, oid, size in git_sizes[name] if size > MAX_FILE_BYTES)
     throughput = _throughput(protocol, roots, inventories, git_records, git_sizes,
-                             calibrate=calibrate)
+                             calibrate=calibrate, held_out_reads=held_out_reads)
     if calibration is not None:
         fields = ('bytes_by_suffix', 'deduplicated_bytes_by_suffix', 'covered_by_git_blobs_bytes')
         recorded = calibration['throughput']
@@ -1331,15 +1333,27 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
     record_raw, record = None, None
     if calibration_record_path is not None:
         record_raw, record = _load_calibration_record(calibration_record_path, declaration_raw)
+    # D2 (scope S1) lets plan-time calibration byte-read held-out-flagged directory roots;
+    # git blobs are still never read in plan mode, and nothing is loaded into a simulator.
+    held_out_reads = False
+    if calibrate and held_out_go_record_path is not None:
+        _load_go(held_out_go_record_path, HELD_OUT_GO_STAGE, 'held-out GO record',
+                 protocol.get('state'))
+        held_out_reads = True
     pre = _preflight(protocol, roots, lost_root, ledger, calibrate=calibrate,
-                     calibration=record)
+                     calibration=record, held_out_reads=held_out_reads)
+    if calibrate:
+        pre['throughput'].setdefault('calibration', {})['held_out_roots_read'] = held_out_reads
     blockers = pre['blockers']
     if lost['status'] == 'present-refused':
         blockers.append(f'frozen lost root {lost_root} is present; its exception premise fails')
     needs_held_out_go = any(root['held_out_payloads'] for root in roots)
     if not execute:
         return {'mode': 'plan-only', 'stage': S1_GO_STAGE, 'writes': [],
-                'contents_read': ('calibration sample from non-held-out directory roots only'
+                'contents_read': (('calibration sample from directory roots, including '
+                                   'held-out-flagged roots under a D2 GO scoped to S1'
+                                   if held_out_reads else
+                                   'calibration sample from non-held-out directory roots only')
                                   if calibrate else False),
                 'metadata_read': 'stat/walk of directory roots; git refs, worktrees, object '
                                  'headers and advertised OIDs',
