@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
 import regenerate_male_navigation_v4 as driver
 
-PROTOCOL_SHA = '6f535edb9af59f9c84e36bbca66348ed910ec4fb77c4f9a0df04025c0154ad88'
+PROTOCOL_SHA = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
 ORIGINAL_BASELINE = 'b'*64
 ORIGINAL_DATA = 'd'*64
 FAKE_MODULES = ('fake_reader', 'fake_producer', 'fake_stale', 'fake_inline', 'fake_import_time', 'fakepkg', 'ghost_mod')

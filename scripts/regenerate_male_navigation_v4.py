@@ -31,7 +31,7 @@ import probe_male_navigation_v4_imports as probe
 
 ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL_PATH = 'docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json'
-PROTOCOL_SHA256 = '6f535edb9af59f9c84e36bbca66348ed910ec4fb77c4f9a0df04025c0154ad88'
+PROTOCOL_SHA256 = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
 PINS_DIR = ROOT/'docs/plans/m7-navigation-v4-pins'
 DECLARATION_SCHEMA = 'm7-navigation-v4-pin-declarations-1'
 RECORD_SCHEMA = 'm7-navigation-v4-pin-record-1'

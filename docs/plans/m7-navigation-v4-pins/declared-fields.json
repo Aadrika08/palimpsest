@@ -1,7 +1,7 @@
 {
   "schema": "m7-navigation-v4-pin-declarations-1",
   "protocol_path": "docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json",
-  "protocol_sha256": "6f535edb9af59f9c84e36bbca66348ed910ec4fb77c4f9a0df04025c0154ad88",
+  "protocol_sha256": "238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8",
   "placeholder_rule": "Every declared field holds the explicit string PENDING-<stage> until that stage's pin record fills it; any consumer refuses a document that still contains a PENDING- value.",
   "documents": {
     "m7-recovery-learning-protocol.json": {
@@ -528,5 +528,164 @@
         }
       ]
     }
+  },
+  "amendment_1_pending": {
+    "status": "inactive; staged for protocol amendment_1 (revision 2); becomes active only after owner decision A1 and regeneration of the v4 copies with PENDING- placeholders for these fields; consumers must ignore this block until then",
+    "pending_documents": {
+      "m7-navigation-study-protocol.json": {
+        "original_path": "docs/plans/m7-navigation-study-protocol.json",
+        "original_sha256": "a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f",
+        "consumed_by": [
+          "S0e"
+        ],
+        "site": "scripts/collect_male_navigation.py:26-27 (736e0cf), reached via collect_male_navigation_v2.source_pins",
+        "fields": [
+          {
+            "pointer": "/current_reusable_source_sha256/src~1palimpsest~1male_recovery_research.py",
+            "class": "sha256",
+            "stage": "S0e",
+            "placeholder": "PENDING-S0e",
+            "note": "T-e port bytes"
+          },
+          {
+            "pointer": "/current_reusable_source_sha256/scripts~1prepare_male_recovery_data.py",
+            "class": "sha256",
+            "stage": "S0e",
+            "placeholder": "PENDING-S0e",
+            "note": "port bytes"
+          },
+          {
+            "pointer": "/current_reusable_source_sha256/data~1manifests~1male-recovery-research-development-v1.json",
+            "class": "doc-sha256",
+            "stage": "S0d",
+            "placeholder": "PENDING-S0d",
+            "note": "cascade of v4 recovery index"
+          },
+          {
+            "pointer": "/current_reusable_source_sha256/docs~1plans~1m7-recovery-learning-protocol.json",
+            "class": "doc-sha256",
+            "stage": "S0b",
+            "placeholder": "PENDING-S0b",
+            "note": "cascade of v4 recovery-learning copy"
+          }
+        ]
+      }
+    },
+    "pending_fields": {
+      "male-recovery-research-development-v1.json": [
+        {
+          "pointer": "/training_source_code",
+          "class": "source-map",
+          "stage": "S0d",
+          "placeholder": "PENDING-S0d",
+          "site": "male_recovery_research.py:64,109 (736e0cf)"
+        },
+        {
+          "pointer": "/training_source_commit",
+          "class": "commit",
+          "stage": "S0d",
+          "placeholder": "PENDING-S0d",
+          "site": "male_recovery_research.py:47 (736e0cf); T-d commit"
+        }
+      ],
+      "m7-navigation-contact-v2-protocol.json": [
+        {
+          "pointer": "/prior_version/protocol_path",
+          "class": "doc-path",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "v4 study-plan copy"
+        },
+        {
+          "pointer": "/prior_version/protocol_sha256",
+          "class": "doc-sha256",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "v4 study-plan copy"
+        },
+        {
+          "pointer": "/prior_version/collector_sha256",
+          "class": "sha256",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "collect_male_navigation_v2.py:42 (736e0cf); T-e ported collect_male_navigation.py"
+        }
+      ],
+      "m7-navigation-data-v2-protocol.json": [
+        {
+          "pointer": "/source_binding/old_historical_reader/head",
+          "class": "commit",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "prepare_male_navigation_v2.py:55-68; T-h commit (H4)"
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/all_tracked_project_python_inventory/count",
+          "class": "count",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4"
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/all_tracked_project_python_inventory/canonical_map_sha256",
+          "class": "sha256",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4"
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/adapter_sha256",
+          "class": "sha256",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4; ported prepare_male_recovery_data.py"
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/code",
+          "class": "source-map",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4"
+        },
+        {
+          "pointer": "/source_binding/navigation_producer_commit",
+          "class": "commit",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "prepare_male_navigation_v2.py:338; T-e commit"
+        },
+        {
+          "pointer": "/counts",
+          "class": "count-map",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "copied to S0f output at prepare_male_navigation_v2.py:470; from S0c/S0e pins; v2 values descriptive only"
+        }
+      ],
+      "m7-recovery-learning-protocol.json": [
+        {
+          "pointer": "/counts",
+          "class": "count-map",
+          "stage": "S0b",
+          "placeholder": "PENDING-S0b",
+          "site": "from S0a/S0b pins; v2 values descriptive only"
+        },
+        {
+          "pointer": "/recovery_ticks_each",
+          "class": "count-list",
+          "stage": "S0b",
+          "placeholder": "PENDING-S0b",
+          "site": "per-source S0b pins (lengths may differ per source)"
+        },
+        {
+          "pointer": "/recovery_windows",
+          "class": "window-list",
+          "stage": "S0b",
+          "placeholder": "PENDING-S0b",
+          "site": "derived from pinned per-source ticks"
+        }
+      ]
+    },
+    "note": "old_historical_reader/root is already declared (stage S0f). Adding these fields to the active documents block requires regenerating the copies and updating tests (implementation follow-up)."
   }
 }
