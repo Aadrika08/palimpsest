@@ -14,3 +14,4 @@ A1 is a source-behaviour change relative to the earlier data/path-only overlay
 choice; it was presented as such, with the alternative (MaleCNS v4 blocked at
 S0e). No stage GO is implied by any entry: every stage still needs its own
 reviewed execution manifest and an explicit owner GO.
+| **D2 for puck S1** — byte-reading tracked copies of authored held-out 6200–6207 rows for S1 calibration and the S1 ID comparison; never loading into reset/simulator; not reusable for S2/S8a | `f885fc8d…286b` | **Granted (scope S1 only)**; GO record `palimpsest-authored-test-evidence/puck-v4-go/d2-scope-s1.json` |
