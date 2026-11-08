@@ -20,7 +20,9 @@ ENV_DIRS = {'.venv': 'Python virtual environment (installed third-party packages
             'node_modules': 'JavaScript dependencies (third-party packages)',
             '.tox': 'tox environments (third-party packages)',
             '.mypy_cache': 'type-checker cache', '.ruff_cache': 'linter cache',
-            '.pytest_cache': 'pytest cache (test-run bookkeeping)'}
+            '.pytest_cache': 'pytest cache (test-run bookkeeping)',
+            'uv-cache': 'uv package download cache (third-party packages)',
+            '.lake': 'Lean Lake build and dependency packages (third-party: mathlib and deps)'}
 UNRELATED_PROJECTS = {
     'aadrikas-archiv': 'unrelated project (archive); not part of the puck lineage',
     'checks': 'unrelated project (checks tooling); not part of the puck lineage',
@@ -132,11 +134,97 @@ def build(*, shraddha=SHRADDHA, main=MAIN, codex_worktrees=CODEX_WORKTREES, adve
     if os.path.isdir(evidence):
         own = [{'path': os.path.join(evidence, child), 'reason': 'puck v4 S1 output or '
                 'attempt ledger (written by this stage)'}
-               for child in sorted(os.listdir(evidence)) if child.startswith('puck-v4-s1-')]
+               for child in sorted(set(os.listdir(evidence)) | {'puck-v4-s1-attempt-ledger'})
+               if child.startswith('puck-v4-s1-')]  # ledger is excluded before it exists
         roots.append(_directory(EVIDENCE, evidence, exclude=_env_excludes(
             evidence, {row['path'] for row in own}) + own))
+    _hazard_excludes(roots)
     return {'kind': 'puck-v4-s1-comparison-set-v1', 'version': 1, 'roots': roots,
             'unscanned': unscanned}
+
+
+def _under(path, root):
+    return path == root or path.startswith(root.rstrip('/') + '/')
+
+
+EPHEMERAL = ('/tmp', '/var/tmp')
+
+
+def _shared_clone_of(full, gits):
+    """True for a `git clone --shared` whose every alternate is a declared root's objects."""
+    alternates = os.path.join(full, 'objects/info/alternates')
+    if not os.path.isfile(alternates) or os.path.islink(full):
+        return False
+    with open(alternates, encoding='utf-8') as stream:
+        lines = [line.strip() for line in stream if line.strip()]
+    base = os.path.join(full, 'objects')
+    return bool(lines) and all(
+        any(_under(os.path.realpath(os.path.join(base, line)), os.path.join(g, '.git'))
+            for g in gits) for line in lines)
+
+
+def _git_covered(full, directory, gits):
+    """A .git is covered only at a declared git root, or as a gitfile into one's .git."""
+    if os.path.realpath(directory) in gits:
+        return True
+    if os.path.isfile(full) and not os.path.islink(full):
+        with open(full, 'rb') as stream:
+            head = stream.read(4096).decode('utf-8', 'replace').strip()
+        if head.startswith('gitdir:'):
+            target = os.path.realpath(os.path.join(directory, head[7:].strip()))
+            return any(_under(target, os.path.join(g, '.git')) for g in gits)
+    return False
+
+
+def _hazard_excludes(roots):
+    """Metadata-only pass so admission never meets a hazard only at execute time.
+
+    Out-of-root symlinks are excluded only when dangling or pointing into ephemeral
+    temp storage; `.git` entries not covered by a git root are excluded only for
+    lost-root clones and fresh-reproduction checkouts. Anything else is refused.
+    """
+    declared = [os.path.realpath(r['path']) for r in roots]
+    gits = [os.path.realpath(r['path']) for r in roots if r['kind'] == 'git']
+    for root in roots:
+        if root['kind'] != 'directory':
+            continue
+        skip = [row['path'] for row in root['exclude']]
+        added = []
+        for directory, dirnames, filenames in os.walk(root['path'], followlinks=False,
+                                                      onerror=_raise):
+            dirnames[:] = sorted(n for n in dirnames
+                                 if not any(_under(os.path.join(directory, n), s) for s in skip))
+            for name in sorted(dirnames + filenames):
+                full = os.path.join(directory, name)
+                if name == '.git' and not _git_covered(full, directory, gits):
+                    if root.get('lost_root_clone'):
+                        reason = ('git metadata of a lost-root clone; its repository was '
+                                  'deleted with the brain root (lost-root exception)')
+                    elif _shared_clone_of(full, gits):
+                        reason = ('git metadata of a shared clone whose objects come from a '
+                                  'declared git root (objects/info/alternates)')
+                    elif any(part.startswith(('test_', 'pytest-of-'))
+                             for part in full[len(root['path']):].split('/')):
+                        reason = ('git metadata of a synthetic pytest fixture repository; '
+                                  'its working files are still scanned')
+                    else:
+                        raise ValueError(f'uncovered git metadata {full}: declare a git root')
+                    added.append({'path': full, 'reason': reason})
+                    if name in dirnames:
+                        dirnames.remove(name)
+                elif os.path.islink(full):
+                    target = os.path.realpath(full)
+                    if any(_under(target, d) for d in declared):
+                        continue
+                    if not os.path.lexists(target):
+                        reason = 'dangling symlink (target absent); nothing behind it to scan'
+                    elif any(_under(target, e) for e in EPHEMERAL):
+                        reason = (f'symlink into ephemeral temp storage {target}; '
+                                  'outside declared roots, not a scene registry')
+                    else:
+                        raise ValueError(f'symlink {full} -> {target} leaves declared roots')
+                    added.append({'path': full, 'reason': reason})
+        root['exclude'] = sorted(root['exclude'] + added, key=lambda row: row['path'])
 
 
 def render(declaration):

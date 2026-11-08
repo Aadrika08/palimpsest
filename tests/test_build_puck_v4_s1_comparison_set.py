@@ -110,3 +110,51 @@ def test_builder_cli_writes_fresh_file_only(tmp_path):
     assert json.loads(output.read_bytes())['kind'] == 'puck-v4-s1-comparison-set-v1'
     with pytest.raises(SystemExit):
         builder.main(argv)
+
+
+def test_hazard_pass_excludes_only_dangling_temp_and_lost_root_git(tmp_path):
+    paths = _machine(tmp_path)
+    main = Path(paths['main'])
+    (main / 'runs').mkdir()
+    (main / 'runs/dangling').symlink_to('/outside/missing')
+    (main / 'runs/temp').symlink_to('/var/tmp')
+    declaration = builder.build(**paths)
+    roots = {row['name']: row for row in declaration['roots']}
+    excluded = {row['path']: row['reason'] for row in roots['palimpsest-main']['exclude']}
+    assert 'dangling' in excluded[str(main / 'runs/dangling')]
+    assert 'ephemeral' in excluded[str(main / 'runs/temp')]
+    codex = roots['codex-0071-brain']
+    assert any(row['path'].endswith('/brain/.git') and 'lost-root' in row['reason']
+               for row in codex['exclude'])
+
+
+def test_hazard_pass_refuses_symlink_leaving_declared_roots(tmp_path):
+    paths = _machine(tmp_path)
+    outside = tmp_path / 'elsewhere'
+    outside.mkdir()
+    main = Path(paths['main'])
+    (main / 'docs/escape').symlink_to(outside)
+    with pytest.raises(ValueError, match='leaves declared roots'):
+        builder.build(**paths)
+
+
+def test_hazard_pass_refuses_uncovered_git_metadata(tmp_path):
+    paths = _machine(tmp_path)
+    _touch(Path(paths['main']) / '.worktrees/paper/vendor/.git', 'gitdir: /x\n')
+    with pytest.raises(ValueError, match='uncovered git metadata'):
+        builder.build(**paths)
+
+
+def test_hazard_pass_excludes_shared_clone_git_only_with_declared_alternates(tmp_path):
+    paths = _machine(tmp_path)
+    main = Path(paths['main'])
+    (main / '.git/objects').mkdir(parents=True)
+    clone = main / 'runs/repro/checkout/.git'
+    _touch(clone / 'objects/info/alternates', str(main / '.git/objects') + '\n')
+    declaration = builder.build(**paths)
+    excluded = {row['path']: row['reason'] for row in
+                {r['name']: r for r in declaration['roots']}['palimpsest-main']['exclude']}
+    assert 'shared clone' in excluded[str(clone)]
+    _touch(clone / 'objects/info/alternates', str(tmp_path / 'foreign/objects') + '\n')
+    with pytest.raises(ValueError, match='uncovered git metadata'):
+        builder.build(**paths)
