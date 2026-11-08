@@ -1234,3 +1234,116 @@ def test_d2_go_scoped_s1_lets_calibration_sample_held_out_roots_but_never_git_bl
     with pytest.raises(s1.AdmissionRefused):
         _calibrated_plan(tmp_path / 'x', roots, held_out_go=_go(
             tmp_path, stage=s1.HELD_OUT_GO_STAGE, scope='S2', name='ho2.json'))
+
+
+# Round 6: optimised detector is byte-identical to the frozen reference ------------
+
+import puck_v4_s1_reference as reference  # noqa: E402
+
+_INTS = [6510, 6511, 6512, 6513, 6520, 6523, 6200, 6203, 6207, 6000, 6019, 6100, 6103, 6300,
+         6999, 7000, 5999, 1, 21, 12, 3130, 16512, -6510, 0]
+_TEXT_ATOMS = ['6510', '6512', '06512', '6505-6515', '6505..6515', '6505–6515',
+               '6505—6515', '5000-7000', '2026-11-05', 'scene 6521', '0.6512', '1e-05',
+               '6.51e3', 'a6512', '6512b', '_6512', '.6512', '٦٥١٠',
+               '6000-6019', '6200..6207', '12-6512', '6000\n-6505-6515', 'x', '', ' ', ', ']
+_KEYS = ['scene_id', 'scene_ids', 'seed', 'layout', 'layout_seed', 'rows', 'id', 'puck_xy',
+         'rover_pose', 'goal_xy', 'bytes', 'model_seed', 'held_out', 'roster', 'split',
+         'collection', 'development', 'notes', 'value', 'inputs', '6510', '6203', '6001', '12',
+         '٦٥١٠', 'scene_reservations', 'retained_bytes', 'a/b~c']
+
+
+def _value(rng, depth):
+    roll = rng.random()
+    if depth < 4 and roll < 0.25:
+        return {rng.choice(_KEYS): _value(rng, depth + 1) for _ in range(rng.randint(0, 5))}
+    if depth < 4 and roll < 0.45:
+        if rng.random() < 0.5:
+            return [rng.random() * 10 ** rng.randint(0, 4) for _ in range(rng.randint(0, 30))]
+        return [_value(rng, depth + 1) for _ in range(rng.randint(0, 6))]
+    if roll < 0.65:
+        return rng.choice(_INTS)
+    if roll < 0.75:
+        return rng.choice([6510.0, 6203.0, 6510.5, 0.6512, 1e-05, rng.random()])
+    if roll < 0.95:
+        return ''.join(rng.choice(_TEXT_ATOMS) for _ in range(rng.randint(0, 3)))
+    return rng.choice([True, False, None])
+
+
+def _document(rng, index):
+    kind = rng.choice(['.json', '.json', '.jsonl', '.csv', '.yaml', '.toml', '.txt', '.md'])
+    if kind in ('.json', '.jsonl'):
+        lines = [json.dumps(_value(rng, 0), ensure_ascii=rng.random() < 0.5)
+                 for _ in range(1 if kind == '.json' else rng.randint(1, 5))]
+        text = '\n'.join(lines)
+        for old, new in (('6510.0', rng.choice(['6.51e3', '651e1', '6510.0', '6.51E+03'])),
+                         ('6203.0', rng.choice(['6.203e3', '6203.0']))):
+            text = text.replace(old, new)
+        if rng.random() < 0.05:
+            text = text[:-1]  # broken document
+    elif kind == '.csv':
+        header = ','.join(rng.choice(['scene', 'bytes', 'x', 'layout', 'notes'])
+                          for _ in range(3))
+        rows = []
+        for _ in range(rng.randint(0, 8)):
+            cells = [rng.choice(_TEXT_ATOMS + [str(rng.choice(_INTS))]) for _ in range(3)]
+            if rng.random() < 0.2:
+                cells[0] = '"' + cells[0].replace('"', '""') + ',' + rng.choice(_TEXT_ATOMS) + '"'
+            if rng.random() < 0.1:
+                cells[1] = '"65"10'
+            rows.append(','.join(cells))
+        text = header + '\n' + '\n'.join(rows) + '\n'
+    elif kind == '.md':
+        templates = ['Scene IDs: {}', '| scene | {} |', 'prose {} here',
+                     'held_out layout seeds: {}', 'scene_id: {}', '# heading {}']
+        text = '\n'.join(rng.choice(templates).format(rng.choice(_TEXT_ATOMS + ['6510, 6511']))
+                         for _ in range(rng.randint(1, 6))) + '\n'
+    else:
+        separator = {'.yaml': ': ', '.toml': ' = ', '.txt': ' '}[kind]
+        text = '\n'.join(rng.choice(_KEYS) + separator + rng.choice(_TEXT_ATOMS)
+                         for _ in range(rng.randint(1, 6))) + '\n'
+    return f'doc{index}{kind}', text.encode()
+
+
+@pytest.mark.parametrize('seed', range(6))
+def test_optimised_analysis_is_identical_to_reference(seed):
+    import random
+    rng = random.Random(seed)
+    for index in range(700):
+        relative, raw = _document(rng, index)
+        digest = hashlib.sha256(raw).hexdigest()
+        assert s1._analyze(relative, raw, digest) == reference._analyze(relative, raw, digest), \
+            (relative, raw[:300])
+
+
+@pytest.mark.parametrize('text', _TEXT_ATOMS + [
+    '6000\n-6505-6515', '"a""6510",x', '"65"10,1', 'a,6505\n-6515', '6509-\n6511',
+    '0006510', '00006510', '6505 .. 6515', 'x 6520-6523 y'])
+def test_helpers_match_reference_on_pathological_text(text):
+    raw = text.encode()
+    assert s1._raw_new_ids(raw) == reference._raw_new_ids(raw)
+    for suffix in ('a.csv', 'a.yaml', 'a.toml', 'a.txt'):
+        assert s1._raw_only_hits(suffix, raw) == reference._raw_only_hits(suffix, raw)
+    assert s1._ids_in_text(text) == reference._ids_in_text(text)
+
+
+@pytest.mark.parametrize('raw', [b'{"a": 1, "a": 2, "scene_id": 6510}',
+                                 b'{"x": {"6510": {"puck_xy": [1]}, "6510": 2}}',
+                                 b'{"scene_id": 6510}\n{"b": 1, "b": 1}\n'])
+def test_duplicate_keys_match_reference(raw):
+    for relative in ('a.json', 'a.jsonl'):
+        digest = hashlib.sha256(raw).hexdigest()
+        assert s1._analyze(relative, raw, digest) == reference._analyze(relative, raw, digest)
+
+
+def test_end_to_end_report_identical_to_reference(tmp_path, monkeypatch):
+    import random
+    rng = random.Random(99)
+    tree = _prior_tree(tmp_path)
+    (tree / 'corpus').mkdir()
+    for index in range(120):
+        relative, raw = _document(rng, index)
+        (tree / 'corpus' / relative).write_bytes(raw)
+    _, new = _admit(tmp_path, [_dir_root(tree)], output=tmp_path / 'new' / 'r.json')
+    monkeypatch.setattr(s1, '_analyze', reference._analyze)
+    _, old = _admit(tmp_path, [_dir_root(tree)], output=tmp_path / 'old' / 'r.json')
+    assert new.read_bytes() == old.read_bytes()

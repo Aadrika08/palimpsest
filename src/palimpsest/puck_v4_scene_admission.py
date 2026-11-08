@@ -130,11 +130,9 @@ def _sha(raw):
 
 def _strict_json(raw, label):
     def pairs(items):
-        result = {}
-        for key, value in items:
-            if key in result:
-                raise ValueError('duplicate key')
-            result[key] = value
+        result = dict(items)  # built in C; a shorter dict means a repeated key
+        if len(result) != len(items):
+            raise ValueError('duplicate key')
         return result
 
     def constant(_):
@@ -567,51 +565,131 @@ def _ids_in_text(text):
     return found
 
 
+# Fast superset test for new IDs on ASCII text. _ids_in_text returns a new ID only
+# through a maximal digit run (the _TOKEN lookarounds) equal to it, or through a
+# valid _RANGE match covering it; every such run matches _NEW_TOKEN_ASCII, and every
+# _RANGE match is among the overlapping matches of _RANGE_ANYWHERE. So a False here
+# guarantees _ids_in_text(text) holds no new ID; a True falls back to the exact path.
+_NEW_TOKEN_ASCII = re.compile(
+    r'(?<![0-9A-Za-z_.])0{0,3}65(?:1[0-3]|2[0-3])(?![0-9A-Za-z_])')
+# A valid range (span <= MAX_RANGE) covering 6510-6523 has low >= 2414 and high >= 6510,
+# so both bounds have at least four digits; shorter ranges (dates, 1-3) cannot qualify.
+_RANGE_ANYWHERE = re.compile(r'(?=' + _RANGE.pattern.replace(r'(\d{1,7})', r'(\d{4,7})') + r')')
+assert MAX_RANGE < min(NEW_SCENE_IDS) - 999 and _RANGE_ANYWHERE.pattern.count('{4,7}') == 2
+_DIGIT = re.compile(r'\d')
+_NUMERIC_KEY = re.compile(r'\d{1,7}')
+
+
+def _may_hold_new_ids(text):
+    if not text.isascii() or _NEW_TOKEN_ASCII.search(text):
+        return True
+    for match in _RANGE_ANYWHERE.finditer(text):
+        low, high = int(match[1]), int(match[2])
+        if (low <= high and high - low <= MAX_RANGE
+                and any(low <= scene_id <= high for scene_id in NEW_SCENE_IDS)):
+            return True
+    return False
+
+
 def _raw_new_ids(raw):
     """New IDs mentioned anywhere in raw bytes, with ranges and all dash forms expanded."""
-    return set(_ids_in_text(raw.decode('utf-8', errors='replace'))) & set(NEW_SCENE_IDS)
+    text = raw.decode('utf-8', errors='replace')
+    if not _may_hold_new_ids(text):
+        return set()
+    return set(_ids_in_text(text)) & set(NEW_SCENE_IDS)
 
 
 def _escape(key):
     return str(key).replace('~', '~0').replace('/', '~1')
 
 
-def _walk(value, pointer, typed, occurrences, held_out_payloads):
-    if type(value) is dict:
-        geometry = bool(_GEOMETRY_KEYS & set(value))
+_KEY_INFO = {}
+
+
+def _key_info(key):
+    """Cached per-key classification: (numeric, scene, non_scene, geometry, id, escaped)."""
+    info = _KEY_INFO.get(key)
+    if info is None:
+        info = (_NUMERIC_KEY.fullmatch(key) is not None, _key_is_scene(key),
+                _key_is_non_scene(key), key in _GEOMETRY_KEYS, key in _ID_KEYS, _escape(key))
+        if len(_KEY_INFO) < 65536:
+            _KEY_INFO[key] = info
+    return info
+
+
+def _typed_scalar(value, pointer, occurrences):
+    kind = type(value)
+    if kind is int:
+        occurrences.append((pointer, value))
+    elif kind is float:
+        if math.isfinite(value) and value.is_integer():
+            occurrences.append((pointer, int(value)))  # e.g. 6510.0 or 6.51e3
+    elif kind is str and _DIGIT.search(value):
+        occurrences.extend((pointer, item) for item in _ids_in_text(value))
+
+
+def _walk_dict(value, pointer, typed, occurrences, held_out_payloads):
+    geometry = not _GEOMETRY_KEYS.isdisjoint(value)
+    if geometry:
         ids = [value[key] for key in value if key in _ID_KEYS]
-        if geometry and any(type(item) is int and item in HELD_OUT_SCENE_IDS for item in ids):
+        if any(type(item) is int and item in HELD_OUT_SCENE_IDS for item in ids):
             held_out_payloads.append((pointer, next(
                 item for item in ids if type(item) is int and item in HELD_OUT_SCENE_IDS)))
-        for key, child in value.items():
-            child_pointer = pointer + '/' + _escape(key)
-            child_geometry = type(child) is dict and bool(_GEOMETRY_KEYS & set(child))
-            if re.fullmatch(r'\d{1,7}', key) and (typed or child_geometry):
+    for key, child in value.items():
+        numeric, scene, non_scene, is_geometry, is_id, escaped = _key_info(key)
+        child_pointer = pointer + '/' + escaped
+        kind = type(child)
+        if numeric:
+            child_geometry = kind is dict and not _GEOMETRY_KEYS.isdisjoint(child)
+            if typed or child_geometry:
                 # A numeric key is a scene ID in typed context, or when it maps to geometry.
                 occurrences.append((child_pointer, int(key)))
                 if child_geometry and int(key) in HELD_OUT_SCENE_IDS:
                     held_out_payloads.append((child_pointer, int(key)))
-            child_typed = (typed or _key_is_scene(key)) and not _key_is_non_scene(key)
-            if geometry and key in _ID_KEYS:
-                child_typed = True  # bare id beside geometry is a scene identity
-            if key in _GEOMETRY_KEYS:
-                child_typed = False  # geometry values are never scene IDs nor compared
-            _walk(child, child_pointer, child_typed, occurrences, held_out_payloads)
-    elif type(value) is list:
-        for index, child in enumerate(value):
-            _walk(child, f'{pointer}/{index}', typed, occurrences, held_out_payloads)
-    elif typed and type(value) is int:
-        occurrences.append((pointer, value))
-    elif typed and type(value) is float and math.isfinite(value) and value.is_integer():
-        occurrences.append((pointer, int(value)))  # e.g. 6510.0 or 6.51e3
-    elif typed and type(value) is str:
-        occurrences.extend((pointer, item) for item in _ids_in_text(value))
+        child_typed = (typed or scene) and not non_scene
+        if geometry and is_id:
+            child_typed = True  # bare id beside geometry is a scene identity
+        if is_geometry:
+            child_typed = False  # geometry values are never scene IDs nor compared
+        if kind is dict:
+            _walk_dict(child, child_pointer, child_typed, occurrences, held_out_payloads)
+        elif kind is list:
+            _walk_list(child, child_pointer, child_typed, occurrences, held_out_payloads)
+        elif child_typed:
+            _typed_scalar(child, child_pointer, occurrences)
+
+
+def _walk_list(value, pointer, typed, occurrences, held_out_payloads):
+    for index, child in enumerate(value):
+        kind = type(child)
+        if kind is dict:
+            _walk_dict(child, f'{pointer}/{index}', typed, occurrences, held_out_payloads)
+        elif kind is list:
+            _walk_list(child, f'{pointer}/{index}', typed, occurrences, held_out_payloads)
+        elif typed:
+            _typed_scalar(child, f'{pointer}/{index}', occurrences)
+        # untyped scalars (the bulk of numeric arrays) contribute nothing: skipped inline
+
+
+def _walk(value, pointer, typed, occurrences, held_out_payloads):
+    """Same traversal order and findings as the reference recursive walk."""
+    kind = type(value)
+    if kind is dict:
+        _walk_dict(value, pointer, typed, occurrences, held_out_payloads)
+    elif kind is list:
+        _walk_list(value, pointer, typed, occurrences, held_out_payloads)
+    elif typed:
+        _typed_scalar(value, pointer, occurrences)
 
 
 def _raw_only_hits(relative, raw):
     """Classify new-ID hits in untyped formats: (ambiguous_ids, non_scene_ids)."""
     text = raw.decode('utf-8', errors='replace')
     ambiguous, non_scene = set(), set()
+    # Cells and lines are substrings of the text, so the text-level superset test is
+    # exact as a negative filter; quoted CSV fields can be rewritten, so they skip it.
+    if not (relative.endswith('.csv') and '"' in text) and not _may_hold_new_ids(text):
+        return ambiguous, non_scene
     if relative.endswith('.csv'):
         try:
             rows = list(csv.reader(io.StringIO(text)))
