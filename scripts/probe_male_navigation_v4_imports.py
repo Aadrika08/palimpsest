@@ -21,7 +21,7 @@ import re
 import subprocess
 import sys
 
-PROTOCOL_SHA256 = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
+PROTOCOL_SHA256 = 'cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477'
 MARKER = '@@M7-NAV-V4-PROBE-RESULT@@ '
 DEFAULT_TIMEOUT = 120.0
 PORTS_PATH = Path(__file__).resolve().parents[1]/'docs/plans/m7-navigation-v4-pins/ports.json'

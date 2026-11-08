@@ -1342,6 +1342,104 @@
       "create the v4 study-plan copy and regenerate pin copies with PENDING- placeholders for amendment_1_pending fields",
       "update the hard-coded study-plan/collector pins in scripts/regenerate_male_navigation_v4.py:118",
       "update PROTOCOL_SHA in tests/test_male_navigation_v4_overlay.py:22 after this reseal"
-    ]
+    ],
+    "erratum_1": {
+      "id": "M7-NAV-V4-REGEN-MATCHED-BUDGET-1/amendment-1/erratum-1",
+      "date": "2026-11-08",
+      "status": "erratum to the approved Amendment 1 (A1, revision 2); earlier amendment text and owner records are not rewritten",
+      "trigger": "Milestone 2 (impl/male-v4-m2, merged at 00db8b4): the diff-restricted port build and function-level tests found three sites where the listed hunks could not reach their stated intent, and two listed line numbers whose literal sits on an adjacent line.",
+      "hunks": [
+        {
+          "kind": "added",
+          "file": "scripts/prepare_male_recovery_data.py",
+          "lines": "116",
+          "range": "116-116",
+          "class": "H3",
+          "trees": [
+            "T-c",
+            "T-d",
+            "T-e",
+            "T-h",
+            "T-f"
+          ],
+          "what": "emitted recovery_admission windows [32,32,3] -> [32]*floor(n/32) + [n mod 32 if > 0] for the pinned per-source length n (the :90 hunk's n)",
+          "reason": "The ported checks at train_male_recovery.py:80 (T-d) and male_recovery_research.py:73 (T-e) derive windows from the pinned lengths; without this site every regenerated recovery length other than 67 is refused. Identical output for n = 67."
+        },
+        {
+          "kind": "added",
+          "file": "scripts/collect_male_navigation.py",
+          "lines": "46-47",
+          "range": "46-47",
+          "class": "H1",
+          "trees": [
+            "T-e"
+          ],
+          "what": "study-plan current_reusable_source_sha256 entries whose basename names a v4 pin document (recovery index, recovery-learning protocol) are hashed at the v4 copy named in the locator; every other pinned source is still hashed at its tracked path",
+          "reason": "v4 copies are supplied by path and never committed into port trees, so the declared study-plan cascades for the v4 recovery index and recovery-learning copy could not match the tracked originals."
+        },
+        {
+          "kind": "tree-addition",
+          "file": "scripts/collect_male_navigation_v2.py",
+          "lines": "20-21",
+          "range": "20-21",
+          "class": "H1",
+          "trees": [
+            "T-f"
+          ],
+          "what": "T-f carries the T-e collector port (same listed hunks, identical bytes); PLAN/PLAN_SHA read the v4 contact-v2 copy",
+          "reason": "prepare_male_navigation_v2.py imports this collector (helpers :76) and compares nav.PLAN_SHA with the S0e report study_sha256 at :325; unported, S0f refuses every v4 collection. Sites 326, 458, 485 are unreachable from S0f."
+        },
+        {
+          "kind": "tree-addition",
+          "file": "scripts/prepare_male_recovery_data.py",
+          "lines": "15-16",
+          "range": "15-16",
+          "class": "H1",
+          "trees": [
+            "T-e"
+          ],
+          "what": "T-e carries the reader port (same listed hunks and bytes as the other trees)",
+          "reason": "collect_male_navigation.py source_pins digests scripts/prepare_male_recovery_data.py against the study-plan pin; porting it makes that pin follow the port bytes. Nothing at 736e0cf imports it."
+        },
+        {
+          "kind": "widened",
+          "file": "scripts/prepare_male_navigation_v2.py",
+          "lines": "19",
+          "range": "18-19",
+          "class": "H1",
+          "trees": [
+            "T-f"
+          ],
+          "what": "PROTOCOL (line 18) and PROTOCOL_SHA (line 19) -> v4 data-v2 copy",
+          "reason": "The data-v2 copy is supplied by path, so the path literal on line 18 must move with the sha."
+        },
+        {
+          "kind": "widened",
+          "file": "src/palimpsest/male_recovery_research.py",
+          "lines": "114,117",
+          "range": "113-114",
+          "class": "H1",
+          "trees": [
+            "T-e"
+          ],
+          "what": "hard-coded recovery-learning path (line 113) and sha (line 114) -> v4 copy; line 117 unchanged in scope",
+          "reason": "The listed path literal sits on line 113."
+        }
+      ],
+      "tree_additions": {
+        "T-e": [
+          "scripts/prepare_male_recovery_data.py"
+        ],
+        "T-f": [
+          "scripts/collect_male_navigation_v2.py"
+        ]
+      },
+      "unchanged": "collect_male_navigation_v2.py:50 needs no bytes (the 20-21 hunk already makes the import-time plan() read the v4 copy); H2 relaunch hunks stay empty; H4 stays a declared-field change.",
+      "pins": "declared-fields.json amendment_1_pending (still inactive): the study-plan cascades for the v4 recovery index and recovery-learning copy become satisfiable; the T-e reader and collector cascade values move to the new port bytes; protocol_sha256 resealed to this file.",
+      "behaviour_change_statement": "Every erratum hunk is in classes H1-H3 already approved under A1 and changes no sampling, features, labels, order or filtering. On the v2 reference lengths each ported function returns the same result as the original (function-level tests); with regenerated lengths, outputs follow the pinned per-source counts within the declared bounds (recovery <= 120, advice <= 600).",
+      "cost_table_changed": false,
+      "cost_note": "No hunk changes runtime or CPU cost; lane_budget is unchanged.",
+      "port_manifest": "docs/plans/m7-navigation-v4-pins/ports.json (port branches rebuilt; new commits recorded there)"
+    }
   }
 }

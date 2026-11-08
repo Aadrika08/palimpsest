@@ -1,7 +1,7 @@
 {
   "schema": "m7-navigation-v4-pin-declarations-1",
   "protocol_path": "docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json",
-  "protocol_sha256": "238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8",
+  "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
   "placeholder_rule": "Every declared field holds the explicit string PENDING-<stage> until that stage's pin record fills it; any consumer refuses a document that still contains a PENDING- value.",
   "documents": {
     "m7-recovery-learning-protocol.json": {
@@ -555,8 +555,8 @@
             "stage": "S0e",
             "placeholder": "PENDING-S0e",
             "note": "port bytes",
-            "cascade_value": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
-            "cascade_note": "T-e does not port the reader (not imported at 736e0cf); collect_male_navigation.py:46-47 digests the unchanged tracked bytes"
+            "cascade_value": "ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c",
+            "cascade_note": "T-e reader port bytes (erratum 1: T-e carries the reader port so this pin follows it)"
           },
           {
             "pointer": "/current_reusable_source_sha256/data~1manifests~1male-recovery-research-development-v1.json",
@@ -564,7 +564,8 @@
             "stage": "S0d",
             "placeholder": "PENDING-S0d",
             "note": "cascade of v4 recovery index",
-            "cascade_note": "collect_male_navigation.py:46-47 (T-e) digests Path(root)/name; the v4 copy is supplied by path and is not at this tracked path, so only the unchanged tracked original can satisfy this pin (spec gap; see ports.json spec_gaps)"
+            "cascade_note": "erratum 1: collect_male_navigation.py:46-47 (T-e port) hashes this pin at the v4 copy named in the locator",
+            "cascade": "sha256 of the validated v4 copy male-recovery-research-development-v1.json named in the locator"
           },
           {
             "pointer": "/current_reusable_source_sha256/docs~1plans~1m7-recovery-learning-protocol.json",
@@ -572,7 +573,8 @@
             "stage": "S0b",
             "placeholder": "PENDING-S0b",
             "note": "cascade of v4 recovery-learning copy",
-            "cascade_note": "collect_male_navigation.py:46-47 (T-e) digests Path(root)/name; the v4 copy is supplied by path and is not at this tracked path, so only the unchanged tracked original can satisfy this pin (spec gap; see ports.json spec_gaps)"
+            "cascade_note": "erratum 1: collect_male_navigation.py:46-47 (T-e port) hashes this pin at the v4 copy named in the locator",
+            "cascade": "sha256 of the validated v4 copy m7-recovery-learning-protocol.json named in the locator"
           }
         ],
         "copy_path": "docs/plans/m7-navigation-v4-pins/m7-navigation-study-protocol.json"
@@ -618,7 +620,7 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "collect_male_navigation_v2.py:42 (736e0cf); T-e ported collect_male_navigation.py",
-          "cascade_value": "705f4f82c8db4b59b14b3b232c6b3c5b946f26f3f01c709826e3c3150061b018",
+          "cascade_value": "d06b0dae2e97bfddcf41bc24c98a6cafff4cda3994d7cbdb32d335be025ab791",
           "cascade_note": "T-e ported scripts/collect_male_navigation.py; equals the S0e port_source_guards pin in scripts/regenerate_male_navigation_v4.py"
         }
       ],
