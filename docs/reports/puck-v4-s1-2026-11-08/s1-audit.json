@@ -1,0 +1,90 @@
+{
+ "checks": [
+  {
+   "check": "canonical bytes",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "kind/version/stage",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "input protocol hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling-protocol.json",
+   "ok": true
+  },
+  {
+   "check": "input comparison_set hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/comparison-set.json",
+   "ok": true
+  },
+  {
+   "check": "input go_record hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/go-s1-admission.json",
+   "ok": true
+  },
+  {
+   "check": "input held_out_go_record hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-go/d2-scope-s1.json",
+   "ok": true
+  },
+  {
+   "check": "input calibration_record hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/final-calibrated-plan.json",
+   "ok": true
+  },
+  {
+   "check": "frozen protocol",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "roster matches protocol",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "refused verdict is explicit",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "refused report reserves nothing",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "no held-out comparison, read, minting, simulator or model claims",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "lost root never treated as clean",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "launcher receipt complete and drained",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "launcher exit matches verdict",
+   "detail": "",
+   "ok": true
+  }
+ ],
+ "kind": "puck-v4-s1-audit-v1",
+ "passed": true,
+ "receipt": {
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/s1-receipt/receipt.json",
+  "sha256": "846a84f3c720e689ddd9de53f6fffc5991a36f4d17966f95b4b74e1baa94a725"
+ },
+ "report": {
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/s1-report.json",
+  "sha256": "4aa9e4c7753cab7c4bd94af7723b90629e84e3ce1b663d3e374534ae99530f61"
+ },
+ "verdict_audited": "refused"
+}
