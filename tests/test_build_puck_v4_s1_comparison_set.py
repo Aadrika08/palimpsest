@@ -17,7 +17,7 @@ def _machine(tmp_path):
     main = shraddha / 'palimpsest'
     for relative in ('.git/HEAD', '.venv/pyvenv.cfg', 'docs/a.md', 'ui/node_modules/x.json',
                      '.worktrees/authority-study-final/runs/r.json',
-                     '.worktrees/authority-study-final/.venv/x', '.worktrees/paper/docs/b.md',
+                     '.worktrees/authority-study-final/.venv/pyvenv.cfg', '.worktrees/paper/docs/b.md',
                      'worktrees/memory/docs/c.md', '.claude/worktrees/agent-1/docs/d.md',
                      '.claude/settings.json'):
         _touch(main / relative)
@@ -117,12 +117,16 @@ def test_hazard_pass_excludes_only_dangling_temp_and_lost_root_git(tmp_path):
     main = Path(paths['main'])
     (main / 'runs').mkdir()
     (main / 'runs/dangling').symlink_to('/outside/missing')
-    (main / 'runs/temp').symlink_to('/var/tmp')
-    declaration = builder.build(**paths)
+    ephemeral = tmp_path / 'eph'
+    (ephemeral / 'pytest-of-u' / 'pytest-1').mkdir(parents=True)
+    (main / 'runs/temp').symlink_to(ephemeral / 'pytest-of-u' / 'pytest-1')
+    declaration = builder.build(**paths, ephemeral=(str(ephemeral),))
     roots = {row['name']: row for row in declaration['roots']}
     excluded = {row['path']: row['reason'] for row in roots['palimpsest-main']['exclude']}
     assert 'dangling' in excluded[str(main / 'runs/dangling')]
     assert 'ephemeral' in excluded[str(main / 'runs/temp')]
+    assert {row['path']: row['reason'] for row in declaration['unscanned']}[
+        str(ephemeral / 'pytest-of-u')].startswith('pytest temporary base directory')
     codex = roots['codex-0071-brain']
     assert any(row['path'].endswith('/brain/.git') and 'lost-root' in row['reason']
                for row in codex['exclude'])
@@ -135,7 +139,7 @@ def test_hazard_pass_refuses_symlink_leaving_declared_roots(tmp_path):
     main = Path(paths['main'])
     (main / 'docs/escape').symlink_to(outside)
     with pytest.raises(ValueError, match='leaves declared roots'):
-        builder.build(**paths)
+        builder.build(**paths, ephemeral=('/nonexistent-ephemeral-prefix',))
 
 
 def test_hazard_pass_refuses_uncovered_git_metadata(tmp_path):
@@ -158,3 +162,54 @@ def test_hazard_pass_excludes_shared_clone_git_only_with_declared_alternates(tmp
     _touch(clone / 'objects/info/alternates', str(tmp_path / 'foreign/objects') + '\n')
     with pytest.raises(ValueError, match='uncovered git metadata'):
         builder.build(**paths)
+
+
+ASSET_REASON = 'third-party FlyWire/FLYNN asset copy, not a scene registry'
+
+
+def test_connectome_asset_copies_excluded_with_reason(tmp_path):
+    paths = _machine(tmp_path)
+    main = Path(paths['main'])
+    graph = 'graph-' + 'a' * 64
+    for parent in (main / 'data/assets/flynn', main / 'runs/r1/copied-assets',
+                   main / '.worktrees/paper/runs/t/assets'):
+        _touch(parent / graph / 'drosophila adult connectome' / 'connections_princeton.csv')
+    declaration = builder.build(**paths)
+    roots = {row['name']: row for row in declaration['roots']}
+    reasons = {row['path']: row['reason'] for root in roots.values()
+               if root['kind'] == 'directory' for row in root['exclude']}
+    for parent in (main / 'data/assets/flynn', main / 'runs/r1/copied-assets',
+                   main / '.worktrees/paper/runs/t/assets'):
+        assert reasons[str(parent / graph)] == ASSET_REASON
+
+
+def test_graph_directory_without_connectome_is_not_excluded(tmp_path):
+    paths = _machine(tmp_path)
+    main = Path(paths['main'])
+    _touch(main / 'runs' / ('graph-' + 'b' * 64) / 'scenes.json')
+    roots = {row['name']: row for row in builder.build(**paths)['roots']}
+    assert not any('graph-' in row['path'] for row in roots['palimpsest-main']['exclude'])
+
+
+def test_venv_named_directory_needs_pyvenv_cfg(tmp_path):
+    paths = _machine(tmp_path)
+    main = Path(paths['main'])
+    _touch(main / 'docs/venv/scenes.json')
+    roots = {row['name']: row for row in builder.build(**paths)['roots']}
+    excluded = {row['path'] for row in roots['palimpsest-main']['exclude']}
+    assert str(main / '.venv') in excluded and str(main / 'docs/venv') not in excluded
+
+
+def test_compare_manifest_accepts_identical_and_rejects_drift(tmp_path, capsys):
+    paths = _machine(tmp_path)
+    reviewed = tmp_path / 'reviewed.json'
+    reviewed.write_bytes(builder.render(builder.build(**paths)))
+    argv = ['--shraddha', paths['shraddha'], '--main', paths['main'],
+            '--codex-worktrees', paths['codex_worktrees'],
+            '--advertisement', paths['advertisement'],
+            '--submodule-advertisement', paths['submodule_advertisement'],
+            '--compare-manifest', str(reviewed)]
+    assert builder.main(argv) == 0
+    (Path(paths['main']) / '.worktrees/new-tree').mkdir()
+    assert builder.main(argv) == 1
+    assert 'new-tree' in capsys.readouterr().out
