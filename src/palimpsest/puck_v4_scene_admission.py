@@ -659,26 +659,58 @@ def _parse_document(relative, raw):
     return occurrences, held_out, unsupported
 
 
-_PRE_TOKEN = re.compile(rb'(?<![0-9A-Za-z_])0*6\d{3}(?![0-9A-Za-z_])')
-_PRE_EXPONENT = re.compile(rb'\d(?:\.\d*)?[eE][+-]?\d')
-_PRE_RANGE = re.compile(rb'(?<![0-9A-Za-z_.])(\d{1,7})\s*(?:-|\.\.|\xe2\x80[\x90-\x95]|'
-                        rb'\xe2\x88\x92)\s*(\d{1,7})(?![0-9A-Za-z_])')
+# The prefilter mirrors the detector exactly, never more broadly than needed:
+#   * _TOKEN tokens (same lookarounds, same Unicode \d) whose value is in 6000-6999;
+#     on ASCII text that is exactly a maximal digit run 0{0,3}6ddd;
+#   * _RANGE ranges (same regex) whose bounds could cover 6000-6999;
+#   * JSON numbers that json parses to an integral float in 6000-6999: exponent
+#     forms (6.51e3, 651e1) and decimals rounding up from 5999.x (6xxx.y is a token);
+#   * the same three checks after decoding \uXXXX escapes, when any are present.
+_PRE_TOKEN_ASCII = re.compile(r'(?<![0-9A-Za-z_.])0{0,3}6[0-9]{3}(?![0-9A-Za-z_])')
+_PRE_FLOAT = re.compile(r'(?<![0-9A-Za-z_.])[-+]?(?:[0-9]+(?:\.[0-9]+)?[eE][+-]?[0-9]+'
+                        r'|0*5999\.[0-9]+)')
+_UNICODE_ESCAPE = re.compile(r'\\u([0-9a-fA-F]{4})')
 
 
-def prefilter_hit(raw):
-    """Cheap raw-byte test: could typed detection find any puck-namespace ID here?
+def _in_namespace(value):
+    return PUCK_NAMESPACE[0] <= value <= PUCK_NAMESPACE[1]
 
-    Typed detection only fires where decimal digits appear in the text, so files
-    without a 6xxx token, an exponent-form number, or a range whose bounds could
-    cover 6000-6999 cannot yield a new, reused, held-out, or mitigation-relevant ID.
-    """
-    if _PRE_TOKEN.search(raw) or _PRE_EXPONENT.search(raw):
+
+def _prefilter_text(text):
+    if text.isascii():
+        if _PRE_TOKEN_ASCII.search(text):
+            return True
+    elif any(_in_namespace(int(match[1])) for match in _TOKEN.finditer(text)):
         return True
-    for match in _PRE_RANGE.finditer(raw):
+    for match in _PRE_FLOAT.finditer(text):
+        try:
+            value = float(match[0])
+        except (ValueError, OverflowError):
+            continue
+        if math.isfinite(value) and value.is_integer() and _in_namespace(value):
+            return True
+    for match in _RANGE.finditer(text):
         low, high = int(match[1]), int(match[2])
         if (low <= high and high - low <= MAX_RANGE
                 and low <= PUCK_NAMESPACE[1] and high >= PUCK_NAMESPACE[0]):
             return True
+    return False
+
+
+def prefilter_hit(raw):
+    """Could the detector find any puck-namespace ID in these bytes?
+
+    Every detector path (typed JSON ints, integral floats, numeric keys, strings,
+    Markdown mentions and unsupported declarations, raw YAML/TOML/CSV/TXT text)
+    reads decimal digits through _TOKEN, _RANGE or json number parsing, so a
+    content with none of the forms above cannot produce a new, reused, held-out
+    or mitigation-relevant ID. Proven by property tests against the detector.
+    """
+    text = raw.decode('utf-8', errors='replace')
+    if _prefilter_text(text):
+        return True
+    if '\\u' in text:
+        return _prefilter_text(_UNICODE_ESCAPE.sub(lambda m: chr(int(m[1], 16)), text))
     return False
 
 
@@ -1000,7 +1032,7 @@ def _clean_tracked(worktree):
     return tracked
 
 
-def _throughput(protocol, roots, inventories, git_records, git_sizes):
+def _throughput(protocol, roots, inventories, git_records, git_sizes, calibrate=False):
     raw, unique, covered, notes = {}, {}, 0, []
 
     def add(table, suffix, size):
@@ -1019,6 +1051,7 @@ def _throughput(protocol, roots, inventories, git_records, git_sizes):
             except AdmissionRefused as error:
                 notes.append(f'worktree {worktree} counted fully: {error}')
     worktrees.sort(key=lambda row: len(row[0]), reverse=True)  # deepest worktree first
+    eligible = []  # unique files in non-held-out directory roots: calibration candidates
     for root in roots:
         inventory = inventories.get(root['name'])
         if inventory is None:
@@ -1031,11 +1064,18 @@ def _throughput(protocol, roots, inventories, git_records, git_sizes):
                 covered += size
             else:
                 add(unique, suffix, size)
+                if not root['held_out_payloads']:
+                    eligible.append((root['name'], full, suffix, size))
     limit = next(row['enclosing_hard_seconds'] for row in
                  protocol['expected_cost_table']['pre_held_out'] if row['stage'] == 'S1')
     full_rate, hit_rate = _sample_rate(), _digest_rate()
     projected = sum(unique.values()) / (full_rate * 1e6) + covered / (hit_rate * 1e6)
+    calibration = (_calibrate(eligible, unique, covered, full_rate, hit_rate)
+                   if calibrate else None)
+    basis = projected if calibration is None else calibration['projected_cpu_seconds']
     return {'bytes_by_suffix': dict(sorted(raw.items())), 'total_bytes': sum(raw.values()),
+            'calibration': calibration,
+            'blocker_basis': 'conservative' if calibration is None else 'calibrated',
             'deduplicated_bytes_by_suffix': dict(sorted(unique.items())),
             'deduplicated_total_bytes': sum(unique.values()),
             'covered_by_git_blobs_bytes': covered,
@@ -1049,7 +1089,85 @@ def _throughput(protocol, roots, inventories, git_records, git_sizes):
                       'clean in a worktree of a declared git root whose blob is in the scan; '
                       'untracked, ignored, dirty and non-git files count fully; no '
                       'size/name dedupe across directory roots',
-            'blocked': projected > THROUGHPUT_BLOCKER_FRACTION * limit}
+            'blocked': basis > THROUGHPUT_BLOCKER_FRACTION * limit}
+
+
+CALIBRATION_RULE = (
+    'Contents are read only from directory roots with held_out_payloads=false (never '
+    'held-out-flagged roots, never git blobs). Per suffix, eligible files (unique bytes in '
+    'those roots) are ordered by sha256 of their absolute path and taken until the sample '
+    'covers >= 10% of the eligible bytes (all, if smaller). Measured: the byte fraction '
+    'passing the prefilter per suffix; the digest+prefilter rate on sampled prefilter misses '
+    '(all sampled bytes if none miss); and the full rate on sampled hits, capped at the '
+    'synthetic conservative rate. Every unique byte (including held-out roots and git blobs, '
+    'which are not read) is projected as pass_upper x bytes / full_rate + (1 - pass_upper) x '
+    'bytes / miss_rate with pass_upper = min(1, 2 x observed pass fraction + 0.05) per '
+    'suffix (1 for suffixes without eligible bytes); clean tracked worktree bytes stay at '
+    'the memo-hit rate. The blocker uses this calibrated projection; limits are unchanged.')
+
+
+def _calibrate(eligible, unique, covered, synthetic_full_rate, hit_rate):
+    started = time.process_time()
+    eligible_bytes, sample = {}, []
+    for _, _, suffix, size in eligible:
+        eligible_bytes[suffix] = eligible_bytes.get(suffix, 0) + size
+    taken = {}
+    for row in sorted(eligible, key=lambda row: (row[2], _sha(os.fsencode(row[1])), row[1])):
+        suffix = row[2]
+        if taken.get(suffix, 0) < 0.1 * eligible_bytes[suffix] or suffix not in taken:
+            sample.append(row)
+            taken[suffix] = taken.get(suffix, 0) + row[3]
+    passed, sampled, notes = {}, {}, []
+    miss_bytes = miss_cpu = hit_bytes = hit_cpu = all_bytes = all_cpu = 0
+    for root, full, suffix, _ in sample:
+        try:
+            raw = Path(full).read_bytes()
+        except OSError as error:
+            notes.append(f'{full} unreadable; counted as a prefilter pass: {error}')
+            sampled[suffix] = sampled.get(suffix, 0) + 1
+            passed[suffix] = passed.get(suffix, 0) + 1
+            continue
+        start = time.process_time()
+        digest = _sha(raw)
+        hit = prefilter_hit(raw)
+        cheap = time.process_time() - start
+        all_bytes, all_cpu = all_bytes + len(raw), all_cpu + cheap
+        sampled[suffix] = sampled.get(suffix, 0) + len(raw)
+        if hit:
+            passed[suffix] = passed.get(suffix, 0) + len(raw)
+            start = time.process_time()
+            _analyze(full, raw, digest)
+            hit_bytes, hit_cpu = hit_bytes + len(raw), hit_cpu + cheap + (
+                time.process_time() - start)
+        else:
+            miss_bytes, miss_cpu = miss_bytes + len(raw), miss_cpu + cheap
+    if miss_bytes:
+        miss_rate = miss_bytes / max(miss_cpu, 1e-6) / 1e6
+    else:
+        miss_rate = all_bytes / max(all_cpu, 1e-6) / 1e6 if all_bytes else synthetic_full_rate
+    full_rate = synthetic_full_rate
+    if hit_bytes:
+        full_rate = min(synthetic_full_rate, hit_bytes / max(hit_cpu, 1e-6) / 1e6)
+    miss_rate = max(miss_rate, full_rate)  # a miss never costs more than a full analysis
+    by_suffix, projected = {}, covered / (hit_rate * 1e6)
+    for suffix, size in sorted(unique.items()):
+        fraction = (passed.get(suffix, 0) / sampled[suffix]
+                    if sampled.get(suffix) else None)
+        upper = 1.0 if fraction is None else min(1.0, 2 * fraction + 0.05)
+        by_suffix[suffix] = {'eligible_bytes': eligible_bytes.get(suffix, 0),
+                             'sample_bytes': sampled.get(suffix, 0),
+                             'sample_files': sum(1 for row in sample if row[2] == suffix),
+                             'pass_fraction': fraction, 'pass_upper': upper,
+                             'unique_bytes_projected': size}
+        projected += size * (upper / (full_rate * 1e6) + (1 - upper) / (miss_rate * 1e6))
+    return {'rule': CALIBRATION_RULE, 'by_suffix': by_suffix,
+            'read_scope': sorted({row[0] for row in sample}),
+            'sample_digest': _sha(canonical_bytes(sorted(row[1] for row in sample))),
+            'full_mb_per_s': full_rate, 'miss_mb_per_s': miss_rate,
+            'full_rate_source': 'sampled hits (capped at synthetic)' if hit_bytes
+                                else 'synthetic conservative (no sampled hits)',
+            'projected_cpu_seconds': projected, 'notes': notes,
+            'cpu_seconds': time.process_time() - started}
 
 
 # Publication ---------------------------------------------------------------------
@@ -1108,8 +1226,22 @@ def _inside_unexcluded(path, roots):
 
 # Entry points --------------------------------------------------------------------
 
-def _preflight(protocol, roots, lost_root, ledger):
-    """Everything checkable without reading root file contents: plan and execute share it."""
+def _load_calibration_record(path, declaration_raw):
+    raw = _read_small(path, 'calibration record')
+    record = _strict_json(raw, 'calibration record')
+    if (type(record) is not dict or record.get('mode') != 'plan-only'
+            or record.get('protocol_sha256') != PROTOCOL_SHA256
+            or record.get('comparison_set_sha256') != _sha(declaration_raw)
+            or type(record.get('throughput')) is not dict
+            or type(record['throughput'].get('calibration')) is not dict):
+        raise AdmissionRefused('calibration record must be a calibrated plan-only output for '
+                               'this protocol and this exact comparison set')
+    return raw, record
+
+
+def _preflight(protocol, roots, lost_root, ledger, *, calibrate=False, calibration=None):
+    """Everything checkable without reading root file contents (except the opt-in plan-time
+    calibration sample from non-held-out directory roots): plan and execute share it."""
     blockers = [problem for root in roots for problem in _root_problems(root, lost_root)]
     directories = [root for root in roots if root['kind'] == 'directory']
     clones, git_records, lost_worktrees, git_covered = [], {}, [], set()
@@ -1145,10 +1277,26 @@ def _preflight(protocol, roots, lost_root, ledger):
             continue
         blockers.extend(f'git blob {oid} ({path}) exceeds {MAX_FILE_BYTES} bytes'
                         for path, oid, size in git_sizes[name] if size > MAX_FILE_BYTES)
-    throughput = _throughput(protocol, roots, inventories, git_records, git_sizes)
+    throughput = _throughput(protocol, roots, inventories, git_records, git_sizes,
+                             calibrate=calibrate)
+    if calibration is not None:
+        fields = ('bytes_by_suffix', 'deduplicated_bytes_by_suffix', 'covered_by_git_blobs_bytes')
+        recorded = calibration['throughput']
+        if any(recorded.get(field) != throughput[field] for field in fields):
+            blockers.append('calibration record differs from the current inventory '
+                            '(bytes by suffix changed since the calibrated plan)')
+        else:
+            calibrated = recorded['calibration']['projected_cpu_seconds']
+            throughput = {**throughput, 'calibration': recorded['calibration'],
+                          'blocker_basis': 'calibration record',
+                          'blocked': calibrated > THROUGHPUT_BLOCKER_FRACTION
+                          * throughput['limit_seconds']}
     if throughput['blocked']:
-        blockers.append(f'throughput projection {throughput["projected_cpu_seconds"]:.0f} CPU-s '
-                        f'exceeds {THROUGHPUT_BLOCKER_FRACTION:.0%} of the '
+        basis = (throughput['projected_cpu_seconds'] if throughput['calibration'] is None
+                 else throughput['calibration']['projected_cpu_seconds'])
+        blockers.append(f'throughput projection {basis:.0f} CPU-s '
+                        f'({throughput["blocker_basis"]}) exceeds '
+                        f'{THROUGHPUT_BLOCKER_FRACTION:.0%} of the '
                         f'{throughput["limit_seconds"]} s S1 limit')
     if os.path.lexists(os.path.join(ledger, ATTEMPT_RECEIPT_NAME)):
         blockers.append(f'the single S1 attempt is already consumed: {ledger}/'
@@ -1167,8 +1315,11 @@ _SCAN_FAILURES = (OSError, ValueError, RecursionError, csv.Error, UnicodeError, 
 
 def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
           go_record_path=None, held_out_go_record_path=None, lost_root=None,
-          attempt_ledger=None):
+          attempt_ledger=None, calibrate=False, calibration_record_path=None):
     """Plan (default) or execute S1. Returns the plan or a verdict summary."""
+    if calibrate and execute:
+        raise AdmissionRefused('--calibrate is plan-only: execute must not read contents before '
+                               'its receipt; pass the calibrated plan as a calibration record')
     protocol_raw, protocol, roster = _load_protocol(protocol_path)
     declaration_raw, declaration = _load_declaration(comparison_set_path)
     derived = lost_root is None
@@ -1177,13 +1328,19 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
     ledger = _canonical_path(attempt_ledger or DEFAULT_ATTEMPT_LEDGER, 'attempt ledger')
     lost = _lost_root_record(protocol, lost_root, derived)
     roots = declaration['roots']
-    pre = _preflight(protocol, roots, lost_root, ledger)
+    record_raw, record = None, None
+    if calibration_record_path is not None:
+        record_raw, record = _load_calibration_record(calibration_record_path, declaration_raw)
+    pre = _preflight(protocol, roots, lost_root, ledger, calibrate=calibrate,
+                     calibration=record)
     blockers = pre['blockers']
     if lost['status'] == 'present-refused':
         blockers.append(f'frozen lost root {lost_root} is present; its exception premise fails')
     needs_held_out_go = any(root['held_out_payloads'] for root in roots)
     if not execute:
-        return {'mode': 'plan-only', 'stage': S1_GO_STAGE, 'writes': [], 'contents_read': False,
+        return {'mode': 'plan-only', 'stage': S1_GO_STAGE, 'writes': [],
+                'contents_read': ('calibration sample from non-held-out directory roots only'
+                                  if calibrate else False),
                 'metadata_read': 'stat/walk of directory roots; git refs, worktrees, object '
                                  'headers and advertised OIDs',
                 'protocol_sha256': PROTOCOL_SHA256, 'comparison_set_sha256': _sha(declaration_raw),
@@ -1281,6 +1438,8 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
             'protocol': {'path': str(protocol_path), 'sha256': _sha(protocol_raw)},
             'comparison_set': {'path': str(comparison_set_path), 'sha256': _sha(declaration_raw)},
             'go_record': go_input, 'held_out_go_record': held_input,
+            'calibration_record': None if record_raw is None else {
+                'path': str(calibration_record_path), 'sha256': _sha(record_raw)},
         },
         'sources': sources,
         'execution_requirements': list(EXECUTION_REQUIREMENTS),
@@ -1348,6 +1507,12 @@ def build_parser():
     parser.add_argument('--plan-only', action='store_true', help='default; never writes')
     parser.add_argument('--go-record')
     parser.add_argument('--held-out-go-record')
+    parser.add_argument('--calibrate', action='store_true',
+                        help='plan-only: read a deterministic >=10%% sample of non-held-out '
+                             'directory roots to calibrate the throughput projection')
+    parser.add_argument('--calibration-record',
+                        help='execute: saved calibrated plan output for this exact comparison '
+                             'set; its calibrated projection gates throughput')
     return parser
 
 
@@ -1361,7 +1526,8 @@ def main(argv=None, *, attempt_ledger=None):
                        output_path=args.output, execute=args.execute,
                        go_record_path=args.go_record,
                        held_out_go_record_path=args.held_out_go_record,
-                       attempt_ledger=attempt_ledger)
+                       attempt_ledger=attempt_ledger, calibrate=args.calibrate,
+                       calibration_record_path=args.calibration_record)
     except AdmissionRefused as error:
         print(f'REFUSED: {error}', file=sys.stderr)
         return 2

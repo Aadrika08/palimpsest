@@ -896,6 +896,7 @@ def test_prefiltered_files_are_digested_but_not_parsed(tmp_path, monkeypatch):
     _write(tree / 'plain.json', {'note': 'nothing numeric here'})
     parsed = []
     original = s1._parse_document
+    s1._measure_rates()  # warm the synthetic-sample rate cache outside the spy
     monkeypatch.setattr(s1, '_parse_document',
                         lambda relative, raw: parsed.append(relative) or original(relative, raw))
     _, output = _admit(tmp_path, [_dir_root(tree)])
@@ -1049,3 +1050,168 @@ def test_plan_reads_no_root_contents(tmp_path, monkeypatch):
         AssertionError('plan analysed content')))
     plan = _plan(tmp_path, [_git_root(repo), _dir_root(repo, name='work'), _dir_root(tree)])
     assert plan['contents_read'] is False and plan['throughput']['total_bytes'] > 0
+
+
+# Round 5: prefilter matches detector semantics -------------------------------------
+
+def _relevant(monkeypatch, relative, raw):
+    """Would the detector report anything puck-relevant if the prefilter let it through?"""
+    with monkeypatch.context() as patch:
+        patch.setattr(s1, 'prefilter_hit', lambda raw: True)
+        result = s1._analyze(relative, raw, hashlib.sha256(raw).hexdigest())
+    return bool(result['ambiguous'] or result['untyped'] or result['held_out'] or any(
+        6000 <= scene_id <= 6999 for _, scene_id in result['occurrences']))
+
+
+_TEMPLATES = [('a.json', '{"scene_id": %s}'), ('b.json', '{"scene_ids": "%s"}'),
+              ('c.json', '{"%s": {"puck_xy": [1.0]}}'), ('d.jsonl', '{"layout_seed": %s}\n'),
+              ('e.yaml', 'scene_id: %s\n'), ('f.toml', 'layout = %s\n'),
+              ('g.csv', 'scene,x\n%s,1\n'), ('h.md', '# t\nScene IDs: %s\n'),
+              ('i.txt', 'see %s\n'), ('j.md', '| scene | %s |\n')]
+_ATOMS = ['6510', '6512', '6203', '6.51e3', '651e1', '6.51E+03', '65100e-1', '0.6512', '1e-05',
+          '2026-11-05', '5999.99999999999999999', '06512', '6505-6515', '6505..6515',
+          '6505–6515', '6505—6515', '5000-7000', '\\u0036510', '٦٥١٠',
+          '-6510', '6510.0', '16512', 'a6512', '6512b', '_6512', '.6512', '-', '.', ',', ' ',
+          'e', '0', '1', '6', '5', '9', '[', ']', '"']
+
+
+@pytest.mark.parametrize('relative, template', _TEMPLATES)
+def test_every_detection_requires_a_prefilter_hit(monkeypatch, relative, template):
+    import random
+    generator = random.Random(relative)
+    samples = [atom for atom in _ATOMS[:20]]
+    samples += [''.join(generator.choice(_ATOMS) for _ in range(generator.randint(1, 5)))
+                for _ in range(300)]
+    relevant = 0
+    for text in samples:
+        raw = (template % text).encode()
+        if _relevant(monkeypatch, relative, raw):
+            relevant += 1
+            assert s1.prefilter_hit(raw), (relative, text)
+    assert relevant > 20
+
+
+@pytest.mark.parametrize('raw', [b'{"x": 1e-05}', b'{"x": 0.6512}', b'{"d": "2026-11-05"}',
+                                 b'{"x": 1e-05, "y": 0.6512, "d": "2026-11-05", "z": 3.5e2}'])
+def test_prefilter_no_longer_hits_routine_numbers(raw):
+    assert s1.prefilter_hit(raw) is False
+
+
+@pytest.mark.parametrize('raw', [b'{"s": 6.51e3}', b'{"s": 651e1}', b'{"s": 5999.99999999999999999}',
+                                 '{"s": "٦٥١٠"}'.encode(),
+                                 b'{"s": "\\u0036510"}', b'{"s": "06512"}'])
+def test_prefilter_hits_exotic_forms_the_detector_finds(raw):
+    assert s1.prefilter_hit(raw) is True
+
+
+# Round 5: plan-time calibration -----------------------------------------------------
+
+def _calibration_fixture(tmp_path):
+    plain = tmp_path / 'plain'
+    for index in range(40):
+        _write(plain / f'n{index:02}.json', {'value': index, 'note': 'x' * (50 + index)})
+    for index in range(4):
+        _write(plain / f'h{index}.json', {'scene_id': 6100 + index})
+    _write(plain / 'doc.md', '# d\nnothing\n')
+    held = tmp_path / 'held'
+    _write(held / 'catalog.json', {'rows': [{'seed': 6203, 'puck_xy': [0.5, 0.5]}]})
+    repo = _repo(tmp_path, [{'r.json': {'scene_id': 6101}}])
+    return plain, held, repo
+
+
+def _calibrated_plan(tmp_path, roots):
+    return s1.admit(protocol_path=PROTOCOL, comparison_set_path=_declaration(tmp_path, roots),
+                    output_path=tmp_path / 'out.json', lost_root=str(tmp_path / 'lost-brain'),
+                    attempt_ledger=str(tmp_path / 'ledger'), calibrate=True)
+
+
+def test_calibration_never_reads_held_out_roots_or_git_blobs(tmp_path, monkeypatch):
+    plain, held, repo = _calibration_fixture(tmp_path)
+    original = Path.read_bytes
+
+    def guarded(self):
+        if str(self).startswith((str(held), str(repo))):
+            raise AssertionError(f'calibration read protected content {self}')
+        return original(self)
+    monkeypatch.setattr(Path, 'read_bytes', guarded)
+    monkeypatch.setattr(s1, '_git_blobs', lambda *a: (_ for _ in ()).throw(
+        AssertionError('calibration read git blobs')))
+    roots = [_git_root(repo), _dir_root(repo, name='work'), _dir_root(plain, name='plain'),
+             _dir_root(held, name='held', held_out_payloads=True)]
+    plan = _calibrated_plan(tmp_path, roots)
+    calibration = plan['throughput']['calibration']
+    assert calibration['read_scope'] == ['plain']
+    assert plan['contents_read'] == 'calibration sample from non-held-out directory roots only'
+
+
+def test_calibration_sample_rule_and_projection_formula(tmp_path):
+    plain, held, repo = _calibration_fixture(tmp_path)
+    roots = [_dir_root(plain, name='plain'),
+             _dir_root(held, name='held', held_out_payloads=True)]
+    estimate = _calibrated_plan(tmp_path, roots)['throughput']
+    calibration = estimate['calibration']
+    json_row = calibration['by_suffix']['.json']
+    assert json_row['sample_bytes'] >= 0.1 * json_row['eligible_bytes']
+    assert 0 <= json_row['pass_fraction'] <= 1
+    assert json_row['pass_upper'] == min(1.0, 2 * json_row['pass_fraction'] + 0.05)
+    assert calibration['by_suffix']['.md']['sample_bytes'] == \
+        calibration['by_suffix']['.md']['eligible_bytes']
+    assert 'pass_upper = min(1, 2 x observed pass fraction + 0.05)' in calibration['rule']
+    assert calibration['cpu_seconds'] >= 0
+    full, miss = calibration['full_mb_per_s'] * 1e6, calibration['miss_mb_per_s'] * 1e6
+    expected = estimate['covered_by_git_blobs_bytes'] / (estimate['digest_mb_per_s'] * 1e6)
+    for suffix, size in estimate['deduplicated_bytes_by_suffix'].items():
+        upper = calibration['by_suffix'].get(suffix, {'pass_upper': 1.0})['pass_upper']
+        expected += size * (upper / full + (1 - upper) / miss)
+    assert calibration['projected_cpu_seconds'] == pytest.approx(expected)
+    assert estimate['projected_cpu_seconds'] > 0  # the conservative figure is still reported
+    assert calibration['full_mb_per_s'] <= estimate['sample_mb_per_s']
+
+
+def test_calibration_sample_is_deterministic(tmp_path):
+    plain, _, _ = _calibration_fixture(tmp_path)
+    roots = [_dir_root(plain, name='plain')]
+    first = _calibrated_plan(tmp_path, roots)['throughput']['calibration']
+    second = _calibrated_plan(tmp_path, roots)['throughput']['calibration']
+    assert first['sample_digest'] == second['sample_digest']
+
+
+def _slow_full_rate(monkeypatch, plan):
+    unique = plan['throughput']['deduplicated_total_bytes']
+    monkeypatch.setattr(s1, '_sample_rate', lambda: unique / 1e6 / 1000.0)  # 1000 CPU-s
+
+
+def test_blocker_uses_calibrated_projection(tmp_path, monkeypatch):
+    plain, _, _ = _calibration_fixture(tmp_path)
+    roots = [_dir_root(plain, name='plain')]
+    _slow_full_rate(monkeypatch, _plan(tmp_path, roots))
+    assert any('throughput' in b for b in _plan(tmp_path, roots)['blockers'])
+    calibrated = _calibrated_plan(tmp_path, roots)
+    assert calibrated['throughput']['calibration']['projected_cpu_seconds'] < 528
+    assert not any('throughput' in b for b in calibrated['blockers'])
+
+
+def test_execute_uses_only_a_matching_calibration_record(tmp_path, monkeypatch):
+    plain, _, _ = _calibration_fixture(tmp_path)
+    roots = [_dir_root(plain, name='plain')]
+    _slow_full_rate(monkeypatch, _plan(tmp_path, roots))
+    record = _write(tmp_path / 'records' / 'plan.json',
+                    s1.canonical_bytes(_calibrated_plan(tmp_path, roots)).decode())
+    with pytest.raises(s1.AdmissionRefused, match='throughput'):
+        _admit(tmp_path, roots)
+    declaration = _declaration(tmp_path, roots)
+
+    def run(output):
+        return s1.admit(protocol_path=PROTOCOL, comparison_set_path=declaration,
+                        output_path=output, execute=True, go_record_path=_go(tmp_path),
+                        lost_root=str(tmp_path / 'lost-brain'),
+                        attempt_ledger=str(tmp_path / 'ledgers' / output.parent.name),
+                        calibration_record_path=record)
+    result = run(tmp_path / 'ok' / 'r.json')
+    assert result['verdict'] == 'admitted'
+    report = _report(tmp_path / 'ok' / 'r.json')
+    assert report['inputs']['calibration_record']['sha256'] == hashlib.sha256(
+        record.read_bytes()).hexdigest()
+    _write(plain / 'late.json', {'value': 1})
+    with pytest.raises(s1.AdmissionRefused, match='calibration record'):
+        run(tmp_path / 'stale' / 'r.json')
