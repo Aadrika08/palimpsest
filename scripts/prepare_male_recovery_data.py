@@ -12,8 +12,8 @@ from palimpsest.records import iter_ticks
 import collect_male_recovery as recovery
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL_PATH = 'docs/plans/m7-recovery-learning-protocol.json'
-PROTOCOL_SHA256 = '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28'
+PROTOCOL_PATH = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['path']
+PROTOCOL_SHA256 = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-recovery-learning-protocol.json']['sha256']
 MAX_JSON = 4*1024**2
 
 
@@ -87,7 +87,8 @@ def inventory(root, entries, deadline=math.inf):
 def admit_rows(raw_rows, result, run_id):
     """Reuse v3 raw validators; feature inputs never include expert/private fields."""
     import numpy as np
-    if len(raw_rows) != 67 or len(result['rows']) != 67:
+    p = protocol(); n = p['recovery_ticks_each'][[x['run_id'] for x in p['recovery_sources']].index(run_id)]
+    if type(n) is not int or not 0 < n <= 120 or len(raw_rows) != n or len(result['rows']) != n:
         raise ValueError('Exact full 67-row fresh recovery sequence required')
     inputs, targets, bound, prefix = [], [], [], True
     for tick, (raw, row) in enumerate(zip(raw_rows, result['rows'])):
@@ -113,7 +114,7 @@ def admit_rows(raw_rows, result, run_id):
         raise ValueError('Only the pinned paused first-cycle coverage ending is admitted')
     episode = {'run_id': run_id, 'episode': 0, 'features': np.stack(inputs), 'targets': np.stack(targets)}
     return episode, {'ending': 'right_censored_coverage_complete', 'final_phase': 'paused',
-        'last_outcome': None, 'windows': [32, 32, 3], 'coverage': coverage,
+        'last_outcome': None, 'windows': [32]*(n//32)+[n%32]*(n%32>0), 'coverage': coverage,
         'feature_target_sha256': hashlib.sha256(episode['features'].tobytes()+episode['targets'].tobytes()).hexdigest()}
 
 
@@ -137,7 +138,15 @@ def validate_splits(data, *, check_counts=True):
             if sha in payload_splits: raise ValueError('Duplicate feature/target payload')
             payload_splits[sha] = split
             counts[split] += len(targets)
-    if check_counts and counts != {'train': 2117, 'dev': 1228, 'held_out': 0}:
+    p = protocol() if check_counts else None; s = p and p['counts']['per_source']; r = p and p['recovery_ticks_each']
+    if check_counts and (len(s['baseline_train']) != 8 or len(s['dev']) != 4 or len(r) != 2 or
+            any(type(n) is not int or n <= 0 for n in s['baseline_train']+s['dev']+r) or max(r) > 120 or
+            {k: p['counts'].get(k) for k in ('baseline_train', 'dev', 'held_out', 'recovery_train', 'train')} !=
+            {'baseline_train': sum(s['baseline_train']), 'dev': sum(s['dev']), 'held_out': 0,
+             'recovery_train': sum(r), 'train': sum(s['baseline_train'])+sum(r)} or
+            [len(ep['targets']) for ep in data['train']] != s['baseline_train']+r or
+            [len(ep['targets']) for ep in data['dev']] != s['dev'] or
+            counts != {'train': p['counts']['train'], 'dev': p['counts']['dev'], 'held_out': 0}):
         raise ValueError('Fixed research train/dev row counts differ')
     return counts
 
@@ -157,7 +166,7 @@ def prepare(baseline_collection, recovery_report, *, deadline=None):
         raise ValueError('Frozen baseline development collection differs')
     if (observed['status'] != 'passed' or observed['protocol_status'] != 'completed' or
             observed['protocol_sha256'] != p['recovery_protocol_sha256'] or
-            observed['numeric_ticks'] != 134 or observed['owners_completed'] != 2 or
+            observed['numeric_ticks'] != sum(p['recovery_ticks_each']) or observed['owners_completed'] != 2 or
             observed['runtime_source']['commit'] != p['recovery_source_commit']):
         raise ValueError('Only the successful exact v3 collection is admitted')
     # Fourteen combined160 MiB ceilings are below the unchanged3 GiB source cap.
@@ -174,7 +183,7 @@ def prepare(baseline_collection, recovery_report, *, deadline=None):
         checks.append((run, files)); paths[entry['split']].append(run)
     # Preserve the existing reader's complete v2 admission, seeds and natural endings.
     data, baseline_admission = male_model.prepare_splits(paths, research_stage='development')
-    if sum(len(ep['targets']) for ep in data['train']) != 1983 or sum(len(ep['targets']) for ep in data['dev']) != 1228:
+    if [len(ep['targets']) for ep in data['train']] != p['counts']['per_source']['baseline_train'] or [len(ep['targets']) for ep in data['dev']] != p['counts']['per_source']['dev']:
         raise ValueError('Baseline row counts differ')
     recovery_admission = []
     for expected in p['recovery_sources']:
@@ -195,7 +204,7 @@ def prepare(baseline_collection, recovery_report, *, deadline=None):
         if (manifest['run_id'] != expected['run_id'] or manifest['profile'] != recovery.PROFILE or
                 manifest['controller'] != 'teacher' or manifest['teacher_privileged'] is not True or
                 manifest.get('parent_run_id') is not None or manifest.get('replay_source_run_id') is not None or
-                manifest.get('initial_memory') is not None or manifest['recorded_ticks'] != 67 or
+                manifest.get('initial_memory') is not None or manifest['recorded_ticks'] != p['recovery_ticks_each'][p['recovery_sources'].index(expected)] or
                 manifest['recovery_protocol_sha256'] != p['recovery_protocol_sha256'] or
                 manifest['recovery_collection_boundary'] != 'coverage_complete' or
                 manifest['recovery_contact_ownership'] != result['contact_ownership']):
