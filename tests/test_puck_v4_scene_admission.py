@@ -4,8 +4,9 @@ Every root is a pytest tmp directory or a throwaway Git repository. No tracked
 registry, retained input, model, simulator, or held-out scene payload is opened;
 the only tracked file read is the hash-pinned v4 protocol document.
 """
-import copy
+import csv
 import hashlib
+import itertools
 import json
 import os
 from pathlib import Path
@@ -31,21 +32,26 @@ def _write(path, value):
     return path
 
 
-def _go(tmp_path, *, stage='S1', sha=PROTOCOL_SHA, name='go.json', **extra):
-    record = {'kind': 'puck-v4-stage-go-v1', 'version': 1, 'stage': stage,
+COMPANION = ROOT / 'docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling.md'
+_LEDGERS = itertools.count()
+
+
+def _go(tmp_path, *, stage='S1', sha=PROTOCOL_SHA, name='go.json', scope='S1', **extra):
+    record = {'kind': 'puck-v4-stage-go-v1', 'version': 1, 'stage': stage, 'scope': scope,
               'protocol_sha256': sha, 'granted_by': 'fixture owner',
               'granted_at': '2026-11-08', **extra}
     return _write(tmp_path / 'gos' / name, record)
 
 
-def _declaration(tmp_path, roots, name='comparison.json'):
+def _declaration(tmp_path, roots, name='comparison.json', unscanned=()):
     return _write(tmp_path / 'decl' / name,
-                  {'kind': 'puck-v4-s1-comparison-set-v1', 'version': 1, 'roots': roots})
+                  {'kind': 'puck-v4-s1-comparison-set-v1', 'version': 1, 'roots': roots,
+                   'unscanned': list(unscanned)})
 
 
 def _dir_root(path, name='tree', **extra):
     return {'name': name, 'kind': 'directory', 'path': str(path), 'exclude': [],
-            'held_out_payloads': False, **extra}
+            'held_out_payloads': False, 'lost_root_clone': False, **extra}
 
 
 def _prior_tree(tmp_path):
@@ -62,13 +68,17 @@ def _prior_tree(tmp_path):
     return tree
 
 
-def _admit(tmp_path, roots, *, go=True, output=None, held_out_go=None, lost_root=None):
+def _admit(tmp_path, roots, *, go=True, output=None, held_out_go=None, lost_root=None,
+           ledger=None, unscanned=()):
     output = output or tmp_path / 'out' / 'admission.json'
-    return s1.admit(protocol_path=PROTOCOL, comparison_set_path=_declaration(tmp_path, roots),
+    ledger = ledger or tmp_path / 'ledgers' / str(next(_LEDGERS))
+    return s1.admit(protocol_path=PROTOCOL,
+                    comparison_set_path=_declaration(tmp_path, roots, unscanned=unscanned),
                     output_path=output, execute=True,
                     go_record_path=_go(tmp_path) if go is True else go,
                     held_out_go_record_path=held_out_go,
-                    lost_root=lost_root or str(tmp_path / 'lost-brain')), output
+                    lost_root=lost_root or str(tmp_path / 'lost-brain'),
+                    attempt_ledger=str(ledger)), output
 
 
 def _report(path):
@@ -121,11 +131,11 @@ def test_plan_only_is_default_and_never_writes_or_reads_contents(tmp_path, capsy
     output = tmp_path / 'out' / 'admission.json'
     declaration = _declaration(tmp_path, [_dir_root(tree)])
     assert s1.main(['--protocol', str(PROTOCOL), '--comparison-set', str(declaration),
-                    '--output', str(output)]) == 0
+                    '--output', str(output)], attempt_ledger=str(tmp_path / 'ledger')) == 0
     plan = json.loads(capsys.readouterr().out)
     assert plan['mode'] == 'plan-only'
     assert plan['writes'] == [] and plan['contents_read'] is False
-    assert plan['required_go'] == {'stage': 'S1', 'protocol_sha256': PROTOCOL_SHA}
+    assert plan['required_go'] == {'stage': 'S1', 'scope': 'S1', 'protocol_sha256': PROTOCOL_SHA}
     assert plan['roster']['new_scene_ids'][0] == 6510
     assert plan['lost_root']['status'] == 'absent-recorded-not-scanned'
     assert not output.exists() and not output.parent.exists()
@@ -147,7 +157,7 @@ def test_plan_only_reports_blockers_without_writing(tmp_path, capsys):
     output = tmp_path / 'out.json'
     declaration = _declaration(tmp_path, [_dir_root(tmp_path / 'missing')])
     assert s1.main(['--protocol', str(PROTOCOL), '--comparison-set', str(declaration),
-                    '--output', str(output)]) == 1
+                    '--output', str(output)], attempt_ledger=str(tmp_path / 'ledger')) == 1
     plan = json.loads(capsys.readouterr().out)
     assert any('missing' in blocker for blocker in plan['blockers'])
     assert not output.exists()
@@ -166,6 +176,8 @@ def test_execute_without_go_record_refused(tmp_path):
     ({'sha': 'f' * 64}, 'protocol_sha256'),
     ({'sha': PROTOCOL_SHA[:-1] + '0'}, 'protocol_sha256'),
     ({'extra_field': True}, 'fields'),
+    ({'scope': 'S2'}, 'scope'),
+    ({'supersedes_protocol_state': 'anything else'}, 'supersede'),
 ])
 def test_go_record_mismatch_refused(tmp_path, kwargs, message):
     tree = _prior_tree(tmp_path)
@@ -250,7 +262,8 @@ def test_cli_exit_code_on_collision(tmp_path):
     output = tmp_path / 'out.json'
     code = s1.main(['--protocol', str(PROTOCOL), '--comparison-set',
                     str(_declaration(tmp_path, [_dir_root(tree)])), '--output', str(output),
-                    '--execute', '--go-record', str(_go(tmp_path))])
+                    '--execute', '--go-record', str(_go(tmp_path))],
+                   attempt_ledger=str(tmp_path / 'ledger'))
     assert code == 1 and _report(output)['verdict'] == 'refused'
 
 
@@ -271,14 +284,27 @@ def test_prior_puck_id_above_6207_breaks_lost_root_mitigation(tmp_path):
     assert report['lost_root']['mitigation_holds'] is False
 
 
-def test_v4_lineage_documents_are_not_collisions(tmp_path):
+def test_companion_hash_frozen_at_drafting_commit():
+    assert hashlib.sha256(COMPANION.read_bytes()).hexdigest() == s1.COMPANION_SHA256
+    assert s1.COMPANION_SHA256.startswith('ed9c1c9d')
+    assert {PROTOCOL_SHA, s1.COMPANION_SHA256} <= set(s1.LINEAGE_SHA256)
+
+
+def test_v4_lineage_documents_are_matched_by_sha_at_any_path(tmp_path):
     tree = _prior_tree(tmp_path)
-    _write(tree / s1.PROTOCOL_RELATIVE_PATH, PROTOCOL.read_text())
-    _write(tree / s1.COMPANION_RELATIVE_PATH, '# v4\nScene IDs: 6510-6513\n')
+    _write(tree / 'copies/protocol.json', PROTOCOL.read_text())
+    _write(tree / 'elsewhere/companion.md', COMPANION.read_text())
     result, output = _admit(tmp_path, [_dir_root(tree)])
     assert result['verdict'] == 'admitted'
     lineage = {row['path'] for row in _report(output)['lineage_documents']}
-    assert lineage == {s1.PROTOCOL_RELATIVE_PATH, s1.COMPANION_RELATIVE_PATH}
+    assert lineage == {'copies/protocol.json', 'elsewhere/companion.md'}
+
+
+def test_arbitrary_content_at_companion_path_is_not_lineage(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _write(tree / s1.COMPANION_RELATIVE_PATH, '# v4\nScene IDs: 6510-6513\n')
+    result, _ = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'refused'
 
 
 def test_altered_protocol_at_lineage_path_is_not_lineage(tmp_path):
@@ -392,6 +418,19 @@ def test_held_out_payload_with_d2_go_recorded_never_compared(tmp_path):
     assert report['claims']['held_out_payloads_compared'] is False
 
 
+def test_d2_go_must_name_scope_s1(tmp_path):
+    tree = _prior_tree(tmp_path)
+    root = _dir_root(tree, held_out_payloads=True)
+    for scope in ('S2', 'S8a'):
+        held = _go(tmp_path, stage=s1.HELD_OUT_GO_STAGE, scope=scope, name='ho.json')
+        with pytest.raises(s1.AdmissionRefused, match='scope'):
+            _admit(tmp_path, [root], held_out_go=held)
+    held = _go(tmp_path, stage=s1.HELD_OUT_GO_STAGE, name='ho.json',
+               supersedes_protocol_state=json.loads(PROTOCOL.read_bytes())['state'])
+    with pytest.raises(s1.AdmissionRefused, match='supersede'):
+        _admit(tmp_path, [root], held_out_go=held)
+
+
 # Git roots ---------------------------------------------------------------------
 
 def _git(repo, *args):
@@ -478,3 +517,236 @@ def test_stale_remote_advertisement_refused(tmp_path):
     assert result['verdict'] == 'admitted'
     git_root = next(row for row in _report(output)['roots'] if row['kind'] == 'git')
     assert git_root['advertisement_sha256'] == hashlib.sha256(good.read_bytes()).hexdigest()
+
+
+# Reviewer fixes: GO supersession -------------------------------------------------
+
+def test_s1_go_may_supersede_protocol_state_for_s1_only(tmp_path):
+    tree = _prior_tree(tmp_path)
+    state = json.loads(PROTOCOL.read_bytes())['state']
+    go = _go(tmp_path, supersedes_protocol_state=state)
+    result, output = _admit(tmp_path, [_dir_root(tree)], go=go)
+    assert result['verdict'] == 'admitted'
+    assert _report(output)['inputs']['go_record']['supersedes_protocol_state_for_s1'] is True
+    with pytest.raises(s1.AdmissionRefused, match='scope'):
+        _admit(tmp_path, [_dir_root(tree)],
+               go=_go(tmp_path, scope='S2', supersedes_protocol_state=state, name='g2.json'))
+
+
+# Reviewer fixes: nested roots, walk safety ---------------------------------------
+
+def test_nested_directory_roots_allowed_only_below_an_exclusion(tmp_path):
+    tree = _prior_tree(tmp_path)
+    inner = tree / 'runs'
+    with pytest.raises(s1.AdmissionRefused, match='overlap'):
+        _admit(tmp_path, [_dir_root(tree), _dir_root(inner, name='runs')])
+    outer = _dir_root(tree, exclude=[{'path': str(inner), 'reason': 'declared separately'}])
+    result, output = _admit(tmp_path, [outer, _dir_root(inner, name='runs')])
+    assert result['verdict'] == 'admitted'
+    assert [row['files_scanned'] for row in _report(output)['roots']] == [4, 1]
+
+
+def test_unreadable_directory_refused_not_skipped(tmp_path):
+    tree = _prior_tree(tmp_path)
+    locked = tree / 'locked'
+    locked.mkdir()
+    locked.chmod(0)
+    try:
+        with pytest.raises(s1.AdmissionRefused, match='walk'):
+            _admit(tmp_path, [_dir_root(tree)])
+    finally:
+        locked.chmod(0o755)
+
+
+def test_uncovered_git_storage_directory_refused(tmp_path):
+    tree = _prior_tree(tmp_path)
+    (tree / 'vendored' / '.git').mkdir(parents=True)
+    with pytest.raises(s1.AdmissionRefused, match='git storage'):
+        _admit(tmp_path, [_dir_root(tree)])
+
+
+def test_uncovered_gitfile_in_directory_root_refused(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _write(tree / 'sub' / '.git', f'gitdir: {tmp_path}/other/.git\n')
+    with pytest.raises(s1.AdmissionRefused, match='git storage'):
+        _admit(tmp_path, [_dir_root(tree)])
+
+
+def test_symlink_outside_declared_roots_refused_unless_excluded(tmp_path):
+    tree = _prior_tree(tmp_path)
+    outside = _write(tmp_path / 'outside' / 'x.json', {'scene_id': 6510})
+    (tree / 'inside-link.json').symlink_to(tree / 'notes.md')
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert _report(output)['roots'][0]['unfollowed_symlinks'] == ['inside-link.json']
+    (tree / 'out-link').symlink_to(outside.parent)
+    with pytest.raises(s1.AdmissionRefused, match='symlink'):
+        _admit(tmp_path, [_dir_root(tree)])
+    excluded = _dir_root(tree, exclude=[{'path': str(tree / 'out-link'), 'reason': 'fixture'}])
+    result, _ = _admit(tmp_path, [excluded], output=tmp_path / 'out2' / 'r.json')
+    assert result['verdict'] == 'admitted'
+
+
+def test_missing_git_object_refused(monkeypatch):
+    oid = 'c' * 40
+    outputs = iter([f'{oid} a.json\n'.encode(), f'{oid} missing\n'.encode()])
+    monkeypatch.setattr(s1, '_git', lambda *args, **kwargs: next(outputs))
+    with pytest.raises(s1.AdmissionRefused, match='missing'):
+        s1._git_blobs('/repo', [oid])
+
+
+# Reviewer fixes: ID detection ------------------------------------------------------
+
+@pytest.mark.parametrize('text', ['6505-6515', '6505–6515', '6505—6515',
+                                  '6505..6515', 'scenes 6512'])
+def test_raw_new_ids_expand_ranges_and_dashes(text):
+    assert s1._raw_new_ids(text.encode()) >= ({6512} if 'scenes' in text else {6510, 6513})
+
+
+@pytest.mark.parametrize('relative, content', [
+    ('docs/em.md', '# x\nScene IDs: 6505—6515\n'),
+    ('docs/table.md', '| scene | 6512 |\n'),
+    ('docs/en.json', {'scene_ids': '6505–6515'}),
+    ('a.json', {'roster': [6510]}),
+    ('b.json', {'split': {'held_out': [6521]}}),
+    ('c.json', {'reservation': '6510-6513'}),
+    ('d.json', {'collection': [6511]}),
+    ('e.json', {'development': [6522]}),
+    ('f.json', {'rows': [{'id': 6520, 'goal_xy': [1.0, 2.0]}]}),
+    ('g.yaml', 'scene_id: 6512\n'),
+    ('h.toml', 'layout = 6513\n'),
+    ('i.txt', 'see 6510\n'),
+    ('j.csv', 'scene,bytes\n6512,1\n'),
+])
+def test_broadened_detection_refuses(tmp_path, relative, content):
+    tree = _prior_tree(tmp_path)
+    _write(tree / relative, content)
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    report = _report(output)
+    assert result['verdict'] == 'refused'
+    assert (report['collisions'] or report['ambiguous'])[0]['path'] == relative
+
+
+@pytest.mark.parametrize('relative, content', [
+    ('g.yaml', 'bytes: 6512\n'),
+    ('h.toml', 'retained_bytes = 6513\n'),
+    ('j.csv', 'scene,bytes\n1,6512\n'),
+])
+def test_raw_only_hits_typed_as_non_scene_are_diagnostics(tmp_path, relative, content):
+    tree = _prior_tree(tmp_path)
+    _write(tree / relative, content)
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    assert result['verdict'] == 'admitted'
+    assert relative in {row['path'] for row in _report(output)['untyped_new_id_mentions']}
+
+
+# Reviewer fixes: reservation record, attempts, caps -------------------------------
+
+def test_report_records_source_hashes_and_inventory_hashes(tmp_path):
+    tree = _prior_tree(tmp_path)
+    _, output = _admit(tmp_path, [_dir_root(tree)])
+    report = _report(output)
+    sources = report['sources']
+    module = ROOT / 'src/palimpsest/puck_v4_scene_admission.py'
+    assert sources['src/palimpsest/puck_v4_scene_admission.py'] == hashlib.sha256(
+        module.read_bytes()).hexdigest()
+    assert set(sources) >= {'src/palimpsest/puck_scene_markdown.py',
+                            'scripts/admit_puck_v4_scene_ids.py', 'git_version'}
+    root = report['roots'][0]
+    assert len(root['inventory_before_sha256']) == 64
+    assert root['inventory_before_sha256'] == root['inventory_after_sha256']
+    assert report['reservation']['output_cap_bytes'] == 64 * 1024 ** 2
+
+
+def test_attempt_receipt_written_before_reads_and_second_attempt_refused(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    ledger = tmp_path / 'ledger'
+    seen = []
+    original = s1._Scan.scan_directory
+
+    def spy(self, root):
+        seen.append((ledger / s1.ATTEMPT_RECEIPT_NAME).exists())
+        return original(self, root)
+    monkeypatch.setattr(s1._Scan, 'scan_directory', spy)
+    _, output = _admit(tmp_path, [_dir_root(tree)], ledger=ledger)
+    assert seen == [True]
+    receipt = (ledger / s1.ATTEMPT_RECEIPT_NAME).read_bytes()
+    assert _report(output)['attempt']['receipt_sha256'] == hashlib.sha256(receipt).hexdigest()
+    with pytest.raises(s1.AdmissionRefused, match='attempt'):
+        _admit(tmp_path, [_dir_root(tree)], ledger=ledger, output=tmp_path / 'other' / 'r.json')
+    assert not (tmp_path / 'other').exists()
+
+
+def test_output_cap_refused(tmp_path, monkeypatch):
+    tree = _prior_tree(tmp_path)
+    monkeypatch.setattr(s1, 'MAX_OUTPUT_BYTES', 64)
+    with pytest.raises(s1.AdmissionRefused, match='cap'):
+        _admit(tmp_path, [_dir_root(tree)])
+    assert not (tmp_path / 'out' / 'admission.json').exists()
+
+
+def test_output_allowed_only_below_an_exclusion(tmp_path):
+    tree = _prior_tree(tmp_path)
+    out_dir = tree / 'puck-v4-s1-out'
+    root = _dir_root(tree, exclude=[{'path': str(out_dir), 'reason': 'S1 output'}])
+    result, output = _admit(tmp_path, [root], output=out_dir / 'admission.json')
+    assert result['verdict'] == 'admitted' and output.exists()
+
+
+def test_unscanned_projects_recorded(tmp_path):
+    tree = _prior_tree(tmp_path)
+    other = tmp_path / 'posthumus'
+    other.mkdir()
+    rows = [{'path': str(other), 'reason': 'unrelated project'}]
+    _, output = _admit(tmp_path, [_dir_root(tree)], unscanned=rows)
+    assert _report(output)['unscanned'] == rows
+    with pytest.raises(s1.AdmissionRefused, match='unscanned'):
+        _admit(tmp_path, [_dir_root(tree)], unscanned=[{'path': str(tree), 'reason': 'x'}])
+
+
+# Reviewer fixes: plan-only preflight ------------------------------------------------
+
+def _plan(tmp_path, roots, lost_root=None):
+    return s1.admit(protocol_path=PROTOCOL, comparison_set_path=_declaration(tmp_path, roots),
+                    output_path=tmp_path / 'out.json',
+                    lost_root=lost_root or str(tmp_path / 'lost-brain'),
+                    attempt_ledger=str(tmp_path / 'ledger'))
+
+
+def test_plan_reports_uncovered_worktree_and_stale_advertisement(tmp_path):
+    repo = _repo(tmp_path, [{'a.json': {'scene_id': 6100}}])
+    _git(repo, 'worktree', 'add', '-q', str(tmp_path / 'wt'), '-b', 'wt')
+    _git(repo, 'remote', 'add', 'origin', str(tmp_path / 'nowhere'))
+    advert = _write(tmp_path / 'advert.txt', ('b' * 40) + '\trefs/heads/main\n')
+    plan = _plan(tmp_path, [_git_root(repo, advert), _dir_root(repo, name='work')])
+    assert any('worktree' in b for b in plan['blockers'])
+    assert any('advertis' in b for b in plan['blockers'])
+    assert not (tmp_path / 'out.json').exists()
+    plan = _plan(tmp_path, [_git_root(repo, advert), _dir_root(repo, name='work'),
+                            _dir_root(tmp_path / 'wt', name='wt')])
+    assert not any('worktree' in b for b in plan['blockers'])
+
+
+def test_plan_accepts_worktree_excluded_with_reason(tmp_path):
+    repo = _repo(tmp_path, [{'a.json': {'scene_id': 6100}}])
+    _git(repo, 'worktree', 'add', '-q', str(repo / 'nested' / 'wt'), '-b', 'wt')
+    root = _dir_root(repo, name='work',
+                     exclude=[{'path': str(repo / 'nested'), 'reason': 'agent scratch'}])
+    plan = _plan(tmp_path, [_git_root(repo), root])
+    assert plan['blockers'] == []
+    assert plan['git'][0]['worktrees_excluded'] == [str(repo / 'nested' / 'wt')]
+
+
+def test_plan_reports_lost_root_clones(tmp_path):
+    lost = tmp_path / 'brain'
+    clone = tmp_path / 'codex' / '0071' / 'brain'
+    _write(clone / '.git', f'gitdir: {lost}/.git/worktrees/brain\n')
+    _write(clone / 'x.md', 'hello\n')
+    plan = _plan(tmp_path, [_dir_root(clone, name='codex-0071')], lost_root=str(lost))
+    assert plan['lost_root_clones'] == [{'root': 'codex-0071', 'path': str(clone),
+                                         'gitdir': f'{lost}/.git/worktrees/brain'}]
+    assert any('lost_root_clone' in b for b in plan['blockers'])
+    flagged = _dir_root(clone, name='codex-0071', lost_root_clone=True)
+    assert _plan(tmp_path, [flagged], lost_root=str(lost))['blockers'] == []
+    result, output = _admit(tmp_path, [flagged], lost_root=str(lost))
+    assert result['verdict'] == 'admitted'
+    assert _report(output)['lost_root']['clones_scanned'] == [str(clone)]
