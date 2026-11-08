@@ -4,6 +4,7 @@ Every root is a pytest tmp directory or a throwaway Git repository. No tracked
 registry, retained input, model, simulator, or held-out scene payload is opened;
 the only tracked file read is the hash-pinned v4 protocol document.
 """
+import copy
 import csv
 import hashlib
 import itertools
@@ -958,3 +959,93 @@ def test_sources_bind_package_init_and_interpreter(tmp_path):
     sources = _report(output)['sources']
     assert 'src/palimpsest/__init__.py' in sources
     assert sources['interpreter'] == {'path': sys.executable, 'version': sys.version}
+
+
+# Round 4: content-addressed dedupe and deduplicated throughput ---------------------
+
+def _duplicated_tree(tmp_path):
+    tree = _prior_tree(tmp_path)
+    contents = {
+        'collide.json': {'scene_id': 6512},
+        'payload.json': {'rows': [{'seed': 6203, 'puck_xy': [0.5, 0.5]}]},
+        'ambiguous.yaml': 'scene_id: 6520\n',
+        'reuse.md': '# r\nScene IDs: 6000..6003\n',
+        'untyped.md': 'prose 6511\n',
+        'broken.json': '{"scene_id": 6513,',
+    }
+    for copy in ('a', 'b/c', 'd'):
+        for name, content in contents.items():
+            _write(tree / copy / name, content)
+    return tree
+
+
+def _without_work_counters(report):
+    report = copy.deepcopy(report)
+    report.pop('prefilter')
+    return report
+
+
+def test_dedupe_preserves_every_detection_result(tmp_path, monkeypatch):
+    repo = _repo(tmp_path, [{'docs/x.json': {'scene_id': 6512}, 'docs/y.md': '# y\nhello\n'}])
+    tree = _duplicated_tree(tmp_path)
+    _write(tree / 'x-copy.json', {'scene_id': 6512})  # same bytes as the git blob
+    roots = [_git_root(repo), _dir_root(repo, name='work'), _dir_root(tree)]
+    reports, analyses = {}, {}
+    original = s1._analyze
+    for dedupe in (True, False):
+        monkeypatch.setattr(s1, 'DEDUPE', dedupe)
+        calls = []
+        monkeypatch.setattr(s1, '_analyze', lambda *a: calls.append(a[0]) or original(*a))
+        _, output = _admit(tmp_path, roots, output=tmp_path / f'out-{dedupe}' / 'r.json')
+        reports[dedupe], analyses[dedupe] = _report(output), len(calls)
+    assert _without_work_counters(reports[True]) == _without_work_counters(reports[False])
+    assert reports[True]['verdict'] == 'refused'
+    paths = {row['path'] for row in reports[True]['collisions']}
+    assert {'a/collide.json', 'b/c/collide.json', 'd/collide.json', 'x-copy.json',
+            'docs/x.json'} <= paths
+    assert analyses[True] < analyses[False]
+    assert reports[True]['prefilter']['unique_contents_analyzed'] == analyses[True]
+    assert reports[False]['prefilter']['unique_contents_analyzed'] == analyses[False]
+
+
+def test_plan_projection_counts_clean_tracked_worktree_files_once(tmp_path):
+    repo = _repo(tmp_path, [{'a.json': {'scene_id': 6100}, 'b.md': '# b\n6001\n'}])
+    _write(repo / 'b.md', '# b\n6001 modified\n')  # dirty tracked: counted fully
+    _write(repo / 'c.json', {'scene_id': 6002})     # untracked: counted fully
+    other_a = _write(tmp_path / 'plain1' / 'same.json', {'scene_id': 6003})
+    other_b = _write(tmp_path / 'plain2' / 'same.json', {'scene_id': 6003})
+    plan = _plan(tmp_path, [_git_root(repo), _dir_root(repo, name='work'),
+                            _dir_root(other_a.parent, name='p1'),
+                            _dir_root(other_b.parent, name='p2')])
+    estimate = plan['throughput']
+    size = {name: (repo / name).stat().st_size for name in ('a.json', 'b.md', 'c.json')}
+    blob_md = len('# b\n6001\n')
+    same = other_a.stat().st_size
+    raw_json = size['a.json'] * 2 + size['c.json'] + 2 * same
+    assert estimate['bytes_by_suffix'] == {'.json': raw_json, '.md': blob_md + size['b.md']}
+    assert estimate['deduplicated_bytes_by_suffix'] == {
+        '.json': size['a.json'] + size['c.json'] + 2 * same,
+        '.md': blob_md + size['b.md']}
+    assert estimate['covered_by_git_blobs_bytes'] == size['a.json']
+    assert estimate['digest_mb_per_s'] > estimate['sample_mb_per_s'] > 0
+    expected = (size['a.json'] / (estimate['digest_mb_per_s'] * 1e6)
+                + sum(estimate['deduplicated_bytes_by_suffix'].values())
+                / (estimate['sample_mb_per_s'] * 1e6))
+    assert estimate['projected_cpu_seconds'] == pytest.approx(expected)
+    assert 'conservative' in estimate['rate_model']
+
+
+def test_plan_reads_no_root_contents(tmp_path, monkeypatch):
+    repo = _repo(tmp_path, [{'a.json': {'scene_id': 6100}}])
+    tree = _duplicated_tree(tmp_path)
+    original = Path.read_bytes
+
+    def guarded(self):
+        if str(self).startswith((str(tree), str(repo))):
+            raise AssertionError(f'plan read root content {self}')
+        return original(self)
+    monkeypatch.setattr(Path, 'read_bytes', guarded)
+    monkeypatch.setattr(s1._Scan, 'document', lambda *a, **k: (_ for _ in ()).throw(
+        AssertionError('plan analysed content')))
+    plan = _plan(tmp_path, [_git_root(repo), _dir_root(repo, name='work'), _dir_root(tree)])
+    assert plan['contents_read'] is False and plan['throughput']['total_bytes'] > 0

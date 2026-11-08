@@ -692,8 +692,44 @@ def _utf8(path):
 
 # Root scanning -------------------------------------------------------------------
 
+DEDUPE = True  # analyse each unique (content sha256, suffix) once across all roots
+
+
+def _analyze(relative, raw, digest):
+    """Pure content analysis; depends only on the bytes and the file suffix."""
+    result = {'lineage': LINEAGE_SHA256.get(digest), 'prefiltered': False, 'unparsed': False,
+              'ambiguous': [], 'untyped': [], 'occurrences': [], 'held_out': []}
+    if result['lineage'] is not None:
+        return result
+    if not prefilter_hit(raw):
+        result['prefiltered'] = True
+        return result
+    raw_new = _raw_new_ids(raw)
+    if relative.endswith(RAW_SUFFIXES):
+        ambiguous, non_scene = _raw_only_hits(relative, raw)
+        if ambiguous:
+            result['ambiguous'].append(('untyped format mentions new IDs', sorted(ambiguous)))
+        result['untyped'] = sorted(non_scene - ambiguous)
+        return result
+    parsed = _parse_document(relative, raw)
+    if parsed is None:
+        result['unparsed'] = True
+        if raw_new:
+            result['ambiguous'].append(('unparsed document contains new IDs', sorted(raw_new)))
+        return result
+    occurrences, held_out, unsupported = parsed
+    for text in unsupported:
+        hits = sorted(_raw_new_ids(text.encode()))
+        if hits:
+            result['ambiguous'].append(('unsupported typed declaration', hits))
+    result['occurrences'] = occurrences
+    result['untyped'] = sorted(raw_new - {scene_id for _, scene_id in occurrences})
+    result['held_out'] = held_out
+    return result
+
+
 class _Scan:
-    def __init__(self, lost_root, roots, git_covered):
+    def __init__(self, lost_root, roots, git_covered, *, dedupe=None):
         self.lost_root = lost_root
         self.root_paths = [root['path'] for root in roots]
         self.git_covered = git_covered  # git root paths and their registered worktrees
@@ -701,45 +737,38 @@ class _Scan:
         self.reuse, self.held_out_ids, self.held_out_payloads = {}, {}, []
         self.lineage, self.unparsed, self.max_puck = [], [], None
         self.clones, self.errors = [], []
-        self.parsed = self.prefiltered = 0
+        self.parsed = self.prefiltered = self.unique = 0
+        self.dedupe = DEDUPE if dedupe is None else dedupe
+        self.memo = {}
 
     def document(self, root, relative, raw, oid=None):
         where = {'root': root, 'path': relative}
         if oid is not None:
             where['oid'] = oid
         digest = _sha(raw)
-        if digest in LINEAGE_SHA256:
-            self.lineage.append({**where, 'sha256': digest, 'lineage': LINEAGE_SHA256[digest]})
+        key = (digest, _suffix(relative))
+        result = self.memo.get(key) if self.dedupe else None
+        if result is None:
+            result = _analyze(relative, raw, digest)
+            self.unique += 1
+            if self.dedupe:
+                self.memo[key] = result
+        self._apply(where, digest, result)
+
+    def _apply(self, where, digest, result):
+        """Record one path's findings; a content's hits are reported for every path."""
+        if result['lineage'] is not None:
+            self.lineage.append({**where, 'sha256': digest, 'lineage': result['lineage']})
             return
-        if not prefilter_hit(raw):
+        if result['prefiltered']:
             self.prefiltered += 1
             return
         self.parsed += 1
-        raw_new = _raw_new_ids(raw)
-        if relative.endswith(RAW_SUFFIXES):
-            ambiguous, non_scene = _raw_only_hits(relative, raw)
-            if ambiguous:
-                self.ambiguous.append({**where, 'reason': 'untyped format mentions new IDs',
-                                       'scene_ids': sorted(ambiguous)})
-            for scene_id in sorted(non_scene - ambiguous):
-                self.untyped.append({**where, 'scene_id': scene_id})
-            return
-        parsed = _parse_document(relative, raw)
-        if parsed is None:
+        if result['unparsed']:
             self.unparsed.append(where)
-            if raw_new:
-                self.ambiguous.append({**where, 'reason': 'unparsed document contains new IDs',
-                                       'scene_ids': sorted(raw_new)})
-            return
-        occurrences, held_out, unsupported = parsed
-        for text in unsupported:
-            hits = sorted(_raw_new_ids(text.encode()))
-            if hits:
-                self.ambiguous.append({**where, 'reason': 'unsupported typed declaration',
-                                       'scene_ids': hits})
-        typed_ids = set()
-        for pointer, scene_id in occurrences:
-            typed_ids.add(scene_id)
+        for reason, ids in result['ambiguous']:
+            self.ambiguous.append({**where, 'reason': reason, 'scene_ids': ids})
+        for pointer, scene_id in result['occurrences']:
             if scene_id in NEW_SCENE_IDS:
                 self.collisions.append({**where, 'pointer': pointer, 'scene_id': scene_id})
             elif PUCK_NAMESPACE[0] <= scene_id <= PUCK_NAMESPACE[1]:
@@ -749,9 +778,9 @@ class _Scan:
                     self.reuse[stage, scene_id] = self.reuse.get((stage, scene_id), 0) + 1
             if scene_id in HELD_OUT_SCENE_IDS:
                 self.held_out_ids[str(scene_id)] = self.held_out_ids.get(str(scene_id), 0) + 1
-        for scene_id in sorted(raw_new - typed_ids):
+        for scene_id in result['untyped']:
             self.untyped.append({**where, 'scene_id': scene_id})
-        for pointer, scene_id in held_out:
+        for pointer, scene_id in result['held_out']:
             self.held_out_payloads.append({**where, 'pointer': pointer, 'scene_id': scene_id})
 
     def _git_storage(self, root, directory, full, problems):
@@ -882,62 +911,144 @@ class _Scan:
 
 # Throughput projection -------------------------------------------------------------
 
-_RATE_CACHE = []
+_RATE_CACHE = {}
+RATE_MODEL = (
+    'Two measured CPU rates, no name-based discount. Unique bytes (every git blob of a '
+    'scanned suffix, plus directory files not proven identical to a scanned blob) are costed '
+    'at the full digest+prefilter+parse rate measured on a bundled synthetic sample whose '
+    'every document passes the prefilter (conservative). Directory files that git reports '
+    'as tracked and clean in a worktree of a declared git root carry exactly the bytes of an '
+    'already scanned blob, so execute only digests them and replays the memoised analysis; '
+    'they are costed at the measured memo-hit rate. A cheaper rate for files whose names do '
+    'not suggest registries is NOT used: names do not predict prefilter misses (routine '
+    'JSON floats such as 1e-05 and dates near 6xxx tokens pass it), so that discount would '
+    'not be justified. Directory walking, git process CPU and read syscalls are not costed.')
 
 
 def _synthetic_sample():
-    """Deterministic bundled sample; every document hits the prefilter (conservative)."""
+    """Deterministic bundled sample of unique documents that all pass the prefilter."""
     docs = []
     for index in range(48):
         rows = [{'scene_id': 6000 + i % 20, 'seed': i, 'rover_pose': [0.1 * i, 0.2, 0.3],
-                 'note': 'sample ' * 6, 'date': '2026-11-07'} for i in range(60)]
+                 'note': 'sample ' * 6, 'date': '2026-11-07', 'doc': index} for i in range(60)]
         payload = {'scene_reservations': {'collection': [6000 + index % 20, 6100],
                                           'development': '6120-6123'}, 'rows': rows}
         docs.append((f'sample/{index}.json', json.dumps(payload).encode()))
-        docs.append((f'sample/{index}.md', ('# Sample\nScene IDs: 6100..6103\n' + (
+        docs.append((f'sample/{index}.md', (f'# Sample {index}\nScene IDs: 6100..6103\n' + (
             'Prose that mentions 6512 bytes on 2026-11-07, for timing only.\n' * 100)).encode()))
         docs.append((f'sample/{index}.jsonl', b'\n'.join(json.dumps(
-            {'tick': i, 'scene_id': 6001, 'inputs': [0.5] * 9}).encode() for i in range(80))))
+            {'doc': index, 'tick': i, 'scene_id': 6001, 'inputs': [0.5] * 9}).encode()
+            for i in range(80))))
     return docs
 
 
-def _sample_rate():
-    """Measured CPU throughput of the full per-document pipeline, in MB per CPU-second."""
+def _measure_rates():
+    """CPU MB/s for first-sight analysis and for memo-hit replays of the same contents."""
     if not _RATE_CACHE:
         docs = _synthetic_sample()
-        scan = _Scan('/nonexistent-lost-root', [], set())
+        total = sum(len(raw) for _, raw in docs)
+        scan = _Scan('/nonexistent-lost-root', [], set(), dedupe=True)
         start = time.process_time()
         for relative, raw in docs:
             scan.document('sample', relative, raw)
-        elapsed = max(time.process_time() - start, 1e-6)
-        _RATE_CACHE.append(sum(len(raw) for _, raw in docs) / elapsed / 1e6)
-    return _RATE_CACHE[0]
+        full = max(time.process_time() - start, 1e-6)
+        repeats, start = 0, time.process_time()
+        while repeats < 3 or (time.process_time() - start < 0.05 and repeats < 50):
+            for relative, raw in docs:
+                scan.document('sample', relative, raw)
+            repeats += 1
+        hit = max(time.process_time() - start, 1e-6) / repeats
+        _RATE_CACHE.update(full=total / full / 1e6, hit=total / hit / 1e6)
+    return _RATE_CACHE
+
+
+def _sample_rate():
+    return _measure_rates()['full']
+
+
+def _digest_rate():
+    return _measure_rates()['hit']
 
 
 def _suffix(path):
-    return next(s for s in sorted(SCANNED_SUFFIXES, key=len, reverse=True) if path.endswith(s))
+    return next((s for s in sorted(SCANNED_SUFFIXES, key=len, reverse=True)
+                 if path.endswith(s)), '')
 
 
-def _throughput(protocol, inventories, git_sizes):
-    by_suffix = {}
-    for inventory in inventories.values():
+def _clean_tracked(worktree):
+    """Git metadata only: {path: blob oid} for tracked files that are clean in a worktree."""
+    tracked = {}
+    for entry in _git(worktree, 'ls-files', '-s', '-z').split(b'\0'):
+        if not entry:
+            continue
+        meta, _, path = entry.partition(b'\t')
+        mode, oid, stage = meta.decode().split()
+        if mode != '160000' and stage == '0':
+            tracked[path.decode('utf-8', 'surrogateescape')] = oid
+    status = _git(worktree, 'status', '--porcelain=v1', '-z', '--untracked-files=no',
+                  '--ignore-submodules=all').split(b'\0')
+    index = 0
+    while index < len(status):
+        item, index = status[index], index + 1
+        if not item:
+            continue
+        tracked.pop(item[3:].decode('utf-8', 'surrogateescape'), None)
+        if item[:1] in (b'R', b'C') or item[1:2] in (b'R', b'C'):
+            if index < len(status):
+                tracked.pop(status[index].decode('utf-8', 'surrogateescape'), None)
+                index += 1
+    return tracked
+
+
+def _throughput(protocol, roots, inventories, git_records, git_sizes):
+    raw, unique, covered, notes = {}, {}, 0, []
+
+    def add(table, suffix, size):
+        table[suffix] = table.get(suffix, 0) + size
+    worktrees = []
+    for name, rows in git_sizes.items():
+        oids = set()
+        for path, oid, size in rows:
+            add(raw, _suffix(path), size)
+            add(unique, _suffix(path), size)
+            oids.add(oid)
+        record = git_records[name]
+        for worktree in sorted({record['path'], *record['worktrees_covered']}):
+            try:
+                worktrees.append((worktree, _clean_tracked(worktree), oids))
+            except AdmissionRefused as error:
+                notes.append(f'worktree {worktree} counted fully: {error}')
+    worktrees.sort(key=lambda row: len(row[0]), reverse=True)  # deepest worktree first
+    for root in roots:
+        inventory = inventories.get(root['name'])
+        if inventory is None:
+            continue
         for relative, size, _, _ in inventory['files']:
-            by_suffix[_suffix(relative)] = by_suffix.get(_suffix(relative), 0) + size
-    for rows in git_sizes.values():
-        for path, _, size in rows:
-            by_suffix[_suffix(path)] = by_suffix.get(_suffix(path), 0) + size
+            suffix, full = _suffix(relative), os.path.join(root['path'], relative)
+            add(raw, suffix, size)
+            match = next((row for row in worktrees if _under(full, row[0])), None)
+            if match is not None and match[1].get(os.path.relpath(full, match[0])) in match[2]:
+                covered += size
+            else:
+                add(unique, suffix, size)
     limit = next(row['enclosing_hard_seconds'] for row in
                  protocol['expected_cost_table']['pre_held_out'] if row['stage'] == 'S1')
-    rate = _sample_rate()
-    total = sum(by_suffix.values())
-    projected = total / (rate * 1e6)
-    return {'bytes_by_suffix': dict(sorted(by_suffix.items())), 'total_bytes': total,
-            'sample_mb_per_s': rate, 'projected_cpu_seconds': projected,
-            'limit_seconds': limit, 'blocker_fraction': THROUGHPUT_BLOCKER_FRACTION,
-            'method': 'every scanned byte is costed at the measured CPU rate of the full '
-                      'digest+prefilter+parse pipeline on a bundled synthetic sample that '
-                      'always passes the prefilter (conservative); walking and git object '
-                      'reads are not separately costed',
+    full_rate, hit_rate = _sample_rate(), _digest_rate()
+    projected = sum(unique.values()) / (full_rate * 1e6) + covered / (hit_rate * 1e6)
+    return {'bytes_by_suffix': dict(sorted(raw.items())), 'total_bytes': sum(raw.values()),
+            'deduplicated_bytes_by_suffix': dict(sorted(unique.items())),
+            'deduplicated_total_bytes': sum(unique.values()),
+            'covered_by_git_blobs_bytes': covered,
+            'sample_mb_per_s': full_rate, 'digest_mb_per_s': hit_rate,
+            'projected_cpu_seconds': projected, 'limit_seconds': limit,
+            'blocker_fraction': THROUGHPUT_BLOCKER_FRACTION, 'rate_model': RATE_MODEL,
+            'dedupe_notes': notes,
+            'method': 'raw bytes = every directory file plus every reachable git blob of a '
+                      'scanned suffix; deduplicated bytes drop directory files that git '
+                      '(ls-files -s minus status --untracked-files=no) reports tracked and '
+                      'clean in a worktree of a declared git root whose blob is in the scan; '
+                      'untracked, ignored, dirty and non-git files count fully; no '
+                      'size/name dedupe across directory roots',
             'blocked': projected > THROUGHPUT_BLOCKER_FRACTION * limit}
 
 
@@ -1034,7 +1145,7 @@ def _preflight(protocol, roots, lost_root, ledger):
             continue
         blockers.extend(f'git blob {oid} ({path}) exceeds {MAX_FILE_BYTES} bytes'
                         for path, oid, size in git_sizes[name] if size > MAX_FILE_BYTES)
-    throughput = _throughput(protocol, inventories, git_sizes)
+    throughput = _throughput(protocol, roots, inventories, git_records, git_sizes)
     if throughput['blocked']:
         blockers.append(f'throughput projection {throughput["projected_cpu_seconds"]:.0f} CPU-s '
                         f'exceeds {THROUGHPUT_BLOCKER_FRACTION:.0%} of the '
@@ -1194,6 +1305,8 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
         'held_out_id_occurrences': dict(sorted(scan.held_out_ids.items())),
         'held_out_payload_objects_not_compared': sorted(scan.held_out_payloads, key=key),
         'prefilter': {'files_parsed': scan.parsed, 'files_prefiltered_out': scan.prefiltered,
+                      'unique_contents_analyzed': scan.unique,
+                      'dedupe': 'content sha256 + suffix memo across all roots' if scan.dedupe else 'off',
                       'rule_and_residual': PREFILTER_RESIDUAL},
         'scope': {
             'typed_suffixes': list(TYPED_SUFFIXES), 'raw_suffixes': list(RAW_SUFFIXES),
