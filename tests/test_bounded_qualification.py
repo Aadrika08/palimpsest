@@ -112,7 +112,11 @@ def test_normal_deadline_terminates_ignored_term(tmp_path):
 def test_term_ignoring_child_after_leader_exit_is_killed(tmp_path):
     code="import subprocess,sys;subprocess.Popen([sys.executable,'-c','import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(10)'])"
     result,output=supervise(tmp_path,code)
-    assert result['status']=='failed' and 'survivors' in result['failure']
+    # The 50 ms sampler may see leader+child together ('unexpected child process')
+    # or only the orphaned child after leader exit ('survivors'); both are the
+    # guarded refusal. Hosted main run 42389976412 hit the former.
+    assert result['status']=='failed'
+    assert 'survivors' in result['failure'] or result['failure']=='unexpected child process'
     assert result['matching_survivors']==[]
 
 
