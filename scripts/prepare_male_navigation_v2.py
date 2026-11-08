@@ -15,8 +15,8 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = Path(__file__).resolve()
 SELF_SHA = hashlib.sha256(SCRIPT.read_bytes()).hexdigest()
-PROTOCOL = 'docs/plans/m7-navigation-data-v2-protocol.json'
-PROTOCOL_SHA = 'd2b998cdd4763a4b173bfe712ba0c50d19c7cfd56b68e44c395c575cdcfa2feb'
+PROTOCOL = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-data-v2-protocol.json']['path']
+PROTOCOL_SHA = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']['m7-navigation-data-v2-protocol.json']['sha256']
 MiB = 1024**2
 MAX_JSON, MAX_TRANSFER = 4*MiB, 8*MiB
 RAW_PAYLOAD_FIELDS = ('cam_left', 'cam_right', 'sensors', 'action', 'simulation_time', 'eyes')
@@ -324,7 +324,7 @@ def admit_collection(p, documents):
     *_,nav=helpers();report=documents['accepted_collection'];terminal=documents['collection_terminal'];enclosing=documents['collection_enclosing'];drain=documents['exec_drain']
     if (report.get('status')!='completed-collection' or report.get('profile')!=nav.PROFILE or report.get('study_sha256')!=nav.PLAN_SHA or
             report.get('contact_profile_sha256')!=nav.PROFILE_SHA or report.get('qualification_claims')!=[] or
-            report.get('owners_completed')!=12 or type(report.get('numeric_ticks')) is not int or report['numeric_ticks']!=5080 or
+            report.get('owners_completed')!=12 or type(report.get('numeric_ticks')) is not int or report['numeric_ticks']!=sum(p['counts']['per_source']['advice']) or
             list(report.get('cases',{}))!=[x['id'] for x in nav.CASES] or report.get('source_pins')!=report.get('final_source_pins') or
             report.get('assets_before')!=report.get('assets_after') or report.get('assets_before',{}).get('ok') is not True or
             report.get('identities_before')!=report.get('identities_after') or 'error' in report): raise ValueError('Accepted fixed navigation collection required')
@@ -427,7 +427,10 @@ def prepare(output, deadline=None):
         except Exception as diagnostic:error.add_note('After child failure: '+str(diagnostic)[:1024])
         raise error
     budget.check(0,path=output);old_manifest=documents['old_manifest'];data=read_old_transfer(output,old_manifest,historical)
-    if old.validate_splits(data)!={'train':2117,'dev':1228,'held_out':0}: raise ValueError('Old fixed arm counts differ')
+    s=p['counts']['per_source']
+    if (old.validate_splits(data)!={'train':p['counts']['old_train_rows'],'dev':p['counts']['recorded_dev_rows'],'held_out':0} or
+            len(s['old_train'])!=10 or len(s['dev'])!=4 or any(type(n) is not int or n<=0 for n in s['old_train']+s['dev']) or max(s['old_train'][8:])>120 or
+            [len(ep['targets']) for ep in data['train']]!=s['old_train'] or [len(ep['targets']) for ep in data['dev']]!=s['dev']): raise ValueError('Old fixed arm counts differ')
     roots={};checks=[];old_sources=[];new_sources=[];old_bytes=new_bytes=0
     for entry in documents['old_baseline_document']['runs']:
         run=Path(p['old_baseline_document']['path']).parent/'runs'/entry['run_id'];roots[entry['run_id']]=run
@@ -461,7 +464,13 @@ def prepare(output, deadline=None):
             outcome=owner['outcome'],label='returned-analytic-teacher-advice',files=files)
         new_sources.append(source);augmented['train'].append(ep)
     if len(checks)!=26 or old_bytes>3*1024**3 or new_bytes>3*1024**3 or old_bytes+new_bytes>6*1024**3: raise ValueError('Separate corpus byte/source budget differs')
-    if old.validate_splits(augmented,check_counts=False)!={'train':7197,'dev':1228,'held_out':0}: raise ValueError('Augmented exact arm counts differ')
+    c=p['counts']
+    if (old.validate_splits(augmented,check_counts=False)!={'train':c['augmented_train_rows'],'dev':c['recorded_dev_rows'],'held_out':0} or
+            len(s['advice'])!=12 or any(type(n) is not int or not 0<n<=600 for n in s['advice']) or
+            c['old_train_rows']!=sum(s['old_train']) or c['recorded_dev_rows']!=sum(s['dev']) or c['new_advice_train_rows']!=sum(s['advice']) or
+            c['augmented_train_rows']!=c['old_train_rows']+c['new_advice_train_rows'] or c['combined_rows']!=c['augmented_train_rows']+c['recorded_dev_rows'] or
+            (c['old_sources'],c['new_sources'],c['combined_unique_sources'],c['held_out_sources'],c['held_out_rows'])!=(14,12,26,0,0) or
+            [len(ep['targets']) for ep in augmented['train']]!=s['old_train']+s['advice'] or [len(ep['targets']) for ep in augmented['dev']]!=s['dev']): raise ValueError('Augmented exact arm counts differ')
     disjoint_sources(old_sources,new_sources)
     manifest={'status':'prepared-navigation-advice-research-only','schema_version':1,'protocol_sha256':PROTOCOL_SHA,'qualification_claims':[],
         'input_documents':p['immutable_inputs'],'historical_reader':historical,'current_reader_sources':reader,'adapter_sha256':SELF_SHA,
