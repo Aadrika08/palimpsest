@@ -1,0 +1,773 @@
+"""M7 navigation v4 Stage 0 overlay driver: data/path-only pin rebinding; refuses by default.
+
+Each S0 sub-stage runs its UNCHANGED producer from a detached worktree at the producing
+commit. This driver (1) verifies the worktree is detached at that commit with clean
+tracked bytes, the pinned producer bytes and every declared source guard; (2) loads the
+previous sub-stage's pin record and refuses any producer input not matching it; (3) loads
+the v4 pin-document copies, refusing undeclared field changes, PENDING placeholders and
+values that do not trace to the pin-record chain; (4) statically refuses read sites an
+in-process overlay cannot reach (copied pins, inline pinned literals, import-time reads,
+child re-execution of a rebound module); (5) imports the producer closure and rebinds
+EXACTLY the declared data/path module attributes before any dependent import.
+
+``--plan-only`` prints what would run and never imports or executes a producer and never
+opens a data input. Execution requires ``--go`` naming a GO record whose content names the
+exact stage and the protocol sha256; anything else is refused. After a normal producer
+exit the driver hashes every output into a fsynced, exclusive v4 pin record that the next
+sub-stage must present. One attempt per GO; there is no retry.
+"""
+import argparse
+import ast
+import hashlib
+import importlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+import probe_male_navigation_v4_imports as probe
+
+ROOT = Path(__file__).resolve().parents[1]
+PROTOCOL_PATH = 'docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json'
+PROTOCOL_SHA256 = '6f535edb9af59f9c84e36bbca66348ed910ec4fb77c4f9a0df04025c0154ad88'
+PINS_DIR = ROOT/'docs/plans/m7-navigation-v4-pins'
+DECLARATION_SCHEMA = 'm7-navigation-v4-pin-declarations-1'
+RECORD_SCHEMA = 'm7-navigation-v4-pin-record-1'
+PENDING = 'PENDING-'
+HEX64 = re.compile(r'[0-9a-f]{64}')
+MAX_DOCUMENT = 4*1024**2
+MAX_GO = 64*1024
+
+RECOVERY_LEARNING = 'm7-recovery-learning-protocol.json'
+CONTACT_V2 = 'm7-navigation-contact-v2-protocol.json'
+DATA_V2 = 'm7-navigation-data-v2-protocol.json'
+RECOVERY_INDEX = 'male-recovery-research-development-v1.json'
+ORIGINAL_RECOVERY_LEARNING_SHA = '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28'
+ORIGINAL_DATA_SHA = '402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014'
+ORIGINAL_INDEX_SHA = 'cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5'
+READER_SOURCES = {
+    'scripts/collect_male_recovery.py': '17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60',
+    'src/palimpsest/artifacts.py': '7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a',
+    'src/palimpsest/body_profile.py': '796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54',
+    'src/palimpsest/male_model.py': '9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad',
+    'src/palimpsest/male_research.py': 'a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce',
+    'src/palimpsest/records.py': 'c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3',
+}
+RECOVERY_PROTOCOL_REBINDS = [
+    {'module': 'prepare_male_recovery_data', 'attribute': 'PROTOCOL_PATH', 'kind': 'document-path', 'document': RECOVERY_LEARNING},
+    {'module': 'prepare_male_recovery_data', 'attribute': 'PROTOCOL_SHA256', 'kind': 'document-sha256', 'document': RECOVERY_LEARNING},
+]
+CONTACT_REBINDS = [
+    {'module': 'collect_male_navigation_v2', 'attribute': 'PLAN', 'kind': 'document-path', 'document': CONTACT_V2},
+    {'module': 'collect_male_navigation_v2', 'attribute': 'PLAN_SHA', 'kind': 'document-sha256', 'document': CONTACT_V2},
+]
+OUTPUT = {'kind': 'output'}
+REPO = {'kind': 'repo', 'optional': True}
+ASSETS = {'kind': 'assets'}
+
+STAGES = {
+    'S0a': {'stage': 'S0a', 'producer': 'scripts/collect_male_teachers.py', 'module': 'collect_male_teachers',
+            'commit': 'cc1cea93d4c3333a0ee2a091dd34fff0b2986887',
+            'producer_sha256': 'ca633269b4710782647f505438ad521fe65b8fce643f48f26bdb3bd2b410025b',
+            'source_guards': {'docs/plans/m7-training-v2-protocol.json':
+                              '8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b'},
+            'documents': [], 'rebinds': [], 'upstream_values': [], 'execution': 'subprocess',
+            'args': {'--repo': {'kind': 'repo'}, '--assets': ASSETS, '--output': OUTPUT,
+                     '--protocol': {'kind': 'fixed-file',
+                                    'sha256': '8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b'},
+                     # Development teacher stage only; held-out teacher scenes 1012-1015 are not run.
+                     '--research-stage': {'kind': 'value', 'allowed': ['development']}}},
+    'S0b': {'stage': 'S0b', 'producer': 'scripts/collect_male_recovery.py', 'module': 'collect_male_recovery',
+            'commit': 'c382c86781a7a5d6651af721119789729cc890ae',
+            'producer_sha256': '17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60',
+            'source_guards': {}, 'documents': [], 'rebinds': [], 'upstream_values': [], 'execution': 'subprocess',
+            'args': {'--repo': REPO, '--assets': ASSETS, '--output': OUTPUT}},
+    'S0c': {'stage': 'S0c', 'producer': 'scripts/prepare_male_recovery_data.py', 'module': 'prepare_male_recovery_data',
+            'commit': '7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe',
+            'producer_sha256': '2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca',
+            'source_guards': dict(READER_SOURCES), 'documents': [RECOVERY_LEARNING],
+            'rebinds': RECOVERY_PROTOCOL_REBINDS, 'upstream_values': [], 'execution': 'in-process',
+            'args': {'--baseline-collection': {'kind': 'record', 'stage': 'S0a'},
+                     '--recovery-report': {'kind': 'record', 'stage': 'S0b'}, '--output': OUTPUT}},
+    'S0d': {'stage': 'S0d', 'producer': 'scripts/train_male_recovery.py', 'module': 'train_male_recovery',
+            'commit': '19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f',
+            'producer_sha256': '1b828d68daf4db6186d5ccc0804d35ce6a8918279cb74834d16291f6d5679877',
+            'source_guards': {**READER_SOURCES,
+                              'scripts/prepare_male_recovery_data.py': '2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca',
+                              'scripts/train_male_reduced.py': '75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a',
+                              'uv.lock': '8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732'},
+            'documents': [RECOVERY_LEARNING],
+            'rebinds': RECOVERY_PROTOCOL_REBINDS + [
+                {'module': 'train_male_recovery', 'attribute': 'DATA_SHA256', 'kind': 'output-sha256',
+                 'stage': 'S0c', 'output': 'data-manifest.json'}],
+            'upstream_values': [], 'execution': 'in-process',
+            'args': {'--data-manifest': {'kind': 'record', 'stage': 'S0c'},
+                     '--training-seed': {'kind': 'value', 'allowed': ['10', '11', '12']},
+                     '--graph': {'kind': 'fixed-file', 'optional': True,
+                                 'sha256': '5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0'},
+                     '--graph-manifest': {'kind': 'fixed-file', 'optional': True,
+                                          'sha256': '7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f'},
+                     '--cell-source': {'kind': 'fixed-file', 'optional': True,
+                                       'sha256': '707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80'},
+                     '--output': OUTPUT}},
+    'S0e': {'stage': 'S0e', 'producer': 'scripts/collect_male_navigation_v2.py', 'module': 'collect_male_navigation_v2',
+            'commit': '736e0cf0a71f6d700bd67836ee5f83911ceff90a',
+            'producer_sha256': '21d2cb104dfe0ea34e52b5d93c835affb9cebeb7bccb85b7314f18404971053f',
+            'source_guards': {'scripts/collect_male_navigation.py':
+                              'd0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f'},
+            'documents': [CONTACT_V2, RECOVERY_INDEX],
+            # The recovery index pin lives in male_recovery_research (not in the protocol inventory).
+            'rebinds': [{'module': 'palimpsest.male_recovery_research', 'attribute': 'INDEX_PATH',
+                         'kind': 'document-path', 'document': RECOVERY_INDEX},
+                        {'module': 'palimpsest.male_recovery_research', 'attribute': 'INDEX_SHA256',
+                         'kind': 'document-sha256', 'document': RECOVERY_INDEX}] + CONTACT_REBINDS,
+            'upstream_values': [ORIGINAL_RECOVERY_LEARNING_SHA, ORIGINAL_DATA_SHA], 'execution': 'in-process',
+            'args': {'--repo': REPO, '--assets': ASSETS, '--output': OUTPUT}},
+    'S0f': {'stage': 'S0f', 'producer': 'scripts/prepare_male_navigation_v2.py', 'module': 'prepare_male_navigation_v2',
+            'commit': '4ecb354efa4223abdbe3d09be118fe5402fec1a1',
+            'producer_sha256': 'ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333',
+            'historical_commit': '217cbee8399dcb25045a079af012beecbbdae29e',
+            'source_guards': {}, 'documents': [DATA_V2, CONTACT_V2],
+            # The S0e report carries the v4 contact-plan sha, which this reader compares to PLAN_SHA.
+            'rebinds': CONTACT_REBINDS + [
+                {'module': 'prepare_male_navigation_v2', 'attribute': 'PROTOCOL', 'kind': 'document-path', 'document': DATA_V2},
+                {'module': 'prepare_male_navigation_v2', 'attribute': 'PROTOCOL_SHA', 'kind': 'document-sha256', 'document': DATA_V2}],
+            'upstream_values': [ORIGINAL_RECOVERY_LEARNING_SHA, ORIGINAL_DATA_SHA, ORIGINAL_INDEX_SHA],
+            'execution': 'in-process', 'args': {'--output': OUTPUT}},
+}
+
+
+class Refusal(Exception):
+    """A v4 stop: nothing is executed or published after it."""
+
+
+# --------------------------------------------------------------------------- small helpers
+
+def sha256_bytes(payload):
+    return hashlib.sha256(payload).hexdigest()
+
+
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with open(path, 'rb') as stream:
+        while block := stream.read(1024*1024): digest.update(block)
+    return digest.hexdigest()
+
+
+def canonical(value):
+    return (json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False) + '\n').encode()
+
+
+def read_text_or_none(path):
+    try: return Path(path).read_text()
+    except (FileNotFoundError, NotADirectoryError, IsADirectoryError): return None
+
+
+def read_bounded(path, maximum=MAX_DOCUMENT):
+    path = Path(path)
+    if path.is_symlink() or not path.is_file(): raise Refusal(f'Regular file required: {path}')
+    with path.open('rb') as stream: payload = stream.read(maximum+1)
+    if len(payload) > maximum: raise Refusal(f'File exceeds {maximum} bytes: {path}')
+    return payload
+
+
+def under(path, root):
+    path, root = Path(path).resolve(), Path(root).resolve()
+    return path == root or root in path.parents
+
+
+def _escape(key): return str(key).replace('~', '~0').replace('/', '~1')
+def _unescape(token): return token.replace('~1', '/').replace('~0', '~')
+
+
+def pointer_get(doc, pointer):
+    node = doc
+    for token in pointer.split('/')[1:]:
+        token = _unescape(token)
+        node = node[int(token)] if isinstance(node, list) else node[token]
+    return node
+
+
+def pointer_set(doc, pointer, value):
+    tokens = [_unescape(t) for t in pointer.split('/')[1:]]
+    node = doc
+    for token in tokens[:-1]: node = node[int(token)] if isinstance(node, list) else node[token]
+    node[int(tokens[-1]) if isinstance(node, list) else tokens[-1]] = value
+
+
+def field_diff(original, changed, pointer=''):
+    """Leaf-level JSON pointers whose value, type or presence differs."""
+    if type(original) is not type(changed): return {pointer}
+    if isinstance(original, dict):
+        found = set()
+        for key in original.keys() | changed.keys():
+            child = f'{pointer}/{_escape(key)}'
+            found |= field_diff(original[key], changed[key], child) if key in original and key in changed else {child}
+        return found
+    if isinstance(original, list):
+        if len(original) != len(changed): return {pointer}
+        return set().union(*(field_diff(a, b, f'{pointer}/{i}') for i, (a, b) in enumerate(zip(original, changed))))
+    return set() if original == changed else {pointer}
+
+
+def _pending(value, pointer=''):
+    if isinstance(value, str): return [pointer] if value.startswith(PENDING) else []
+    if isinstance(value, dict): return [p for k, v in value.items() for p in _pending(v, f'{pointer}/{_escape(k)}')]
+    if isinstance(value, list): return [p for i, v in enumerate(value) for p in _pending(v, f'{pointer}/{i}')]
+    return []
+
+
+def _git(worktree, *args):
+    env = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
+    return subprocess.run(['git', *args], cwd=worktree, capture_output=True, text=True, timeout=30, env=env)
+
+
+# --------------------------------------------------------------------------- pin documents
+
+def load_declarations(pins_dir, protocol_sha256):
+    value = json.loads(read_bounded(Path(pins_dir)/'declared-fields.json'))
+    if value.get('schema') != DECLARATION_SCHEMA or value.get('protocol_sha256') != protocol_sha256:
+        raise Refusal('v4 pin declarations do not bind this protocol')
+    return value
+
+
+def check_pin_document(original_bytes, copy_bytes, item, *, consumer):
+    """A v4 copy may differ from its original only in declared data/path fields."""
+    original, copy = json.loads(original_bytes), json.loads(copy_bytes)
+    declared = [f['pointer'] for f in item['fields']]
+    undeclared = sorted(p for p in field_diff(original, copy)
+                        if not any(p == d or p.startswith(d + '/') for d in declared))
+    if undeclared: raise Refusal('v4 pin copy changes undeclared fields: ' + ', '.join(undeclared))
+    if consumer and (pending := _pending(copy)):
+        raise Refusal('v4 pin copy still holds PENDING placeholders at: ' + ', '.join(pending))
+    return copy
+
+
+def fill_document(raw, item, values):
+    """Replace declared PENDING placeholders only; refuses anything else."""
+    doc, fields = json.loads(raw), {f['pointer']: f for f in item['fields']}
+    for pointer, value in values.items():
+        if pointer not in fields: raise Refusal(f'Fill targets an undeclared field: {pointer}')
+        if pointer_get(doc, pointer) != fields[pointer]['placeholder']:
+            raise Refusal(f'Field {pointer} no longer holds its placeholder')
+        pointer_set(doc, pointer, value)
+    text = json.dumps(doc, indent=2, ensure_ascii=False) + ('\n' if raw.endswith(b'\n') else '')
+    return text.encode()
+
+
+def _outputs(chain, stage, where):
+    if stage not in chain: raise Refusal(f'{where}: {stage} is not in the pin-record chain')
+    return chain[stage]
+
+
+def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir):
+    """Every filled value must trace to the pin-record chain (or to a validated v4 copy)."""
+    for field in item['fields']:
+        where, value, kind = f'{name}{field["pointer"]}', pointer_get(doc, field['pointer']), field['class']
+        if kind in ('doc-sha256', 'doc-path'):
+            target = Path(pins_dir)/field['document']
+            if (kind == 'doc-sha256' and value != doc_sha(field['document'])) or \
+                    (kind == 'doc-path' and (not isinstance(value, str) or Path(value).resolve() != target.resolve())):
+                raise Refusal(f'{where} does not name the validated v4 copy {field["document"]}')
+            continue
+        if kind == 'worktree-path':
+            if not isinstance(value, str) or _git(value, 'rev-parse', 'HEAD').stdout.strip() != field['commit']:
+                raise Refusal(f'{where} is not a worktree at {field["commit"]}')
+            continue
+        record = _outputs(chain, field['stage'], where)
+        outputs = record['outputs']
+        if kind == 'sha256':
+            if not (isinstance(value, str) and HEX64.fullmatch(value)) or \
+                    value not in {o['sha256'] for o in outputs.values()} | set(record.get('declared_values', [])):
+                raise Refusal(f'{where} is not an output of {field["stage"]}')
+        elif kind == 'bytes':
+            sibling = pointer_get(doc, field['pointer'].rpartition('/')[0] + '/sha256')
+            if value not in [o['bytes'] for o in outputs.values() if o['sha256'] == sibling]:
+                raise Refusal(f'{where} is not the recorded size of a {field["stage"]} output')
+        elif kind == 'run-id':
+            if not isinstance(value, str) or not any(value in Path(rel).parts for rel in outputs):
+                raise Refusal(f'{where} is not a run id among {field["stage"]} outputs')
+        elif kind == 'path':
+            if not isinstance(value, str) or not _traced_path(value, record):
+                raise Refusal(f'{where} is not inside the {field["stage"]} output root or worktree')
+        elif kind == 'path-keys':
+            if not isinstance(value, dict) or list(value.values()) != list(pointer_get(original, field['pointer']).values()) \
+                    or not all(Path(k).is_absolute() and under(k, record['worktree']) for k in value):
+                raise Refusal(f'{where} must keep pinned hashes and name paths in the {field["stage"]} worktree')
+        else:
+            raise Refusal(f'{where} has unknown class {kind}')
+
+
+def _traced_path(value, record):
+    path = Path(value)
+    if path.is_absolute():
+        return under(path, record['output_root']) or under(path, record['worktree'])
+    if any(Path(rel).parts[:len(path.parts)] == path.parts for rel in record['outputs']): return True
+    return under(Path(record['worktree'])/path, record['output_root'])
+
+
+def load_pin_documents(spec, pins_dir, declarations, worktree, chain):
+    """Validated, placeholder-free v4 copies for this stage: {name: {path, sha256, value}}."""
+    pins_dir, cache = Path(pins_dir), {}
+
+    def load(name):
+        if name in cache: return cache[name]
+        if name not in declarations['documents']: raise Refusal(f'Undeclared v4 pin document {name}')
+        item = declarations['documents'][name]
+        original = read_bounded(Path(worktree)/item['original_path'])
+        if sha256_bytes(original) != item['original_sha256']:
+            raise Refusal(f'Original {item["original_path"]} differs at the producing commit')
+        raw = read_bounded(pins_dir/name)
+        doc = check_pin_document(original, raw, item, consumer=True)
+        cache[name] = {'path': str((pins_dir/name).resolve()), 'sha256': sha256_bytes(raw), 'value': doc,
+                       'original': json.loads(original), 'item': item}
+        return cache[name]
+    for name in spec['documents']:
+        entry = load(name)
+        check_document_values(name, entry['value'], entry['original'], entry['item'], chain,
+                              lambda other: load(other)['sha256'], pins_dir)
+    return {name: {k: cache[name][k] for k in ('path', 'sha256')} for name in spec['documents']}
+
+
+# --------------------------------------------------------------------------- pin records
+
+def _hash_tree(output_root):
+    outputs = {}
+    for path in sorted(Path(output_root).rglob('*')):
+        if path.is_symlink() or not (path.is_file() or path.is_dir()):
+            raise Refusal(f'Nonregular output {path}')
+        if path.is_file():
+            outputs[path.relative_to(output_root).as_posix()] = {'sha256': sha256_file(path), 'bytes': path.stat().st_size}
+    return outputs
+
+
+def make_pin_record(spec, stage, worktree, output_root, previous, *, protocol_sha256, overlay=None, go_sha256=None):
+    output_root, worktree = Path(output_root).resolve(), Path(worktree).resolve()
+    outputs = _hash_tree(output_root)
+    own = {'producing_commit': spec['commit'], 'worktree': str(worktree), 'output_root': str(output_root), 'outputs': outputs}
+    return {'schema': RECORD_SCHEMA, 'protocol_sha256': protocol_sha256, 'stage': stage, **own,
+            'producer_sha256': spec['producer_sha256'], 'go_sha256': go_sha256,
+            'previous_record_sha256': None if previous is None else sha256_bytes(canonical(previous)),
+            'chain': json.loads(json.dumps({**({} if previous is None else previous['chain']), stage: own})),
+            'overlay': overlay, 'qualification_claims': []}
+
+
+def write_pin_record(path, record):
+    path = Path(path)
+    with path.open('xb') as stream:
+        stream.write(canonical(record)); stream.flush(); os.fsync(stream.fileno())
+    directory = os.open(path.parent, os.O_RDONLY)
+    try: os.fsync(directory)
+    finally: os.close(directory)
+
+
+def check_pin_record(record, stage, stages, *, protocol_sha256):
+    """The previous sub-stage's record, with a consistent cumulative chain; returns the chain."""
+    order = list(stages)
+    if order.index(stage) == 0: raise Refusal(f'{stage} is the first sub-stage and takes no previous record')
+    previous = order[order.index(stage)-1]
+    if record.get('schema') != RECORD_SCHEMA: raise Refusal('Pin record schema differs')
+    if record.get('protocol_sha256') != protocol_sha256: raise Refusal('Pin record binds another protocol')
+    if record.get('stage') != previous: raise Refusal(f'{stage} requires the previous sub-stage ({previous}) pin record')
+    if record.get('producing_commit') != stages[previous]['commit']:
+        raise Refusal(f'Pin record producing commit differs from {previous}')
+    chain = record.get('chain')
+    own = {k: record.get(k) for k in ('producing_commit', 'worktree', 'output_root', 'outputs')}
+    if not isinstance(chain, dict) or list(chain) != order[:order.index(stage)] or chain[previous] != own:
+        raise Refusal('Pin record chain is incomplete or differs from its own outputs')
+    return chain
+
+
+# --------------------------------------------------------------------------- arguments and GO
+
+def check_arguments(spec, argv, worktree, chain, *, open_inputs):
+    """Every producer argument is declared; data inputs must match the pin-record chain."""
+    rules, given, index = spec['args'], {}, 0
+    while index < len(argv):
+        token = argv[index]
+        flag, _, inline = token.partition('=')
+        if not flag.startswith('--') or flag not in rules or flag in given:
+            raise Refusal(f'Refused undeclared argument {token!r}')
+        if inline or '=' in token: value = inline
+        else:
+            if index+1 >= len(argv): raise Refusal(f'{flag} needs a value')
+            index += 1; value = argv[index]
+        given[flag] = value; index += 1
+    missing = [f for f, r in rules.items() if f not in given and not r.get('optional')]
+    if missing: raise Refusal('Producer arguments missing: ' + ', '.join(missing))
+    checked = {}
+    for flag, value in given.items():
+        rule, path = rules[flag], Path(value)
+        kind = rule['kind']
+        if kind == 'value':
+            if value not in rule['allowed']: raise Refusal(f'{flag}={value} is not allowed')
+            checked[flag] = {'value': value}
+        elif kind == 'repo':
+            if not under(path, worktree) or path.resolve() != Path(worktree).resolve():
+                raise Refusal(f'{flag} must be the producing worktree')
+            checked[flag] = {'path': str(path.resolve())}
+        elif kind == 'assets':
+            if not path.is_dir(): raise Refusal(f'{flag} must be an existing assets directory')
+            checked[flag] = {'path': str(path.resolve())}
+        elif kind == 'output':
+            if path.exists() or path.is_symlink(): raise Refusal(f'{flag} must be a fresh path')
+            if any(under(path, record['output_root']) or under(record['output_root'], path) for record in chain.values()):
+                raise Refusal(f'{flag} overlaps an earlier pin-record output')
+            checked[flag] = {'path': str(path.resolve())}
+        elif kind == 'record':
+            record = _outputs(chain, rule['stage'], flag)
+            relative = path.resolve().relative_to(record['output_root']).as_posix() \
+                if under(path, record['output_root']) else None
+            if relative not in record['outputs']:
+                raise Refusal(f'{flag} is not an output in the previous sub-stage pin record chain ({rule["stage"]})')
+            expected = record['outputs'][relative]
+            if open_inputs and (path.is_symlink() or path.stat().st_size != expected['bytes'] or
+                                sha256_file(path) != expected['sha256']):
+                raise Refusal(f'{flag} bytes differ from the {rule["stage"]} pin record')
+            checked[flag] = {'path': str(path.resolve()), **expected}
+        elif kind == 'fixed-file':
+            if open_inputs and (not path.is_file() or sha256_file(path) != rule['sha256']):
+                raise Refusal(f'{flag} differs from its pinned bytes')
+            checked[flag] = {'path': str(path.resolve()), 'sha256': rule['sha256']}
+        else:
+            raise Refusal(f'Unknown argument rule {kind}')
+    return checked
+
+
+def check_go(path, stage, protocol_sha256):
+    """The GO record must name exactly this stage and the protocol sha256."""
+    try: raw = read_bounded(path, MAX_GO); value = json.loads(raw)
+    except (OSError, ValueError, Refusal) as error: raise Refusal(f'Unreadable GO record: {error}') from None
+    if not isinstance(value, dict) or value.get('decision') != 'GO' or value.get('stage') != stage or \
+            value.get('protocol_sha256') != protocol_sha256:
+        raise Refusal(f'GO record does not name stage {stage} and protocol {protocol_sha256}')
+    return sha256_bytes(raw)
+
+
+# --------------------------------------------------------------------------- worktree and sources
+
+def verify_worktree(worktree, spec, *, commit=None):
+    worktree, commit = Path(worktree), commit or spec['commit']
+    head = _git(worktree, 'rev-parse', 'HEAD').stdout.strip()
+    if _git(worktree, 'symbolic-ref', '-q', 'HEAD').returncode == 0:
+        raise Refusal('Producer worktree must be a detached worktree')
+    if head != commit: raise Refusal(f'Worktree HEAD {head or "?"} is not the producing commit {commit}')
+    status = _git(worktree, 'status', '--porcelain', '--untracked-files=no')
+    if status.returncode != 0 or status.stdout.strip():
+        raise Refusal('Producer worktree tracked files differ from the producing commit')
+    others = _git(worktree, 'ls-files', '--others', '--', 'src', 'scripts').stdout.split()
+    others = [o for o in others if '__pycache__' not in o and not o.endswith('.pyc')]
+    if others: raise Refusal('Producer worktree has untracked source files: ' + ', '.join(others[:8]))
+    report = {'head': head, 'detached': True}
+    if 'producer' in spec:
+        if sha256_file(worktree/spec['producer']) != spec['producer_sha256']:
+            raise Refusal(f'Pinned producer bytes differ: {spec["producer"]}')
+        report['producer_sha256'] = spec['producer_sha256']
+        for rel, pin in spec['source_guards'].items():
+            if not (worktree/rel).is_file() or sha256_file(worktree/rel) != pin:
+                raise Refusal(f'Pinned source guard differs: {rel}')
+        report['source_guards'] = dict(spec['source_guards'])
+    return report
+
+
+def _module_paths(name):
+    parts = name.split('.')
+    paths = [f'src/{"/".join(parts)}.py', f'src/{"/".join(parts)}/__init__.py']
+    return ([f'scripts/{name}.py'] if len(parts) == 1 else []) + paths
+
+
+def _resolve(read, name, cache):
+    if name not in cache:
+        cache[name] = next(((rel, text) for rel in _module_paths(name) if (text := read(rel)) is not None), None)
+    return cache[name]
+
+
+def static_closure(read, start, cache=None, graph=None):
+    """Local modules reachable from ``start`` through any import statement: {name: (rel, source)}.
+
+    ``graph`` (optional) receives each module's direct local imports."""
+    cache = {} if cache is None else cache
+    closure, pending = {}, [start]
+    while pending:
+        name = pending.pop()
+        if name in closure or (found := _resolve(read, name, cache)) is None: continue
+        closure[name] = found
+        parents = name.split('.')
+        edges = ['.'.join(parents[:i]) for i in range(1, len(parents))]
+        for target, names, *_ in probe.static_imports(found[1], name, found[0].endswith('__init__.py')):
+            edges.append(target); edges += [f'{target}.{n}' for n in names]
+        edges = [e for e in edges if _resolve(read, e, cache) is not None]
+        if graph is not None: graph[name] = set(edges)
+        pending += edges
+    return closure
+
+
+def _reaches(graph, start, targets):
+    seen, pending = set(), [start]
+    while pending:
+        name = pending.pop()
+        if name in seen: continue
+        if name in targets: return True
+        seen.add(name); pending += graph.get(name, ())
+    return False
+
+
+def original_values(spec, read):
+    """Pinned values of every rebound attribute at the producing commit, plus upstream pins."""
+    values = {}
+    for rebind in spec['rebinds']:
+        found = _resolve(read, rebind['module'], {})
+        if found is None: raise Refusal(f'Rebound module {rebind["module"]} is absent at the producing commit')
+        for node in ast.parse(found[1]).body:
+            if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == rebind['attribute'] for t in node.targets) \
+                    and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
+                values[f'{rebind["module"]}.{rebind["attribute"]}'] = node.value.value
+        if f'{rebind["module"]}.{rebind["attribute"]}' not in values:
+            raise Refusal(f'{rebind["module"]}.{rebind["attribute"]} is not a module-level string pin')
+    return values
+
+
+def _module_level(tree):
+    """Statements executed at import (module and class bodies), minus __main__ guards."""
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)): continue
+        if isinstance(node, ast.If) and '__name__' in ast.unparse(node.test) and '__main__' in ast.unparse(node.test):
+            continue
+        if isinstance(node, ast.ClassDef):
+            yield from (n for n in node.body if not isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)))
+            continue
+        yield node
+
+
+def _mentions_file(node, aliases):
+    return any((isinstance(n, ast.Name) and (n.id == '__file__' or n.id in aliases)) for n in ast.walk(node))
+
+
+def static_reachability(read, spec, originals):
+    """Read sites that an in-process attribute rebinding would NOT reach; [] means reachable."""
+    graph = {}
+    closure = static_closure(read, spec['module'], {}, graph)
+    rebound = {}
+    for key in originals:
+        module, _, attribute = key.rpartition('.')
+        rebound.setdefault(module, set()).add(attribute)
+    pinned = {v: k for k, v in originals.items()} | {v: 'upstream pin' for v in spec.get('upstream_values', [])}
+    findings = []
+    for name, (rel, source) in sorted(closure.items()):
+        tree = ast.parse(source)
+        own = rebound.get(name, set())
+        aliases = {}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    if alias.name in rebound: aliases[alias.asname or alias.name] = alias.name
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                for alias in node.names:
+                    if f'{node.module}.{alias.name}' in rebound: aliases[alias.asname or alias.name] = f'{node.module}.{alias.name}'
+                    if node.module in rebound and alias.name in rebound[node.module]:
+                        findings.append(f'{name} ({rel}:{node.lineno}) copies rebound pin {node.module}.{alias.name} at import')
+        allowed = {id(node.value) for node in tree.body if isinstance(node, ast.Assign)
+                   and any(isinstance(t, ast.Name) and t.id in own for t in node.targets)}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in pinned and id(node) not in allowed:
+                findings.append(f'{name} ({rel}:{node.lineno}) inline literal of pinned value {pinned[node.value]} '
+                                f'({node.value[:16]}...); a rebinding cannot reach it')
+        local_defs = {n.name for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+        for statement in _module_level(tree):
+            if isinstance(statement, ast.Assign) and id(statement.value) in allowed: continue
+            for node in ast.walk(statement):
+                hit = (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in own) or \
+                      (own and isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in local_defs) or \
+                      (isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id in aliases)
+                if hit:
+                    findings.append(f'{name} ({rel}:{statement.lineno}) import-time read of a rebound pin '
+                                    'happens before any rebinding')
+                    break
+        file_names = {t.id for n in tree.body if isinstance(n, ast.Assign) and _mentions_file(n.value, set())
+                      for t in n.targets if isinstance(t, ast.Name)}
+        affected = _reaches(graph, name, set(rebound))
+        for node in ast.walk(tree):
+            if affected and isinstance(node, (ast.List, ast.Tuple)) and \
+                    any(ast.unparse(e) == 'sys.executable' for e in node.elts) and \
+                    any(_mentions_file(e, file_names) for e in node.elts):
+                findings.append(f'{name} ({rel}:{node.lineno}) re-executes {name} in a child process; '
+                                'the in-process overlay does not reach it')
+    return sorted(set(findings))
+
+
+# --------------------------------------------------------------------------- overlay
+
+def overlay_values(spec, pins_dir, documents, chain):
+    values = {}
+    for rebind in spec['rebinds']:
+        key, kind = (rebind['module'], rebind['attribute']), rebind['kind']
+        if kind == 'document-path': values[key] = documents[rebind['document']]['path']
+        elif kind == 'document-sha256': values[key] = documents[rebind['document']]['sha256']
+        elif kind == 'output-sha256':
+            outputs = _outputs(chain, rebind['stage'], f'{key}')['outputs']
+            if rebind['output'] not in outputs: raise Refusal(f'{rebind["stage"]} recorded no {rebind["output"]}')
+            values[key] = outputs[rebind['output']]['sha256']
+        else: raise Refusal(f'Unknown rebind kind {kind}')
+    return values
+
+
+def apply_overlay(worktree, spec, values):
+    """Import the unchanged closure from ``worktree`` and rebind exactly the declared pins."""
+    worktree = Path(worktree).resolve()
+    local = probe.local_namespace(worktree)
+    preloaded = sorted(n for n in sys.modules if n.partition('.')[0] in local)
+    if preloaded: raise Refusal('Producer modules already imported before the overlay: ' + ', '.join(preloaded))
+    ours = {str(ROOT/'scripts'), str(ROOT/'src'), ''}
+    sys.path[:] = [str(worktree/'scripts'), str(worktree/'src')] + [p for p in sys.path if p not in ours]
+    importlib.invalidate_caches()
+    order = list(dict.fromkeys([r['module'] for r in spec['rebinds']] + [spec['module']]))
+    snapshots, originals, changed, origins = {}, {}, [], {}
+    for name in order:
+        module = importlib.import_module(name)
+        origin = getattr(module, '__file__', None)
+        if origin is None or not under(origin, worktree):
+            raise Refusal(f'{name} resolves outside the producing worktree: {origin}')
+        origins[name] = str(Path(origin).resolve())
+        snapshots[name] = dict(vars(module))
+        for rebind in (r for r in spec['rebinds'] if r['module'] == name):
+            attribute = rebind['attribute']
+            if not isinstance(getattr(module, attribute, None), str):
+                raise Refusal(f'{name}.{attribute} is not a string pin')
+            originals[f'{name}.{attribute}'] = getattr(module, attribute)
+            setattr(module, attribute, values[(name, attribute)])
+            changed.append(f'{name}.{attribute}')
+    for name in order:
+        module = sys.modules[name]
+        differ = sorted(f'{name}.{k}' for k in vars(module).keys() | snapshots[name].keys()
+                        if vars(module).get(k, snapshots) is not snapshots[name].get(k, snapshots))
+        if differ != sorted(c for c in changed if c.rpartition('.')[0] == name):
+            raise Refusal(f'Overlay changed undeclared attributes of {name}: {differ}')
+    stale = set(originals.values()) | set(spec.get('upstream_values', []))
+    for name, module in list(sys.modules.items()):
+        origin = getattr(module, '__file__', None) if module is not None else None
+        if origin is None or not under(origin, worktree): continue
+        for attribute, value in list(vars(module).items()):
+            if isinstance(value, str) and value in stale and f'{name}.{attribute}' not in changed:
+                raise Refusal(f'{name}.{attribute} keeps a stale copy of a rebound pin')
+    return sys.modules[spec['module']], {'changed': changed, 'import_order': order, 'origins': origins,
+                                         'original_values': originals}
+
+
+# --------------------------------------------------------------------------- driver
+
+def _split(argv):
+    if '--' in argv:
+        cut = argv.index('--'); return argv[:cut], argv[cut+1:]
+    return argv, []
+
+
+def _emit(value):
+    print(json.dumps(value, indent=1, sort_keys=True))
+
+
+def prepare(spec, stage, worktree, previous_path, producer_args, *, stages, pins_dir, protocol_sha256,
+            historical_worktree, execute):
+    report = {'stage': stage, 'protocol_sha256': protocol_sha256, 'producing_commit': spec['commit'],
+              'worktree': str(Path(worktree).resolve()), 'producer': spec['producer'], 'execution': spec['execution']}
+    report['worktree_check'] = verify_worktree(worktree, spec)
+    if 'historical_commit' in spec:
+        if historical_worktree is None: raise Refusal(f'{stage} requires --historical-worktree')
+        report['historical_check'] = verify_worktree(historical_worktree, {}, commit=spec['historical_commit'])
+    previous, chain = None, {}
+    if previous_path is not None:
+        previous = json.loads(read_bounded(previous_path))
+        chain = check_pin_record(previous, stage, stages, protocol_sha256=protocol_sha256)
+        report['previous_record_sha256'] = sha256_bytes(read_bounded(previous_path))
+    documents = {}
+    if spec['documents']:
+        declarations = load_declarations(pins_dir, protocol_sha256)
+        documents = load_pin_documents(spec, pins_dir, declarations, worktree, chain)
+    report['documents'] = documents
+    values = overlay_values(spec, pins_dir, documents, chain)
+    read = lambda rel: read_text_or_none(Path(worktree)/rel)
+    findings = static_reachability(read, spec, original_values(spec, read)) if spec['rebinds'] else []
+    if findings: raise Refusal('Overlay cannot reach every read site: ' + ' | '.join(findings))
+    report['rebinds'] = [{**r, 'value': values[(r['module'], r['attribute'])]} for r in spec['rebinds']]
+    report['arguments'] = check_arguments(spec, producer_args, worktree, chain, open_inputs=execute)
+    if spec['execution'] == 'subprocess':
+        report['would_run'] = [sys.executable, str(Path(worktree).resolve()/spec['producer']), *producer_args]
+    else:
+        report['would_run'] = ['<in-process overlay>', f'{spec["module"]}.main', *producer_args]
+    return report, previous, values
+
+
+def _run(spec, worktree, values, producer_args):
+    worktree = Path(worktree).resolve()
+    if spec['execution'] == 'subprocess':
+        thread_env = probe.ENTRYPOINTS.get(spec['stage'], {}).get('thread_env', {})
+        env = {'PATH': '/usr/bin:/bin', 'HOME': os.environ.get('HOME', '/nonexistent'), 'LANG': 'C.UTF-8',
+               'MUJOCO_GL': 'egl', 'CUDA_VISIBLE_DEVICES': '', 'PYTHONPATH': f'{worktree/"src"}:{worktree/"scripts"}',
+               **thread_env}
+        done = subprocess.run([sys.executable, str(worktree/spec['producer']), *producer_args], cwd=worktree, env=env)
+        return done.returncode, None
+    module, overlay = apply_overlay(worktree, spec, values)
+    if not callable(getattr(module, 'main', None)): raise Refusal(f'{spec["module"]} has no main()')
+    os.chdir(worktree); sys.argv = [str(worktree/spec['producer']), *producer_args]
+    try: code = module.main()
+    except SystemExit as stop: code = stop.code
+    overlay = {k: v for k, v in overlay.items() if k != 'original_values'}
+    return (0 if code is None else code if isinstance(code, int) else 1), overlay
+
+
+def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=None):
+    stages = STAGES if stages is None else stages
+    pins_dir = PINS_DIR if pins_dir is None else Path(pins_dir)
+    own, producer_args = _split(list(sys.argv[1:] if argv is None else argv))
+    parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
+    parser.add_argument('--stage', required=True, choices=list(stages))
+    parser.add_argument('--worktree', type=Path, required=True, help='Detached worktree at the producing commit')
+    parser.add_argument('--previous-pins', type=Path, help="Previous sub-stage's v4 pin record")
+    parser.add_argument('--historical-worktree', type=Path, help='S0f historical reader worktree (217cbee)')
+    parser.add_argument('--plan-only', action='store_true', help='Print the plan; never executes a producer')
+    parser.add_argument('--go', type=Path, help='GO record naming this exact stage and the protocol sha256')
+    parser.add_argument('--pin-record-out', type=Path, help='Fresh path for the published pin record')
+    args = parser.parse_args(own)
+    refused = lambda reason: (_emit({'status': 'refused', 'stage': args.stage, 'reason': reason}), 2)[1]
+    if protocol_sha256 is None:
+        protocol_sha256 = PROTOCOL_SHA256
+        if sha256_file(ROOT/PROTOCOL_PATH) != PROTOCOL_SHA256: return refused('v4 protocol bytes differ from the pin')
+    if args.plan_only and args.go is not None: return refused('--plan-only and --go are mutually exclusive')
+    if not args.plan_only and args.go is None:
+        return refused('Default is refusal: pass --plan-only, or --go with an owner GO record')
+    spec = stages[args.stage]
+    first = list(stages).index(args.stage) == 0
+    if first != (args.previous_pins is None):
+        return refused('The first sub-stage takes no previous record; every later one requires --previous-pins')
+    go_sha = None
+    if args.go is not None:
+        try: go_sha = check_go(args.go, args.stage, protocol_sha256)
+        except Refusal as error: return refused(str(error))
+        if args.pin_record_out is None or args.pin_record_out.exists():
+            return refused('--go requires a fresh --pin-record-out path')
+    try:
+        plan, previous, values = prepare(spec, args.stage, args.worktree, args.previous_pins, producer_args,
+                                         stages=stages, pins_dir=pins_dir, protocol_sha256=protocol_sha256,
+                                         historical_worktree=args.historical_worktree, execute=not args.plan_only)
+    except (Refusal, OSError, ValueError, KeyError) as error:
+        _emit({'mode': 'plan-only' if args.plan_only else 'go', 'status': 'refused', 'stage': args.stage,
+               'reason': f'{type(error).__name__}: {error}' if not isinstance(error, Refusal) else str(error)})
+        return 3
+    if args.plan_only:
+        _emit({'mode': 'plan-only', 'status': 'admissible', **plan}); return 0
+    code, overlay = _run(spec, args.worktree, values, producer_args)
+    output = plan['arguments'].get('--output', {}).get('path')
+    if code != 0 or output is None:
+        _emit({'mode': 'go', 'status': 'producer-failed', 'stage': args.stage, 'returncode': code}); return 1
+    verify_worktree(args.worktree, spec)
+    record = make_pin_record(spec, args.stage, args.worktree, output, previous, protocol_sha256=protocol_sha256,
+                             overlay=overlay, go_sha256=go_sha)
+    write_pin_record(args.pin_record_out, record)
+    _emit({'mode': 'go', 'status': 'completed', 'stage': args.stage, 'pin_record': str(args.pin_record_out),
+           'outputs': len(record['outputs'])})
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
