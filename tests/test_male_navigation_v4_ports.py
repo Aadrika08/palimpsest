@@ -57,8 +57,21 @@ def amendment():
 
 def test_manifest_lists_exactly_the_amendment_hunks_with_their_classes():
     listed = {(item['file'], h['lines'], h['class']) for item in amendment()['ports'] for h in item['hunks']}
+    erratum = amendment()['erratum_1']
+    added = {(h['file'], h['lines'], h['class']) for h in erratum['hunks'] if h['kind'] == 'added'}
     manifest = {(path, h['spec_lines'], h['class']) for path, f in SPEC['files'].items() for h in f['hunks']}
-    assert manifest == listed
+    assert manifest == listed | added
+    assert {(p, h['spec_lines']) for p, f in SPEC['files'].items() for h in f['hunks'] if h.get('erratum')} == \
+        {(f, lines) for f, lines, _ in added}
+    # Widened ranges are recorded in the erratum with the exact manifest range.
+    widened = [h for h in erratum['hunks'] if h['kind'] == 'widened']
+    assert {(h['file'], h['range']) for h in widened} == {('scripts/prepare_male_navigation_v2.py', '18-19'),
+                                                          ('src/palimpsest/male_recovery_research.py', '113-114')}
+    for item in widened:
+        hunk = next(h for h in SPEC['files'][item['file']]['hunks'] if h['start'] == int(item['range'].split('-')[0]))
+        assert hunk['spec_lines'] == item['lines'] and hunk['start'] + len(hunk['old']) - 1 == int(item['range'].split('-')[1])
+    assert {h['class'] for h in erratum['hunks']} <= {'H1', 'H2', 'H3', 'H4'}
+    assert erratum['cost_table_changed'] is False
 
 
 def test_manifest_trees_follow_the_amendment_port_trees():
@@ -68,9 +81,12 @@ def test_manifest_trees_follow_the_amendment_port_trees():
         assert tree['base'] == declared[tree_id]['base']
         assert tree['branch'] == f'port/male-v4-{tree_id.lower()}'
         listed = {p.split(' ')[0] for p in declared[tree_id]['ports']}
-        assert set(tree['files']) <= listed, tree_id
-    # The reader is ported into T-e only if imported there; at 736e0cf it is not.
-    assert 'scripts/prepare_male_recovery_data.py' not in SPEC['trees']['T-e']['files']
+        additions = set(amendment()['erratum_1']['tree_additions'].get(tree_id, []))
+        assert set(tree['files']) <= listed | additions and additions <= set(tree['files']), tree_id
+    # Erratum 1: the reader is ported into T-e so the study-plan pin follows the port, although
+    # nothing at 736e0cf imports it; T-f carries the v2 collector its admission compares against.
+    assert 'scripts/prepare_male_recovery_data.py' in SPEC['trees']['T-e']['files']
+    assert 'scripts/collect_male_navigation_v2.py' in SPEC['trees']['T-f']['files']
     importers = subprocess.run(['git', 'grep', '-l', 'import prepare_male_recovery_data', SPEC['trees']['T-e']['base'],
                                 '--', 'src', 'scripts/collect_male_navigation_v2.py', 'scripts/collect_male_navigation.py'],
                                cwd=ROOT, capture_output=True, text=True).stdout
@@ -113,8 +129,10 @@ def test_exact_diff_is_only_the_listed_hunks(tree_id):
 
 def test_reader_port_is_identical_in_every_tree_that_carries_it():
     payloads = {blob(SPEC['trees'][t]['branch'], 'scripts/prepare_male_recovery_data.py')
-                for t in ('T-c', 'T-d', 'T-h', 'T-f')}
+                for t in ('T-c', 'T-d', 'T-e', 'T-h', 'T-f')}
     assert len(payloads) == 1
+    collectors = {blob(SPEC['trees'][t]['branch'], 'scripts/collect_male_navigation_v2.py') for t in ('T-e', 'T-f')}
+    assert len(collectors) == 1
 
 
 def test_verify_cli_passes_on_the_real_branches(capsys):
@@ -736,6 +754,8 @@ def test_real_port_stages_pin_port_bytes_and_the_s0e_collector_cascade():
     assert driver.STAGES['S0e']['port_source_guards'] == {'scripts/collect_male_navigation.py': collector}
     assert driver.STAGES['S0d']['port_source_guards'] == {
         'scripts/prepare_male_recovery_data.py': sha(blob(SPEC['trees']['T-d']['branch'], 'scripts/prepare_male_recovery_data.py'))}
+    assert driver.STAGES['S0f']['port_source_guards'] == {
+        'scripts/collect_male_navigation_v2.py': sha(blob(SPEC['trees']['T-f']['branch'], 'scripts/collect_male_navigation_v2.py'))}
     pending = DECLARED['amendment_1_pending']
     assert pending['status'].startswith('inactive')
     field = next(f for f in pending['pending_fields'][driver.CONTACT_V2] if f['pointer'] == '/prior_version/collector_sha256')
@@ -757,6 +777,14 @@ def test_study_plan_copy_differs_only_in_pending_fields_and_holds_placeholders()
     assert driver.STUDY_PLAN not in DECLARED['documents']
     assert field_of(item, '/current_reusable_source_sha256/src~1palimpsest~1male_recovery_research.py')['cascade_value'] == \
         sha(blob(SPEC['trees']['T-e']['branch'], 'src/palimpsest/male_recovery_research.py'))
+    assert field_of(item, '/current_reusable_source_sha256/scripts~1prepare_male_recovery_data.py')['cascade_value'] == \
+        sha(blob(SPEC['trees']['T-e']['branch'], 'scripts/prepare_male_recovery_data.py'))
+    # Erratum 1: the two document pins are hashed at their v4 copies (locator), so they cascade too.
+    for pointer, name in (('/current_reusable_source_sha256/data~1manifests~1male-recovery-research-development-v1.json',
+                           driver.RECOVERY_INDEX),
+                          ('/current_reusable_source_sha256/docs~1plans~1m7-recovery-learning-protocol.json',
+                           driver.RECOVERY_LEARNING)):
+        assert field_of(item, pointer)['cascade'] == f'sha256 of the validated v4 copy {name} named in the locator'
 
 
 def field_of(item, pointer):
@@ -878,3 +906,101 @@ def test_probe_declares_port_entry_points_and_refuses_wrong_head_without_child(t
     assert probe.probe_stage(sys.executable, 'S0c-port', repo, port_pins=tmp_path/'pins.json')['status'] == 'passed'
     assert calls[0][1]['extra_env'] == {ENV: str(tmp_path/'pins.json')}
     assert probe.probe_stage(sys.executable, 'S0c-port', repo)['status'] == 'refused'  # locator required
+
+
+# =================================================================== erratum 1 sites
+
+def recovery_rows(n):
+    raws, rows = [], []
+    state = {'count': 0, 'direction': 1, 'previous_bad_contact': 0}
+    for t in range(n):
+        action = np.array([.1*t, -.1], dtype=np.float32)
+        raws.append({'episode': 0, 'tick': t, 'action': action, 'simulation_time': (t+1)*.02, 'eyes': np.array([True, True]),
+                     'recovery_expert_action': action, 'recovery_prefix': True, 'body_contact_counts': np.array([0, 1]),
+                     'recovery_teacher_before': np.array([0, 1, 0]), 'recovery_teacher_after': np.array([0, 1, 0]),
+                     'recovery_transitions': np.array([0, 0, 0])})
+        rows.append({'tick': t, 'action': action.tolist(), 'expert_action': action.tolist(), 'prefix': True, 'callback_count': 10,
+                     'contact_counts': [0, 1], 'before': state, 'after': state,
+                     'transition': {'started': 0, 'completed': 0, 'old_label_replaced': 0}})
+    return raws, {'rows': rows, 'contact_ownership': {}, 'collection_boundary': {}, 'coverage': {'passed': True},
+                  'final_state': {'phase': 'paused', 'last_outcome': None}}
+
+
+def admit_namespaces(locator, recovery):
+    entry = locator({LEARNING: learning_doc(V2_BASELINE, V2_DEV, recovery)})[LEARNING]
+    stubs = {'recovery': types.SimpleNamespace(bind_action=lambda tick, raw, prefix: prefix, bind_clearance=lambda raw, row, own: 0,
+                                               validate_collection=lambda bound, boundary, final: {'passed': True}),
+             'male_model': types.SimpleNamespace(features=lambda raw: np.full(388, raw['tick'], dtype=np.float32))}
+    return reader_namespaces(entry['path'], entry['sha256'], extra=('admit_rows',), stubs=stubs)
+
+
+def admitted(result):
+    if result[0] != 'ok': return result
+    episode, admission = result[1]
+    return ('ok', sha(episode['features'].tobytes() + episode['targets'].tobytes()), json.dumps(admission, sort_keys=True))
+
+
+def test_erratum_admit_rows_full_run_equals_original_and_emits_windows_from_the_pinned_length(locator):
+    orig, port = admit_namespaces(locator, V2_RECOVERY)
+    expected = admitted(outcome(orig['admit_rows'], *recovery_rows(67), 'rec-a'))
+    assert expected[0] == 'ok' and json.loads(expected[2])['windows'] == [32, 32, 3]
+    assert admitted(outcome(port['admit_rows'], *recovery_rows(67), 'rec-a')) == expected
+    _, port = admit_namespaces(locator, [67, 70])
+    result = outcome(port['admit_rows'], *recovery_rows(70), 'rec-b')
+    assert result[0] == 'ok' and result[1][1]['windows'] == [32, 32, 6] == windows(70)
+    _, port = admit_namespaces(locator, [67, 64])
+    assert outcome(port['admit_rows'], *recovery_rows(64), 'rec-b')[1][1]['windows'] == [32, 32]
+    _, port = admit_namespaces(locator, [67, 121])
+    assert outcome(port['admit_rows'], *recovery_rows(121), 'rec-b')[0] == 'refused'
+
+
+def collector_constants(rev):
+    """Module-level PLAN/PLAN_SHA and the literal profile constants of a collect_male_navigation_v2 blob."""
+    ns = {'json': json, 'os': __import__('os'), 'Path': Path}
+    extract(blob(rev, 'scripts/collect_male_navigation_v2.py'), (), ns, assigns=('PLAN', 'PLAN_SHA', 'PROFILE', 'PROFILE_SHA'))
+    return types.SimpleNamespace(**{k: ns[k] for k in ('PLAN', 'PLAN_SHA', 'PROFILE', 'PROFILE_SHA')}, CASES=CASES)
+
+
+def test_erratum_s0f_admission_compares_the_report_with_the_v4_contact_copy(tmp_path, locator, stub_storage_modules):
+    orig, port, run, documents = s0f_fixture(tmp_path, locator)
+    data_v2 = json.loads(Path(port['PROTOCOL']).read_text())
+    entries = locator({DATA_V2: data_v2, LEARNING: {}, driver.CONTACT_V2: {'contacts': {}}})
+    v4_sha = entries[driver.CONTACT_V2]['sha256']
+    tf = SPEC['trees']['T-f']
+    ported, original = collector_constants(tf['branch']), collector_constants(tf['base'])
+    assert ported.PLAN_SHA == v4_sha and ported.PLAN == entries[driver.CONTACT_V2]['path']
+    assert original.PLAN_SHA == '29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0'
+    docs = copy.deepcopy(documents)
+    docs['accepted_collection'].update(study_sha256=v4_sha, profile=ported.PROFILE, contact_profile_sha256=ported.PROFILE_SHA)
+    for nav, expected in ((ported, 'ok'), (original, 'refused')):
+        port['helpers'] = lambda nav=nav: (None, None, None, None, nav)
+        assert outcome(port['admit_collection'], data_v2, docs)[0] == expected
+
+
+def test_erratum_study_plan_source_pins_hash_the_v4_copies_named_in_the_locator(tmp_path, locator):
+    root = tmp_path/'tree'
+    tracked = {'data/manifests/male-recovery-research-development-v1.json': b'{"original": "index"}\n',
+               'docs/plans/m7-recovery-learning-protocol.json': b'{"original": "learning"}\n',
+               'scripts/prepare_male_recovery_data.py': b'reader = 1\n'}
+    for rel, payload in tracked.items():
+        (root/rel).parent.mkdir(parents=True, exist_ok=True); (root/rel).write_bytes(payload)
+    entries = locator({driver.RECOVERY_INDEX: {'v4': 'index'}, LEARNING: {'v4': 'learning'}})
+    plan = {'current_reusable_source_sha256': {
+                'data/manifests/male-recovery-research-development-v1.json': entries[driver.RECOVERY_INDEX]['sha256'],
+                'docs/plans/m7-recovery-learning-protocol.json': entries[LEARNING]['sha256'],
+                'scripts/prepare_male_recovery_data.py': sha(tracked['scripts/prepare_male_recovery_data.py'])},
+            'generator': {'source_sha256': {}}}
+    pins = {}
+    for which, rev in (('original', SPEC['trees']['T-e']['base']), ('port', SPEC['trees']['T-e']['branch'])):
+        ns = {'json': json, 'os': __import__('os'), 'Path': Path, 'ROOT': Path('/nonexistent-root'), 'PLAN_SHA': 'plan',
+              'plan': lambda root=None: plan,
+              'digest': lambda path: sha(Path(path).read_bytes()) if Path(path).exists() else 'absent',
+              'source_identity': lambda root: {'runtime': 1}}
+        pins[which] = extract(blob(rev, 'scripts/collect_male_navigation.py'), ('source_pins',), ns)['source_pins']
+    assert outcome(pins['original'], root) == \
+        ('refused', 'ValueError', 'Pinned study reader source differs: data/manifests/male-recovery-research-development-v1.json')
+    accepted = outcome(pins['port'], root)
+    assert accepted[0] == 'ok' and accepted[1]['plan_sha256'] == 'plan'
+    Path(entries[LEARNING]['path']).write_text('{"v4": "changed"}\n')
+    assert outcome(pins['port'], root) == \
+        ('refused', 'ValueError', 'Pinned study reader source differs: docs/plans/m7-recovery-learning-protocol.json')

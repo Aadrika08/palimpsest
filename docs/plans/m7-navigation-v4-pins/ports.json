@@ -1,7 +1,7 @@
 {
  "schema": "m7-navigation-v4-ports-1",
  "protocol_path": "docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json",
- "protocol_sha256": "238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
  "amendment": "amendment_1 (revision 2), owner decision A1 approved 2026-11-08",
  "locator": {
   "env": "PALIMPSEST_M7_V4_PINS",
@@ -43,6 +43,20 @@
       "    if type(n) is not int or not 0 < n <= 120 or len(raw_rows) != n or len(result['rows']) != n:"
      ],
      "what": "67 raw/result rows per recovery source -> S0b per-source pin (0 < n <= 120)"
+    },
+    {
+     "spec_lines": "116",
+     "class": "H3",
+     "start": 116,
+     "old": [
+      "        'last_outcome': None, 'windows': [32, 32, 3], 'coverage': coverage,"
+     ],
+     "new": [
+      "        'last_outcome': None, 'windows': [32]*(n//32)+[n%32]*(n%32>0), 'coverage': coverage,"
+     ],
+     "what": "emitted recovery windows [32,32,3] -> derived from the pinned per-source length n (32-row chunks + remainder)",
+     "erratum": "erratum_1",
+     "reason": "The ported checks at train_male_recovery.py:80 (T-d) and male_recovery_research.py:73 (T-e) derive windows from the pinned lengths; without this site every regenerated length other than 67 is refused. Identical bytes for n=67."
     },
     {
      "spec_lines": "140",
@@ -333,6 +347,23 @@
    "base_sha256": "d0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f",
    "hunks": [
     {
+     "spec_lines": "46-47",
+     "class": "H1",
+     "start": 46,
+     "old": [
+      "    for name, pin in expected.items():",
+      "        if digest(Path(root)/name) != pin: raise ValueError('Pinned study reader source differs: '+name)"
+     ],
+     "new": [
+      "    v4 = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']",
+      "    for name, pin in expected.items():",
+      "        if digest(Path(root)/(v4[Path(name).name]['path'] if Path(name).name in v4 else name)) != pin: raise ValueError('Pinned study reader source differs: '+name)"
+     ],
+     "what": "study-plan pinned documents (recovery index, recovery-learning protocol) -> hashed at their v4 copies named in the locator; every other pinned source still at its tracked path",
+     "erratum": "erratum_1",
+     "reason": "v4 copies are supplied by path and never committed into port trees, so the declared study-plan cascades for the v4 recovery index and recovery-learning copy could not match the tracked originals."
+    },
+    {
      "spec_lines": "26-27",
      "class": "H1",
      "start": 26,
@@ -435,7 +466,7 @@
     "m7-recovery-learning-protocol.json"
    ],
    "branch": "port/male-v4-t-c",
-   "port_commit": "d99bc333f5a93aa051c16677790349ceb805f592"
+   "port_commit": "c06b4976f30b86455dc9ea3406bad6fab42371e1"
   },
   "T-d": {
    "base": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
@@ -451,7 +482,7 @@
     "data_manifest"
    ],
    "branch": "port/male-v4-t-d",
-   "port_commit": "f67c8c2377a2d0bd4aae8f81c79c80277915bcb7"
+   "port_commit": "02e861f8be9877dd183a659ed1b70d66a9141052"
   },
   "T-e": {
    "base": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
@@ -459,7 +490,8 @@
    "files": [
     "src/palimpsest/male_recovery_research.py",
     "scripts/collect_male_navigation_v2.py",
-    "scripts/collect_male_navigation.py"
+    "scripts/collect_male_navigation.py",
+    "scripts/prepare_male_recovery_data.py"
    ],
    "documents": [
     "m7-navigation-contact-v2-protocol.json",
@@ -467,9 +499,9 @@
     "m7-recovery-learning-protocol.json",
     "m7-navigation-study-protocol.json"
    ],
-   "reader_port": "not imported at 736e0cf (scripts/prepare_male_recovery_data.py is only read as bytes under producer_root at male_recovery_research.py:64); not ported",
+   "reader_port": "erratum_1: ported so the study-plan pin current_reusable_source_sha256/scripts/prepare_male_recovery_data.py (digested by collect_male_navigation.py source_pins) follows the port bytes; not imported at 736e0cf",
    "branch": "port/male-v4-t-e",
-   "port_commit": "813b80c396eeb5496dbb9a91920ac08a92df8d9f"
+   "port_commit": "77287f3b5ea30802acd3090adb1e83f72ebcb9b5"
   },
   "T-h": {
    "base": "217cbee8399dcb25045a079af012beecbbdae29e",
@@ -481,28 +513,32 @@
     "m7-recovery-learning-protocol.json"
    ],
    "branch": "port/male-v4-t-h",
-   "port_commit": "c9045ebb41a76d3140c6bd6f7a1ee8e6b6210ba8"
+   "port_commit": "0789b2ed54117c01c40ab5818148cc0515eb4fb5"
   },
   "T-f": {
    "base": "4ecb354efa4223abdbe3d09be118fe5402fec1a1",
    "stage": "S0f",
    "files": [
     "scripts/prepare_male_navigation_v2.py",
-    "scripts/prepare_male_recovery_data.py"
+    "scripts/prepare_male_recovery_data.py",
+    "scripts/collect_male_navigation_v2.py"
    ],
    "documents": [
     "m7-navigation-data-v2-protocol.json",
-    "m7-recovery-learning-protocol.json"
+    "m7-recovery-learning-protocol.json",
+    "m7-navigation-contact-v2-protocol.json"
    ],
+   "collector_port": "erratum_1: prepare_male_navigation_v2.py imports this collector (helpers :76) and compares nav.PLAN_SHA with the S0e report at :325; same port bytes as T-e (sites 326,458,485 are unreachable from S0f)",
    "branch": "port/male-v4-t-f",
-   "port_commit": "e71c026bf7ab806e3c6cc52d99abe3f8bec40663"
+   "port_commit": "88c1a0f6f53274fe663f4cdad3be5ae2743af558"
   }
  },
- "spec_gaps": [
-  "scripts/prepare_male_recovery_data.py:116 still emits windows [32,32,3] (no listed hunk); the ported checks at train_male_recovery.py:80 (T-d) and male_recovery_research.py:73 (T-e) derive windows from the pinned lengths, so any pinned recovery length other than 67 is refused (fail-closed) until an amendment adds that site.",
-  "T-f imports its own scripts/collect_male_navigation_v2.py (helpers :76; bytes identical to 736e0cf) and compares nav.PLAN_SHA with the S0e report study_sha256 at prepare_male_navigation_v2.py:325; the spec ports no T-f collector, so S0f refuses a T-e collection (fail-closed) until an amendment ports collect_male_navigation_v2.py:20-21 into T-f.",
-  "collect_male_navigation.py:46-47 (T-e) digests Path(root)/name for each study-plan current_reusable_source_sha256 key; the v4 recovery index and recovery-learning copy are supplied by path and are not at those tracked paths, so the declared PENDING-S0d/PENDING-S0b cascades for those two keys cannot be satisfied (the tracked originals are what is digested). scripts/prepare_male_recovery_data.py is not ported in T-e, so its declared cascade value is the unchanged 2b5c7b78... rather than port bytes.",
-  "Hunk ranges fixed beyond the listed line numbers: prepare_male_navigation_v2.py 19 -> 18-19 (PROTOCOL path, because the data-v2 copy is supplied by path); male_recovery_research.py 114 -> 113-114 (the hard-coded path is on line 113).",
+ "spec_gaps": [],
+ "resolved_by_erratum_1": [
+  "prepare_male_recovery_data.py:116 windows derived from the pinned per-source length (H3).",
+  "T-f carries the collect_male_navigation_v2.py port so prepare_male_navigation_v2.py:325 compares against the v4 contact-v2 copy (H1).",
+  "collect_male_navigation.py:46-47 hashes the v4 copies named in the locator; T-e carries the reader port (H1).",
+  "Widened ranges recorded: prepare_male_navigation_v2.py 18-19 (listed 19) and male_recovery_research.py 113-114 (listed 114).",
   "collect_male_navigation_v2.py:50 needs no bytes: the 20-21 hunk already makes the import-time plan() read the v4 copy."
  ]
 }

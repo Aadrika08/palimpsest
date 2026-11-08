@@ -38,7 +38,7 @@ import probe_male_navigation_v4_imports as probe
 
 ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL_PATH = 'docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json'
-PROTOCOL_SHA256 = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
+PROTOCOL_SHA256 = 'cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477'
 PINS_DIR = ROOT/'docs/plans/m7-navigation-v4-pins'
 # Amendment 1 (owner decision A1): S0c-S0f run from committed port trees listed here.
 PORTS_PATH = PINS_DIR/'ports.json'
@@ -57,7 +57,8 @@ CONTACT_V2 = 'm7-navigation-contact-v2-protocol.json'
 DATA_V2 = 'm7-navigation-data-v2-protocol.json'
 RECOVERY_INDEX = 'male-recovery-research-development-v1.json'
 STUDY_PLAN = 'm7-navigation-study-protocol.json'
-PORT_READER_SHA = 'ad05bfecb866cd7c47205321c5cf885cf349d44707e046cb4a7c1acece7a4567'
+PORT_READER_SHA = 'ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c'
+PORT_COLLECTOR_V2_SHA = '5d7ddef2104a2ec9bb9446aaaa2e8b8db6c77b23ce0d3afd903abc6c6c074a09'
 ORIGINAL_RECOVERY_LEARNING_SHA = '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28'
 ORIGINAL_DATA_SHA = '402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014'
 ORIGINAL_INDEX_SHA = 'cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5'
@@ -137,9 +138,9 @@ STAGES = {
                               'd0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f'},
             # Port tree T-e: the v1 collector reached via source_pins is the port (PLAN/PLAN_SHA -> v4 study-plan
             # copy); contact-v2 /prior_version/collector_sha256 cascades to these bytes (amendment_1_pending).
-            'port_tree': 'T-e', 'port_producer_sha256': '5d7ddef2104a2ec9bb9446aaaa2e8b8db6c77b23ce0d3afd903abc6c6c074a09',
+            'port_tree': 'T-e', 'port_producer_sha256': PORT_COLLECTOR_V2_SHA,
             'port_source_guards': {'scripts/collect_male_navigation.py':
-                                   '705f4f82c8db4b59b14b3b232c6b3c5b946f26f3f01c709826e3c3150061b018'},
+                                   'd06b0dae2e97bfddcf41bc24c98a6cafff4cda3994d7cbdb32d335be025ab791'},
             'port_documents': [CONTACT_V2, RECOVERY_INDEX, RECOVERY_LEARNING, STUDY_PLAN],
             'documents': [CONTACT_V2, RECOVERY_INDEX],
             # The recovery index pin lives in male_recovery_research (not in the protocol inventory).
@@ -155,7 +156,9 @@ STAGES = {
             'historical_commit': '217cbee8399dcb25045a079af012beecbbdae29e',
             'port_tree': 'T-f', 'historical_port_tree': 'T-h',
             'port_producer_sha256': 'b819af261cea449aae01cae90e994aeebefba672b1bbbad43099bc64fab449e0',
-            'port_documents': [DATA_V2, RECOVERY_LEARNING],
+            # Erratum 1: T-f carries the collector port its admission compares against (:325).
+            'port_source_guards': {'scripts/collect_male_navigation_v2.py': PORT_COLLECTOR_V2_SHA},
+            'port_documents': [DATA_V2, RECOVERY_LEARNING, CONTACT_V2],
             'source_guards': {}, 'documents': [DATA_V2, CONTACT_V2],
             # The S0e report carries the v4 contact-plan sha, which this reader compares to PLAN_SHA.
             'rebinds': CONTACT_REBINDS + [

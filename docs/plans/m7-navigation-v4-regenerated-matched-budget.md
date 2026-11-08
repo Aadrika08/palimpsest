@@ -439,3 +439,32 @@ data/path-only, and v4 is **blocked at S0e**.
   `declared-fields.json` changes its `protocol_sha256`.
 
 Thresholds, the matched clock, scene IDs, the lane cap and v3 are unchanged.
+
+## Amendment 1 erratum 1 (8 November 2026)
+
+This erratum corrects Amendment 1 (approved as A1); the text above and the owner records
+are unchanged. The exact record is JSON `amendment_1.erratum_1`. Milestone 2 built the port
+trees and tested them function by function. Three listed sites could not do what their
+hunks state, and two listed line numbers point next to the literal they name.
+
+| Kind | Site | Class | Trees | Change |
+| --- | --- | :-: | --- | --- |
+| added | `prepare_male_recovery_data.py:116` | H3 | all reader trees | emitted windows `[32,32,3]` → derived from the pinned per-source length |
+| added | `collect_male_navigation.py:46-47` | H1 | T-e | study-plan document pins hashed at the v4 copies named in the pins file |
+| tree addition | `collect_male_navigation_v2.py` (20-21 load-bearing) | H1 | T-f | T-f carries the T-e collector port, so `prepare_male_navigation_v2.py:325` compares against the v4 contact-v2 copy |
+| tree addition | `prepare_male_recovery_data.py` | H1 | T-e | T-e carries the reader port, so the study-plan reader pin follows the port |
+| widened | `prepare_male_navigation_v2.py` 19 → 18-19 | H1 | T-f | the path literal is on line 18 |
+| widened | `male_recovery_research.py` 114 → 113-114 | H1 | T-e | the path literal is on line 113 |
+
+**Why.** Without `:116`, the ported window checks at `train_male_recovery.py:80` and
+`male_recovery_research.py:73` refuse every regenerated recovery length except 67. Without
+the T-f collector, S0f refuses every v4 collection at `:325`. Because v4 copies are supplied
+by path, `collect_male_navigation.py:46-47` hashed the tracked originals, so the declared
+study-plan cascades could never match.
+
+**No scientific behaviour change.** Every hunk is in classes H1–H3, which A1 already
+approved. None changes sampling, features, labels, order or filtering. On the v2 reference
+lengths, each ported function returns the same result as the original. The cost table is
+unchanged, because no hunk changes cost. The port branches were rebuilt; the new commits
+are recorded in `docs/plans/m7-navigation-v4-pins/ports.json`. `amendment_1_pending` stays
+inactive.

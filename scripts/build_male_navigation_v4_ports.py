@@ -26,7 +26,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT/'docs/plans/m7-navigation-v4-pins/ports.json'
 SCHEMA = 'm7-navigation-v4-ports-1'
-PROTOCOL_SHA256 = '238bc160d26c70273765eb1d51f8280383f99a88bc8f26ec4a829048552594f8'
+PROTOCOL_SHA256 = 'cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477'
 HUNK_HEADER = re.compile(r'^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@')
 TRAILER = 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>'
 
