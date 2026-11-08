@@ -306,3 +306,7 @@ All nine decisions remain **open**. Each must be resolved, and this protocol re-
 | D7 | Per-owner byte cap and stage headroom | Keep 160 MiB and v3 stage caps; tighten only after a synthetic 600-tick S3 recorder measurement. |
 | D8 | Hard 120 s audit deadline (prior audits ≤ 23.1 s wall); a kill is an operational failure | No reviewer default. |
 | D9 | Order S1 before S0, so an ID collision stops v4 before ~4.3k worst-case CPU-s of S0 | No reviewer default. S1 does not depend on S0 outputs, but S2 does. |
+
+## Owner resolution — 8 November 2026
+
+All open decisions above were resolved by the owner to their recommended defaults (puck: D8 = 120 s hard audit kill; D9 = S1 before S0). Independent manifest review: a fresh AI reviewer agent, recorded as AI review, not human acceptance. Machine-readable record: `owner_decisions_resolution` in the protocol JSON. Each stage still requires its own reviewed execution manifest and explicit owner GO.

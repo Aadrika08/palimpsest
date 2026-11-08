@@ -779,5 +779,21 @@
     "development_executed": false,
     "held_out_accessed": false
   },
-  "qualification_claims": []
+  "qualification_claims": [],
+  "owner_decisions_resolution": {
+    "date": "2026-11-08",
+    "resolved_by": "owner (Utkarsh Maurya), interactive session",
+    "independent_manifest_reviewer": "fresh AI reviewer agent with no drafting context; recorded as AI review, not human acceptance",
+    "choices": {
+      "D1_heldout_roster": "authored 6200-6207 (S8a not needed; held-out W 8,870, admissible iff C <= 9,130)",
+      "D2_heldout_read_scope": "executing or loading 6200-6207 scenes; pure ID/payload comparison under its own explicit GO",
+      "D3_keep_S0d": true,
+      "D4_cgroup_quota_census": "yes, after cgroup-v2 delegation is verified",
+      "D5_reviewer": "fresh AI reviewer agent independent of the drafter",
+      "D6_blocked_is_final": true,
+      "D7_byte_cap": "160 MiB per owner and v3 stage caps; tighten only after synthetic 600-tick S3 recorder measurement",
+      "D8_audit_hard_deadline_seconds": 120,
+      "D9_order": "S1 before S0"
+    }
+  }
 }

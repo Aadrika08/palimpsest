@@ -269,3 +269,7 @@ and is **not** this environment. It is cited only to mark that distinction.
    limits is 2,565 s.
 
 `qualification_claims` is empty.
+
+## Owner resolution — 8 November 2026
+
+All open decisions above were resolved by the owner to their recommended defaults (puck: D8 = 120 s hard audit kill; D9 = S1 before S0). Independent manifest review: a fresh AI reviewer agent, recorded as AI review, not human acceptance. Machine-readable record: `owner_decisions_resolution` in the protocol JSON. Each stage still requires its own reviewed execution manifest and explicit owner GO.

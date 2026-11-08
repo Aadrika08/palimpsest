@@ -814,5 +814,20 @@
     "S2 does not start without six admitted terminal checkpoints.",
     "S3 requires a complete S2 pass, separate manifest, lane admission (charge through S2 <= 5648.168) and a separate explicit owner GO.",
     "No threshold, budget, sampler, checkpoint rule, seed, source, model or topology change after any numerical result."
-  ]
+  ],
+  "owner_decisions_resolution": {
+    "date": "2026-11-08",
+    "resolved_by": "owner (Utkarsh Maurya), interactive session",
+    "independent_manifest_reviewer": "fresh AI reviewer agent with no drafting context; recorded as AI review, not human acceptance",
+    "choices": {
+      "1_stage0_route": "producing-commit worktrees plus data/path-only overlay",
+      "2_rewired_s0d_byproducts": "run unchanged, retain, never evaluate or cite",
+      "3_prior_charge": "count 1.832 CPU-s",
+      "4_scene_ids": "development 3160-3163, held-out 3170-3177",
+      "5_s0_go_granularity": "one GO per S0 sub-stage",
+      "6_unknown_tail_reserve": "none; report tails as unknown",
+      "7_cpuquota": "k=2 for S0b, k=1 elsewhere",
+      "8_s0e_kill_target_seconds": 2240
+    }
+  }
 }
