@@ -1031,8 +1031,17 @@ def count_chain(teacher=None, recovery=None, advice=None):
             'S0d': entry(None), 'S0e': entry(advice or ADVICE)}
 
 
+COUNT_CLASSES = ('count-map', 'count-list', 'window-list')
+
+
+def count_fields(name):
+    """Count fields of a v4 copy: activated (documents block) plus still-pending (amendment_1_pending)."""
+    active = DECLARED['documents'].get(name, {}).get('fields', [])
+    return [f for f in [*active, *PENDING['pending_fields'].get(name, [])] if f['class'] in COUNT_CLASSES]
+
+
 def pending_item(name):
-    return {'fields': [f for f in PENDING['pending_fields'][name] if f['class'] in ('count-map', 'count-list', 'window-list')]}
+    return {'fields': count_fields(name)}
 
 
 def filled_learning():
@@ -1066,7 +1075,7 @@ def check_counts(name, original, doc, chain):
 
 def test_every_pending_count_field_names_a_declared_sub_schema():
     schemas = PENDING['count_schemas']
-    fields = [f for fs in PENDING['pending_fields'].values() for f in fs if f['class'] in ('count-map', 'count-list', 'window-list')]
+    fields = count_fields(LEARNING) + count_fields(DATA_V2)
     assert {(f['pointer'], f['schema']) for f in fields} == {
         ('/counts', 'recovery-learning-counts-v4'), ('/recovery_ticks_each', 'recovery-ticks-v4'),
         ('/recovery_windows', 'recovery-windows-v4'), ('/counts', 'data-v2-counts-v4')}
@@ -1201,3 +1210,103 @@ def test_study_plan_redirect_is_exactly_the_two_named_documents(tmp_path, locato
     assert outcome(source_pins, root)[0] == 'ok'
     plan['current_reusable_source_sha256']['scripts/prepare_male_recovery_data.py'] = sha(b'decoy\n')
     assert outcome(source_pins, root)[2] == 'Pinned study reader source differs: scripts/prepare_male_recovery_data.py'
+
+
+# =================================================================== S0c: recovery-learning copy filled from S0a/S0b records
+
+PINS = ROOT/'docs/plans/m7-navigation-v4-pins'
+S0B_RECORD = ROOT/'docs/reports/male-v4-s0b/pin-record.json'
+LEARNING_FIELDS = ['/baseline_collection_sha256', '/counts', '/recovery_report_sha256', '/recovery_sources/0/result_sha256',
+                   '/recovery_sources/0/run_id', '/recovery_sources/1/result_sha256', '/recovery_sources/1/run_id',
+                   '/recovery_ticks_each', '/recovery_windows']
+
+
+def learning_item():
+    return DECLARED['documents'][LEARNING]
+
+
+def placeholder_copy():
+    """The regenerated copy: the original with every declared field at its placeholder."""
+    doc = json.loads((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_text())
+    for f in learning_item()['fields']: driver.pointer_set(doc, f['pointer'], f['placeholder'])
+    return (json.dumps(doc, indent=2) + '\n').encode()
+
+
+def record_chain(outputs_b=None, recovery=None):
+    out = lambda *names: {n: {'sha256': sha(n.encode()), 'bytes': 1} for n in names}
+    s0b = outputs_b or out('report.json', 'recovery-north-2100/result.json', 'recovery-south-2101/result.json',
+                           'recovery-north-2100/aaaa/recording/manifest.json', 'recovery-north-2100/aaaa/snapshots/initial.snp',
+                           'recovery-south-2101/bbbb/recording/manifest.json')
+    return {'S0a': {'producing_commit': 'a', 'worktree': '/w', 'output_root': '/o/a', 'outputs': out('collection.json', 'runs/x'),
+                    'counts': TEACHER},
+            'S0b': {'producing_commit': 'b', 'worktree': '/w', 'output_root': '/o/b', 'outputs': s0b, 'counts': recovery or RECOVERY}}
+
+
+def test_recovery_learning_count_fields_are_active_and_every_field_names_its_fill_source():
+    item = learning_item()
+    assert [f['pointer'] for f in item['fields']] == LEARNING_FIELDS
+    assert LEARNING not in PENDING['pending_fields'] and PENDING['activated'][LEARNING] == ['/counts', '/recovery_ticks_each',
+                                                                                          '/recovery_windows']
+    for f in item['fields']:
+        assert f['class'] in COUNT_CLASSES or f.get('fill'), f['pointer']
+
+
+def test_fill_derives_every_recovery_learning_field_from_the_s0a_s0b_records_and_the_result_traces():
+    raw, original, chain = placeholder_copy(), json.loads((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_text()), record_chain()
+    values = driver.fill_values(LEARNING, learning_item(), json.loads(raw), original, chain)
+    assert sorted(values) == sorted(LEARNING_FIELDS)
+    assert values['/baseline_collection_sha256'] == sha(b'collection.json') and values['/recovery_report_sha256'] == sha(b'report.json')
+    assert values['/recovery_sources/0/result_sha256'] == sha(b'recovery-north-2100/result.json')
+    assert (values['/recovery_sources/0/run_id'], values['/recovery_sources/1/run_id']) == ('aaaa', 'bbbb')
+    assert values['/recovery_ticks_each'] == [70, 64] and values['/recovery_windows'] == [[32, 32, 6], [32, 32]]
+    assert values['/counts']['per_source'] == TEACHER and values['/counts']['train'] == sum(TEACHER['baseline_train']) + 134
+    filled = driver.fill_document(raw, learning_item(), values)
+    doc = driver.check_pin_document((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_bytes(), filled, learning_item(), consumer=True)
+    driver.check_document_values(LEARNING, doc, original, learning_item(), chain, lambda other: None, PINS)
+
+
+@pytest.mark.parametrize('chain, match', [
+    (lambda c: c.pop('S0b'), 'S0b is not in the pin-record chain'),
+    (lambda c: c['S0b']['outputs'].pop('report.json'), 'report.json'),
+    (lambda c: c['S0b']['outputs'].update({'recovery-north-2100/cccc/recording/manifest.json': {'sha256': 'x', 'bytes': 1}}),
+     'exactly one run directory'),
+    (lambda c: c['S0b'].update(counts={'recovery-north-2100': 67, 'recovery-south-2101': 121}), '120'),
+])
+def test_fill_refuses_missing_records_outputs_ambiguous_runs_and_out_of_bound_counts(chain, match):
+    c = record_chain(); chain(c)
+    original = json.loads((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_text())
+    with pytest.raises(driver.Refusal, match=match):
+        driver.fill_values(LEARNING, learning_item(), json.loads(placeholder_copy()), original, c)
+
+
+def test_tracked_recovery_learning_copy_is_filled_from_the_committed_s0a_s0b_pin_records():
+    record = json.loads(S0B_RECORD.read_bytes())
+    stages = driver.port_stages(driver.STAGES, driver.load_ports())
+    chain = driver.check_pin_record(record, 'S0c', stages, protocol_sha256=driver.PROTOCOL_SHA256)
+    original_raw = (ROOT/learning_item()['original_path']).read_bytes()
+    assert sha(original_raw) == learning_item()['original_sha256']
+    copy_raw = (PINS/LEARNING).read_bytes()
+    doc = driver.check_pin_document(original_raw, copy_raw, learning_item(), consumer=True)    # no PENDING left
+    driver.check_document_values(LEARNING, doc, json.loads(original_raw), learning_item(), chain, lambda other: None, PINS)
+    assert doc['recovery_ticks_each'] == [67, 67] and doc['recovery_windows'] == [[32, 32, 3], [32, 32, 3]]
+    assert doc['counts']['per_source'] == {'baseline_train': [277, 182, 315, 245, 199, 265, 243, 257], 'dev': [189, 338, 319, 382]}
+    assert doc['counts']['train'] == 1983 + 134 and doc['counts']['dev'] == 1228 and doc['counts']['held_out'] == 0
+    assert [s['run_id'] for s in doc['recovery_sources']] == ['f10998ca8ed246059193ca87a9a19a7b', 'a3a272518cfe41f0971631439ce1e84c']
+    assert copy_raw == driver.fill_document(placeholder_copy(), learning_item(),
+                                             driver.fill_values(LEARNING, learning_item(), json.loads(placeholder_copy()),
+                                                                json.loads(original_raw), chain))
+
+
+def test_fill_cli_fills_a_placeholder_copy_in_place_from_previous_records_only(tmp_path, capsys):
+    pins = tmp_path/'pins'; pins.mkdir()
+    (pins/'declared-fields.json').write_bytes((PINS/'declared-fields.json').read_bytes())
+    (pins/LEARNING).write_bytes(placeholder_copy())
+    tree = tmp_path/'tree'; (tree/'docs/plans').mkdir(parents=True)
+    (tree/learning_item()['original_path']).write_bytes((ROOT/learning_item()['original_path']).read_bytes())
+    argv = ['--fill-document', LEARNING, '--stage', 'S0c', '--worktree', str(tree), '--previous-pins', str(S0B_RECORD)]
+    assert driver.main(argv, pins_dir=pins) == 0
+    out = json.loads(capsys.readouterr().out)
+    assert out['status'] == 'filled' and out['sha256'] == sha((pins/LEARNING).read_bytes()) and sorted(out['fields']) == sorted(LEARNING_FIELDS)
+    assert (pins/LEARNING).read_bytes() == (PINS/LEARNING).read_bytes()
+    assert driver.main(argv, pins_dir=pins) == 3 and 'no placeholder' in json.loads(capsys.readouterr().out)['reason']
+    assert driver.main([*argv[:2], '--stage', 'S0b', *argv[4:]], pins_dir=pins) == 3   # S0b does not consume this copy

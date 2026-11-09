@@ -1,5 +1,5 @@
 {
-  "baseline_collection_sha256": "PENDING-S0a",
+  "baseline_collection_sha256": "7c5fabc2d81c5e1b9aff6fb8ddbf9ed431d6f75219eb8af98b7f2787b4a5614f",
   "baseline_protocol_sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
   "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
   "counts": {
@@ -7,7 +7,32 @@
     "dev": 1228,
     "held_out": 0,
     "recovery_train": 134,
-    "train": 2117
+    "train": 2117,
+    "per_source": {
+      "baseline_train": [
+        277,
+        182,
+        315,
+        245,
+        199,
+        265,
+        243,
+        257
+      ],
+      "dev": [
+        189,
+        338,
+        319,
+        382
+      ]
+    },
+    "v2_reference_counts": {
+      "baseline_train": 1983,
+      "dev": 1228,
+      "held_out": 0,
+      "recovery_train": 134,
+      "train": 2117
+    }
   },
   "current_reader_identity": "Pinned preparation/feature/record/raw-validator code is separate from immutable historical v3 producer runtime/harness metadata; no equality assumption for unrelated current Engine/profile/replay files.",
   "excluded": "All v1/v2 recovery failures, new scenes, changed source bytes, held-out data and all expert-substituted targets.",
@@ -67,27 +92,37 @@
   "qualification_claims": [],
   "recorded_dev_only": true,
   "recovery_protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
-  "recovery_report_sha256": "PENDING-S0b",
+  "recovery_report_sha256": "2a54c2a59f1b1d5bf86ce022273b8cbebd04521e9fa58cf3818e2717b7202974",
   "recovery_source_commit": "c382c86781a7a5d6651af721119789729cc890ae",
   "recovery_sources": [
     {
       "case_id": "recovery-north-2100",
-      "result_sha256": "PENDING-S0b",
-      "run_id": "PENDING-S0b",
+      "result_sha256": "e050065ca2af0b3975453d5d3eda381a6de6c3b679cc9bb5ae991068691f73e8",
+      "run_id": "f10998ca8ed246059193ca87a9a19a7b",
       "seed": 2100
     },
     {
       "case_id": "recovery-south-2101",
-      "result_sha256": "PENDING-S0b",
-      "run_id": "PENDING-S0b",
+      "result_sha256": "f6ae433a2d1d1fe1b801078d2b5728a6c39fd10f06ce45b49f7df846be05b594",
+      "run_id": "a3a272518cfe41f0971631439ce1e84c",
       "seed": 2101
     }
   ],
-  "recovery_ticks_each": 67,
+  "recovery_ticks_each": [
+    67,
+    67
+  ],
   "recovery_windows": [
-    32,
-    32,
-    3
+    [
+      32,
+      32,
+      3
+    ],
+    [
+      32,
+      32,
+      3
+    ]
   ],
   "right_censoring": "Recovery sources are separate fresh sequences ending paused at coverage_complete, not natural task terminals. Zero hidden at each source start, carry and detach at 32/32/3 boundaries, include all three final rows, then discard final hidden. No padding, terminal bootstrap, cross-source carry or continuation claim.",
   "scope": "Executed-action imitation on the fixed v2 baseline plus two observed right-censored first-cycle development records; preparation only in this slice. No causal coverage benefit, task success, biological, physical or production qualification.",

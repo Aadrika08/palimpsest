@@ -316,29 +316,40 @@ def test_real_v4_pin_copies_differ_only_in_declared_fields():
         assert sha(original) == item['original_sha256'], name
         copy_bytes = (ROOT/'docs/plans/m7-navigation-v4-pins'/name).read_bytes()
         declared = {f['pointer'] for f in item['fields']}
-        assert driver.field_diff(json.loads(original), json.loads(copy_bytes)) == declared, name
+        diff = driver.field_diff(json.loads(original), json.loads(copy_bytes))
+        assert all(any(p == d or p.startswith(d + '/') for d in declared) for p in diff), name   # nothing undeclared
+        assert all(any(p == d or p.startswith(d + '/') for p in diff) for d in declared), name   # every field regenerated
         driver.check_pin_document(original, copy_bytes, item, consumer=False)
 
 
-def test_real_v4_pin_copies_hold_explicit_stage_placeholders_and_are_refused_by_consumers():
+# Copies filled from published pin records before their first consumer (S0c: S0a + S0b records).
+FILLED_COPIES = {'m7-recovery-learning-protocol.json'}
+
+
+def test_real_v4_pin_copies_hold_explicit_stage_placeholders_until_filled_and_unfilled_ones_are_refused():
     decl = real_declarations()
     for name, item in decl['documents'].items():
         doc = json.loads((ROOT/'docs/plans/m7-navigation-v4-pins'/name).read_text())
-        for field in item['fields']:
-            assert field['placeholder'] == 'PENDING-' + field['stage']
-            assert driver.pointer_get(doc, field['pointer']) == field['placeholder']
-            assert field['stage'] in driver.STAGES
         original = (ROOT/item['original_path']).read_bytes()
-        with pytest.raises(driver.Refusal, match='PENDING'):
-            driver.check_pin_document(original, (ROOT/'docs/plans/m7-navigation-v4-pins'/name).read_bytes(), item, consumer=True)
+        copy_bytes = (ROOT/'docs/plans/m7-navigation-v4-pins'/name).read_bytes()
+        for field in item['fields']:
+            assert field['placeholder'] == 'PENDING-' + field['stage'] and field['stage'] in driver.STAGES
+            filled = driver.pointer_get(doc, field['pointer']) != field['placeholder']
+            assert filled == (name in FILLED_COPIES), (name, field['pointer'])
+        if name in FILLED_COPIES:
+            driver.check_pin_document(original, copy_bytes, item, consumer=True)
+        else:
+            with pytest.raises(driver.Refusal, match='PENDING'):
+                driver.check_pin_document(original, copy_bytes, item, consumer=True)
 
 
 def test_real_v4_source_behaviour_fields_are_unchanged():
     decl = real_declarations()['documents']
     learning = json.loads((ROOT/'docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json').read_text())
     original = json.loads((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_text())
-    for key in ('source_code_sha256', 'recovery_protocol_sha256', 'recovery_source_commit', 'training', 'counts'):
+    for key in ('source_code_sha256', 'recovery_protocol_sha256', 'recovery_source_commit', 'training'):
         assert learning[key] == original[key]
+    assert learning['counts']['v2_reference_counts'] == original['counts']   # counts are declared; v2 kept descriptively
     contact = json.loads((ROOT/'docs/plans/m7-navigation-v4-pins/m7-navigation-contact-v2-protocol.json').read_text())
     assert contact['contact_profile']['sha256'] == '1593421ae2cc1a12b0d9aeae6646fda77da1d11a885ffac3406e52dc6af12186'
     assert all(f['stage'] in ('S0a', 'S0b', 'S0c', 'S0d', 'S0e', 'S0f') for d in decl.values() for f in d['fields'])

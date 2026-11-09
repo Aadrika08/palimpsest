@@ -17,21 +17,38 @@
           "class": "sha256",
           "stage": "S0a",
           "placeholder": "PENDING-S0a",
-          "site": "scripts/prepare_male_recovery_data.py:154,212"
+          "site": "scripts/prepare_male_recovery_data.py:154,212",
+          "fill": {
+            "output": "collection.json"
+          }
+        },
+        {
+          "pointer": "/counts",
+          "class": "count-map",
+          "stage": "S0b",
+          "placeholder": "PENDING-S0b",
+          "site": "from S0a/S0b pins; v2 values descriptive only",
+          "schema": "recovery-learning-counts-v4"
         },
         {
           "pointer": "/recovery_report_sha256",
           "class": "sha256",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "scripts/prepare_male_recovery_data.py:155,213"
+          "site": "scripts/prepare_male_recovery_data.py:155,213",
+          "fill": {
+            "output": "report.json"
+          }
         },
         {
           "pointer": "/recovery_sources/0/result_sha256",
           "class": "sha256",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "scripts/prepare_male_recovery_data.py:182"
+          "site": "scripts/prepare_male_recovery_data.py:182",
+          "fill": {
+            "output": "recovery-north-2100/result.json"
+          }
         },
         {
           "pointer": "/recovery_sources/0/run_id",
@@ -39,14 +56,20 @@
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
           "site": "scripts/prepare_male_recovery_data.py:184",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review",
+          "fill": {
+            "run_dir_of": "recovery-north-2100"
+          }
         },
         {
           "pointer": "/recovery_sources/1/result_sha256",
           "class": "sha256",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "scripts/prepare_male_recovery_data.py:182"
+          "site": "scripts/prepare_male_recovery_data.py:182",
+          "fill": {
+            "output": "recovery-south-2101/result.json"
+          }
         },
         {
           "pointer": "/recovery_sources/1/run_id",
@@ -54,7 +77,26 @@
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
           "site": "scripts/prepare_male_recovery_data.py:184",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review",
+          "fill": {
+            "run_dir_of": "recovery-south-2101"
+          }
+        },
+        {
+          "pointer": "/recovery_ticks_each",
+          "class": "count-list",
+          "stage": "S0b",
+          "placeholder": "PENDING-S0b",
+          "site": "per-source S0b pins (lengths may differ per source)",
+          "schema": "recovery-ticks-v4"
+        },
+        {
+          "pointer": "/recovery_windows",
+          "class": "window-list",
+          "stage": "S0b",
+          "placeholder": "PENDING-S0b",
+          "site": "derived from pinned per-source ticks",
+          "schema": "recovery-windows-v4"
         }
       ]
     },
@@ -675,32 +717,6 @@
           "site": "copied to S0f output at prepare_male_navigation_v2.py:470; from S0c/S0e pins; v2 values descriptive only",
           "schema": "data-v2-counts-v4"
         }
-      ],
-      "m7-recovery-learning-protocol.json": [
-        {
-          "pointer": "/counts",
-          "class": "count-map",
-          "stage": "S0b",
-          "placeholder": "PENDING-S0b",
-          "site": "from S0a/S0b pins; v2 values descriptive only",
-          "schema": "recovery-learning-counts-v4"
-        },
-        {
-          "pointer": "/recovery_ticks_each",
-          "class": "count-list",
-          "stage": "S0b",
-          "placeholder": "PENDING-S0b",
-          "site": "per-source S0b pins (lengths may differ per source)",
-          "schema": "recovery-ticks-v4"
-        },
-        {
-          "pointer": "/recovery_windows",
-          "class": "window-list",
-          "stage": "S0b",
-          "placeholder": "PENDING-S0b",
-          "site": "derived from pinned per-source ticks",
-          "schema": "recovery-windows-v4"
-        }
       ]
     },
     "note": "old_historical_reader/root is already declared (stage S0f). Adding these fields to the active documents block requires regenerating the copies and updating tests (implementation follow-up).",
@@ -811,6 +827,14 @@
         "bounds": "ints > 0; recovery <= 120; advice <= 600"
       }
     },
-    "count_records": "Pin records of S0a, S0b and S0e carry per-source counts read by the driver from the finished stage's own output documents (collection.json; <case_id>/result.json), never from recordings; count-map/count-list/window-list values must equal the counts derived from those records exactly."
+    "count_records": "Pin records of S0a, S0b and S0e carry per-source counts read by the driver from the finished stage's own output documents (collection.json; <case_id>/result.json), never from recordings; count-map/count-list/window-list values must equal the counts derived from those records exactly.",
+    "activated": {
+      "m7-recovery-learning-protocol.json": [
+        "/counts",
+        "/recovery_ticks_each",
+        "/recovery_windows"
+      ]
+    },
+    "activation_note": "2026-11-09, before S0c: the recovery-learning count fields are active in documents[] (Amendment 1 follow-up \"regenerate the pin copies with PENDING- placeholders\"); the copy was regenerated from the original with every declared field at its placeholder and then filled only from the S0a/S0b pin records (regenerate_male_navigation_v4.py --fill-document). The other pending fields stay inactive until their consumer stage."
   }
 }
