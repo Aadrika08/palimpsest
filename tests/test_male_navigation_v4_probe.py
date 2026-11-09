@@ -318,3 +318,12 @@ def test_stage_p_manifest_covers_every_entry_point_once_under_a_charged_navigati
     assert '/home/utkarsh/Work/shraddha/palimpsest/runs' in forbid and '/home/utkarsh/Work/shraddha/palimpsest/data/assets' in forbid
     assert all(f'{r}/runs' in forbid and f'{r}/data/assets' in forbid for r in roots)
     assert '--write-port-pins' in text and PORTS['trees']['T-e']['port_commit'] in text
+
+
+def test_egl_stage_limits_the_single_context_to_one_declared_stage(monkeypatch, tmp_path):
+    calls = []
+    monkeypatch.setattr(probe, 'probe_stage', lambda python, stage, worktree, **kw: calls.append(
+        (stage, kw['egl'])) or {'stage': stage, 'status': 'passed'})
+    probe.main(['--python', sys.executable, '--egl', '--egl-stage', 'S2',
+                '--stage', f'S1={tmp_path}', '--stage', f'S2={tmp_path}'])
+    assert calls == [('S1', False), ('S2', True)]

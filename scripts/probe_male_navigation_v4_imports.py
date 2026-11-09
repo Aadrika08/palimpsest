@@ -407,6 +407,7 @@ def main(argv=None):
     parser.add_argument('--module', help='Ad-hoc entry module (with --root)')
     parser.add_argument('--forbid', action='append', default=[], help='Data root that must never be opened')
     parser.add_argument('--egl', action='store_true', help='Record EGL identity from one offscreen context')
+    parser.add_argument('--egl-stage', help='With --egl: only this declared stage creates the one context')
     parser.add_argument('--timeout', type=float, default=DEFAULT_TIMEOUT)
     parser.add_argument('--port-pins', type=Path, help='Port locator document for *-port stages')
     parser.add_argument('--write-port-pins', type=Path,
@@ -428,7 +429,8 @@ def main(argv=None):
         stage, _, worktree = item.partition('=')
         if stage not in ENTRYPOINTS or not worktree:
             print(json.dumps({'status': 'refused', 'reasons': [f'Undeclared stage entry {item}']})); return 2
-        results.append(probe_stage(python, stage, worktree, forbid=args.forbid, egl=args.egl, timeout=args.timeout,
+        egl = args.egl and (args.egl_stage is None or stage == args.egl_stage)
+        results.append(probe_stage(python, stage, worktree, forbid=args.forbid, egl=egl, timeout=args.timeout,
                                    port_pins=args.port_pins))
     if args.root or args.module:
         if not (args.root and args.module):

@@ -123,7 +123,7 @@ reserved v4 data root `palimpsest-authored-test-evidence/male-v4-runs`. Held-out
   --receipt-dir /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-stage-p/receipt \
   -- \
   /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -I -B /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/probe_male_navigation_v4_imports.py \
-  --python /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python --egl --timeout 30 \
+  --python /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python --egl --egl-stage S2 --timeout 30 \
   --port-pins /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-stage-p/port-pins.json \
   --stage S0a=/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9 \
   --stage S0b=/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/c382c86 \
@@ -189,7 +189,9 @@ reserved v4 data root `palimpsest-authored-test-evidence/male-v4-runs`. Held-out
 - Kill target 120 s plus `TimeoutStopSec=5` at k=1 gives a worst case of 125 CPU-s (the
   amendment's stage-cost row). Admission uses the ledger; there is no retry.
 - One invocation runs 21 sequential `python -I` children. Several import Torch and MuJoCo, and
-  `--egl` creates one offscreen context per child. The protocol's ≤30 s expectation is an
+  `--egl --egl-stage S2` creates the protocol's single offscreen context, in the S2 (renderer) child only;
+  measured cost of one context is about 3.2 CPU-s and of a torch+mujoco import about 1.3 CPU-s, so
+  21 children are expected to need roughly 30 CPU-s. (Before this change `--egl` created one context per child.) The protocol's ≤30 s expectation is an
   estimate. Real entries were **not** probed for timing (that would be stage P). `--timeout 30`
   bounds any single child. If the sum exceeds 120 s, the unit is killed: an operational failure
   that ends v4 at P. Reviewers may instead choose to split P into per-entry units, which needs a
