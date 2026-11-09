@@ -151,3 +151,28 @@ pin record, or a unit that is not drained. Later stages stay `not_started`. Ther
 substitution, filtering, recollection or budget change. The first fault and all partial outputs
 are retained as they are, the charge stands (census, or 1,265 CPU-s without a complete receipt),
 and any further work needs a new protocol version.
+
+## Review amendments (independent AI review, 2026-11-09)
+
+- **Writer lock (additional pre-launch check):** no palimpsest lab, producer or research stage is
+  running in any lane, and nothing holds `~/.cache/palimpsest/writer.lock` (`fuser` empty).
+  `StorageBudget.lock()` takes that per-user non-blocking lock; contention would fail
+  `LabSupervisor` at startup and end v4.
+- **Directories:** create `palimpsest-authored-test-evidence/male-v4-s0a/` (GO record, receipt)
+  before launch; `male-v4-runs/S0a/` must be absent or empty. `male-v4-runs` is a v4 output
+  root chosen for this run, not a protocol reservation.
+- **Throttling risk (stated, not blocking):** the 277.697 s historical figure is unconstrained
+  wall time; S0a CPU was never measured. Under CPUQuota=100% the owner runs 2 torch threads,
+  OpenBLAS/OMP threads are unset and the supervisor polls every 10 ms. Headroom against the
+  1,200 s stage deadline is about 4.3x; each run also has a 180 s owner deadline (historical mean
+  about 23 s, longest unknown, at most 600 ticks). Any `TimeoutError` or RuntimeMaxSec kill is an
+  operational failure that ends v4. The producer's thread environment is left exactly as at
+  cc1cea9 (owner decision 7: k=1 for S0a).
+- **EGL identity:** recorded as host graphics stack `mesa 1:26.2.5-1`, `libglvnd 1.7.0-3`
+  (checked before launch and again after S0a; any change is reported), plus the stage P S2
+  EGL record (`docs/reports/male-v4-stage-p/probe-report.json.gz`) from the same host.
+- **Post-run gate before any S0b GO:** read `collection.json` and require status `completed`,
+  stage `development`, seeds in order (train 1000–1007, dev 1008–1011), no held-out entries,
+  every train run at least 32 ticks, and per-source counts equal to the published pin record.
+  Record the pin-record sha256 in the S0a RESULT and in the S0b GO.
+- **Wording:** "137 files" means 137 entries (123 regular files).
