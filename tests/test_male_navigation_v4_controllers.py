@@ -51,6 +51,15 @@ def git(cwd, *args):
                           check=True, capture_output=True, text=True).stdout.strip()
 
 
+def port_rev(tree_id):
+    """The port branch's commit (local ref, else origin as in CI checkouts); always the recorded commit."""
+    import build_male_navigation_v4_ports as port_builder
+    tree = PORTS['trees'][tree_id]
+    commit = port_builder.branch_commit(ROOT, tree['branch'])
+    assert commit and commit == tree['port_commit'], (tree_id, tree['branch'], commit, tree['port_commit'])
+    return commit
+
+
 def blob(rev, path):
     return subprocess.run(['git', 'show', f'{rev}:{path}'], cwd=ROOT, capture_output=True, check=True).stdout
 
@@ -181,7 +190,7 @@ def fake(tmp_path):
 def port_tree(tmp_path_factory):
     """Read-only extract of the T-e port branch (src, scripts) as a clean detached worktree."""
     root = tmp_path_factory.mktemp('t-e')/'worktree'; root.mkdir()
-    archive = subprocess.run(['git', 'archive', PORTS['trees']['T-e']['branch'], 'src', 'scripts'], cwd=ROOT,
+    archive = subprocess.run(['git', 'archive', port_rev('T-e'), 'src', 'scripts'], cwd=ROOT,
                              capture_output=True, check=True).stdout
     with tarfile.open(fileobj=io.BytesIO(archive)) as tar: tar.extractall(root, filter='data')
     git(root, 'init', '-q'); git(root, 'add', '-A'); git(root, 'commit', '-qm', 'T-e port extract')
@@ -320,7 +329,7 @@ def gate_namespace():
           'artifacts': types.SimpleNamespace(_read=lambda p, cap=None: Path(p).read_bytes(), _json=json.loads,
                                              _safe_path=lambda p: Path(p).absolute()),
           'male_policy': types.SimpleNamespace(_sha=sha)}
-    return extract(blob(PORTS['trees']['T-e']['branch'], 'src/palimpsest/male_recovery_research.py'), ('read_pin', '_gate'), ns)
+    return extract(blob(port_rev('T-e'), 'src/palimpsest/male_recovery_research.py'), ('read_pin', '_gate'), ns)
 
 
 def gate_index(tmp_path, worktree, monkeypatch):
@@ -528,7 +537,7 @@ def launch(tmp_path, worktree, fake, **overrides):
 def admit_namespace():
     nav = types.SimpleNamespace(PROFILE='P', PLAN_SHA='S', PROFILE_SHA='C', CASES=[{'id': c} for c in ADVICE_CASES])
     ns = {'helpers': lambda: (None, nav)}
-    return extract(blob(PORTS['trees']['T-f']['branch'], 'scripts/prepare_male_navigation_v2.py'), ('admit_collection',), ns)
+    return extract(blob(port_rev('T-f'), 'scripts/prepare_male_navigation_v2.py'), ('admit_collection',), ns)
 
 
 def drain_fixture(tmp_path, *, returncode=0, unit_returncode=0, survivors=(), complete=True, cgroup_pids=None):

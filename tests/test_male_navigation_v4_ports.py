@@ -39,7 +39,11 @@ def blob(rev, path):
 
 
 def port_rev(tree_id):
-    return SPEC['trees'][tree_id]['branch']
+    """The port branch's commit (local ref, else origin as in CI checkouts); always the recorded deterministic commit."""
+    tree = SPEC['trees'][tree_id]
+    commit = ports.branch_commit(ROOT, tree['branch'])
+    assert commit and commit == tree['port_commit'], (tree_id, tree['branch'], commit, tree['port_commit'])
+    return commit
 
 
 def git(cwd, *args):
@@ -112,13 +116,13 @@ def test_port_branch_exists_at_recorded_deterministic_commit(tree_id):
 @pytest.mark.parametrize('tree_id', sorted(SPEC['trees']))
 def test_exact_diff_is_only_the_listed_hunks(tree_id):
     tree = SPEC['trees'][tree_id]
-    changed = git(ROOT, 'diff', '--no-renames', '--name-only', tree['base'], tree['branch']).split()
+    changed = git(ROOT, 'diff', '--no-renames', '--name-only', tree['base'], port_rev(tree_id)).split()
     assert sorted(changed) == sorted(tree['files'])
     for path in tree['files']:
-        base, port = blob(tree['base'], path), blob(tree['branch'], path)
+        base, port = blob(tree['base'], path), blob(port_rev(tree_id), path)
         assert port == ports.apply_hunks(base, SPEC['files'][path]['hunks'], name=path)
         hunks = SPEC['files'][path]['hunks']
-        ranges = ports.diff_ranges(ROOT, tree['base'], tree['branch'], path)
+        ranges = ports.diff_ranges(ROOT, tree['base'], port_rev(tree_id), path)
         assert ranges and all(ports.contained(first, count, hunks) for first, count in ranges)
         # Every non-empty listed hunk changes something; unchanged lines keep their bytes.
         for hunk in hunks:
@@ -128,10 +132,10 @@ def test_exact_diff_is_only_the_listed_hunks(tree_id):
 
 
 def test_reader_port_is_identical_in_every_tree_that_carries_it():
-    payloads = {blob(SPEC['trees'][t]['branch'], 'scripts/prepare_male_recovery_data.py')
+    payloads = {blob(port_rev(t), 'scripts/prepare_male_recovery_data.py')
                 for t in ('T-c', 'T-d', 'T-e', 'T-h', 'T-f')}
     assert len(payloads) == 1
-    collectors = {blob(SPEC['trees'][t]['branch'], 'scripts/collect_male_navigation_v2.py') for t in ('T-e', 'T-f')}
+    collectors = {blob(port_rev(t), 'scripts/collect_male_navigation_v2.py') for t in ('T-e', 'T-f')}
     assert len(collectors) == 1
 
 
@@ -149,18 +153,18 @@ def test_h2_relaunch_hunks_are_empty_and_the_child_is_the_port():
             tree_id = next(t for t, tree in SPEC['trees'].items() if path in tree['files'] and
                            tree['stage'] in ('S0e', 'S0f'))
             base = blob(SPEC['trees'][tree_id]['base'], path).decode().split('\n')
-            port = blob(SPEC['trees'][tree_id]['branch'], path).decode().split('\n')
+            port = blob(port_rev(tree_id), path).decode().split('\n')
             # The relaunch line is byte-identical and still re-executes this very file (the port).
             line = base[hunk['start'] - 1]
             assert hunk['unchanged_line_contains'] in line and line in port
             found[path] = line
     assert set(found) == {'scripts/collect_male_navigation_v2.py', 'scripts/prepare_male_navigation_v2.py'}
     assert '__file__' in found['scripts/collect_male_navigation_v2.py']
-    script = blob(SPEC['trees']['T-f']['branch'], 'scripts/prepare_male_navigation_v2.py').decode()
+    script = blob(port_rev('T-f'), 'scripts/prepare_male_navigation_v2.py').decode()
     assert 'SCRIPT = Path(__file__).resolve()' in script and 'str(SCRIPT)' in found['scripts/prepare_male_navigation_v2.py']
     # The locator reaches both children: bounded_process inherits os.environ and -I keeps non-PYTHON* vars.
     assert not ENV.startswith('PYTHON')
-    child = blob(SPEC['trees']['T-e']['branch'], 'scripts/collect_male_navigation_v2.py').decode()
+    child = blob(port_rev('T-e'), 'scripts/collect_male_navigation_v2.py').decode()
     assert "{**os.environ,'PYTHONPATH'" in child
 
 
@@ -179,7 +183,7 @@ def test_import_time_reads_touch_only_the_locator_documents():
                     for a in n.names}
     for tree_id, tree in SPEC['trees'].items():
         for path in tree['files']:
-            text = blob(tree['branch'], path).decode()
+            text = blob(port_rev(tree_id), path).decode()
             found = [s for s in stale if s in text]
             if path == 'scripts/collect_male_navigation.py':
                 # v1's own worker/verify keep their inline index path; S0e (v2) never reaches them. In
@@ -349,7 +353,7 @@ READER_FUNCTIONS = ('protocol', 'frozen_json', 'validate_splits')
 def reader_namespaces(learning_path, learning_sha, *, extra=(), stubs=None, port_tree='T-c'):
     """(original, port) namespaces of the reader functions (the reader port is identical in every tree)."""
     path, out = 'scripts/prepare_male_recovery_data.py', []
-    for rev, port in ((SPEC['trees'][port_tree]['base'], False), (SPEC['trees'][port_tree]['branch'], True)):
+    for rev, port in ((SPEC['trees'][port_tree]['base'], False), (port_rev(port_tree), True)):
         ns = {'json': json, 'os': __import__('os'), 'Path': Path, 'hashlib': hashlib, 'math': math, 'time': time,
               'np': np, 'MAX_JSON': 4*1024**2, 'ROOT': Path('/nonexistent-root'), 'artifacts': artifacts_stub(), **(stubs or {})}
         if port: extract(blob(rev, path), (), ns, assigns=('PROTOCOL_PATH', 'PROTOCOL_SHA256'))
@@ -495,7 +499,7 @@ def test_s0c_pending_pin_values_are_refused(tmp_path, locator, field):
 def research_namespaces(stubs=None):
     path = 'src/palimpsest/male_recovery_research.py'
     out = []
-    for rev in (SPEC['trees']['T-e']['base'], SPEC['trees']['T-e']['branch']):
+    for rev in (SPEC['trees']['T-e']['base'], port_rev('T-e')):
         ns = {'Path': Path, 'math': math, 'MAX_JSON': 4*1024**2, 'PAIR_SEEDS': (10, 11, 12), 'artifacts': artifacts_stub(),
               'male_policy': types.SimpleNamespace(_sha=sha), **(stubs or {})}
         out.append(extract(blob(rev, path), ('read_pin', '_gate', '_history'), ns))
@@ -578,7 +582,7 @@ def test_trainer_epoch_count_check_port_equals_original(tmp_path, locator):
     path, results = 'scripts/train_male_recovery.py', []
     rows = [{'epoch': e, 'train_ticks': 2117, 'train_loss': 1.0, 'dev': {'ticks': 1228, 'loss': abs(e-3)+1.,
             'velocity_mae': .1, 'wrapped_heading_mae_radians': .2}} for e in range(1, 21)]
-    for rev in (SPEC['trees']['T-d']['base'], SPEC['trees']['T-d']['branch']):
+    for rev in (SPEC['trees']['T-d']['base'], port_rev('T-d')):
         ns = extract(blob(rev, path), ('validate_fit',), {'math': math, 'data_reader': types.SimpleNamespace(protocol=reader['protocol'])})
         results.append([outcome(ns['validate_fit'], r) for r in (
             {'history': rows, 'selected_epoch': 3}, {'history': [{**rows[0], 'train_ticks': 2118}] + rows[1:], 'selected_epoch': 3})])
@@ -658,7 +662,7 @@ def s0f_fixture(tmp_path, locator, *, advice=V2_ADVICE, data_advice=None, old_tr
     path = 'scripts/prepare_male_navigation_v2.py'
     out = []
     readers = reader_namespaces(entries[LEARNING]['path'], entries[LEARNING]['sha256'], port_tree='T-f')
-    for (rev, port), reader in zip(((SPEC['trees']['T-f']['base'], False), (SPEC['trees']['T-f']['branch'], True)), readers):
+    for (rev, port), reader in zip(((SPEC['trees']['T-f']['base'], False), (port_rev('T-f'), True)), readers):
         old_module = types.SimpleNamespace(validate_splits=reader['validate_splits'], inventory=lambda run, files, deadline: [])
         ns = {'json': json, 'os': __import__('os'), 'Path': Path, 'hashlib': hashlib, 'math': math, 'time': time, 'sys': sys,
               'ROOT': Path('/nonexistent-root'), 'MiB': 1024**2, 'MAX_JSON': 4*1024**2, 'SELF_SHA': 's'*64,
@@ -750,19 +754,19 @@ def test_real_port_stages_pin_port_bytes_and_the_s0e_collector_cascade():
     for stage, tree_id in (('S0c', 'T-c'), ('S0d', 'T-d'), ('S0e', 'T-e'), ('S0f', 'T-f')):
         spec, tree = driver.STAGES[stage], SPEC['trees'][tree_id]
         assert spec['port_tree'] == tree_id and spec['commit'] == tree['base']
-        assert spec['port_producer_sha256'] == sha(blob(tree['branch'], spec['producer']))
+        assert spec['port_producer_sha256'] == sha(blob(port_rev(tree_id), spec['producer']))
         for rel, pin in spec.get('port_source_guards', {}).items():
-            assert rel in tree['files'] and pin == sha(blob(tree['branch'], rel)), (stage, rel)
+            assert rel in tree['files'] and pin == sha(blob(port_rev(tree_id), rel)), (stage, rel)
         assert sorted(spec['port_documents']) == sorted(tree['documents'])
     assert driver.STAGES['S0f']['historical_port_tree'] == 'T-h'
     assert not any('port_tree' in driver.STAGES[s] for s in ('S0a', 'S0b'))
     # :118 cascade: the S0e guard, the T-e port bytes and the staged contact-v2 prior_version value agree.
-    collector = sha(blob(SPEC['trees']['T-e']['branch'], 'scripts/collect_male_navigation.py'))
+    collector = sha(blob(port_rev('T-e'), 'scripts/collect_male_navigation.py'))
     assert driver.STAGES['S0e']['port_source_guards'] == {'scripts/collect_male_navigation.py': collector}
     assert driver.STAGES['S0d']['port_source_guards'] == {
-        'scripts/prepare_male_recovery_data.py': sha(blob(SPEC['trees']['T-d']['branch'], 'scripts/prepare_male_recovery_data.py'))}
+        'scripts/prepare_male_recovery_data.py': sha(blob(port_rev('T-d'), 'scripts/prepare_male_recovery_data.py'))}
     assert driver.STAGES['S0f']['port_source_guards'] == {
-        'scripts/collect_male_navigation_v2.py': sha(blob(SPEC['trees']['T-f']['branch'], 'scripts/collect_male_navigation_v2.py'))}
+        'scripts/collect_male_navigation_v2.py': sha(blob(port_rev('T-f'), 'scripts/collect_male_navigation_v2.py'))}
     pending = DECLARED['amendment_1_pending']
     assert pending['status'].startswith('inactive')
     field = next(f for f in pending['pending_fields'][driver.CONTACT_V2] if f['pointer'] == '/prior_version/collector_sha256')
@@ -783,9 +787,9 @@ def test_study_plan_copy_differs_only_in_pending_fields_and_holds_placeholders()
     # Inactive: the copy is not an active pin document, so no stage can consume it yet.
     assert driver.STUDY_PLAN not in DECLARED['documents']
     assert field_of(item, '/current_reusable_source_sha256/src~1palimpsest~1male_recovery_research.py')['cascade_value'] == \
-        sha(blob(SPEC['trees']['T-e']['branch'], 'src/palimpsest/male_recovery_research.py'))
+        sha(blob(port_rev('T-e'), 'src/palimpsest/male_recovery_research.py'))
     assert field_of(item, '/current_reusable_source_sha256/scripts~1prepare_male_recovery_data.py')['cascade_value'] == \
-        sha(blob(SPEC['trees']['T-e']['branch'], 'scripts/prepare_male_recovery_data.py'))
+        sha(blob(port_rev('T-e'), 'scripts/prepare_male_recovery_data.py'))
     # Erratum 1: the two document pins are hashed at their v4 copies (locator), so they cascade too.
     for pointer, name in (('/current_reusable_source_sha256/data~1manifests~1male-recovery-research-development-v1.json',
                            driver.RECOVERY_INDEX),
@@ -974,7 +978,7 @@ def test_erratum_s0f_admission_compares_the_report_with_the_v4_contact_copy(tmp_
     entries = locator({DATA_V2: data_v2, LEARNING: {}, driver.CONTACT_V2: {'contacts': {}}})
     v4_sha = entries[driver.CONTACT_V2]['sha256']
     tf = SPEC['trees']['T-f']
-    ported, original = collector_constants(tf['branch']), collector_constants(tf['base'])
+    ported, original = collector_constants(port_rev('T-f')), collector_constants(tf['base'])
     assert ported.PLAN_SHA == v4_sha and ported.PLAN == entries[driver.CONTACT_V2]['path']
     assert original.PLAN_SHA == '29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0'
     docs = copy.deepcopy(documents)
@@ -998,7 +1002,7 @@ def test_erratum_study_plan_source_pins_hash_the_v4_copies_named_in_the_locator(
                 'scripts/prepare_male_recovery_data.py': sha(tracked['scripts/prepare_male_recovery_data.py'])},
             'generator': {'source_sha256': {}}}
     pins = {}
-    for which, rev in (('original', SPEC['trees']['T-e']['base']), ('port', SPEC['trees']['T-e']['branch'])):
+    for which, rev in (('original', SPEC['trees']['T-e']['base']), ('port', port_rev('T-e'))):
         ns = {'json': json, 'os': __import__('os'), 'Path': Path, 'ROOT': Path('/nonexistent-root'), 'PLAN_SHA': 'plan',
               'plan': lambda root=None: plan,
               'digest': lambda path: sha(Path(path).read_bytes()) if Path(path).exists() else 'absent',
@@ -1174,7 +1178,7 @@ def test_port_locator_refuses_relative_paths():
 
 def test_study_plan_redirect_is_exactly_the_two_named_documents(tmp_path, locator):
     """A locator key matching another pinned source's basename never redirects it."""
-    port = blob(SPEC['trees']['T-e']['branch'], 'scripts/collect_male_navigation.py').decode()
+    port = blob(port_rev('T-e'), 'scripts/collect_male_navigation.py').decode()
     hunk = next(h for h in SPEC['files']['scripts/collect_male_navigation.py']['hunks'] if h['spec_lines'] == '46-47')
     assert "'data/manifests/male-recovery-research-development-v1.json': v4['male-recovery-research-development-v1.json']['path']" in hunk['new'][0]
     assert "'docs/plans/m7-recovery-learning-protocol.json': v4['m7-recovery-learning-protocol.json']['path']" in hunk['new'][0]
