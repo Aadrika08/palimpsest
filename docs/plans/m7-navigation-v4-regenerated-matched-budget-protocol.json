@@ -814,5 +814,632 @@
     "S2 does not start without six admitted terminal checkpoints.",
     "S3 requires a complete S2 pass, separate manifest, lane admission (charge through S2 <= 5648.168) and a separate explicit owner GO.",
     "No threshold, budget, sampler, checkpoint rule, seed, source, model or topology change after any numerical result."
-  ]
+  ],
+  "owner_decisions_resolution": {
+    "date": "2026-11-08",
+    "resolved_by": "owner (Utkarsh Maurya), interactive session",
+    "independent_manifest_reviewer": "fresh AI reviewer agent with no drafting context; recorded as AI review, not human acceptance",
+    "choices": {
+      "1_stage0_route": "producing-commit worktrees plus data/path-only overlay",
+      "2_rewired_s0d_byproducts": "run unchanged, retain, never evaluate or cite",
+      "3_prior_charge": "count 1.832 CPU-s",
+      "4_scene_ids": "development 3160-3163, held-out 3170-3177",
+      "5_s0_go_granularity": "one GO per S0 sub-stage",
+      "6_unknown_tail_reserve": "none; report tails as unknown",
+      "7_cpuquota": "k=2 for S0b, k=1 elsewhere",
+      "8_s0e_kill_target_seconds": 2240
+    }
+  },
+  "amendment_1": {
+    "id": "M7-NAV-V4-REGEN-MATCHED-BUDGET-1/amendment-1",
+    "date": "2026-11-08",
+    "status": "draft; requires explicit owner approval A1; owner_decisions_resolution is not rewritten",
+    "trigger": "Milestone 1 (fbaa421: probe, overlay driver, docs/plans/m7-navigation-v4-pins/) found the data/path-only in-process overlay cannot reach S0e/S0f.",
+    "findings": [
+      "Self-relaunch: scripts/collect_male_navigation_v2.py:466 and scripts/prepare_male_navigation_v2.py:422 (-I) start child processes that an in-process rebinding never reaches.",
+      "Inline literal index path scripts/collect_male_navigation_v2.py:326,458,485; plan read at import :50.",
+      "src/palimpsest/male_recovery_research.py:114,117 (736e0cf) hard-codes recovery-learning sha 091c4e98..., which the v4 copy changes.",
+      "Hard-coded counts: prepare_male_recovery_data.py:140 (2117/1228/0), :160 (134 ticks), :177 (1983/1228), identical at 7d5fc1f and 217cbee; prepare_male_navigation_v2.py:327 (5080), :430 (2117/1228), :464 (7197/1228).",
+      "S0d needs three per-seed runs plus an enclosing controller; the original controller lived in lost runs/.",
+      "data-v2 immutable_inputs collection_terminal, collection_enclosing, collector_supervisor, launcher_supervisor, exec_drain, root_raw_audit, published_collection_index came from launcher/host/audit steps no v4 stage produced; the original launch.py, supervise.py and root audit.py were in lost runs/.",
+      "v1 scripts/collect_male_navigation.py:26-27 (736e0cf), reached via collect_male_navigation_v2.source_pins, hard-codes study-plan sha a3612cdc...; that plan pins male_recovery_research.py, prepare_male_recovery_data.py, the recovery index and the recovery-learning protocol, whose bytes change in v4."
+    ],
+    "behaviour_change_statement": "This is a source-behaviour change relative to the owner's data/path-only Stage 0 choice (owner_decisions_resolution.choices.1_stage0_route) and needs new explicit owner approval.",
+    "route": {
+      "unchanged": [
+        "S0a from worktree at cc1cea9",
+        "S0b from worktree at c382c86"
+      ],
+      "ported": "S0c-S0f run from committed v4 port trees: producing commit + only the listed hunks; ports keep original relative paths so git rev-parse HEAD reports the port commit; v4 pin documents are supplied by path and are not committed into port trees.",
+      "reconstructed": "controllers whose bytes were lost are new source under full (not diff-restricted) review"
+    },
+    "hunk_classes": {
+      "H1": "externalized literal: path/pin literal read from a v4 pin document or CLI argument; read timing unchanged (including import-time reads)",
+      "H2": "relaunch target: child executes the port; EMPTY in practice because ports keep original relative paths and relaunch via __file__ (collect_male_navigation_v2.py:466, prepare_male_navigation_v2.py:422); tests still prove the child is the port",
+      "H3": "count assertion -> structural invariant plus per-source order-preserving equality with upstream v4 pin records; original numbers kept only as descriptive v2_reference_counts",
+      "H4": "NOT a code hunk: declared-field change in the data-v2 copy (source_binding/old_historical_reader/{root,head,all_tracked_project_python_inventory/{count,canonical_map_sha256},adapter_sha256,code} -> T-h; source_binding/navigation_producer_commit -> T-e), read by prepare_male_navigation_v2.py:55-68 and :338"
+    },
+    "ports": [
+      {
+        "file": "scripts/prepare_male_recovery_data.py",
+        "from": "7d5fc1f (identical at 217cbee)",
+        "trees": [
+          "T-c",
+          "T-d",
+          "T-h",
+          "T-f",
+          "T-e?"
+        ],
+        "hunks": [
+          {
+            "lines": "15-16",
+            "class": "H1",
+            "what": "PROTOCOL_PATH/PROTOCOL_SHA256 -> v4 recovery-learning copy"
+          },
+          {
+            "lines": "90",
+            "class": "H3",
+            "what": "67 raw/result rows per recovery source -> S0b per-source pin"
+          },
+          {
+            "lines": "140",
+            "class": "H3",
+            "what": "{'train':2117,'dev':1228,'held_out':0} -> S0c-recorded counts (dev = S0a pin)"
+          },
+          {
+            "lines": "160",
+            "class": "H3",
+            "what": "numeric_ticks 134 -> S0b pinned ticks; owners_completed 2 kept"
+          },
+          {
+            "lines": "177",
+            "class": "H3",
+            "what": "1983/1228 -> S0a per-source pins"
+          },
+          {
+            "lines": "198",
+            "class": "H3",
+            "what": "recorded_ticks 67 -> S0b per-source pin"
+          }
+        ]
+      },
+      {
+        "file": "scripts/train_male_recovery.py",
+        "from": "19d275d",
+        "trees": [
+          "T-d"
+        ],
+        "hunks": [
+          {
+            "lines": "19",
+            "class": "H1",
+            "what": "DATA_SHA256 -> S0c pin"
+          },
+          {
+            "lines": "208",
+            "class": "H1",
+            "what": "default --data-manifest path -> v4 path"
+          },
+          {
+            "lines": "77",
+            "class": "H3",
+            "what": "manifest counts 2117/1228/0 -> S0c pins"
+          },
+          {
+            "lines": "80",
+            "class": "H3",
+            "what": "windows [32,32,3] -> derived from each pinned recovery length: [32]*floor(n/32) + [n mod 32 if > 0]"
+          },
+          {
+            "lines": "123",
+            "class": "H3",
+            "what": "per-epoch train_ticks 2117 / dev ticks 1228 -> S0c pins"
+          }
+        ],
+        "retained": "FITTER_SHA256 (line 20) and all fitting code"
+      },
+      {
+        "file": "src/palimpsest/male_recovery_research.py",
+        "from": "736e0cf",
+        "trees": [
+          "T-e"
+        ],
+        "hunks": [
+          {
+            "lines": "10-11",
+            "class": "H1",
+            "what": "INDEX_PATH/INDEX_SHA256 -> v4 recovery index"
+          },
+          {
+            "lines": "71",
+            "class": "H3",
+            "what": "data counts 2117/1228/0 -> S0c pins"
+          },
+          {
+            "lines": "73",
+            "class": "H3",
+            "what": "recovery windows [[32,32,3],[32,32,3]] -> derived from S0b pins"
+          },
+          {
+            "lines": "85",
+            "class": "H3",
+            "what": "history train_ticks 2117 / dev 1228 -> S0c pins"
+          },
+          {
+            "lines": "114,117",
+            "class": "H1",
+            "what": "hard-coded recovery-learning path/sha 091c4e98... -> v4 copy"
+          }
+        ]
+      },
+      {
+        "file": "scripts/collect_male_navigation_v2.py",
+        "from": "736e0cf",
+        "trees": [
+          "T-e"
+        ],
+        "hunks": [
+          {
+            "lines": "20-21",
+            "class": "H1",
+            "what": "PLAN/PLAN_SHA -> v4 contact-v2 copy"
+          },
+          {
+            "lines": "50",
+            "class": "H1",
+            "what": "import-time CONTACTS = plan()['contacts'] reads the v4 plan, still at import"
+          },
+          {
+            "lines": "326,458,485",
+            "class": "H1",
+            "what": "inline recovery index path -> v4 index path"
+          },
+          {
+            "lines": "466",
+            "class": "H2",
+            "what": "empty (relaunch via __file__ at original relative path)"
+          }
+        ]
+      },
+      {
+        "file": "scripts/collect_male_navigation.py",
+        "from": "736e0cf",
+        "trees": [
+          "T-e"
+        ],
+        "hunks": [
+          {
+            "lines": "26-27",
+            "class": "H1",
+            "what": "PLAN/PLAN_SHA a3612cdc... -> v4 copy of docs/plans/m7-navigation-study-protocol.json (its current_reusable_source_sha256 re-pinned to the T-e/T-d bytes and v4 documents)"
+          }
+        ]
+      },
+      {
+        "file": "scripts/prepare_male_navigation_v2.py",
+        "from": "4ecb354",
+        "trees": [
+          "T-f"
+        ],
+        "hunks": [
+          {
+            "lines": "19",
+            "class": "H1",
+            "what": "PROTOCOL_SHA -> v4 data-v2 copy"
+          },
+          {
+            "lines": "327",
+            "class": "H3",
+            "what": "numeric_ticks 5080 -> S0e pinned ticks; owners_completed 12 kept"
+          },
+          {
+            "lines": "422",
+            "class": "H2",
+            "what": "empty (-I historical child via __file__ at original relative path)"
+          },
+          {
+            "lines": "430",
+            "class": "H3",
+            "what": "old 2117/1228 -> S0c pins"
+          },
+          {
+            "lines": "464",
+            "class": "H3",
+            "what": "augmented 7197/1228 -> S0c train + S0e ticks, S0c dev"
+          }
+        ],
+        "retained_structural": "len(mapping)==14 (:203,:231), len(checks)==26 (:463)",
+        "no_code_hunk": "historical_identity (:55-68) and navigation_producer_commit (:338) change only through H4 declared fields"
+      }
+    ],
+    "hunk_line_note": "Line numbers refer to the producing-commit bytes; the port review manifest fixes exact hunk ranges.",
+    "structural_invariants": [
+      "old = 8 teacher train sources (1000-1007) then 2 recovery sources (2100, 2101)",
+      "augmented = old prefix then 12 advice sources in scene 3100..3103 x learner 10,11,12 order",
+      "recorded-dev = 4 sources (1008-1011); held-out rows = 0",
+      "14 old-manifest sources, 26 combined",
+      "12 collection owners, 2 recovery owners",
+      "every length > 0; recovery source <= 120 rows; advice source <= 600 rows",
+      "per-source, order-preserving equality with upstream v4 pin records (not only sums)",
+      "recovery windows derived from pinned per-source ticks"
+    ],
+    "reconstructed_controllers": [
+      {
+        "stage": "S0d",
+        "name": "scripts/run_male_recovery_training_v4.py",
+        "does": "three sequential per-seed runs of the ported train_male_recovery.py --training-seed N --output <root>/seed-N for N=10,11,12; 600 s internal / 660 s outer per pair; 2,100 s internal; emits training_terminal and training_supervisor documents carrying the fields male_recovery_research._gate checks (status passed-research-training, head, inventories_unchanged, completed_pair_content_unchanged, before/after inventory sha)",
+        "basis": "docs/plans/m7-recovery-training.md contract; original supervise.py lost",
+        "bound_to": "docs/reports/m7-recovery-training.{md,json} at 217cbee: 0.25 s PID/start sampler; five-part inventory 355 tracked / 122 upstream / 181 raw-document / 16 model-production / 7 runtime; pair 600 s internal / 660 s outer; stage 2,100 s internal / 2,160 s enclosing",
+        "emits_gate_fields": [
+          "terminal.status=passed-research-training",
+          "terminal.head=T-d commit",
+          "terminal.inventories_unchanged",
+          "terminal.completed_pair_content_unchanged",
+          "terminal.before_inventory_sha256",
+          "terminal.after_inventory_sha256",
+          "terminal.cleanup.{sampler_stopped,sample_errors,forced_signals,survivors}",
+          "terminal.pairs[].{training_seed,status,supervision.{status,returncode}}",
+          "outer.status=completed",
+          "outer.returncode=0",
+          "outer.elapsed_seconds<=2160"
+        ]
+      },
+      {
+        "stage": "S0e",
+        "name": "scripts/run_male_navigation_collection_v4.py",
+        "does": "enclosing launcher producing collector_supervisor, launcher_supervisor, collection_enclosing and collection_terminal",
+        "basis": "docs/reports/m7-navigation-collection-v2.md; original launch.py/supervise.py lost",
+        "bound_to": "docs/reports/m7-navigation-collection-v2.md: 2,210 s normal-return bound, inner/outer samplers, before/after inventories",
+        "emits": "exact admit_collection fields checked at prepare_male_navigation_v2.py:331-344 (terminal/enclosing status, controls_unchanged, cleanup and outer_cleanup lists, inventories, report_sha256, head, collector/launcher supervisor status/returncode)"
+      },
+      {
+        "stage": "S0e-D",
+        "name": "exec-drain receipt writer",
+        "does": "host receipt of the S0e unit's drain, exit and absent identities (exec_drain)",
+        "basis": "systemd unit exit status plus empty cgroup; exec_exitcode, matching_survivors, forced_signals"
+      },
+      {
+        "stage": "S0e-A",
+        "name": "root raw audit",
+        "does": "independent raw audit of the S0e output (root_raw_audit); no native/model import",
+        "basis": "v2 root raw-audit scope; must record a passed status checked by S0z"
+      },
+      {
+        "stage": "S0e-I",
+        "name": "collection index publisher",
+        "does": "writes published_collection_index binding S0e outputs and S0e-D/S0e-A receipts"
+      }
+    ],
+    "added_pins": [
+      "src/palimpsest/male_recovery_research.py:10-11 INDEX_PATH/INDEX_SHA256",
+      "src/palimpsest/male_recovery_research.py:114,117 hard-coded recovery-learning sha 091c4e98...",
+      "recovery-learning copy /recovery_sources/{0,1}/run_id (uuid4, S0b)",
+      "recovery index /training_terminal/{path,sha256}, /training_supervisor/{path,sha256}, /before_after_inventory_sha256 (S0d controller)",
+      "data-v2 /immutable_inputs/{collection_terminal,collection_enclosing,collector_supervisor,launcher_supervisor,exec_drain,root_raw_audit,published_collection_index}/{path,sha256,bytes} (S0e, S0e-D, S0e-A, S0e-I)",
+      "contact-v2 /current_reusable_source_sha256 cascades and data-v2 /parent_study cascade (hashes of v4 pin copies)",
+      "per-port exact recorded source counts (S0a, S0b, S0c, S0e)",
+      "recovery index /training_source_code and /training_source_commit (checked male_recovery_research.py:47,64,109)",
+      "v4 copy of docs/plans/m7-navigation-study-protocol.json (sha a3612cdc... original; current_reusable_source_sha256 re-pinned)",
+      "contact-v2 copy /prior_version/{protocol_path,protocol_sha256,collector_sha256} (checked collect_male_navigation_v2.py:42)",
+      "data-v2 copy /source_binding/old_historical_reader/{root,head,all_tracked_project_python_inventory/count,all_tracked_project_python_inventory/canonical_map_sha256,adapter_sha256,code} and /source_binding/navigation_producer_commit (H4)",
+      "data-v2 copy /counts (copied to S0f output at prepare_male_navigation_v2.py:470) -> pinned from S0c/S0e",
+      "recovery-learning copy /counts, /recovery_ticks_each, /recovery_windows -> pinned from S0a/S0b"
+    ],
+    "tests_before_port_execution": [
+      "Diff-restricted review per port tree: regenerate diff(base, tree) and require exact equality with the hunk manifest; any unlisted hunk fails.",
+      "Function-level behaviour equivalence for S0c, S0f and _gate: original functions with original pins rebound in-process vs port functions on synthetic fixtures satisfying the original counts; outputs identical except declared path/pin/count-record fields.",
+      "Negative fixtures: off-v2 lengths accepted only with structural invariants and per-source pin equality; zero-length, over-bound (recovery >120, advice >600), wrong order/count and PENDING- values refused.",
+      "Relaunch: each child's __file__ is the port; import-time reads touch only v4 documents.",
+      "Controllers: S0d runs exactly seeds 10, 11, 12 once in order and its documents pass the ported _gate; S0e launcher/drain/audit/index emit all seven data-v2 inputs accepted by admit_collection; S0e-A passed status checked by S0z.",
+      "P covers every port and controller entrypoint.",
+      "S0e-D and S0e-I 30 s kill targets are confirmed by fixture measurement before freeze."
+    ],
+    "lane_budget": {
+      "stage_costs_seconds": [
+        {
+          "stage": "P",
+          "expected": 30,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 120,
+          "worst_case_cpu": 125,
+          "worst_case_basis": "protocol-declared",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0a",
+          "expected": 277.697,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 1260,
+          "worst_case_cpu": 1265,
+          "worst_case_basis": "collection_limits 1200 + 60 grace",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0b",
+          "expected": 15.565,
+          "cpu_quota_k": 2,
+          "runtime_max_sec_kill_target": 480,
+          "worst_case_cpu": 970,
+          "worst_case_basis": "outer_timeout_seconds; k=2",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0c",
+          "expected": 13.701,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 180,
+          "worst_case_cpu": 185,
+          "worst_case_basis": "preparation_limits.seconds",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0d",
+          "expected": 194.681,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 2160,
+          "worst_case_cpu": 2165,
+          "worst_case_basis": "enclosing bound; includes named controller",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0e",
+          "expected": 543.022,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 2240,
+          "worst_case_cpu": 2245,
+          "worst_case_basis": "owner-resolved kill target; includes reconstructed launcher",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0e-D",
+          "expected": 5,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 30,
+          "worst_case_cpu": 35,
+          "worst_case_basis": "metadata-only drain receipt; estimate",
+          "timeout_stop_sec": 5,
+          "requires_fixture_measurement_before_freeze": true
+        },
+        {
+          "stage": "S0e-A",
+          "expected": 43.1,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 150,
+          "worst_case_cpu": 155,
+          "worst_case_basis": "about 3.5x v2 root raw audit wall 43.100 s",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0e-I",
+          "expected": 5,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 30,
+          "worst_case_cpu": 35,
+          "worst_case_basis": "metadata-only index publication; estimate",
+          "timeout_stop_sec": 5,
+          "requires_fixture_measurement_before_freeze": true
+        },
+        {
+          "stage": "S0f",
+          "expected": 79.46,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 263,
+          "worst_case_cpu": 268,
+          "worst_case_basis": "nominal_failure_envelope_seconds",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S0z",
+          "expected": 82,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 300,
+          "worst_case_cpu": 305,
+          "worst_case_basis": "about 3.7x prior audit sum",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S1",
+          "expected": 480,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 2160,
+          "worst_case_cpu": 2165,
+          "worst_case_basis": "v3 training enclosing",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S2",
+          "expected": 988.524,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 4430,
+          "worst_case_cpu": 4435,
+          "worst_case_basis": "v3 development enclosing",
+          "timeout_stop_sec": 5
+        },
+        {
+          "stage": "S3",
+          "expected": 1977,
+          "cpu_quota_k": 1,
+          "runtime_max_sec_kill_target": 8750,
+          "worst_case_cpu": 8755,
+          "worst_case_basis": "v3 held-out enclosing",
+          "timeout_stop_sec": 5
+        }
+      ],
+      "prior_figures_are_wall_seconds": true,
+      "expected_total": 4734.75,
+      "worst_case_total": 23108,
+      "worst_case_through_S2": 14353,
+      "remaining_at_start": 14398.168,
+      "slack_through_S2": 45.168,
+      "s0e_kill_target_cap_seconds": 2285,
+      "held_out_admission": "S3 admitted only if measured charge through S2 <= 5643.168 CPU-s (S3 worst 8755)",
+      "worst_case_formula": "k x (RuntimeMaxSec kill target + TimeoutStopSec 5)",
+      "audit_rule": "Reviewer audits run inside the unit they review, within its kill target; never separate budget lines. If TimeoutStopSec<=5 or this rule is not met, the all-stages-fit-at-limits claim is withdrawn."
+    },
+    "decision_A1": {
+      "question": "Run S0c-S0f from committed v4 port trees (producing commit + only listed H1/H3 hunks, H2 empty), with H4 and added pins as declared fields, reconstructed S0d/S0e controllers bound to surviving evidence, diff-restricted review and function-level behaviour-equivalence tests?",
+      "recommended_default": "approve",
+      "alternative": "keep data/path-only; v4 is blocked at S0e"
+    },
+    "consequences": [
+      "declared-fields.json protocol_sha256 resealed to this file's final sha256 in the same change",
+      "Thresholds, matched clock, scene IDs, lane cap and v3 are unchanged."
+    ],
+    "revision": 2,
+    "revision_note": "Revision 2 applies independent review of Amendment 1 (APPROVE WITH CHANGES; arithmetic verified; no listed hunk changes sampling/features/labels/order/filtering).",
+    "port_trees": [
+      {
+        "id": "T-c",
+        "base": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+        "ports": [
+          "scripts/prepare_male_recovery_data.py"
+        ],
+        "stage": "S0c"
+      },
+      {
+        "id": "T-d",
+        "base": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+        "ports": [
+          "scripts/prepare_male_recovery_data.py",
+          "scripts/train_male_recovery.py"
+        ],
+        "stage": "S0d",
+        "note": "T-d commit becomes recovery index training_source_commit"
+      },
+      {
+        "id": "T-e",
+        "base": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
+        "ports": [
+          "src/palimpsest/male_recovery_research.py",
+          "scripts/collect_male_navigation_v2.py",
+          "scripts/collect_male_navigation.py",
+          "scripts/prepare_male_recovery_data.py (only if diff-restricted review finds it imported)"
+        ],
+        "stage": "S0e",
+        "note": "T-e commit becomes data-v2 source_binding/navigation_producer_commit"
+      },
+      {
+        "id": "T-h",
+        "base": "217cbee8399dcb25045a079af012beecbbdae29e",
+        "ports": [
+          "scripts/prepare_male_recovery_data.py"
+        ],
+        "stage": "S0f historical reader root"
+      },
+      {
+        "id": "T-f",
+        "base": "4ecb354efa4223abdbe3d09be118fe5402fec1a1",
+        "ports": [
+          "scripts/prepare_male_navigation_v2.py",
+          "scripts/prepare_male_recovery_data.py (parent `old` import :75, check :430)"
+        ],
+        "stage": "S0f"
+      }
+    ],
+    "added_pins_status": "staged in docs/plans/m7-navigation-v4-pins/declared-fields.json under amendment_1_pending; inactive until A1 approval and regenerated copies carry PENDING- placeholders",
+    "controller_note": "S0c has no controller.",
+    "implementation_followups": [
+      "create the v4 study-plan copy and regenerate pin copies with PENDING- placeholders for amendment_1_pending fields",
+      "update the hard-coded study-plan/collector pins in scripts/regenerate_male_navigation_v4.py:118",
+      "update PROTOCOL_SHA in tests/test_male_navigation_v4_overlay.py:22 after this reseal"
+    ],
+    "erratum_1": {
+      "id": "M7-NAV-V4-REGEN-MATCHED-BUDGET-1/amendment-1/erratum-1",
+      "date": "2026-11-08",
+      "status": "erratum to the approved Amendment 1 (A1, revision 2); earlier amendment text and owner records are not rewritten",
+      "trigger": "Milestone 2 (impl/male-v4-m2, merged at 00db8b4): the diff-restricted port build and function-level tests found three sites where the listed hunks could not reach their stated intent, and two listed line numbers whose literal sits on an adjacent line.",
+      "hunks": [
+        {
+          "kind": "added",
+          "file": "scripts/prepare_male_recovery_data.py",
+          "lines": "116",
+          "range": "116-116",
+          "class": "H3",
+          "trees": [
+            "T-c",
+            "T-d",
+            "T-e",
+            "T-h",
+            "T-f"
+          ],
+          "what": "emitted recovery_admission windows [32,32,3] -> [32]*floor(n/32) + [n mod 32 if > 0] for the pinned per-source length n (the :90 hunk's n)",
+          "reason": "The ported checks at train_male_recovery.py:80 (T-d) and male_recovery_research.py:73 (T-e) derive windows from the pinned lengths; without this site every regenerated recovery length other than 67 is refused. Identical output for n = 67."
+        },
+        {
+          "kind": "added",
+          "file": "scripts/collect_male_navigation.py",
+          "lines": "46-47",
+          "range": "46-47",
+          "class": "H1",
+          "trees": [
+            "T-e"
+          ],
+          "what": "study-plan current_reusable_source_sha256 entries whose basename names a v4 pin document (recovery index, recovery-learning protocol) are hashed at the v4 copy named in the locator; every other pinned source is still hashed at its tracked path",
+          "reason": "v4 copies are supplied by path and never committed into port trees, so the declared study-plan cascades for the v4 recovery index and recovery-learning copy could not match the tracked originals."
+        },
+        {
+          "kind": "tree-addition",
+          "file": "scripts/collect_male_navigation_v2.py",
+          "lines": "20-21",
+          "range": "20-21",
+          "class": "H1",
+          "trees": [
+            "T-f"
+          ],
+          "what": "T-f carries the T-e collector port (same listed hunks, identical bytes); PLAN/PLAN_SHA read the v4 contact-v2 copy",
+          "reason": "prepare_male_navigation_v2.py imports this collector (helpers :76) and compares nav.PLAN_SHA with the S0e report study_sha256 at :325; unported, S0f refuses every v4 collection. Sites 326, 458, 485 are unreachable from S0f."
+        },
+        {
+          "kind": "tree-addition",
+          "file": "scripts/prepare_male_recovery_data.py",
+          "lines": "15-16",
+          "range": "15-16",
+          "class": "H1",
+          "trees": [
+            "T-e"
+          ],
+          "what": "T-e carries the reader port (same listed hunks and bytes as the other trees)",
+          "reason": "collect_male_navigation.py source_pins digests scripts/prepare_male_recovery_data.py against the study-plan pin; porting it makes that pin follow the port bytes. Nothing at 736e0cf imports it."
+        },
+        {
+          "kind": "widened",
+          "file": "scripts/prepare_male_navigation_v2.py",
+          "lines": "19",
+          "range": "18-19",
+          "class": "H1",
+          "trees": [
+            "T-f"
+          ],
+          "what": "PROTOCOL (line 18) and PROTOCOL_SHA (line 19) -> v4 data-v2 copy",
+          "reason": "The data-v2 copy is supplied by path, so the path literal on line 18 must move with the sha."
+        },
+        {
+          "kind": "widened",
+          "file": "src/palimpsest/male_recovery_research.py",
+          "lines": "114,117",
+          "range": "113-114",
+          "class": "H1",
+          "trees": [
+            "T-e"
+          ],
+          "what": "hard-coded recovery-learning path (line 113) and sha (line 114) -> v4 copy; line 117 unchanged in scope",
+          "reason": "The listed path literal sits on line 113."
+        }
+      ],
+      "tree_additions": {
+        "T-e": [
+          "scripts/prepare_male_recovery_data.py"
+        ],
+        "T-f": [
+          "scripts/collect_male_navigation_v2.py"
+        ]
+      },
+      "unchanged": "collect_male_navigation_v2.py:50 needs no bytes (the 20-21 hunk already makes the import-time plan() read the v4 copy); H2 relaunch hunks stay empty; H4 stays a declared-field change.",
+      "pins": "declared-fields.json amendment_1_pending (still inactive): the study-plan cascades for the v4 recovery index and recovery-learning copy become satisfiable; the T-e reader and collector cascade values move to the new port bytes; protocol_sha256 resealed to this file.",
+      "behaviour_change_statement": "Every erratum hunk is in classes H1-H3 already approved under A1 and changes no sampling, features, labels, order or filtering. On the v2 reference lengths each ported function returns the same result as the original (function-level tests); with regenerated lengths, outputs follow the pinned per-source counts within the declared bounds (recovery <= 120, advice <= 600).",
+      "cost_table_changed": false,
+      "cost_note": "No hunk changes runtime or CPU cost; lane_budget is unchanged.",
+      "port_manifest": "docs/plans/m7-navigation-v4-pins/ports.json (port branches rebuilt; new commits recorded there)"
+    }
+  }
 }

@@ -1,0 +1,110 @@
+{
+ "checks": [
+  {
+   "check": "canonical bytes",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "kind/version/stage",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "input protocol hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling-protocol.json",
+   "ok": true
+  },
+  {
+   "check": "input comparison_set hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-comparison-set.json",
+   "ok": true
+  },
+  {
+   "check": "input go_record hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-go-admission.json",
+   "ok": true
+  },
+  {
+   "check": "input held_out_go_record hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/d2-scope-s1-amendment1.json",
+   "ok": true
+  },
+  {
+   "check": "input calibration_record hash",
+   "detail": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-calibrated-plan.json",
+   "ok": true
+  },
+  {
+   "check": "protocol is a frozen v4 version",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "roster matches protocol",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "admitted has no refusal reasons",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "admitted has no collisions",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "admitted has no ambiguous findings",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "reservation covers exactly the new IDs",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "reservation lineage is the frozen protocol",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "no held-out comparison, read, minting, simulator or model claims",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "non-scene mentions only for protocol-allowlisted contents",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "lost root never treated as clean",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "launcher receipt complete and drained",
+   "detail": "",
+   "ok": true
+  },
+  {
+   "check": "launcher exit matches verdict",
+   "detail": "",
+   "ok": true
+  }
+ ],
+ "kind": "puck-v4-s1-audit-v1",
+ "passed": true,
+ "receipt": {
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-s1-receipt/receipt.json",
+  "sha256": "664c6071a38e28ec465788f7a5ee1d69023016062b3b91bf3bbf913fcd78c349"
+ },
+ "report": {
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-s1-report.json",
+  "sha256": "406438fecae037edf49564ec5df69a60ba230a616ab007dbe365c58e311f94cf"
+ },
+ "verdict_audited": "admitted"
+}

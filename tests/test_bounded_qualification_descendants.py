@@ -25,6 +25,15 @@ def identity(pid):
         return None
 
 
+def gone(pid, start_ticks, timeout=5.0):
+    """A SIGKILLed process exits asynchronously; allow the kernel time on slow hosts."""
+    import time as _time
+    deadline = _time.monotonic() + timeout
+    while identity(pid) == start_ticks and _time.monotonic() < deadline:
+        _time.sleep(0.05)
+    return identity(pid) != start_ticks
+
+
 def cleanup(path):
     if path.exists():
         row=json.loads(path.read_text())
@@ -84,7 +93,7 @@ def test_session_escape_is_counted_and_killed_on_stop(tmp_path,limit):
             'timeout':'normal-return deadline','orphan':'matching descendant survivors'}[limit]
         if limit=='rss':assert result['sampled_peak_rss_bytes']>options['rss_bytes']
         if pidfile.exists():
-            row=json.loads(pidfile.read_text());assert identity(row['pid'])!=row['start_ticks']
+            row=json.loads(pidfile.read_text());assert gone(row['pid'], row['start_ticks'])
         else:assert limit=='processes'  # The extra process can be stopped before its first Python line.
     finally:cleanup(pidfile)
 
@@ -101,7 +110,7 @@ def test_monitor_exception_kills_recorded_new_session(tmp_path,monkeypatch):
         row=json.loads(pidfile.read_text())
         until=time.monotonic()+1
         while identity(row['pid'])==row['start_ticks'] and time.monotonic()<until:time.sleep(.01)
-        assert identity(row['pid'])!=row['start_ticks']
+        assert gone(row['pid'], row['start_ticks'])
     finally:cleanup(pidfile)
 
 
@@ -126,7 +135,7 @@ with q.hard_guard(time.monotonic()+.7,state):
         assert parent.wait(timeout=3)==-signal.SIGKILL
         row=json.loads(pidfile.read_text());until=time.monotonic()+1
         while identity(row['pid'])==row['start_ticks'] and time.monotonic()<until:time.sleep(.01)
-        assert identity(row['pid'])!=row['start_ticks']
+        assert gone(row['pid'], row['start_ticks'])
     finally:
         if parent.poll() is None:os.killpg(parent.pid,signal.SIGKILL);parent.wait()
         cleanup(pidfile)
@@ -143,7 +152,7 @@ def test_reused_pid_start_tick_mismatch_is_not_signalled(tmp_path):
         api()._kill_owned_groups({'tracked_processes':{row['pid']:row['start_ticks']}})
         until=time.monotonic()+1
         while identity(row['pid'])==row['start_ticks'] and time.monotonic()<until:time.sleep(.01)
-        assert identity(row['pid'])!=row['start_ticks']
+        assert gone(row['pid'], row['start_ticks'])
     finally:
         if parent.poll() is None:parent.kill();parent.wait()
         cleanup(pidfile)
@@ -178,7 +187,7 @@ def test_recursive_new_session_grandchild_is_counted_under_three_process_bound(t
             assert {k:row[k] for k in ('pid','start_ticks')} in result['tracked_processes']
         else:
             assert result['status']=='failed' and result['failure']=='unexpected child process'
-        assert all(identity(row['pid'])!=row['start_ticks'] for row in result['tracked_processes'])
+        assert all(gone(row['pid'], row['start_ticks']) for row in result['tracked_processes'])
     finally:
         for pid,ticks in state.get('tracked_processes',{}).items():
             if identity(pid)==ticks:os.kill(pid,signal.SIGKILL)
@@ -198,7 +207,7 @@ def test_tracked_signal_uses_stable_handle_and_closes_it(tmp_path,monkeypatch):
         module._signal_tracked({row['pid']:row['start_ticks']},signal.SIGKILL)
         until=time.monotonic()+1
         while identity(row['pid'])==row['start_ticks'] and time.monotonic()<until:time.sleep(.01)
-        assert identity(row['pid'])!=row['start_ticks']
+        assert gone(row['pid'], row['start_ticks'])
         assert len(os.listdir('/proc/self/fd'))==before
     finally:
         if parent.poll() is None:parent.kill();parent.wait()

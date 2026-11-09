@@ -269,3 +269,202 @@ and is **not** this environment. It is cited only to mark that distinction.
    limits is 2,565 s.
 
 `qualification_claims` is empty.
+
+## Owner resolution — 8 November 2026
+
+All open decisions above were resolved by the owner to their recommended defaults (puck: D8 = 120 s hard audit kill; D9 = S1 before S0). Independent manifest review: a fresh AI reviewer agent, recorded as AI review, not human acceptance. Machine-readable record: `owner_decisions_resolution` in the protocol JSON. Each stage still requires its own reviewed execution manifest and explicit owner GO.
+
+## Amendment 1: v4 producer ports (draft, 8 November 2026; awaiting owner decision A1)
+
+Revision 2 applies the independent review of Amendment 1 (APPROVE WITH CHANGES). The
+exact per-hunk record is in JSON `amendment_1`.
+
+**Why the overlay fails.** Milestone 1 (`fbaa421`) showed that the owner-approved route,
+an in-process overlay that rebinds only data and path pins inside producing-commit
+worktrees, cannot reach S0e or S0f:
+
+- **Producers re-launch themselves.** `collect_male_navigation_v2.py:466` and
+  `prepare_male_navigation_v2.py:422` (under `-I`) start child processes.
+- **Pins are written inline in code.** The index path is inline at
+  `collect_male_navigation_v2.py:326,458,485`; the plan is read at import time (`:50`);
+  `male_recovery_research.py:114,117` hard-codes the recovery-learning SHA `091c4e98…`;
+  and v1 `collect_male_navigation.py:27`, called through S0e's `source_pins`, hard-codes
+  the study-plan SHA `a3612cdc…`. That plan pins four files whose bytes change in v4.
+- **Row counts are asserted exactly.** See the hunk list below.
+- **The S0d controller is lost.**
+- **No v4 stage produces seven data-v2 inputs.** They came from the v2 launcher, host
+  and audit steps, whose scripts were in the lost `runs/`.
+
+**This is a source-behaviour change.** The owner chose a data/path-only Stage 0
+(`owner_decisions_resolution.choices.1_stage0_route`), so this needs a **new explicit
+owner approval (A1)**. The resolution record is not rewritten.
+
+**Port trees.** A port tree is a **committed v4 branch: the producing commit plus only the
+listed hunks.** Ports keep their original relative paths, so
+`git rev-parse HEAD` (in `source_identity`, `historical_identity` and the terminal head
+gates) reports the port commit. v4 pin documents are passed in by path; they are never
+committed into a port tree. S0a (`cc1cea9`) and S0b (`c382c86`) run unchanged.
+
+| Tree | Base | Ported files | Used by |
+| --- | --- | --- | --- |
+| T-c | `7d5fc1f` | `prepare_male_recovery_data.py` | S0c |
+| T-d | `19d275d` | `prepare_male_recovery_data.py` (reader import), `train_male_recovery.py` | S0d |
+| T-e | `736e0cf` | `male_recovery_research.py`, `collect_male_navigation_v2.py`, `collect_male_navigation.py` (+ the ported reader, if review finds it imported) | S0e |
+| T-h | `217cbee` | `prepare_male_recovery_data.py` | S0f historical reader root |
+| T-f | `4ecb354` | `prepare_male_navigation_v2.py`, `prepare_male_recovery_data.py` (parent `old` import at `:75`, check at `:430`) | S0f |
+
+**Hunk classes.** No other behaviour change is permitted.
+
+- **H1, externalized literal.** A path or pin literal is read from a v4 pin document or
+  a CLI argument, with read timing unchanged (including import-time reads). This covers
+  `collect_male_navigation.py:26-27` (PLAN/PLAN_SHA → a v4 copy of
+  `m7-navigation-study-protocol.json`).
+- **H2, relaunch target.** Because ports keep their original paths and relaunch via
+  `__file__`, the hunks at `:466` and `:422` are **empty**. Tests still prove that the
+  child is the port.
+- **H3, count → structural invariant.** The hunks and their replacements:
+
+  | Site | Hard-coded value | Replaced by |
+  | --- | --- | --- |
+  | `prepare_male_recovery_data.py:90,198` | 67 per recovery source | S0b per-source pins |
+  | same file, `:140` | 2117/1228/0 | S0c pins |
+  | same file, `:160` | 134 | S0b pins |
+  | same file, `:177` | 1983/1228 | S0a pins |
+  | `train_male_recovery.py:77,123` | 2117/1228 | S0c pins |
+  | `train_male_recovery.py:80` | windows `[32,32,3]` | windows derived from each pinned recovery length (32-row chunks + remainder) |
+  | `male_recovery_research.py:71,73,85` | same values, inside `_gate`/`_history` (run in S0e) | same derivations |
+  | `prepare_male_navigation_v2.py:327` | 5080 | S0e pins |
+  | same file, `:430` | 2117/1228 | S0c pins |
+  | same file, `:464` | 7197/1228 | S0c train + S0e ticks |
+
+  The original numbers survive only as descriptive `v2_reference_counts`.
+- **H4 is now a declared-field change, not a code hunk.** It rewrites the data-v2 copy's
+  `source_binding/old_historical_reader/{root, head, all_tracked_project_python_inventory/{count, canonical_map_sha256}, adapter_sha256, code}`
+  to point at T-h, and adds `source_binding/navigation_producer_commit` (checked at
+  `:338`), which is set to T-e.
+
+**Structural invariants.** Every port must enforce:
+
+- the old arm is 8 teacher train sources (1000–1007) followed by 2 recovery sources
+  (2100, 2101);
+- the augmented arm is that old prefix followed by 12 advice sources in scene
+  `3100…3103` × learner `10,11,12` order;
+- there are 4 dev sources and 0 held-out rows;
+- there are 14 old-manifest sources and 26 combined;
+- there are 12 collection owners and 2 recovery owners;
+- every length is greater than 0, each recovery source is at most 120 rows, and each
+  advice source is at most 600 rows;
+- **per-source, order-preserving equality** with the upstream v4 pin records. Matching
+  sums alone is not enough.
+
+**Pins and documents added** (staged in `declared-fields.json` under
+`amendment_1_pending`; not yet active, because the copies are unchanged):
+
+- the recovery-index pins `training_source_code` and `training_source_commit`, checked at
+  `male_recovery_research.py:47,64,109`;
+- a new v4 study-plan copy;
+- in the contact-v2 copy, the `prior_version` cascade: `protocol_path`, `protocol_sha256`
+  and `collector_sha256`, checked at `collect_male_navigation_v2.py:42`;
+- the stale `counts` field in the data-v2 copy. It is copied into the S0f output at
+  `:470`, so it is now declared and pinned from S0c/S0e;
+- the recovery-learning copy's `counts`, `recovery_ticks_each` and `recovery_windows`,
+  now declared and pinned from S0a/S0b.
+
+**Reconstructed controllers** are new source under full review, bound to the surviving
+evidence:
+
+- **S0d controller.** `run_male_recovery_training_v4.py` runs seeds 10, 11 and 12 once
+  each, in order. It is bound to `docs/reports/m7-recovery-training.{md,json}` at
+  `217cbee`: a 0.25 s PID/start sampler; a five-part inventory (355/122/181/16/7); pair
+  deadlines of 600 s internal / 660 s outer; stage deadlines of 2,100 s internal /
+  2,160 s enclosing. It emits the full `_gate` field set: terminal `status`, `head`,
+  `inventories_unchanged`, `completed_pair_content_unchanged`, before/after inventory,
+  `cleanup{sampler_stopped, sample_errors, forced_signals, survivors}`, and
+  `pairs[].supervision{status, returncode}`. The outer supervisor reports `completed`
+  with `returncode` 0 and `elapsed_seconds` ≤ 2,160.
+- **S0e launcher.** `run_male_navigation_collection_v4.py` is bound to
+  `docs/reports/m7-navigation-collection-v2.md`: a 2,210 s normal-return bound, inner and
+  outer samplers, and inventories. It emits the exact `admit_collection` fields at
+  `prepare_male_navigation_v2.py:331-344`.
+- **S0e-D drain receipt.** Built from the systemd unit's exit status and an empty cgroup.
+- **S0e-A root raw audit.** Uses the v2 root-audit scope and must record a `passed`
+  status, which S0z checks.
+- **S0e-I index publisher.**
+
+**Tests before freeze.**
+
+- A diff-restricted review per tree, which regenerates the diff and requires an exact
+  match with the hunk manifest.
+- **Function-level** behaviour-equivalence tests for S0c, S0f and `_gate`: original pins
+  are rebound in-process, and synthetic fixtures satisfy the original counts.
+- Negative fixtures: off-v2 lengths, bounds, order and `PENDING-` values.
+- Tests that each relaunched child is the port, and that import-time reads touch only v4
+  documents.
+- Controller fixtures, and P coverage of every port and controller.
+
+**Budget rules.** Every unit sets `TimeoutStopSec` ≤ 5 s, and its worst-case CPU is
+k × (kill target + 5). Reviewer audits run inside the unit they review, within its kill
+target; they are never separate budget lines. If either rule is not met, the claim that
+everything fits even at worst case is withdrawn. The 30 s limits for S0e-D and S0e-I
+**need fixture measurement before freeze**. S0c has no controller.
+
+| Stage | Expected (wall s) | k | Kill + stop (s) | Worst CPU (s) |
+| --- | ---: | :-: | ---: | ---: |
+| P / S0a / S0b / S0c | 30 / 277.697 / 15.565 / 13.701 | 1/1/2/1 | 125 / 1,265 / 485 / 185 | 2,545 |
+| S0d (incl. controller) | 194.681 | 1 | 2,165 | 2,165 |
+| S0e (incl. launcher) | 543.022 | 1 | 2,245 | 2,245 |
+| S0e-D / S0e-A / S0e-I | ≤5 / 43.100 / ≤5 | 1 | 35 / 155 / 35 | 225 |
+| S0f / S0z | 79.460 / 82 | 1 | 268 / 305 | 573 |
+| S1 / S2 / S3 | 480 / 988.524 / 1,977 | 1 | 2,165 / 4,435 / 8,755 | 15,355 |
+| **Total** | **≈4,734.75** | | | **23,108** |
+
+Worst case through S2 is **14,353 ≤ 14,398.168** (slack 45.168), so every stage through
+development stays admissible even at worst case. That holds only while the S0e kill
+target is ≤ 2,285 s; the chosen 2,240 s fits. **S3 is admitted only if the measured charge
+through S2 is ≤ 5,643.168 CPU-s.** S3's worst case is now 8,755, which lowers the ceiling
+by 5 s from Amendment 1's draft.
+
+**Decision A1** (recommended: **approve**). Should S0c–S0f run on committed v4 port trees
+(producing commit plus only H1–H3 hunks; H2 empty), with the H4/pin changes as declared
+fields, reconstructed S0d/S0e controllers bound to the surviving evidence, and
+diff-restricted review plus function-level equivalence tests? **Alternative:** keep
+data/path-only, and v4 is **blocked at S0e**.
+
+**Implementation follow-ups** (not done here):
+
+- Create the v4 study-plan copy and regenerate the pin copies with `PENDING-` placeholders
+  for the `amendment_1_pending` fields.
+- Update the hard-coded study-plan pin in `regenerate_male_navigation_v4.py:118` and the
+  test's `PROTOCOL_SHA` (`tests/test_male_navigation_v4_overlay.py:22`); resealing
+  `declared-fields.json` changes its `protocol_sha256`.
+
+Thresholds, the matched clock, scene IDs, the lane cap and v3 are unchanged.
+
+## Amendment 1 erratum 1 (8 November 2026)
+
+This erratum corrects Amendment 1 (approved as A1); the text above and the owner records
+are unchanged. The exact record is JSON `amendment_1.erratum_1`. Milestone 2 built the port
+trees and tested them function by function. Three listed sites could not do what their
+hunks state, and two listed line numbers point next to the literal they name.
+
+| Kind | Site | Class | Trees | Change |
+| --- | --- | :-: | --- | --- |
+| added | `prepare_male_recovery_data.py:116` | H3 | all reader trees | emitted windows `[32,32,3]` → derived from the pinned per-source length |
+| added | `collect_male_navigation.py:46-47` | H1 | T-e | study-plan document pins hashed at the v4 copies named in the pins file |
+| tree addition | `collect_male_navigation_v2.py` (20-21 load-bearing) | H1 | T-f | T-f carries the T-e collector port, so `prepare_male_navigation_v2.py:325` compares against the v4 contact-v2 copy |
+| tree addition | `prepare_male_recovery_data.py` | H1 | T-e | T-e carries the reader port, so the study-plan reader pin follows the port |
+| widened | `prepare_male_navigation_v2.py` 19 → 18-19 | H1 | T-f | the path literal is on line 18 |
+| widened | `male_recovery_research.py` 114 → 113-114 | H1 | T-e | the path literal is on line 113 |
+
+**Why.** Without `:116`, the ported window checks at `train_male_recovery.py:80` and
+`male_recovery_research.py:73` refuse every regenerated recovery length except 67. Without
+the T-f collector, S0f refuses every v4 collection at `:325`. Because v4 copies are supplied
+by path, `collect_male_navigation.py:46-47` hashed the tracked originals, so the declared
+study-plan cascades could never match.
+
+**No scientific behaviour change.** Every hunk is in classes H1–H3, which A1 already
+approved. None changes sampling, features, labels, order or filtering. On the v2 reference
+lengths, each ported function returns the same result as the original. The cost table is
+unchanged, because no hunk changes cost. The port branches were rebuilt; the new commits
+are recorded in `docs/plans/m7-navigation-v4-pins/ports.json`. `amendment_1_pending` stays
+inactive.
