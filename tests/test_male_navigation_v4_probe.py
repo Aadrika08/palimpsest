@@ -202,6 +202,12 @@ MANIFEST = ROOT/'docs/reports/male-v4-stage-p/MANIFEST.md'
 
 
 def blob(rev, path):
+    """Port branches resolve like CI (local ref, else origin); the recorded commit is still required."""
+    import build_male_navigation_v4_ports as ports
+    if rev.startswith('port/'):
+        commit = ports.branch_commit(ROOT, rev)
+        assert commit is not None, f'{rev} not found locally or on origin'
+        rev = commit
     return subprocess.run(['git', 'show', f'{rev}:{path}'], cwd=ROOT, capture_output=True, check=True, text=True).stdout
 
 
