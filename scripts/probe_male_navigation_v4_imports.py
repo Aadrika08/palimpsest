@@ -48,6 +48,16 @@ ENTRYPOINTS = {
                  'thread_env': {'OMP_NUM_THREADS': '1'}},
     'S0f-port': {'module': 'prepare_male_navigation_v2', 'commit': None, 'port_tree': 'T-f', 'thread_env': {}},
     'S0f-historical-port': {'module': 'prepare_male_recovery_data', 'commit': None, 'port_tree': 'T-h', 'thread_env': {}},
+    # Amendment 1 reconstructed controllers and their shared module, on the v4 branch (HEAD worktree).
+    # S0e-launch/D/A/I are subcommands of one module; the S0e-A worker imports the T-e port by name
+    # at run time only, so its own closure is stdlib.
+    'S0d-controller': {'module': 'run_male_navigation_v4_s0d', 'commit': None, 'thread_env': {}},
+    'S0e-launch': {'module': 'run_male_navigation_v4_s0e', 'commit': None, 'thread_env': {}},
+    'S0e-D': {'module': 'run_male_navigation_v4_s0e', 'commit': None, 'thread_env': {}},
+    'S0e-A': {'module': 'run_male_navigation_v4_s0e', 'commit': None, 'thread_env': {}},
+    'S0e-A-worker': {'module': 'audit_male_navigation_v4_s0e_raw', 'commit': None, 'thread_env': {}},
+    'S0e-I': {'module': 'run_male_navigation_v4_s0e', 'commit': None, 'thread_env': {}},
+    'controls': {'module': 'male_navigation_v4_controls', 'commit': None, 'thread_env': {}},
     # Planned v4 entry points live on the v4 branch; absent files are refused.
     'S1': {'module': 'train_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
     'S2': {'module': 'evaluate_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},

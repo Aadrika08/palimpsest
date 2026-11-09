@@ -122,6 +122,19 @@ def binding(path):
     return {'path': str(Path(path)), 'sha256': sha256_bytes(raw), 'bytes': len(raw)}
 
 
+def write_controller_record(stage, stage_root, producer_records, protocol_sha256, declared_values=()):
+    """Bind every controller document under <stage root>/control and the producer records it supervised.
+
+    The driver merges this with the producer records for the next stage (driver.merge_controlled)."""
+    root = Path(stage_root); control = root/'control'; target = root/driver.CONTROLLER_RECORD
+    documents = {p.relative_to(root).as_posix(): {'sha256': driver.sha256_file(p), 'bytes': p.stat().st_size}
+                 for p in files_under(control) if p != target}
+    shas = [sha256_bytes(driver.canonical(json.loads(driver.read_bounded(p)))) for p in producer_records]
+    return write_json(target, {'schema': driver.CONTROLLER_RECORD_SCHEMA, 'stage': stage, 'protocol_sha256': protocol_sha256,
+                               'stage_root': str(root), 'producer_records': shas, 'documents': documents,
+                               'declared_values': list(declared_values), 'qualification_claims': []})
+
+
 def read_invocation(path, sha256):
     raw = driver.read_bounded(path)
     if sha256_bytes(raw) != sha256: raise Refusal('Invocation record changed after launch')

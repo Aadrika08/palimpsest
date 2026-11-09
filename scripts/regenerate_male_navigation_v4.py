@@ -17,6 +17,13 @@ point at it) before anything is planned; the port's H1 hunks read every pin from
 document named by ``PALIMPSEST_M7_V4_PINS``, written by this driver next to the pin record,
 so no attribute is rebound in-process.
 
+Reconstructed controllers (``CONTROLLED``): S0d runs this driver once per training seed and S0e
+once, each writing ``<stage root>/seed-N`` or ``<stage root>/collection``. The next stage takes
+those producer records as one ordered set (seeds 10, 11, 12) and merges them with the
+controller record at ``<stage root>/control/controller-record.json``, which binds the
+controller documents (terminal, supervisors, drain, audit, index) so that every declared
+path, sha256 and byte count in the v4 pin documents traces to the merged chain.
+
 ``--plan-only`` prints what would run and never imports or executes a producer and never
 opens a data input. Execution requires ``--go`` naming a GO record whose content names the
 exact stage and the protocol sha256; anything else is refused. After a normal producer
@@ -47,6 +54,12 @@ PORT_LOCATOR_SCHEMA = 'm7-navigation-v4-port-pins-1'
 PORT_LOCATOR_ENV = 'PALIMPSEST_M7_V4_PINS'
 DECLARATION_SCHEMA = 'm7-navigation-v4-pin-declarations-1'
 RECORD_SCHEMA = 'm7-navigation-v4-pin-record-1'
+CONTROLLER_RECORD_SCHEMA = 'm7-navigation-v4-controller-record-1'
+CONTROLLER_RECORD = 'control/controller-record.json'   # relative to a controlled stage's root
+# Stages run by a reconstructed Amendment 1 controller. The next stage takes their producer pin
+# records (S0d: one per training seed, in this order) as one ordered set; the controller record at
+# <stage root>/control binds the controller documents, so every declared path and sha traces.
+CONTROLLED = {'S0d': {'seeds': (10, 11, 12), 'output': 'seed-{seed}'}, 'S0e': {'seeds': None, 'output': 'collection'}}
 PENDING = 'PENDING-'
 HEX64 = re.compile(r'[0-9a-f]{64}')
 MAX_DOCUMENT = 4*1024**2
@@ -473,11 +486,12 @@ def _hash_tree(output_root):
 
 
 def make_pin_record(spec, stage, worktree, output_root, previous, *, protocol_sha256, overlay=None, go_sha256=None,
-                    port=None, counts=None):
+                    port=None, counts=None, training_seed=None):
     output_root, worktree = Path(output_root).resolve(), Path(worktree).resolve()
     outputs = _hash_tree(output_root)
     own = {'producing_commit': spec['commit'], 'worktree': str(worktree), 'output_root': str(output_root), 'outputs': outputs,
-           **({} if counts is None else {'counts': counts})}
+           **({} if counts is None else {'counts': counts}),
+           **({} if training_seed is None else {'training_seed': training_seed})}
     return {'schema': RECORD_SCHEMA, 'protocol_sha256': protocol_sha256, 'stage': stage, **own,
             'producer_sha256': spec['producer_sha256'], 'go_sha256': go_sha256,
             'previous_record_sha256': None if previous is None else sha256_bytes(canonical(previous)),
@@ -506,10 +520,63 @@ def check_pin_record(record, stage, stages, *, protocol_sha256):
         raise Refusal(f'Pin record producing commit differs from {previous}')
     chain = record.get('chain')
     own = {k: record.get(k) for k in ('producing_commit', 'worktree', 'output_root', 'outputs')}
-    if 'counts' in record: own['counts'] = record['counts']
+    for key in ('counts', 'training_seed'):
+        if key in record: own[key] = record[key]
     if not isinstance(chain, dict) or list(chain) != order[:order.index(stage)] or chain[previous] != own:
         raise Refusal('Pin record chain is incomplete or differs from its own outputs')
     return chain
+
+
+def merge_controlled(records, stage, stages, *, protocol_sha256):
+    """One chain from a controlled stage's ordered producer records plus its controller record."""
+    order = list(stages)
+    previous = order[order.index(stage)-1]
+    rule = CONTROLLED[previous]
+    expected = list(rule['seeds']) if rule['seeds'] else [None]
+    if len(records) != len(expected):
+        raise Refusal(f'{stage} requires exactly {len(expected)} {previous} pin record(s), got {len(records)}')
+    chains = [check_pin_record(r, stage, stages, protocol_sha256=protocol_sha256) for r in records]
+    seeds = [r.get('training_seed') for r in records]
+    if seeds != expected: raise Refusal(f'{previous} pin records must be seeds {expected} in order, got {seeds}')
+    prefixes = [{k: v for k, v in c.items() if k != previous} for c in chains]
+    if any(p != prefixes[0] for p in prefixes) or \
+            len({(r['worktree'], r['producing_commit'], r.get('previous_record_sha256')) for r in records}) != 1:
+        raise Refusal(f'{previous} pin records do not share one worktree, commit and previous chain')
+    names = [rule['output'].format(seed=s) for s in seeds]
+    roots = {Path(r['output_root']).parent for r in records}
+    if len(roots) != 1 or [Path(r['output_root']).name for r in records] != names:
+        raise Refusal(f'{previous} outputs must be {names} under one stage root')
+    root = roots.pop()
+    raw = read_bounded(root/CONTROLLER_RECORD)
+    controller = json.loads(raw)
+    shas = [sha256_bytes(canonical(r)) for r in records]
+    if (controller.get('schema') != CONTROLLER_RECORD_SCHEMA or controller.get('stage') != previous or
+            controller.get('protocol_sha256') != protocol_sha256 or controller.get('stage_root') != str(root) or
+            controller.get('producer_records') != shas):
+        raise Refusal(f'{previous} controller record does not bind these producer records and stage root')
+    documents = controller.get('documents')
+    if not isinstance(documents, dict) or not documents: raise Refusal(f'{previous} controller record binds no documents')
+    for rel, item in documents.items():
+        path, parts = root/rel, Path(rel).parts
+        if Path(rel).is_absolute() or parts[0] != 'control' or '..' in parts or path.is_symlink() or not path.is_file() or \
+                path.stat().st_size != item.get('bytes') or sha256_file(path) != item.get('sha256'):
+            raise Refusal(f'{previous} controller document differs from its record: {rel}')
+    outputs = {f'{name}/{rel}': value for record, name in zip(records, names) for rel, value in record['outputs'].items()}
+    own = {'producing_commit': records[0]['producing_commit'], 'worktree': records[0]['worktree'], 'output_root': str(root),
+           'outputs': {**outputs, **documents}, 'producer_records': shas, 'controller_record_sha256': sha256_bytes(raw),
+           'declared_values': list(controller.get('declared_values', []))}
+    if 'counts' in records[0]: own['counts'] = records[0]['counts']
+    return {**prefixes[0], previous: own}
+
+
+def previous_chain(records, stage, stages, *, protocol_sha256):
+    """The previous sub-stage's chain: one record, or a controlled stage's ordered set (CONTROLLED)."""
+    order = list(stages)
+    if order.index(stage) == 0: raise Refusal(f'{stage} is the first sub-stage and takes no previous record')
+    if order[order.index(stage)-1] in CONTROLLED:
+        return merge_controlled(records, stage, stages, protocol_sha256=protocol_sha256)
+    if len(records) != 1: raise Refusal(f'{stage} takes exactly one previous pin record, got {len(records)}')
+    return check_pin_record(records[0], stage, stages, protocol_sha256=protocol_sha256)
 
 
 # --------------------------------------------------------------------------- arguments and GO
@@ -882,10 +949,16 @@ def prepare(spec, stage, worktree, previous_path, producer_args, *, stages, pins
                                                                ports, repo=repo)
         report['historical_check'] = verify_worktree(historical_worktree, {}, commit=spec['historical_commit'])
     previous, chain = None, {}
-    if previous_path is not None:
-        previous = json.loads(read_bounded(previous_path))
-        chain = check_pin_record(previous, stage, stages, protocol_sha256=protocol_sha256)
-        report['previous_record_sha256'] = sha256_bytes(read_bounded(previous_path))
+    paths = [] if previous_path is None else [previous_path] if isinstance(previous_path, (str, Path)) else list(previous_path)
+    if paths:
+        raws = [read_bounded(path) for path in paths]
+        records = [json.loads(raw) for raw in raws]
+        chain = previous_chain(records, stage, stages, protocol_sha256=protocol_sha256)
+        if len(records) == 1 and chain == records[0].get('chain'):
+            previous, report['previous_record_sha256'] = records[0], sha256_bytes(raws[0])
+        else:  # a controlled stage: the merged chain stands for its records and controller record
+            report['previous_record_sha256'] = [sha256_bytes(raw) for raw in raws]
+            previous = {'chain': chain, 'records': report['previous_record_sha256']}
     documents = {}
     if spec['documents']:
         declarations = load_declarations(pins_dir, protocol_sha256)
@@ -935,7 +1008,8 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--stage', required=True, choices=list(stages))
     parser.add_argument('--worktree', type=Path, required=True, help='Detached worktree at the producing commit')
-    parser.add_argument('--previous-pins', type=Path, help="Previous sub-stage's v4 pin record")
+    parser.add_argument('--previous-pins', type=Path, nargs='+',
+                        help="Previous sub-stage's v4 pin record (after S0d: the seed 10, 11, 12 records in order)")
     parser.add_argument('--historical-worktree', type=Path, help='S0f historical reader worktree (217cbee)')
     parser.add_argument('--plan-only', action='store_true', help='Print the plan; never executes a producer')
     parser.add_argument('--go', type=Path, help='GO record naming this exact stage and the protocol sha256')
@@ -991,8 +1065,10 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
     try: counts = stage_counts(spec['records_counts'], output) if 'records_counts' in spec else None
     except (Refusal, OSError, ValueError, KeyError, TypeError) as error:
         _emit({'mode': 'go', 'status': 'record-refused', 'stage': args.stage, 'reason': str(error)}); return 1
+    seed = plan['arguments'].get('--training-seed', {}).get('value')
     record = make_pin_record(spec, args.stage, args.worktree, output, previous, protocol_sha256=protocol_sha256,
-                             overlay=overlay, go_sha256=go_sha, port=port, counts=counts)
+                             overlay=overlay, go_sha256=go_sha, port=port, counts=counts,
+                             training_seed=None if seed is None else int(seed))
     write_pin_record(args.pin_record_out, record)
     _emit({'mode': 'go', 'status': 'completed', 'stage': args.stage, 'pin_record': str(args.pin_record_out),
            'outputs': len(record['outputs'])})

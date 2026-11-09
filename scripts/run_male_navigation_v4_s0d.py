@@ -10,15 +10,21 @@ Reconstructs the lost ``supervise.py`` (Amendment 1, reconstructed_controllers S
   stage: 2,100 s internal (bounds every pair) / 2,160 s enclosing (outer supervisor);
 * a 0.25 s PID/start sampler over every descendant, with subreaper containment and cleanup
   ``{sampler_stopped, sample_errors, forced_signals, survivors}``;
-* a five-part before/after inventory (tracked 355, upstream 122 asserted; raw-document,
-  model/production and runtime parts are caller-listed, v2 counts 181/16/7 kept descriptive);
+* a five-part before/after inventory. Tracked (355) and upstream (122) are derived from the
+  worktree and asserted. Documented limitation: the membership of the raw-document,
+  model/production and runtime parts did not survive (only their v2 counts 181/16/7), so
+  those parts stay caller-listed; their counts are recorded next to the v2 reference counts
+  and are never asserted;
 * after the first failure the remaining pairs stay ``not_started``.
 
-Outputs (all under the T-d worktree, which is the recovery index ``producer_root``):
-``<control>/terminal.json`` (training_terminal), ``<control>/outer-supervisor/supervisor.json``
-(training_supervisor) and, after a pass, ``<control>/recovery-index-values.json`` holding the
-S0d fill values the ported ``male_recovery_research._gate`` reads. The controller never
-accounts CPU: it must run as stage S0d under ``run_research_stage.py`` (navigation lane).
+Layout (inside the T-d worktree, which is the recovery index ``producer_root``): pairs in
+``<stage root>/seed-N``, controller documents in ``<stage root>/control``: ``terminal.json``
+(training_terminal), ``outer-supervisor/supervisor.json`` (training_supervisor), the per-seed
+driver pin records ``pairs/seed-N/pin-record.json`` and, after a pass,
+``recovery-index-values.json`` (the S0d fill values the ported ``_gate`` reads) and
+``controller-record.json`` (binds the control documents and the three seed records, which the
+driver merges for S0e). The controller never accounts CPU: it must run as stage S0d under
+``run_research_stage.py`` (navigation lane).
 """
 import argparse
 from pathlib import Path
@@ -47,8 +53,7 @@ def parse(argv):
     parser.add_argument('--worktree', help='T-d port worktree (detached at the port commit)')
     parser.add_argument('--previous-pins', help='S0c pin record')
     parser.add_argument('--data-manifest', help='S0c data-manifest.json')
-    parser.add_argument('--output-root', help='Fresh aggregate root inside the worktree; pairs go to seed-N')
-    parser.add_argument('--control-root', help='Fresh control root inside the worktree, disjoint from the output root')
+    parser.add_argument('--stage-root', help='Fresh stage root inside the worktree: seed-N pairs and control/')
     parser.add_argument('--raw-documents', nargs='+', default=[], help='Fixed raw/document inventory paths')
     parser.add_argument('--model-production', nargs='+', default=[], help='Original-model/production inventory paths')
     parser.add_argument('--runtime', nargs='+', default=[], help='Runtime metadata/entrypoint inventory paths')
@@ -59,19 +64,19 @@ def parse(argv):
 
 def configure(args, *, driver_path, limits, expected_counts, protocol_sha256):
     if args.go is not None and args.plan_only: raise ctl.Refusal('--plan-only and --go are mutually exclusive')
-    names = ('worktree', 'previous_pins', 'data_manifest', 'output_root', 'control_root')
+    names = ('worktree', 'previous_pins', 'data_manifest', 'stage_root')
     paths = {n: str(ctl.absolute('--' + n.replace('_', '-'), getattr(args, n))) for n in names}
     parts = {}
     for part in INVENTORY_PARTS[2:]:
         values = getattr(args, part)
         if not values: raise ctl.Refusal(f'--{part.replace("_", "-")} needs at least one absolute path')
         parts[part] = [str(ctl.absolute('--' + part.replace('_', '-'), v)) for v in values]
-    worktree, output, control = (Path(paths[n]) for n in ('worktree', 'output_root', 'control_root'))
-    for name, path in (('--output-root', output), ('--control-root', control)):
-        if path == worktree or not ctl.driver.under(path, worktree):
-            raise ctl.Refusal(f'{name} must be inside the port worktree (the recovery index producer_root): {path}')
-    if ctl.driver.under(output, control) or ctl.driver.under(control, output):
-        raise ctl.Refusal('--output-root and --control-root must be disjoint')
+    worktree, root = Path(paths['worktree']), Path(paths['stage_root'])
+    if root == worktree or not ctl.driver.under(root, worktree):
+        raise ctl.Refusal(f'--stage-root must be inside the port worktree (the recovery index producer_root): {root}')
+    if any(ctl.driver.under(p, root) for p in (paths['previous_pins'], paths['data_manifest'], *sum(parts.values(), []))):
+        raise ctl.Refusal('--stage-root must be disjoint from every input')
+    paths.update(output_root=str(root), control_root=str(root/'control'))
     return {'stage': STAGE, 'protocol_sha256': protocol_sha256, 'go': None if args.go is None else str(ctl.absolute('--go', args.go)),
             **paths, 'inventory_paths': parts, 'driver': str(driver_path), 'python': sys.executable,
             'limits': dict(limits), 'expected_counts': dict(expected_counts)}
@@ -166,9 +171,13 @@ def index_values(cfg, supervisor):
                        'report_sha256': ctl.binding(Path(p['output'])/'report.json')['sha256']} for p in value['pairs']]}
 
 
+def seed_records(cfg):
+    return [Path(cfg['control_root'])/'pairs'/f'seed-{s}'/'pin-record.json' for s in SEEDS]
+
+
 def outer(cfg):
     control = Path(cfg['control_root'])
-    control.mkdir(parents=True); Path(cfg['output_root']).mkdir(parents=True)
+    control.mkdir(parents=True)
     invocation = ctl.write_json(control/'invocation.json', cfg)
     command = [sys.executable, '-B', str(Path(__file__).resolve()), '--inner', invocation['path'],
                '--invocation-sha256', invocation['sha256']]
@@ -177,9 +186,15 @@ def outer(cfg):
     record['output'] = str(control/'terminal.json')
     supervisor = ctl.write_json(control/'outer-supervisor/supervisor.json', record)
     ok = record['status'] == 'completed' and record['returncode'] == 0 and record['elapsed_seconds'] <= limit
+    if ok and not all(p.is_file() for p in seed_records(cfg)): ok = False   # the driver published every seed record
     summary = {'mode': 'go', 'stage': STAGE, 'status': 'completed' if ok else 'failed', 'supervisor': supervisor,
                'terminal': str(control/'terminal.json')}
-    if ok: summary['recovery_index_values'] = ctl.write_json(control/'recovery-index-values.json', index_values(cfg, supervisor))
+    if ok:
+        values = index_values(cfg, supervisor)
+        summary['recovery_index_values'] = ctl.write_json(control/'recovery-index-values.json', values)
+        summary['controller_record'] = ctl.write_controller_record(
+            STAGE, cfg['output_root'], seed_records(cfg), cfg['protocol_sha256'],
+            declared_values=[values['before_after_inventory_sha256']])
     ctl.emit(summary)
     return 0 if ok else 1
 
@@ -206,7 +221,7 @@ def main(argv=None, *, driver_path=ctl.DRIVER, limits=None, expected_head=None, 
         expected_head = ctl.port_commit('T-d') if expected_head is None else expected_head
         if (head := ctl.git_head(cfg['worktree'])) != expected_head:
             raise ctl.Refusal(f'Worktree HEAD {head} is not the T-d port commit {expected_head}')
-        for name in ('output_root', 'control_root'): ctl.fresh('--' + name.replace('_', '-'), cfg[name])
+        ctl.fresh('--stage-root', cfg['stage_root'])
     except (ctl.Refusal, OSError, ValueError, KeyError) as error:
         ctl.emit({'mode': 'go' if args.go else 'plan-only', 'stage': STAGE, 'status': 'refused',
                   'reason': str(error) if isinstance(error, ctl.Refusal) else f'{type(error).__name__}: {error}'})
