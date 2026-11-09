@@ -1,0 +1,40 @@
+{
+ "decision": "GO",
+ "lane": "navigation",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "manifest_sha256": "7cd83e97e4e5d8611ed8447eb8e7ec969e9321ade6a19fe60a948c0e9bd011d2",
+ "plan_sha256": {
+  "driver": "3bd12d9f7b9fe7db68284944d4a9034cff9c7751102be7fbcd8a7ce995c5a997",
+  "launch": "7dd7b72fdb2f2384c4b2b34ca58276857d850af789b390b16cee221b333a8382",
+  "drain": "1a16a802f5cdf372418b8d9ce41145da2986c07974e31dd1dd04121112e1ca35",
+  "audit": "01b69218c23005aea78493e26c1090431114d654541b48b723404a370c24df9b",
+  "index": "d809f682df1811e3649367401d9cbbc1cbcc3fb23b55ede7a0f9b57ee9970d95"
+ },
+ "previous_pin_records_sha256": [
+  "4ce884fba00b6d51e162435d4cfa79d1de70e0a6ccca9760f34e0721192fbaaa",
+  "6fc8bb5fa4fa2888dba0f0f868c98a8f54b0386435e5e9c1b2256b292cf038dc",
+  "bd87a1debdc92c99417330a4d006d3a9de7cb4e91b9263577125639a2d5b0b7c"
+ ],
+ "s0d_controller_record_sha256": "831d140ae0edfdc2636196744ac3cbe42a4613d40c0312e4e72455e06c679823",
+ "chain_pin_record_sha256": {
+  "S0a": "d8e511b8d8095c8d781a0ecfb2b031571c4f6fd72d0367b88520643d0f653901",
+  "S0b": "b3511f1a3bf625dd4cec20733317b5288bb965cde6873fbb1023a768e02809cb",
+  "S0c": "8044fa1ab5a01db56ae19d1c4ee9a63daba8a670297ab42c4ab83f967e7e657c"
+ },
+ "pin_document_sha256": {
+  "male-recovery-research-development-v1.json": "ab42f9c55bd110be8a89933aa4f9decf55e7b7827cc1c5d0ef9b47bdde535618",
+  "m7-navigation-study-protocol.json": "4939f9c91fd84c74fe1e467b9a231ba86f48694c57159ba50cc26d938a8299f5",
+  "m7-navigation-contact-v2-protocol.json": "cadd0e45190cc2a6f4bbc742c8b38f065bbe2c831f42b8f84cef4bd75d3b1de3",
+  "m7-recovery-learning-protocol.json": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+ },
+ "declared_fields_sha256": "96d5b6634c1e4dd47bfe5bce148024bf2601319ba4c4f99a83acca0290a9d722",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e",
+ "worktree_head": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+ "port_tree": "T-e",
+ "current_tree_head": "594388aa5868be9a8d525a515c891e8bd6dfbee4",
+ "cpu_quota_k": 1,
+ "scientific_attempt": true,
+ "granted_by": "Utkarsh Maurya (owner), interactive session",
+ "granted_at": "2026-11-09",
+ "stage": "S0e"
+}

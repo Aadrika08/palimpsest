@@ -1,0 +1,95 @@
+{
+ "after_inventory_sha256": "64ac3bdb8d4c5add4beedea93b27d108fe8b7311eea3efbf4ab29b189df09d2c",
+ "before_inventory_sha256": "64ac3bdb8d4c5add4beedea93b27d108fe8b7311eea3efbf4ab29b189df09d2c",
+ "cleanup": {
+  "conflicting_owned_identities": [],
+  "forced_signals": [],
+  "max_sample_gap_seconds": 0.7983944680017885,
+  "observed_owned_processes": [
+   {
+    "pid": 2521251,
+    "start_ticks": 25175439
+   },
+   {
+    "pid": 2521272,
+    "start_ticks": 25175498
+   },
+   {
+    "pid": 2521281,
+    "start_ticks": 25175740
+   },
+   {
+    "pid": 2521391,
+    "start_ticks": 25178415
+   },
+   {
+    "pid": 2521463,
+    "start_ticks": 25180734
+   },
+   {
+    "pid": 2521847,
+    "start_ticks": 25182907
+   },
+   {
+    "pid": 2521906,
+    "start_ticks": 25185652
+   },
+   {
+    "pid": 2521945,
+    "start_ticks": 25186662
+   },
+   {
+    "pid": 2522026,
+    "start_ticks": 25189453
+   },
+   {
+    "pid": 2522099,
+    "start_ticks": 25192218
+   },
+   {
+    "pid": 2522145,
+    "start_ticks": 25193623
+   },
+   {
+    "pid": 2522173,
+    "start_ticks": 25194659
+   },
+   {
+    "pid": 2522285,
+    "start_ticks": 25197384
+   },
+   {
+    "pid": 2522346,
+    "start_ticks": 25198990
+   }
+  ],
+  "remaining_after_forced": [],
+  "sample_errors": [],
+  "sample_seconds": 0.25,
+  "sampler_stopped": true,
+  "samples": 955,
+  "scope": "finite 0.25 s PID/start sampling with PID/start recheck before owned containment; not universal transient-process proof",
+  "survivors": []
+ },
+ "collector_supervisor": {
+  "bytes": 1518,
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-launch/supervisor.json",
+  "sha256": "f83d09571032df04c592fe8df5fdaf3627dc913e478350b487c05ea63d40c926"
+ },
+ "controls_unchanged": true,
+ "head": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+ "inventories_unchanged": true,
+ "inventory_counts": {
+  "assets": 20,
+  "bundle": 40,
+  "corpus": 226,
+  "source": 512,
+  "upstream": 122
+ },
+ "normal_return_limit_seconds": 2210,
+ "report_sha256": "7c117e572088fb6415ebfa56b0dc44b2ad41aafe398fca601aca98116fc9ddde",
+ "report_status": "completed-collection",
+ "schema": "m7-navigation-v4-s0e-terminal-1",
+ "stage": "S0e",
+ "status": "completed-collection"
+}
