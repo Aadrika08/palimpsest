@@ -310,7 +310,8 @@ def test_real_v4_pin_copies_differ_only_in_declared_fields():
     decl = real_declarations()
     assert decl['protocol_sha256'] == PROTOCOL_SHA
     assert set(decl['documents']) == {'m7-recovery-learning-protocol.json', 'm7-navigation-contact-v2-protocol.json',
-                                      'm7-navigation-data-v2-protocol.json', 'male-recovery-research-development-v1.json'}
+                                      'm7-navigation-data-v2-protocol.json', 'male-recovery-research-development-v1.json',
+                                      'm7-navigation-study-protocol.json'}   # study plan activated before S0e
     for name, item in decl['documents'].items():
         original = (ROOT/item['original_path']).read_bytes()
         assert sha(original) == item['original_sha256'], name
@@ -322,8 +323,9 @@ def test_real_v4_pin_copies_differ_only_in_declared_fields():
         driver.check_pin_document(original, copy_bytes, item, consumer=False)
 
 
-# Copies filled from published pin records before their first consumer (S0c: S0a + S0b records).
-FILLED_COPIES = {'m7-recovery-learning-protocol.json'}
+# Copies filled from published pin records before their first consumer (S0c: S0a + S0b records; S0e: S0c + S0d).
+FILLED_COPIES = {'m7-recovery-learning-protocol.json', 'male-recovery-research-development-v1.json',
+                 'm7-navigation-study-protocol.json', 'm7-navigation-contact-v2-protocol.json'}
 
 
 def test_real_v4_pin_copies_hold_explicit_stage_placeholders_until_filled_and_unfilled_ones_are_refused():

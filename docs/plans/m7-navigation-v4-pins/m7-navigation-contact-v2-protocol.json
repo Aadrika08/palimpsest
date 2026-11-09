@@ -70,14 +70,14 @@
     "id_disjointness_check": "Existing JSON plan/data-manifest seed keys have no overlap; this is not geometric/payload disjointness. Never use these seeds in a toy, smoke or tuning run."
   },
   "fixed_source_models": {
-    "index_path": "PENDING-S0d",
-    "index_sha256": "PENDING-S0d",
-    "producer_root": "PENDING-S0d",
+    "index_path": "docs/plans/m7-navigation-v4-pins/male-recovery-research-development-v1.json",
+    "index_sha256": "ab42f9c55bd110be8a89933aa4f9decf55e7b7827cc1c5d0ef9b47bdde535618",
+    "producer_root": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
     "selected": "Exactly original graph seed10/11/12 from admitted recovery bundles; no control or winning-seed choice",
     "pair_report_sha256": {
-      "10": "PENDING-S0d",
-      "11": "PENDING-S0d",
-      "12": "PENDING-S0d"
+      "10": "3b5f14f26bd8bedf9754bf74aa37b15fb4106932532713cd2db412f506204086",
+      "11": "27cd10fa4bda58ce328871bd01ca440468281c296b60606747694cc94b1d1313",
+      "12": "186e3b6af878f4511f74d78d17d73630d8a421f113d729ae3fc5e7afbec0f09c"
     },
     "read_or_loaded_in_this_slice": false
   },
@@ -384,7 +384,7 @@
     "sensor_floor_blindness": "Pinned MuJoCoTwoCamEnv._has_collision excludes all floor contacts; class3 non-wheel floor packets stay audit metadata and are not a new collision feature. Wall/obstacle sensor/outcome behavior, analytic teacher advice and private45-query counter are unchanged."
   },
   "data": {
-    "old_manifest_sha256": "PENDING-S0c",
+    "old_manifest_sha256": "052a8dbd7428ffa064a74dfd71792ca6c0f2ae54ea9564ce68eb0a94d5220c72",
     "old_train_rows": 2117,
     "recorded_dev_rows": 1228,
     "old_sources": 14,
@@ -555,8 +555,8 @@
     "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
     "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
     "scripts/prepare_male_recovery_data.py": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
-    "data/manifests/male-recovery-research-development-v1.json": "PENDING-S0d",
-    "docs/plans/m7-recovery-learning-protocol.json": "PENDING-S0b",
+    "data/manifests/male-recovery-research-development-v1.json": "ab42f9c55bd110be8a89933aa4f9decf55e7b7827cc1c5d0ef9b47bdde535618",
+    "docs/plans/m7-recovery-learning-protocol.json": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df",
     "docs/plans/m7-training-v2-protocol.json": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
     "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
   },
@@ -625,10 +625,10 @@
     "hash_encoding": "SHA256 of UTF-8 json.dumps(identity, sort_keys=True, separators=(comma, colon)); no trailing newline"
   },
   "prior_version": {
-    "protocol_path": "docs/plans/m7-navigation-study-protocol.json",
-    "protocol_sha256": "a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f",
+    "protocol_path": "docs/plans/m7-navigation-v4-pins/m7-navigation-study-protocol.json",
+    "protocol_sha256": "4939f9c91fd84c74fe1e467b9a231ba86f48694c57159ba50cc26d938a8299f5",
     "producer_commit": "13a1afe90131e61cf3320b83af82a7aa98b62e4f",
-    "collector_sha256": "d0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f",
+    "collector_sha256": "f96552012646b4cac5c7feeb253a6c16ab15d1948b67a6a8799da5341f74d1a0",
     "failure_index_path": "docs/reports/m7-navigation-collection-v1.json",
     "failure_index_sha256": "664f8be5667820a2120c500a082b4d3e9920848cd6e9455f972552fed6a47dcb",
     "status": "failed infrastructure admission; immutable and excluded from all v2 data manifests",

@@ -487,7 +487,8 @@ def test_driver_merges_the_three_seed_records_and_traces_every_s0d_recovery_inde
     doc = json.loads((PINS/'male-recovery-research-development-v1.json').read_text())
     doc.update({k: values[k] for k in ('producer_root', 'training_terminal', 'training_supervisor', 'before_after_inventory_sha256')})
     for pair, value in zip(doc['pairs'], values['pairs']): pair.update(directory=value['directory'], report_sha256=value['report_sha256'])
-    item = declared('male-recovery-research-development-v1.json', 'S0d', skip=('path-keys',))
+    # path-keys, source-map and commit are read from seed protocol.json / the producing commit (ports tests cover them).
+    item = declared('male-recovery-research-development-v1.json', 'S0d', skip=('path-keys', 'source-map', 'commit'))
     assert len(item['fields']) == 12
     driver.check_document_values('index', doc, doc, item, chain, None, PINS)    # every S0d path and sha traces
     for pointer, value in (('/training_terminal/sha256', 'f'*64), ('/pairs/1/directory', '/elsewhere/seed-11'),

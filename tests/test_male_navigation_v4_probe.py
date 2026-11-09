@@ -222,7 +222,7 @@ def test_p_locator_names_every_port_document_by_absolute_path_with_current_bytes
     # S0c has not run: the only non-document locator value (T-d data_manifest) is an explicit placeholder.
     assert {k for t in PORTS['trees'].values() for k in t.get('locator_values', [])} == {'data_manifest'}
     assert value['data_manifest'] == {'path': 'PENDING-S0c', 'sha256': 'PENDING-S0c'}
-    assert value['pending']['male-recovery-research-development-v1.json']        # the copies still hold placeholders
+    assert value['pending']['m7-navigation-data-v2-protocol.json']        # unfilled copies (S0f) still hold placeholders
 
 
 def test_every_locator_key_a_port_reads_is_present_in_the_p_locator():
@@ -246,7 +246,8 @@ def test_the_only_import_time_document_open_accepts_the_pending_v4_contact_copy(
     copy = json.loads((PINS/'m7-navigation-contact-v2-protocol.json').read_bytes())
     identity = json.dumps(copy['contact_profile']['identity'], sort_keys=True, separators=(',', ':')).encode()
     assert copy['contact_profile']['sha256'] == profile == hashlib.sha256(identity).hexdigest()
-    assert probe.p_time_locator()['pending']['m7-navigation-contact-v2-protocol.json']   # PENDING fields are not read there
+    # At P the copy held PENDING fields that plan() never reads; since S0e preparation it is filled (no PENDING left).
+    assert 'contact_profile' not in {p.split('/')[1] for p in probe.p_time_locator()['pending']['m7-navigation-contact-v2-protocol.json']}
 
 
 def test_write_port_pins_is_fresh_absolute_exclusive_and_outside_every_root(tmp_path):
