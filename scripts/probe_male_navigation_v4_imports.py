@@ -11,9 +11,16 @@ blocked open, local module resolving outside the worktree or initialized CUDA is
 refusal. P is not a scientific attempt; it reserves nothing.
 
 This parent module is stdlib-only, so the child can run this same file under ``-I``.
+
+Port entry points import against ``--port-pins``. At P no S0 pin record exists, so
+``--write-port-pins PATH`` (``write_port_pins``) writes the P-time locator: the tracked v4
+copies by absolute path and sha256 (their PENDING placeholders are never read at import) and
+the S0c ``data_manifest`` value as an explicit PENDING placeholder. See
+``docs/reports/male-v4-stage-p/MANIFEST.md``.
 """
 import argparse
 import ast
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -26,6 +33,9 @@ MARKER = '@@M7-NAV-V4-PROBE-RESULT@@ '
 DEFAULT_TIMEOUT = 120.0
 PORTS_PATH = Path(__file__).resolve().parents[1]/'docs/plans/m7-navigation-v4-pins/ports.json'
 PORT_LOCATOR_ENV = 'PALIMPSEST_M7_V4_PINS'
+PINS_DIR = PORTS_PATH.parent
+# Locator values that are S0 outputs, not v4 documents; at P time no S0 record exists yet.
+LOCATOR_VALUE_STAGES = {'data_manifest': 'S0c'}
 
 ENTRYPOINTS = {
     'S0a': {'module': 'collect_male_teachers', 'commit': 'cc1cea93d4c3333a0ee2a091dd34fff0b2986887', 'thread_env': {}},
@@ -330,6 +340,58 @@ def probe_stage(python, stage, worktree, *, forbid=(), egl=False, timeout=DEFAUL
     return {'stage': stage, 'commit': commit, **result}
 
 
+def _pending(value, pointer=''):
+    if isinstance(value, str): return [pointer] if value.startswith('PENDING-') else []
+    if isinstance(value, dict):
+        return [p for k, v in value.items() for p in _pending(v, f'{pointer}/{str(k).replace("~", "~0").replace("/", "~1")}')]
+    if isinstance(value, list): return [p for i, v in enumerate(value) for p in _pending(v, f'{pointer}/{i}')]
+    return []
+
+
+def p_time_locator(pins_dir=PINS_DIR, ports_path=PORTS_PATH):
+    """The locator the *-port stages import against at stage P, before any S0 pin record exists.
+
+    The port H1 hunks read only the locator at import; the one import-time document open is
+    collect_male_navigation_v2 ``plan()`` (T-e, T-f), which checks the contact-v2 copy's digest
+    and contact-profile identity and never reads a PENDING field. So the tracked v4 copies, with
+    their PENDING placeholders, are named by absolute path and current sha256, and the S0c
+    data-manifest locator value is an explicit PENDING placeholder (read at import, never opened)."""
+    ports = json.loads(Path(ports_path).read_text())
+    trees = ports['trees'].values()
+    documents, pending = {}, {}
+    for name in sorted({d for tree in trees for d in tree.get('documents', [])}):
+        path = (Path(pins_dir)/name).resolve()
+        raw = path.read_bytes()
+        documents[name] = {'path': str(path), 'sha256': hashlib.sha256(raw).hexdigest()}
+        pending[name] = _pending(json.loads(raw))
+    value = {'schema': ports['locator']['schema'], 'stage': 'P', 'protocol_sha256': ports['protocol_sha256'],
+             'documents': documents, 'pending': pending}
+    for key in sorted({k for tree in trees for k in tree.get('locator_values', [])}):
+        if key not in LOCATOR_VALUE_STAGES: raise ValueError(f'Unknown locator value {key}')
+        value[key] = {'path': f'PENDING-{LOCATOR_VALUE_STAGES[key]}', 'sha256': f'PENDING-{LOCATOR_VALUE_STAGES[key]}'}
+    return value
+
+
+def write_port_pins(path, roots, pins_dir=PINS_DIR, ports_path=PORTS_PATH):
+    """Write the P-time locator to a fresh absolute path outside every probed worktree and data root."""
+    path = Path(path)
+    if not path.is_absolute(): raise ValueError(f'P locator path must be absolute: {path}')
+    if path.exists() or path.is_symlink(): raise ValueError(f'P locator path must be fresh: {path}')
+    resolved = Path(os.path.realpath(path))
+    for root in roots:
+        root = Path(root).resolve()
+        if resolved == root or root in resolved.parents:
+            raise ValueError(f'P locator must be outside every root; {path} is under {root}')
+    if not path.parent.is_dir(): raise ValueError(f'P locator parent directory must exist: {path.parent}')
+    payload = (json.dumps(p_time_locator(pins_dir, ports_path), sort_keys=True, separators=(',', ':')) + '\n').encode()
+    with path.open('xb') as stream:
+        stream.write(payload); stream.flush(); os.fsync(stream.fileno())
+    fd = os.open(path.parent, os.O_RDONLY)
+    try: os.fsync(fd)
+    finally: os.close(fd)
+    return {'path': str(path), 'sha256': hashlib.sha256(payload).hexdigest(), 'bytes': len(payload)}
+
+
 def main(argv=None):
     if argv is None and len(sys.argv) == 3 and sys.argv[1] == '--child':
         try: result = _child(json.loads(sys.argv[2]))
@@ -347,11 +409,20 @@ def main(argv=None):
     parser.add_argument('--egl', action='store_true', help='Record EGL identity from one offscreen context')
     parser.add_argument('--timeout', type=float, default=DEFAULT_TIMEOUT)
     parser.add_argument('--port-pins', type=Path, help='Port locator document for *-port stages')
+    parser.add_argument('--write-port-pins', type=Path,
+                        help='Only write the P-time port locator here (outside every --stage/--root/--forbid root); no probe')
     args = parser.parse_args(argv)
     python = Path(args.python)
     if not python.is_absolute() or not python.exists():
         print(json.dumps({'status': 'refused', 'reasons': ['Explicit absolute interpreter path required']}))
         return 2
+    if args.write_port_pins is not None:
+        roots = [item.partition('=')[2] for item in args.stage] + ([args.root] if args.root else []) + list(args.forbid)
+        try: written = write_port_pins(args.write_port_pins, [r for r in roots if r])
+        except (ValueError, OSError) as error:
+            print(json.dumps({'status': 'refused', 'reasons': [str(error)]})); return 2
+        print(json.dumps({'status': 'written', 'locator': written, 'protocol_sha256': PROTOCOL_SHA256}, sort_keys=True))
+        return 0
     results = []
     for item in args.stage:
         stage, _, worktree = item.partition('=')

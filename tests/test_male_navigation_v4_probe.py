@@ -189,3 +189,132 @@ def test_cli_requires_absolute_existing_interpreter_and_exits_nonzero_on_refusal
     report = json.loads(capsys.readouterr().out.strip().splitlines()[-1])
     assert report['status'] == 'refused'
     assert probe.main(['--python', sys.executable, '--root', str(root), '--module', 'train_male_navigation_v3']) == 0
+
+
+# ------------------------------------------------------------------- P-time port locator (no S0 record yet)
+
+import hashlib  # noqa: E402
+import re  # noqa: E402
+
+PINS = ROOT/'docs/plans/m7-navigation-v4-pins'
+PORTS = json.loads((PINS/'ports.json').read_text())
+MANIFEST = ROOT/'docs/reports/male-v4-stage-p/MANIFEST.md'
+
+
+def blob(rev, path):
+    return subprocess.run(['git', 'show', f'{rev}:{path}'], cwd=ROOT, capture_output=True, check=True, text=True).stdout
+
+
+def test_p_locator_names_every_port_document_by_absolute_path_with_current_bytes_and_pending_values():
+    value = probe.p_time_locator()
+    assert value['schema'] == PORTS['locator']['schema'] and value['stage'] == 'P'
+    assert value['protocol_sha256'] == PORTS['protocol_sha256'] == probe.PROTOCOL_SHA256
+    assert set(value['documents']) == {d for t in PORTS['trees'].values() for d in t['documents']}
+    for name, entry in value['documents'].items():
+        assert Path(entry['path']).is_absolute() and entry['path'] == str((PINS/name).resolve())
+        assert entry['sha256'] == hashlib.sha256((PINS/name).read_bytes()).hexdigest()
+    # S0c has not run: the only non-document locator value (T-d data_manifest) is an explicit placeholder.
+    assert {k for t in PORTS['trees'].values() for k in t.get('locator_values', [])} == {'data_manifest'}
+    assert value['data_manifest'] == {'path': 'PENDING-S0c', 'sha256': 'PENDING-S0c'}
+    assert value['pending']['male-recovery-research-development-v1.json']        # the copies still hold placeholders
+
+
+def test_every_locator_key_a_port_reads_is_present_in_the_p_locator():
+    value, seen = probe.p_time_locator(), set()
+    for tree in PORTS['trees'].values():
+        for rel in tree['files']:
+            for line in blob(tree['branch'], rel).splitlines():
+                if 'PALIMPSEST_M7_V4_PINS' not in line and 'v4[' not in line: continue
+                seen |= {('documents', n) for n in re.findall(r"\['([\w.-]+\.json)'\]", line)}
+                seen |= {(k, None) for k in re.findall(r"read_bytes\(\)\)\['(\w+)'\]", line) if k != 'documents'}
+    assert ('data_manifest', None) in seen and len(seen) >= 6
+    for key, name in seen:
+        assert (name in value['documents']) if key == 'documents' else (key in value), (key, name)
+
+
+def test_the_only_import_time_document_open_accepts_the_pending_v4_contact_copy():
+    """collect_male_navigation_v2.py:50 (T-e, T-f) runs plan() at import: digest + contact-profile identity only."""
+    source = blob(PORTS['trees']['T-e']['branch'], 'scripts/collect_male_navigation_v2.py')
+    assert "CONTACTS = plan()['contacts']" in source
+    profile = re.search(r"PROFILE_SHA = '([0-9a-f]{64})'", source).group(1)
+    copy = json.loads((PINS/'m7-navigation-contact-v2-protocol.json').read_bytes())
+    identity = json.dumps(copy['contact_profile']['identity'], sort_keys=True, separators=(',', ':')).encode()
+    assert copy['contact_profile']['sha256'] == profile == hashlib.sha256(identity).hexdigest()
+    assert probe.p_time_locator()['pending']['m7-navigation-contact-v2-protocol.json']   # PENDING fields are not read there
+
+
+def test_write_port_pins_is_fresh_absolute_exclusive_and_outside_every_root(tmp_path):
+    roots = [tmp_path/'wt', tmp_path/'data']
+    for root in roots: root.mkdir()
+    for bad, reason in (('relative/port-pins.json', 'absolute'), (str(tmp_path/'wt/pins.json'), 'outside'),
+                        (str(tmp_path/'data/x/pins.json'), 'outside'), (str(tmp_path/'missing/pins.json'), 'parent')):
+        with pytest.raises(ValueError, match=reason): probe.write_port_pins(bad, roots)
+    out = tmp_path/'p/port-pins.json'; out.parent.mkdir()
+    written = probe.write_port_pins(str(out), roots)
+    raw = out.read_bytes()
+    assert written == {'path': str(out), 'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}
+    assert json.loads(raw) == probe.p_time_locator()
+    with pytest.raises(ValueError, match='fresh'): probe.write_port_pins(str(out), roots)
+
+
+def test_cli_write_port_pins_writes_the_locator_and_never_probes(tmp_path, capsys, monkeypatch):
+    monkeypatch.setattr(probe, 'probe_entry', lambda *a, **k: pytest.fail('no probe may run'))
+    wt, data = tmp_path/'wt', tmp_path/'data'; wt.mkdir(); data.mkdir()
+    out = tmp_path/'p-pins.json'
+    argv = ['--python', sys.executable, '--stage', f'S0e-port={wt}', '--forbid', str(data), '--write-port-pins', str(out)]
+    assert probe.main(argv) == 0 and json.loads(capsys.readouterr().out)['locator']['path'] == str(out)
+    assert json.loads(out.read_text())['stage'] == 'P'
+    assert probe.main([*argv[:-1], str(wt/'pins.json')]) == 2 and 'outside' in capsys.readouterr().out
+
+
+def test_dry_synthetic_h1_entry_imports_against_the_p_locator_and_its_open_is_audited(tmp_path):
+    """Command-shape validation only: one ad-hoc synthetic entry, never a real entry point."""
+    out = tmp_path/'p-pins.json'
+    probe.write_port_pins(str(out), [tmp_path/'wt'])
+    root = tmp_path/'wt'
+    write(root, 'scripts/entry.py', '''
+        import hashlib, json, os
+        from pathlib import Path
+        LOCATOR = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())
+        PLAN = LOCATOR['documents']['m7-navigation-contact-v2-protocol.json']['path']
+        DATA_SHA256 = LOCATOR['data_manifest']['sha256']
+        if hashlib.sha256(Path(PLAN).read_bytes()).hexdigest() != LOCATOR['documents']['m7-navigation-contact-v2-protocol.json']['sha256']:
+            raise ValueError('Frozen v2 navigation plan differs')
+    ''')
+    env = {probe.PORT_LOCATOR_ENV: str(out)}
+    result = probe.probe_entry(sys.executable, root, 'entry', forbid=(tmp_path/'data',), extra_env=env)
+    assert result['status'] == 'passed', result.get('reasons')
+    blocked = probe.probe_entry(sys.executable, root, 'entry', forbid=(PINS,), extra_env=env)
+    assert blocked['status'] == 'refused'
+
+
+# ------------------------------------------------------------------- the stage P manifest
+
+def manifest_command():
+    text = MANIFEST.read_text()
+    block = re.search(r'<!-- stage-p-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    return text, block.replace('\\\n', ' ').split()
+
+
+def test_stage_p_manifest_covers_every_entry_point_once_under_a_charged_navigation_p_unit():
+    text, argv = manifest_command()
+    unit = argv[:argv.index('--')]
+    flag = lambda name, words=unit: words[words.index(name) + 1]
+    assert unit[1].endswith('scripts/run_research_stage.py')
+    assert (flag('--lane'), flag('--stage'), flag('--runtime-max-sec'), flag('--worst-case-cpu'), flag('--cpu-quota-k')) == \
+        ('navigation', 'P', '120', '125', '1')
+    command = argv[argv.index('--') + 1:]
+    assert command[0] == '/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python' and flag('--python', command) == command[0]
+    stages = [command[i + 1].partition('=') for i, w in enumerate(command) if w == '--stage']
+    assert sorted(s for s, _, _ in stages) == sorted(probe.ENTRYPOINTS) and len(stages) == len(probe.ENTRYPOINTS)
+    assert '--egl' in command and Path(flag('--port-pins', command)).is_absolute()
+    roots = {w for _, _, w in stages}
+    forbid = [command[i + 1] for i, w in enumerate(command) if w == '--forbid']
+    outside = [flag('--receipt-dir'), flag('--ledger'), flag('--go-record'), flag('--port-pins', command)]
+    for path in outside + forbid:
+        assert Path(path).is_absolute()
+    for path in outside:
+        assert not any(Path(path) == Path(r) or Path(r) in Path(path).parents for r in roots | set(forbid)), path
+    assert '/home/utkarsh/Work/shraddha/palimpsest/runs' in forbid and '/home/utkarsh/Work/shraddha/palimpsest/data/assets' in forbid
+    assert all(f'{r}/runs' in forbid and f'{r}/data/assets' in forbid for r in roots)
+    assert '--write-port-pins' in text and PORTS['trees']['T-e']['port_commit'] in text
