@@ -1,0 +1,1879 @@
+{
+  "status": "passed",
+  "protocol": {
+    "id": "M7-REC-COVER-1",
+    "version": 3,
+    "profile": "teacher-recovery-development-v3",
+    "cases": [
+      {
+        "id": "recovery-north-2100",
+        "seed": 2100,
+        "start_pose": [
+          -0.95,
+          0.12,
+          0.0
+        ]
+      },
+      {
+        "id": "recovery-south-2101",
+        "seed": 2101,
+        "start_pose": [
+          -0.95,
+          -0.12,
+          0.0
+        ]
+      }
+    ],
+    "goal_xy": [
+      2.0,
+      0.0
+    ],
+    "scenario": "reproduction",
+    "texture": "checker",
+    "controller": "teacher",
+    "device": "cpu",
+    "teacher_sha256": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586",
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+    "prefix_max_ticks": 32,
+    "prefix_action": [
+      0.7,
+      0.0
+    ],
+    "source_max_ticks": 120,
+    "prefix_handoff": "Permanent before-action handoff to same expert on first independently sampled bad contact or 32-interval cap; no reactivation",
+    "expert": "Exactly one unchanged teacher.act before every interval, including prefix; no teacher reset at handoff",
+    "labels": "expert_action is separate from recorded actual action; post-prefix equality exact; old training loader rejects profile",
+    "numeric_columns": {
+      "recovery_teacher_before": [
+        "count",
+        "direction",
+        "previous_bad_contact"
+      ],
+      "recovery_teacher_after": [
+        "count",
+        "direction",
+        "previous_bad_contact"
+      ],
+      "recovery_transitions": [
+        "started",
+        "completed",
+        "old_label_replaced"
+      ]
+    },
+    "counter": "45 back queries (40+5), no turn/forward phase; final query may complete and restart, replacing old emitted action",
+    "coverage": "each first cycle: observed contact/sign at start, 45 emitted back targets without replacement, actual post-prefix reverse, later observed clearance",
+    "contact": "independent prior contact-cache sensor plus ten actual pre-control caches/end; intentional robot-obstacle1 allowed, no continuous collision claim",
+    "owners": 2,
+    "maximum_numeric_ticks": 240,
+    "snapshot_files": 2,
+    "snapshot_max_bytes": 16777216,
+    "recording_max_bytes": 150994944,
+    "recording_plus_snapshot_max_bytes": 167772160,
+    "output_max_bytes": 1073741824,
+    "min_free_bytes": 1073741824,
+    "result_max_bytes": 4194304,
+    "report_max_bytes": 4194304,
+    "log_max_bytes": 1048576,
+    "headroom_bytes": 8388608,
+    "child_timeout_seconds": 180,
+    "inner_timeout_seconds": 420,
+    "outer_timeout_seconds": 480,
+    "collection_boundary": "Earliest first 45-returned-label cycle without replacement plus later fully admitted recorded interval with cached and stage-zero intended-contact clearance; publish before stopping; no hardcoded tick",
+    "outcomes": "coverage_complete is collection-only, not natural termination; otherwise natural outcome or 120 cap; collect both valid sources before scoring; infrastructure/invariant/storage stops remaining not_started",
+    "pipeline": {
+      "mujoco_version": "3.3.6",
+      "integrator": "Euler",
+      "physics_dt_s": 0.002,
+      "frame_skip": 10,
+      "control_dt_s": 0.02,
+      "max_contacts_per_stage": 128
+    },
+    "student": "unchanged 388 RGB/contact/bearing features; privileged teacher/private history not student inputs",
+    "scope": "two mirrored first-cycle development sources; event boundary deliberately censors later driving, does not cure or reclassify v1/v2 failures; no training, held-out reads, learned/general/task/body/physical qualification"
+  },
+  "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+  "runtime_source": {
+    "commit": "c382c86781a7a5d6651af721119789729cc890ae",
+    "files_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+      "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+      "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+      "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+      "src/palimpsest/cli.py": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+      "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "ad8f92746f020391ef3c3c974e0f1293f82c83ae24070e05bced60d16982c5c1",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+      "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+      "src/palimpsest/male_policy.py": "12f2ff72a46e4b240c38a986b285ea087cdddfd2dcb6f574cc944f73eb7f168c",
+      "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+      "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+      "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+      "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+      "src/palimpsest/profiles.py": "3d6340eebcea149f5bdcad203c360f8e2792e80159207e9c3dd69afef798d3d5",
+      "src/palimpsest/puck_profile.py": "b20e3710700bde7273fad751c7919a3bec2a4987482e0bb518716df7ffda44f0",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "73b9e651ec4f8c775cf515f8e386a728a7266cca2eea06a13f4236895fdc4878",
+      "src/palimpsest/snapshots.py": "22eee5484b49028a1a65839a47d1120883c1ce25b68abd8516b6a7657d1a2592",
+      "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+      "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "a44a15087317d76e3cec921bcc76be37c3c28eb70931bfca7ba0dfb2066989d7",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "harness_sha256": {
+    "collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+    "verify_task_starts.py": "ee5b2facae4dd91eb7caf2e041b97db126bcd863ec13ecde54931dd99fda888b",
+    "verify_task_phases.py": "d4614765a745e751a367183bc54220668a227a1d565bc890678b6030994384e5",
+    "verify_body_adaptation.py": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+    "verify_body_gains.py": "eb4b9e8f7d4b940438ad381b771d035dc49e1bcf90f7b0d54a08d8f9d99987c5",
+    "verify_body_runtime.py": "07912e536a85c621919a2d22f4c1f516ffa63a47b2f45d0659a60af946d906b2",
+    "verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+    "verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803",
+    "verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b"
+  },
+  "numeric_ticks": 134,
+  "owners_completed": 2,
+  "cases": {
+    "recovery-north-2100": {
+      "status": "completed-recording",
+      "case": {
+        "id": "recovery-north-2100",
+        "seed": 2100,
+        "start_pose": [
+          -0.95,
+          0.12,
+          0.0
+        ]
+      },
+      "supervision": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 180,
+        "started_utc": "2026-11-09T10:41:21.314570+00:00",
+        "output": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/recovery-north-2100",
+        "returncode": 0,
+        "elapsed_seconds": 6.039641404990107
+      },
+      "result_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/recovery-north-2100/result.json",
+      "result_sha256": "e050065ca2af0b3975453d5d3eda381a6de6c3b679cc9bb5ae991068691f73e8",
+      "result": {
+        "status": "completed-recording",
+        "case": {
+          "id": "recovery-north-2100",
+          "seed": 2100,
+          "start_pose": [
+            -0.95,
+            0.12,
+            0.0
+          ]
+        },
+        "run": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b",
+        "override": {
+          "case": {
+            "id": "recovery-north-2100",
+            "seed": 2100,
+            "start_pose": [
+              -0.95,
+              0.12,
+              0.0
+            ]
+          },
+          "old_world": {
+            "arena": 7.0,
+            "pose": [
+              0.47414442896842957,
+              0.19415384531021118,
+              -0.13143755711315075
+            ],
+            "obstacles": [
+              [
+                -2.572325021042481,
+                5.745305668771371,
+                0.4
+              ],
+              [
+                -2.9881841104062277,
+                0.7994858059658823,
+                0.4
+              ],
+              [
+                -5.879638048219447,
+                -1.759154577066056,
+                0.4
+              ],
+              [
+                -2.422487290896274,
+                -6.119151836228486,
+                0.4
+              ],
+              [
+                -3.4879087258562893,
+                -0.6813511230064311,
+                0.4
+              ],
+              [
+                0.1185128860792588,
+                -3.836020017933133,
+                0.4
+              ],
+              [
+                3.3262170879448902,
+                -5.27412018932411,
+                0.4
+              ],
+              [
+                0.2866358790617669,
+                2.1660541461559895,
+                0.4
+              ],
+              [
+                4.377540371837279,
+                -2.2559752887947155,
+                0.4
+              ],
+              [
+                -5.1055519218106795,
+                -0.2852007882465646,
+                0.4
+              ],
+              [
+                5.994793099472679,
+                1.4580468795902393,
+                0.4
+              ],
+              [
+                -4.6644615014560245,
+                -3.6758509812055493,
+                0.4
+              ],
+              [
+                -1.1792714847110615,
+                -4.600053776580672,
+                0.4
+              ],
+              [
+                2.0734347045876973,
+                2.786416717103899,
+                0.4
+              ],
+              [
+                2.905746094979241,
+                4.58998367669005,
+                0.4
+              ],
+              [
+                -2.165672792147852,
+                -1.8883525705401913,
+                0.4
+              ],
+              [
+                -6.178018954290557,
+                -3.8003319280187826,
+                0.4
+              ],
+              [
+                6.313034473018613,
+                3.326319144555365,
+                0.4
+              ],
+              [
+                5.884345799469751,
+                -1.9963680970846331,
+                0.4
+              ],
+              [
+                2.5913450703390346,
+                -0.07091018030137963,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.2883777618408203,
+              -3.052551507949829,
+              0.25
+            ]
+          },
+          "new_world": {
+            "arena": 7.0,
+            "pose": [
+              -0.949999988079071,
+              0.11999999731779099,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              2.0,
+              0.0,
+              0.25
+            ]
+          },
+          "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+          "actual_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+          "world_profile": {
+            "version": 1,
+            "id": "memory-passages-development-v1",
+            "memory_source_sha256": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+            "sensor_bridge_source_sha256": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+            "world_source_sha256": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+            "claim": "development-fixture",
+            "arena": 7.0,
+            "obstacle_radius": 0.4,
+            "rover_radius": 0.3,
+            "start_pose": [
+              -2.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -1.0,
+              0.0
+            ],
+            "posts": [
+              [
+                0.0,
+                -2.0
+              ],
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "parked_gates": [
+              [
+                2.5,
+                -1.0
+              ],
+              [
+                2.5,
+                1.0
+              ]
+            ],
+            "closed_gates": [
+              [
+                0.0,
+                -1.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "parked_others": [
+              [
+                3.7,
+                -5.6
+              ],
+              [
+                3.7,
+                -4.4
+              ],
+              [
+                3.7,
+                -3.2
+              ],
+              [
+                3.7,
+                3.2
+              ],
+              [
+                3.7,
+                4.4
+              ],
+              [
+                4.9,
+                -5.6
+              ],
+              [
+                4.9,
+                -4.4
+              ],
+              [
+                4.9,
+                -3.2
+              ],
+              [
+                4.9,
+                3.2
+              ],
+              [
+                4.9,
+                4.4
+              ],
+              [
+                6.1,
+                -5.6
+              ],
+              [
+                6.1,
+                -4.4
+              ],
+              [
+                6.1,
+                -3.2
+              ],
+              [
+                6.1,
+                3.2
+              ],
+              [
+                6.1,
+                4.4
+              ]
+            ],
+            "crossing_x": [
+              -1.0,
+              1.0
+            ],
+            "apertures": [
+              [
+                -2.0,
+                0.0
+              ],
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "cue_xy": [
+              -1.2,
+              0.0
+            ],
+            "inspection_xy": [
+              [
+                -0.8,
+                -1.0
+              ],
+              [
+                -0.8,
+                1.0
+              ]
+            ],
+            "default_change_tick": 10
+          },
+          "world_profile_sha256": "967625e3afdc3930aac3c83e2d91dc5788595f4e1aad96cbb0128267971f6d54",
+          "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+          "scope": "standalone authored world; original episode_started remains history; generic playback not qualified"
+        },
+        "admission": {
+          "aggregate_bytes": 266731520,
+          "per_recording_bytes": 32702464,
+          "allowances": {
+            "numeric_bytes": 57016320,
+            "snapshot_bytes": 33554432,
+            "result_bytes": 8388608,
+            "native_logs_bytes": 8388608,
+            "control_bytes": 16777216,
+            "atomic_native_staging_bytes": 134217728,
+            "headroom_bytes": 8388608
+          }
+        },
+        "contact_ownership": {
+          "base_body_id": 21,
+          "robot_bodies": [
+            {
+              "body_id": 21,
+              "name": "base",
+              "parent_id": 0
+            },
+            {
+              "body_id": 22,
+              "name": "left_wheel",
+              "parent_id": 21
+            },
+            {
+              "body_id": 23,
+              "name": "right_wheel",
+              "parent_id": 21
+            },
+            {
+              "body_id": 24,
+              "name": "front_caster_mount",
+              "parent_id": 21
+            },
+            {
+              "body_id": 25,
+              "name": "caster_wheel",
+              "parent_id": 24
+            }
+          ],
+          "geometries": [
+            {
+              "geom_id": 0,
+              "name": "floor",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 1,
+              "name": "wall_n",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 2,
+              "name": "wall_s",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 3,
+              "name": "wall_e",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 4,
+              "name": "wall_w",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 5,
+              "name": "obstacle0",
+              "body_id": 1,
+              "body_name": "obstacle0_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 6,
+              "name": "obstacle1",
+              "body_id": 2,
+              "body_name": "obstacle1_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 7,
+              "name": "obstacle2",
+              "body_id": 3,
+              "body_name": "obstacle2_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 8,
+              "name": "obstacle3",
+              "body_id": 4,
+              "body_name": "obstacle3_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 9,
+              "name": "obstacle4",
+              "body_id": 5,
+              "body_name": "obstacle4_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 10,
+              "name": "obstacle5",
+              "body_id": 6,
+              "body_name": "obstacle5_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 11,
+              "name": "obstacle6",
+              "body_id": 7,
+              "body_name": "obstacle6_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 12,
+              "name": "obstacle7",
+              "body_id": 8,
+              "body_name": "obstacle7_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 13,
+              "name": "obstacle8",
+              "body_id": 9,
+              "body_name": "obstacle8_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 14,
+              "name": "obstacle9",
+              "body_id": 10,
+              "body_name": "obstacle9_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 15,
+              "name": "obstacle10",
+              "body_id": 11,
+              "body_name": "obstacle10_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 16,
+              "name": "obstacle11",
+              "body_id": 12,
+              "body_name": "obstacle11_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 17,
+              "name": "obstacle12",
+              "body_id": 13,
+              "body_name": "obstacle12_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 18,
+              "name": "obstacle13",
+              "body_id": 14,
+              "body_name": "obstacle13_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 19,
+              "name": "obstacle14",
+              "body_id": 15,
+              "body_name": "obstacle14_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 20,
+              "name": "obstacle15",
+              "body_id": 16,
+              "body_name": "obstacle15_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 21,
+              "name": "obstacle16",
+              "body_id": 17,
+              "body_name": "obstacle16_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 22,
+              "name": "obstacle17",
+              "body_id": 18,
+              "body_name": "obstacle17_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 23,
+              "name": "obstacle18",
+              "body_id": 19,
+              "body_name": "obstacle18_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 24,
+              "name": "obstacle19",
+              "body_id": 20,
+              "body_name": "obstacle19_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 25,
+              "name": "base_geom",
+              "body_id": 21,
+              "body_name": "base",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 26,
+              "name": "cam_left_marker",
+              "body_id": 21,
+              "body_name": "base",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 27,
+              "name": "cam_right_marker",
+              "body_id": 21,
+              "body_name": "base",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 28,
+              "name": "left_wheel_geom",
+              "body_id": 22,
+              "body_name": "left_wheel",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 29,
+              "name": "right_wheel_geom",
+              "body_id": 23,
+              "body_name": "right_wheel",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 30,
+              "name": "caster_fork",
+              "body_id": 24,
+              "body_name": "front_caster_mount",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 31,
+              "name": "caster_wheel_geom",
+              "body_id": 25,
+              "body_name": "caster_wheel",
+              "owner": "robot"
+            }
+          ],
+          "model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5"
+        },
+        "pipeline_evidence": {
+          "mujoco_version": "3.3.6",
+          "installed_headers_sha256": {
+            "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+            "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+          },
+          "upstream_files_sha256": {
+            "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+            "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+          },
+          "integrator_enum": 0,
+          "physics_dt_s": 0.002,
+          "frame_skip": 10,
+          "disableflags": 0
+        },
+        "recorded_ticks": 67,
+        "final_state": {
+          "run_id": "f10998ca8ed246059193ca87a9a19a7b",
+          "parent_run_id": null,
+          "controller": "teacher",
+          "phase": "paused",
+          "scenario": "reproduction",
+          "texture": "checker",
+          "revision": 68,
+          "eyes": {
+            "left": true,
+            "right": true
+          },
+          "simulation_time": 1.340000000000001,
+          "episode": 0,
+          "episode_step": 67,
+          "total_tick": 67,
+          "pending_commands": 0,
+          "metrics": {
+            "reward": -4.264766505004686,
+            "contact_ticks": 3,
+            "path_length": 0.8770483803044427
+          },
+          "last_outcome": null,
+          "task": null,
+          "closed": false
+        },
+        "collection_boundary": "coverage_complete",
+        "coverage": {
+          "passed": true,
+          "coverage_complete_tick": 66,
+          "first_cycle": {
+            "start_tick": 21,
+            "queries": 45,
+            "completed": true,
+            "emitted_old_cycle_targets": 45,
+            "old_label_replaced": false
+          },
+          "start_contact": true,
+          "actual_post_prefix_reverse": true,
+          "subsequent_clearance": true,
+          "sensor_contact_rows": 3,
+          "stage0_contact_rows": 3
+        },
+        "model_unchanged": true,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      "coverage": {
+        "passed": true,
+        "coverage_complete_tick": 66,
+        "first_cycle": {
+          "start_tick": 21,
+          "queries": 45,
+          "completed": true,
+          "emitted_old_cycle_targets": 45,
+          "old_label_replaced": false
+        },
+        "start_contact": true,
+        "actual_post_prefix_reverse": true,
+        "subsequent_clearance": true,
+        "sensor_contact_rows": 3,
+        "stage0_contact_rows": 3
+      },
+      "collection_boundary": "coverage_complete"
+    },
+    "recovery-south-2101": {
+      "status": "completed-recording",
+      "case": {
+        "id": "recovery-south-2101",
+        "seed": 2101,
+        "start_pose": [
+          -0.95,
+          -0.12,
+          0.0
+        ]
+      },
+      "supervision": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 180,
+        "started_utc": "2026-11-09T10:41:27.536978+00:00",
+        "output": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/recovery-south-2101",
+        "returncode": 0,
+        "elapsed_seconds": 3.638663354999153
+      },
+      "result_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/recovery-south-2101/result.json",
+      "result_sha256": "f6ae433a2d1d1fe1b801078d2b5728a6c39fd10f06ce45b49f7df846be05b594",
+      "result": {
+        "status": "completed-recording",
+        "case": {
+          "id": "recovery-south-2101",
+          "seed": 2101,
+          "start_pose": [
+            -0.95,
+            -0.12,
+            0.0
+          ]
+        },
+        "run": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/recovery-south-2101/a3a272518cfe41f0971631439ce1e84c",
+        "override": {
+          "case": {
+            "id": "recovery-south-2101",
+            "seed": 2101,
+            "start_pose": [
+              -0.95,
+              -0.12,
+              0.0
+            ]
+          },
+          "old_world": {
+            "arena": 7.0,
+            "pose": [
+              -0.5723615288734436,
+              -5.269646644592285,
+              2.5273766185232365
+            ],
+            "obstacles": [
+              [
+                -5.0154162215789215,
+                -0.5687808724413062,
+                0.4
+              ],
+              [
+                6.029395619257739,
+                -0.12318966610951776,
+                0.4
+              ],
+              [
+                -2.1369773641303897,
+                0.56983320109003,
+                0.4
+              ],
+              [
+                3.7255447152766834,
+                -0.8584395374501614,
+                0.4
+              ],
+              [
+                0.930292129947202,
+                -5.332233172137322,
+                0.4
+              ],
+              [
+                -4.484607260959703,
+                5.088314657938922,
+                0.4
+              ],
+              [
+                -4.441683359427819,
+                -5.0829592305178455,
+                0.4
+              ],
+              [
+                -4.291056806199665,
+                1.1787487326062545,
+                0.4
+              ],
+              [
+                2.475102639926492,
+                1.3453960558147902,
+                0.4
+              ],
+              [
+                0.6655743650448089,
+                -1.5664411955546313,
+                0.4
+              ],
+              [
+                -1.4056225532248403,
+                -2.2926388633540986,
+                0.4
+              ],
+              [
+                5.2886689048914235,
+                2.0466251671278286,
+                0.4
+              ],
+              [
+                1.24688287204909,
+                2.8187269705249367,
+                0.4
+              ],
+              [
+                -2.1033869835051293,
+                -4.973097268455153,
+                0.4
+              ],
+              [
+                0.4605234630635291,
+                6.120184118597939,
+                0.4
+              ],
+              [
+                -3.771178165932074,
+                -3.3928081900689566,
+                0.4
+              ],
+              [
+                -0.18031249163916918,
+                -0.15569832711507736,
+                0.4
+              ],
+              [
+                4.118183660658259,
+                -4.850261034434381,
+                0.4
+              ],
+              [
+                0.4413703630071648,
+                1.3916169786371118,
+                0.4
+              ],
+              [
+                -6.262578902616541,
+                1.8992631305939476,
+                0.4
+              ]
+            ],
+            "goal": [
+              5.15186071395874,
+              -3.12438702583313,
+              0.25
+            ]
+          },
+          "new_world": {
+            "arena": 7.0,
+            "pose": [
+              -0.949999988079071,
+              -0.11999999731779099,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              2.0,
+              0.0,
+              0.25
+            ]
+          },
+          "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+          "actual_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+          "world_profile": {
+            "version": 1,
+            "id": "memory-passages-development-v1",
+            "memory_source_sha256": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+            "sensor_bridge_source_sha256": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+            "world_source_sha256": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+            "claim": "development-fixture",
+            "arena": 7.0,
+            "obstacle_radius": 0.4,
+            "rover_radius": 0.3,
+            "start_pose": [
+              -2.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -1.0,
+              0.0
+            ],
+            "posts": [
+              [
+                0.0,
+                -2.0
+              ],
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "parked_gates": [
+              [
+                2.5,
+                -1.0
+              ],
+              [
+                2.5,
+                1.0
+              ]
+            ],
+            "closed_gates": [
+              [
+                0.0,
+                -1.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "parked_others": [
+              [
+                3.7,
+                -5.6
+              ],
+              [
+                3.7,
+                -4.4
+              ],
+              [
+                3.7,
+                -3.2
+              ],
+              [
+                3.7,
+                3.2
+              ],
+              [
+                3.7,
+                4.4
+              ],
+              [
+                4.9,
+                -5.6
+              ],
+              [
+                4.9,
+                -4.4
+              ],
+              [
+                4.9,
+                -3.2
+              ],
+              [
+                4.9,
+                3.2
+              ],
+              [
+                4.9,
+                4.4
+              ],
+              [
+                6.1,
+                -5.6
+              ],
+              [
+                6.1,
+                -4.4
+              ],
+              [
+                6.1,
+                -3.2
+              ],
+              [
+                6.1,
+                3.2
+              ],
+              [
+                6.1,
+                4.4
+              ]
+            ],
+            "crossing_x": [
+              -1.0,
+              1.0
+            ],
+            "apertures": [
+              [
+                -2.0,
+                0.0
+              ],
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "cue_xy": [
+              -1.2,
+              0.0
+            ],
+            "inspection_xy": [
+              [
+                -0.8,
+                -1.0
+              ],
+              [
+                -0.8,
+                1.0
+              ]
+            ],
+            "default_change_tick": 10
+          },
+          "world_profile_sha256": "967625e3afdc3930aac3c83e2d91dc5788595f4e1aad96cbb0128267971f6d54",
+          "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+          "scope": "standalone authored world; original episode_started remains history; generic playback not qualified"
+        },
+        "admission": {
+          "aggregate_bytes": 266731520,
+          "per_recording_bytes": 32702464,
+          "allowances": {
+            "numeric_bytes": 57016320,
+            "snapshot_bytes": 33554432,
+            "result_bytes": 8388608,
+            "native_logs_bytes": 8388608,
+            "control_bytes": 16777216,
+            "atomic_native_staging_bytes": 134217728,
+            "headroom_bytes": 8388608
+          }
+        },
+        "contact_ownership": {
+          "base_body_id": 21,
+          "robot_bodies": [
+            {
+              "body_id": 21,
+              "name": "base",
+              "parent_id": 0
+            },
+            {
+              "body_id": 22,
+              "name": "left_wheel",
+              "parent_id": 21
+            },
+            {
+              "body_id": 23,
+              "name": "right_wheel",
+              "parent_id": 21
+            },
+            {
+              "body_id": 24,
+              "name": "front_caster_mount",
+              "parent_id": 21
+            },
+            {
+              "body_id": 25,
+              "name": "caster_wheel",
+              "parent_id": 24
+            }
+          ],
+          "geometries": [
+            {
+              "geom_id": 0,
+              "name": "floor",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 1,
+              "name": "wall_n",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 2,
+              "name": "wall_s",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 3,
+              "name": "wall_e",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 4,
+              "name": "wall_w",
+              "body_id": 0,
+              "body_name": "world",
+              "owner": "world"
+            },
+            {
+              "geom_id": 5,
+              "name": "obstacle0",
+              "body_id": 1,
+              "body_name": "obstacle0_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 6,
+              "name": "obstacle1",
+              "body_id": 2,
+              "body_name": "obstacle1_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 7,
+              "name": "obstacle2",
+              "body_id": 3,
+              "body_name": "obstacle2_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 8,
+              "name": "obstacle3",
+              "body_id": 4,
+              "body_name": "obstacle3_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 9,
+              "name": "obstacle4",
+              "body_id": 5,
+              "body_name": "obstacle4_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 10,
+              "name": "obstacle5",
+              "body_id": 6,
+              "body_name": "obstacle5_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 11,
+              "name": "obstacle6",
+              "body_id": 7,
+              "body_name": "obstacle6_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 12,
+              "name": "obstacle7",
+              "body_id": 8,
+              "body_name": "obstacle7_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 13,
+              "name": "obstacle8",
+              "body_id": 9,
+              "body_name": "obstacle8_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 14,
+              "name": "obstacle9",
+              "body_id": 10,
+              "body_name": "obstacle9_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 15,
+              "name": "obstacle10",
+              "body_id": 11,
+              "body_name": "obstacle10_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 16,
+              "name": "obstacle11",
+              "body_id": 12,
+              "body_name": "obstacle11_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 17,
+              "name": "obstacle12",
+              "body_id": 13,
+              "body_name": "obstacle12_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 18,
+              "name": "obstacle13",
+              "body_id": 14,
+              "body_name": "obstacle13_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 19,
+              "name": "obstacle14",
+              "body_id": 15,
+              "body_name": "obstacle14_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 20,
+              "name": "obstacle15",
+              "body_id": 16,
+              "body_name": "obstacle15_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 21,
+              "name": "obstacle16",
+              "body_id": 17,
+              "body_name": "obstacle16_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 22,
+              "name": "obstacle17",
+              "body_id": 18,
+              "body_name": "obstacle17_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 23,
+              "name": "obstacle18",
+              "body_id": 19,
+              "body_name": "obstacle18_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 24,
+              "name": "obstacle19",
+              "body_id": 20,
+              "body_name": "obstacle19_body",
+              "owner": "world"
+            },
+            {
+              "geom_id": 25,
+              "name": "base_geom",
+              "body_id": 21,
+              "body_name": "base",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 26,
+              "name": "cam_left_marker",
+              "body_id": 21,
+              "body_name": "base",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 27,
+              "name": "cam_right_marker",
+              "body_id": 21,
+              "body_name": "base",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 28,
+              "name": "left_wheel_geom",
+              "body_id": 22,
+              "body_name": "left_wheel",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 29,
+              "name": "right_wheel_geom",
+              "body_id": 23,
+              "body_name": "right_wheel",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 30,
+              "name": "caster_fork",
+              "body_id": 24,
+              "body_name": "front_caster_mount",
+              "owner": "robot"
+            },
+            {
+              "geom_id": 31,
+              "name": "caster_wheel_geom",
+              "body_id": 25,
+              "body_name": "caster_wheel",
+              "owner": "robot"
+            }
+          ],
+          "model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5"
+        },
+        "pipeline_evidence": {
+          "mujoco_version": "3.3.6",
+          "installed_headers_sha256": {
+            "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+            "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+          },
+          "upstream_files_sha256": {
+            "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+            "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+          },
+          "integrator_enum": 0,
+          "physics_dt_s": 0.002,
+          "frame_skip": 10,
+          "disableflags": 0
+        },
+        "recorded_ticks": 67,
+        "final_state": {
+          "run_id": "a3a272518cfe41f0971631439ce1e84c",
+          "parent_run_id": null,
+          "controller": "teacher",
+          "phase": "paused",
+          "scenario": "reproduction",
+          "texture": "checker",
+          "revision": 68,
+          "eyes": {
+            "left": true,
+            "right": true
+          },
+          "simulation_time": 1.340000000000001,
+          "episode": 0,
+          "episode_step": 67,
+          "total_tick": 67,
+          "pending_commands": 0,
+          "metrics": {
+            "reward": -4.2375322697832996,
+            "contact_ticks": 3,
+            "path_length": 0.8833266460061319
+          },
+          "last_outcome": null,
+          "task": null,
+          "closed": false
+        },
+        "collection_boundary": "coverage_complete",
+        "coverage": {
+          "passed": true,
+          "coverage_complete_tick": 66,
+          "first_cycle": {
+            "start_tick": 21,
+            "queries": 45,
+            "completed": true,
+            "emitted_old_cycle_targets": 45,
+            "old_label_replaced": false
+          },
+          "start_contact": true,
+          "actual_post_prefix_reverse": true,
+          "subsequent_clearance": true,
+          "sensor_contact_rows": 3,
+          "stage0_contact_rows": 3
+        },
+        "model_unchanged": true,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      "coverage": {
+        "passed": true,
+        "coverage_complete_tick": 66,
+        "first_cycle": {
+          "start_tick": 21,
+          "queries": 45,
+          "completed": true,
+          "emitted_old_cycle_targets": 45,
+          "old_label_replaced": false
+        },
+        "start_contact": true,
+        "actual_post_prefix_reverse": true,
+        "subsequent_clearance": true,
+        "sensor_contact_rows": 3,
+        "stage0_contact_rows": 3
+      },
+      "collection_boundary": "coverage_complete"
+    }
+  },
+  "assets_before": {
+    "ok": true,
+    "profile_id": "flynn-full-vision",
+    "files": [
+      {
+        "id": "graph_archive",
+        "path": "drosophila adult connectome.7z",
+        "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/drosophila%20adult%20connectome.7z",
+        "sha256": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1",
+        "size_bytes": 45111367,
+        "license": "CC-BY-NC-4.0",
+        "status": "verified"
+      },
+      {
+        "id": "checkpoint",
+        "path": "connectome_rnn_dagger_princeton_full_vision.pt",
+        "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/connectome_rnn_dagger_princeton_full_vision.pt",
+        "sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+        "size_bytes": 108220841,
+        "license": "CC-BY-NC-4.0",
+        "status": "verified"
+      }
+    ],
+    "provenance_limit": "Pins distributed archive/checkpoint identities and mapping CSVs from the pinned upstream commit. The legacy checkpoint has no embedded source-graph or neuron-order provenance; these identities do not prove its original training graph or mapping pairing."
+  },
+  "protocol_status": "completed",
+  "snapshot_files": 2,
+  "assets_after": {
+    "ok": true,
+    "profile_id": "flynn-full-vision",
+    "files": [
+      {
+        "id": "graph_archive",
+        "path": "drosophila adult connectome.7z",
+        "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/drosophila%20adult%20connectome.7z",
+        "sha256": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1",
+        "size_bytes": 45111367,
+        "license": "CC-BY-NC-4.0",
+        "status": "verified"
+      },
+      {
+        "id": "checkpoint",
+        "path": "connectome_rnn_dagger_princeton_full_vision.pt",
+        "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/connectome_rnn_dagger_princeton_full_vision.pt",
+        "sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+        "size_bytes": 108220841,
+        "license": "CC-BY-NC-4.0",
+        "status": "verified"
+      }
+    ],
+    "provenance_limit": "Pins distributed archive/checkpoint identities and mapping CSVs from the pinned upstream commit. The legacy checkpoint has no embedded source-graph or neuron-order provenance; these identities do not prove its original training graph or mapping pairing."
+  },
+  "inner_supervision": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 420,
+    "started_utc": "2026-11-09T10:41:21.148054+00:00",
+    "output": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/inner-supervision",
+    "returncode": 0,
+    "elapsed_seconds": 10.298609609017149
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "survivors": [],
+    "sampler_stopped": true,
+    "sample_errors": [],
+    "observed_owned_processes": [
+      {
+        "pid": 2326639,
+        "start_ticks": 22201946
+      },
+      {
+        "pid": 2326642,
+        "start_ticks": 22201962
+      },
+      {
+        "pid": 2326649,
+        "start_ticks": 22201985
+      },
+      {
+        "pid": 2326694,
+        "start_ticks": 22202585
+      }
+    ],
+    "scope": "finite .25s PID/start sampling; not universal transient-process proof"
+  },
+  "wall_seconds": 10.301954794005724,
+  "final_source": {
+    "commit": "c382c86781a7a5d6651af721119789729cc890ae",
+    "files_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+      "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+      "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+      "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+      "src/palimpsest/cli.py": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+      "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "ad8f92746f020391ef3c3c974e0f1293f82c83ae24070e05bced60d16982c5c1",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+      "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+      "src/palimpsest/male_policy.py": "12f2ff72a46e4b240c38a986b285ea087cdddfd2dcb6f574cc944f73eb7f168c",
+      "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+      "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+      "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+      "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+      "src/palimpsest/profiles.py": "3d6340eebcea149f5bdcad203c360f8e2792e80159207e9c3dd69afef798d3d5",
+      "src/palimpsest/puck_profile.py": "b20e3710700bde7273fad751c7919a3bec2a4987482e0bb518716df7ffda44f0",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "73b9e651ec4f8c775cf515f8e386a728a7266cca2eea06a13f4236895fdc4878",
+      "src/palimpsest/snapshots.py": "22eee5484b49028a1a65839a47d1120883c1ce25b68abd8516b6a7657d1a2592",
+      "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+      "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "a44a15087317d76e3cec921bcc76be37c3c28eb70931bfca7ba0dfb2066989d7",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "final_harness": {
+    "collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+    "verify_task_starts.py": "ee5b2facae4dd91eb7caf2e041b97db126bcd863ec13ecde54931dd99fda888b",
+    "verify_task_phases.py": "d4614765a745e751a367183bc54220668a227a1d565bc890678b6030994384e5",
+    "verify_body_adaptation.py": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+    "verify_body_gains.py": "eb4b9e8f7d4b940438ad381b771d035dc49e1bcf90f7b0d54a08d8f9d99987c5",
+    "verify_body_runtime.py": "07912e536a85c621919a2d22f4c1f516ffa63a47b2f45d0659a60af946d906b2",
+    "verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+    "verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803",
+    "verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b"
+  },
+  "usage": {
+    "used_bytes": 30531527,
+    "files": 27,
+    "remaining_bytes": 1043210297,
+    "max_bytes": 1073741824,
+    "headroom_bytes": 8388608,
+    "min_free_bytes": 1073741824
+  },
+  "artifacts_sha256": {
+    "inner-supervision/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inner-supervision/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inner-supervision/supervisor.json": "1bcdeb3c7ace11e18f56641ae7ebbd81fcbd0881d9879cf3880cd5128c618330",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/recording/chunks/000000.npz": "6a7c94c02640cab1a6d0e5ede0e79ac09390b2cf1e23275c90eeaa9e6afdd3cb",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/recording/chunks/000001.npz": "ad56d49bbce9794f68907b048faf58ecbdff39325c0b7283ddc4febac6cbafb4",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/recording/chunks/000002.npz": "09691119226bcda11fbfe6ade6d83d292523301cebfabd0bfee02decf8a23018",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/recording/events.jsonl": "89faba8f6dbc2ca19d04f7eb0fdab0206507ca239b2371bbb7c3307c0d30d648",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/recording/manifest.json": "0653d841584bead9d7b01c28e11a097b87688acec7cebbdf1f74e5d6e6d60f0d",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/snapshots/index.json": "fe2791d10a880bc9f53ed6e9ae3bf17906ba7b3f1d9f3452306dd890c0e1e0cf",
+    "recovery-north-2100/f10998ca8ed246059193ca87a9a19a7b/snapshots/initial.snp": "c2c8a4600454d7e6a16e78e763b4b67516c77315502a9e8fdaf8f295fcdee113",
+    "recovery-north-2100/result.json": "e050065ca2af0b3975453d5d3eda381a6de6c3b679cc9bb5ae991068691f73e8",
+    "recovery-north-2100/stderr.log": "7a670766f06c093d26083f5f4a7905cdd12f410a1c84d86154c430f72829661b",
+    "recovery-north-2100/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "recovery-north-2100/supervisor.json": "a7a4b5114555791f84cbbb25e317f76133432e4a7e77cba8259265f2db33204f",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/recording/chunks/000000.npz": "0b8c81b1494d84cf90a8ff544ef734fc8822d13bee08c560674d4c1dfdee0e24",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/recording/chunks/000001.npz": "d46212df127ab5441d2b664b716ef796e28b24782343688dbaf38d75cd2d8a3d",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/recording/chunks/000002.npz": "859cf10b8425003b0f5acccc196bc8b002aa971f9c394861989d21385a28910a",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/recording/events.jsonl": "606abe29147d3ef619bf52e38d891e193b7cf159f58866ca954f04706ab5c934",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/recording/manifest.json": "81ff734f7590e9a145a80fb6da884c6f5eccc44514468ff502277805e12975f2",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/snapshots/index.json": "189a238534dd34053370aedfc77227434e746fe697c5584406c4b4b03fae50c2",
+    "recovery-south-2101/a3a272518cfe41f0971631439ce1e84c/snapshots/initial.snp": "f11415b27fc9ffd238c3c1b2b345b94baf6699790911b4ca3d51c1ba76826e16",
+    "recovery-south-2101/result.json": "f6ae433a2d1d1fe1b801078d2b5728a6c39fd10f06ce45b49f7df846be05b594",
+    "recovery-south-2101/stderr.log": "7a670766f06c093d26083f5f4a7905cdd12f410a1c84d86154c430f72829661b",
+    "recovery-south-2101/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "recovery-south-2101/supervisor.json": "c1e4273ccf0bc54ce03bd824fb2ac5f4cd0ed0593e19f002422f7c620de5a414"
+  }
+}
