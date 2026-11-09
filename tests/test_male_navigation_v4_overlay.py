@@ -587,6 +587,72 @@ def test_s0a_manifest_launch_matches_the_saved_plan_the_driver_rules_and_the_pro
     assert 'scientific_attempt": true' in text and 'ends v4' in text.lower()
 
 
+def test_s0d_manifest_binds_the_controller_and_seed_plans_the_chain_the_live_locator_and_nested_deadlines():
+    import re
+    import run_research_stage as launcher
+    import run_male_navigation_v4_s0d as controller
+    folder = ROOT/'docs/reports/male-v4-s0d'
+    text = (folder/'MANIFEST.md').read_text()
+    cur = '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/'
+    plans = {}
+    for name in ('controller-plan', 'driver-plan-seed-10', 'driver-plan-seed-11', 'driver-plan-seed-12'):
+        raw, derived = (folder/f'{name}.prepared-in-agent-worktree.json').read_bytes(), (folder/f'{name}.json').read_bytes()
+        agent = re.search(rb'(/[^"]+?/)(?:docs/plans|scripts)/', raw).group(1)
+        assert raw.replace(agent, cur.encode()) == derived and sha(derived) in text, name
+        plans[name] = json.loads(derived)
+    record = {s: (ROOT/f'docs/reports/male-v4-{s.lower()}/pin-record.json').read_bytes() for s in ('S0a', 'S0b', 'S0c')}
+    for raw in record.values(): assert sha(raw) in text
+    s0c = json.loads(record['S0c'])
+    data_manifest = s0c['outputs']['data-manifest.json']['sha256']
+    ports = driver.load_ports()
+    spec = driver.port_stages(driver.STAGES, ports)['S0d']
+    copy_sha = sha((ROOT/'docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json').read_bytes())
+    seeds = []
+    for seed in (10, 11, 12):
+        plan = plans[f'driver-plan-seed-{seed}']
+        assert (plan['status'], plan['stage'], plan['protocol_sha256']) == ('admissible', 'S0d', PROTOCOL_SHA)
+        assert plan['producing_commit'] == spec['commit'] == ports['trees']['T-d']['port_commit'] == plan['port_check']['head']
+        assert plan['previous_record_sha256'] == sha(record['S0c'])
+        locator = plan['locator']['value']
+        assert locator['data_manifest']['sha256'] == data_manifest and data_manifest in text and 'PENDING' not in json.dumps(locator)
+        assert locator['documents']['m7-recovery-learning-protocol.json']['sha256'] == copy_sha
+        assert plan['arguments']['--training-seed'] == {'value': str(seed)}
+        seeds.append(plan['would_run'][2:])
+    control = plans['controller-plan']
+    assert control['mode'] == 'plan-only' and control['stage'] == 'S0d' and control['limits'] == controller.LIMITS
+    assert [p['training_seed'] for p in control['pairs']] == [10, 11, 12]
+    for pair, producer_args in zip(control['pairs'], seeds):
+        command = pair['command']
+        assert command[2] == cur + 'scripts/regenerate_male_navigation_v4.py'
+        assert command[command.index('--') + 1:] == producer_args                    # controller runs the planned seed argv
+    block = re.search(r'<!-- s0d-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    cut = argv.index('--')
+    unit, command = argv[:cut], argv[cut + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    row = next(r for r in json.loads((ROOT/driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']
+               if r['stage'] == 'S0d')
+    k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+    assert (flag('--lane', unit), flag('--stage', unit)) == ('navigation', 'S0d')
+    assert (k, kill, worst) == (row['cpu_quota_k'], row['runtime_max_sec_kill_target'], row['worst_case_cpu']) == (1, 2160, 2165)
+    assert worst >= k * (kill + launcher.STOP_TIMEOUT)
+    limits = controller.LIMITS                                                       # deadlines nest inside RuntimeMaxSec
+    assert 3 * limits['pair_supervised_seconds'] <= limits['stage_internal_seconds'] < limits['stage_supervised_seconds'] == kill
+    assert limits['pair_internal_seconds'] < limits['pair_supervised_seconds']
+    assert command[2] == cur + 'scripts/run_male_navigation_v4_s0d.py'
+    go = command[command.index('--go'):command.index('--go') + 2]
+    assert go[1] == flag('--go-record', unit)
+    planned = control['unit_command'][control['unit_command'].index('--') + 1:]
+    planned = planned[:planned.index('--go')] + planned[planned.index('--go') + 2:]
+    launched = command[:command.index('--go')] + command[command.index('--go') + 2:]
+    assert launched[3:] == planned[3:] and launched[2] == planned[2]                  # same controller arguments as planned
+    assert flag('--stage-root', command) == '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d'
+    for phrase in ('scientific_attempt": true', '"cpu_quota_k": 1', 'chain_pin_record_sha256', 'previous_pin_record_sha256',
+                   'never evaluated or cited', 'must **not exist**', 'writer.lock', 'Throttling risk', 'not applicable',
+                   'GO binding', '[S0a, S0b, S0c, S0d]', 'elapsed_seconds ≤ 2160', 'recovery-index-values.json', 'ends v4'):
+        assert phrase in text, phrase
+
+
 def test_s0c_manifest_launch_matches_the_plan_the_records_the_filled_copy_and_the_protocol_budget():
     import re
     import run_research_stage as launcher
