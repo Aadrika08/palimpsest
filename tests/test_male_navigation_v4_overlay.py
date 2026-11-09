@@ -647,8 +647,14 @@ def test_s0e_manifest_binds_four_units_to_their_plans_the_filled_copies_the_s0d_
     assert round(charged, 3) == 330.857 and ahead == 9643 and charged + ahead <= launcher.LANE_CAPS['navigation']
     for phrase in ('scientific_attempt": true', 'current_tree_head', 'must **not exist**', 'writer.lock', 'Throttling risk',
                    'mesa 1:26.2.5-1', 'not_covered: []', 'exec_exitcode', 'collection-index.json', '1..600', 'ends v4',
-                   '9,973.857', 'GO binding', '[S0a, S0b, S0c, S0d, S0e]'):
+                   '9,973.857', 'GO binding', '[S0a, S0b, S0c, S0d, S0e]', '4d95f77', 'S0f dry-load',
+                   'binding deadline is the 180 s per-owner cap', '**329.025**', '**2,555**', 'source_pins'):
         assert phrase in text, phrase
+    declared = sha((ROOT/'docs/plans/m7-navigation-v4-pins/declared-fields.json').read_bytes())
+    assert f'"declared_fields_sha256": "{declared}"' in text
+    assert round(charged - 1.832, 3) == 329.025                                   # measured v4 charge excl. the v3 prior
+    expected = (charged - 1.832 + sum(rows[s]['expected'] for s in ('S0e', 'S0e-D', 'S0e-A', 'S0e-I', 'S0f', 'S0z', 'S1', 'S2')))
+    assert round(expected) == 2555 and expected <= 5643.168
 
 
 def test_s0d_manifest_binds_the_controller_and_seed_plans_the_chain_the_live_locator_and_nested_deadlines():

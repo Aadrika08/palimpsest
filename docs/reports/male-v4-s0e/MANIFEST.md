@@ -96,8 +96,10 @@ difference; a test checks it). Pre-launch check 2 re-derives these from `CUR`.
 | [`audit-plan.json`](audit-plan.json) | plan-only | `01b69218c23005aea78493e26c1090431114d654541b48b723404a370c24df9b` |
 | [`index-plan.json`](index-plan.json) | plan-only | `d809f682df1811e3649367401d9cbbc1cbcc3fb23b55ede7a0f9b57ee9970d95` |
 
-The driver plan records the T-e port check, the three previous record shas, all four documents
-(shas above) and the live locator. The launch plan's `collector_command` producer arguments equal
+The plans were re-derived after the review fix `4d95f77` (port-byte pins are now checked at the
+field's own port tree). All five outputs are byte-identical, because the plans carry no code, so
+the sha256s above stand. The driver plan records the T-e port check, the three previous record
+shas, all four documents (shas above) and the live locator. The launch plan's `collector_command` producer arguments equal
 the driver plan's `would_run`.
 
 ## Budget, units and deadlines
@@ -119,7 +121,25 @@ S0a 97.378, S0b 9.472, S0c 6.378 and S0d 130.525, in
 S0e 2,470 (all four units), S0f 268, S0z 305, S1 2,165 and S2 4,435, a total of 9,643. That gives
 330.857 + 9,643 = **9,973.857 ≤ 14,400**, with 4,426.143 CPU-s of slack. Every stage through
 development stays admissible even at worst case, and the 2,240 s kill is under the 2,285 s
-ceiling. S3 is still admitted only if the measured charge through S2 is ≤ 5,643.168.
+ceiling.
+
+**Held-out threshold basis.** S3 is admitted only if the measured v4 charge through S2 is
+≤ 5,643.168 CPU-s; that charge excludes the 1.832 v3 prior, which the threshold already deducts.
+The measured v4 charge so far is **329.025** (330.857 − 1.832). At the protocol's expected costs
+for the remaining stages, it would be about **2,555** through S2:
+
+| Stage | Expected (s) |
+| --- | ---: |
+| S0e | 543.022 |
+| S0e-D | 5 |
+| S0e-A | 43.1 |
+| S0e-I | 5 |
+| S0f | 79.46 |
+| S0z | 82 |
+| S1 | 480 |
+| S2 | 988.524 |
+
+That is well under 5,643.168. The threshold is decided by measured charges, not by this estimate.
 
 **Deadline nesting (S0e).**
 
@@ -134,9 +154,14 @@ ceiling. S3 is still admitted only if the measured charge through S2 is ≤ 5,64
 The enclosing evidence (after-inventory, `enclosing.json`) is written after the launcher returns.
 A collection that reaches the 2,210 s bound is a failure regardless.
 
+**The binding deadline is the 180 s per-owner cap, not 2,210 s.** Each of the 12 owners runs
+under `min(180, collector deadline − now)`. v2's collector took 514 s for 12 owners, about 43 s
+per owner, so per-owner headroom is about 4x. Twelve owners at the cap (2,160 s) would still
+exhaust the collector's own 2,160 s deadline before the 2,210 s normal-return bound.
+
 **Throttling risk (stated, not blocking).** The v2 historical figures are collector 514 s,
-launcher 543 s and enclosing pre-publication 545 s. They were unconstrained wall time, so
-headroom is about 4x against 2,210 s. CPU under CPUQuota 100% was never measured; rendering uses
+launcher 543 s and enclosing pre-publication 545 s. They were unconstrained wall time; the
+per-owner headroom (about 4x against 180 s) is the binding margin. CPU under CPUQuota 100% was never measured; rendering uses
 the GPU through EGL, while physics, the learner and the teacher run on the CPU. The
 inventories hash about 650 MB of corpus plus the S0d bundle twice, inner and outer. Any timeout,
 owner deadline or RuntimeMaxSec kill is an operational failure that ends v4.
@@ -167,6 +192,7 @@ Write `go-S0e.json`, `go-S0e-D.json`, `go-S0e-A.json` and `go-S0e-I.json` in
                          "m7-navigation-study-protocol.json": "4939f9c91fd84c74fe1e467b9a231ba86f48694c57159ba50cc26d938a8299f5",
                          "m7-navigation-contact-v2-protocol.json": "cadd0e45190cc2a6f4bbc742c8b38f065bbe2c831f42b8f84cef4bd75d3b1de3",
                          "m7-recovery-learning-protocol.json": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"},
+ "declared_fields_sha256": "96d5b6634c1e4dd47bfe5bce148024bf2601319ba4c4f99a83acca0290a9d722",
  "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e",
  "worktree_head": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
  "port_tree": "T-e",
@@ -179,9 +205,10 @@ Write `go-S0e.json`, `go-S0e-D.json`, `go-S0e-A.json` and `go-S0e-I.json` in
 ## Pre-launch checks (all must hold before the S0e unit; any failure means no launch, and nothing is charged)
 
 1. **Current tree:** `CUR=/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite`
-   is at the research head carrying `117d646` and this manifest, with clean tracked files. In
-   `CUR`, the protocol file is `cd4eb130…`, `declared-fields.json` is `96d5b663…` and the four copies
-   hash to the GO's `pin_document_sha256`.
+   is at the research head carrying `117d646`, the review fix `4d95f77` and this manifest, with
+   clean tracked files. In `CUR`, the protocol file is `cd4eb130…`, `declared-fields.json` is
+   `96d5b663…` (the GO's `declared_fields_sha256`) and the four copies hash to the GO's
+   `pin_document_sha256`.
 2. **Plans:** the five plan commands (the launch, drain, audit and index commands below without
    `--go` and without the launcher prefix, plus the driver plan: `regenerate_male_navigation_v4.py
    --stage S0e --worktree <T-e> --previous-pins <seed 10, 11, 12 records> --plan-only -- --repo
@@ -191,7 +218,7 @@ Write `go-S0e.json`, `go-S0e-D.json`, `go-S0e-A.json` and `go-S0e-I.json` in
    hash to the GO values.
 4. **GO binding (by hand, for each of the four GO records; `load_go`/`check_go` do not compare these):**
    - `stage` is the unit's stage, and `manifest_sha256` is the sha256 of this committed file;
-   - every `plan_sha256` entry matches check 2;
+   - every `plan_sha256` entry matches check 2, and `declared_fields_sha256` matches check 1;
    - `previous_pin_records_sha256` and the chain and document shas match checks 1 and 3;
    - `cpu_quota_k` is 1, matching `--cpu-quota-k 1`;
    - `worktree_head` is `703acc50…`;
@@ -326,6 +353,20 @@ ends v4, and later units are not started.
   - `regenerate_male_navigation_v4.previous_chain([collector-pin-record], 'S0f', …)` succeeds.
 - **Units:** all four launcher receipts are `complete` and `drained` with returncode 0 and no
   survivors. The ledger has four `charged` rows.
+- **S0f dry-load (no producer):** the S0f pin documents the S0e outputs do not change must load
+  against T-f. `regenerate_male_navigation_v4.load_pin_documents({'documents':
+  ['m7-navigation-contact-v2-protocol.json']}, <CUR pins>, <declarations>, <port-t-f>, <chain>)`,
+  with `chain` from the merged S0d records, must return contact-v2 `cadd0e45…`. The T-e collector
+  pin is checked at the T-e port commit, not at T-f (`4d95f77`). On the evidence host the test
+  `test_s0f_dry_loads_the_contact_v2_copy_against_the_real_t_f_worktree_on_the_evidence_host`
+  does exactly this. The data-v2 copy is filled before S0f from the S0e records, so it is not
+  dry-loaded here.
+- **Recorded limitation (no fix needed now):** T-f carries the T-e collector port, but its v1
+  `scripts/collect_male_navigation.py` is the unported `d0decc66…`. T-f's
+  `collect_male_navigation_v2.source_pins` would therefore raise, because contact-v2
+  `prior_version.collector_sha256` pins the T-e port bytes `f9655201…`. No S0f code path calls
+  `source_pins`: S0f's `prepare_male_navigation_v2` uses the collector's `PLAN_SHA`, `PROFILE`,
+  `PROFILE_SHA`, `CASES` and `admit_record`.
 - **Graphics stack:** unchanged after the run.
 
 Record the collector pin-record, controller-record and index sha256s in the S0e RESULT and the
