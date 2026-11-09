@@ -1542,6 +1542,45 @@ def test_tracked_data_v2_copy_holds_the_published_s0a_s0e_values_and_the_t_h_ide
     assert counts['augmented_train_rows'] == 7197 and counts['combined_unique_sources'] == 26
 
 
+H = '/source_binding/old_historical_reader'
+
+
+def data_field(pointer): return next(f for f in item_of(DATA)['fields'] if f['pointer'] == pointer)
+
+
+@pytest.mark.parametrize('pointer, mutate', [
+    (f'{H}/all_tracked_project_python_inventory/count', lambda v: v + 1),
+    (f'{H}/all_tracked_project_python_inventory/canonical_map_sha256', lambda v: '0'*64),
+    (f'{H}/code', lambda v: {**v, 'src/palimpsest/records.py': '0'*64}),
+    (f'{H}/code', lambda v: {k: x for k, x in v.items() if k != 'src/palimpsest/records.py'}),
+    (f'{H}/head', lambda v: SPEC['trees']['T-h']['base']),
+])
+def test_s0f_port_identity_fields_refuse_a_wrong_count_map_source_map_or_head(pointer, mutate):
+    data = json.loads((PINS/DATA).read_bytes())
+    original = json.loads((ROOT/item_of(DATA)['original_path']).read_text())
+    item = {**item_of(DATA), 'fields': [data_field(pointer)]}
+    driver.check_document_values(DATA, data, original, item, {}, lambda other: None, PINS)      # the filled value passes
+    changed = copy.deepcopy(data); driver.pointer_set(changed, pointer, mutate(driver.pointer_get(data, pointer)))
+    with pytest.raises(driver.Refusal):
+        driver.check_document_values(DATA, changed, original, item, {}, lambda other: None, PINS)
+
+
+def test_s0f_historical_root_needs_the_worktree_argument_and_refuses_a_worktree_at_another_commit(tmp_path):
+    field = data_field(f'{H}/root')
+    original = json.loads((ROOT/item_of(DATA)['original_path']).read_text())
+    doc = {**json.loads((PINS/DATA).read_bytes())}
+    driver.pointer_set(doc, field['pointer'], field['placeholder'])
+    with pytest.raises(driver.Refusal, match='historical-worktree'):
+        driver.fill_values(DATA, {**item_of(DATA), 'fields': [field]}, doc, original, {}, pins_dir=PINS)
+    other = tmp_path/'other'; other.mkdir(); git(other, 'init', '-q'); (other/'x').write_text('x')
+    git(other, 'add', '-A'); git(other, 'commit', '-qm', 'not T-h')
+    with pytest.raises(driver.Refusal, match='is not a worktree at'):
+        driver.fill_values(DATA, {**item_of(DATA), 'fields': [field]}, doc, original, {}, pins_dir=PINS, historical_worktree=other)
+    driver.pointer_set(doc, field['pointer'], str(other))
+    with pytest.raises(driver.Refusal, match='is not a worktree at'):
+        driver.check_document_values(DATA, doc, original, {**item_of(DATA), 'fields': [field]}, {}, lambda other: None, PINS)
+
+
 @pytest.mark.skipif(not S0E_RECORD.exists() or not TH_TREE.exists(), reason='S0e evidence host only')
 def test_tracked_data_v2_copy_traces_to_the_live_s0e_chain_and_the_real_t_f_t_h_worktrees_on_the_evidence_host():
     stages = driver.port_stages(driver.STAGES, driver.load_ports())

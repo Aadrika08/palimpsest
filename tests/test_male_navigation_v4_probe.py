@@ -223,7 +223,10 @@ def test_p_locator_names_every_port_document_by_absolute_path_with_current_bytes
     assert {k for t in PORTS['trees'].values() for k in t.get('locator_values', [])} == {'data_manifest'}
     assert value['data_manifest'] == {'path': 'PENDING-S0c', 'sha256': 'PENDING-S0c'}
     # At P every copy held placeholders; since S0f preparation all are filled, so the P-time locator lists none.
-    assert set(value['pending']) == set(value['documents']) and all(isinstance(v, list) for v in value['pending'].values())
+    assert value['pending'] == {name: [] for name in value['documents']}
+    assert set(value['documents']) == {'m7-recovery-learning-protocol.json', 'm7-navigation-contact-v2-protocol.json',
+                                       'm7-navigation-data-v2-protocol.json', 'male-recovery-research-development-v1.json',
+                                       'm7-navigation-study-protocol.json'}
 
 
 def test_every_locator_key_a_port_reads_is_present_in_the_p_locator():

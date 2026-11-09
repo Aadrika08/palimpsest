@@ -652,7 +652,9 @@ def test_s0f_manifest_binds_t_f_and_t_h_the_plan_the_filled_copies_the_s0e_recor
                    'writer.lock', 'Throttling risk', 'not applicable', 'Post-run gate', 'male_matched_budget_v4.derive',
                    '600, 485, 496, 600, 196, 600, 600, 243, 198, 600, 276, 186', '[277,182,315,245,199,265,243,257]',
                    'ends v4', 'GO binding', '[S0a, S0b, S0c, S0d, S0e, S0f]', 'm7-navigation-v4-corpus-pin-1', 'source_pins',
-                   '7,740.975', '**2,196**', 'driver.port_stages(driver.STAGES, driver.load_ports())'):
+                   '7,740.975', '**2,196**', 'driver.port_stages(driver.STAGES, driver.load_ports())',
+                   '**7,739.143 ≤ 14,398.168**', 'mkdir -p /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-data/S0f',
+                   'round-trip', 'New data production', 'Byte drift ends v4', 'measured charge'):
         assert phrase in text, phrase
 
 

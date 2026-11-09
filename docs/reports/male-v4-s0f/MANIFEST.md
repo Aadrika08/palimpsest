@@ -94,9 +94,11 @@ Amendment 1 cost table: S0f expected 79.460 s (pre-publication). `RuntimeMaxSec`
 nominal failure envelope; `TimeoutStopSec` is 5; CPUQuota k = 1 (owner decision 7). The worst case
 is k × (263 + 5) = **268 CPU-s**, which matches `run_research_stage.py`'s rule.
 
-**Admissibility.** The navigation lane has been charged 567.975 CPU-s. The worst cases still
-ahead through S2 are S0f 268, S0z 305, S1 2,165 and S2 4,435, a total of 7,173. That gives
-567.975 + 7,173 = **7,740.975 ≤ 14,400**.
+**Admissibility.** In the protocol's form, the measured v4 charge excluding the v3 prior is
+566.143. The worst cases still ahead through S2 are S0f 268, S0z 305, S1 2,165 and S2 4,435, a
+total of 7,173. That gives 566.143 + 7,173 = **7,739.143 ≤ 14,398.168** (remaining at start).
+Equivalently, in the ledger's form, the lane total of 567.975 including the prior gives
+567.975 + 7,173 = 7,740.975 ≤ 14,400.
 
 **Held-out basis.** The measured v4 charge excluding the v3 prior is **566.143** now. At expected
 costs (S0f 79.46, S0z 82, S1 480, S2 988.524) it would be about **2,196** through S2, against the
@@ -170,8 +172,11 @@ Write it at `/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-
 5. **Writer lock free:** no palimpsest lab, producer or research stage is running in any lane, and
    nothing holds `~/.cache/palimpsest/writer.lock` (`fuser` empty).
 6. **Directories, by write order:**
-   - `male-v4-data/S0f/` must **exist and be empty**: in GO mode the driver writes
-     `S0f/pin-record.json.port-pins.json` (`open('xb')`) before the producer runs;
+   - run `mkdir -p /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-data/S0f`,
+     then confirm it is empty (`ls -A` prints nothing). `male-v4-data/S0f/`
+     must **exist and be empty**: in GO mode the driver writes `S0f/pin-record.json.port-pins.json`
+     (`open('xb')`) inside the charged unit before the producer runs. If the directory is missing,
+     that write raises and ends v4;
    - `S0f/data` must not exist: the producer checks it is fresh, then runs `mkdir(parents=True,
      exist_ok=False)`;
    - `S0f/pin-record.json` must not exist;
@@ -308,3 +313,27 @@ and not persisted. S0z must therefore:
 M4 ignores the extra chain fields. That record-format match should be pinned by a test
 (`read_corpus_pin` on a synthetic S0z record) when S0z is implemented. This needs its own
 reviewed change.
+
+**Risks to resolve before any S0z GO (S0f review).**
+
+1. **New data production.** Re-deriving the advice arrays is new data production. It is not
+   a check, so it needs its own reviewed manifest and a scope statement: which code, which inputs
+   bound by which records, and the read-only guarantee for S0e recordings.
+2. **Byte drift ends v4.** If any re-derived array does not hash to the S0f manifest's
+   `feature_target_sha256`, v4 ends: there is no repair or substitution. Mitigation:
+   - import the T-f code at `88c1a0f6` (the S0f producer's own tree) in the same `.venv`
+     interpreter (Python 3.11.15, NumPy 2.2.5);
+   - before writing anything, verify that the feature and reader code hashes equal the S0f data
+     manifest's `current_reader_sources` (and `feature_protocol_sha256`);
+   - verify every array pair before the bundle is published.
+3. **Pre-freeze round-trip test.** Before S0z is frozen, build a synthetic 26-key bundle: 22
+   augmented-train sources (10 old + 12 advice) plus 4 dev, each `<fts>/features` float32 `(n, 388)`
+   and `<fts>/targets` float32 `(n, 2)`, with `fts` the sha256 of the feature and target bytes. Run
+   M4's `read_corpus_pin` on a synthetic S0z record, then `load_arrays` with the rosters from
+   `derive`, and require exact admission. Also require refusal on a missing key, a wrong dtype or
+   shape, and a hash mismatch.
+4. **Cost against the 300 s kill.** S0z re-reads the same 26 sources and recomputes the 12
+   advice sources' features: roughly S0f's own work plus hashing and writing the bundle. Estimate
+   S0z's CPU from **S0f's measured charge** in its RESULT. If S0f measures above about 200 CPU-s
+   (two thirds of S0z's 300 s kill), S0z's budget must be re-assessed before its GO. At S0f's
+   expected 79.46 s, S0z would be about 80–110 s, consistent with the protocol's ≈82 s.
