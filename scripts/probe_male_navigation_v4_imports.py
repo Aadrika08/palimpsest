@@ -154,6 +154,9 @@ def _child(config):
     import importlib.metadata
     root = Path(config['root']).resolve()
     readable = [root/p for p in READABLE]
+    # The interpreter's own installation (e.g. a CI venv at <root>/.venv) is environment,
+    # not data: its site-packages and stdlib stay readable even when inside the worktree.
+    readable += [Path(p).resolve() for p in {sys.prefix, sys.base_prefix, sys.exec_prefix}]
     forbidden = [Path(p).resolve() for p in config['forbid']]
     denied = []
 

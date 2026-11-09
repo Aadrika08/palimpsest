@@ -157,8 +157,12 @@ def verify_port(repo, spec, tree_id, commit):
 
 
 def branch_commit(repo, branch):
-    done = git(repo, 'rev-parse', '--verify', '-q', f'refs/heads/{branch}^{{commit}}', check=False)
-    return done.stdout.decode().strip() if done.returncode == 0 else None
+    """Local branch, else the fetched origin branch (CI checkouts have only remote refs)."""
+    for ref in (f'refs/heads/{branch}', f'refs/remotes/origin/{branch}'):
+        done = git(repo, 'rev-parse', '--verify', '-q', f'{ref}^{{commit}}', check=False)
+        if done.returncode == 0:
+            return done.stdout.decode().strip()
+    return None
 
 
 def build(repo, spec, *, update_refs=True):

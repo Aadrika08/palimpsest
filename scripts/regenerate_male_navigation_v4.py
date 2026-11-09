@@ -712,7 +712,9 @@ def verify_port_tree(worktree, tree_id, ports, *, repo=ROOT):
     tree = ports['trees'][tree_id]
     expected, branch = tree.get('port_commit'), tree['branch']
     if not expected: raise Refusal(f'{tree_id} has no recorded port commit; build the port branches first')
-    actual = _git(repo, 'rev-parse', '--verify', '-q', f'refs/heads/{branch}^{{commit}}').stdout.strip()
+    actual = (_git(repo, 'rev-parse', '--verify', '-q', f'refs/heads/{branch}^{{commit}}').stdout.strip()
+              or _git(repo, 'rev-parse', '--verify', '-q',
+                      f'refs/remotes/origin/{branch}^{{commit}}').stdout.strip())
     if actual != expected:
         raise Refusal(f'Port branch {branch} is at {actual or "nothing"}, not the recorded port commit {expected}')
     parents = _git(repo, 'rev-list', '--parents', '-n', '1', expected).stdout.split()[1:]
