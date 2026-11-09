@@ -343,6 +343,64 @@ def _port_file(field, worktree, where):
     return field['cascade_value']
 
 
+def _git_bytes(*args):
+    done = subprocess.run(['git', *args], cwd=ROOT, capture_output=True, timeout=60,
+                          env={k: v for k, v in os.environ.items() if not k.startswith('GIT_')})
+    if done.returncode != 0: raise Refusal(f'git {" ".join(args)} failed: {done.stderr.decode(errors="replace")[:200]}')
+    return done.stdout
+
+
+def git_python_inventory(commit):
+    """Every tracked .py under src/ and scripts/ at ``commit`` -> sha256, from git objects.
+
+    The same map the T-f port's ``historical_identity`` hashes on a clean worktree at that commit."""
+    names = [n for n in _git_bytes('ls-tree', '-r', '--name-only', commit, '--', 'src', 'scripts').decode().splitlines()
+             if n.endswith('.py')]
+    if len(names) > 1024: raise Refusal('Historical source inventory cap exceeded')
+    return {name: sha256_bytes(_git_bytes('cat-file', 'blob', f'{commit}:{name}')) for name in names}
+
+
+def inventory_digest(sources):
+    """The data-v2 ``canonical_map_sha256`` serialization (sorted-key compact JSON, no newline)."""
+    return sha256_bytes(json.dumps(sources, sort_keys=True, separators=(',', ':'), allow_nan=False).encode())
+
+
+def _port_commit(tree, where):
+    commit = load_ports()['trees'].get(tree, {}).get('port_commit')
+    if not commit: raise Refusal(f'{where}: unknown port tree {tree!r}')
+    return commit
+
+
+def _chainless(field, original, where, historical_worktree=None):
+    """Values that do not come from a stage record: port identities and the historical worktree; None otherwise."""
+    kind, fill = field['class'], field.get('fill', {})
+    if kind == 'commit' and 'port_commit_of' in fill:
+        return _port_commit(fill['port_commit_of'], where)
+    if kind == 'port-inventory':
+        sources = git_python_inventory(_port_commit(fill['port_tree'], where))
+        return {'count': len(sources), 'canonical_map_sha256': inventory_digest(sources)}[fill['part']]
+    if kind == 'port-source-map':
+        sources = git_python_inventory(_port_commit(fill['port_tree'], where))
+        keys = list(pointer_get(original, field['pointer']))
+        if any(k not in sources for k in keys): raise Refusal(f'{where}: a pinned source is absent at {fill["port_tree"]}')
+        return {k: sources[k] for k in keys}
+    if kind == 'worktree-path' and fill.get('historical_worktree'):
+        if historical_worktree is None: raise Refusal(f'{where} needs --historical-worktree')
+        value = str(Path(historical_worktree).resolve())
+        if _git(value, 'rev-parse', 'HEAD').stdout.strip() != field['commit']:
+            raise Refusal(f'{where}: {value} is not a worktree at {field["commit"]}')
+        return value
+    return None
+
+
+CHAINLESS = ('port-inventory', 'port-source-map')
+
+
+def _is_chainless(field):
+    return field['class'] in CASCADE_CLASSES + CHAINLESS or 'port_commit_of' in field.get('fill', {}) or \
+        field.get('fill', {}).get('historical_worktree') is True
+
+
 def _recorded_path(record, fill, where):
     if fill.get('worktree'): return record['worktree']
     rel = fill['path_of']
@@ -352,7 +410,7 @@ def _recorded_path(record, fill, where):
     return path.relative_to(record['worktree']).as_posix() if fill.get('relative_to') == 'worktree' else str(path)
 
 
-def fill_values(name, item, doc, original, chain, *, pins_dir=None, worktree=None, doc_sha=None):
+def fill_values(name, item, doc, original, chain, *, pins_dir=None, worktree=None, doc_sha=None, historical_worktree=None):
     """Values for every declared field still at its placeholder.
 
     Read only from pin records, the files they bind and validated v4 copies. A sha256 is a named
@@ -379,12 +437,15 @@ def fill_values(name, item, doc, original, chain, *, pins_dir=None, worktree=Non
             value = doc_sha(field['document'])
         elif kind == 'port-sha256':
             value = _port_file(field, worktree, where)
+        elif _is_chainless(field):
+            value = _chainless(field, original, where, historical_worktree)
+            if value is None: raise Refusal(f'{where} ({kind}) names no fill source')
         else:
             record = _outputs(chain, field['stage'], where)
             outputs = record['outputs']
-            if kind == 'sha256' and 'output' in fill:
+            if kind in ('sha256', 'bytes') and 'output' in fill:
                 if fill['output'] not in outputs: raise Refusal(f'{where}: {field["stage"]} recorded no {fill["output"]}')
-                value = outputs[fill['output']]['sha256']
+                value = outputs[fill['output']]['sha256' if kind == 'sha256' else 'bytes']
             elif kind == 'sha256' and 'declared_value' in fill:
                 declared = record.get('declared_values', [])
                 if len(declared) <= fill['declared_value']: raise Refusal(f'{where}: {field["stage"]} declared no value')
@@ -416,7 +477,7 @@ def referenced_copy_sha(pins_dir, declarations, worktree, name):
     return sha256_bytes(raw)
 
 
-def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha256, stages):
+def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha256, stages, historical_worktree=None):
     """--fill-document: fill a v4 copy consumed by ``stage`` in place, from the previous pin records only.
 
     Every field whose stage is in the chain must end filled and traced (check_document_values);
@@ -434,11 +495,11 @@ def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha25
     declarations = load_declarations(pins_dir, protocol_sha256)
     doc_sha = lambda other: referenced_copy_sha(pins_dir, declarations, worktree, other)
     values = fill_values(name, item, check_pin_document(original_raw, raw, item, consumer=False), original, chain,
-                         pins_dir=pins_dir, worktree=worktree, doc_sha=doc_sha)
+                         pins_dir=pins_dir, worktree=worktree, doc_sha=doc_sha, historical_worktree=historical_worktree)
     if not values: raise Refusal(f'{name} holds no placeholder that this chain can fill')
     filled = fill_document(raw, item, values)
     doc = check_pin_document(original_raw, filled, item, consumer=False)
-    due = {f['pointer'] for f in item['fields'] if f['stage'] in chain or f['class'] in CASCADE_CLASSES}
+    due = {f['pointer'] for f in item['fields'] if f['stage'] in chain or _is_chainless(f)}
     left = [p for p in _pending(doc) if any(p == d or p.startswith(d + '/') for d in due)]
     if left: raise Refusal(f'{name} still holds placeholders this chain should fill: {left}')
     check_document_values(name, doc, original, {**item, 'fields': [f for f in item['fields'] if f['pointer'] in values]},
@@ -479,6 +540,10 @@ def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir, *
         if kind == 'worktree-path':
             if not isinstance(value, str) or _git(value, 'rev-parse', 'HEAD').stdout.strip() != field['commit']:
                 raise Refusal(f'{where} is not a worktree at {field["commit"]}')
+            continue
+        if kind in CHAINLESS or (kind == 'commit' and 'port_commit_of' in field.get('fill', {})):
+            if value != _chainless(field, original, where):
+                raise Refusal(f'{where} differs from the {field["fill"].get("port_tree", field["fill"].get("port_commit_of"))} port identity')
             continue
         record = _outputs(chain, field['stage'], where)
         outputs = record['outputs']
@@ -1189,7 +1254,7 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
             if any('port_tree' in s for s in stages.values()):
                 stages = port_stages(stages, load_ports(protocol_sha256=protocol_sha256) if ports is None else ports)
             filled = fill_copy(args.fill_document, args.stage, args.worktree, args.previous_pins or [], pins_dir=pins_dir,
-                               protocol_sha256=protocol_sha256, stages=stages)
+                               protocol_sha256=protocol_sha256, stages=stages, historical_worktree=args.historical_worktree)
         except (Refusal, OSError, ValueError, KeyError) as error:
             _emit({'mode': 'fill', 'status': 'refused', 'stage': args.stage,
                    'reason': str(error) if isinstance(error, Refusal) else f'{type(error).__name__}: {error}'})

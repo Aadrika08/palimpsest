@@ -5,8 +5,8 @@
   "no_execution_authorized": true,
   "qualification_claims": [],
   "parent_study": {
-    "path": "PENDING-S0d",
-    "sha256": "PENDING-S0d",
+    "path": "docs/plans/m7-navigation-v4-pins/m7-navigation-contact-v2-protocol.json",
+    "sha256": "cadd0e45190cc2a6f4bbc742c8b38f065bbe2c831f42b8f84cef4bd75d3b1de3",
     "contact_profile_sha256": "1593421ae2cc1a12b0d9aeae6646fda77da1d11a885ffac3406e52dc6af12186",
     "unchanged_capability_gates": {
       "every_augmented_seed_dev": "3/4",
@@ -16,58 +16,58 @@
   },
   "immutable_inputs": {
     "old_manifest": {
-      "path": "PENDING-S0c",
-      "sha256": "PENDING-S0c",
-      "bytes": "PENDING-S0c"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data/data-manifest.json",
+      "sha256": "052a8dbd7428ffa064a74dfd71792ca6c0f2ae54ea9564ce68eb0a94d5220c72",
+      "bytes": 101620
     },
     "accepted_collection": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/collection/report.json",
+      "sha256": "7c117e572088fb6415ebfa56b0dc44b2ad41aafe398fca601aca98116fc9ddde",
+      "bytes": 130385
     },
     "collection_terminal": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/terminal.json",
+      "sha256": "7773bfb8756b3ce54ae7d0fc5acf40e6bcf738a2fc5bef72878402d7ba3495a3",
+      "bytes": 2207
     },
     "collection_enclosing": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/enclosing.json",
+      "sha256": "1780067f90773f66d1be0e5021dd03680a95e6adbb32fee6c8aeb38ff8482e69",
+      "bytes": 2324
     },
     "collector_supervisor": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-launch/supervisor.json",
+      "sha256": "f83d09571032df04c592fe8df5fdaf3627dc913e478350b487c05ea63d40c926",
+      "bytes": 1518
     },
     "launcher_supervisor": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-supervisor/supervisor.json",
+      "sha256": "4b909b6826869ee14a9fc9b852095bfddcf4de9a9bdec4843982d0225c3979ad",
+      "bytes": 649
     },
     "exec_drain": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/exec-drain.json",
+      "sha256": "a99a33cd4fbbfd9bae3265973eb7d100f96cf6882b279b82b9baf3a2922ad3f2",
+      "bytes": 1346
     },
     "root_raw_audit": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/root-raw-audit.json",
+      "sha256": "58d7696197ee0aaaa131fa4b0154c2b3f731bcba280c2c13ac473ae5e33608a4",
+      "bytes": 5306
     },
     "published_collection_index": {
-      "path": "PENDING-S0e",
-      "sha256": "PENDING-S0e",
-      "bytes": "PENDING-S0e"
+      "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/collection-index.json",
+      "sha256": "3d0ea26c9b4a9293f39d7b54e1e90c52f55bfb07eefec36ea1c8fd7d7ff90972",
+      "bytes": 4378
     }
   },
   "old_baseline_document": {
-    "path": "PENDING-S0a",
-    "sha256": "PENDING-S0a"
+    "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/collection.json",
+    "sha256": "7c5fabc2d81c5e1b9aff6fb8ddbf9ed431d6f75219eb8af98b7f2787b4a5614f"
   },
   "old_recovery_document": {
-    "path": "PENDING-S0b",
-    "sha256": "PENDING-S0b"
+    "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/report.json",
+    "sha256": "2a54c2a59f1b1d5bf86ce022273b8cbebd04521e9fa58cf3818e2717b7202974"
   },
   "counts": {
     "old_sources": 14,
@@ -79,7 +79,53 @@
     "recorded_dev_rows": 1228,
     "combined_rows": 8425,
     "held_out_sources": 0,
-    "held_out_rows": 0
+    "held_out_rows": 0,
+    "per_source": {
+      "old_train": [
+        277,
+        182,
+        315,
+        245,
+        199,
+        265,
+        243,
+        257,
+        67,
+        67
+      ],
+      "dev": [
+        189,
+        338,
+        319,
+        382
+      ],
+      "advice": [
+        600,
+        485,
+        496,
+        600,
+        196,
+        600,
+        600,
+        243,
+        198,
+        600,
+        276,
+        186
+      ]
+    },
+    "v2_reference_counts": {
+      "old_sources": 14,
+      "new_sources": 12,
+      "combined_unique_sources": 26,
+      "old_train_rows": 2117,
+      "new_advice_train_rows": 5080,
+      "augmented_train_rows": 7197,
+      "recorded_dev_rows": 1228,
+      "combined_rows": 8425,
+      "held_out_sources": 0,
+      "held_out_rows": 0
+    }
   },
   "source_sequence": {
     "old_arm": "Existing fourteen-source corpus: unchanged 2,117 train / 1,228 recorded-dev rows; identical order, features and executed targets.",
@@ -104,8 +150,8 @@
   },
   "source_binding": {
     "old_historical_reader": {
-      "root": "PENDING-S0f",
-      "adapter_sha256": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+      "root": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-h",
+      "adapter_sha256": "ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c",
       "code": {
         "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
         "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
@@ -114,18 +160,18 @@
         "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
         "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3"
       },
-      "head": "217cbee8399dcb25045a079af012beecbbdae29e",
+      "head": "0789b2ed54117c01c40ab5818148cc0515eb4fb5",
       "all_tracked_project_python_inventory": {
         "roots": [
           "src",
           "scripts"
         ],
         "count": 70,
-        "canonical_map_sha256": "ef29698a7b0ddb6af62560277bf34db059eb42fc7c52e81552dfae814b006f6f",
+        "canonical_map_sha256": "9ce286fe14362dc4fb2017a07e5fa091cee7ad50f69e0296e8b45a6967d6ef97",
         "serialization": "relative POSIX path -> lowercase SHA256, sorted-key compact UTF8 JSON, no newline; only tracked .py files under src/scripts; require full equality before/after"
       }
     },
-    "navigation_producer_commit": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
+    "navigation_producer_commit": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
     "producer_pins": "Exact accepted source_pins equals final_source_pins; matched assets/model identities and initial ownership/profile/model. Historical producer bytes remain distinct from current reader code.",
     "reader_checkout": "New named preparer pins its own bytes and every directly imported helper before/after and immediately before publication; no hidden live worktree dependency or pin normalization.",
     "reuse_boundary": "Fresh bounded historical child isolation described below; unchanged old prepare()/reader identity and strict current navigation row admission. No sys.modules rewriting, source-map patch or ROOT/global mutation."

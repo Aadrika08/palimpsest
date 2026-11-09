@@ -762,6 +762,7 @@ def test_s0e_index_publishes_and_the_driver_traces_every_data_v2_s0e_field(tmp_p
     for name, item in {**index['immutable_inputs'], 'published_collection_index': ctl.binding(control/'collection-index.json')}.items():
         doc['immutable_inputs'][name] = item
     item = declared('m7-navigation-data-v2-protocol.json', 'S0e')
+    item = {**item, 'fields': [f for f in item['fields'] if f['pointer'].startswith('/immutable_inputs/')]}  # counts/commit: ports tests
     assert len(item['fields']) == 24
     driver.check_document_values('data-v2', doc, doc, item, chain, None, PINS)
     changed = copy.deepcopy(doc); changed['immutable_inputs']['exec_drain']['bytes'] += 1

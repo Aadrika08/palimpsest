@@ -451,42 +451,60 @@
           "class": "path",
           "stage": "S0c",
           "placeholder": "PENDING-S0c",
-          "site": "scripts/prepare_male_navigation_v2.py:91-104,158"
+          "site": "scripts/prepare_male_navigation_v2.py:91-104,158",
+          "fill": {
+            "path_of": "data-manifest.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/old_manifest/sha256",
           "class": "sha256",
           "stage": "S0c",
           "placeholder": "PENDING-S0c",
-          "site": "scripts/prepare_male_navigation_v2.py:91-104,158"
+          "site": "scripts/prepare_male_navigation_v2.py:91-104,158",
+          "fill": {
+            "output": "data-manifest.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/old_manifest/bytes",
           "class": "bytes",
           "stage": "S0c",
           "placeholder": "PENDING-S0c",
-          "site": "scripts/prepare_male_navigation_v2.py:91-104,158"
+          "site": "scripts/prepare_male_navigation_v2.py:91-104,158",
+          "fill": {
+            "output": "data-manifest.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/accepted_collection/path",
           "class": "path",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195"
+          "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
+          "fill": {
+            "path_of": "collection/report.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/accepted_collection/sha256",
           "class": "sha256",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195"
+          "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
+          "fill": {
+            "output": "collection/report.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/accepted_collection/bytes",
           "class": "bytes",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195"
+          "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
+          "fill": {
+            "output": "collection/report.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collection_terminal/path",
@@ -494,7 +512,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/terminal.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collection_terminal/sha256",
@@ -502,7 +523,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/terminal.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collection_terminal/bytes",
@@ -510,7 +534,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/terminal.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collection_enclosing/path",
@@ -518,7 +545,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/enclosing.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collection_enclosing/sha256",
@@ -526,7 +556,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/enclosing.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collection_enclosing/bytes",
@@ -534,7 +567,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/enclosing.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collector_supervisor/path",
@@ -542,7 +578,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/outer-launch/supervisor.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collector_supervisor/sha256",
@@ -550,7 +589,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/outer-launch/supervisor.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/collector_supervisor/bytes",
@@ -558,7 +600,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/outer-launch/supervisor.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/launcher_supervisor/path",
@@ -566,7 +611,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/outer-supervisor/supervisor.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/launcher_supervisor/sha256",
@@ -574,7 +622,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/outer-supervisor/supervisor.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/launcher_supervisor/bytes",
@@ -582,7 +633,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/outer-supervisor/supervisor.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/exec_drain/path",
@@ -590,7 +644,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/exec-drain.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/exec_drain/sha256",
@@ -598,7 +655,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/exec-drain.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/exec_drain/bytes",
@@ -606,7 +666,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/exec-drain.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/root_raw_audit/path",
@@ -614,7 +677,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/root-raw-audit.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/root_raw_audit/sha256",
@@ -622,7 +688,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/root-raw-audit.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/root_raw_audit/bytes",
@@ -630,7 +699,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/root-raw-audit.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/published_collection_index/path",
@@ -638,7 +710,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "path_of": "control/collection-index.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/published_collection_index/sha256",
@@ -646,7 +721,10 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/collection-index.json"
+          }
         },
         {
           "pointer": "/immutable_inputs/published_collection_index/bytes",
@@ -654,35 +732,50 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "scripts/prepare_male_navigation_v2.py:91-104,179-195",
-          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer"
+          "note": "not listed in stage_0_pin_inventory; required because producers embed uuid4 run IDs / regenerated control documents; needs manifest review; produced by an enclosing launcher/audit/report step, not by the S0e producer",
+          "fill": {
+            "output": "control/collection-index.json"
+          }
         },
         {
           "pointer": "/old_baseline_document/path",
           "class": "path",
           "stage": "S0a",
           "placeholder": "PENDING-S0a",
-          "site": "scripts/prepare_male_navigation_v2.py:105-106"
+          "site": "scripts/prepare_male_navigation_v2.py:105-106",
+          "fill": {
+            "path_of": "collection.json"
+          }
         },
         {
           "pointer": "/old_baseline_document/sha256",
           "class": "sha256",
           "stage": "S0a",
           "placeholder": "PENDING-S0a",
-          "site": "scripts/prepare_male_navigation_v2.py:105-106"
+          "site": "scripts/prepare_male_navigation_v2.py:105-106",
+          "fill": {
+            "output": "collection.json"
+          }
         },
         {
           "pointer": "/old_recovery_document/path",
           "class": "path",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "scripts/prepare_male_navigation_v2.py:105-106"
+          "site": "scripts/prepare_male_navigation_v2.py:105-106",
+          "fill": {
+            "path_of": "report.json"
+          }
         },
         {
           "pointer": "/old_recovery_document/sha256",
           "class": "sha256",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "scripts/prepare_male_navigation_v2.py:105-106"
+          "site": "scripts/prepare_male_navigation_v2.py:105-106",
+          "fill": {
+            "output": "report.json"
+          }
         },
         {
           "pointer": "/source_binding/old_historical_reader/root",
@@ -690,7 +783,82 @@
           "stage": "S0f",
           "placeholder": "PENDING-S0f",
           "site": "scripts/prepare_male_navigation_v2.py:55-68",
-          "commit": "217cbee8399dcb25045a079af012beecbbdae29e"
+          "commit": "0789b2ed54117c01c40ab5818148cc0515eb4fb5",
+          "fill": {
+            "historical_worktree": true
+          },
+          "port_tree": "T-h",
+          "note": "H4: the historical reader root is the T-h port worktree at its port commit"
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/head",
+          "class": "commit",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "prepare_male_navigation_v2.py:55-68; T-h commit (H4)",
+          "fill": {
+            "port_commit_of": "T-h"
+          }
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/all_tracked_project_python_inventory/count",
+          "class": "port-inventory",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4",
+          "fill": {
+            "port_tree": "T-h",
+            "part": "count"
+          }
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/all_tracked_project_python_inventory/canonical_map_sha256",
+          "class": "port-inventory",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4",
+          "fill": {
+            "port_tree": "T-h",
+            "part": "canonical_map_sha256"
+          }
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/adapter_sha256",
+          "class": "port-sha256",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4; ported prepare_male_recovery_data.py",
+          "port_tree": "T-h",
+          "port_file": "scripts/prepare_male_recovery_data.py",
+          "cascade_value": "ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c"
+        },
+        {
+          "pointer": "/source_binding/old_historical_reader/code",
+          "class": "port-source-map",
+          "stage": "S0f",
+          "placeholder": "PENDING-S0f",
+          "site": "H4",
+          "fill": {
+            "port_tree": "T-h"
+          }
+        },
+        {
+          "pointer": "/source_binding/navigation_producer_commit",
+          "class": "commit",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "prepare_male_navigation_v2.py:338; T-e commit",
+          "fill": {
+            "producing_commit": true
+          }
+        },
+        {
+          "pointer": "/counts",
+          "class": "count-map",
+          "stage": "S0e",
+          "placeholder": "PENDING-S0e",
+          "site": "copied to S0f output at prepare_male_navigation_v2.py:470; from S0c/S0e pins; v2 values descriptive only",
+          "schema": "data-v2-counts-v4"
         }
       ]
     },
@@ -750,60 +918,7 @@
   "amendment_1_pending": {
     "status": "inactive; staged for protocol amendment_1 (revision 2); becomes active only after owner decision A1 and regeneration of the v4 copies with PENDING- placeholders for these fields; consumers must ignore this block until then",
     "pending_documents": {},
-    "pending_fields": {
-      "m7-navigation-data-v2-protocol.json": [
-        {
-          "pointer": "/source_binding/old_historical_reader/head",
-          "class": "commit",
-          "stage": "S0f",
-          "placeholder": "PENDING-S0f",
-          "site": "prepare_male_navigation_v2.py:55-68; T-h commit (H4)"
-        },
-        {
-          "pointer": "/source_binding/old_historical_reader/all_tracked_project_python_inventory/count",
-          "class": "count",
-          "stage": "S0f",
-          "placeholder": "PENDING-S0f",
-          "site": "H4"
-        },
-        {
-          "pointer": "/source_binding/old_historical_reader/all_tracked_project_python_inventory/canonical_map_sha256",
-          "class": "sha256",
-          "stage": "S0f",
-          "placeholder": "PENDING-S0f",
-          "site": "H4"
-        },
-        {
-          "pointer": "/source_binding/old_historical_reader/adapter_sha256",
-          "class": "sha256",
-          "stage": "S0f",
-          "placeholder": "PENDING-S0f",
-          "site": "H4; ported prepare_male_recovery_data.py"
-        },
-        {
-          "pointer": "/source_binding/old_historical_reader/code",
-          "class": "source-map",
-          "stage": "S0f",
-          "placeholder": "PENDING-S0f",
-          "site": "H4"
-        },
-        {
-          "pointer": "/source_binding/navigation_producer_commit",
-          "class": "commit",
-          "stage": "S0e",
-          "placeholder": "PENDING-S0e",
-          "site": "prepare_male_navigation_v2.py:338; T-e commit"
-        },
-        {
-          "pointer": "/counts",
-          "class": "count-map",
-          "stage": "S0e",
-          "placeholder": "PENDING-S0e",
-          "site": "copied to S0f output at prepare_male_navigation_v2.py:470; from S0c/S0e pins; v2 values descriptive only",
-          "schema": "data-v2-counts-v4"
-        }
-      ]
-    },
+    "pending_fields": {},
     "note": "old_historical_reader/root is already declared (stage S0f). Adding these fields to the active documents block requires regenerating the copies and updating tests (implementation follow-up).",
     "port_manifest": "docs/plans/m7-navigation-v4-pins/ports.json",
     "count_schemas": {
@@ -933,8 +1048,17 @@
         "/current_reusable_source_sha256/scripts~1prepare_male_recovery_data.py",
         "/current_reusable_source_sha256/data~1manifests~1male-recovery-research-development-v1.json",
         "/current_reusable_source_sha256/docs~1plans~1m7-recovery-learning-protocol.json"
+      ],
+      "m7-navigation-data-v2-protocol.json": [
+        "/source_binding/old_historical_reader/head",
+        "/source_binding/old_historical_reader/all_tracked_project_python_inventory/count",
+        "/source_binding/old_historical_reader/all_tracked_project_python_inventory/canonical_map_sha256",
+        "/source_binding/old_historical_reader/adapter_sha256",
+        "/source_binding/old_historical_reader/code",
+        "/source_binding/navigation_producer_commit",
+        "/counts"
       ]
     },
-    "activation_note": "2026-11-09, before S0c: the recovery-learning count fields are active in documents[] (Amendment 1 follow-up \"regenerate the pin copies with PENDING- placeholders\"); the copy was regenerated from the original with every declared field at its placeholder and then filled only from the S0a/S0b pin records (regenerate_male_navigation_v4.py --fill-document). The other pending fields stay inactive until their consumer stage. 2026-11-09, before S0e: the recovery-index training_source_* fields, the contact-v2 prior_version fields and the whole study-plan copy are active; port-byte cascades use class port-sha256 (checked against the port tree file), and doc-path values are repo-relative (as in the originals). The copies were regenerated at their placeholders and filled with --fill-document from the S0d seed records (merged with the S0d controller record) in the order index, study plan, contact-v2."
+    "activation_note": "2026-11-09, before S0c: the recovery-learning count fields are active in documents[] (Amendment 1 follow-up \"regenerate the pin copies with PENDING- placeholders\"); the copy was regenerated from the original with every declared field at its placeholder and then filled only from the S0a/S0b pin records (regenerate_male_navigation_v4.py --fill-document). The other pending fields stay inactive until their consumer stage. 2026-11-09, before S0e: the recovery-index training_source_* fields, the contact-v2 prior_version fields and the whole study-plan copy are active; port-byte cascades use class port-sha256 (checked against the port tree file), and doc-path values are repo-relative (as in the originals). The copies were regenerated at their placeholders and filled with --fill-document from the S0d seed records (merged with the S0d controller record) in the order index, study plan, contact-v2. 2026-11-10, before S0f: every data-v2 field is active; the historical reader identity (head, Python inventory count and canonical map, adapter, code) is read from git objects at the T-h port commit, its root is the T-h worktree, and the S0e inputs trace to the merged S0e chain (collector record + controller record). No pending field remains."
   }
 }

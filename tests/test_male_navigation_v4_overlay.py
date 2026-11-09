@@ -319,13 +319,18 @@ def test_real_v4_pin_copies_differ_only_in_declared_fields():
         declared = {f['pointer'] for f in item['fields']}
         diff = driver.field_diff(json.loads(original), json.loads(copy_bytes))
         assert all(any(p == d or p.startswith(d + '/') for d in declared) for p in diff), name   # nothing undeclared
-        assert all(any(p == d or p.startswith(d + '/') for p in diff) for d in declared), name   # every field regenerated
+        doc = json.loads(copy_bytes)
+        for field in item['fields']:   # a field differs from the original unless it is filled with an equal value
+            d = field['pointer']
+            assert any(p == d or p.startswith(d + '/') for p in diff) or \
+                driver.pointer_get(doc, d) == driver.pointer_get(json.loads(original), d), (name, d)
         driver.check_pin_document(original, copy_bytes, item, consumer=False)
 
 
 # Copies filled from published pin records before their first consumer (S0c: S0a + S0b records; S0e: S0c + S0d).
 FILLED_COPIES = {'m7-recovery-learning-protocol.json', 'male-recovery-research-development-v1.json',
-                 'm7-navigation-study-protocol.json', 'm7-navigation-contact-v2-protocol.json'}
+                 'm7-navigation-study-protocol.json', 'm7-navigation-contact-v2-protocol.json',
+                 'm7-navigation-data-v2-protocol.json'}   # S0f: S0a-S0e records and the T-h port
 
 
 def test_real_v4_pin_copies_hold_explicit_stage_placeholders_until_filled_and_unfilled_ones_are_refused():
@@ -650,8 +655,8 @@ def test_s0e_manifest_binds_four_units_to_their_plans_the_filled_copies_the_s0d_
                    '9,973.857', 'GO binding', '[S0a, S0b, S0c, S0d, S0e]', '4d95f77', 'S0f dry-load',
                    'binding deadline is the 180 s per-owner cap', '**329.025**', '**2,555**', 'source_pins'):
         assert phrase in text, phrase
-    declared = sha((ROOT/'docs/plans/m7-navigation-v4-pins/declared-fields.json').read_bytes())
-    assert f'"declared_fields_sha256": "{declared}"' in text
+    # Historical binding: the declarations as of S0e (the data-v2 fields were activated later, before S0f).
+    assert '"declared_fields_sha256": "96d5b6634c1e4dd47bfe5bce148024bf2601319ba4c4f99a83acca0290a9d722"' in text
     assert round(charged - 1.832, 3) == 329.025                                   # measured v4 charge excl. the v3 prior
     expected = (charged - 1.832 + sum(rows[s]['expected'] for s in ('S0e', 'S0e-D', 'S0e-A', 'S0e-I', 'S0f', 'S0z', 'S1', 'S2')))
     assert round(expected) == 2555 and expected <= 5643.168

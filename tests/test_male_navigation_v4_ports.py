@@ -1484,3 +1484,74 @@ def test_tracked_s0e_copies_trace_to_the_live_merged_s0d_chain_on_the_evidence_h
     spec = stages['S0e']
     documents = driver.load_pin_documents(spec, PINS, declarations, TE_TREE, chain)   # every S0e copy validated and traced
     assert set(documents) == {CONTACT, INDEX, driver.RECOVERY_LEARNING, STUDY}
+
+
+# =================================================================== S0f: data-v2 copy filled from S0a-S0e and the T-h port
+
+DATA = driver.DATA_V2
+S0E_EVIDENCE = ROOT/'docs/reports/male-v4-s0e'
+S0E_RECORD = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/collector-pin-record.json')
+TH_TREE = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-h')
+S0E_ADVICE = [600, 485, 496, 600, 196, 600, 600, 243, 198, 600, 276, 186]
+
+
+def test_data_v2_fields_are_all_active_with_fill_sources_and_the_historical_root_is_the_t_h_port():
+    assert DATA not in PENDING['pending_fields'] and PENDING['activated'][DATA]
+    for f in item_of(DATA)['fields']:
+        assert f['class'] in CASCADES or f['class'] == 'count-map' or f.get('fill'), f['pointer']
+    root = next(f for f in item_of(DATA)['fields'] if f['pointer'] == '/source_binding/old_historical_reader/root')
+    assert root['class'] == 'worktree-path' and root['commit'] == SPEC['trees']['T-h']['port_commit']
+
+
+def test_port_python_inventory_reproduces_the_original_217cbee_pin_and_follows_the_t_h_port():
+    original = json.loads((ROOT/item_of(DATA)['original_path']).read_text())['source_binding']['old_historical_reader']
+    base = driver.git_python_inventory('217cbee8399dcb25045a079af012beecbbdae29e')
+    assert len(base) == original['all_tracked_project_python_inventory']['count'] == 70
+    assert driver.inventory_digest(base) == original['all_tracked_project_python_inventory']['canonical_map_sha256']
+    port = driver.git_python_inventory(SPEC['trees']['T-h']['port_commit'])
+    assert set(port) == set(base) and {k for k in port if port[k] != base[k]} == {'scripts/prepare_male_recovery_data.py'}
+    assert port['scripts/prepare_male_recovery_data.py'] == driver.PORT_READER_SHA
+    assert {k: port[k] for k in original['code']} == original['code']                 # the six code pins are untouched
+
+
+def test_tracked_data_v2_copy_holds_the_published_s0a_s0e_values_and_the_t_h_identity():
+    data = json.loads((PINS/DATA).read_bytes())
+    original = (ROOT/item_of(DATA)['original_path']).read_bytes()
+    driver.check_pin_document(original, (PINS/DATA).read_bytes(), item_of(DATA), consumer=True)   # no PENDING left
+    index = json.loads((S0E_EVIDENCE/'control/collection-index.json').read_text())
+    for name, binding in index['immutable_inputs'].items():
+        assert data['immutable_inputs'][name] == binding, name
+    published = S0E_EVIDENCE/'control/collection-index.json'
+    assert data['immutable_inputs']['published_collection_index']['sha256'] == sha(published.read_bytes())
+    s0c = json.loads((ROOT/'docs/reports/male-v4-s0c/pin-record.json').read_text())
+    assert data['immutable_inputs']['old_manifest'] == {'path': str(Path(s0c['output_root'])/'data-manifest.json'),
+                                                        'sha256': s0c['outputs']['data-manifest.json']['sha256'],
+                                                        'bytes': s0c['outputs']['data-manifest.json']['bytes']}
+    assert data['parent_study'] | {} and data['parent_study']['sha256'] == sha((PINS/CONTACT).read_bytes())
+    assert data['parent_study']['path'] == 'docs/plans/m7-navigation-v4-pins/' + CONTACT
+    h = data['source_binding']['old_historical_reader']
+    port = driver.git_python_inventory(SPEC['trees']['T-h']['port_commit'])
+    assert h['head'] == SPEC['trees']['T-h']['port_commit'] and h['root'] == str(TH_TREE)
+    assert h['all_tracked_project_python_inventory']['count'] == len(port) == 70
+    assert h['all_tracked_project_python_inventory']['canonical_map_sha256'] == driver.inventory_digest(port)
+    assert h['adapter_sha256'] == driver.PORT_READER_SHA
+    assert data['source_binding']['navigation_producer_commit'] == SPEC['trees']['T-e']['port_commit']
+    counts = data['counts']
+    assert counts['per_source']['advice'] == S0E_ADVICE and counts['new_advice_train_rows'] == sum(S0E_ADVICE) == 5080
+    assert counts['old_train_rows'] == 2117 and counts['recorded_dev_rows'] == 1228 and counts['held_out_rows'] == 0
+    assert counts['augmented_train_rows'] == 7197 and counts['combined_unique_sources'] == 26
+
+
+@pytest.mark.skipif(not S0E_RECORD.exists() or not TH_TREE.exists(), reason='S0e evidence host only')
+def test_tracked_data_v2_copy_traces_to_the_live_s0e_chain_and_the_real_t_f_t_h_worktrees_on_the_evidence_host():
+    stages = driver.port_stages(driver.STAGES, driver.load_ports())
+    chain = driver.previous_chain([json.loads(S0E_RECORD.read_bytes())], 'S0f', stages, protocol_sha256=driver.PROTOCOL_SHA256)
+    declarations = driver.load_declarations(PINS, driver.PROTOCOL_SHA256)
+    tf = TF_TREE
+    documents = driver.load_pin_documents(stages['S0f'], PINS, declarations, tf, chain)   # data-v2, learning, contact-v2
+    assert set(documents) == {DATA, driver.RECOVERY_LEARNING, CONTACT}
+    # The historical identity the T-f port computes on the real T-h worktree equals the filled pins.
+    h = json.loads((PINS/DATA).read_bytes())['source_binding']['old_historical_reader']
+    worktree = {rel: sha((TH_TREE/rel).read_bytes()) for rel in driver.git_python_inventory(h['head'])}
+    assert worktree == driver.git_python_inventory(h['head']) and driver.inventory_digest(worktree) == \
+        h['all_tracked_project_python_inventory']['canonical_map_sha256']
