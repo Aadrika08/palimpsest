@@ -21,7 +21,7 @@ from palimpsest import puck_v4_scene_admission as s1
 ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / 'docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling-protocol.json'
 CLI = ROOT / 'scripts/admit_puck_v4_scene_ids.py'
-PROTOCOL_SHA = 'f885fc8d857cc47ec696ad65501b70ac80e16dfa5439fd5bf62919f868bc286b'
+PROTOCOL_SHA = '8d8529712614292ba470ce88f60aaad7d061a1732851627f3be0e1e8c0d1b20f'
 GIT = '/usr/bin/git'
 
 
@@ -147,7 +147,8 @@ def test_plan_only_cli_subprocess_writes_nothing(tmp_path):
     output = tmp_path / 'out.json'
     result = subprocess.run(
         [sys.executable, str(CLI), '--protocol', str(PROTOCOL), '--comparison-set',
-         str(_declaration(tmp_path, [_dir_root(tree)])), '--output', str(output)],
+         str(_declaration(tmp_path, [_dir_root(tree)])), '--output', str(output),
+         '--attempt-ledger', str(tmp_path / 'ledger')],
         capture_output=True, text=True, env={**os.environ, 'PYTHONPATH': str(ROOT / 'src')})
     assert result.returncode == 0, result.stderr
     assert json.loads(result.stdout)['mode'] == 'plan-only'
@@ -285,9 +286,17 @@ def test_prior_puck_id_above_6207_breaks_lost_root_mitigation(tmp_path):
     assert report['lost_root']['mitigation_holds'] is False
 
 
+def _pre_amendment(result):
+    """Amendment 1 adds only `non_scene_asset` (None outside the one-content allowlist)."""
+    result = dict(result)
+    assert result.pop('non_scene_asset') is None
+    return result
+
+
 def test_companion_hash_frozen_at_drafting_commit():
     assert hashlib.sha256(COMPANION.read_bytes()).hexdigest() == s1.COMPANION_SHA256
-    assert s1.COMPANION_SHA256.startswith('ed9c1c9d')
+    assert s1.COMPANION_SHA256.startswith('2551bf24')  # Amendment 1
+    assert 'ed9c1c9d5b39ef9864faa9589c53248beeece650cc762e006182aa37c64ebd84' in s1.LINEAGE_SHA256
     assert {PROTOCOL_SHA, s1.COMPANION_SHA256} <= set(s1.LINEAGE_SHA256)
 
 
@@ -1311,7 +1320,7 @@ def test_optimised_analysis_is_identical_to_reference(seed):
     for index in range(700):
         relative, raw = _document(rng, index)
         digest = hashlib.sha256(raw).hexdigest()
-        assert s1._analyze(relative, raw, digest) == reference._analyze(relative, raw, digest), \
+        assert _pre_amendment(s1._analyze(relative, raw, digest)) == reference._analyze(relative, raw, digest), \
             (relative, raw[:300])
 
 
@@ -1332,7 +1341,7 @@ def test_helpers_match_reference_on_pathological_text(text):
 def test_duplicate_keys_match_reference(raw):
     for relative in ('a.json', 'a.jsonl'):
         digest = hashlib.sha256(raw).hexdigest()
-        assert s1._analyze(relative, raw, digest) == reference._analyze(relative, raw, digest)
+        assert _pre_amendment(s1._analyze(relative, raw, digest)) == reference._analyze(relative, raw, digest)
 
 
 def test_end_to_end_report_identical_to_reference(tmp_path, monkeypatch):
@@ -1347,3 +1356,22 @@ def test_end_to_end_report_identical_to_reference(tmp_path, monkeypatch):
     monkeypatch.setattr(s1, '_analyze', reference._analyze)
     _, old = _admit(tmp_path, [_dir_root(tree)], output=tmp_path / 'old' / 'r.json')
     assert new.read_bytes() == old.read_bytes()
+
+
+def test_amendment_1_allowlisted_cell_type_table_is_non_scene_not_ambiguous(tmp_path):
+    table = (Path(__file__).resolve().parents[1] /
+             'upstream/fly-gym/connectomes/ws_small_world/consolidated_cell_types.csv')
+    if not table.is_file():
+        pytest.skip('pinned FLYNN submodule not checked out')
+    raw = table.read_bytes()
+    tree = tmp_path / 'tree'
+    _write(tree / 'assets/consolidated_cell_types.csv', raw.decode())
+    _write(tree / 'assets/changed_copy.csv', raw.decode() + '138603,Extra\n')
+    result, output = _admit(tmp_path, [_dir_root(tree)])
+    report = json.loads(Path(output).read_bytes())
+    assert [row['path'] for row in report['non_scene_asset_mentions']] == \
+        ['assets/consolidated_cell_types.csv']
+    assert set(report['non_scene_asset_mentions'][0]['scene_ids']) >= set(s1.NEW_SCENE_IDS)
+    # A single changed byte falls back to the original fail-closed rule.
+    assert [row['path'] for row in report['ambiguous']] == ['assets/changed_copy.csv']
+    assert result['verdict'] == 'refused'

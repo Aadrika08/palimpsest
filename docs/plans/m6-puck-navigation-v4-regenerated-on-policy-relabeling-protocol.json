@@ -795,5 +795,59 @@
       "D8_audit_hard_deadline_seconds": 120,
       "D9_order": "S1 before S0"
     }
+  },
+  "amendment_1": {
+    "date": "2026-11-09",
+    "status": "prospective; drafted after S1 attempt 1 refusal; requires independent review and a new owner GO before S1 attempt 2",
+    "base_protocol_sha256": "f885fc8d857cc47ec696ad65501b70ac80e16dfa5439fd5bf62919f868bc286b",
+    "disclosure": {
+      "trigger": "S1 attempt 1 refused (docs/reports/puck-v4-s1-2026-11-08/README.md, evidence commit 65b196a): 0 typed collisions, 63 ambiguous documents, no reservation published.",
+      "ambiguous_cause": "All 63 are byte-identical copies of one file: upstream/fly-gym/connectomes/ws_small_world/consolidated_cell_types.csv at pinned FLYNN 8d96459 (header root_id,primary_type; 138,603 rows of sequential neuron IDs 0..138602, so every integer including 6510-6523 appears).",
+      "attempt_1": "Consumed and retained unchanged; charged 86.606110 CPU-s (S1) + 0.069836 CPU-s (D8 audit).",
+      "no_scientific_outcome_observed": "No scene minted, no simulator or model run; held-out 6200-6207 only byte-read under the D2 S1 scope."
+    },
+    "change": {
+      "non_scene_content_allowlist": [
+        {
+          "sha256": "52c1b2340c7df1311687584e8642b007eae65001315b7a64a0ff109c238e020e",
+          "provenance": "FLYNN upstream/fly-gym@8d964599119b420de67ee259434d273651a1a76d: connectomes/ws_small_world/consolidated_cell_types.csv",
+          "reason": "Neuron cell-type table whose root_id column enumerates all integers 0..138602; not scene, layout, roster, split or held-out content."
+        }
+      ],
+      "allowlist_frozen": true,
+      "allowlist_entries": 1,
+      "matching": "Exact whole-content sha256 only; path, name and location are irrelevant. Any byte difference means the unamended rule applies.",
+      "classification": "Mentions inside allowlisted content are reported as non_scene_asset_mentions diagnostics, never as ambiguous or collision.",
+      "unchanged": "Ambiguity rule, fail-closed refusal on any remaining ambiguity, scope roots, typed parsing, candidate IDs, thresholds, and all other protocol text."
+    },
+    "s1_attempt_2": {
+      "attempts": 1,
+      "requires": [
+        "independent review of this amendment",
+        "new explicit owner GO"
+      ],
+      "same_as_attempt_1": [
+        "declaration method and comparison-set rules",
+        "calibration",
+        "D2 scope (S1)",
+        "D8 audit with 120 s hard kill"
+      ],
+      "worst_case_cpu_seconds": {
+        "S1": 660,
+        "audit": 120,
+        "total": 780
+      },
+      "refusal": "If attempt 2 refuses for any reason, puck v4 is final-blocked; no further S1 amendment."
+    },
+    "lane_accounting": {
+      "attempt_1_charged_cpu_seconds": 86.675946,
+      "pre_held_out_worst_case_including_attempt_1": 15876.675946,
+      "pre_held_out_composition": "attempt-1 actual 86.675946 + S1 attempt 2 780 + S0a 1700 + S0b 800 + S0c 360 + S0d 1400 + S2 1670 + S3 2390 + S4 360 + S5 830 + S6 950 + S7 4550",
+      "fits_lane": true,
+      "lane_cpu_seconds": 18000,
+      "held_out_D1_authored_worst_case": 8870,
+      "held_out_admissible_if_measured_charge_at_most": 9130,
+      "held_out_note": "Threshold unchanged as a number; measured charge C includes attempt 1's 86.675946 CPU-s."
+    }
   }
 }

@@ -36,16 +36,27 @@ import time
 
 from .puck_scene_markdown import parse_puck_markdown_document
 
-PROTOCOL_SHA256 = 'f885fc8d857cc47ec696ad65501b70ac80e16dfa5439fd5bf62919f868bc286b'
-COMPANION_SHA256 = 'ed9c1c9d5b39ef9864faa9589c53248beeece650cc762e006182aa37c64ebd84'
-# Every v4 protocol/companion version reachable from 70874e2 (drafts at 745bfc5).
+# Amendment 1 (after S1 attempt 1 refusal) is the protocol in force for S1 attempt 2.
+PROTOCOL_SHA256 = '8d8529712614292ba470ce88f60aaad7d061a1732851627f3be0e1e8c0d1b20f'
+COMPANION_SHA256 = '2551bf24944b6dc5299fc2132bfcd026d613a77bb870642eedaf2741dbd6dd05'
+# Every v4 protocol/companion version: drafts (745bfc5), frozen base (8dc8141), Amendment 1.
 LINEAGE_SHA256 = {
-    PROTOCOL_SHA256: 'v4 protocol JSON (frozen, 8dc8141)',
-    COMPANION_SHA256: 'v4 companion Markdown (frozen, 8dc8141)',
+    PROTOCOL_SHA256: 'v4 protocol JSON with Amendment 1',
+    COMPANION_SHA256: 'v4 companion Markdown with Amendment 1',
+    'f885fc8d857cc47ec696ad65501b70ac80e16dfa5439fd5bf62919f868bc286b':
+        'v4 protocol JSON (frozen base, 8dc8141)',
+    'ed9c1c9d5b39ef9864faa9589c53248beeece650cc762e006182aa37c64ebd84':
+        'v4 companion Markdown (frozen base, 8dc8141)',
     'e52c3c5f44559564a06d790877f0a4f2230e812a7d8e0999691c4a6cc44958ed': 'v4 protocol draft 745bfc5',
     '68454591e01ad64b3b46a26172d3f736b0f824cea034641d737a5a243255a2b3': 'v4 companion draft 745bfc5',
 }
 PROTOCOL_ID = 'M6-PUCK-NAV-V4-REGENERATED-ON-POLICY-RELABEL-1'
+# Amendment 1: exact-content allowlist of non-scene asset tables (any byte change -> old rule).
+NON_SCENE_CONTENT_SHA256 = {
+    '52c1b2340c7df1311687584e8642b007eae65001315b7a64a0ff109c238e020e':
+        'FLYNN 8d96459 upstream/fly-gym/connectomes/ws_small_world/consolidated_cell_types.csv '
+        '(root_id,primary_type cell-type table; root_id enumerates every integer 0..138602)',
+}
 PROTOCOL_RELATIVE_PATH = (
     'docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling-protocol.json')
 COMPANION_RELATIVE_PATH = 'docs/plans/m6-puck-navigation-v4-regenerated-on-policy-relabeling.md'
@@ -808,8 +819,13 @@ DEDUPE = True  # analyse each unique (content sha256, suffix) once across all ro
 def _analyze(relative, raw, digest):
     """Pure content analysis; depends only on the bytes and the file suffix."""
     result = {'lineage': LINEAGE_SHA256.get(digest), 'prefiltered': False, 'unparsed': False,
-              'ambiguous': [], 'untyped': [], 'occurrences': [], 'held_out': []}
+              'ambiguous': [], 'untyped': [], 'occurrences': [], 'held_out': [],
+              'non_scene_asset': None}
     if result['lineage'] is not None:
+        return result
+    if digest in NON_SCENE_CONTENT_SHA256:
+        result['non_scene_asset'] = (NON_SCENE_CONTENT_SHA256[digest],
+                                     sorted(_raw_new_ids(raw)))
         return result
     if not prefilter_hit(raw):
         result['prefiltered'] = True
@@ -844,6 +860,7 @@ class _Scan:
         self.root_paths = [root['path'] for root in roots]
         self.git_covered = git_covered  # git root paths and their registered worktrees
         self.collisions, self.ambiguous, self.untyped = [], [], []
+        self.non_scene = []
         self.reuse, self.held_out_ids, self.held_out_payloads = {}, {}, []
         self.lineage, self.unparsed, self.max_puck = [], [], None
         self.clones, self.errors = [], []
@@ -869,6 +886,11 @@ class _Scan:
         """Record one path's findings; a content's hits are reported for every path."""
         if result['lineage'] is not None:
             self.lineage.append({**where, 'sha256': digest, 'lineage': result['lineage']})
+            return
+        if result.get('non_scene_asset') is not None:
+            provenance, ids = result['non_scene_asset']
+            self.non_scene.append({**where, 'sha256': digest, 'provenance': provenance,
+                                   'scene_ids': ids})
             return
         if result['prefiltered']:
             self.prefiltered += 1
@@ -1548,6 +1570,7 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
         'lineage_documents': sorted(scan.lineage, key=key),
         'collisions': sorted(scan.collisions, key=key),
         'ambiguous': sorted(scan.ambiguous, key=key),
+        'non_scene_asset_mentions': sorted(scan.non_scene, key=key),
         'unparsed_documents': sorted(scan.unparsed, key=key),
         'untyped_new_id_mentions': sorted(scan.untyped, key=key),
         'intentional_reuse_occurrences': [
@@ -1599,6 +1622,9 @@ def build_parser():
     parser.add_argument('--plan-only', action='store_true', help='default; never writes')
     parser.add_argument('--go-record')
     parser.add_argument('--held-out-go-record')
+    parser.add_argument('--attempt-ledger',
+                        help='attempt ledger directory (default %(default)s); outside all roots '
+                             'or under an excluded path', default=None)
     parser.add_argument('--calibrate', action='store_true',
                         help='plan-only: read a deterministic >=10%% sample of non-held-out '
                              'directory roots to calibrate the throughput projection')
@@ -1618,7 +1644,8 @@ def main(argv=None, *, attempt_ledger=None):
                        output_path=args.output, execute=args.execute,
                        go_record_path=args.go_record,
                        held_out_go_record_path=args.held_out_go_record,
-                       attempt_ledger=attempt_ledger, calibrate=args.calibrate,
+                       attempt_ledger=args.attempt_ledger or attempt_ledger,
+                       calibrate=args.calibrate,
                        calibration_record_path=args.calibration_record)
     except AdmissionRefused as error:
         print(f'REFUSED: {error}', file=sys.stderr)

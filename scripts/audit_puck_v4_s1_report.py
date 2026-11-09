@@ -67,6 +67,9 @@ def audit(report_path, receipt_path):
           not any(claims.get(k) for k in ('held_out_payloads_compared', 'held_out_read',
                                             'scenes_minted', 'simulator_executed', 'models_loaded'))
           and claims.get('qualification_claims') == [])
+    check('non-scene mentions only for allowlisted contents',
+          all(row.get('sha256') in s1.NON_SCENE_CONTENT_SHA256
+              for row in report.get('non_scene_asset_mentions', [])))
     check('lost root never treated as clean',
           report.get('lost_root', {}).get('treated_as_clean') is False)
     receipt = json.loads(Path(receipt_path).read_bytes())

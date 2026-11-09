@@ -310,3 +310,36 @@ All nine decisions remain **open**. Each must be resolved, and this protocol re-
 ## Owner resolution — 8 November 2026
 
 All open decisions above were resolved by the owner to their recommended defaults (puck: D8 = 120 s hard audit kill; D9 = S1 before S0). Independent manifest review: a fresh AI reviewer agent, recorded as AI review, not human acceptance. Machine-readable record: `owner_decisions_resolution` in the protocol JSON. Each stage still requires its own reviewed execution manifest and explicit owner GO.
+
+## Amendment 1 — 9 November 2026 (S1 non-scene content allowlist)
+
+**Disclosure.** This amendment was written because S1 attempt 1 was refused
+([evidence](../reports/puck-v4-s1-2026-11-08/README.md), `65b196a`). That attempt found 0 typed collisions
+and 63 ambiguous documents, and published no reservation. All 63 documents are byte-identical copies of one
+file: FLYNN `upstream/fly-gym/connectomes/ws_small_world/consolidated_cell_types.csv` at `8d96459`. Its
+`root_id` column lists the neuron IDs 0–138,602 in sequence, so every integer, 6510–6523 included, appears in
+it. Attempt 1 is consumed and its records are kept unchanged; it was charged 86.676 CPU-s (86.606 + 0.070 for
+the audit). No scientific outcome was observed. No scene was minted, no simulator or model ran, and held-out
+6200–6207 was only byte-read, within the S1 scope of D2.
+
+**Change (frozen, one entry).** A non-scene content allowlist, matched only by exact sha256 of the whole
+content: `52c1b2340c7df1311687584e8642b007eae65001315b7a64a0ff109c238e020e`, the FLYNN `8d96459` cell-type
+table, a neuron table whose ID column enumerates all integers. Path and location do not matter. Any byte
+difference means the unamended rule applies. ID mentions inside allowlisted content are reported as
+`non_scene_asset_mentions` diagnostics, never as ambiguous or as collisions. Nothing else changes: the
+ambiguity rule, fail-closed refusal on any remaining ambiguity, scope, typing, IDs and thresholds all stay as
+written.
+
+**S1 attempt 2.** Exactly one more attempt is allowed. It needs an independent review of this amendment and
+a new owner GO. It uses the same declaration method, calibration, S1 scope of D2, and D8 audit (120 s hard
+kill). Its worst case is unchanged at 660 + 120 = 780 CPU-s. **If attempt 2 is refused for any reason,
+puck v4 is final-blocked, with no further S1 amendment.**
+
+**Lane.** The pre-held-out worst case adds up as follows:
+- 86.676 CPU-s already charged for attempt 1;
+- 780 CPU-s for attempt 2;
+- 15,010 CPU-s for S0a–S7.
+
+The total is **15,876.676 ≤ 18,000**. Under D1 (authored 6200–6207), held-out `W` = 8,870, so held-out is
+still admissible only if the measured charge `C` ≤ **9,130** CPU-s. That `C` includes attempt 1.
+Machine-readable record: `amendment_1` in the protocol JSON.
