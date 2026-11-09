@@ -1,0 +1,38 @@
+{
+ "decision": "GO",
+ "lane": "navigation",
+ "stage": "S0d",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "plan_sha256": {
+  "controller": "b8889dce3ca107cf386ea8349761d9d5b08c8dea6c9a470946b958ecf4c900ec",
+  "seed-10": "6f2fd6f29cb5c3e3c54ea112340b41812019446d83d8fd2fb6ae1cb4fe3ce63c",
+  "seed-11": "7b3daee053d74d8af111460d9dc1dfcc231d994d92efe709314a718ac01ebdfa",
+  "seed-12": "ba1ee07efd24da6db1007f48fbcfc8a899821d52d5091a1ce711130cd503a96c"
+ },
+ "previous_pin_record": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/pin-record.json",
+ "previous_pin_record_sha256": "8044fa1ab5a01db56ae19d1c4ee9a63daba8a670297ab42c4ab83f967e7e657c",
+ "chain_pin_record_sha256": {
+  "S0a": "d8e511b8d8095c8d781a0ecfb2b031571c4f6fd72d0367b88520643d0f653901",
+  "S0b": "b3511f1a3bf625dd4cec20733317b5288bb965cde6873fbb1023a768e02809cb",
+  "S0c": "8044fa1ab5a01db56ae19d1c4ee9a63daba8a670297ab42c4ab83f967e7e657c"
+ },
+ "pin_document_sha256": {
+  "m7-recovery-learning-protocol.json": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+ },
+ "locator_data_manifest_sha256": "052a8dbd7428ffa064a74dfd71792ca6c0f2ae54ea9564ce68eb0a94d5220c72",
+ "manifest_sha256": "d884c3efb8be896503db1926149dea5374d954f9108a582bbb971111cb803739",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
+ "worktree_head": "02e861f8be9877dd183a659ed1b70d66a9141052",
+ "port_tree": "T-d",
+ "seeds": [
+  10,
+  11,
+  12
+ ],
+ "current_tree_head": "b26d5a7f06b37a80ea588a2b32be139b9ad3fd69",
+ "cpu_quota_k": 1,
+ "rewired_by_products": "run unchanged, retained, never evaluated or cited (owner decision 2)",
+ "scientific_attempt": true,
+ "granted_by": "Utkarsh Maurya (owner), interactive session",
+ "granted_at": "2026-11-09"
+}
