@@ -303,3 +303,25 @@ Later stages stay `not_started`. There is no retry, seed replacement, substituti
 change. The first fault and all partial outputs are retained as they are, the charge stands
 (census, or 2,165 CPU-s without a complete receipt), and any further work needs a new protocol
 version.
+
+## Review amendments (independent AI review, 2026-11-09)
+
+1. **Deadline wording corrected:** `stage_seconds` is measured after cleanup and the
+   after-inventory, so both count against the controller's 2,100 s internal bound. The 60 s gap to
+   RuntimeMaxSec 2,160 covers only the terminal, supervisor, index-values and controller-record
+   writes.
+2. **Post-run gate additions, per seed (10, 11, 12):** `report.json` status
+   `completed-research-training`, both models `completed`, `training_seed` = N,
+   `data_manifest_sha256` = `052a8dbd…`; `protocol.json` `training.research_protocol_sha256` =
+   `9c0ae9ef…`; `protocol.json` `model_inputs` names the three default T-d paths with
+   `5aba0fef…`/`7a205342…`/`707cba79…`, identical across the three seeds. This `model_inputs`
+   block is the named fill source for the recovery index copy's `/model_inputs`.
+3. **GO check 4 addition:** `current_tree_head` equals CUR's HEAD at launch (by hand).
+4. **Rewired by-products:** `report.json` contains `degree_rewired` histories and dev metrics; per
+   owner decision 2 they are retained but the RESULT will not quote, evaluate or cite them.
+5. **Limitation recorded:** the v2 run verified one intra-op and one inter-op thread, CUDA
+   uninitialised and no MuJoCo import; the rebuilt controller sets the environment and the trainer
+   sets intra-op threads, but none of these runtime facts is re-checked. No numerical effect.
+6. **S0e prerequisite (complete):** before S0e, fill the recovery index copy's
+   `training_source_*` fields and `/model_inputs` from S0d, and `/data_manifest/path` and
+   `/data_manifest/sha256` (still PENDING-S0c) from the S0c record.
