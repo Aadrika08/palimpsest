@@ -1,0 +1,1267 @@
+{
+  "status": "completed",
+  "protocol_sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+  "runtime_source": {
+    "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+    "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+    "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+    "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+    "src/palimpsest/cli.py": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+    "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+    "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+    "src/palimpsest/engine.py": "b3b286d2cfe0a91cf14ce20c5efd591ab3b0e320eb5b429ca4c48f669ae582eb",
+    "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+    "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+    "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+    "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+    "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+    "src/palimpsest/male_policy.py": "12f2ff72a46e4b240c38a986b285ea087cdddfd2dcb6f574cc944f73eb7f168c",
+    "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+    "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+    "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+    "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+    "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+    "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+    "src/palimpsest/profiles.py": "39173b7b248d4768f160b540acde532ec6b1c1e2bcfc04eb449c152b88423216",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/replay.py": "df5f805f268fc4894a68adfa30cfa6fc446d989be474c2907ae7c0d62d12e99b",
+    "src/palimpsest/snapshots.py": "a8f521c117e70009f95d3cef0cb4cdfd2a711ee842b3cc85ea2a3782d16ef3a9",
+    "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+    "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+    "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+    "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+    "src/palimpsest/worker.py": "08058664200167dde42342a2808ced4caff18ccc0159f6c1affadf54d4ceebc6",
+    "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+    "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800"
+  },
+  "script_sha256": "ca633269b4710782647f505438ad521fe65b8fce643f48f26bdb3bd2b410025b",
+  "scope": "frozen teacher imitation sources, no student evaluation or collection retries",
+  "runs": [
+    {
+      "seed": 1000,
+      "split": "train",
+      "status": "completed",
+      "run_id": "ce667886b8de4bae979b7a6420ad817a",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/ce667886b8de4bae979b7a6420ad817a",
+      "storage_preflight": {
+        "initial_bytes": 540644,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011620,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 277,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 277,
+        "final_distance": 0.7828489542007446
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 55362906,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "0ef5f55ef9c8f3138b120d20064504100f30f68ae213f9f1a4934613c320f196"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "ae755d00f182aceefca715b4be5468b8cca9f216b3a356d1be4087df9c819a18"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "5804b3732dd3f7bc3e9937d19920bc3c997a1bf2805c29f9a10c5bf31adb2ed6"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "566a31e771ee001cd6bd401e9eec4d627e9cd98e69e294fcde4942a6e2255173"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "31f7d256bf54d4d951a562b71181fcdc8fe4142a7455900f890b42eecb495cd1"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "f0657f994fd133e98950c5dab1de98d2f7932ec44a95d5724c8c9ba3a440fd83"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "37eed25b2d713a2593cbf950dc5a14b8ab90294ab05c628300d07b3f0ec003b9"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "7a4f317e0213518b98cd03560c1a35f5b95df2e348dca1748673560f5c1cc91c"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 4135518,
+          "sha256": "ba816781a45372fc889a18bb5de40e210e62922bd152057a51b449d78eb95c9a"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 300325,
+          "sha256": "20b9535f5f7aa12bbc4ec5ea128ae64785d398637226a26ae3cc5c233a224d86"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2984,
+          "sha256": "35b065dbeabd7e2f77a48f1a74fa3b99c952163cc581c925344239f4c3b5cb5f"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "9c286b2f6728659dfca76565fe3e53ad9fa20d448e3e7afec14c74e36e95edef"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526476,
+          "sha256": "6a02d38c50073ecf46902310271c4147fb613a911a24af767b17ab198ac6cebe"
+        }
+      ]
+    },
+    {
+      "seed": 1001,
+      "split": "train",
+      "status": "completed",
+      "run_id": "846fc28521d34fedbe89651177fd0036",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/846fc28521d34fedbe89651177fd0036",
+      "storage_preflight": {
+        "initial_bytes": 540646,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011622,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 182,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 182,
+        "final_distance": 0.7885187268257141
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 36561742,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "2a3d78bb4c6649c2f9d20caee5f1153ca370dcfe8ccc905c6cd03420dbb86252"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "763808c3b596ffddb2d97a572698de3d58e3d2fe910d23e75ab5fd3cbc758d70"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "564e51469f14d173326a9a8ef72f81eb5c438129973375360fb9a0c3ce9b529f"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "536cb3bcb99f35ab033515fb92b3ef7fc9c085d1d4374bf6258200f3d3a98856"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "7cf03791fce475f5adc8154ee198346ccee7fdc6e5d10e6a02c1e15af1f64065"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 4332256,
+          "sha256": "6e2310ee8484caaa1f66e52ef8366116f16984e5c01516ff39a95457a6195980"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 201340,
+          "sha256": "1bd93b1d50a2fddb8f052ffd4af46a7aea0126e16f869cd6e5987f78b6d5d2c0"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2985,
+          "sha256": "5c017d6253bab498d5c5d93b6f69efb49923696da4ee8a10fa3f584c3f41d937"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "8f9f6d3f65351bfe7ac4dd0c518e0e20493bda747dd91e5570fcd9162ee00a2e"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526466,
+          "sha256": "f0e095d5d4c18a4c86455c4e6fcc54162dad1a2c34f2e305c09baf3db659797d"
+        }
+      ]
+    },
+    {
+      "seed": 1002,
+      "split": "train",
+      "status": "completed",
+      "run_id": "69396152db4a443cb53e55a282d474d3",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/69396152db4a443cb53e55a282d474d3",
+      "storage_preflight": {
+        "initial_bytes": 540603,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011579,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 315,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 315,
+        "final_distance": 0.785993754863739
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 62882338,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "33e701b99c8e7bcfcf2cf08dc3a359a26a87e4fe712840428388beeaaa09701a"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "7d00ab9cd37844036f1fc55cbe34b028afffb62f2906f03c64387daa3c51b31e"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "afba712aa91c96d35fd9eafc3fa0740220512f347a9488c926782bb521810fc0"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "6ff34ac0372e64cdb95e9d60297a30e3851c505192efb798fb707d582455e848"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "28a7ff3d3126a68198e164f3a8c0f55627c845629b4cc36a725e8f0841854074"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "75d6c2972e78d8c503c82c85aa3b81739da8b7e8aeb6349fa39a7a6db13fb956"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "fa2b8b294fd90f39155473dfc401776db7da85ec8dab7ead69704ebae6429b56"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "fd6dfc142f5db7769021903434871eff72237e517ba6f6ec5f6d1f01686d9288"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 6299636,
+          "sha256": "0f4423b45832220ec3157ed9129b5aa3041159d31ad5f2f3756e34bbc822e822"
+        },
+        {
+          "path": "recording/chunks/000009.npz",
+          "bytes": 5315946,
+          "sha256": "afb607be1e872ec114340ce2eec5b91f861b71922b1fd6914b8ec0e164d6066f"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 339736,
+          "sha256": "353336ba8c444bd3d09abf39647831fe6c0a3c6757e5d33041b219354439f423"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2986,
+          "sha256": "c325bd6c72ec32e0c3440bc3fec0e97193ff5b1af58ace7a2665ac4fe2dd1287"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "78fac1c46bbf317ebd178acdf71b9605d9a979635325c42a1a8fe587f46729cb"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526431,
+          "sha256": "0d87288b2ca62358986dca80829a76471baeb87f505137414bba72e01ce92975"
+        }
+      ]
+    },
+    {
+      "seed": 1003,
+      "split": "train",
+      "status": "completed",
+      "run_id": "521475f2e3194ecc98d9901dfd1f5137",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/521475f2e3194ecc98d9901dfd1f5137",
+      "storage_preflight": {
+        "initial_bytes": 540625,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011601,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 245,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 245,
+        "final_distance": 0.7772241830825806
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 49029912,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "afd33313194bfecd50c2a75a2848409f1a9fe91768eecfb43282e6c6221ec874"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "4ea3b51c8f80a927ec4925962bc656dc3072f05941a6fcc9c7e90348bfe4d5af"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "f2c2c24a276f44d274875cfae2fa56509abefafbaf07916683dec32b17ea9e2d"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "76671b3c49017b75df73c55faa750e9b798fec15a7a647da52e60160b165b704"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "5d7c03bcd401abd4496c7b2f5e8d0445d10a75fa1e8de9e7645403e66fe14729"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "5080ee962ae4564e00da7d572ea1ad0f818eb349e1a92b4ff75b82b482e427a6"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "77c7af13f46539957655ef1ac8fcc4fbb917f996acc4b395a3c938435b4c38ee"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 4135518,
+          "sha256": "c9e3fa8162581e8f91b592322ad03376033923a99d3cb0fa7b1f5667c7c145af"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 266991,
+          "sha256": "02107049603fefa5b989fd6e9320097267dda3da82f22b22689610194d84c0fb"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2983,
+          "sha256": "9de85d528a1baf8aec9cae084caded3cc4b9bd3fe819a2ccabf3a55b04499873"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "c7753deb4920720096b816373896b283566cd140eaac591bc1af47f0fdd17b84"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526453,
+          "sha256": "606ca32d8bb501daf38c578890867eed7952fea9b42f57aeb41844a25be2097c"
+        }
+      ]
+    },
+    {
+      "seed": 1004,
+      "split": "train",
+      "status": "completed",
+      "run_id": "c6d7e61d28d04f9897b42dd3a14f0de6",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/c6d7e61d28d04f9897b42dd3a14f0de6",
+      "storage_preflight": {
+        "initial_bytes": 540605,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011581,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 199,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 199,
+        "final_distance": 0.7879906892776489
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 39928412,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "3be2e2f1545f30c16c9e4aa9edb8779e81f4b403192008610a3e472b6a7340ae"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "02bf51ad89e939a0a28672e07f4103304765efaf39dc833e3ac4c5c8ef2cd958"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "c5af70313f583f793e1bbad94a7460f6aed1338e91c7424d27534b3a6e2aa28a"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "5f4aec41ac60748e85f362ac6c5edf8e301d316555f07f6c7f7fdc87288bdfa7"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "ff7e8dae35c7061b27e4141c08d3c5fac91b788652d75b01170d00c0ddbff0af"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "2d7d181d018ee75fd60be23228acf2c6437f50c95760070e834335889cc45c2e"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 1381186,
+          "sha256": "3e8a994e4320fea0a1f2bf882e98c19c81ddfc26a0c1d6d681346d1d2ca17868"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 219463,
+          "sha256": "36f90b68482888a9c86a9fde28e89830d48690069cba099c780f13df0c9c95bd"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2975,
+          "sha256": "eada7e9c2f6aa2ff34bb8bc49bbe8a07cefad40e080619f4fbe18a860de00f4f"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "20b9bf7a197e44cf698990ccebca3f4a7ace509b47f2b9b1aea5d5afa6d2ca1d"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526457,
+          "sha256": "fe5fbbedac274745587d3376a34c17bff31b86a20f3a5e2dc6909f926522dc8c"
+        }
+      ]
+    },
+    {
+      "seed": 1005,
+      "split": "train",
+      "status": "completed",
+      "run_id": "3a5344827a024916a5e6736effebc3ae",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/3a5344827a024916a5e6736effebc3ae",
+      "storage_preflight": {
+        "initial_bytes": 540658,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011634,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 265,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 265,
+        "final_distance": 0.7831348180770874
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 52989919,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "887296e63303750601f7f127cd4c4b2ec9d6751b924b5c471d564ae01e59efaf"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "09f3b6d6a33cf957212077abf9386d321198bf1dc3b951ff92686eea1c77e4e2"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "f01ee8b5bfcf18f45c32dd4de5f6eadc53d99bc3c138daa0658dfd172ec50f4f"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "bf65886423132a8af4026fb2411cf39edd5ded1f51e0c518b9ea50972150114c"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "3ade70fbf956841818d30fd5aaf6c21e78d5d54384d6323c884282597d3a3384"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "af0e9917d2075e45194c3ac9a5776db5ee4bc36e2ca78fd3d02800e6990b85ea"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "179c94aa0642346063b0bfd3b4c139a7a17d27c4bace203911e81af09e7bf353"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "4b1267c00ffa3a450afddbda47e6dfcc371c6f83468d0d1b369c9d74c3c60244"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 1774662,
+          "sha256": "c618599044ac565cc373535c23ce3af9d00e5006e7c03b8279665313723fd735"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 288191,
+          "sha256": "4569313d77edfbc1991e8142002bbae88749f228b3b8b4bc933cbfcb1785cd5b"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2986,
+          "sha256": "84a2f475c645acfd2eb91043f085363a14d153b7a87e1e85ca12bca7fbf7c5c5"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "60be9ee81a804ae8c5c0aac177e53e0fabfbe0d8ee639876764f7595801f1dec"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526477,
+          "sha256": "fff194a44eb3be2beef8d55403a8e83c9eb05ef9815eaf3168a4af6c11761295"
+        }
+      ]
+    },
+    {
+      "seed": 1006,
+      "split": "train",
+      "status": "completed",
+      "run_id": "c1c502da7cd34533a84da17621d0f543",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/c1c502da7cd34533a84da17621d0f543",
+      "storage_preflight": {
+        "initial_bytes": 540633,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011609,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 243,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 243,
+        "final_distance": 0.7871281504631042
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 48634426,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "499c7116943fc4c1319b6818a78d8b896a457fa935515fd7d8391305a095d83e"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "72ebba662bf94b63e257a7af14ab1535955b68df22fd606faf3409c4d7590fc7"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "21cecb2875302643619d77d95b1f4a0cec396339cdf17653a1577d37541f533c"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "0d691549b176f4a73dfb278e3a95b08b35e16da3dc0955c48abb403833d24dfc"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "537b6473684d45e9058ad8444bbed0b690b5b1ab6b07724bf881e1846249f70a"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "07712a1c13a65fabfd82a4e308a13ad8f85f49c46b8c2473882ca8eb6f825b73"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "0e6db10b16ae308e240cbbe1256852bf07b21cdaef43b737f5d62b4763dac88a"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 3742042,
+          "sha256": "1aa1448592c76a6b870df5ba95316a209fe5dc040385e109e86624b7b594675c"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 264974,
+          "sha256": "b7ecaa102b8a36838a98c97857927de0626f513733333e57b708572d390c676a"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2987,
+          "sha256": "5789cbd307a9afcb4a44031e54ab72a1819f2da2d213a5a751138fff2902fc9e"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "7c34dfdb13f18510761a2a54da826c4ad1fe85b94eb09a0bfff3d7270f054b97"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526456,
+          "sha256": "598aa0f5d2197d755d52365bf1db9a224c6b80e2dd000ea90648b96985ce2786"
+        }
+      ]
+    },
+    {
+      "seed": 1007,
+      "split": "train",
+      "status": "completed",
+      "run_id": "1e15bf859af34cb5a691deae80e539a6",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/1e15bf859af34cb5a691deae80e539a6",
+      "storage_preflight": {
+        "initial_bytes": 540620,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011596,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 257,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 257,
+        "final_distance": 0.7802444696426392
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 51407875,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "10a59c5c4a332c0a2013aee4c33b28d913260dbfb004dad4e249f36da02587b4"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "4cb5b3f9c88dfaeaa0e14c994d2995787ee1c6993e8aa18883e7c2345892f909"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "ed64665ffd980d13cb90b9ccfb0302e9375bbb1f61bf6e2eaae92865da5af292"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "6c075fa2ed921aa01ceaecea5dc8cbfed5e9003d52fac78bf00f170caac74393"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "d8d10ae605c1ae11ad0ca171165e9f6311893c7c4621668209804c32ec25db3a"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "6ebb35d1014bd32411027f2e0513286c3a525d93a28c64ac3af03f2deec200c8"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "037890853f89987f985be8de22a45f7b4ac5f849f199f008afa4cb5265c13a26"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "175e9acd83485b3e6dd37dacd9560088d83b90af72a9bf8c7d789c947a54f110"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 200758,
+          "sha256": "589dc43f76e0ffd8e8f8238e80b7d94dc3512dabb4063288eb1c2b82328497fc"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 280076,
+          "sha256": "c121a6293b8da5e2e46ccb5ae69d8bb06034a011662f21ab7387c3d8b855e60b"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2979,
+          "sha256": "236add84a64712130db3fa916ad4e033b5241cbde5d823360f3cefc005e9c6b6"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "a03088e75f5483c7bc8fcfa2b97ed1d54338f9b870ad8668336e144f3a0703c1"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526459,
+          "sha256": "15d1e09462a727d4c2d0885735443ceac36e739f062c99623406d2896a76b859"
+        }
+      ]
+    },
+    {
+      "seed": 1008,
+      "split": "dev",
+      "status": "completed",
+      "run_id": "ed6a7f63f8464f40b45da336638f6ca7",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/ed6a7f63f8464f40b45da336638f6ca7",
+      "storage_preflight": {
+        "initial_bytes": 540633,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011609,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 189,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 189,
+        "final_distance": 0.7897288203239441
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 37945974,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "65522e33ddb5d078f38e1b33c51a46c74fc5a9a8ead5962115b93f7b96c04e57"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "fd5cff4b47f3682868663262c8978d47423ba8368fad278bf0e862c794af6654"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "d72753c5a0cca1269a942f871c476b558bac86ee6b389244f1ffadb9df0f3446"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "f63b4091eefd51f404d1d45010a380e2d8d4403732de9d923acaf0fc94e10505"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "7ec7543541e7a54d51261ba2d51f11e12badb373b33e6eea2e3c47ae99a84a47"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 5709422,
+          "sha256": "da5ae10a4239866fce548dd840616a7f79d3b423c47377b18655b3ce6fdf6f88"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 208407,
+          "sha256": "ed7d9cbdcc715feca0397ead6b9c990ddbd61a9a910d574066a10766ef0d238d"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2981,
+          "sha256": "5f2d07908969ca0e173a62d005abf5b6aba3e71a4bf04cdd62213685ae263e8b"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "cb8e112bfd0c3154e8ba9a1122a28ef0e744496a694bf5ec0fedd38d63718ea5"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526469,
+          "sha256": "02d9543b049edbbb74264e964b944811c0669d7bfc8d7f450f3656b03234bae8"
+        }
+      ]
+    },
+    {
+      "seed": 1009,
+      "split": "dev",
+      "status": "completed",
+      "run_id": "001fcfe5b4ae4ea5b514ca4eebc83614",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/001fcfe5b4ae4ea5b514ca4eebc83614",
+      "storage_preflight": {
+        "initial_bytes": 540624,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011600,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 338,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 338,
+        "final_distance": 0.7877351641654968
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 67435577,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "a7a83cfe3bf5b098947975cc9a631d9b8f00b9d02bf5f324a7bdd08857627631"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "5b6eab21936455a9d7a52b4495aa5d06599181f37399cec96156a54f3f42816e"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "a388d3c17955e37e9d6dd7a1c9cca8ea4e0f5c0c615684f3a706fe160dabf1b5"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "f5b9b56a750365b89acad8d726025ca6584f4df5b8dd35fb05dfe11f32d904c3"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "655f4a77668f9f82f6a6852226a84840954fa5492770ce90a3ac329264e46d6a"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "0fa1e6d11a21cb7c166d53457fdbedf831922cfdf3da2464dbbb7b028d3b9f1a"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "9f2c6b678a1b44bc9dd07e7ab14773117798539495322e97f7ccfff74a8e9f83"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "f90ccf69a9270b689ef31bdc6216bf6c17f0ed4620f0c91400c00c6ac0da23c1"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 6299636,
+          "sha256": "89f29b1bd2c55f0ca63d79a89fc3ecdf4825f2bb637e6f543b8a0319a48284de"
+        },
+        {
+          "path": "recording/chunks/000009.npz",
+          "bytes": 6299636,
+          "sha256": "a188b905c8341758dace81f13a3c534fc6012557cf87a9b68acae61df1af4caa"
+        },
+        {
+          "path": "recording/chunks/000010.npz",
+          "bytes": 3545304,
+          "sha256": "8f559a43955364a02f49c1a3fbdb6a7f686b8553b18385528c976a280d6240bf"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 363950,
+          "sha256": "ec8e91b8c2bc0edec0bdccc52425fa1b2b8d333c25b7ca6d7b58e394da9cc39c"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2982,
+          "sha256": "4e520fbac57fc9c5a329942c212734b6b0ebcb11369b18cb5096388d7426207c"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "3258838afd54e1bcc577a7ea21a6e89e246ca84f129ac9eb5df28b86e5811a1a"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526466,
+          "sha256": "5a74dcb09b2491a0fe83d90e528989f390ec0b6b669b33a1afeceb5d4e34b936"
+        }
+      ]
+    },
+    {
+      "seed": 1010,
+      "split": "dev",
+      "status": "completed",
+      "run_id": "c60587d9574a426d812295bf843212cc",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/c60587d9574a426d812295bf843212cc",
+      "storage_preflight": {
+        "initial_bytes": 540614,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011590,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 319,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 319,
+        "final_distance": 0.796980619430542
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 63673336,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "4fa27f67a230d41d3d9ad98c2398ea33a5714fea95e8c860a6a418d7aaa3e4a2"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "6495c3bb330d7b3704d5b3e392f5f164cffd61577ff089697b26b2a13a515f2c"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "e3ee03bd7ce87a9f8a2f12e53d1c59c2a895a5adc2883898f6e22e8d476d5e89"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "c695a1ff7850b8eda28b1ee79691dce3385ba509684696438447f7e2064e2854"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "80e15be89d9d2dd842c745b332818663ee1a00b12c3ac6cb977fdb3aa8c5da45"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "d1cda1889eb58061c2c16e1b79f7839043cde0192f5bdf7a6d5f2c6b01a0878f"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "44afde7ba57efe4bb829ed01ce266a985ba5ce09527ca3b78e31f4d3171388a9"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "438a0222d0ccd8e598e4b65d23d33a5ed9915b4583f329cc6ffb864a7b7eee45"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 6299636,
+          "sha256": "de49325e11a468802bb5d8519c3ebbef2adfc5eb422d39c278f1e0d807a3e237"
+        },
+        {
+          "path": "recording/chunks/000009.npz",
+          "bytes": 6102898,
+          "sha256": "bba5aaf531cb1926c918cb87a8ee952c4ce261a85bc1373a68f2de1a7c2ceb24"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 343755,
+          "sha256": "e1c95963dfb8b31ad5cffc2910e4758588efdf47e30929c9897000b3e19bb2c5"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2974,
+          "sha256": "f766a3b0ffb31bfe9bf55dfafc9a233a25f19a517bd71d5f2b12eacc398e9b13"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "15a176fc1d0260418f6300b62c1d80b793c385460a764eff971f9178a8677c20"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526470,
+          "sha256": "5da7ce0ea3756d70f9892a4bf96f077b7335295950a99eae7a215d424e174961"
+        }
+      ]
+    },
+    {
+      "seed": 1011,
+      "split": "dev",
+      "status": "completed",
+      "run_id": "8e68d0cbfd084f6286c5a986d20c7bbd",
+      "run_path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/runs/8e68d0cbfd084f6286c5a986d20c7bbd",
+      "storage_preflight": {
+        "initial_bytes": 540624,
+        "per_tick_estimate": 200704,
+        "estimated_total_bytes": 122011600,
+        "limit_bytes": 167772160,
+        "aggregate_hard_limit_bytes": 3221225472,
+        "scope": "admission estimate; actual final size is independently checked"
+      },
+      "ticks": 382,
+      "final_phase": "terminated",
+      "last_outcome": {
+        "reason": "goal",
+        "episode": 0,
+        "steps": 382,
+        "final_distance": 0.7814234495162964
+      },
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false,
+      "recording_and_snapshot_bytes": 76141556,
+      "files": [
+        {
+          "path": "recording/chunks/000000.npz",
+          "bytes": 6299636,
+          "sha256": "7f2a780bd00a029a3a002d02dae3640a85dc11363a83f65fb5bf360b9f8ad90a"
+        },
+        {
+          "path": "recording/chunks/000001.npz",
+          "bytes": 6299636,
+          "sha256": "5ac2c3ce6e77f59e0bb7a99b75871edb1c26bb34fbe9ac92dcbd5c23ca58358f"
+        },
+        {
+          "path": "recording/chunks/000002.npz",
+          "bytes": 6299636,
+          "sha256": "815d45868873e37f083cf53782f86df01ba6286b1f9a0baf1bf6b1397845148b"
+        },
+        {
+          "path": "recording/chunks/000003.npz",
+          "bytes": 6299636,
+          "sha256": "b08d778af60b146d76bdb85f8143f054cdaa5652d422e6de028970770e5d00fb"
+        },
+        {
+          "path": "recording/chunks/000004.npz",
+          "bytes": 6299636,
+          "sha256": "f581a3839531ed020cfd98f9a634c1ba7d7adf7d755a832ebae97b9f5f52826b"
+        },
+        {
+          "path": "recording/chunks/000005.npz",
+          "bytes": 6299636,
+          "sha256": "d37bdfd8675b7df3bb0c616d050b08ad5ee2e95cc394736d1ff37a1f12607044"
+        },
+        {
+          "path": "recording/chunks/000006.npz",
+          "bytes": 6299636,
+          "sha256": "2bd2b26146feb11613eb1da0d15a5710b5d946667c76bf574b920d67eaff3add"
+        },
+        {
+          "path": "recording/chunks/000007.npz",
+          "bytes": 6299636,
+          "sha256": "003c5d7f207971bb429813b2d6a3e85101e7235671f9282585697b2a0e5abfda"
+        },
+        {
+          "path": "recording/chunks/000008.npz",
+          "bytes": 6299636,
+          "sha256": "cf4f703bf4796614bb525c028de20bc3f299954a03599ec900386d514190618a"
+        },
+        {
+          "path": "recording/chunks/000009.npz",
+          "bytes": 6299636,
+          "sha256": "faa2b7e7ea5789ad5d5adb92246b7715b8fcf7fa08984686a3b4edc573015397"
+        },
+        {
+          "path": "recording/chunks/000010.npz",
+          "bytes": 6299636,
+          "sha256": "9ec2294f7e862a8d8cc2adcf05c86002248d9aac69b16b7ff1b1570ed5d786e2"
+        },
+        {
+          "path": "recording/chunks/000011.npz",
+          "bytes": 5906160,
+          "sha256": "f593e5115229bd7bc694779f8cbc3eb46e5cce8837cc1473e0ff1613ba9b9209"
+        },
+        {
+          "path": "recording/events.jsonl",
+          "bytes": 409445,
+          "sha256": "2deec5f20d5477f35077724a70cefc76bed5395216bdffb2f581653164aaf76c"
+        },
+        {
+          "path": "recording/manifest.json",
+          "bytes": 2988,
+          "sha256": "2829954a36524198e6ec5e5551445e365a6a74238fd22520d39cb93b37460eb0"
+        },
+        {
+          "path": "snapshots/index.json",
+          "bytes": 515,
+          "sha256": "4042462168bd208a916bcc2fb945bd5f6c034f7819783f08d984ad6abedc4111"
+        },
+        {
+          "path": "snapshots/initial.snp",
+          "bytes": 526452,
+          "sha256": "09a001db544e45887a50359003255d33616c3ba0cd56f30b88531919c535b4f4"
+        }
+      ]
+    }
+  ],
+  "stage": "development",
+  "research_protocol_sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+  "research_sources": {
+    "docs/plans/m7-training-v2-protocol.json": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+    "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+    "scripts/collect_male_teachers.py": "ca633269b4710782647f505438ad521fe65b8fce643f48f26bdb3bd2b410025b",
+    "scripts/evaluate_male_closed_loop.py": "c6e9cda14722cec9c85a81cd93ef638d2f9f915630d5e0075594ee8ae4e079bd",
+    "scripts/male_research.py": "f461fb049bff023c09b232f5d9f0be13500ce5726e02d7b3a60317aafc2a9286",
+    "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+    "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+    "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+    "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+    "src/palimpsest/cli.py": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+    "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+    "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+    "src/palimpsest/engine.py": "b3b286d2cfe0a91cf14ce20c5efd591ab3b0e320eb5b429ca4c48f669ae582eb",
+    "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+    "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+    "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+    "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+    "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+    "src/palimpsest/male_policy.py": "12f2ff72a46e4b240c38a986b285ea087cdddfd2dcb6f574cc944f73eb7f168c",
+    "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+    "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+    "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+    "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+    "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+    "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+    "src/palimpsest/profiles.py": "39173b7b248d4768f160b540acde532ec6b1c1e2bcfc04eb449c152b88423216",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/replay.py": "df5f805f268fc4894a68adfa30cfa6fc446d989be474c2907ae7c0d62d12e99b",
+    "src/palimpsest/snapshots.py": "a8f521c117e70009f95d3cef0cb4cdfd2a711ee842b3cc85ea2a3782d16ef3a9",
+    "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+    "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+    "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+    "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+    "src/palimpsest/worker.py": "08058664200167dde42342a2808ced4caff18ccc0159f6c1affadf54d4ceebc6"
+  },
+  "storage_admission": {
+    "used_bytes": 26435,
+    "files": 5,
+    "remaining_bytes": 3221199037,
+    "max_bytes": 3221225472,
+    "headroom_bytes": 10485760,
+    "min_free_bytes": 1073741824,
+    "additional_bytes": 2013265920,
+    "free_bytes": 72094236672
+  },
+  "cleanup": [
+    {
+      "run_id": "c6d7e61d28d04f9897b42dd3a14f0de6",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "3a5344827a024916a5e6736effebc3ae",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "c1c502da7cd34533a84da17621d0f543",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "1e15bf859af34cb5a691deae80e539a6",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "ed6a7f63f8464f40b45da336638f6ca7",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "001fcfe5b4ae4ea5b514ca4eebc83614",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "c60587d9574a426d812295bf843212cc",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    },
+    {
+      "run_id": "8e68d0cbfd084f6286c5a986d20c7bbd",
+      "close_status": "closed",
+      "owner_exitcode": 0,
+      "owner_alive": false
+    }
+  ],
+  "finalization_errors": [],
+  "supervisor_shutdown": "completed",
+  "runtime_source_unchanged": true,
+  "protocol_unchanged": true,
+  "script_unchanged": true,
+  "recordings_unchanged": true,
+  "within_deadline": true,
+  "research_sources_unchanged": true,
+  "wall_seconds": 151.35865011400892
+}
