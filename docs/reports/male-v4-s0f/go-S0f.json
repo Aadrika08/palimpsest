@@ -1,0 +1,32 @@
+{
+ "decision": "GO",
+ "lane": "navigation",
+ "stage": "S0f",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "manifest_sha256": "fc231dcd3a158c941a91967ce0966597d65d54ecb76ef00556a1eaa49acefb2d",
+ "plan_sha256": "79a7a23ea53bf742fdb8c0c714cae3a665d00cc7a3c7f421191269fde6f91954",
+ "previous_pin_records_sha256": [
+  "2eb64603ba837ac495a75081e11add57fddbdf0b55a70d70b59f107840e84af0"
+ ],
+ "s0e_controller_record_sha256": "32a854e61d2284a0b63b77069870524b79c98f7b9b3950ffdb6e750a7d7eb827",
+ "s0e_collection_index_sha256": "3d0ea26c9b4a9293f39d7b54e1e90c52f55bfb07eefec36ea1c8fd7d7ff90972",
+ "pin_document_sha256": {
+  "m7-navigation-data-v2-protocol.json": "41c1bb9ae511f64e581265ce15b89b3313fe1813651d589bb54f6678a34261ae",
+  "m7-recovery-learning-protocol.json": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df",
+  "m7-navigation-contact-v2-protocol.json": "cadd0e45190cc2a6f4bbc742c8b38f065bbe2c831f42b8f84cef4bd75d3b1de3"
+ },
+ "declared_fields_sha256": "8877390c230e6371d6130abf3f4ff874639c00a9fa8d872c322251375d7ce208",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-f",
+ "worktree_head": "88c1a0f6f53274fe663f4cdad3be5ae2743af558",
+ "historical_worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-h",
+ "historical_worktree_head": "0789b2ed54117c01c40ab5818148cc0515eb4fb5",
+ "port_trees": [
+  "T-f",
+  "T-h"
+ ],
+ "current_tree_head": "e2fec6ba19db6155de4055f021b6224c5410ea49",
+ "cpu_quota_k": 1,
+ "scientific_attempt": true,
+ "granted_by": "Utkarsh Maurya (owner), interactive session",
+ "granted_at": "2026-11-10"
+}
