@@ -574,3 +574,48 @@ def test_s0a_manifest_launch_matches_the_saved_plan_the_driver_rules_and_the_pro
     for path in (receipt, go_record, output, record):
         assert not driver.under(path, plan['worktree']) and not driver.under(path, flag('--assets', producer_args))
     assert 'scientific_attempt": true' in text and 'ends v4' in text.lower()
+
+
+def test_s0b_manifest_launch_matches_the_saved_plan_the_s0a_record_the_launcher_rule_and_the_protocol_budget():
+    import re
+    import run_research_stage as launcher
+    folder = ROOT/'docs/reports/male-v4-s0b'
+    text, plan_raw = (folder/'MANIFEST.md').read_text(), (folder/'plan-only.json').read_bytes()
+    plan = json.loads(plan_raw)
+    assert plan['status'] == 'admissible' and plan['mode'] == 'plan-only' and plan['stage'] == 'S0b'
+    assert plan['protocol_sha256'] == PROTOCOL_SHA and sha(plan_raw) in text
+    spec = driver.STAGES['S0b']
+    assert plan['producing_commit'] == spec['commit'] and plan['worktree_check']['producer_sha256'] == spec['producer_sha256']
+    assert plan['worktree_check']['detached'] is True and plan['worktree_check']['source_guards'] == {}
+    s0a_record = (ROOT/'docs/reports/male-v4-s0a/pin-record.json').read_bytes()
+    assert plan['previous_record_sha256'] == sha(s0a_record) == 'd8e511b8d8095c8d781a0ecfb2b031571c4f6fd72d0367b88520643d0f653901'
+    assert json.loads(s0a_record)['stage'] == 'S0a' and sha(s0a_record) in text
+    block = re.search(r'<!-- s0b-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    cut = argv.index('--')
+    unit, command = argv[:cut], argv[cut + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    row = next(r for r in json.loads((ROOT/driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']
+               if r['stage'] == 'S0b')
+    k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+    assert unit[1].endswith('scripts/run_research_stage.py') and (flag('--lane', unit), flag('--stage', unit)) == ('navigation', 'S0b')
+    assert (k, kill, worst) == (row['cpu_quota_k'], row['runtime_max_sec_kill_target'], row['worst_case_cpu']) == (2, 480, 970)
+    assert worst >= k * (kill + launcher.STOP_TIMEOUT) == row['worst_case_cpu']   # the launcher's admission rule agrees
+    inner = command.index('--')
+    driver_args, producer_args = command[:inner], command[inner + 1:]
+    assert driver_args[2].endswith('scripts/regenerate_male_navigation_v4.py') and '--plan-only' not in driver_args
+    assert flag('--stage', driver_args) == 'S0b' and flag('--worktree', driver_args) == plan['worktree']
+    assert flag('--previous-pins', driver_args) == '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/pin-record.json'
+    assert producer_args == plan['would_run'][2:]                                    # exactly the planned producer argv
+    assert driver.probe.ENTRYPOINTS['S0b']['thread_env'] == {'OMP_NUM_THREADS': '2'}   # the driver's producer env (k=2)
+    output, record = Path(flag('--output', producer_args)), Path(flag('--pin-record-out', driver_args))
+    data_root = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b')
+    assert output.parent == data_root and record.parent == data_root and record not in output.parents
+    receipt, go_record = Path(flag('--receipt-dir', unit)), Path(flag('--go-record', unit))
+    assert flag('--go', driver_args) == str(go_record) and data_root not in receipt.parents
+    for path in (receipt, go_record, output, record):
+        assert not driver.under(path, plan['worktree']) and not driver.under(path, flag('--assets', producer_args))
+    assert 'scientific_attempt": true' in text and 'ends v4' in text.lower() and '"cpu_quota_k": 2' in text
+    for phrase in ('writer.lock', 'previous_pin_record_sha256', 'Throttling risk', 'mesa 1:26.2.5-1', 'Post-run gate',
+                   '1..120', 'recovery-north-2100', 'recovery-south-2101'):
+        assert phrase in text, phrase
