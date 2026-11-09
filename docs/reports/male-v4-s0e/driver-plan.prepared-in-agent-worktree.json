@@ -1,0 +1,94 @@
+{
+ "arguments": {
+  "--assets": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn"
+  },
+  "--output": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/collection"
+  },
+  "--repo": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e"
+  }
+ },
+ "documents": {
+  "m7-navigation-contact-v2-protocol.json": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/m7-navigation-contact-v2-protocol.json",
+   "sha256": "cadd0e45190cc2a6f4bbc742c8b38f065bbe2c831f42b8f84cef4bd75d3b1de3"
+  },
+  "m7-navigation-study-protocol.json": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/m7-navigation-study-protocol.json",
+   "sha256": "4939f9c91fd84c74fe1e467b9a231ba86f48694c57159ba50cc26d938a8299f5"
+  },
+  "m7-recovery-learning-protocol.json": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json",
+   "sha256": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+  },
+  "male-recovery-research-development-v1.json": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/male-recovery-research-development-v1.json",
+   "sha256": "ab42f9c55bd110be8a89933aa4f9decf55e7b7827cc1c5d0ef9b47bdde535618"
+  }
+ },
+ "execution": "in-process",
+ "locator": {
+  "env": "PALIMPSEST_M7_V4_PINS",
+  "value": {
+   "documents": {
+    "m7-navigation-contact-v2-protocol.json": {
+     "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/m7-navigation-contact-v2-protocol.json",
+     "sha256": "cadd0e45190cc2a6f4bbc742c8b38f065bbe2c831f42b8f84cef4bd75d3b1de3"
+    },
+    "m7-navigation-study-protocol.json": {
+     "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/m7-navigation-study-protocol.json",
+     "sha256": "4939f9c91fd84c74fe1e467b9a231ba86f48694c57159ba50cc26d938a8299f5"
+    },
+    "m7-recovery-learning-protocol.json": {
+     "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json",
+     "sha256": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+    },
+    "male-recovery-research-development-v1.json": {
+     "path": "/home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees/agent-a5848382e6b3d28ef/docs/plans/m7-navigation-v4-pins/male-recovery-research-development-v1.json",
+     "sha256": "ab42f9c55bd110be8a89933aa4f9decf55e7b7827cc1c5d0ef9b47bdde535618"
+    }
+   },
+   "schema": "m7-navigation-v4-port-pins-1"
+  }
+ },
+ "mode": "plan-only",
+ "port_check": {
+  "base": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
+  "branch": "port/male-v4-t-e",
+  "detached": true,
+  "head": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+  "tree": "T-e"
+ },
+ "previous_record_sha256": [
+  "4ce884fba00b6d51e162435d4cfa79d1de70e0a6ccca9760f34e0721192fbaaa",
+  "6fc8bb5fa4fa2888dba0f0f868c98a8f54b0386435e5e9c1b2256b292cf038dc",
+  "bd87a1debdc92c99417330a4d006d3a9de7cb4e91b9263577125639a2d5b0b7c"
+ ],
+ "producer": "scripts/collect_male_navigation_v2.py",
+ "producing_commit": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "rebinds": [],
+ "stage": "S0e",
+ "status": "admissible",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e",
+ "worktree_check": {
+  "detached": true,
+  "head": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+  "producer_sha256": "5d7ddef2104a2ec9bb9446aaaa2e8b8db6c77b23ce0d3afd903abc6c6c074a09",
+  "source_guards": {
+   "scripts/collect_male_navigation.py": "f96552012646b4cac5c7feeb253a6c16ab15d1948b67a6a8799da5341f74d1a0"
+  }
+ },
+ "would_run": [
+  "<in-process overlay>",
+  "collect_male_navigation_v2.main",
+  "--repo",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e",
+  "--assets",
+  "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+  "--output",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/collection"
+ ]
+}
