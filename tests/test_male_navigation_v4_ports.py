@@ -1407,9 +1407,44 @@ def test_cascades_refuse_a_referenced_copy_that_still_holds_placeholders_or_port
         driver.referenced_copy_sha(pins, DECLARED, tree, INDEX)
     port = next(f for f in item_of(STUDY)['fields'] if f['class'] == 'port-sha256')
     (tree/port['port_file']).parent.mkdir(parents=True, exist_ok=True); (tree/port['port_file']).write_text('not the port')
-    with pytest.raises(driver.Refusal, match='port'):
-        driver.fill_values(STUDY, item_of(STUDY), placeholders(STUDY), {}, {}, pins_dir=PINS, worktree=tree,
-                           doc_sha=lambda other: 'x'*64)
+    # Port-byte pins are checked against the tree the field names (T-e), not the stage worktree given.
+    values = driver.fill_values(STUDY, item_of(STUDY), placeholders(STUDY), {}, {}, pins_dir=PINS, worktree=tree,
+                                doc_sha=lambda other: 'x'*64)
+    assert values[port['pointer']] == port['cascade_value'] == sha(blob(port_rev('T-e'), port['port_file']))
+    for changed, match in (({**port, 'cascade_value': '0'*64}, 'not the declared port bytes'), ({**port, 'port_tree': 'T-x'}, 'T-x')):
+        with pytest.raises(driver.Refusal, match=match):
+            driver.fill_values(STUDY, {**item_of(STUDY), 'fields': [changed]}, placeholders(STUDY), {}, {}, pins_dir=PINS, worktree=tree)
+
+
+def test_contact_collector_port_pin_is_accepted_with_a_t_f_worktree_whose_v1_collector_is_unported(tmp_path):
+    """S0f passes T-f (unported collect_male_navigation.py d0decc66) while contact-v2 pins the T-e port bytes."""
+    field = next(f for f in item_of(CONTACT)['fields'] if f['pointer'] == '/prior_version/collector_sha256')
+    tree = tmp_path/'t-f'; (tree/'scripts').mkdir(parents=True)
+    unported = blob(SPEC['trees']['T-f']['branch'], 'scripts/collect_male_navigation.py')
+    (tree/'scripts/collect_male_navigation.py').write_bytes(unported)
+    assert sha(unported) != field['cascade_value']                                   # the bytes differ by design
+    contact = json.loads((PINS/CONTACT).read_bytes())
+    original = json.loads((ROOT/item_of(CONTACT)['original_path']).read_text())
+    driver.check_document_values(CONTACT, contact, original, {**item_of(CONTACT), 'fields': [field]}, {}, lambda other: None, PINS,
+                                 worktree=tree)
+    forged = copy.deepcopy(contact); forged['prior_version']['collector_sha256'] = sha(unported)
+    with pytest.raises(driver.Refusal):
+        driver.check_document_values(CONTACT, forged, original, {**item_of(CONTACT), 'fields': [field]}, {}, lambda other: None,
+                                     PINS, worktree=tree)
+
+
+TF_TREE = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-f')
+
+
+@pytest.mark.skipif(not all(p.exists() for p in S0D_RECORDS) or not TF_TREE.exists(), reason='S0d evidence host only')
+def test_s0f_dry_loads_the_contact_v2_copy_against_the_real_t_f_worktree_on_the_evidence_host():
+    stages = driver.port_stages(driver.STAGES, driver.load_ports())
+    chain = driver.previous_chain([json.loads(p.read_bytes()) for p in S0D_RECORDS], 'S0e', stages,
+                                  protocol_sha256=driver.PROTOCOL_SHA256)
+    declarations = driver.load_declarations(PINS, driver.PROTOCOL_SHA256)
+    assert CONTACT in stages['S0f']['documents']
+    documents = driver.load_pin_documents({'documents': [CONTACT]}, PINS, declarations, TF_TREE, chain)
+    assert documents[CONTACT]['sha256'] == sha((PINS/CONTACT).read_bytes())
 
 
 def test_tracked_s0e_copies_hold_the_published_s0c_s0d_values_and_cascades():

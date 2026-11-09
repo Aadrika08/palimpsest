@@ -328,11 +328,18 @@ def _output_json(record, fill, where):
 
 
 def _port_file(field, worktree, where):
-    """A port-byte cascade: the declared value, which must equal the file in the port tree being run."""
-    if worktree is not None:
-        path = Path(worktree)/field['port_file']
-        if not path.is_file() or sha256_file(path) != field['cascade_value']:
-            raise Refusal(f'{where}: {field["port_file"]} in {worktree} is not the {field["port_tree"]} port bytes')
+    """A port-byte cascade: the declared value, which must equal ``port_file`` at the recorded port commit
+    of the tree the field names (``port_tree`` in ports.json), read as a git object.
+
+    Independent of the stage worktree being run: S0f runs T-f, whose v1 collector is unported, while
+    contact-v2 pins the T-e port bytes (``worktree`` is accepted for the call sites and not used)."""
+    tree = load_ports()['trees'].get(field.get('port_tree'), {})
+    commit = tree.get('port_commit')
+    if not commit: raise Refusal(f'{where}: unknown port tree {field.get("port_tree")!r}')
+    done = subprocess.run(['git', 'cat-file', 'blob', f'{commit}:{field["port_file"]}'], cwd=ROOT, capture_output=True, timeout=30,
+                          env={k: v for k, v in os.environ.items() if not k.startswith('GIT_')})
+    if done.returncode != 0 or sha256_bytes(done.stdout) != field['cascade_value']:
+        raise Refusal(f'{where}: {field["port_file"]} at {field["port_tree"]} port commit {commit} is not the declared port bytes')
     return field['cascade_value']
 
 
