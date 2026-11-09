@@ -21,3 +21,11 @@ reviewed execution manifest and an explicit owner GO.
 Note (2026-11-09): the attempt-1 evidence README says "No retry is permitted"; that was true
 under the base protocol. Puck v4 Amendment 1 (proposed) permits exactly one more attempt; see
 `docs/reports/puck-v4-s1-attempt-2/MANIFEST.md`. The attempt-1 evidence is unchanged.
+
+## 9 November 2026
+
+| Decision | Protocol (sha256) | Owner answer |
+| --- | --- | --- |
+| Puck v4 **Amendment 1** (one-content non-scene allowlist; exactly one more S1 attempt; attempt-2 refusal ends puck v4) | `8d8529712614292ba470ce88f60aaad7d061a1732851627f3be0e1e8c0d1b20f` | **Approved** |
+| MaleCNS v4 **Amendment 1 erratum 1** (window derivation H3; v4-copy redirects and two ported files H1) | `cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477` | **Acknowledged** |
+| **GO puck S1 attempt 2** + D8 audit (stages `S1-attempt-2`, `S1-attempt-2-audit`; worst case 660 + 120 CPU-s), conditional on frozen-window checks | `8d852971…b20f` | **Granted** |
