@@ -182,11 +182,18 @@ def test_import_time_reads_touch_only_the_locator_documents():
             text = blob(tree['branch'], path).decode()
             found = [s for s in stale if s in text]
             if path == 'scripts/collect_male_navigation.py':
-                # v1's own worker/verify keep their inline index path; S0e (v2) never reaches them.
-                holders = {f.name for f in ast.parse(text).body if isinstance(f, ast.FunctionDef)
-                           and any(isinstance(c, ast.Constant) and c.value in stale for c in ast.walk(f))}
-                assert holders == {'worker', 'verify'} and not holders & used_from_v1
-                assert found == ['data/manifests/male-recovery-research-development-v1.json']
+                # v1's own worker/verify keep their inline index path; S0e (v2) never reaches them. In
+                # source_pins the two tracked names are only keys mapping to the locator's v4 copies.
+                functions = {f.name: f for f in ast.parse(text).body if isinstance(f, ast.FunctionDef)}
+                holders = {name for name, f in functions.items()
+                           if any(isinstance(c, ast.Constant) and c.value in stale for c in ast.walk(f))}
+                assert holders == {'worker', 'verify', 'source_pins'} and not {'worker', 'verify'} & used_from_v1
+                keys = [k.value for d in ast.walk(functions['source_pins']) if isinstance(d, ast.Dict) for k in d.keys
+                        if isinstance(k, ast.Constant) and '/' in str(k.value)]
+                assert keys == ['data/manifests/male-recovery-research-development-v1.json',
+                                'docs/plans/m7-recovery-learning-protocol.json']
+                assert sorted(found) == ['data/manifests/male-recovery-research-development-v1.json',
+                                         'docs/plans/m7-recovery-learning-protocol.json']
             else:
                 assert not found, (tree_id, path)
             assert f"environ['{ENV}']" in text
@@ -1004,3 +1011,189 @@ def test_erratum_study_plan_source_pins_hash_the_v4_copies_named_in_the_locator(
     Path(entries[LEARNING]['path']).write_text('{"v4": "changed"}\n')
     assert outcome(pins['port'], root) == \
         ('refused', 'ValueError', 'Pinned study reader source differs: docs/plans/m7-recovery-learning-protocol.json')
+
+
+# =================================================================== count sub-schema (review of erratum 1)
+
+PENDING = DECLARED['amendment_1_pending']
+TEACHER = {'baseline_train': [250, 240, 260, 230, 255, 245, 251, 249], 'dev': [300, 310, 305, 313]}
+RECOVERY = {'recovery-north-2100': 70, 'recovery-south-2101': 64}
+ADVICE = {case: 400 + i for i, case in enumerate(driver.ADVICE_CASES)}
+
+
+def count_chain(teacher=None, recovery=None, advice=None):
+    entry = lambda counts: {'producing_commit': 'c', 'worktree': '/w', 'output_root': '/o', 'outputs': {}, 'counts': counts}
+    return {'S0a': entry(teacher or TEACHER), 'S0b': entry(recovery or RECOVERY), 'S0c': entry(None),
+            'S0d': entry(None), 'S0e': entry(advice or ADVICE)}
+
+
+def pending_item(name):
+    return {'fields': [f for f in PENDING['pending_fields'][name] if f['class'] in ('count-map', 'count-list', 'window-list')]}
+
+
+def filled_learning():
+    original = json.loads((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_text())
+    doc = copy.deepcopy(original)
+    base, dev = TEACHER['baseline_train'], TEACHER['dev']
+    rec = [RECOVERY[s['case_id']] for s in original['recovery_sources']]
+    doc['counts'] = {'baseline_train': sum(base), 'dev': sum(dev), 'held_out': 0, 'recovery_train': sum(rec),
+                     'train': sum(base) + sum(rec), 'per_source': {'baseline_train': base, 'dev': dev},
+                     'v2_reference_counts': original['counts']}
+    doc['recovery_ticks_each'] = rec
+    doc['recovery_windows'] = [windows(n) for n in rec]
+    return original, copy.deepcopy(doc)  # no list/dict shared with the fixtures or the original
+
+
+def filled_data_v2():
+    original = json.loads((ROOT/'docs/plans/m7-navigation-data-v2-protocol.json').read_text())
+    doc = copy.deepcopy(original)
+    old = TEACHER['baseline_train'] + [RECOVERY[c] for c in driver.RECOVERY_CASES]
+    dev, adv = TEACHER['dev'], [ADVICE[c] for c in driver.ADVICE_CASES]
+    doc['counts'] = {'old_sources': 14, 'new_sources': 12, 'combined_unique_sources': 26, 'old_train_rows': sum(old),
+                     'new_advice_train_rows': sum(adv), 'augmented_train_rows': sum(old) + sum(adv), 'recorded_dev_rows': sum(dev),
+                     'combined_rows': sum(old) + sum(adv) + sum(dev), 'held_out_sources': 0, 'held_out_rows': 0,
+                     'per_source': {'old_train': old, 'dev': dev, 'advice': adv}, 'v2_reference_counts': original['counts']}
+    return original, copy.deepcopy(doc)
+
+
+def check_counts(name, original, doc, chain):
+    driver.check_document_values(name, doc, original, pending_item(name), chain, lambda other: None, ROOT)
+
+
+def test_every_pending_count_field_names_a_declared_sub_schema():
+    schemas = PENDING['count_schemas']
+    fields = [f for fs in PENDING['pending_fields'].values() for f in fs if f['class'] in ('count-map', 'count-list', 'window-list')]
+    assert {(f['pointer'], f['schema']) for f in fields} == {
+        ('/counts', 'recovery-learning-counts-v4'), ('/recovery_ticks_each', 'recovery-ticks-v4'),
+        ('/recovery_windows', 'recovery-windows-v4'), ('/counts', 'data-v2-counts-v4')}
+    for f in fields:
+        schema = schemas[f['schema']]
+        assert schema['class'] == f['class'] and schema['traced_from'] and set(schema['traced_from']) <= {'S0a', 'S0b', 'S0e'}
+    assert schemas['recovery-learning-counts-v4']['per_source'] == {'baseline_train': 8, 'dev': 4}
+    assert schemas['data-v2-counts-v4']['per_source'] == {'old_train': 10, 'dev': 4, 'advice': 12}
+    original = json.loads((ROOT/'docs/plans/m7-recovery-learning-protocol.json').read_text())
+    assert [s['case_id'] for s in original['recovery_sources']] == list(driver.RECOVERY_CASES)
+    v1 = blob(SPEC['trees']['T-e']['base'], 'scripts/collect_male_navigation.py').decode()
+    assert "for scene in range(3100, 3104) for seed in (10, 11, 12)]" in v1
+    assert driver.ADVICE_CASES[0] == 'learner-3100-seed-10' and driver.ADVICE_CASES[-1] == 'learner-3103-seed-12'
+
+
+def test_count_fields_traced_to_the_pin_records_are_accepted():
+    check_counts(LEARNING, *filled_learning(), count_chain())
+    check_counts(DATA_V2, *filled_data_v2(), count_chain())
+
+
+LEARNING_MUTATIONS = {
+    'reordered_per_source': lambda d: d['counts']['per_source']['baseline_train'].reverse(),
+    'current_int_ticks': lambda d: d.update(recovery_ticks_each=67),
+    'ticks_reordered': lambda d: d['recovery_ticks_each'].reverse(),
+    'windows_not_derived': lambda d: d.update(recovery_windows=[[32, 32, 3], [32, 32, 3]]),
+    'sum_inconsistent': lambda d: d['counts'].update(train=d['counts']['train'] + 1),
+    'v2_reference_changed': lambda d: d['counts']['v2_reference_counts'].update(train=2118),
+    'extra_key': lambda d: d['counts'].update(extra=1),
+    'bool_for_int': lambda d: d['counts'].update(held_out=False),
+    'pending': lambda d: d.update(recovery_ticks_each='PENDING-S0b'),
+}
+
+
+@pytest.mark.parametrize('mutation', sorted(LEARNING_MUTATIONS))
+def test_recovery_learning_count_fields_refuse_untraced_shapes(mutation):
+    original, doc = filled_learning()
+    LEARNING_MUTATIONS[mutation](doc)
+    with pytest.raises(driver.Refusal):
+        check_counts(LEARNING, original, doc, count_chain())
+
+
+@pytest.mark.parametrize('chain, match', [
+    (count_chain(recovery={'recovery-north-2100': 70, 'recovery-south-2101': 121}), '120'),
+    (count_chain(teacher={'baseline_train': TEACHER['baseline_train'][:7], 'dev': TEACHER['dev']}), 'S0a'),
+    (count_chain(teacher={'baseline_train': TEACHER['baseline_train'][:7] + [0], 'dev': TEACHER['dev']}), 'S0a'),
+])
+def test_recovery_learning_counts_refuse_records_outside_the_structural_invariants(chain, match):
+    original, doc = filled_learning()
+    with pytest.raises(driver.Refusal, match=match):
+        check_counts(LEARNING, original, doc, chain)
+
+
+@pytest.mark.parametrize('mutation', ['advice_reordered', 'advice_missing', 'advice_over_bound', 'constants', 'record_missing'])
+def test_data_v2_counts_refuse_untraced_shapes(mutation):
+    original, doc = filled_data_v2()
+    chain = count_chain()
+    if mutation == 'advice_reordered': doc['counts']['per_source']['advice'].reverse()
+    elif mutation == 'advice_missing': doc['counts']['per_source']['advice'].pop()
+    elif mutation == 'advice_over_bound':
+        chain = count_chain(advice={**ADVICE, driver.ADVICE_CASES[0]: 601})
+    elif mutation == 'constants': doc['counts']['combined_unique_sources'] = 25
+    else: chain['S0e'].pop('counts')
+    with pytest.raises(driver.Refusal):
+        check_counts(DATA_V2, original, doc, chain)
+
+
+def test_stage_counts_read_the_teacher_recovery_and_advice_outputs(tmp_path):
+    s0a = tmp_path/'s0a'; s0a.mkdir()
+    runs = [{'split': 'train', 'ticks': n} for n in TEACHER['baseline_train']] + [{'split': 'dev', 'ticks': n} for n in TEACHER['dev']]
+    (s0a/'collection.json').write_text(json.dumps({'runs': runs}))
+    assert driver.stage_counts('teacher-collection', s0a) == TEACHER
+    s0b = tmp_path/'s0b'
+    for case, n in RECOVERY.items():
+        (s0b/case).mkdir(parents=True); (s0b/case/'result.json').write_text(json.dumps({'recorded_ticks': n, 'rows': [{}]*n}))
+    assert driver.stage_counts('recovery-cases', s0b) == RECOVERY
+    (s0b/'recovery-south-2101'/'result.json').write_text(json.dumps({'recorded_ticks': 64, 'rows': [{}]*63}))
+    with pytest.raises(driver.Refusal, match='recorded_ticks'):
+        driver.stage_counts('recovery-cases', s0b)
+    s0e = tmp_path/'s0e'
+    for case, n in ADVICE.items():
+        (s0e/case).mkdir(parents=True); (s0e/case/'result.json').write_text(json.dumps({'rows': [{}]*n}))
+    assert driver.stage_counts('advice-cases', s0e) == ADVICE
+    assert {s: driver.STAGES[s].get('records_counts') for s in driver.STAGES} == {
+        'S0a': 'teacher-collection', 'S0b': 'recovery-cases', 'S0c': None, 'S0d': None, 'S0e': 'advice-cases', 'S0f': None}
+
+
+def test_pin_record_carries_counts_and_the_chain_refuses_tampered_counts(tmp_path):
+    out = tmp_path/'out'; out.mkdir(); (out/'collection.json').write_text('{}')
+    spec = {'commit': 'c'*40, 'producer_sha256': 'p'*64}
+    record = driver.make_pin_record(spec, 'S0a', tmp_path, out, None, protocol_sha256=SPEC['protocol_sha256'], counts=TEACHER)
+    assert record['counts'] == record['chain']['S0a']['counts'] == TEACHER
+    stages = {'S0a': spec, 'S0b': spec}
+    assert driver.check_pin_record(record, 'S0b', stages, protocol_sha256=SPEC['protocol_sha256'])['S0a']['counts'] == TEACHER
+    record['counts'] = {**TEACHER, 'dev': [1, 2, 3, 4]}
+    with pytest.raises(driver.Refusal, match='chain'):
+        driver.check_pin_record(record, 'S0b', stages, protocol_sha256=SPEC['protocol_sha256'])
+
+
+def test_port_locator_refuses_relative_paths():
+    spec = {'port': {'locator_values': []}}
+    assert driver.port_locator(spec, {LEARNING: {'path': '/abs/learning.json', 'sha256': 'a'*64}}, {})['documents']
+    for bad in ('docs/plans/m7-recovery-learning-protocol.json', './x.json', ''):
+        with pytest.raises(driver.Refusal, match='absolute'):
+            driver.port_locator(spec, {LEARNING: {'path': bad, 'sha256': 'a'*64}}, {})
+    chain = {'S0c': {'output_root': 'relative/out', 'outputs': {'data-manifest.json': {'sha256': 'b'*64, 'bytes': 1}}}}
+    with pytest.raises(driver.Refusal, match='absolute'):
+        driver.port_locator({'port': {'locator_values': ['data_manifest']}}, {}, chain)
+
+
+def test_study_plan_redirect_is_exactly_the_two_named_documents(tmp_path, locator):
+    """A locator key matching another pinned source's basename never redirects it."""
+    port = blob(SPEC['trees']['T-e']['branch'], 'scripts/collect_male_navigation.py').decode()
+    hunk = next(h for h in SPEC['files']['scripts/collect_male_navigation.py']['hunks'] if h['spec_lines'] == '46-47')
+    assert "'data/manifests/male-recovery-research-development-v1.json': v4['male-recovery-research-development-v1.json']['path']" in hunk['new'][0]
+    assert "'docs/plans/m7-recovery-learning-protocol.json': v4['m7-recovery-learning-protocol.json']['path']" in hunk['new'][0]
+    assert all(line in port for line in hunk['new']) and 'Path(name).name' not in port
+    root = tmp_path/'tree'; (root/'scripts').mkdir(parents=True)
+    (root/'scripts/prepare_male_recovery_data.py').write_bytes(b'tracked reader\n')
+    decoy = tmp_path/'decoy.py'; decoy.write_bytes(b'decoy\n')
+    entries = locator({driver.RECOVERY_INDEX: {'v4': 'index'}, LEARNING: {'v4': 'learning'}})
+    loc = json.loads(Path(__import__('os').environ[ENV]).read_text())
+    loc['documents']['prepare_male_recovery_data.py'] = {'path': str(decoy), 'sha256': sha(b'decoy\n')}
+    Path(__import__('os').environ[ENV]).write_text(json.dumps(loc))
+    plan = {'current_reusable_source_sha256': {
+                'data/manifests/male-recovery-research-development-v1.json': entries[driver.RECOVERY_INDEX]['sha256'],
+                'docs/plans/m7-recovery-learning-protocol.json': entries[LEARNING]['sha256'],
+                'scripts/prepare_male_recovery_data.py': sha(b'tracked reader\n')}, 'generator': {'source_sha256': {}}}
+    ns = {'json': json, 'os': __import__('os'), 'Path': Path, 'ROOT': Path('/nonexistent-root'), 'PLAN_SHA': 'plan',
+          'plan': lambda root=None: plan, 'digest': lambda path: sha(Path(path).read_bytes()) if Path(path).exists() else 'absent',
+          'source_identity': lambda root: {'runtime': 1}}
+    source_pins = extract(port, ('source_pins',), ns)['source_pins']
+    assert outcome(source_pins, root)[0] == 'ok'
+    plan['current_reusable_source_sha256']['scripts/prepare_male_recovery_data.py'] = sha(b'decoy\n')
+    assert outcome(source_pins, root)[2] == 'Pinned study reader source differs: scripts/prepare_male_recovery_data.py'

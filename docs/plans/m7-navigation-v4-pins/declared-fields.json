@@ -620,7 +620,7 @@
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
           "site": "collect_male_navigation_v2.py:42 (736e0cf); T-e ported collect_male_navigation.py",
-          "cascade_value": "d06b0dae2e97bfddcf41bc24c98a6cafff4cda3994d7cbdb32d335be025ab791",
+          "cascade_value": "f96552012646b4cac5c7feeb253a6c16ab15d1948b67a6a8799da5341f74d1a0",
           "cascade_note": "T-e ported scripts/collect_male_navigation.py; equals the S0e port_source_guards pin in scripts/regenerate_male_navigation_v4.py"
         }
       ],
@@ -672,7 +672,8 @@
           "class": "count-map",
           "stage": "S0e",
           "placeholder": "PENDING-S0e",
-          "site": "copied to S0f output at prepare_male_navigation_v2.py:470; from S0c/S0e pins; v2 values descriptive only"
+          "site": "copied to S0f output at prepare_male_navigation_v2.py:470; from S0c/S0e pins; v2 values descriptive only",
+          "schema": "data-v2-counts-v4"
         }
       ],
       "m7-recovery-learning-protocol.json": [
@@ -681,25 +682,135 @@
           "class": "count-map",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "from S0a/S0b pins; v2 values descriptive only"
+          "site": "from S0a/S0b pins; v2 values descriptive only",
+          "schema": "recovery-learning-counts-v4"
         },
         {
           "pointer": "/recovery_ticks_each",
           "class": "count-list",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "per-source S0b pins (lengths may differ per source)"
+          "site": "per-source S0b pins (lengths may differ per source)",
+          "schema": "recovery-ticks-v4"
         },
         {
           "pointer": "/recovery_windows",
           "class": "window-list",
           "stage": "S0b",
           "placeholder": "PENDING-S0b",
-          "site": "derived from pinned per-source ticks"
+          "site": "derived from pinned per-source ticks",
+          "schema": "recovery-windows-v4"
         }
       ]
     },
     "note": "old_historical_reader/root is already declared (stage S0f). Adding these fields to the active documents block requires regenerating the copies and updating tests (implementation follow-up).",
-    "port_manifest": "docs/plans/m7-navigation-v4-pins/ports.json"
+    "port_manifest": "docs/plans/m7-navigation-v4-pins/ports.json",
+    "count_schemas": {
+      "recovery-learning-counts-v4": {
+        "class": "count-map",
+        "document": "m7-recovery-learning-protocol.json",
+        "pointer": "/counts",
+        "traced_from": [
+          "S0a",
+          "S0b"
+        ],
+        "keys": [
+          "baseline_train",
+          "dev",
+          "held_out",
+          "recovery_train",
+          "train",
+          "per_source",
+          "v2_reference_counts"
+        ],
+        "per_source": {
+          "baseline_train": 8,
+          "dev": 4
+        },
+        "order": "per_source lists follow the S0a collection.json runs order within each split (seeds 1000-1007 train, 1008-1011 dev)",
+        "values": {
+          "per_source.baseline_train": "S0a collection.json runs[split=train].ticks (one episode per run)",
+          "per_source.dev": "S0a collection.json runs[split=dev].ticks",
+          "baseline_train": "sum(per_source.baseline_train)",
+          "dev": "sum(per_source.dev)",
+          "held_out": "0",
+          "recovery_train": "sum(recovery_ticks_each)",
+          "train": "baseline_train + recovery_train",
+          "v2_reference_counts": "the original document's counts, unchanged (descriptive only)"
+        },
+        "bounds": "every per-source value is an int > 0"
+      },
+      "recovery-ticks-v4": {
+        "class": "count-list",
+        "document": "m7-recovery-learning-protocol.json",
+        "pointer": "/recovery_ticks_each",
+        "traced_from": [
+          "S0b"
+        ],
+        "length": 2,
+        "order": "recovery_sources order: recovery-north-2100, recovery-south-2101",
+        "values": "S0b <case_id>/result.json recorded_ticks (must equal len(rows))",
+        "bounds": "int, 1..120"
+      },
+      "recovery-windows-v4": {
+        "class": "window-list",
+        "document": "m7-recovery-learning-protocol.json",
+        "pointer": "/recovery_windows",
+        "traced_from": [
+          "S0b"
+        ],
+        "length": 2,
+        "order": "recovery_sources order",
+        "values": "[32]*floor(n/32) + [n mod 32 if > 0] for each recovery_ticks_each n; checked equal, never read by producers"
+      },
+      "data-v2-counts-v4": {
+        "class": "count-map",
+        "document": "m7-navigation-data-v2-protocol.json",
+        "pointer": "/counts",
+        "traced_from": [
+          "S0a",
+          "S0b",
+          "S0e"
+        ],
+        "keys": [
+          "old_sources",
+          "new_sources",
+          "combined_unique_sources",
+          "old_train_rows",
+          "new_advice_train_rows",
+          "augmented_train_rows",
+          "recorded_dev_rows",
+          "combined_rows",
+          "held_out_sources",
+          "held_out_rows",
+          "per_source",
+          "v2_reference_counts"
+        ],
+        "per_source": {
+          "old_train": 10,
+          "dev": 4,
+          "advice": 12
+        },
+        "order": "old_train = S0a train runs order then recovery-north-2100, recovery-south-2101; dev = S0a dev runs order; advice = scene 3100..3103 x learner 10, 11, 12",
+        "values": {
+          "per_source.old_train": "S0a runs[split=train].ticks + S0b recorded_ticks",
+          "per_source.dev": "S0a runs[split=dev].ticks",
+          "per_source.advice": "S0e <case_id>/result.json len(rows)",
+          "old_train_rows": "sum(per_source.old_train)",
+          "new_advice_train_rows": "sum(per_source.advice)",
+          "augmented_train_rows": "old_train_rows + new_advice_train_rows",
+          "recorded_dev_rows": "sum(per_source.dev)",
+          "combined_rows": "augmented_train_rows + recorded_dev_rows",
+          "old_sources": "14",
+          "new_sources": "12",
+          "combined_unique_sources": "26",
+          "held_out_sources": "0",
+          "held_out_rows": "0",
+          "v2_reference_counts": "the original document's counts, unchanged (descriptive only)"
+        },
+        "bounds": "ints > 0; recovery <= 120; advice <= 600"
+      }
+    },
+    "count_records": "Pin records of S0a, S0b and S0e carry per-source counts read by the driver from the finished stage's own output documents (collection.json; <case_id>/result.json), never from recordings; count-map/count-list/window-list values must equal the counts derived from those records exactly."
   }
 }

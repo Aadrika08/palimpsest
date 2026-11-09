@@ -355,11 +355,11 @@
       "        if digest(Path(root)/name) != pin: raise ValueError('Pinned study reader source differs: '+name)"
      ],
      "new": [
-      "    v4 = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']",
+      "    v4 = json.loads(Path(os.environ['PALIMPSEST_M7_V4_PINS']).read_bytes())['documents']; v4 = {'data/manifests/male-recovery-research-development-v1.json': v4['male-recovery-research-development-v1.json']['path'], 'docs/plans/m7-recovery-learning-protocol.json': v4['m7-recovery-learning-protocol.json']['path']}",
       "    for name, pin in expected.items():",
-      "        if digest(Path(root)/(v4[Path(name).name]['path'] if Path(name).name in v4 else name)) != pin: raise ValueError('Pinned study reader source differs: '+name)"
+      "        if digest(Path(root)/v4.get(name, name)) != pin: raise ValueError('Pinned study reader source differs: '+name)"
      ],
-     "what": "study-plan pinned documents (recovery index, recovery-learning protocol) -> hashed at their v4 copies named in the locator; every other pinned source still at its tracked path",
+     "what": "exactly two study-plan entries, data/manifests/male-recovery-research-development-v1.json and docs/plans/m7-recovery-learning-protocol.json, are hashed at the v4 copies named in the locator; every other pinned source still at its tracked path",
      "erratum": "erratum_1",
      "reason": "v4 copies are supplied by path and never committed into port trees, so the declared study-plan cascades for the v4 recovery index and recovery-learning copy could not match the tracked originals."
     },
@@ -501,7 +501,7 @@
    ],
    "reader_port": "erratum_1: ported so the study-plan pin current_reusable_source_sha256/scripts/prepare_male_recovery_data.py (digested by collect_male_navigation.py source_pins) follows the port bytes; not imported at 736e0cf",
    "branch": "port/male-v4-t-e",
-   "port_commit": "77287f3b5ea30802acd3090adb1e83f72ebcb9b5"
+   "port_commit": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247"
   },
   "T-h": {
    "base": "217cbee8399dcb25045a079af012beecbbdae29e",
