@@ -44,8 +44,11 @@ def audit(report_path, receipt_path):
         path = item.get('path')
         ok = bool(path) and os.path.isfile(path) and _sha(Path(path).read_bytes()) == item['sha256']
         check(f'input {name} hash', ok, path or '')
-    check('frozen protocol', inputs.get('protocol', {}).get('sha256') == s1.PROTOCOL_SHA256)
-    roster = s1.derive_roster(json.loads(Path(inputs['protocol']['path']).read_bytes()))
+    protocol_sha = inputs.get('protocol', {}).get('sha256')
+    check('protocol is a frozen v4 version',
+          protocol_sha in (s1.PROTOCOL_SHA256, s1.ATTEMPT_1_PROTOCOL_SHA256))
+    protocol = json.loads(Path(inputs['protocol']['path']).read_bytes())
+    roster = s1.derive_roster(protocol)
     check('roster matches protocol', report.get('roster') == roster)
     verdict, reasons = report.get('verdict'), report.get('refusal_reasons')
     if verdict == 'admitted':
@@ -67,9 +70,13 @@ def audit(report_path, receipt_path):
           not any(claims.get(k) for k in ('held_out_payloads_compared', 'held_out_read',
                                             'scenes_minted', 'simulator_executed', 'models_loaded'))
           and claims.get('qualification_claims') == [])
-    check('non-scene mentions only for allowlisted contents',
-          all(row.get('sha256') in s1.NON_SCENE_CONTENT_SHA256
-              for row in report.get('non_scene_asset_mentions', [])))
+    allow = {row['sha256'] for row in protocol.get('amendment_1', {}).get('change', {}).get(
+        'non_scene_content_allowlist', [])}
+    amended = protocol_sha == s1.PROTOCOL_SHA256
+    check('non-scene mentions only for protocol-allowlisted contents',
+          ('non_scene_asset_mentions' in report) == amended
+          and all(row.get('sha256') in allow
+                  for row in report.get('non_scene_asset_mentions', [])))
     check('lost root never treated as clean',
           report.get('lost_root', {}).get('treated_as_clean') is False)
     receipt = json.loads(Path(receipt_path).read_bytes())

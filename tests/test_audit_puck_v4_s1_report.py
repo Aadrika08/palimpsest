@@ -10,6 +10,11 @@ import test_puck_v4_scene_admission as t  # noqa: E402  (reuse its synthetic fix
 import audit_puck_v4_s1_report as a  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def _synthetic_ledgers(monkeypatch):
+    monkeypatch.setattr(t.s1, 'ENFORCE_ATTEMPT_LEDGERS', False)
+
+
 def _receipt(tmp_path, returncode):
     path = tmp_path / 'receipt.json'
     path.write_text(json.dumps({'complete': True, 'drained': True, 'survivors_killed': [],

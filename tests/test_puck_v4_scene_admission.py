@@ -1375,3 +1375,49 @@ def test_amendment_1_allowlisted_cell_type_table_is_non_scene_not_ambiguous(tmp_
     # A single changed byte falls back to the original fail-closed rule.
     assert [row['path'] for row in report['ambiguous']] == ['assets/changed_copy.csv']
     assert result['verdict'] == 'refused'
+
+
+@pytest.fixture(autouse=True)
+def _synthetic_ledgers(monkeypatch, request):
+    if not request.node.name.startswith(('test_execute_refuses_any_ledger',
+                                         'test_attempt_2_requires_attempt_1')):
+        monkeypatch.setattr(s1, 'ENFORCE_ATTEMPT_LEDGERS', False)
+
+
+def test_execute_refuses_any_ledger_but_attempt_1_or_2(tmp_path):
+    tree = _prior_tree(tmp_path)
+    with pytest.raises(s1.AdmissionRefused, match='neither attempt 1 nor attempt 2'):
+        _admit(tmp_path, [_dir_root(tree)], ledger=tmp_path / 'other-ledger')
+
+
+def test_attempt_2_requires_attempt_1_receipt_from_base_protocol(tmp_path, monkeypatch):
+    first = tmp_path / 'ledger-1'
+    first.mkdir()
+    monkeypatch.setattr(s1, 'DEFAULT_ATTEMPT_LEDGER', str(first))
+    monkeypatch.setattr(s1, 'ATTEMPT_2_LEDGER', str(tmp_path / 'ledger-2'))
+    with pytest.raises(s1.AdmissionRefused, match='attempt 1 on record'):
+        s1._require_attempt_ledger(str(tmp_path / 'ledger-2'))
+    (first / s1.ATTEMPT_RECEIPT_NAME).write_text(json.dumps(
+        {'kind': 'puck-v4-s1-attempt-receipt-v1', 'protocol_sha256': '0' * 64}))
+    with pytest.raises(s1.AdmissionRefused, match='base-protocol'):
+        s1._require_attempt_ledger(str(tmp_path / 'ledger-2'))
+    (first / s1.ATTEMPT_RECEIPT_NAME).write_text(json.dumps(
+        {'kind': 'puck-v4-s1-attempt-receipt-v1',
+         'protocol_sha256': s1.ATTEMPT_1_PROTOCOL_SHA256}))
+    s1._require_attempt_ledger(str(tmp_path / 'ledger-2'))
+
+
+def test_code_allowlist_equals_protocol_amendment():
+    protocol = json.loads(PROTOCOL.read_bytes())
+    assert {row['sha256'] for row in protocol['amendment_1']['change'][
+        'non_scene_content_allowlist']} == set(s1.NON_SCENE_CONTENT_SHA256)
+
+
+def test_allowlist_with_synthetic_hash_without_submodule(tmp_path, monkeypatch):
+    raw = 'root_id,primary_type\n' + ''.join(f'{i},T{i % 7}\n' for i in range(6600))
+    digest = hashlib.sha256(raw.encode()).hexdigest()
+    monkeypatch.setattr(s1, 'NON_SCENE_CONTENT_SHA256', {digest: 'synthetic table'})
+    result = s1._analyze('a/table.csv', raw.encode(), digest)
+    assert result['non_scene_asset'][0] == 'synthetic table' and result['ambiguous'] == []
+    other = s1._analyze('a/table.csv', (raw + 'x\n').encode(), '0' * 64)
+    assert other['non_scene_asset'] is None and other['ambiguous']

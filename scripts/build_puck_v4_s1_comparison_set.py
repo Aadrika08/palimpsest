@@ -165,7 +165,8 @@ def build(*, shraddha=SHRADDHA, main=MAIN, codex_worktrees=CODEX_WORKTREES, adve
     if os.path.isdir(evidence):
         own = [{'path': os.path.join(evidence, child), 'reason': 'puck v4 S1 output or '
                 'attempt ledger (written by this stage)'}
-               for child in sorted(set(os.listdir(evidence)) | {'puck-v4-s1-attempt-ledger'})
+               for child in sorted(set(os.listdir(evidence)) | {'puck-v4-s1-attempt-ledger',
+                                                        'puck-v4-s1-attempt-2-ledger'})
                if child.startswith('puck-v4-s1-')]  # ledger is excluded before it exists
         roots.append(_directory(EVIDENCE, evidence, exclude=_env_excludes(
             evidence, {row['path'] for row in own}) + own))

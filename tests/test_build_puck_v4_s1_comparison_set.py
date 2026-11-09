@@ -64,7 +64,7 @@ def test_builder_declares_expected_roots(tmp_path):
     evidence = roots['palimpsest-authored-test-evidence']
     assert evidence['held_out_payloads'] is True
     assert {row['path'].rsplit('/', 1)[1] for row in evidence['exclude']} == {
-        'puck-v4-s1-out', 'puck-v4-s1-attempt-ledger'}
+        'puck-v4-s1-out', 'puck-v4-s1-attempt-ledger', 'puck-v4-s1-attempt-2-ledger'}
     assert {'fixture-.palimpsest-a', 'fixture-.palimpsest-b'} <= set(roots)
     assert sorted(Path(row['path']).name for row in declaration['unscanned']) == sorted(
         builder.UNRELATED_PROJECTS)

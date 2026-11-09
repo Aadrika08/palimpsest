@@ -76,6 +76,12 @@ RECEIPT_KIND = 'puck-v4-s1-attempt-receipt-v1'
 ATTEMPT_RECEIPT_NAME = 'S1.attempt.json'
 DEFAULT_ATTEMPT_LEDGER = (
     '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-attempt-ledger')
+# Amendment 1 permits exactly one more S1 attempt, bound to this constant ledger, and only
+# after attempt 1 (base protocol) is on record in the default ledger.
+ATTEMPT_2_LEDGER = (
+    '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-attempt-2-ledger')
+ATTEMPT_1_PROTOCOL_SHA256 = 'f885fc8d857cc47ec696ad65501b70ac80e16dfa5439fd5bf62919f868bc286b'
+ENFORCE_ATTEMPT_LEDGERS = True  # tests with synthetic ledgers switch this off
 TYPED_SUFFIXES = ('.json', '.jsonl', '.md')
 RAW_SUFFIXES = ('.yaml', '.yml', '.toml', '.csv', '.txt')
 SCANNED_SUFFIXES = TYPED_SUFFIXES + RAW_SUFFIXES
@@ -251,10 +257,29 @@ def lost_root_from_protocol(protocol):
     return _canonical_path(exception['root'].split(' (', 1)[0], 'lost root')
 
 
+def _require_attempt_ledger(ledger):
+    """Only the default ledger (attempt 1) or the Amendment 1 attempt-2 ledger may execute."""
+    if ledger not in (DEFAULT_ATTEMPT_LEDGER, ATTEMPT_2_LEDGER):
+        raise AdmissionRefused(f'attempt ledger {ledger} is neither attempt 1 nor attempt 2')
+    if ledger == ATTEMPT_2_LEDGER:
+        first = os.path.join(DEFAULT_ATTEMPT_LEDGER, ATTEMPT_RECEIPT_NAME)
+        try:
+            record = json.loads(_read_small(first, 'attempt 1 receipt'))
+        except (OSError, ValueError, AdmissionRefused) as error:
+            raise AdmissionRefused(f'attempt 2 requires attempt 1 on record: {error}')
+        if (record.get('kind') != 'puck-v4-s1-attempt-receipt-v1'
+                or record.get('protocol_sha256') != ATTEMPT_1_PROTOCOL_SHA256):
+            raise AdmissionRefused('attempt 1 receipt is not the base-protocol S1 attempt')
+
+
 def _load_protocol(path):
     raw = _read_small(path, 'protocol')
     if _sha(raw) != PROTOCOL_SHA256:
         raise AdmissionRefused(f'protocol sha256 {_sha(raw)} differs from frozen {PROTOCOL_SHA256}')
+    declared = json.loads(raw).get('amendment_1', {}).get('change', {}).get(
+        'non_scene_content_allowlist', [])
+    if {row['sha256'] for row in declared} != set(NON_SCENE_CONTENT_SHA256):
+        raise AdmissionRefused('code non-scene allowlist differs from protocol Amendment 1')
     protocol = _strict_json(raw, 'protocol')
     return raw, protocol, derive_roster(protocol)
 
@@ -1428,6 +1453,8 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
     lost_root = lost_root_from_protocol(protocol) if derived else _canonical_path(
         lost_root, 'lost root')
     ledger = _canonical_path(attempt_ledger or DEFAULT_ATTEMPT_LEDGER, 'attempt ledger')
+    if execute and ENFORCE_ATTEMPT_LEDGERS:
+        _require_attempt_ledger(ledger)
     lost = _lost_root_record(protocol, lost_root, derived)
     roots = declaration['roots']
     record_raw, record = None, None
@@ -1496,7 +1523,9 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
                'protocol_sha256': PROTOCOL_SHA256,
                'comparison_set_sha256': _sha(declaration_raw), 'go_record_sha256': _sha(go_raw),
                'held_out_go_record_sha256': None if held_raw is None else _sha(held_raw),
-               'sources': sources}
+               'sources': sources,
+               # the ledger path itself is in the stage launcher receipt's command line
+               'attempt_number': 2 if ledger == ATTEMPT_2_LEDGER else 1}
     receipt_raw = canonical_bytes(receipt)
     Path(ledger).mkdir(parents=True, exist_ok=True)
     try:
@@ -1558,7 +1587,8 @@ def admit(*, protocol_path, comparison_set_path, output_path, execute=False,
         'sources': sources,
         'execution_requirements': list(EXECUTION_REQUIREMENTS),
         'attempt': {'receipt_name': ATTEMPT_RECEIPT_NAME, 'receipt_sha256': _sha(receipt_raw),
-                    'ledger_is_default': ledger == DEFAULT_ATTEMPT_LEDGER},
+                    'ledger_is_default': ledger == DEFAULT_ATTEMPT_LEDGER,
+                    'attempt_number': 2 if ledger == ATTEMPT_2_LEDGER else 1},
         'roster': roster,
         'reservation': None if reasons else {
             'scene_ids': list(NEW_SCENE_IDS), 'collection': list(COLLECTION_SCENE_IDS),

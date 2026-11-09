@@ -17,3 +17,7 @@ reviewed execution manifest and an explicit owner GO.
 | **D2 for puck S1** — byte-reading tracked copies of authored held-out 6200–6207 rows for S1 calibration and the S1 ID comparison; never loading into reset/simulator; not reusable for S2/S8a | `f885fc8d…286b` | **Granted (scope S1 only)**; GO record `palimpsest-authored-test-evidence/puck-v4-go/d2-scope-s1.json` |
 | **Puck S1 GO + D8 audit GO** | `f885fc8d…286b` | **Granted**; S1 attempt 1 ran: refused (0 collisions, 63 ambiguous = one FLYNN cell-type table content), 86.61 + 0.07 CPU-s charged; see `docs/reports/puck-v4-s1-2026-11-08/` |
 | **After S1 refusal: amend vs record blocked** | `f885fc8d…286b` | **Amend** — draft a disclosed, independently reviewed Amendment 1 (one-content non-scene allowlist) and one new S1 attempt; amendment text and the new S1 GO each still need explicit owner approval |
+
+Note (2026-11-09): the attempt-1 evidence README says "No retry is permitted"; that was true
+under the base protocol. Puck v4 Amendment 1 (proposed) permits exactly one more attempt; see
+`docs/reports/puck-v4-s1-attempt-2/MANIFEST.md`. The attempt-1 evidence is unchanged.
