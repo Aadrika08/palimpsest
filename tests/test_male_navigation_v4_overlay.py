@@ -534,3 +534,43 @@ def test_real_cli_refuses_worktree_not_at_producing_commit(chain, capsys):
     assert 'producing commit' in json.loads(capsys.readouterr().out)['reason']
     assert driver.PROTOCOL_SHA256 == PROTOCOL_SHA
     assert sha((ROOT/driver.PROTOCOL_PATH).read_bytes()) == PROTOCOL_SHA
+
+
+# ------------------------------------------------------------------- S0a execution manifest (no producer runs)
+
+def test_s0a_manifest_launch_matches_the_saved_plan_the_driver_rules_and_the_protocol_budget():
+    import re
+    folder = ROOT/'docs/reports/male-v4-s0a'
+    text, plan_raw = (folder/'MANIFEST.md').read_text(), (folder/'plan-only.json').read_bytes()
+    plan = json.loads(plan_raw)
+    assert plan['status'] == 'admissible' and plan['mode'] == 'plan-only' and plan['stage'] == 'S0a'
+    assert plan['protocol_sha256'] == PROTOCOL_SHA and sha(plan_raw) in text
+    spec = driver.STAGES['S0a']
+    assert plan['producing_commit'] == spec['commit'] and plan['worktree_check']['producer_sha256'] == spec['producer_sha256']
+    assert plan['worktree_check']['source_guards'] == spec['source_guards'] and plan['worktree_check']['detached'] is True
+    block = re.search(r'<!-- s0a-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    cut = argv.index('--')
+    unit, command = argv[:cut], argv[cut + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    row = next(r for r in json.loads((ROOT/driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']
+               if r['stage'] == 'S0a')
+    assert unit[1].endswith('scripts/run_research_stage.py')
+    assert (flag('--lane', unit), flag('--stage', unit), int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)),
+            int(flag('--worst-case-cpu', unit))) == ('navigation', 'S0a', row['cpu_quota_k'], row['runtime_max_sec_kill_target'],
+                                                      row['worst_case_cpu'])
+    inner = command.index('--')
+    driver_args, producer_args = command[:inner], command[inner + 1:]
+    assert driver_args[2].endswith('scripts/regenerate_male_navigation_v4.py') and '--plan-only' not in driver_args
+    assert flag('--stage', driver_args) == 'S0a' and flag('--worktree', driver_args) == plan['worktree']
+    assert '--previous-pins' not in driver_args                                      # first sub-stage
+    assert producer_args == plan['would_run'][2:]                                    # exactly the planned producer argv
+    assert flag('--research-stage', producer_args) == 'development'
+    output, record = Path(flag('--output', producer_args)), Path(flag('--pin-record-out', driver_args))
+    data_root = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a')
+    assert output.parent == data_root and record.parent == data_root and record not in output.parents
+    receipt, go_record = Path(flag('--receipt-dir', unit)), Path(flag('--go-record', unit))
+    assert flag('--go', driver_args) == str(go_record) and data_root not in receipt.parents
+    for path in (receipt, go_record, output, record):
+        assert not driver.under(path, plan['worktree']) and not driver.under(path, flag('--assets', producer_args))
+    assert 'scientific_attempt": true' in text and 'ends v4' in text.lower()
