@@ -419,6 +419,15 @@ def test_s0d_enclosing_deadline_reports_a_timeout_supervisor(tmp_path, worktree,
     assert code == 1 and supervisor['status'] == 'timeout' and supervisor['returncode'] != 0 and 'failure' in supervisor
 
 
+def _alive(pid):
+    """Running, not a zombie: in CI containers a killed orphan can linger unreaped as Z."""
+    try:
+        stat = Path(f'/proc/{pid}/stat').read_text()
+    except OSError:
+        return False
+    return stat.rsplit(')', 1)[1].split()[0] != 'Z'
+
+
 def test_s0d_orphaned_descendant_is_a_survivor_and_is_force_killed(tmp_path, worktree, fake):
     fake[1](**{'12': {'orphan': True}})
     code, out, terminal, _ = s0d_run(tmp_path, worktree, fake)
@@ -426,7 +435,7 @@ def test_s0d_orphaned_descendant_is_a_survivor_and_is_force_killed(tmp_path, wor
     assert code == 1 and terminal['status'] == 'failed-research-training'
     assert [s['pid'] for s in terminal['cleanup']['survivors']] == [orphan]
     assert [f['pid'] for f in terminal['cleanup']['forced_signals']] == [orphan]
-    assert terminal['cleanup']['remaining_after_forced'] == [] and not Path(f'/proc/{orphan}').exists()
+    assert terminal['cleanup']['remaining_after_forced'] == [] and not _alive(orphan)
 
 
 def test_s0d_inventory_and_completed_pair_changes_are_detected(tmp_path, worktree, fake):
