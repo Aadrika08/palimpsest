@@ -253,3 +253,18 @@ Later stages stay `not_started`. There is no retry, substitution, filtering, rec
 budget change. The first fault and all partial outputs are retained as they are, the charge
 stands (census, or 185 CPU-s without a complete receipt), and any further work needs a new
 protocol version.
+
+## Review amendments (independent AI review, 2026-11-09)
+
+- **Required — pre-launch check 6 replaced:** `male-v4-runs/S0c/` must **exist and be empty**
+  (create it before launch). In GO mode the driver writes the locator
+  `S0c/pin-record.json.port-pins.json` with `open('xb')` before the producer runs, and only the
+  producer creates `S0c/`; an absent directory would fail after the ledger reservation and end v4.
+  An empty `S0c/` does not conflict with the producer's `exist_ok=False` on `S0c/data`.
+- **Gate wording:** the data manifest's `protocol_sha256` must equal the filled copy sha
+  `9c0ae9ef…`; its `protocol` field holds the whole document, not a sha.
+- **Line references:** the T-c port reads `counts.per_source` at `:141` and `:207`.
+- **Fill fix f62ef5b:** within Amendment 1's declared pins (`added_pins`: recovery-learning copy
+  counts/ticks/windows pinned from S0a/S0b); no owner acknowledgement required. Note: consumer-side
+  `check_document_values` only checks a sha matches some stage output (weaker than fill's exact
+  named output); the GO binds the copy sha and the producer re-checks file shas.
