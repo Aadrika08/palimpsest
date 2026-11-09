@@ -1,0 +1,75 @@
+{
+ "arguments": {
+  "--baseline-collection": {
+   "bytes": 49105,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/collection.json",
+   "sha256": "7c5fabc2d81c5e1b9aff6fb8ddbf9ed431d6f75219eb8af98b7f2787b4a5614f"
+  },
+  "--output": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data"
+  },
+  "--recovery-report": {
+   "bytes": 61806,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/report.json",
+   "sha256": "2a54c2a59f1b1d5bf86ce022273b8cbebd04521e9fa58cf3818e2717b7202974"
+  }
+ },
+ "documents": {
+  "m7-recovery-learning-protocol.json": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json",
+   "sha256": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+  }
+ },
+ "execution": "in-process",
+ "locator": {
+  "env": "PALIMPSEST_M7_V4_PINS",
+  "value": {
+   "documents": {
+    "m7-recovery-learning-protocol.json": {
+     "path": "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json",
+     "sha256": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+    }
+   },
+   "schema": "m7-navigation-v4-port-pins-1"
+  }
+ },
+ "mode": "plan-only",
+ "port_check": {
+  "base": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+  "branch": "port/male-v4-t-c",
+  "detached": true,
+  "head": "c06b4976f30b86455dc9ea3406bad6fab42371e1",
+  "tree": "T-c"
+ },
+ "previous_record_sha256": "b3511f1a3bf625dd4cec20733317b5288bb965cde6873fbb1023a768e02809cb",
+ "producer": "scripts/prepare_male_recovery_data.py",
+ "producing_commit": "c06b4976f30b86455dc9ea3406bad6fab42371e1",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "rebinds": [],
+ "stage": "S0c",
+ "status": "admissible",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-c",
+ "worktree_check": {
+  "detached": true,
+  "head": "c06b4976f30b86455dc9ea3406bad6fab42371e1",
+  "producer_sha256": "ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c",
+  "source_guards": {
+   "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+   "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+   "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+   "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+   "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+   "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3"
+  }
+ },
+ "would_run": [
+  "<in-process overlay>",
+  "prepare_male_recovery_data.main",
+  "--baseline-collection",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection/collection.json",
+  "--recovery-report",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection/report.json",
+  "--output",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data"
+ ]
+}

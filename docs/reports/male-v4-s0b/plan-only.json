@@ -1,0 +1,40 @@
+{
+ "arguments": {
+  "--assets": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn"
+  },
+  "--output": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection"
+  },
+  "--repo": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/c382c86"
+  }
+ },
+ "documents": {},
+ "execution": "subprocess",
+ "mode": "plan-only",
+ "previous_record_sha256": "d8e511b8d8095c8d781a0ecfb2b031571c4f6fd72d0367b88520643d0f653901",
+ "producer": "scripts/collect_male_recovery.py",
+ "producing_commit": "c382c86781a7a5d6651af721119789729cc890ae",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "rebinds": [],
+ "stage": "S0b",
+ "status": "admissible",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/c382c86",
+ "worktree_check": {
+  "detached": true,
+  "head": "c382c86781a7a5d6651af721119789729cc890ae",
+  "producer_sha256": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+  "source_guards": {}
+ },
+ "would_run": [
+  "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/c382c86/scripts/collect_male_recovery.py",
+  "--repo",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/c382c86",
+  "--assets",
+  "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+  "--output",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/collection"
+ ]
+}

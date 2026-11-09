@@ -1,0 +1,52 @@
+{
+ "arguments": {
+  "--assets": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn"
+  },
+  "--output": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection"
+  },
+  "--protocol": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9/docs/plans/m7-training-v2-protocol.json",
+   "sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b"
+  },
+  "--repo": {
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9"
+  },
+  "--research-stage": {
+   "value": "development"
+  }
+ },
+ "documents": {},
+ "execution": "subprocess",
+ "mode": "plan-only",
+ "producer": "scripts/collect_male_teachers.py",
+ "producing_commit": "cc1cea93d4c3333a0ee2a091dd34fff0b2986887",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "rebinds": [],
+ "stage": "S0a",
+ "status": "admissible",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9",
+ "worktree_check": {
+  "detached": true,
+  "head": "cc1cea93d4c3333a0ee2a091dd34fff0b2986887",
+  "producer_sha256": "ca633269b4710782647f505438ad521fe65b8fce643f48f26bdb3bd2b410025b",
+  "source_guards": {
+   "docs/plans/m7-training-v2-protocol.json": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b"
+  }
+ },
+ "would_run": [
+  "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9/scripts/collect_male_teachers.py",
+  "--repo",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9",
+  "--assets",
+  "/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn",
+  "--output",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0a/collection",
+  "--protocol",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9/docs/plans/m7-training-v2-protocol.json",
+  "--research-stage",
+  "development"
+ ]
+}

@@ -305,6 +305,73 @@ def fill_document(raw, item, values):
     return text.encode()
 
 
+def fill_values(name, item, doc, original, chain):
+    """Values for every declared field still at its placeholder whose stage is in the chain.
+
+    Read only from pin records: a sha256 is the named output's recorded sha256, a run id is the
+    single run directory recorded under a case, and count fields are derived by the same
+    sub-schemas that check them. Anything else is refused, never guessed."""
+    values = {}
+    for field in item['fields']:
+        pointer, kind = field['pointer'], field['class']
+        if pointer_get(doc, pointer) != field['placeholder']: continue
+        where = f'{name}{pointer}'
+        if kind in ('count-map', 'count-list', 'window-list'):
+            if kind == 'count-map': value = expected_count_map(field.get('schema'), original, chain, where)
+            elif field.get('schema') == 'recovery-ticks-v4': value = _recovery_ticks(chain, where)
+            elif field.get('schema') == 'recovery-windows-v4': value = [windows_for(n) for n in _recovery_ticks(chain, where)]
+            else: raise Refusal(f'{where} has class {kind} with unknown schema {field.get("schema")}')
+        else:
+            outputs, fill = _outputs(chain, field['stage'], where)['outputs'], field.get('fill', {})
+            if kind == 'sha256' and 'output' in fill:
+                if fill['output'] not in outputs: raise Refusal(f'{where}: {field["stage"]} recorded no {fill["output"]}')
+                value = outputs[fill['output']]['sha256']
+            elif kind == 'run-id' and 'run_dir_of' in fill:
+                runs = {Path(rel).parts[1] for rel in outputs if Path(rel).parts[0] == fill['run_dir_of'] and len(Path(rel).parts) > 3
+                        and Path(rel).parts[2] in ('recording', 'snapshots')}
+                if len(runs) != 1: raise Refusal(f'{where}: {fill["run_dir_of"]} must record exactly one run directory, got {sorted(runs)}')
+                value = runs.pop()
+            else:
+                raise Refusal(f'{where} ({kind}) names no fill source')
+        values[pointer] = value
+    return values
+
+
+def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha256, stages):
+    """--fill-document: fill a v4 copy consumed by ``stage`` in place, from the previous pin records only.
+
+    Every field whose stage is in the chain must end filled and traced (check_document_values);
+    fields of later stages keep their placeholders. Writes via an exclusive temporary and rename."""
+    if name not in stages[stage]['documents']: raise Refusal(f'{stage} does not consume {name}')
+    raws = [read_bounded(path) for path in previous_paths]
+    chain = previous_chain([json.loads(raw) for raw in raws], stage, stages, protocol_sha256=protocol_sha256)
+    item = load_declarations(pins_dir, protocol_sha256)['documents'][name]
+    original_raw = read_bounded(Path(worktree)/item['original_path'])
+    if sha256_bytes(original_raw) != item['original_sha256']:
+        raise Refusal(f'Original {item["original_path"]} differs in {worktree}')
+    target = Path(pins_dir)/name
+    raw = read_bounded(target)
+    original = json.loads(original_raw)
+    values = fill_values(name, item, check_pin_document(original_raw, raw, item, consumer=False), original, chain)
+    if not values: raise Refusal(f'{name} holds no placeholder that this chain can fill')
+    filled = fill_document(raw, item, values)
+    doc = check_pin_document(original_raw, filled, item, consumer=False)
+    due = {f['pointer'] for f in item['fields'] if f['stage'] in chain}
+    left = [p for p in _pending(doc) if any(p == d or p.startswith(d + '/') for d in due)]
+    if left: raise Refusal(f'{name} still holds placeholders this chain should fill: {left}')
+    check_document_values(name, doc, original, {**item, 'fields': [f for f in item['fields'] if f['pointer'] in values]},
+                          chain, lambda other: sha256_bytes(read_bounded(Path(pins_dir)/other)), pins_dir)
+    temporary = target.with_name(target.name + '.filling')
+    with temporary.open('xb') as stream:
+        stream.write(filled); stream.flush(); os.fsync(stream.fileno())
+    os.replace(temporary, target)
+    directory = os.open(target.parent, os.O_RDONLY)
+    try: os.fsync(directory)
+    finally: os.close(directory)
+    return {'document': name, 'path': str(target.resolve()), 'sha256': sha256_bytes(filled), 'fields': sorted(values),
+            'previous_record_sha256': [sha256_bytes(r) for r in raws], 'remaining_placeholders': _pending(doc)}
+
+
 def _outputs(chain, stage, where):
     if stage not in chain: raise Refusal(f'{where}: {stage} is not in the pin-record chain')
     return chain[stage]
@@ -1016,11 +1083,25 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
     parser.add_argument('--plan-only', action='store_true', help='Print the plan; never executes a producer')
     parser.add_argument('--go', type=Path, help='GO record naming this exact stage and the protocol sha256')
     parser.add_argument('--pin-record-out', type=Path, help='Fresh path for the published pin record')
+    parser.add_argument('--fill-document', metavar='NAME',
+                        help='Fill this v4 copy (consumed by --stage) in place from the --previous-pins records only; no producer')
     args = parser.parse_args(own)
     refused = lambda reason: (_emit({'status': 'refused', 'stage': args.stage, 'reason': reason}), 2)[1]
     if protocol_sha256 is None:
         protocol_sha256 = PROTOCOL_SHA256
         if sha256_file(ROOT/PROTOCOL_PATH) != PROTOCOL_SHA256: return refused('v4 protocol bytes differ from the pin')
+    if args.fill_document is not None:
+        if args.plan_only or args.go is not None or producer_args: return refused('--fill-document takes no --plan-only, --go or producer arguments')
+        try:
+            if any('port_tree' in s for s in stages.values()):
+                stages = port_stages(stages, load_ports(protocol_sha256=protocol_sha256) if ports is None else ports)
+            filled = fill_copy(args.fill_document, args.stage, args.worktree, args.previous_pins or [], pins_dir=pins_dir,
+                               protocol_sha256=protocol_sha256, stages=stages)
+        except (Refusal, OSError, ValueError, KeyError) as error:
+            _emit({'mode': 'fill', 'status': 'refused', 'stage': args.stage,
+                   'reason': str(error) if isinstance(error, Refusal) else f'{type(error).__name__}: {error}'})
+            return 3
+        _emit({'mode': 'fill', 'status': 'filled', 'stage': args.stage, **filled}); return 0
     if args.plan_only and args.go is not None: return refused('--plan-only and --go are mutually exclusive')
     if not args.plan_only and args.go is None:
         return refused('Default is refusal: pass --plan-only, or --go with an owner GO record')
