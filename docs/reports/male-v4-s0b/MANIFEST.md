@@ -212,3 +212,20 @@ Later stages stay `not_started`. There is no retry, substitution, filtering, rec
 budget change. The first fault and all partial outputs are retained as they are, the charge
 stands (census, or 970 CPU-s without a complete receipt), and any further work needs a new
 protocol version.
+
+## Review amendments (independent AI review, 2026-11-09)
+
+- **A. GO binding (pre-launch, by hand):** `load_go`/`check_go` do not compare these fields, so
+  before launch verify: `manifest_sha256` = sha256 of this committed file; `plan_sha256` =
+  `1ed0dfdc…3ef3`; `previous_pin_record_sha256` = sha256 of the `--previous-pins` file
+  (`d8e511b8…3901`); `cpu_quota_k` = 2 (= `--cpu-quota-k 2`); `worktree_head` = c382c86…; no
+  `<…>` placeholder remains anywhere in the GO record.
+- **B. Post-run gate additions:** pin record `chain` keys exactly `[S0a, S0b]` with `chain.S0a`
+  equal to the S0a record's own entry; `previous_record_sha256` = `d8e511b8…`; `go_sha256` =
+  sha256 of the GO file; `outputs` contains `report.json` and both `<case>/result.json`, each
+  result sha equal to `report.cases[*].result_sha256`; each case has exactly one uuid-hex run
+  directory; launcher receipt `complete`, `drained`, returncode 0, no survivors; ledger has a
+  `charged` S0b row; the driver printed `status: completed`.
+- **C. Wording:** RuntimeMaxSec 480 covers the driver as well as the producer; about 60 s beyond
+  the producer's 420 s gate remains for outer startup, cleanup and output hashing. A kill in that
+  window is an operational failure that ends v4.
