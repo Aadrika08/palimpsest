@@ -1,0 +1,22 @@
+{
+ "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/run-p2115154-i2142791.service",
+ "command": [
+  "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+  "-B",
+  "-c",
+  "import sys; sys.path[:0]=['/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src','/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts']; import audit_puck_v4_s1_report as a; sys.exit(a.main(['--report','/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-s1-report.json','--receipt','/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-s1-receipt/receipt.json','--output','/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g/attempt2-audit.json']))"
+ ],
+ "complete": true,
+ "cpu_seconds": 0.064385,
+ "drained": true,
+ "kind": "research-stage-receipt-v1",
+ "peak_memory_bytes": 22327296,
+ "peak_pids": 1,
+ "returncode": 0,
+ "sample_seconds": 0.25,
+ "samples": 1,
+ "supervisor_cpu_seconds": 0.002097,
+ "survivors_killed": [],
+ "wall_seconds": 0.06896343798143789,
+ "work_cpu_seconds": 0.062288
+}
