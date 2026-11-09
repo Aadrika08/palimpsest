@@ -293,7 +293,7 @@ def probe_entry(python, root, module, *, thread_env=None, forbid=(), egl=False, 
            'MUJOCO_GL': 'egl', 'CUDA_VISIBLE_DEVICES': '', 'PYTHONDONTWRITEBYTECODE': '1', **(thread_env or {}),
            **(extra_env or {})}
     try:
-        done = subprocess.run([str(python), '-I', str(Path(__file__).resolve()), '--child', json.dumps(config)],
+        done = subprocess.run([str(python), '-I', '-B', str(Path(__file__).resolve()), '--child', json.dumps(config)],
                               cwd=root, env=env, capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired:
         return {**base, 'status': 'refused', 'reasons': [f'Probe child exceeded {timeout} s']}
@@ -424,6 +424,8 @@ def main(argv=None):
             print(json.dumps({'status': 'refused', 'reasons': [str(error)]})); return 2
         print(json.dumps({'status': 'written', 'locator': written, 'protocol_sha256': PROTOCOL_SHA256}, sort_keys=True))
         return 0
+    if args.egl_stage is not None and args.egl_stage not in ENTRYPOINTS:
+        print(json.dumps({'status': 'refused', 'reasons': [f'Unknown --egl-stage {args.egl_stage}']})); return 2
     results = []
     for item in args.stage:
         stage, _, worktree = item.partition('=')
@@ -432,6 +434,8 @@ def main(argv=None):
         egl = args.egl and (args.egl_stage is None or stage == args.egl_stage)
         results.append(probe_stage(python, stage, worktree, forbid=args.forbid, egl=egl, timeout=args.timeout,
                                    port_pins=args.port_pins))
+        # Per-entry line on stderr so a RuntimeMaxSec kill still leaves the completed results.
+        print(json.dumps(results[-1], sort_keys=True), file=sys.stderr, flush=True)
     if args.root or args.module:
         if not (args.root and args.module):
             print(json.dumps({'status': 'refused', 'reasons': ['--root and --module go together']})); return 2

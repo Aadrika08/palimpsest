@@ -84,9 +84,12 @@ reserved v4 data root `palimpsest-authored-test-evidence/male-v4-runs`. Held-out
 
 1. **Merge and pin.** Merge `impl/male-v4-p` so `CUR` carries `--write-port-pins`. Record `CUR`'s
    HEAD and this file's sha256 in the GO.
-2. **Ledger (owner).** If the navigation-lane ledger does not exist, seed it with the prior v3
-   charge as one `charged` row (`lane: navigation`, `stage: v3-prior`, `cpu_seconds: 1.832`).
-   `run_research_stage.py` then admits P against 14,400 − 1.832.
+2. **Ledger.** Use the single global research ledger `~/.local/state/palimpsest/research-ledger.jsonl`
+   (the same ledger as puck, so the 24 CPU-hour aggregate cap is enforced across lanes). Before P,
+   append exactly one seed row for the prior v3 charge (owner decision 3):
+   `{"cpu_seconds": 1.832, "event": "charged", "lane": "navigation", "stage": "v3-prior", "basis": "v3 attempts 1 (0.431) and 2 (1.401), docs/reports/m7-navigation-v3-matched-budget-attempt-{1,2}.md"}`.
+   `run_research_stage.py` then admits P against 14,400 − 1.832 (the launcher now creates a
+   missing ledger directory before writing).
 3. **P-time locator** (uncharged; opens no data; writes one file):
 
    ```sh
@@ -118,7 +121,7 @@ reserved v4 data root `palimpsest-authored-test-evidence/male-v4-runs`. Held-out
 ```sh
 /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/run_research_stage.py \
   --lane navigation --stage P --cpu-quota-k 1 --runtime-max-sec 120 --worst-case-cpu 125 \
-  --ledger /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-ledger/ledger.jsonl \
+  --ledger /home/utkarsh/.local/state/palimpsest/research-ledger.jsonl \
   --go-record /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-stage-p/go-P.json \
   --receipt-dir /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-stage-p/receipt \
   -- \
@@ -149,6 +152,68 @@ reserved v4 data root `palimpsest-authored-test-evidence/male-v4-runs`. Held-out
   --forbid /home/utkarsh/Work/shraddha/palimpsest/runs \
   --forbid /home/utkarsh/Work/shraddha/palimpsest/data/assets \
   --forbid /home/utkarsh/Work/shraddha/brain \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/runs \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-ci-repair/data/assets \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/runs \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-final/data/assets \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-recovery/runs \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-study-recovery/data/assets \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/runs \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/paper-systems/data/assets \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/ci-isolated-first-20261106/runs \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/data/assets \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/worktrees \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest/.claude/worktrees \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-go \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108b \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108c \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108d \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108e \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108f \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-20261108g \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-attempt-2-ledger \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/puck-v4-s1-attempt-ledger \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/custody-extraction-20261107.075cy2 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/custody-extraction-20261107.LAsiKE \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/custody-extraction-20261107.T7N2nJ \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-custody-extraction-20261107.07zE7v \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-custody-extraction-20261107.S7OZx8 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-custody-extraction-20261107.SJb3Y5 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-custody-extraction-20261107.X2cmS2 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-01 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-covering-02 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-green-01 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-green-02 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-green-03 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-fix1-red-01 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-03 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-04 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-05 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-green-20261106-06 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-integration-20261106-10 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-paper-tests.2eXSgv \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-paper-tests.KSbbb5 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-paper-tests.XnuA8j \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-paper-tests.b7am0n \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-paper-tests.jhIGsU \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-paper-tests.uylAaa \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-scratch-20261106-10 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/source-vertical-scratch-20261106-11 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/fresh-reproduction-v2-20261107-94c5488.time \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/ci-sim-bt \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/ci-sim-bt2-d5b04c7 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/ci-sim-clone \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/ci-sim-clone2 \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/paper-verify-20261107.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/paper-verify-rq5.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/paper-verify-rq5b.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/paper-verify-rq5c.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/paper-verify-v2.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/canonical-94c5488-20261107.log \
+  --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/canonical-ab1e927-20261107.log \
   --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs \
   --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9/runs \
   --forbid /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/cc1cea9/data/assets \
@@ -207,3 +272,23 @@ locator. That entry passes, and it is refused when the pins directory is forbidd
 parses the command above and checks that every `ENTRYPOINTS` key appears exactly once, the unit
 parameters, `--egl`, `--port-pins`, the forbid list and that every output path sits outside all
 roots. No real entry point was probed.
+
+## Review amendments (independent AI review, 2026-11-09)
+
+- **Stage classification:** `scientific_attempt: false`. Protocol `on_failure`, verbatim:
+  "Report blocked. Environment repair and any re-probe require a new manifest and owner GO;
+  every probe is charged." A P failure or a RuntimeMaxSec kill ends MaleCNS v4 at P.
+- **Forbid scope:** the audit hook sees Python-level `open` calls only; C-level reads inside
+  MuJoCo or Torch are not audited. The forbid list now also covers every other worktree's `runs`
+  and `data/assets`, `palimpsest/worktrees`, `palimpsest/.claude/worktrees` and the other
+  evidence-store directories (puck evidence, fixtures, reproductions, CI simulations).
+- **Pass conditions (step 6):** every entry `passed`; `verify_endurance` and `httpx` 0.28.1 present
+  in the S0b–S0f and port reports; exactly one non-null `runtime.egl`, from S2. The v2-trainer head
+  of the must-cover chain is not a v4 entry point; it is covered only by
+  `test_real_v3_trainer_chain_resolves_in_locked_environment`.
+- **Pre-launch operator checks (by hand; `load_go` checks only lane, stage and non-empty fields):**
+  sha256 of the protocol, this manifest and `port-pins.json` equal the GO; `CUR` HEAD equals
+  `current_tree_head`; `git status --porcelain` in `CUR` is empty.
+- **Hardening applied:** probe children run `-I -B` (no `__pycache__` written into the trees);
+  `--egl-stage` is validated against the declared entry points; each entry result is also written
+  to stderr as it completes, so a kill keeps the completed diagnostics.

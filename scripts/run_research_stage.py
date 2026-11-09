@@ -82,6 +82,7 @@ def admit(rows, lane, stage, worst_case):
 
 
 def append(path, row):
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     with open(path, 'a', encoding='utf-8') as stream:
         stream.write(json.dumps(row, sort_keys=True) + '\n')
         stream.flush()

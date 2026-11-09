@@ -327,3 +327,9 @@ def test_egl_stage_limits_the_single_context_to_one_declared_stage(monkeypatch, 
     probe.main(['--python', sys.executable, '--egl', '--egl-stage', 'S2',
                 '--stage', f'S1={tmp_path}', '--stage', f'S2={tmp_path}'])
     assert calls == [('S1', False), ('S2', True)]
+
+
+def test_unknown_egl_stage_is_refused(tmp_path, capsys):
+    assert probe.main(['--python', sys.executable, '--egl', '--egl-stage', 'S9',
+                       '--stage', f'S1={tmp_path}']) == 2
+    assert 'Unknown --egl-stage' in capsys.readouterr().out
