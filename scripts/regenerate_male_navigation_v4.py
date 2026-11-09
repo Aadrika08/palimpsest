@@ -57,6 +57,10 @@ CONTACT_V2 = 'm7-navigation-contact-v2-protocol.json'
 DATA_V2 = 'm7-navigation-data-v2-protocol.json'
 RECOVERY_INDEX = 'male-recovery-research-development-v1.json'
 STUDY_PLAN = 'm7-navigation-study-protocol.json'
+# Per-source count sub-schemas (declared-fields.json amendment_1_pending.count_schemas).
+RECOVERY_CASES = ('recovery-north-2100', 'recovery-south-2101')
+ADVICE_CASES = tuple(f'learner-{scene}-seed-{seed}' for scene in range(3100, 3104) for seed in (10, 11, 12))
+RECOVERY_MAX_ROWS, ADVICE_MAX_ROWS = 120, 600
 PORT_READER_SHA = 'ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c'
 PORT_COLLECTOR_V2_SHA = '5d7ddef2104a2ec9bb9446aaaa2e8b8db6c77b23ce0d3afd903abc6c6c074a09'
 ORIGINAL_RECOVERY_LEARNING_SHA = '091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28'
@@ -93,12 +97,13 @@ STAGES = {
                      '--protocol': {'kind': 'fixed-file',
                                     'sha256': '8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b'},
                      # Development teacher stage only; held-out teacher scenes 1012-1015 are not run.
-                     '--research-stage': {'kind': 'value', 'allowed': ['development']}}},
+                     '--research-stage': {'kind': 'value', 'allowed': ['development']}},
+            'records_counts': 'teacher-collection'},
     'S0b': {'stage': 'S0b', 'producer': 'scripts/collect_male_recovery.py', 'module': 'collect_male_recovery',
             'commit': 'c382c86781a7a5d6651af721119789729cc890ae',
             'producer_sha256': '17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60',
             'source_guards': {}, 'documents': [], 'rebinds': [], 'upstream_values': [], 'execution': 'subprocess',
-            'args': {'--repo': REPO, '--assets': ASSETS, '--output': OUTPUT}},
+            'args': {'--repo': REPO, '--assets': ASSETS, '--output': OUTPUT}, 'records_counts': 'recovery-cases'},
     'S0c': {'stage': 'S0c', 'producer': 'scripts/prepare_male_recovery_data.py', 'module': 'prepare_male_recovery_data',
             'commit': '7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe',
             'producer_sha256': '2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca',
@@ -140,7 +145,7 @@ STAGES = {
             # copy); contact-v2 /prior_version/collector_sha256 cascades to these bytes (amendment_1_pending).
             'port_tree': 'T-e', 'port_producer_sha256': PORT_COLLECTOR_V2_SHA,
             'port_source_guards': {'scripts/collect_male_navigation.py':
-                                   'd06b0dae2e97bfddcf41bc24c98a6cafff4cda3994d7cbdb32d335be025ab791'},
+                                   'f96552012646b4cac5c7feeb253a6c16ab15d1948b67a6a8799da5341f74d1a0'},
             'port_documents': [CONTACT_V2, RECOVERY_INDEX, RECOVERY_LEARNING, STUDY_PLAN],
             'documents': [CONTACT_V2, RECOVERY_INDEX],
             # The recovery index pin lives in male_recovery_research (not in the protocol inventory).
@@ -149,7 +154,7 @@ STAGES = {
                         {'module': 'palimpsest.male_recovery_research', 'attribute': 'INDEX_SHA256',
                          'kind': 'document-sha256', 'document': RECOVERY_INDEX}] + CONTACT_REBINDS,
             'upstream_values': [ORIGINAL_RECOVERY_LEARNING_SHA, ORIGINAL_DATA_SHA], 'execution': 'in-process',
-            'args': {'--repo': REPO, '--assets': ASSETS, '--output': OUTPUT}},
+            'args': {'--repo': REPO, '--assets': ASSETS, '--output': OUTPUT}, 'records_counts': 'advice-cases'},
     'S0f': {'stage': 'S0f', 'producer': 'scripts/prepare_male_navigation_v2.py', 'module': 'prepare_male_navigation_v2',
             'commit': '4ecb354efa4223abdbe3d09be118fe5402fec1a1',
             'producer_sha256': 'ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333',
@@ -302,6 +307,9 @@ def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir):
                     (kind == 'doc-path' and (not isinstance(value, str) or Path(value).resolve() != target.resolve())):
                 raise Refusal(f'{where} does not name the validated v4 copy {field["document"]}')
             continue
+        if kind in ('count-map', 'count-list', 'window-list'):
+            check_count_field(where, kind, field.get('schema'), doc, original, value, chain)
+            continue
         if kind == 'worktree-path':
             if not isinstance(value, str) or _git(value, 'rev-parse', 'HEAD').stdout.strip() != field['commit']:
                 raise Refusal(f'{where} is not a worktree at {field["commit"]}')
@@ -328,6 +336,97 @@ def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir):
                 raise Refusal(f'{where} must keep pinned hashes and name paths in the {field["stage"]} worktree')
         else:
             raise Refusal(f'{where} has unknown class {kind}')
+
+
+def windows_for(ticks):
+    """Recovery windows: 32-row chunks then the remainder (Amendment 1 H3)."""
+    return [32]*(ticks//32) + ([ticks % 32] if ticks % 32 else [])
+
+
+def _counts(values, length, maximum=None):
+    return isinstance(values, list) and len(values) == length and \
+        all(type(n) is int and n > 0 and (maximum is None or n <= maximum) for n in values)
+
+
+def _recorded(chain, stage, where):
+    counts = _outputs(chain, stage, where).get('counts')
+    if counts is None: raise Refusal(f'{where}: the {stage} pin record carries no per-source counts')
+    return counts
+
+
+def _teacher_ticks(chain, where):
+    teacher = _recorded(chain, 'S0a', where)
+    if not (isinstance(teacher, dict) and _counts(teacher.get('baseline_train'), 8) and _counts(teacher.get('dev'), 4)):
+        raise Refusal(f'{where}: S0a must record 8 train and 4 dev teacher sources, each > 0')
+    return teacher['baseline_train'], teacher['dev']
+
+
+def _recovery_ticks(chain, where):
+    recovery = _recorded(chain, 'S0b', where)
+    ticks = [recovery.get(case) for case in RECOVERY_CASES] if isinstance(recovery, dict) else None
+    if not _counts(ticks, 2, RECOVERY_MAX_ROWS) or set(recovery) != set(RECOVERY_CASES):
+        raise Refusal(f'{where}: S0b must record both recovery sources, each 1..{RECOVERY_MAX_ROWS} rows')
+    return ticks
+
+
+def _advice_ticks(chain, where):
+    advice = _recorded(chain, 'S0e', where)
+    ticks = [advice.get(case) for case in ADVICE_CASES] if isinstance(advice, dict) else None
+    if not _counts(ticks, 12, ADVICE_MAX_ROWS) or set(advice) != set(ADVICE_CASES):
+        raise Refusal(f'{where}: S0e must record all 12 advice sources, each 1..{ADVICE_MAX_ROWS} rows')
+    return ticks
+
+
+def expected_count_map(schema, original, chain, where):
+    """The exact count map a v4 copy must hold, derived from the pin-record chain."""
+    base, dev = _teacher_ticks(chain, where)
+    recovery = _recovery_ticks(chain, where)
+    if schema == 'recovery-learning-counts-v4':
+        return {'baseline_train': sum(base), 'dev': sum(dev), 'held_out': 0, 'recovery_train': sum(recovery),
+                'train': sum(base) + sum(recovery), 'per_source': {'baseline_train': base, 'dev': dev},
+                'v2_reference_counts': original['counts']}
+    if schema == 'data-v2-counts-v4':
+        old, advice = base + recovery, _advice_ticks(chain, where)
+        return {'old_sources': 14, 'new_sources': 12, 'combined_unique_sources': 26, 'old_train_rows': sum(old),
+                'new_advice_train_rows': sum(advice), 'augmented_train_rows': sum(old) + sum(advice),
+                'recorded_dev_rows': sum(dev), 'combined_rows': sum(old) + sum(advice) + sum(dev),
+                'held_out_sources': 0, 'held_out_rows': 0, 'per_source': {'old_train': old, 'dev': dev, 'advice': advice},
+                'v2_reference_counts': original['counts']}
+    raise Refusal(f'{where} names unknown count schema {schema}')
+
+
+def check_count_field(where, kind, schema, doc, original, value, chain):
+    """count-map / count-list / window-list: exact, order-preserving, traced to S0a/S0b/S0e records."""
+    if kind == 'count-map':
+        expected = expected_count_map(schema, original, chain, where)
+    elif kind == 'count-list' and schema == 'recovery-ticks-v4':
+        if [s.get('case_id') for s in doc.get('recovery_sources', [])] != list(RECOVERY_CASES):
+            raise Refusal(f'{where}: recovery_sources order differs from {RECOVERY_CASES}')
+        expected = _recovery_ticks(chain, where)
+    elif kind == 'window-list' and schema == 'recovery-windows-v4':
+        expected = [windows_for(n) for n in _recovery_ticks(chain, where)]
+    else:
+        raise Refusal(f'{where} has class {kind} with unknown schema {schema}')
+    if canonical(value) != canonical(expected):
+        raise Refusal(f'{where} differs from the per-source counts in the S0a/S0b/S0e pin records')
+
+
+def stage_counts(kind, output_root):
+    """Per-source tick counts read from a finished stage's own output documents (never recordings)."""
+    root = Path(output_root)
+    if kind == 'teacher-collection':  # collect_male_teachers.py: runs[*].ticks, one episode per run
+        runs = json.loads(read_bounded(root/'collection.json'))['runs']
+        return {split: [r['ticks'] for r in runs if r['split'] == key] for split, key in (('baseline_train', 'train'), ('dev', 'dev'))}
+    if kind in ('recovery-cases', 'advice-cases'):
+        counts = {}
+        for case in (RECOVERY_CASES if kind == 'recovery-cases' else ADVICE_CASES):
+            result = json.loads(read_bounded(root/case/'result.json'))
+            rows = len(result['rows'])
+            if kind == 'recovery-cases' and result.get('recorded_ticks') != rows:
+                raise Refusal(f'{case}: recorded_ticks differs from the result rows')
+            counts[case] = rows
+        return counts
+    raise Refusal(f'Unknown count source {kind}')
 
 
 def _traced_path(value, record):
@@ -374,10 +473,11 @@ def _hash_tree(output_root):
 
 
 def make_pin_record(spec, stage, worktree, output_root, previous, *, protocol_sha256, overlay=None, go_sha256=None,
-                    port=None):
+                    port=None, counts=None):
     output_root, worktree = Path(output_root).resolve(), Path(worktree).resolve()
     outputs = _hash_tree(output_root)
-    own = {'producing_commit': spec['commit'], 'worktree': str(worktree), 'output_root': str(output_root), 'outputs': outputs}
+    own = {'producing_commit': spec['commit'], 'worktree': str(worktree), 'output_root': str(output_root), 'outputs': outputs,
+           **({} if counts is None else {'counts': counts})}
     return {'schema': RECORD_SCHEMA, 'protocol_sha256': protocol_sha256, 'stage': stage, **own,
             'producer_sha256': spec['producer_sha256'], 'go_sha256': go_sha256,
             'previous_record_sha256': None if previous is None else sha256_bytes(canonical(previous)),
@@ -406,6 +506,7 @@ def check_pin_record(record, stage, stages, *, protocol_sha256):
         raise Refusal(f'Pin record producing commit differs from {previous}')
     chain = record.get('chain')
     own = {k: record.get(k) for k in ('producing_commit', 'worktree', 'output_root', 'outputs')}
+    if 'counts' in record: own['counts'] = record['counts']
     if not isinstance(chain, dict) or list(chain) != order[:order.index(stage)] or chain[previous] != own:
         raise Refusal('Pin record chain is incomplete or differs from its own outputs')
     return chain
@@ -559,12 +660,16 @@ def verify_port_tree(worktree, tree_id, ports, *, repo=ROOT):
 def port_locator(spec, documents, chain):
     """The locator the H1 hunks read: v4 documents (path, sha256) and upstream output pins."""
     value = {'schema': PORT_LOCATOR_SCHEMA, 'documents': {k: dict(v) for k, v in documents.items()}}
+    absolute = lambda path: isinstance(path, str) and path != '' and Path(path).is_absolute()
+    for name, entry in value['documents'].items():
+        if not absolute(entry.get('path')): raise Refusal(f'Locator path for {name} must be absolute: {entry.get("path")!r}')
     for name in spec['port']['locator_values']:
         if name != 'data_manifest': raise Refusal(f'Unknown locator value {name}')
         record = _outputs(chain, 'S0c', 'data_manifest')
         if 'data-manifest.json' not in record['outputs']: raise Refusal('S0c recorded no data-manifest.json')
         value['data_manifest'] = {'path': str(Path(record['output_root'])/'data-manifest.json'),
                                   'sha256': record['outputs']['data-manifest.json']['sha256']}
+        if not absolute(record['output_root']): raise Refusal('Locator data_manifest path must be absolute')
     return value
 
 
@@ -883,8 +988,11 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
     if code != 0 or output is None:
         _emit({'mode': 'go', 'status': 'producer-failed', 'stage': args.stage, 'returncode': code}); return 1
     verify_worktree(args.worktree, spec)
+    try: counts = stage_counts(spec['records_counts'], output) if 'records_counts' in spec else None
+    except (Refusal, OSError, ValueError, KeyError, TypeError) as error:
+        _emit({'mode': 'go', 'status': 'record-refused', 'stage': args.stage, 'reason': str(error)}); return 1
     record = make_pin_record(spec, args.stage, args.worktree, output, previous, protocol_sha256=protocol_sha256,
-                             overlay=overlay, go_sha256=go_sha, port=port)
+                             overlay=overlay, go_sha256=go_sha, port=port, counts=counts)
     write_pin_record(args.pin_record_out, record)
     _emit({'mode': 'go', 'status': 'completed', 'stage': args.stage, 'pin_record': str(args.pin_record_out),
            'outputs': len(record['outputs'])})
