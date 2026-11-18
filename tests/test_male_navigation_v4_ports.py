@@ -902,8 +902,10 @@ import probe_male_navigation_v4_imports as probe  # noqa: E402
 def test_probe_declares_port_entry_points_and_refuses_wrong_head_without_child(tmp_path, monkeypatch):
     table = probe.ENTRYPOINTS
     assert {k: v['port_tree'] for k, v in table.items() if v.get('port_tree')} == {
-        'S0c-port': 'T-c', 'S0d-port': 'T-d', 'S0e-port': 'T-e', 'S0f-port': 'T-f', 'S0f-historical-port': 'T-h'}
+        'S0c-port': 'T-c', 'S0d-port': 'T-d', 'S0e-port': 'T-e', 'S0f-port': 'T-f', 'S0f-historical-port': 'T-h',
+        'S1-data-child-closure': 'T-f'}   # P2: the S1 data child's T-f closure
     assert all(table[k]['module'] == table[k[:-5]]['module'] for k in table if k.endswith('-port'))
+    assert table['S1-data-child-closure']['module'] == table['S0f-port']['module']
     assert probe.port_commit('T-e') == SPEC['trees']['T-e']['port_commit']
     calls = []
     monkeypatch.setattr(probe, 'probe_entry', lambda *a, **k: calls.append((a, k)) or {'status': 'passed'})

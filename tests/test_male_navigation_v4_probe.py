@@ -317,7 +317,8 @@ def test_stage_p_manifest_covers_every_entry_point_once_under_a_charged_navigati
     command = argv[argv.index('--') + 1:]
     assert command[0] == '/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python' and flag('--python', command) == command[0]
     stages = [command[i + 1].partition('=') for i, w in enumerate(command) if w == '--stage']
-    assert sorted(s for s, _, _ in stages) == sorted(probe.ENTRYPOINTS) and len(stages) == len(probe.ENTRYPOINTS)
+    p_keys = sorted(set(probe.ENTRYPOINTS) - set(probe.P2_ENTRIES))      # stage P predates the P2 entries
+    assert sorted(s for s, _, _ in stages) == p_keys and len(stages) == len(p_keys) == 21
     assert '--egl' in command and Path(flag('--port-pins', command)).is_absolute()
     roots = {w for _, _, w in stages}
     forbid = [command[i + 1] for i, w in enumerate(command) if w == '--forbid']
@@ -344,3 +345,71 @@ def test_unknown_egl_stage_is_refused(tmp_path, capsys):
     assert probe.main(['--python', sys.executable, '--egl', '--egl-stage', 'S9',
                        '--stage', f'S1={tmp_path}']) == 2
     assert 'Unknown --egl-stage' in capsys.readouterr().out
+
+
+# ------------------------------------------------------------------- stage P2 entry points
+
+def test_p2_entries_are_declared_with_the_right_modules_trees_and_thread_environment():
+    table = probe.ENTRYPOINTS
+    assert {k: table[k]['module'] for k in probe.P2_ENTRIES} == {
+        'S0z-controller': 'run_male_navigation_v4_s0z', 'S0z-audit': 'audit_male_navigation_v4_s0z',
+        'S1-data-child': 'derive_male_navigation_v4_s1_data', 'S1-data-child-closure': 'prepare_male_navigation_v2'}
+    assert table['S1-data-child-closure']['port_tree'] == 'T-f' and table['S1-data-child-closure']['commit'] is None
+    assert all(table[k]['commit'] is None for k in probe.P2_ENTRIES) and set(probe.P2_REPROBE) <= set(table)
+    for key in ('S0z-controller', 'S0z-audit', 'S1-data-child'):
+        assert (ROOT/'scripts'/(table[key]['module'] + '.py')).is_file()
+
+
+def test_p2_cur_entries_pass_the_real_probe_with_only_stdlib_numpy_and_pure_palimpsest_modules(tmp_path):
+    # Synthetic dry validation only: the audit and child files are tiny and import-safe; no data opens.
+    for key in ('S0z-audit', 'S1-data-child'):
+        result = probe.probe_stage(sys.executable, key, ROOT)
+        assert result['status'] == 'passed', (key, result.get('reasons'))
+        assert not {'torch', 'mujoco'} & set(result['modules'])
+
+
+def test_the_s1_data_child_runs_under_dash_i_with_only_the_port_on_its_path_and_its_closure_is_a_port_entry():
+    source = (ROOT/'scripts/derive_male_navigation_v4_s1_data.py').read_text()
+    assert "sys.path[:0] = [str(port/'src'), str(port/'scripts')]" in source and "importlib.import_module('prepare_male_navigation_v2')" in source
+    trainer = (ROOT/'scripts/train_male_navigation_v4.py').read_text()
+    assert "[sys.executable, '-I', '-B'" in trainer and 'derive_male_navigation_v4_s1_data.py' in trainer
+    assert probe.ENTRYPOINTS['S1-data-child-closure']['port_tree'] == 'T-f'
+
+
+P2_MANIFEST = ROOT/'docs/reports/male-v4-stage-p2/MANIFEST.md'
+
+
+def test_stage_p2_manifest_probes_exactly_the_new_and_changed_entries_under_a_fresh_p2_unit():
+    text = P2_MANIFEST.read_text()
+    block = re.search(r'<!-- stage-p2-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    unit, command = argv[:argv.index('--')], argv[argv.index('--') + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    assert (flag('--lane', unit), flag('--stage', unit), flag('--runtime-max-sec', unit), flag('--worst-case-cpu', unit),
+            flag('--cpu-quota-k', unit)) == ('navigation', 'P2', '120', '125', '1')
+    assert flag('--stage', unit) != 'P'                                           # the launcher refuses a repeated (lane, stage)
+    stages = [command[i + 1].partition('=') for i, w in enumerate(command) if w == '--stage']
+    assert [s for s, _, _ in stages] == ['S0z-controller', 'S0z-audit', 'S1-data-child', 'S1-data-child-closure', 'S1', 'S2']
+    assert set(s for s, _, _ in stages) == set(probe.P2_ENTRIES) | set(probe.P2_REPROBE)
+    cur = '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite'
+    tf = '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-f'
+    assert {s: w for s, _, w in stages}['S1-data-child-closure'] == tf and all(w == cur for s, _, w in stages if s != 'S1-data-child-closure')
+    assert '--egl' in command and flag('--egl-stage', command) == 'S2' and flag('--egl-stage', command) in dict((s, 1) for s, _, _ in stages)
+    forbid = [command[i + 1] for i, w in enumerate(command) if w == '--forbid']
+    e = '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence'
+    for required in (f'{e}/male-v4-data', f'{e}/male-v4-runs', f'{e}/male-v4-trees/port-t-d/runs/S0d', f'{e}/male-v4-trees/port-t-f/runs',
+                     f'{e}/male-v4-trees/port-t-e/runs', f'{e}/male-v4-stage-p', '/home/utkarsh/Work/shraddha/brain'):
+        assert required in forbid, required
+    p_block = re.search(r'<!-- stage-p-command -->\n```sh\n(.*?)\n```', MANIFEST.read_text(), re.S).group(1).replace('\\\n', ' ').split()
+    assert {p_block[i + 1] for i, w in enumerate(p_block) if w == '--forbid'} <= set(forbid)      # P's list is kept, never shrunk
+    outside = [flag('--receipt-dir', unit), flag('--go-record', unit), flag('--port-pins', command)]
+    for path in outside:
+        assert Path(path).parent == Path(f'{e}/male-v4-stage-p2') or Path(path).parent.parent == Path(f'{e}/male-v4-stage-p2')
+        assert not any(Path(path) == Path(r) or Path(r) in Path(path).parents for r in set(forbid) | {w for _, _, w in stages}), path
+    # The locator digest in the manifest is the probe's own output over the tracked copies (paths as in CUR).
+    value = probe.p_time_locator()
+    raw = (json.dumps(value, sort_keys=True, separators=(',', ':')) + '\n').encode().replace(str(ROOT).encode(), cur.encode())
+    assert hashlib.sha256(raw).hexdigest() in text and all(not v for v in value['pending'].values())
+    for phrase in ('scientific_attempt": false', 'Decision: split', 'declared_fields_sha256', 'current_tree_head', 'Post-run gate',
+                   'On failure', 'mesa 1:26.2.5-1', '85.274', 'only the T-f port on `sys.path`', '88c1a0f6f53274fe663f4cdad3be5ae2743af558'):
+        assert phrase in text, phrase
