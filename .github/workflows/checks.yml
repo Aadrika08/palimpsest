@@ -28,7 +28,11 @@ jobs:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Install namespace, compiler and EGL dependencies
-        run: pacman -Syu --noconfirm --needed git gcc bubblewrap libglvnd mesa curl tar gzip xz python
+        run: |
+          pacman -Syu --noconfirm --needed git gcc bubblewrap libglvnd mesa curl tar gzip xz python
+          # The hosted runner's base image leaves little room for the fixture storage floors;
+          # downloaded packages are no longer needed once installed.
+          rm -rf /var/cache/pacman/pkg/*
       - uses: actions/checkout@v7
         with:
           submodules: true
