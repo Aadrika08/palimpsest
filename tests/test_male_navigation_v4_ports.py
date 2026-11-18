@@ -1420,7 +1420,7 @@ def test_contact_collector_port_pin_is_accepted_with_a_t_f_worktree_whose_v1_col
     """S0f passes T-f (unported collect_male_navigation.py d0decc66) while contact-v2 pins the T-e port bytes."""
     field = next(f for f in item_of(CONTACT)['fields'] if f['pointer'] == '/prior_version/collector_sha256')
     tree = tmp_path/'t-f'; (tree/'scripts').mkdir(parents=True)
-    unported = blob(SPEC['trees']['T-f']['branch'], 'scripts/collect_male_navigation.py')
+    unported = blob(port_rev('T-f'), 'scripts/collect_male_navigation.py')
     (tree/'scripts/collect_male_navigation.py').write_bytes(unported)
     assert sha(unported) != field['cascade_value']                                   # the bytes differ by design
     contact = json.loads((PINS/CONTACT).read_bytes())
