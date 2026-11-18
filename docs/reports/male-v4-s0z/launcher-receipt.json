@@ -1,0 +1,31 @@
+{
+ "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/run-p97533-i112411.service",
+ "command": [
+  "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+  "-B",
+  "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/run_male_navigation_v4_s0z.py",
+  "--s0f-record",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-data/S0f/pin-record.json",
+  "--stage-root",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-data/S0z",
+  "--expected-manifest-sha256",
+  "4a1be0920f01a3d36df4f9a48b7906fefbd4efd128e1ffaa1ff2759a010e2fa3",
+  "--expected-derivation-sha256",
+  "81cd9a496ec25762b106276fbfb87754593c668d6159adf5c15b30df38ff83cb",
+  "--go",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0z/go-S0z.json"
+ ],
+ "complete": true,
+ "cpu_seconds": 0.7264660000000001,
+ "drained": true,
+ "kind": "research-stage-receipt-v1",
+ "peak_memory_bytes": 35975168,
+ "peak_pids": 1,
+ "returncode": 0,
+ "sample_seconds": 0.25,
+ "samples": 3,
+ "supervisor_cpu_seconds": 0.00436,
+ "survivors_killed": [],
+ "wall_seconds": 0.7547356520003632,
+ "work_cpu_seconds": 0.722106
+}

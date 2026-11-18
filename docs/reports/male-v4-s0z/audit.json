@@ -1,0 +1,61 @@
+{
+ "advice_arrays": "not vouched for here; enforced at S1 by the fts gate",
+ "checks": [
+  {
+   "detail": "S0f record shape, chain S0a..S0f and bound locator",
+   "name": "s0f_record",
+   "ok": true
+  },
+  {
+   "detail": "11 outputs re-hashed; differing []",
+   "name": "outputs",
+   "ok": true
+  },
+  {
+   "detail": "data manifest sha256",
+   "name": "manifest_pin",
+   "ok": true
+  },
+  {
+   "detail": "rosters (8+2 old, 12 advice in scene/learner order, 4 dev, no held-out), bounds, 26 unique hashes, counts",
+   "name": "structure",
+   "ok": true
+  },
+  {
+   "detail": "old and dev identities equal the S0c data manifest, in order",
+   "name": "old_corpus",
+   "ok": true
+  },
+  {
+   "detail": "commits vs ports.json, S0f->S0e linkage, S0e counts == advice ticks, old manifest from the S0c record",
+   "name": "chain",
+   "ok": true
+  },
+  {
+   "detail": "S0e-A audit passed, no failures, not_covered empty (no waiver)",
+   "name": "s0e_audit",
+   "ok": true
+  },
+  {
+   "detail": "14 old/dev arrays: dtype, shape, finiteness and hashes; differing []",
+   "name": "historical_arrays",
+   "ok": true
+  },
+  {
+   "detail": "N, q, r and source rows recomputed independently",
+   "name": "derivation",
+   "ok": true
+  }
+ ],
+ "failures": [],
+ "kind": "m7-navigation-v4-s0z-audit-1",
+ "s0e_audit": {
+  "bytes": 5306,
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/root-raw-audit.json",
+  "sha256": "58d7696197ee0aaaa131fa4b0154c2b3f731bcba280c2c13ac473ae5e33608a4"
+ },
+ "s0f_record_sha256": "635d7ebcbcafece61b84bf49ee3d43cc30cd75e984680b17cfa6367e5cf9cc42",
+ "status": "passed",
+ "torch_imported": false,
+ "waivers": []
+}
