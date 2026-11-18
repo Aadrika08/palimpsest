@@ -87,11 +87,11 @@ def run_audit(b, **changes):
 def failed(report): return {f['name'] for f in report['failures']}
 
 
-def test_audit_passes_a_synthetic_s0f_output_and_never_imports_torch(tmp_path):
+def test_audit_passes_a_synthetic_s0f_output_and_states_what_it_does_not_vouch_for(tmp_path):
     report = run_audit(build(tmp_path))
     assert report['status'] == 'passed' and report['failures'] == [], report['failures']
     assert {c['name'] for c in report['checks']} == {'s0f_record', 'outputs', 'manifest_pin', 'structure', 'old_corpus', 'historical_arrays', 'derivation'}
-    assert 'torch' not in sys.modules and report['advice_arrays'].startswith('not vouched')
+    assert report['advice_arrays'].startswith('not vouched')   # Torch absence is asserted in the controller subprocess test
 
 
 MUTATIONS = {
@@ -246,3 +246,50 @@ def test_failing_audit_publishes_no_corpus_pin_and_wrong_pins_refuse_before_writ
     b = build(tmp_path/'c')
     assert s0z.main(argv(b, tmp_path/'c', go(tmp_path/'c'), **{'--expected-derivation-sha256': '0'*64}), require_unit=False) == 2
     assert 'expected pin' in json.loads(capsys.readouterr().out)['reason'] and not (Path(tmp_path)/'c/s0z').exists()
+
+
+# ------------------------------------------------------------------- manifest binding
+
+def test_s0z_manifest_binds_the_plan_the_command_the_s0f_evidence_and_the_budget():
+    import re
+    import run_research_stage as launcher
+    folder = ROOT/'docs/reports/male-v4-s0z'
+    text = (folder/'MANIFEST.md').read_text()
+    raw, derived = (folder/'plan-only.prepared-in-agent-worktree.json').read_bytes(), (folder/'plan-only.json').read_bytes()
+    agent = re.search(rb'"(/[^"]+?/)scripts/run_research_stage.py"', raw).group(1)
+    cur = b'/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/'
+    assert raw.replace(agent, cur) == derived and sha(raw) in text and sha(derived) in text
+    plan = json.loads(derived)
+    s0f = ROOT/'docs/reports/male-v4-s0f'
+    record_sha = sha((s0f/'pin-record.json').read_bytes())
+    manifest_sha = sha((s0f/'data-manifest.json').read_bytes())
+    derivation_sha = sha((s0f/'derivation.json').read_bytes())
+    assert plan['expected_manifest_sha256'] == manifest_sha and plan['expected_derivation_sha256'] == derivation_sha
+    assert all(v in text for v in (record_sha, manifest_sha, derivation_sha))
+    assert json.loads((s0f/'pin-record.json').read_text())['outputs']['data-manifest.json']['sha256'] == manifest_sha
+    block = re.search(r'<!-- s0z-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    words = block.replace('\\\n', ' ').split()
+    unit, command = words[:words.index('--')], words[words.index('--') + 1:]
+    flag = lambda name, w: w[w.index(name) + 1]
+    stages = json.loads((ROOT/ctl.driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']
+    rows = {r['stage']: r for r in stages}
+    row = rows['S0z']
+    k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+    assert (k, kill, worst) == (row['cpu_quota_k'], row['runtime_max_sec_kill_target'], row['worst_case_cpu']) == (1, 300, 305)
+    assert worst >= k * (kill + launcher.STOP_TIMEOUT) and s0z.UNIT['runtime_max_sec'] == kill
+    planned = plan['unit_command'][plan['unit_command'].index('--') + 1:]
+    given = command[:command.index('--go')]
+    assert given[3:] == planned[3:planned.index('--go')]
+    assert command[2] == cur.decode() + 'scripts/run_male_navigation_v4_s0z.py' and flag('--go', command) == flag('--go-record', unit)
+    stage_root = Path(flag('--stage-root', command))
+    assert stage_root.name == 'S0z' and stage_root.parent.name == 'male-v4-data' and not ctl.driver.under(flag('--receipt-dir', unit), stage_root)
+    ledger = [json.loads(line) for line in (s0f/'research-ledger-snapshot.jsonl').read_text().splitlines() if line.strip()]
+    charged = sum(v for key, v in launcher.charges(ledger).items() if key[0] == 'navigation')
+    ahead = sum(rows[s]['worst_case_cpu'] for s in ('S0z', 'S1', 'S2'))
+    assert round(charged, 3) == 604.510 and ahead == 6905 and round(charged - 1.832 + ahead, 3) == 7507.678 <= 14398.168
+    for phrase in ('scientific_attempt": true', 'current_tree_head', 'declared_fields_sha256', 'must **not exist**', 'writer.lock',
+                   'Throttling risk', 'not applicable', 'Post-run gate', 'no array bundle', 'identical to v3',
+                   'not a new data-producing stage and needs no amendment', 'does **not** vouch', 'ends v4', '7,507.678',
+                   'old N 2,117 q = 21 r = 1,623', 'd537a96'):
+        assert phrase in text, phrase
+    assert divmod(46080, 2117) == (21, 1623) and divmod(46080, 7197) == (6, 2898)
