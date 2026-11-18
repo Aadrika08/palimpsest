@@ -262,3 +262,17 @@ RuntimeMaxSec kill blocks S1 (S0 stages are already complete; S0z is passed and 
 source sets only the T-f port on its path. A binding test parses the command above against the declared
 entry points, the unit parameters, the new roots and the output paths. No real data was opened and P2 was
 not run.
+
+## Review amendments (independent AI review, 2026-11-18)
+
+- **Check 3 extended:** the diff list since stage P (`4cd98e4`) also includes
+  `regenerate_male_navigation_v4.py` (+247 lines; imported by `male_navigation_v4_controls.py` and
+  `run_male_navigation_v4_s0d.py`) and `probe_male_navigation_v4_imports.py`. Acceptance: their
+  imports are stdlib plus the probe; `src/` is unchanged; the P-covered `controls`, `S0d-controller`
+  and `S0e-*` closures are therefore unchanged in kind. S0z-controller probes controls and regenerate.
+- **Owner acknowledgement required before the GO:** P2 and its split (six entries, about 25 CPU-s,
+  instead of re-probing all 25 at about 103 CPU-s against the 120 s kill). P2 is not in the protocol;
+  no waiver is needed, but an acknowledgement row in `decisions-2026-11-08.md` is.
+- **On failure:** a P2 failure is treated as a P failure under `execution_stops/1`: MaleCNS v4 is
+  blocked until a new manifest and owner GO.
+- **Budget note:** 125 CPU-s worst case is 2.2% of the 5,648 S3 headroom (expected 25 CPU-s: 0.4%).
