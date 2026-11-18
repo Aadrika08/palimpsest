@@ -367,3 +367,55 @@ def test_go_expected_shas_must_equal_the_arguments_when_present(tmp_path, capsys
     assert s0z.main(argv(b, tmp_path, bad), require_unit=False) == 2
     assert 'differs from the expected pin' in json.loads(capsys.readouterr().out)['reason']
     assert not (Path(tmp_path)/'s0z').exists()
+
+
+# ------------------------------------------------------------------- S1 manifest binding
+
+def test_s1_manifest_binds_the_plan_the_pins_the_command_the_budget_and_the_lane_math():
+    import re
+    import run_research_stage as launcher
+    folder = ROOT/'docs/reports/male-v4-s1'
+    text = (folder/'MANIFEST.md').read_text()
+    plan_raw = (folder/'plan-only.json').read_bytes()
+    plan = json.loads(plan_raw)
+    assert sha(plan_raw) in text and plan['mode'] == 'plan-only' and plan['stage'] == 'S1' and plan['protocol_sha256'] == PROTOCOL
+    s0z = ROOT/'docs/reports/male-v4-s0z'
+    pin_sha, audit_sha = (sha((s0z/n).read_bytes()) for n in ('corpus-pin.json', 'audit.json'))
+    derivation_sha = json.loads((s0z/'corpus-pin.json').read_text())['schedule_derivation_sha256']   # sha of derive()'s canonical bytes
+    assert plan['corpus_pin_sha256'] == pin_sha and plan['schedule_derivation_sha256'] == derivation_sha
+    assert all(v in text for v in (pin_sha, audit_sha, derivation_sha)) and pin_sha.startswith('f6115c1e') and audit_sha.startswith('2bef1569')
+    pin = json.loads((s0z/'corpus-pin.json').read_text())
+    assert pin['schedule_derivation_sha256'] == derivation_sha and pin['audit']['sha256'] == audit_sha
+    manifest_raw = (ROOT/'docs/reports/male-v4-s0f/data-manifest.json').read_bytes()
+    assert sha(manifest_raw) == pin['data_manifest']['sha256'] and sha(manifest_raw) in text
+    derived = budget.derive(manifest_raw, sha(manifest_raw))
+    assert derived['sha256'] == derivation_sha and plan['schedule_derivation'] == derived['document']
+    assert plan['models'] == trainer.plan()['models'] and len(plan['models']) == 6
+    assert (pin['reader']['t_f']['head'], pin['reader']['t_h']['head']) == ('88c1a0f6f53274fe663f4cdad3be5ae2743af558', '0789b2ed54117c01c40ab5818148cc0515eb4fb5')
+    for head in (pin['reader']['t_f']['head'], pin['reader']['t_h']['head']): assert head in text
+    for receipt in ('stage-p', 'stage-p2'):
+        assert sha((ROOT/f'docs/reports/male-v4-{receipt}/launcher-receipt.json').read_bytes()) in text
+    assert sha((ROOT/'docs/plans/m7-navigation-v4-pins/declared-fields.json').read_bytes()).startswith('8877390c')
+    block = re.search(r'<!-- s1-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    words = block.replace('\\\n', ' ').split()
+    unit, command = words[:words.index('--')], words[words.index('--') + 1:]
+    flag = lambda name, w: w[w.index(name) + 1]
+    stages = json.loads((ROOT/ctl.driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']
+    rows = {r['stage']: r for r in stages}
+    k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+    assert (flag('--lane', unit), flag('--stage', unit)) == ('navigation', 'S1')
+    assert (k, kill, worst) == (rows['S1']['cpu_quota_k'], rows['S1']['runtime_max_sec_kill_target'], rows['S1']['worst_case_cpu']) == (1, 2160, 2165)
+    assert worst >= k * (kill + launcher.STOP_TIMEOUT)
+    assert command[0] == '/usr/bin/env' and 'CUDA_VISIBLE_DEVICES=' in command and 'OMP_NUM_THREADS=1' in command   # hooks.runtime needs CUDA hidden
+    assert flag('--corpus-pin', command).endswith('male-v4-data/S0z/corpus-pin.json') and flag('--go', command) == flag('--go-record', unit)
+    output = Path(flag('--output', command))
+    assert output.parent.name == 'S1' and output.parent.parent.name == 'male-v4-data' and not ctl.driver.under(output, ROOT)
+    ledger = [json.loads(line) for line in (ROOT/'docs/reports/male-v4-stage-p2/research-ledger-snapshot.jsonl').read_text().splitlines() if line.strip()]
+    charged = sum(v for key, v in launcher.charges(ledger).items() if key[0] == 'navigation')
+    ahead = rows['S1']['worst_case_cpu'] + rows['S2']['worst_case_cpu']
+    v4 = charged - 1.832
+    assert round(charged, 3) == 635.154 and round(v4, 3) == 633.322 and ahead == 6600 and round(v4 + ahead, 3) == 7233.322 <= 14398.168
+    assert 14398.168 - rows['S3']['worst_case_cpu'] == 5643.168
+    for phrase in ('scientific_attempt": true', 'current_tree_head', 'declared_fields_sha256', 'must **not\n   exist**', 'writer lock', 'Throttling / threads',
+                   'honest CPU estimate', 'terminal-only', 'ends v4', '7,233.322', '5,643.168', 'one attempt', 'CUDA_VISIBLE_DEVICES'):
+        assert phrase.replace('\n   ', ' ') in text.replace('\n   ', ' ') or phrase in text, phrase
