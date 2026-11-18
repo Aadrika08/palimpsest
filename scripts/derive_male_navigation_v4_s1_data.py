@@ -60,6 +60,16 @@ def main():
     p = prep.protocol()
     historical = prep.historical_identity(p, deadline)
     if historical != manifest['historical_reader']: refuse('Historical reader identity differs from S0f')
+    prepared = prep.read_json(Path(config['data_root'])/'after-admission.json')
+    sources = {x['path'] for x in manifest['old_sources'] + manifest['new_sources']}
+    if (prepared.get('status') != 'obtained-after-inventory' or prepared.get('errors') != [] or prepared.get('qualification_claims') != [] or
+            prepared.get('reader') != manifest['current_reader_sources'] or prepared.get('historical') != historical or
+            len(prepared.get('sources', [])) != 26 or {x['path'] for x in prepared['sources']} != sources or
+            any(prepared['documents'][k]['sha256'] != v['sha256'] for k, v in manifest['input_documents'].items() if k in prepared['documents'])):
+        refuse('S0f after-admission inventory differs from the manifest')
+    if (manifest.get('status') != 'prepared-navigation-advice-research-only' or manifest.get('labels') != {'old': 'unchanged executed targets', 'new': 'nav_advice_action'} or
+            any(manifest['arms'][arm]['held_out'] for arm in ('old', 'augmented'))):
+        refuse('Manifest status/labels/held-out differ')
     old_manifest = prep.read_json(manifest['input_documents']['old_manifest']['path'], expected=manifest['old_manifest_sha256'])
     data = prep.read_old_transfer(Path(config['data_root']), old_manifest, historical)
     counts = manifest['counts']
@@ -81,6 +91,9 @@ def main():
         actual = {split: [{'run_id': ep['run_id'], 'episode': ep['episode'], 'ticks': len(ep['targets']), 'feature_target_sha256': fts(ep)}
                           for ep in arm[split]] for split in ('train', 'dev', 'held_out')}
         if actual != manifest['arms'][name]: refuse('Exact manifest arm order/bytes differ')
+    if old.validate_splits(augmented, check_counts=False) != {'train': counts['augmented_train_rows'], 'dev': counts['recorded_dev_rows'], 'held_out': 0}:
+        refuse('Augmented fixed counts differ')
+    if prep.reader_identity(deadline) != manifest['current_reader_sources']: refuse('T-f reader code changed during the read')
     arrays = {}
     for episode in augmented['train'] + augmented['dev']:
         digest = fts(episode)

@@ -29,7 +29,7 @@ def write_bytes(path, raw):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(raw); return path
 
 
-def build(tmp, mutate=None, hist=None):
+def build(tmp, mutate=None, hist=None, mutate_audit=None, mutate_record=None):
     """A synthetic S0f output tree + pin record; returns a dict of paths and the expected shas."""
     out = Path(tmp)/'s0f/data'
     arrays = {}
@@ -47,6 +47,12 @@ def build(tmp, mutate=None, hist=None):
               'input_documents': {'old_manifest': {'path': str(s0c), 'sha256': sha(s0c.read_bytes())}},
               'old_manifest_sha256': sha(s0c.read_bytes()),
               'historical_reader': {'root': str(Path(tmp)/'t-h'), 'head': 'b'*40}})
+    s0e_root = Path(tmp)/'s0e'
+    audit_doc = {'kind': 'm7-navigation-v4-root-raw-audit-1', 'status': 'passed', 'failures': [], 'not_covered': []}
+    if mutate_audit: mutate_audit(audit_doc)
+    audit_file = write_bytes(s0e_root/'control/root-raw-audit.json', canonical(audit_doc))
+    m['input_documents'].update(accepted_collection={'path': str(s0e_root/'collection/report.json')},
+                                root_raw_audit={'path': str(audit_file), 'sha256': sha(audit_file.read_bytes()), 'bytes': audit_file.stat().st_size})
     if mutate: mutate(m)
     historical, mapping, npz = {}, [], {}
     for i, source in enumerate(old + dev):
@@ -68,11 +74,24 @@ def build(tmp, mutate=None, hist=None):
         derivation = budget.derive(raw, sha(raw))
     except ValueError:
         derivation = {'bytes': b'{}', 'sha256': sha(b'{}')}
-    entry = {'producing_commit': 'c'*40, 'worktree': str(Path(tmp)/'t-f'), 'output_root': str(out), 'outputs': outputs}
-    record = {'schema': 'm7-navigation-v4-pin-record-1', 'stage': 'S0f', 'protocol_sha256': PROTOCOL, 'producing_commit': 'c'*40,
+    ports = json.loads((ROOT/'docs/plans/m7-navigation-v4-pins/ports.json').read_text())['trees']
+    commits = {'S0a': 'cc1cea93d4c3333a0ee2a091dd34fff0b2986887', 'S0b': 'c382c86781a7a5d6651af721119789729cc890ae',
+               'S0c': ports['T-c']['port_commit'], 'S0d': ports['T-d']['port_commit'], 'S0e': ports['T-e']['port_commit'], 'S0f': ports['T-f']['port_commit']}
+    advice_ids = audit_module.ADVICE
+    entry = {'producing_commit': commits['S0f'], 'worktree': str(Path(tmp)/'t-f'), 'output_root': str(out), 'outputs': outputs}
+    chain = {s_: {'stage': s_, 'producing_commit': c} for s_, c in commits.items()}
+    chain['S0c']['outputs'] = {'data-manifest.json': {'sha256': sha(s0c.read_bytes()), 'bytes': 1}}
+    chain['S0e'].update(counts=dict(zip(advice_ids, adv)), outputs={'control/root-raw-audit.json': {'sha256': sha(audit_file.read_bytes()), 'bytes': 1}})
+    s0e_record = {'stage': 'S0e', 'previous_record_sha256': 'd'*64, 'chain': {k: chain[k] for k in ORDER[:5]}}
+    s0e_file = write_bytes(s0e_root/'control/collector-pin-record.json', canonical(s0e_record))
+    canon = lambda v: (json.dumps(v, sort_keys=True, separators=(',', ':'), allow_nan=False) + '\n').encode()
+    chain['S0f'] = entry
+    link = sha(canon({'chain': {k: chain[k] for k in ORDER[:-1]}, 'records': [sha(canon(s0e_record))]}))
+    record = {'schema': 'm7-navigation-v4-pin-record-1', 'stage': 'S0f', 'protocol_sha256': PROTOCOL, 'producing_commit': commits['S0f'],
               'worktree': str(Path(tmp)/'t-f'), 'output_root': str(out), 'outputs': outputs, 'qualification_claims': [],
-              'chain': {**{s: {'stage': s} for s in ORDER[:-1]}, 'S0f': entry},
-              'port': {'tree': 'T-f', 'head': 'c'*40, 'locator_path': str(locator), 'locator_sha256': sha(locator.read_bytes())}}
+              'previous_record_sha256': link, 'chain': chain,
+              'port': {'tree': 'T-f', 'head': commits['S0f'], 'locator_path': str(locator), 'locator_sha256': sha(locator.read_bytes())}}
+    if mutate_record: mutate_record(record)
     path = write_bytes(Path(tmp)/'s0f/pin-record.json', canonical(record))
     return {'record': path, 'out': out, 'manifest_sha': sha(raw), 'derivation': derivation['bytes'], 'derivation_sha': derivation['sha256'],
             'manifest': m, 'arrays': arrays}
@@ -90,7 +109,7 @@ def failed(report): return {f['name'] for f in report['failures']}
 def test_audit_passes_a_synthetic_s0f_output_and_states_what_it_does_not_vouch_for(tmp_path):
     report = run_audit(build(tmp_path))
     assert report['status'] == 'passed' and report['failures'] == [], report['failures']
-    assert {c['name'] for c in report['checks']} == {'s0f_record', 'outputs', 'manifest_pin', 'structure', 'old_corpus', 'historical_arrays', 'derivation'}
+    assert {c['name'] for c in report['checks']} == {'s0f_record', 'outputs', 'manifest_pin', 'structure', 'old_corpus', 'chain', 's0e_audit', 'historical_arrays', 'derivation'}
     assert report['advice_arrays'].startswith('not vouched')   # Torch absence is asserted in the controller subprocess test
 
 
@@ -222,7 +241,7 @@ def test_passing_run_pins_the_corpus_for_m4_with_the_full_chain_and_writes_only_
     assert record['data_manifest']['sha256'] == b['manifest_sha'] and record['scientific_attempt'] is True
     assert record['schedule_derivation_sha256'] == b['derivation_sha'] == trainer.derive_schedules(record)['sha256']
     assert list(record['chain']) == list(ORDER) + ['S0z'] and record['s0f_pin_record']['sha256'] == sha(b['record'].read_bytes())
-    assert record['reader']['t_f'] == {'path': str(Path(tmp_path)/'t-f'), 'head': 'c'*40} and record['reader']['data_root'] == str(b['out'])
+    assert record['reader']['t_f'] == {'path': str(Path(tmp_path)/'t-f'), 'head': json.loads(b['record'].read_bytes())['port']['head']} and record['reader']['data_root'] == str(b['out'])
     roster = record['roster_feature_target_sha256']
     assert (len(roster['old_train']), len(roster['advice']), len(roster['dev'])) == (10, 12, 4)
     assert len(set(sum(roster.values(), []))) == 26 and 'arrays' not in record
@@ -290,6 +309,61 @@ def test_s0z_manifest_binds_the_plan_the_command_the_s0f_evidence_and_the_budget
     for phrase in ('scientific_attempt": true', 'current_tree_head', 'declared_fields_sha256', 'must **not exist**', 'writer.lock',
                    'Throttling risk', 'not applicable', 'Post-run gate', 'no array bundle', 'identical to v3',
                    'not a new data-producing stage and needs no amendment', 'does **not** vouch', 'ends v4', '7,507.678',
-                   'old N 2,117 q = 21 r = 1,623', 'd537a96'):
+                   'old N 2,117 q = 21 r = 1,623', 'd537a96', 'Ruling needed', 'Stage P must be re-run', 'owner_waivers'):
         assert phrase in text, phrase
     assert divmod(46080, 2117) == (21, 1623) and divmod(46080, 7197) == (6, 2898)
+
+
+# ------------------------------------------------------------------- S0e-A document and chain audit
+
+@pytest.mark.parametrize('name, mutate, check', [
+    ('failed_status', lambda d: d.update(status='failed'), 's0e_audit'),
+    ('failures', lambda d: d.update(failures=[{'name': 'x'}]), 's0e_audit'),
+    ('not_covered', lambda d: d.update(not_covered=['finite arrays']), 's0e_audit'),
+    ('missing_not_covered', lambda d: d.pop('not_covered'), 's0e_audit'),
+    ('kind', lambda d: d.update(kind='other'), 's0e_audit'),
+])
+def test_s0e_audit_document_must_have_passed_with_nothing_uncovered(tmp_path, name, mutate, check):
+    b = build(tmp_path, mutate_audit=mutate)
+    assert check in failed(run_audit(b))
+    if name == 'not_covered':
+        assert 's0e_audit' not in failed(run_audit(b, waivers=('finite arrays',)))          # only an explicit owner waiver
+
+
+@pytest.mark.parametrize('name, mutate', [
+    ('commit', lambda r: r['chain']['S0d'].update(producing_commit='0' * 40)),
+    ('link', lambda r: r.update(previous_record_sha256='0' * 64)),
+    ('s0e_counts', lambda r: r['chain']['S0e']['counts'].update({'learner-3100-seed-10': 1})),
+    ('old_manifest_sha', lambda r: r['chain']['S0c']['outputs']['data-manifest.json'].update(sha256='1' * 64)),
+    ('audit_not_in_chain', lambda r: r['chain']['S0e']['outputs'].clear()),
+])
+def test_chain_audit_refuses_commit_linkage_count_and_old_manifest_faults(tmp_path, name, mutate):
+    b = build(tmp_path, mutate_record=mutate)
+    got = failed(run_audit(b))
+    assert got & {'chain', 's0e_audit', 's0f_record'}, (name, got)
+
+
+def test_audit_document_tampered_after_s0e_changes_its_sha(tmp_path):
+    b = build(tmp_path)
+    audit_path = Path(json.loads((b['out']/'data-manifest.json').read_bytes())['input_documents']['root_raw_audit']['path'])
+    audit_path.write_bytes(audit_path.read_bytes() + b' ')
+    assert 's0e_audit' in failed(run_audit(b))
+
+
+def test_controller_pins_the_s0e_audit_and_refuses_an_unwaived_not_covered_item(tmp_path, capsys):
+    b = build(tmp_path/'a', mutate_audit=lambda d: d.update(not_covered=['finite arrays']))
+    assert s0z.main(argv(b, tmp_path/'a', go(tmp_path/'a')), require_unit=False) == 1
+    assert not (Path(tmp_path)/'a/s0z/corpus-pin.json').exists()
+    b = build(tmp_path/'b')
+    assert s0z.main(argv(b, tmp_path/'b', go(tmp_path/'b')), require_unit=False) == 0
+    pin = json.loads((Path(tmp_path)/'b/s0z/corpus-pin.json').read_text())
+    manifest = json.loads((b['out']/'data-manifest.json').read_bytes())
+    assert pin['s0e_audit']['sha256'] == manifest['input_documents']['root_raw_audit']['sha256'] and pin['owner_waivers'] == []
+
+
+def test_go_expected_shas_must_equal_the_arguments_when_present(tmp_path, capsys):
+    b = build(tmp_path)
+    bad = go(tmp_path, data_manifest_sha256='0' * 64)
+    assert s0z.main(argv(b, tmp_path, bad), require_unit=False) == 2
+    assert 'differs from the expected pin' in json.loads(capsys.readouterr().out)['reason']
+    assert not (Path(tmp_path)/'s0z').exists()

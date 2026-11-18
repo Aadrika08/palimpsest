@@ -927,3 +927,23 @@ def test_s1_hooks_derive_data_binds_heads_locator_and_the_child_result(tmp_path)
     changed = copy.deepcopy(record); changed['reader']['locator']['sha256'] = '0'*64
     with mock.patch.object(s1.subprocess, 'run', worker(ok)), pytest.raises(s1.Refusal, match='differ'):
         hooks.derive_data(changed, {}, out)
+
+
+def test_s1_hooks_refuse_a_dirty_or_untracked_reader_worktree_before_the_child_starts(tmp_path):
+    import train_male_navigation_v4 as s1
+    from unittest import mock
+    record = {'data_manifest': {'path': str(tmp_path/'m.json'), 'sha256': '1'*64, 'bytes': 1}, 'reader': {}}
+    for name in ('t-f', 't-h'):
+        repo = tmp_path/name; (repo/'src').mkdir(parents=True); (repo/'src/a.py').write_text('a=1\n'); git(repo, 'init', '-q')
+        git(repo, 'add', '-A'); git(repo, 'commit', '-qm', name)
+        record['reader'][name.replace('-', '_')] = {'path': str(repo), 'head': git(repo, 'rev-parse', 'HEAD')}
+    locator = write(tmp_path/'locator.json', {'v': 1})
+    record['reader'].update(locator={'path': locator['path'], 'sha256': locator['sha256'], 'bytes': Path(locator['path']).stat().st_size}, data_root='/x')
+    started = []
+    with mock.patch.object(s1.subprocess, 'run', wraps=subprocess.run) as run:
+        for edit in (lambda r: (r/'src/a.py').write_text('a=2\n'), lambda r: (r/'src/new.py').write_text('x=1\n')):
+            edit(tmp_path/'t-h')
+            with pytest.raises(s1.Refusal, match='modified or untracked'):
+                s1.Hooks().derive_data(record, {}, tmp_path)
+            git(tmp_path/'t-h', 'checkout', '-q', '--', 'src'); (tmp_path/'t-h/src/new.py').unlink(missing_ok=True)
+        assert not any(call.args[0][1:3] == ['-I', '-B'] for call in run.call_args_list)   # the child never started

@@ -39,7 +39,8 @@ def _hex(value, size=64):
     return isinstance(value, str) and len(value) == size and set(value) <= set('0123456789abcdef')
 
 
-def audit(record_path, *, expected_manifest_sha256, expected_derivation_sha256, derivation_bytes, protocol_sha256):
+def audit(record_path, *, expected_manifest_sha256, expected_derivation_sha256, derivation_bytes, protocol_sha256,
+          ports_path=None, waivers=()):
     """Return {'status', 'checks', 'failures', ...}; never raises on a failed check."""
     import numpy as np
     checks = []
@@ -133,12 +134,49 @@ def audit(record_path, *, expected_manifest_sha256, expected_derivation_sha256, 
         ok = ok and doc.get('dev_rows') == sum(s['ticks'] for s in arms['old']['dev'])
         return ok, 'N, q, r and source rows recomputed independently'
 
+    def chain_audit():
+        ports = json.loads(Path(ports_path or Path(__file__).resolve().parents[1]/'docs/plans/m7-navigation-v4-pins/ports.json').read_text())['trees']
+        chain, m = record['chain'], state['manifest']
+        commits = {'S0a': 'cc1cea93d4c3333a0ee2a091dd34fff0b2986887', 'S0b': 'c382c86781a7a5d6651af721119789729cc890ae',
+                   'S0c': ports['T-c']['port_commit'], 'S0d': ports['T-d']['port_commit'], 'S0e': ports['T-e']['port_commit'],
+                   'S0f': ports['T-f']['port_commit']}
+        if {k: v.get('producing_commit') for k, v in chain.items()} != commits: return False, 'producing commits differ from ports.json'
+        if not _hex(record.get('previous_record_sha256')): return False, 'S0f previous_record_sha256 missing'
+        s0e_root = Path(m['input_documents']['accepted_collection']['path']).parents[1]
+        s0e_raw = (s0e_root/'control/collector-pin-record.json').read_bytes()
+        s0e = json.loads(s0e_raw)
+        canon = lambda v: (json.dumps(v, sort_keys=True, separators=(',', ':'), allow_nan=False) + '\n').encode()
+        # The driver hashes a controlled previous stage as {chain, records}: the merged chain below S0f plus the S0e record sha.
+        link = sha(canon({'chain': {k: chain[k] for k in ORDER[:-1]}, 'records': [sha(canon(s0e))]}))
+        if not (record['previous_record_sha256'] == link and s0e.get('stage') == 'S0e' and _hex(s0e.get('previous_record_sha256')) and
+                {k: s0e['chain'][k] for k in ORDER[:4]} == {k: chain[k] for k in ORDER[:4]}):
+            return False, 'S0f -> S0e previous_record_sha256 linkage or S0a..S0d chain entries differ'
+        advice = [s['ticks'] for s in m['new_sources']]
+        counts = chain['S0e'].get('counts', {})
+        if [counts.get(c) for c in ADVICE] != advice or len(counts) != 12: return False, 'S0e chain counts differ from the 12 advice tick counts'
+        s0c = chain['S0c']['outputs']['data-manifest.json']['sha256']
+        if not (s0c == m['old_manifest_sha256'] == sha(Path(m['input_documents']['old_manifest']['path']).read_bytes())):
+            return False, 'old manifest sha differs from the S0c chain record'
+        return True, 'commits vs ports.json, S0f->S0e linkage, S0e counts == advice ticks, old manifest from the S0c record'
+
+    def s0e_audit():
+        item = state['manifest']['input_documents']['root_raw_audit']
+        raw = Path(item['path']).read_bytes()
+        doc = json.loads(raw)
+        rel = Path(item['path']).relative_to(Path(state['manifest']['input_documents']['accepted_collection']['path']).parents[1]).as_posix()
+        recorded = record['chain']['S0e']['outputs'].get(rel, {}).get('sha256')
+        covered = doc.get('not_covered')
+        unwaived = [i for i in covered if i not in waivers] if isinstance(covered, list) else ['<missing>']
+        state['s0e_audit'] = {'path': item['path'], 'sha256': sha(raw), 'bytes': len(raw)}
+        return (sha(raw) == item['sha256'] == recorded and doc.get('kind') == 'm7-navigation-v4-root-raw-audit-1' and
+                doc.get('status') == 'passed' and doc.get('failures') == [] and not unwaived), 'S0e-A audit passed, no failures, not_covered empty (no waiver)'
+
     for name, test in (('s0f_record', record_shape), ('outputs', outputs), ('manifest_pin', manifest_pin), ('structure', structure),
-                       ('old_corpus', old_corpus), ('historical_arrays', historical), ('derivation', derivation)):
+                       ('old_corpus', old_corpus), ('chain', chain_audit), ('s0e_audit', s0e_audit), ('historical_arrays', historical), ('derivation', derivation)):
         if name != 's0f_record' and name != 'outputs' and name != 'manifest_pin' and 'manifest' not in state:
             checks.append({'name': name, 'ok': False, 'detail': 'skipped: data manifest not admitted'}); continue
         check(name, test)
     failures = [c for c in checks if not c['ok']]
     return {'kind': 'm7-navigation-v4-s0z-audit-1', 'status': 'failed' if failures else 'passed', 'checks': checks, 'failures': failures,
             'torch_imported': 'torch' in __import__('sys').modules, 'advice_arrays': 'not vouched for here; enforced at S1 by the fts gate',
-            's0f_record_sha256': sha(raw_record)}
+            's0f_record_sha256': sha(raw_record), 's0e_audit': state.get('s0e_audit'), 'waivers': list(waivers)}

@@ -377,6 +377,10 @@ class Hooks:
             done = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=reader[name]['path'], capture_output=True, text=True, timeout=10)
             if done.returncode != 0 or done.stdout.strip() != reader[name]['head']:
                 raise Refusal(f'{name} worktree is not at its pinned port head')
+            dirty = subprocess.run(['git', 'status', '--porcelain', '--untracked-files=all', '--', 'src', 'scripts'], cwd=reader[name]['path'],
+                                   capture_output=True, text=True, timeout=30)
+            if dirty.returncode != 0 or dirty.stdout.strip():
+                raise Refusal(f'{name} worktree has modified or untracked src/scripts files')
         _pinned_bytes({**reader['locator']}, MAX_JSON)
         target = Path(output) / 'transient-arrays.npz'
         config = {'port_root': reader['t_f']['path'], 'data_root': reader['data_root'], 'output': str(target),

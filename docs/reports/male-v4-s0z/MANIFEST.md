@@ -44,6 +44,43 @@ This derivation is identical to v3's and gated by equality to the hashes S0z pin
 identity (they are not published by S0f): that is enforced at S1 by the fts gate, and the audit
 report says so. S0z does vouch for the 14 old/dev arrays it can re-hash from S0f's own output.
 
+## Implementation files
+
+- `scripts/run_male_navigation_v4_s0z.py`: the S0z controller (plan-only default, GO gating, absolute paths).
+- `scripts/audit_male_navigation_v4_s0z.py`: the independent audit (stdlib + NumPy).
+- `scripts/derive_male_navigation_v4_s1_data.py`: the S1 data child (v3's data path on the T-f reader).
+- `scripts/train_male_navigation_v4.py`: S1 trainer, data path changed (`d537a96`).
+- Tests: `tests/test_male_navigation_v4_s0z.py` (audit, controller, binding), plus the S1 child and
+  trainer cases in `tests/test_male_navigation_v4_controllers.py` and `tests/test_male_navigation_v4.py`.
+
+S0z itself has **no native, Torch or EGL import closure** (stdlib, NumPy and, for `derive()`,
+`palimpsest.male_matched_budget_v4`).
+
+## Owner rulings and prerequisites
+
+1. **Ruling needed on the protocol sentence** "S1 does not start before S0z review passes and
+   derived arrays are published". Our reading: "derived arrays" means the **schedule derivation
+   plus the pinned roster** (`derivation.json` and the 26 ordered hashes in the corpus pin); there is
+   **no array bundle**, because v3 never had one and the advice arrays are derived at S1, hash-gated.
+   If the owner reads it as requiring published data arrays, that needs a separate reviewed design.
+2. `scientific_attempt` for S0z is **true** (the pin is a frozen, one-attempt step).
+3. **Stage P must be re-run** with the new entry points (S0z controller, audit, S1 data child) before
+   S1: 125 CPU-s worst case, a new manifest and a new GO. P has not probed them.
+4. The S0e-A check is **independent and default-refuse**: the audit reads `input_documents.root_raw_audit`,
+   requires its sha (equal to the manifest item and the S0e chain record), kind, `status: passed`,
+   `failures: []` and `not_covered: []`, and the controller also calls
+   `run_male_navigation_v4_s0e.audit_passed`. A waiver exists only as an explicit `--owner-waiver` and a
+   GO `owner_waivers` entry; the S0e-A sha is pinned in the corpus pin as `s0e_audit`.
+5. The chain audit checks: producing commits against `ports.json` (S0c..S0f) and the fixed S0a/S0b
+   commits; the S0f `previous_record_sha256` equals the driver's hash of the merged chain plus the S0e
+   record sha; the S0e record's S0a..S0d entries equal the S0f chain's; the S0e chain counts equal
+   the 12 advice tick counts; and the old-manifest sha comes from the S0c chain record.
+6. S1 child hardening (this branch): the parent refuses a modified or untracked `src`/`scripts` tree in
+   T-f/T-h before the child starts; the child checks `after-admission.json` (status, errors, reader,
+   historical, 26 sources, document shas), manifest status/labels/held-out, `validate_splits` on the
+   augmented arm, and re-checks the reader identity after the read. These child-side gates run only on
+   real data at S1 (no offline fixture reaches them).
+
 ## What S0z runs
 
 `scripts/run_male_navigation_v4_s0z.py` from `CUR` as unit `S0z`. There is no driver invocation, no
@@ -60,6 +97,7 @@ record with the audit's explicit S0a..S0f chain check instead of `previous_chain
    `old_corpus` (old and dev identities equal the S0c manifest, in order), `historical_arrays`
    (28 members, float32, shapes, finite, each source hashes to its fts) and `derivation` (N, q, r
    and source rows of both arms recomputed by independent divmod of 46,080).
+   Plus `chain` and `s0e_audit` (see rulings 4 and 5); nine checks in all.
 3. **`derive()` reproducibility:** M4's pure `derive` run twice, byte-identical, sha256 equal to
    the expected `81cd9a49…83cb`.
 4. **Publication, only if all pass:** `corpus-pin.json` in M4's `m7-navigation-v4-corpus-pin-1`
@@ -84,9 +122,9 @@ Writes only under the stage root `male-v4-data/S0z/`: `derivation.json`, `audit.
 Plan-only reads only the S0f pin record's JSON (a pin document, also committed under
 `docs/reports/male-v4-s0f/`); it opens no data and writes nothing. The raw output (run in this
 branch's agent worktree) is [`plan-only.prepared-in-agent-worktree.json`](plan-only.prepared-in-agent-worktree.json)
-(`2dbfd9444b5deeb87fb5c0131bdebc688b5a527b81a8683c4fa612496428baa0`); from `CUR` it differs only
+(`552a3139a0181d78c5de633b30c009492df4e4ab3a1940942f7710ece0c75824`); from `CUR` it differs only
 in the controller path. The expected `CUR` plan is [`plan-only.json`](plan-only.json), sha256
-**`17d4ee6c67cdd198d8da214850e867f0e92aa06edce141812adc6def9fc9a66d`**; a test checks the
+**`d7fd21e78574c17baf91b3e54815a938e4c5b57478b0b3cfce761fb3902037a5`**; a test checks the
 derivation.
 
 ## Budget, deadlines and throttling
@@ -120,7 +158,7 @@ Write it at `/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-
 {"decision": "GO", "lane": "navigation", "stage": "S0z",
  "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
  "manifest_sha256": "<sha256 of this file>",
- "plan_sha256": "17d4ee6c67cdd198d8da214850e867f0e92aa06edce141812adc6def9fc9a66d",
+ "plan_sha256": "d7fd21e78574c17baf91b3e54815a938e4c5b57478b0b3cfce761fb3902037a5",
  "s0f_pin_record": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-data/S0f/pin-record.json",
  "s0f_pin_record_sha256": "635d7ebcbcafece61b84bf49ee3d43cc30cd75e984680b17cfa6367e5cf9cc42",
  "data_manifest_sha256": "4a1be0920f01a3d36df4f9a48b7906fefbd4efd128e1ffaa1ff2759a010e2fa3",
@@ -129,6 +167,7 @@ Write it at `/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-
  "t_f_head": "88c1a0f6f53274fe663f4cdad3be5ae2743af558",
  "t_h_head": "0789b2ed54117c01c40ab5818148cc0515eb4fb5",
  "current_tree_head": "<authority-paper-rewrite HEAD at launch>",
+ "owner_waivers": [],
  "cpu_quota_k": 1,
  "scientific_attempt": true,
  "granted_by": "<owner>", "granted_at": "<date>"}
@@ -182,14 +221,14 @@ Write it at `/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-
 - **Unit:** receipt `complete`, `drained`, returncode 0, no survivors; ledger `charged` S0z row; the
   controller printed `status: passed`.
 - **Outputs:** exactly `audit.json`, `corpus-pin.json`, `derivation.json` under `male-v4-data/S0z`.
-  `audit.json` has `status: passed`, `failures: []`, all seven checks `ok`, `torch_imported: false`.
+  `audit.json` has `status: passed`, `failures: []`, all nine checks `ok`, `torch_imported: false`.
   `derivation.json` hashes (as written bytes) to a document whose `derive()` sha256 is `81cd9a49…`.
 - **Corpus pin** (`corpus-pin.json`): schema `m7-navigation-v4-corpus-pin-1`, stage `S0z`, status
   `passed`, protocol sha `cd4eb130…`, `qualification_claims: []`, `scientific_attempt: true`; `go_sha256`
   equals the GO file; `data_manifest` equals the S0f manifest (path, `4a1be092…`, bytes);
   `schedule_derivation_sha256` equals `81cd9a49…`; chain keys exactly `[S0a, S0b, S0c, S0d, S0e,
   S0f, S0z]` with `chain.S0a..S0f` equal to the S0f record's chain and the `S0z` entry binding the
-  stage root and the `derivation.json`/`audit.json` shas; `s0f_pin_record` sha `635d7ebc…`;
+  stage root and the `derivation.json`/`audit.json` shas; `s0f_pin_record` sha `635d7ebc…`; `s0e_audit` sha `58d76961…` and `owner_waivers: []`;
   `roster_feature_target_sha256` is 10 old + 12 advice + 4 dev, 26 unique, equal to the manifest's
   arms in order; `reader` has `t_f` at `88c1a0f6…` and `t_h` at `0789b2ed…` (both equal
   `ports.json`), the S0f locator path and sha (equal to the S0f record's `port.locator_sha256`) and

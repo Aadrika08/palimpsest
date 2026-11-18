@@ -44,6 +44,7 @@ def parse(argv):
     parser.add_argument('--stage-root', help='Fresh S0z stage root (absolute); the controller creates it')
     parser.add_argument('--expected-manifest-sha256', help='S0f data manifest sha256 the GO binds')
     parser.add_argument('--expected-derivation-sha256', help='Schedule derivation sha256 the GO binds')
+    parser.add_argument('--owner-waiver', action='append', default=[], help='Explicit owner waiver of an S0e-A not_covered item (default: none; refused)')
     return parser.parse_args(argv)
 
 
@@ -59,7 +60,7 @@ def configure(args, protocol_sha256):
         raise ctl.Refusal('--stage-root overlaps the S0f output tree')
     if record.get('protocol_sha256') != protocol_sha256: raise ctl.Refusal('S0f record binds another protocol')
     return {'stage': STAGE, 'protocol_sha256': protocol_sha256, **cfg,
-            'go': None if args.go is None else str(ctl.absolute('--go', args.go)), 'outputs': list(FILES)}
+            'go': None if args.go is None else str(ctl.absolute('--go', args.go)), 'outputs': list(FILES), 'owner_waivers': list(args.owner_waiver)}
 
 
 def derive_twice(manifest_raw, manifest_sha256, expected):
@@ -83,12 +84,15 @@ def run(cfg):
     written = {'derivation.json': ctl.write_json(root/'derivation.json', json.loads(derivation))}
     report = audit_module.audit(cfg['s0f_record'], expected_manifest_sha256=cfg['expected_manifest_sha256'],
                                 expected_derivation_sha256=cfg['expected_derivation_sha256'], derivation_bytes=derivation,
-                                protocol_sha256=cfg['protocol_sha256'])
+                                protocol_sha256=cfg['protocol_sha256'], waivers=tuple(cfg['owner_waivers']))
     written['audit.json'] = ctl.write_json(root/'audit.json', report)
     if report['status'] != 'passed':
         ctl.emit({'mode': 'go', 'stage': STAGE, 'status': 'failed-audit', 'failures': [f['name'] for f in report['failures']]})
         return 1
     manifest = json.loads(manifest_raw)
+    import run_male_navigation_v4_s0e as s0e   # the protocol's S0z check, mirrored independently by the audit above
+    s0e_item = manifest['input_documents']['root_raw_audit']
+    s0e.audit_passed(s0e_item['path'], s0e_item['sha256'], waivers=tuple(cfg['owner_waivers']))
     s0f_raw = ctl.driver.read_bounded(cfg['s0f_record'])
     pin = {'schema': CORPUS_PIN_SCHEMA, 'protocol_sha256': cfg['protocol_sha256'], 'stage': STAGE, 'status': 'passed',
            'qualification_claims': [], 'scientific_attempt': True,
@@ -104,6 +108,7 @@ def run(cfg):
            'schedule_derivation_sha256': cfg['expected_derivation_sha256'],
            's0f_pin_record': {'path': cfg['s0f_record'], 'sha256': ctl.sha256_bytes(s0f_raw), 'bytes': len(s0f_raw)},
            'audit': {'path': written['audit.json']['path'], 'sha256': written['audit.json']['sha256']},
+           's0e_audit': report['s0e_audit'], 'owner_waivers': list(cfg['owner_waivers']),
            'go_sha256': cfg['go_sha256'], 'chain': {**record['chain'], STAGE: {'stage_root': cfg['stage_root'], 'outputs': {
                name: {'sha256': written[name]['sha256'], 'bytes': written[name]['bytes']} for name in ('derivation.json', 'audit.json')}}},
            'advice_arrays': 'derived at S1 by the T-f reader child; enforced by the feature_target_sha256 gate, not published here'}
@@ -123,6 +128,9 @@ def main(argv=None, *, protocol_sha256=None, require_unit=True):
                                                  *(sys.argv[1:] if argv is None else argv), '--go', '<GO>'])})
             return 0
         cfg['go_sha256'] = ctl.go_gate(cfg['go'], STAGE, protocol_sha256)
+        go = ctl.read_json(cfg['go'])
+        for key, name in (('data_manifest_sha256', 'expected_manifest_sha256'), ('schedule_derivation_sha256', 'expected_derivation_sha256')):
+            if key in go and go[key] != cfg[name]: raise ctl.Refusal(f'GO {key} differs from the expected pin argument')
         if require_unit and not ctl.research_stage_unit():
             raise ctl.Refusal('S0z must run as stage S0z inside a run_research_stage.py unit (work leaf)')
         ctl.fresh('--stage-root', cfg['stage_root'])
