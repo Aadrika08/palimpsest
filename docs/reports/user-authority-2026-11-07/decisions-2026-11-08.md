@@ -36,3 +36,4 @@ under the base protocol. Puck v4 Amendment 1 (proposed) permits exactly one more
 | --- | --- | --- |
 | Reading of protocol sentence "S1 does not start before S0z review passes and derived arrays are published": "derived arrays" = the pinned schedule derivation and rosters (no array bundle; v3's trainer derived arrays in-process, hash-gated, and so does v4's S1) | MaleCNS v4 protocol `cd4eb130…` | **Accepted** (no amendment) |
 | GO MaleCNS v4 stage S0z (pin + independent compact audit; `scientific_attempt: true`) | S0z manifest | **Granted** |
+| Acknowledge MaleCNS v4 stage **P2** (smaller import re-probe of the 6 new/changed entries: S0z controller, S0z audit, S1 data child + its T-f closure, S1, S2; P2 failure treated as P failure) and **GO P2** (worst case 125 CPU-s) | P2 manifest | **Acknowledged and granted** (19 Nov 2026) |
