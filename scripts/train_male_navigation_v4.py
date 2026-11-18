@@ -3,13 +3,18 @@
 Re-pinned from ``train_male_navigation_v3.py`` (which stays untouched and pins the lost
 ``47c4523c...`` corpus). This trainer admits only the S0z-pinned v4 corpus:
 
-* ``--corpus-pin`` names the S0z pin record (data manifest and array bundle, each with
-  sha256 and bytes). The lost v2/v3 corpus, the v3 protocol and any corpus not named by a
-  passed S0z record are refused.
+* ``--corpus-pin`` names the S0z pin record (the S0f data manifest with sha256 and bytes, plus
+  the T-f/T-h reader worktrees, S0f locator and data root). The lost v2/v3 corpus, the v3
+  protocol and any corpus not named by a passed S0z record are refused.
 * Every per-arm array (N, q/r, allocations, totals, seed starts, schedule SHA-256s) is
   derived by pure source (``palimpsest.male_matched_budget_v4``) from the pinned manifest
-  bytes. ``--plan-only`` (the default) prints that derivation and never opens the array
-  bundle, imports Torch, or builds a model.
+  bytes. ``--plan-only`` (the default) prints that derivation and never opens an array,
+  imports Torch, or builds a model.
+* Arrays follow v3's design, not a pinned bundle: in the GO route, before Torch, a child
+  (``derive_male_navigation_v4_s1_data.py``) loads the old arrays from S0f's historical transfer
+  and derives the 12 advice arrays from the S0e recordings with the T-f port reader (code hashes
+  verified against the manifest's ``current_reader_sources`` before any read). Every source must
+  hash to its manifest ``feature_target_sha256``; the transient result is re-validated here.
 * Execution needs ``--go``: an owner GO record naming lane ``navigation``, stage ``S1``,
   the v4 protocol sha256, the corpus-pin sha256 and the derivation sha256. It runs only
   inside a ``scripts/run_research_stage.py`` unit, which owns RuntimeMaxSec, CPUQuota and
@@ -33,6 +38,7 @@ from pathlib import Path
 import platform
 import resource
 import shutil
+import subprocess
 import sys
 import time
 
@@ -55,6 +61,7 @@ MiB, GiB = 1024**2, 1024**3
 MAX_JSON = 4 * MiB
 MAX_FILE = 8 * MiB
 MAX_ARRAYS = 512 * MiB
+DATA_SECONDS = 180
 OUTPUT_BYTES = 256 * MiB
 FREE_FLOOR = GiB
 RSS_BYTES = 2 * GiB
@@ -65,6 +72,7 @@ SOURCES = (
     'src/palimpsest/male_matched_budget.py',
     'src/palimpsest/male_model.py',
     'scripts/train_male_reduced.py',
+    'scripts/derive_male_navigation_v4_s1_data.py',
 )
 
 
@@ -138,6 +146,22 @@ def _file_pin(value, name):
     return value
 
 
+def _reader_pin(value):
+    """The S0f reader context S0z pins: T-f and T-h worktrees at their port heads, locator, data root."""
+    if not isinstance(value, dict) or set(value) != {'t_f', 't_h', 'locator', 'data_root'}:
+        raise Refusal('Corpus pin reader needs exactly t_f, t_h, locator and data_root')
+    for name in ('t_f', 't_h'):
+        item = value[name]
+        if (not isinstance(item, dict) or set(item) != {'path', 'head'} or not isinstance(item['path'], str) or
+                not os.path.isabs(item['path']) or not isinstance(item['head'], str) or
+                len(item['head']) != 40 or not set(item['head']) <= set('0123456789abcdef')):
+            raise Refusal(f'Corpus pin reader {name} needs an absolute path and a 40-hex head')
+    _file_pin(value['locator'], 'reader locator')
+    if not isinstance(value['data_root'], str) or not os.path.isabs(value['data_root']):
+        raise Refusal('Corpus pin reader data_root must be absolute')
+    return value
+
+
 def read_corpus_pin(path, protocol_sha256=PROTOCOL_SHA256):
     """The S0z pin record; anything unpinned, unpassed or v3-bound is refused."""
     if path is None:
@@ -152,7 +176,7 @@ def read_corpus_pin(path, protocol_sha256=PROTOCOL_SHA256):
             record.get('status') != 'passed' or record.get('qualification_claims') != []):
         raise Refusal('Unpinned corpus: pin record is not a passed S0z record of this protocol')
     manifest = _file_pin(record.get('data_manifest'), 'data_manifest')
-    _file_pin(record.get('arrays'), 'arrays')
+    _reader_pin(record.get('reader'))
     if manifest['sha256'] == V3_DATA_SHA256:
         raise Refusal('Lost v2/v3 corpus 47c4523c... is not a v4 corpus')
     return record, sha256_bytes(raw)
@@ -212,10 +236,11 @@ def inside_research_stage(cgroup_file='/proc/self/cgroup', root='/sys/fs/cgroup'
 
 # --------------------------------------------------------------------------- arrays
 
-def load_arrays(record, rosters, numpy=None):
-    """Load the pinned array bundle; every source's bytes must hash to its manifest identity."""
+def load_arrays(path, rosters, numpy=None):
+    """Validate the transient array file the data child wrote; trust rests on the per-source
+    hash equality to the S0z-pinned manifest, not on a pin of this file."""
     numpy = importlib.import_module('numpy') if numpy is None else numpy
-    raw = _pinned_bytes(record['arrays'], MAX_ARRAYS)
+    raw = artifacts._read(path, MAX_ARRAYS)
     with numpy.load(io.BytesIO(raw), allow_pickle=False) as bundle:
         arrays = {key: bundle[key] for key in bundle.files}
     wanted = rosters['augmented'] + rosters['dev']
@@ -344,6 +369,32 @@ class Hooks:
         if graph.get('source_graph_sha256') != study['training']['model']['graph_sha256']:
             raise Refusal('Same pinned ORIGINAL graph required')
         return graph, {str(paths[name]): digest for name, digest in observed.items()}
+
+    def derive_data(self, record, derivation, output):
+        """v3's data path in a child: old transfer + advice arrays from the S0e recordings, hash-gated."""
+        reader = record['reader']
+        for name in ('t_f', 't_h'):
+            done = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=reader[name]['path'], capture_output=True, text=True, timeout=10)
+            if done.returncode != 0 or done.stdout.strip() != reader[name]['head']:
+                raise Refusal(f'{name} worktree is not at its pinned port head')
+        _pinned_bytes({**reader['locator']}, MAX_JSON)
+        target = Path(output) / 'transient-arrays.npz'
+        config = {'port_root': reader['t_f']['path'], 'data_root': reader['data_root'], 'output': str(target),
+                  'manifest': {'path': record['data_manifest']['path'], 'sha256': record['data_manifest']['sha256']},
+                  'seconds': DATA_SECONDS}
+        env = {'PATH': '/usr/bin:/bin', 'HOME': os.environ.get('HOME', '/nonexistent'), 'LANG': 'C.UTF-8',
+               'PALIMPSEST_M7_V4_PINS': reader['locator']['path'], 'OMP_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1',
+               'MKL_NUM_THREADS': '1', 'CUDA_VISIBLE_DEVICES': '', 'MUJOCO_GL': 'egl'}
+        done = subprocess.run([sys.executable, '-I', '-B', str(ROOT / 'scripts/derive_male_navigation_v4_s1_data.py'),
+                               json.dumps(config)], capture_output=True, text=True, timeout=DATA_SECONDS + 30, env=env,
+                              stdin=subprocess.DEVNULL)
+        lines = [line for line in done.stdout.splitlines() if line.startswith('{')]
+        result = json.loads(lines[-1]) if lines else {}
+        if done.returncode != 0 or result.get('status') != 'derived':
+            raise Refusal(f'Data derivation refused: {result.get("reason", done.stderr[-300:])}')
+        if result['forbidden_modules'] or result['sources'] != 26:
+            raise Refusal('Data derivation loaded forbidden modules or the wrong source count')
+        return target
 
     def make_model(self, graph, seed):
         return male_model.make_model(graph, self.args.cell_source, seed)
@@ -536,7 +587,7 @@ def train(args, hooks, study, record, pin_sha256, derivation, go_sha256):
 
     try:
         graph, model_inputs = hooks.admit_model_inputs(study)
-        data = load_arrays(record, derivation['rosters'])
+        data = load_arrays(hooks.derive_data(record, derivation, output), derivation['rosters'])
         if source_identity() != before:
             raise ValueError('S1 behaviour source changed during admission')
         run_protocol = {'id': budget.PROTOCOL_ID, 'protocol_sha256': PROTOCOL_SHA256,
