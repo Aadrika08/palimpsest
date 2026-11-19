@@ -7,7 +7,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
+from palimpsest import male_navigation_research_v4 as research
 import evaluate_male_navigation_v4 as evaluator
 import train_male_navigation_v4 as trainer
 
@@ -342,6 +344,14 @@ class Cli(Temp):
 
     def test_go_route_requires_admitted_s1_named_go_and_never_binds_native_owner(self):
         s1 = self.published_s1()
+        with self.assertRaisesRegex(evaluator.Refusal, 'exact tree the binding loads'):
+            evaluator.admit_candidates(s1)
+        sha = hashlib.sha256((s1 / 'report.json').read_bytes()).hexdigest()
+        with patch.object(research, 'S1_OUTPUT', s1):
+            with self.assertRaisesRegex(evaluator.Refusal, 'binding constant'):
+                evaluator.admit_candidates(s1)
+        patcher = patch.multiple(research, S1_OUTPUT=s1, REPORT_SHA256=sha)
+        patcher.start(); self.addCleanup(patcher.stop)
         _, s1_sha = evaluator.admit_candidates(s1)
         output = self.root / 'eval'
         go = self.write('go.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S2',

@@ -322,11 +322,17 @@ def check_go(path, stage, s1_report_sha256):
 
 def admit_candidates(s1_output):
     """Six terminal S1 checkpoints behind a durable publication receipt."""
+    from palimpsest import male_navigation_research_v4 as research
+    if Path(s1_output).resolve() != Path(research.S1_OUTPUT).resolve():
+        raise Refusal('S1 output must be the exact tree the binding loads (research.S1_OUTPUT)')
     report = trainer.success_admitted(s1_output)
     if report is None:
         raise Refusal('Six admitted terminal S1 checkpoints are required')
     payload = artifacts._read(Path(s1_output) / 'report.json', MAX_JSON)
-    return report, hashlib.sha256(payload).hexdigest()
+    sha = hashlib.sha256(payload).hexdigest()
+    if sha != research.REPORT_SHA256:
+        raise Refusal('S1 report sha differs from the binding constant')
+    return report, sha
 
 
 # --------------------------------------------------------------------------- A2 native owner (S2 development only)
