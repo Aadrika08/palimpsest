@@ -1,0 +1,26 @@
+{
+ "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/run-p2526147-i2538461.service",
+ "command": [
+  "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+  "-B",
+  "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/run_male_navigation_v4_s0e.py",
+  "index",
+  "--stage-root",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e",
+  "--go",
+  "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0e/go-S0e-I.json"
+ ],
+ "complete": true,
+ "cpu_seconds": 0.059353,
+ "drained": true,
+ "kind": "research-stage-receipt-v1",
+ "peak_memory_bytes": 17186816,
+ "peak_pids": 1,
+ "returncode": 0,
+ "sample_seconds": 0.25,
+ "samples": 1,
+ "supervisor_cpu_seconds": 0.001971,
+ "survivors_killed": [],
+ "wall_seconds": 0.07992775802267715,
+ "work_cpu_seconds": 0.057382
+}

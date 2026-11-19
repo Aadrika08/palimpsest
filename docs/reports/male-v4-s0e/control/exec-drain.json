@@ -1,0 +1,35 @@
+{
+ "basis": "systemd unit exit status (run_research_stage ledger) and an empty unit cgroup",
+ "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/run-p2521209-i2532942.service",
+ "cgroup_pids": [],
+ "cgroup_present": false,
+ "drained": true,
+ "exec_exitcode": 0,
+ "forced_signals": [],
+ "kind": "m7-navigation-v4-exec-drain-1",
+ "ledger_row": {
+  "at": 1794250866.3588426,
+  "basis": "measured work+sup cpu.stat",
+  "cpu_seconds": 208.306704,
+  "event": "charged",
+  "go_record": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0e/go-S0e.json",
+  "lane": "navigation",
+  "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+  "receipt_dir": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0e/receipt-S0e",
+  "stage": "S0e",
+  "unit_returncode": 0
+ },
+ "matching_survivors": [],
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "receipt": {
+  "bytes": 1875,
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0e/receipt-S0e/receipt.json",
+  "sha256": "58361660a094578d8d4dfa6c1aad1dd5293d1c457f322a60f01a621bd57b8769"
+ },
+ "receipt_complete": true,
+ "source_stage": "S0e",
+ "stage": "S0e-D",
+ "status": "drained",
+ "unit_returncode": 0,
+ "workload_returncode": 0
+}

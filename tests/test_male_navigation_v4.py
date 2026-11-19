@@ -129,14 +129,18 @@ def write_corpus(root, with_arrays=True, manifest=None, **pin_changes):
     (root / "data-manifest.json").write_bytes(raw)
     stream = io.BytesIO()
     np.savez(stream, **(arrays or {"empty": np.zeros(1, np.float32)}))
-    (root / "arrays.npz").write_bytes(stream.getvalue())
+    (root / "arrays.npz").write_bytes(stream.getvalue())   # the data child's transient file (not pinned)
+    (root / "locator.json").write_bytes(b'{"synthetic": true}')
 
     def pin(path):
         data = path.read_bytes()
         return {"path": str(path), "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
     record = {"schema": trainer.CORPUS_PIN_SCHEMA, "protocol_sha256": trainer.PROTOCOL_SHA256,
               "stage": "S0z", "status": "passed", "qualification_claims": [],
-              "data_manifest": pin(root / "data-manifest.json"), "arrays": pin(root / "arrays.npz"),
+              "data_manifest": pin(root / "data-manifest.json"),
+              "reader": {"t_f": {"path": str(root / "t-f"), "head": "a" * 40},
+                         "t_h": {"path": str(root / "t-h"), "head": "b" * 40},
+                         "locator": pin(root / "locator.json"), "data_root": str(root / "s0f-data")},
               **pin_changes}
     (root / "corpus-pin.json").write_bytes(canonical(record))
     return root / "corpus-pin.json", record, arrays
@@ -384,7 +388,8 @@ class TrainerAdmission(Temp):
             ({"stage": "S0f"}, "Unpinned"),
             ({"status": "pending"}, "Unpinned"),
             ({"data_manifest": v3_manifest}, "47c4523c"),
-            ({"arrays": {"path": "x"}}, "arrays"),
+            ({"reader": None}, "reader"),
+            ({"reader": {"t_f": {"path": "rel", "head": "a" * 40}}}, "reader"),
         ):
             target = self.root / f"pin-{message}-{len(changes)}-{list(changes)[0]}.json"
             target.write_bytes(canonical({**record, **changes}))
@@ -427,7 +432,7 @@ class TrainerAdmission(Temp):
 
     def test_plan_only_is_default_and_never_imports_torch_or_opens_arrays(self):
         path, record, _ = write_corpus(self.root, with_arrays=False)
-        (self.root / "arrays.npz").unlink()  # Plan-only must not need the bundle.
+        (self.root / "arrays.npz").unlink()  # Plan-only must not need any array file.
         script = ("import json,sys,io,contextlib;import train_male_navigation_v4 as t;"
                   "out=io.StringIO()\nwith contextlib.redirect_stdout(out): code=t.main(sys.argv[1:])\n"
                   "print(json.dumps({'code':code,'out':json.loads(out.getvalue()),"
@@ -471,7 +476,7 @@ class TrainerAdmission(Temp):
         import numpy as np
         path, record, arrays = write_corpus(self.root)
         rosters = trainer.derive_schedules(record)["rosters"]
-        data = trainer.load_arrays(record, rosters)
+        data = trainer.load_arrays(self.root / "arrays.npz", rosters)
         self.assertEqual([len(e["targets"]) for e in data["augmented"]["train"]],
                          list(OLD_TINY + ADVICE_TINY))
         self.assertIs(data["old-corpus"]["dev"], data["augmented"]["dev"])
@@ -489,13 +494,8 @@ class TrainerAdmission(Temp):
             np.savez(stream, **changed)
             target = self.root / f"arrays-{mutation}.npz"
             target.write_bytes(stream.getvalue())
-            pinned = {**record, "arrays": {"path": str(target), "bytes": len(stream.getvalue()),
-                                           "sha256": hashlib.sha256(stream.getvalue()).hexdigest()}}
             with self.subTest(mutation=mutation), self.assertRaises(trainer.Refusal):
-                trainer.load_arrays(pinned, rosters)
-        tampered = {**record, "arrays": {**record["arrays"], "sha256": "0" * 64}}
-        with self.assertRaisesRegex(trainer.Refusal, "differ"):
-            trainer.load_arrays(tampered, rosters)
+                trainer.load_arrays(target, rosters)
 
 
 # --------------------------------------------------------------------------- update runner
@@ -609,6 +609,9 @@ class TinyHooks(trainer.Hooks):
         if getattr(self.test, "fail_at", None) == len(self.calls):
             raise ValueError("synthetic recorded-development fault")
         return super().evaluate(model, episodes, deadline, training)
+
+    def derive_data(self, record, derivation, output):
+        return self.test.root / "arrays.npz"      # stands in for the S0f-reader child (own tests below)
 
     def inside_stage(self):
         return True

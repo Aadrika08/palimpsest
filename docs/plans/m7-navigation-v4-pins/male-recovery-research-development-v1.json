@@ -1,29 +1,33 @@
 {
-  "before_after_inventory_sha256": "PENDING-S0d",
+  "before_after_inventory_sha256": "4bb839c55dd8978378f8232c6855e8350d3d2dcf0abef6ede5ae7d7a20bce485",
   "data_manifest": {
-    "path": "PENDING-S0c",
-    "sha256": "PENDING-S0c"
+    "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data/data-manifest.json",
+    "sha256": "052a8dbd7428ffa064a74dfd71792ca6c0f2ae54ea9564ce68eb0a94d5220c72"
   },
   "id": "male-recovery-executed-target-development-v1",
-  "model_inputs": "PENDING-S0d",
+  "model_inputs": {
+    "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/data/assets/flynn/male-reduced-v1/source-graph.json": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+    "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+    "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/upstream/fly-gym/models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+  },
   "pairs": [
     {
-      "directory": "PENDING-S0d",
-      "report_sha256": "PENDING-S0d",
+      "directory": "runs/S0d/seed-10",
+      "report_sha256": "3b5f14f26bd8bedf9754bf74aa37b15fb4106932532713cd2db412f506204086",
       "training_seed": 10
     },
     {
-      "directory": "PENDING-S0d",
-      "report_sha256": "PENDING-S0d",
+      "directory": "runs/S0d/seed-11",
+      "report_sha256": "27cd10fa4bda58ce328871bd01ca440468281c296b60606747694cc94b1d1313",
       "training_seed": 11
     },
     {
-      "directory": "PENDING-S0d",
-      "report_sha256": "PENDING-S0d",
+      "directory": "runs/S0d/seed-12",
+      "report_sha256": "186e3b6af878f4511f74d78d17d73630d8a421f113d729ae3fc5e7afbec0f09c",
       "training_seed": 12
     }
   ],
-  "producer_root": "PENDING-S0d",
+  "producer_root": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
   "qualification_claims": [],
   "runtime": {
     "numpy": "2.2.5",
@@ -32,7 +36,7 @@
   },
   "training_source_code": {
     "reader": {
-      "adapter_sha256": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+      "adapter_sha256": "ddefc34d4b1c3512a0751f4597be537a380b6823efc31fdbfd838ec04e4ae24c",
       "current_reader_sources": {
         "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
         "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
@@ -43,19 +47,19 @@
       }
     },
     "trainer": {
-      "scripts/train_male_recovery.py": "1b828d68daf4db6186d5ccc0804d35ce6a8918279cb74834d16291f6d5679877",
+      "scripts/train_male_recovery.py": "b9cc181f7caec71cbd890fdb17d4cdaa73c1b0a847e4a3d6b437b2d3be0bed37",
       "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
       "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
     }
   },
-  "training_source_commit": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+  "training_source_commit": "02e861f8be9877dd183a659ed1b70d66a9141052",
   "training_supervisor": {
-    "path": "PENDING-S0d",
-    "sha256": "PENDING-S0d"
+    "path": "runs/S0d/control/outer-supervisor/supervisor.json",
+    "sha256": "fe2ae7cd6fb5605475e8fda5e5c455216385b0b1d346b173a50f8361457b29f0"
   },
   "training_terminal": {
-    "path": "PENDING-S0d",
-    "sha256": "PENDING-S0d"
+    "path": "runs/S0d/control/terminal.json",
+    "sha256": "af0abad743e347195a382a58bba26d149a2f0cb1460756ee6ab6cf38fed3aa76"
   },
   "version": 1
 }

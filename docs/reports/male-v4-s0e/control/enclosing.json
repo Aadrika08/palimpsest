@@ -1,0 +1,99 @@
+{
+ "controls_unchanged": true,
+ "launcher_supervisor": {
+  "bytes": 649,
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-supervisor/supervisor.json",
+  "sha256": "4b909b6826869ee14a9fc9b852095bfddcf4de9a9bdec4843982d0225c3979ad"
+ },
+ "normal_return_limit_seconds": 2210,
+ "outer_after_inventory_sha256": "64ac3bdb8d4c5add4beedea93b27d108fe8b7311eea3efbf4ab29b189df09d2c",
+ "outer_before_inventory_sha256": "64ac3bdb8d4c5add4beedea93b27d108fe8b7311eea3efbf4ab29b189df09d2c",
+ "outer_cleanup": {
+  "conflicting_owned_identities": [],
+  "forced_signals": [],
+  "max_sample_gap_seconds": 1.4995218240073882,
+  "observed_owned_processes": [
+   {
+    "pid": 2521245,
+    "start_ticks": 25175351
+   },
+   {
+    "pid": 2521251,
+    "start_ticks": 25175439
+   },
+   {
+    "pid": 2521272,
+    "start_ticks": 25175498
+   },
+   {
+    "pid": 2521281,
+    "start_ticks": 25175740
+   },
+   {
+    "pid": 2521391,
+    "start_ticks": 25178415
+   },
+   {
+    "pid": 2521463,
+    "start_ticks": 25180734
+   },
+   {
+    "pid": 2521847,
+    "start_ticks": 25182907
+   },
+   {
+    "pid": 2521906,
+    "start_ticks": 25185652
+   },
+   {
+    "pid": 2521945,
+    "start_ticks": 25186662
+   },
+   {
+    "pid": 2522026,
+    "start_ticks": 25189453
+   },
+   {
+    "pid": 2522099,
+    "start_ticks": 25192218
+   },
+   {
+    "pid": 2522145,
+    "start_ticks": 25193623
+   },
+   {
+    "pid": 2522173,
+    "start_ticks": 25194659
+   },
+   {
+    "pid": 2522285,
+    "start_ticks": 25197384
+   },
+   {
+    "pid": 2522291,
+    "start_ticks": 25197509
+   },
+   {
+    "pid": 2522346,
+    "start_ticks": 25198990
+   }
+  ],
+  "remaining_after_forced": [],
+  "sample_errors": [],
+  "sample_seconds": 0.25,
+  "sampler_stopped": true,
+  "samples": 963,
+  "scope": "finite 0.25 s PID/start sampling with PID/start recheck before owned containment; not universal transient-process proof",
+  "survivors": []
+ },
+ "outer_inventory_unchanged": true,
+ "schema": "m7-navigation-v4-s0e-enclosing-1",
+ "stage": "S0e",
+ "status": "completed-collection",
+ "terminal": {
+  "bytes": 2207,
+  "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/terminal.json",
+  "sha256": "7773bfb8756b3ce54ae7d0fc5acf40e6bcf738a2fc5bef72878402d7ba3495a3"
+ },
+ "wall_seconds": 252.26833966199774
+}

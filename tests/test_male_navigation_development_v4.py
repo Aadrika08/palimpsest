@@ -7,7 +7,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
+from palimpsest import male_navigation_research_v4 as research
 import evaluate_male_navigation_v4 as evaluator
 import train_male_navigation_v4 as trainer
 
@@ -342,17 +344,33 @@ class Cli(Temp):
 
     def test_go_route_requires_admitted_s1_named_go_and_never_binds_native_owner(self):
         s1 = self.published_s1()
+        with self.assertRaisesRegex(evaluator.Refusal, 'exact tree the binding loads'):
+            evaluator.admit_candidates(s1)
+        sha = hashlib.sha256((s1 / 'report.json').read_bytes()).hexdigest()
+        with patch.object(research, 'S1_OUTPUT', s1):
+            with self.assertRaisesRegex(evaluator.Refusal, 'binding constant'):
+                evaluator.admit_candidates(s1)
+        patcher = patch.multiple(research, S1_OUTPUT=s1, REPORT_SHA256=sha)
+        patcher.start(); self.addCleanup(patcher.stop)
         _, s1_sha = evaluator.admit_candidates(s1)
         output = self.root / 'eval'
         go = self.write('go.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S2',
                                     'protocol_sha256': trainer.PROTOCOL_SHA256, 's1_report_sha256': s1_sha,
+                                    'amendment_2_sha256': evaluator.AMENDMENT_SHA256,
                                     'granted_by': 'owner', 'granted_at': '2026-11-09'})
+        no_amendment = self.write('no-amendment.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S2',
+                                  'protocol_sha256': trainer.PROTOCOL_SHA256, 's1_report_sha256': s1_sha,
+                                  'granted_by': 'owner', 'granted_at': '2026-11-09'})
         wrong = self.write('wrong.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S3',
                                           'protocol_sha256': trainer.PROTOCOL_SHA256, 's1_report_sha256': s1_sha,
+                                          'amendment_2_sha256': evaluator.AMENDMENT_SHA256,
                                           'granted_by': 'owner', 'granted_at': '2026-11-09'})
+        extra = ['--assets', str(self.root / 'assets'), '--corpus-pin', str(self.root / 'pin.json')]
         for argv, message in ((['--go', str(go)], '--s1-output'),
-                              (['--go', str(wrong), '--s1-output', str(s1), '--output', str(output)], 'stage S2'),
-                              (['--go', str(go), '--s1-output', str(s1), '--output', str(output)],
+                              (['--go', str(wrong), '--s1-output', str(s1), '--output', str(output), *extra], 'stage S2'),
+                              (['--go', str(no_amendment), '--s1-output', str(s1), '--output', str(output), *extra],
+                               'amendment 2'),
+                              (['--go', str(go), '--s1-output', str(s1), '--output', str(output), *extra],
                                'run_research_stage'),
                               (['--plan-only', '--go', str(go)], 'exclusive')):
             code, value = self.invoke(argv)
@@ -360,7 +378,7 @@ class Cli(Temp):
                 self.assertEqual((code, value['status']), (2, 'refused'))
                 self.assertIn(message, value['reason'])
                 self.assertFalse(output.exists())
-        with self.assertRaisesRegex(evaluator.Refusal, 'Engine'):
+        with self.assertRaisesRegex(evaluator.Refusal, 'run_development'):
             evaluator.native_owner(evaluator.CASES[0])
         (s1 / 'publication.json').unlink()
         with self.assertRaisesRegex(evaluator.Refusal, 'terminal S1'):

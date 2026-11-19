@@ -15,14 +15,19 @@ through ``admit_held_out``: a published development pass, a separate S3 owner GO
 that report, and a lane charge through S2 within the Amendment 1 ceiling. There is no
 held-out constant to import and no CLI path around that admission.
 
-The native owner (Engine episode of a v4 checkpoint) is deliberately not bound here; the
-GO route refuses before any scene is generated until a reviewed v4 Engine binding exists.
+The native owner (Amendment 2) is a port of the v2 owner worker: NavigationBindingV4, a fresh
+spawned one-thread CPU process per owner, 180 s each, no teacher, no retry or replacement, the
+first failure stops the stage. It is reachable only through the GO route inside a research stage;
+the S2 GO must name both the base protocol sha and the amendment-2 file sha.
 """
 import argparse
 from dataclasses import dataclass
 import hashlib
 import json
+import os
 from pathlib import Path
+import sys
+import time
 
 from palimpsest import artifacts, male_model
 import run_research_stage as stage_runner
@@ -309,54 +314,429 @@ def check_go(path, stage, s1_report_sha256):
     if value.get('protocol_sha256') == V3_PROTOCOL_SHA256:
         raise Refusal('GO record names the v3 protocol')
     if (value.get('decision') != 'GO' or value.get('lane') != LANE or value.get('stage') != stage or
-            value.get('protocol_sha256') != PROTOCOL_SHA256 or value.get('s1_report_sha256') != s1_report_sha256 or
-            not str(value.get('granted_by', '')).strip() or not str(value.get('granted_at', '')).strip()):
-        raise Refusal(f'GO record does not name lane navigation, stage {stage}, this protocol and the S1 report')
+            value.get('protocol_sha256') != PROTOCOL_SHA256 or value.get('amendment_2_sha256') != AMENDMENT_SHA256 or
+            value.get('s1_report_sha256') != s1_report_sha256 or not str(value.get('granted_by', '')).strip() or not str(value.get('granted_at', '')).strip()):
+        raise Refusal(f'GO record does not name lane navigation, stage {stage}, the base protocol and amendment 2 shas, and the S1 report')
     return sha
 
 
 def admit_candidates(s1_output):
     """Six terminal S1 checkpoints behind a durable publication receipt."""
+    from palimpsest import male_navigation_research_v4 as research
+    if Path(s1_output).resolve() != Path(research.S1_OUTPUT).resolve():
+        raise Refusal('S1 output must be the exact tree the binding loads (research.S1_OUTPUT)')
     report = trainer.success_admitted(s1_output)
     if report is None:
         raise Refusal('Six admitted terminal S1 checkpoints are required')
     payload = artifacts._read(Path(s1_output) / 'report.json', MAX_JSON)
-    return report, hashlib.sha256(payload).hexdigest()
+    sha = hashlib.sha256(payload).hexdigest()
+    if sha != research.REPORT_SHA256:
+        raise Refusal('S1 report sha differs from the binding constant')
+    return report, sha
+
+
+# --------------------------------------------------------------------------- A2 native owner (S2 development only)
+# Port of scripts/evaluate_male_navigation_v2.py (worker + verify) with v4 constants: NavigationBindingV4,
+# the fixed v4 scenes and case table, v4 pins. Thresholds, scene lists and case tables live above, once;
+# this block only executes them. Heavy imports stay inside functions: the parent never loads Torch/MuJoCo.
+
+AMENDMENT_PATH = 'docs/plans/m7-navigation-v4-amendment-2.json'
+AMENDMENT_SHA256 = 'c4cd3a506b0b468b0d6d4d359dff7ecbd3b3bf0c25c6fe9360207282249f8d6f'
+PROFILE = 'male-navigation-development-v4'
+OWNER_SECONDS, STAGE_SECONDS, MiB = 180, 1800, 1024**2
+PINNED_SOURCES = ('src/palimpsest/engine.py', 'src/palimpsest/male_navigation_research_v4.py', 'src/palimpsest/male_policy.py',
+                  'src/palimpsest/male_model.py', 'scripts/evaluate_male_navigation_v4.py', 'scripts/train_male_navigation_v4.py',
+                  trainer.PROTOCOL_PATH, AMENDMENT_PATH)
+
+
+def _lib():
+    import collect_male_navigation as common
+    import collect_male_navigation_v2 as contacts
+    import evaluate_male_navigation_v2 as v2
+    return common, contacts, v2
+
+
+def check_amendment(root):
+    """The amendment-2 file sha is checked by every S2 file; it is never trusted from arguments."""
+    sha = hashlib.sha256(artifacts._read(Path(root) / AMENDMENT_PATH, MAX_JSON)).hexdigest()
+    if sha != AMENDMENT_SHA256:
+        raise Refusal('Amendment 2 file differs from the approved sha256')
+    return sha
+
+
+def source_pins(root):
+    common, contacts, _ = _lib()
+    root = Path(root)
+    plan = contacts.plan(root)
+    for name, pin in plan['generator']['source_sha256'].items():
+        if common.digest(root / 'upstream/fly-gym' / name) != pin:
+            raise ValueError('Frozen navigation generator changed')
+    scripts = sorted((root / 'scripts').glob('*.py'))
+    if len(scripts) > 256:
+        raise ValueError('Current script inventory exceeds bound')
+    return {'protocol_sha256': PROTOCOL_SHA256, 'amendment_2_sha256': check_amendment(root),
+            'study_sha256': contacts.PLAN_SHA, 'contact_profile_sha256': contacts.PROFILE_SHA,
+            'runtime_source': common.source_identity(root),
+            'sources': {name: common.digest(root / name) for name in PINNED_SOURCES},
+            'scripts': {p.name: common.digest(p) for p in scripts}, 'upstream': plan['generator']['source_sha256']}
+
+
+def check_pins(root, expected):
+    if source_pins(root) != expected:
+        raise ValueError('Development source changed')
+
+
+def prior_metadata(pin_path, pin_sha256):
+    """Prior/S0 scene metadata from the S0z-pinned data manifest named by the S1 report."""
+    record, actual = trainer.read_corpus_pin(pin_path)
+    if actual != pin_sha256:
+        raise Refusal('Corpus pin differs from the one the S1 report names')
+    data = json.loads(trainer._pinned_bytes(record['data_manifest'], MAX_JSON))
+    rows = data['old_sources'] + data['new_sources']
+    if len(rows) != 26 or data.get('counts', {}).get('held_out_sources', 0) != 0:
+        raise ValueError('Exact admitted parent source metadata required')
+    return {'data_manifest_sha256': record['data_manifest']['sha256'], 'sources': [
+        {key: row[key] for key in ('run_id', 'episode', 'geometry', 'raw_payload_sha256')} |
+        ({'initial_fingerprint': row['initial_fingerprint']} if 'initial_fingerprint' in row else {}) for row in rows]}
+
+
+def initial_admission(world, fingerprint, case, prior, earlier, expected=None):
+    """Evaluator-only metadata checks; no scene mutation or teacher access."""
+    from evaluate_male_closed_loop import require_matched_initial
+    from prepare_male_navigation_v2 import geometry_digests
+    check_case(case, CASES)
+    geometry = geometry_digests(world)
+    for row in prior['sources']:
+        if any(geometry[key] == row['geometry'][key] for key in ('layout', 'full_scene')):
+            raise ValueError('Development geometry repeats admitted parent data')
+        if row.get('initial_fingerprint', {}).get('inputs') == fingerprint['inputs']:
+            raise ValueError('Development initial input repeats admitted parent data')
+    for scene, previous in earlier.items():
+        if int(scene) != case['scene_seed'] and (any(geometry[key] == previous['geometry'][key] for key in geometry) or
+                                                 fingerprint['inputs'] == previous['fingerprint']['inputs']):
+            raise ValueError('Distinct development scenes repeat geometry or initial input')
+    if expected is not None:
+        require_matched_initial(expected, fingerprint)
+    return geometry
+
+
+def candidates(root, assets):
+    """Six identities from the hard-coded S1 evidence; no Torch/model/native construction here."""
+    from palimpsest import male_navigation_research_v4 as research
+    return {f'{seed}:{arm}': research.resolve(Path(root), Path(assets), seed, arm, 'male-original')[0]
+            for seed in research.PAIR_SEEDS for arm in research.ARMS}
+
+
+def worker(config):
+    """One fresh spawned one-thread CPU owner. The parent never repeats it."""
+    common, contacts, v2 = _lib()
+    started = time.monotonic(); deadline = started + OWNER_SECONDS
+    root, run, stage = map(Path, (config['repo'], config['run'], config['stage']))
+    budget = common.storage(config); engine = probe = None
+    result = {'status': 'failed-infrastructure', 'case': config['case'], 'rows': [],
+              'contact_incidence': contacts.empty_incidence(), 'executed_ticks': 0, 'published_rows': 0}
+    try:
+        check_case(config['case'], CASES); check_pins(root, config['source_pins'])
+        if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
+            raise ValueError('CUDA must be explicitly hidden')
+        import numpy as np
+        import torch
+        import mujoco
+        from palimpsest import male_navigation_research_v4 as research
+        from palimpsest.engine import Engine
+        from palimpsest.replay import _register_initial
+        from palimpsest.snapshots import _model_digest
+        from palimpsest.profiles import validate_world
+        torch.set_num_threads(1); torch.set_num_interop_threads(1)
+        if (torch.cuda.is_initialized() or torch.get_num_threads() != 1 or torch.get_num_interop_threads() != 1 or
+                mujoco.__version__ != '3.3.6' or mujoco.get_mjcb_control() is not None):
+            raise ValueError('Fresh pinned one-thread CPU/native owner required')
+        result['runtime'] = {**research.runtime_identity(), 'torch_build': torch.__version__, 'mujoco': mujoco.__version__,
+                             'intraop_threads': torch.get_num_threads(), 'interop_threads': torch.get_num_interop_threads(),
+                             'cuda_initialized': False}
+        budget.check(v2.admission(contacts.plan(root))['recording_bytes'] + 16 * MiB, path=run)
+        run.mkdir(exist_ok=False)
+        case = config['case']; binding = research.Binding(case['training_seed'], case['arm'])
+        engine = Engine.open(root, Path(config['assets']), run / 'recording', controller='male-original', device='cpu',
+                             seed=case['scene_seed'], scenario='reproduction', texture='checker', run_id=run.name,
+                             max_bytes=144 * MiB, storage_budget=budget, research_binding=binding,
+                             expected_policy_identity=config['identity'])
+        if (engine.total_tick or engine.episode or engine.phase != 'paused' or engine.teacher is not None or
+                np.any(engine.env.data.qvel) or np.any(engine.env.data.ctrl) or engine.env.data.time or engine.env._t or
+                engine.env._speed or engine.env._stall_steps or np.any(engine.env._last_action) or
+                not np.array_equal(engine.env._prev_xy, engine.env._base_xy()) or engine.eyes != {'left': True, 'right': True} or
+                engine.env.max_steps != MAX_TICKS or engine.env.n_obstacles != 20 or engine.env._action_scale != 2 or
+                engine.env.end_on_collision):
+            raise ValueError('Exact untouched reproduction boundary required')
+        result['numeric_admission'] = common.numeric_admission([engine.observation[k] for k in ('cam_left', 'cam_right')],
+                                                               engine.policy.agent.cell.Nin)
+        validate_world(engine.env)
+        probe = common.body.ContactProbe(mujoco, engine.env)
+        ownership = contacts.compiled_ownership(mujoco, engine.env.model, _model_digest(engine.env.model))
+        result['contact_ownership'] = ownership
+        if (ownership['base_body_id'] != probe.ownership['base_body_id'] or
+                ownership['robot_bodies'] != probe.ownership['robot_bodies'] or
+                any({k: actual[k] for k in original} != original for actual, original in
+                    zip(ownership['geometries'], probe.ownership['geometries'], strict=True))):
+            raise ValueError('Probe and compiled contact ownership differ')
+        metadata = {'study_sha256': contacts.PLAN_SHA, 's1_report_sha256': research.REPORT_SHA256,
+                    'case': case, 'source_identity': config['identity'], 'contact_profile_sha256': contacts.PROFILE_SHA,
+                    'contact_ownership': ownership, 'teacher_queries': 0, 'generic_replay_qualified': False,
+                    'runtime': result['runtime'], 'data_manifest_sha256': config['prior']['data_manifest_sha256']}
+        engine.writer.manifest.update(profile=PROFILE, navigation_development=metadata)
+        _register_initial(engine, run, budget); common.initial_ready(run, 'ready')
+        if (run / 'snapshots/initial.snp').stat().st_size > 16 * MiB:
+            raise ValueError('Initial SNP exceeds cap')
+        contacts.initial_contact_binding(run, ownership)
+        result['initial_world'] = engine.world()
+        fingerprint = common.initial_match(run, result['initial_world'], case, config['identity'], config.get('scene_initial'))
+        result['initial_fingerprint'] = fingerprint
+        result['geometry'] = initial_admission(result['initial_world'], fingerprint, case, config['prior'],
+                                               config['earlier_scenes'], config.get('scene_initial'))
+        metadata['initial_fingerprint'] = fingerprint; metadata['geometry'] = result['geometry']
+        probe.install()  # All scientific initial/disjointness checks precede action 1.
+        result['outcome'] = v2.run_episode(engine, probe, result, deadline, stage, budget)
+        result['final_state'] = engine.public_state(); result['status'] = 'completed-recording'
+    except BaseException as error:
+        result.update(status='failed-infrastructure', error={'type': type(error).__name__, 'message': str(error)[:1024]})
+    finally:
+        if probe is not None:
+            try:
+                probe.close(); result['callback_restored'] = mujoco.get_mjcb_control() is None
+            except Exception as error:
+                result.update(status='failed-infrastructure', callback_error=str(error)[:512])
+        if engine is not None:
+            result['executed_ticks'] = engine.total_tick
+            try:
+                engine.close(); result['engine_closed'] = True
+            except Exception as error:
+                result.update(status='failed-infrastructure', cleanup_error=str(error)[:512])
+    if not result.get('callback_restored') or not result.get('engine_closed') or result['executed_ticks'] != len(result['rows']):
+        result['status'] = 'failed-infrastructure'
+    result['wall_seconds'] = time.monotonic() - started
+    try:
+        v2.owner_payload(result)
+        common.publish(stage / 'result.json', result, budget, deadline, lambda: check_pins(root, config['source_pins']))
+    except Exception as error:
+        common.write_json(stage / 'failure.json', {'status': 'failed-infrastructure', 'error': str(error)[:1024], 'result': result},
+                          max_bytes=4 * MiB, storage_budget=budget)
+        return False
+    return result['status'] == 'completed-recording' and time.monotonic() <= deadline
+
+
+def admit_record(run, result, config):
+    """Parent-side re-admission of one owner's retained recording; port of v2 admit_record."""
+    import numpy as np
+    from evaluate_male_closed_loop import validate_recording, inventory
+    from palimpsest import male_navigation_research_v4 as research
+    from palimpsest.records import iter_ticks
+    from prepare_male_navigation_v2 import raw_payload_update
+    common, contacts, v2 = _lib()
+    case = config['case']; check_case(case, CASES)
+    manifest = common.read_json(run / 'recording/manifest.json', maximum=4 * MiB)
+    meta = manifest.get('navigation_development', {})
+    binding = research.Binding(case['training_seed'], case['arm'])
+    if (result.get('status') != 'completed-recording' or result.get('case') != case or
+            any(result.get(k) is not True for k in ('callback_restored', 'engine_closed', 'telemetry_wrappers_restored')) or
+            manifest.get('profile') != PROFILE or manifest.get('teacher_privileged') is not False or
+            meta.get('case') != case or meta.get('source_identity') != config['identity'] or
+            meta.get('study_sha256') != contacts.PLAN_SHA or meta.get('s1_report_sha256') != research.REPORT_SHA256 or
+            meta.get('contact_profile_sha256') != contacts.PROFILE_SHA or
+            meta.get('contact_ownership') != result.get('contact_ownership') or
+            meta.get('teacher_queries') != 0 or type(meta.get('teacher_queries')) is not int or
+            meta.get('generic_replay_qualified') is not False or meta.get('runtime') != result.get('runtime') or
+            meta.get('data_manifest_sha256') != config['prior']['data_manifest_sha256']):
+        raise ValueError('Development model/contact/profile/cleanup lineage differs')
+    common.initial_ready(run, 'ready'); contacts.initial_contact_binding(run, result['contact_ownership'])
+    fingerprint = common.initial_match(run, result['initial_world'], case, config['identity'], config.get('scene_initial'))
+    geometry = initial_admission(result['initial_world'], fingerprint, case, config['prior'], config['earlier_scenes'],
+                                 config.get('scene_initial'))
+    if (fingerprint != result['initial_fingerprint'] or fingerprint != meta.get('initial_fingerprint') or
+            geometry != result.get('geometry') or geometry != meta.get('geometry')):
+        raise ValueError('Initial scientific receipt differs')
+    summary = validate_recording(run, case['scene_seed'], config['identity'], result['final_state'], fingerprint,
+                                 research_provenance=binding.provenance())
+    declared = result['numeric_admission']
+    if common.numeric_admission([np.zeros((128, 128, 3), np.uint8)] * 2, declared['input_nodes']) != declared:
+        raise ValueError('Numeric storage preflight differs')
+    incidence = contacts.empty_incidence(); payload = hashlib.sha256(); count = 0
+    for count, raw in enumerate(iter_ticks(run / 'recording'), 1):
+        if count > MAX_TICKS or count > len(result['rows']):
+            raise ValueError('Unexpected numeric row')
+        if sum(np.asarray(value).nbytes for key, value in raw.items() if key not in ('episode', 'tick')) > declared['bytes_per_tick']:
+            raise ValueError('Retained numeric interval exceeds cap')
+        row = result['rows'][count - 1]; observed = v2.bind_interval(raw, row, result['contact_ownership'], count - 1)
+        if row.get('contacts') != contacts.row_contacts(observed):
+            raise ValueError('Cached contact receipt differs')
+        contacts.add_incidence(incidence, observed); raw_payload_update(payload, raw)
+    if (count != len(result['rows']) or type(result.get('executed_ticks')) is not int or result['executed_ticks'] != count or
+            type(result.get('published_rows')) is not int or result['published_rows'] != count or summary['ticks'] != count or
+            result.get('contact_incidence') != incidence or
+            result.get('outcome') != common.natural_boundary(count, result['final_state']) or result['outcome'] != summary['outcome']):
+        raise ValueError('Complete natural outcome/interval ledger differs')
+    if payload.hexdigest() in {row['raw_payload_sha256'] for row in config['prior']['sources']}:
+        raise ValueError('Complete development payload repeats admitted parent data')
+    if list((run / 'snapshots').glob('*.snp')) != [run / 'snapshots/initial.snp'] or \
+            (run / 'snapshots/initial.snp').stat().st_size > 16 * MiB:
+        raise ValueError('Exactly one bounded initial SNP required')
+    files, _, size = inventory(run)
+    return {**summary, 'raw_payload_sha256': payload.hexdigest(), 'initial_fingerprint': fingerprint,
+            'geometry': geometry, 'contact_incidence': incidence, 'files': files, 'source_bytes': size}
 
 
 def native_owner(*_):
-    raise Refusal('No reviewed v4 Engine research binding exists; native owners are not bound')
+    """Direct calls stay refused: owners exist only inside ``run_development`` under a GO."""
+    raise Refusal('Native owners run only through run_development under an admitted S2 GO')
+
+
+def run_development(args):
+    """S2 parent: 24 sequential owners, no retry/replacement, first failure stops, publication last."""
+    import math
+    import shutil
+    import uuid
+    from dataclasses import asdict
+    from palimpsest.evaluate import bounded_process
+    from palimpsest.storage import StorageBudget, StorageLimits
+    common, contacts, v2 = _lib()
+    started = time.monotonic(); deadline = started + STAGE_SECONDS
+    root, assets, output = Path(args.repo).resolve(), Path(args.assets).resolve(), artifacts._safe_path(args.output)
+    s1_output = Path(args.s1_output).resolve()
+    if root != ROOT or not output.is_absolute() or output.exists() or not output.parent.is_dir():
+        raise Refusal('Exact producer root and a fresh absolute output directory are required')
+    if any(output == path or output.is_relative_to(path) or path.is_relative_to(output) for path in (s1_output, assets, root)):
+        raise Refusal('Output overlaps S1 evidence, assets or the source tree')
+    pins = source_pins(root); plan = contacts.plan(root); estimates = v2.admission(plan)
+    report_s1, s1_sha = admit_candidates(s1_output)
+    prior = prior_metadata(args.corpus_pin, report_s1['corpus_pin_sha256'])
+    if prior['data_manifest_sha256'] != report_s1['data_manifest_sha256']:
+        raise Refusal('Prior metadata manifest differs from the one S1 trained on')
+    required_free = plan['limits']['combined_incremental_free_reservation_bytes'] + plan['limits']['free_floor_bytes']
+    if shutil.disk_usage(output.parent).free < required_free:
+        raise Refusal('Whole-study prospective capacity reservation is unavailable')
+    output.mkdir(exist_ok=False)
+    budget = StorageBudget((output,), StorageLimits(max_bytes=4 * 1024**3, min_free_bytes=1024**3, max_runs=len(CASES),
+                                                    max_snapshots=1, max_exports=1), headroom_bytes=8 * MiB)
+    config = {'repo': str(root), 'assets': str(assets), 'source_pins': pins, 'prior': prior,
+              'storage': {'roots': [str(output)], 'limits': asdict(budget.limits), 'headroom_bytes': 8 * MiB}}
+    extra = {'amendment_2_sha256': AMENDMENT_SHA256, 's1_report_sha256': s1_sha, 'source_pins': pins,
+             'data_manifest_sha256': prior['data_manifest_sha256'], 'admission_estimate': estimates,
+             'whole_study_free_required_bytes': required_free}
+    report = {'id': REPORT_ID, 'route': 'development', 'protocol_sha256': PROTOCOL_SHA256, 'status': 'failed-infrastructure',
+              'cases': {}, 'admission': {'status': 'not-admitted-operational-failure'}, 'qualification_claims': [], **extra}
+    try:
+        with budget.lock():
+            from palimpsest.assets import verify_assets
+            budget.check(estimates['aggregate_bytes'] + estimates['failure_extra_bytes'], path=output)
+            assets_before = verify_assets(root, assets)
+            if not assets_before['ok']:
+                raise ValueError('Pinned runtime assets unavailable')
+            identities = candidates(root, assets); scenes = {}; payloads = []
+
+            def owner(case):
+                if time.monotonic() >= deadline:
+                    raise TimeoutError('Development stage deadline')
+                check_pins(root, pins)
+                stage = output / case['id']; stage.mkdir(); run = stage / uuid.uuid4().hex
+                previous = scenes.get(case['scene_seed'])
+                child = {**config, 'case': case, 'stage': str(stage), 'run': str(run),
+                         'identity': identities[f"{case['training_seed']}:{case['arm']}"], 'earlier_scenes': scenes,
+                         'scene_initial': previous['fingerprint'] if previous else None}
+                allowance = min(float(OWNER_SECONDS), deadline - time.monotonic())
+                if allowance <= 0:
+                    raise TimeoutError('No remaining owner admission time')
+                supervision = bounded_process(
+                    [sys.executable, str(Path(__file__).resolve()), '--worker', json.dumps(child)], stage / 'supervision',
+                    allowance, {**os.environ, 'PYTHONPATH': str(root / 'src'), 'MUJOCO_GL': 'egl', 'OMP_NUM_THREADS': '1',
+                                'CUDA_VISIBLE_DEVICES': ''}, log_max_bytes=MiB, storage_budget=budget)
+                elapsed = supervision.get('elapsed_seconds')
+                if (supervision.get('status') != 'completed' or type(supervision.get('returncode')) is not int or
+                        supervision['returncode'] != 0 or any(key in supervision for key in ('error', 'failure')) or
+                        type(elapsed) not in (int, float) or not math.isfinite(elapsed) or not 0 <= elapsed <= allowance):
+                    raise ValueError('Owner failed normal bounded disposition')
+                result = common.read_json(stage / 'result.json', maximum=MiB)
+                admitted = admit_record(run, result, child)
+                if any(old != case['scene_seed'] and digest == admitted['raw_payload_sha256'] for old, digest in payloads):
+                    raise ValueError('Distinct development scene repeats complete payload')
+                payloads.append((case['scene_seed'], admitted['raw_payload_sha256']))
+                scenes.setdefault(case['scene_seed'], {'geometry': admitted['geometry'],
+                                                       'fingerprint': admitted['initial_fingerprint']})
+                if time.monotonic() > deadline:
+                    raise TimeoutError('Late owner readmission')
+                return {**admitted, 'status': 'completed-recording', 'case': case, 'teacher_queries': 0,
+                        'final_state': result['final_state'], 'executed_ticks': result['executed_ticks'], 'run': str(run)}
+
+            report = {**evaluate('development', CASES, owner, lambda rows: reduce_development(rows, prior)), **extra}
+            errors = []
+            for key, operation in (('assets_after', lambda: verify_assets(root, assets)),
+                                   ('identities_after', lambda: candidates(root, assets)),
+                                   ('final_source_pins', lambda: source_pins(root))):
+                try:
+                    report[key] = operation()
+                except Exception as error:
+                    errors.append(key + ': ' + str(error)[:512])
+            if (report.get('assets_after') != assets_before or report.get('identities_after') != identities or
+                    report.get('final_source_pins') != pins):
+                errors.append('Final source/assets/candidates differ')
+            if report['status'] == 'completed' and (len(scenes) != len(DEVELOPMENT_SCENES) or
+                                                    len(list(output.rglob('*.snp'))) != len(CASES)):
+                errors.append('Incomplete fixed owner/initial plan')
+            report['finalization_errors'] = errors
+            if errors:
+                report.update(status='failed-infrastructure',
+                              admission={'status': 'not-admitted-operational-failure', 'qualification_claims': []})
+            budget.check(0, path=output)
+        if time.monotonic() > deadline:
+            raise TimeoutError('Late development finalization/lease release')
+        # Publication: the source-pin recheck is the last check before the final rename.
+        common.publish(output / 'report.json', report, budget, deadline, lambda: check_pins(root, pins))
+    except BaseException as error:
+        report.update(status='failed-infrastructure', error={'type': type(error).__name__, 'message': str(error)[:1024]},
+                      admission={'status': 'not-admitted-operational-failure', 'qualification_claims': []})
+        common.write_json(output / 'failure.json', report, max_bytes=4 * MiB, storage_budget=budget)
+    return report
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if len(argv) == 2 and argv[0] == '--worker':
+        return 0 if worker(json.loads(argv[1])) else 1
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--plan-only', action='store_true', help='Default: print the plan only')
     parser.add_argument('--go', type=Path, help='S2 owner GO record')
     parser.add_argument('--s1-output', type=Path, help='Published S1 trainer output')
-    parser.add_argument('--output', type=Path, help='Fresh evaluation output directory')
+    parser.add_argument('--output', type=Path, help='Fresh evaluation output directory (absolute)')
+    parser.add_argument('--repo', type=Path, default=ROOT)
+    parser.add_argument('--assets', type=Path, help='Pinned runtime asset root')
+    parser.add_argument('--corpus-pin', type=Path, help='S0z corpus pin record named by the S1 report')
     args = parser.parse_args(argv)
     try:
         study = trainer.protocol()
         check_protocol(study)
+        check_amendment(ROOT)
         if args.plan_only and args.go is not None:
             raise Refusal('--plan-only and --go are mutually exclusive')
         if args.go is None:
             print(json.dumps({'mode': 'plan-only', 'route': 'development', 'protocol_sha256': PROTOCOL_SHA256,
+                              'amendment_2_sha256': AMENDMENT_SHA256, 'owners': len(CASES), 'per_owner_seconds': OWNER_SECONDS,
                               'cases': list(CASES), 'gate': 'each augmented seed >= 3 of 4; old arm reported',
                               'held_out_status': 'locked: requires development pass and a separate S3 GO'},
                              indent=1))
             return 0
-        if args.s1_output is None or args.output is None:
-            raise Refusal('--go requires --s1-output and a fresh --output')
+        if None in (args.s1_output, args.output, args.assets, args.corpus_pin):
+            raise Refusal('--go requires --s1-output, --assets, --corpus-pin and a fresh --output')
+        if not all(Path(p).is_absolute() for p in (args.s1_output, args.output, args.assets, args.corpus_pin, args.go)):
+            raise Refusal('Absolute paths are required')
         _, s1_sha = admit_candidates(args.s1_output)
         check_go(args.go, 'S2', s1_sha)
         if not trainer.inside_research_stage():
             raise Refusal('S2 runs only inside a run_research_stage.py census unit')
-        native_owner()
+        started = time.monotonic()
+        report = run_development(args)
     except (Refusal, OSError, ValueError, KeyError) as error:
         print(json.dumps({'status': 'refused', 'reason': f'{type(error).__name__}: {error}'}))
         return 2
-    return 1
+    print(json.dumps({'status': report['status'], 'admission': report['admission']}))
+    return 0 if report['status'] == 'completed' and time.monotonic() - started <= STAGE_SECONDS else 1
 
 
 if __name__ == '__main__':

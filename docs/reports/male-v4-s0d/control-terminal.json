@@ -1,0 +1,172 @@
+{
+ "after_inventory_sha256": "4bb839c55dd8978378f8232c6855e8350d3d2dcf0abef6ede5ae7d7a20bce485",
+ "before_inventory_sha256": "4bb839c55dd8978378f8232c6855e8350d3d2dcf0abef6ede5ae7d7a20bce485",
+ "cleanup": {
+  "conflicting_owned_identities": [],
+  "forced_signals": [],
+  "max_sample_gap_seconds": 1.5463944219809491,
+  "observed_owned_processes": [
+   {
+    "pid": 2424957,
+    "start_ticks": 23527848
+   },
+   {
+    "pid": 2425114,
+    "start_ticks": 23532272
+   },
+   {
+    "pid": 2425582,
+    "start_ticks": 23536707
+   }
+  ],
+  "remaining_after_forced": [],
+  "sample_errors": [],
+  "sample_seconds": 0.25,
+  "sampler_stopped": true,
+  "samples": 504,
+  "scope": "finite 0.25 s PID/start sampling with PID/start recheck before owned containment; not universal transient-process proof",
+  "survivors": []
+ },
+ "completed_pair_content_unchanged": true,
+ "head": "02e861f8be9877dd183a659ed1b70d66a9141052",
+ "inventories_unchanged": true,
+ "inventory_counts": {
+  "model_production": 14,
+  "raw_documents": 226,
+  "runtime": 4,
+  "tracked": 355,
+  "upstream": 122
+ },
+ "limits": {
+  "pair_internal_seconds": 600,
+  "pair_supervised_seconds": 660,
+  "stage_internal_seconds": 2100,
+  "stage_supervised_seconds": 2160
+ },
+ "pairs": [
+  {
+   "content_sha256": "d8173e66013fe7218d3459513f7a29b255afb2dc29454d5c0feeedf00701dcc8",
+   "output": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/seed-10",
+   "status": "completed",
+   "supervision": {
+    "command": [
+     "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+     "-B",
+     "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/regenerate_male_navigation_v4.py",
+     "--stage",
+     "S0d",
+     "--worktree",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
+     "--previous-pins",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/pin-record.json",
+     "--go",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0d/go-S0d.json",
+     "--pin-record-out",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/control/pairs/seed-10/pin-record.json",
+     "--",
+     "--data-manifest",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data/data-manifest.json",
+     "--training-seed",
+     "10",
+     "--output",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/seed-10"
+    ],
+    "elapsed_seconds": 44.23595818699687,
+    "pid": 2424957,
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-11-09T14:22:20.176552+00:00",
+    "status": "completed",
+    "timeout_seconds": 660
+   },
+   "training_seed": 10
+  },
+  {
+   "content_sha256": "7a9fda1c3f75cbd935cbd629b41677aca4e8415cf2c41f8781383bce0c799d09",
+   "output": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/seed-11",
+   "status": "completed",
+   "supervision": {
+    "command": [
+     "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+     "-B",
+     "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/regenerate_male_navigation_v4.py",
+     "--stage",
+     "S0d",
+     "--worktree",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
+     "--previous-pins",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/pin-record.json",
+     "--go",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0d/go-S0d.json",
+     "--pin-record-out",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/control/pairs/seed-11/pin-record.json",
+     "--",
+     "--data-manifest",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data/data-manifest.json",
+     "--training-seed",
+     "11",
+     "--output",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/seed-11"
+    ],
+    "elapsed_seconds": 44.34914596501039,
+    "pid": 2425114,
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-11-09T14:23:04.413706+00:00",
+    "status": "completed",
+    "timeout_seconds": 660
+   },
+   "training_seed": 11
+  },
+  {
+   "content_sha256": "634703d96e5215c5517715cdc06bf9d2b13e904ca8576b2f699d63a5d1c211e4",
+   "output": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/seed-12",
+   "status": "completed",
+   "supervision": {
+    "command": [
+     "/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python",
+     "-B",
+     "/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/regenerate_male_navigation_v4.py",
+     "--stage",
+     "S0d",
+     "--worktree",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
+     "--previous-pins",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/pin-record.json",
+     "--go",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s0d/go-S0d.json",
+     "--pin-record-out",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/control/pairs/seed-12/pin-record.json",
+     "--",
+     "--data-manifest",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0c/data/data-manifest.json",
+     "--training-seed",
+     "12",
+     "--output",
+     "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d/seed-12"
+    ],
+    "elapsed_seconds": 44.48945301800268,
+    "pid": 2425582,
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-11-09T14:23:48.764179+00:00",
+    "status": "completed",
+    "timeout_seconds": 660
+   },
+   "training_seed": 12
+  }
+ ],
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "qualification_claims": [],
+ "schema": "m7-navigation-v4-s0d-terminal-1",
+ "stage": "S0d",
+ "stage_seconds": 134.03806720802095,
+ "status": "passed-research-training",
+ "v2_reference_inventory_counts": {
+  "model_production": 16,
+  "raw_documents": 181,
+  "runtime": 7,
+  "tracked": 355,
+  "upstream": 122
+ }
+}

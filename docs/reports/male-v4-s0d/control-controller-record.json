@@ -1,0 +1,97 @@
+{
+ "declared_values": [
+  "4bb839c55dd8978378f8232c6855e8350d3d2dcf0abef6ede5ae7d7a20bce485"
+ ],
+ "documents": {
+  "control/after.json": {
+   "bytes": 148384,
+   "sha256": "2f59fcb0a2a7b493f786c94be0f6ecb781f8ad46a63d33c7aceb701fbdcdfee4"
+  },
+  "control/before.json": {
+   "bytes": 148384,
+   "sha256": "2f59fcb0a2a7b493f786c94be0f6ecb781f8ad46a63d33c7aceb701fbdcdfee4"
+  },
+  "control/invocation.json": {
+   "bytes": 2318,
+   "sha256": "91b99bb14d756b6e197e702faff9b634e16d34876e357c7bd97512853111664a"
+  },
+  "control/outer-supervisor/stderr.log": {
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "control/outer-supervisor/stdout.log": {
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "control/outer-supervisor/supervisor.json": {
+   "bytes": 765,
+   "sha256": "fe2ae7cd6fb5605475e8fda5e5c455216385b0b1d346b173a50f8361457b29f0"
+  },
+  "control/pairs/seed-10/pin-record.json": {
+   "bytes": 38239,
+   "sha256": "4ce884fba00b6d51e162435d4cfa79d1de70e0a6ccca9760f34e0721192fbaaa"
+  },
+  "control/pairs/seed-10/pin-record.json.port-pins.json": {
+   "bytes": 528,
+   "sha256": "1c5e8776efa9b3da6f7a363355de0d26236e65c6ae3da659bd43787800dec6a5"
+  },
+  "control/pairs/seed-10/stderr.log": {
+   "bytes": 435,
+   "sha256": "d865b97022aeac86ba807cede2178be93f02329eeda4b759c6a9f081a7ca9c49"
+  },
+  "control/pairs/seed-10/stdout.log": {
+   "bytes": 224,
+   "sha256": "0ebb118e210913875f683ddc7bd24e88c2071e63d49e0e8d5e21b3716e9620c7"
+  },
+  "control/pairs/seed-11/pin-record.json": {
+   "bytes": 38239,
+   "sha256": "6fc8bb5fa4fa2888dba0f0f868c98a8f54b0386435e5e9c1b2256b292cf038dc"
+  },
+  "control/pairs/seed-11/pin-record.json.port-pins.json": {
+   "bytes": 528,
+   "sha256": "1c5e8776efa9b3da6f7a363355de0d26236e65c6ae3da659bd43787800dec6a5"
+  },
+  "control/pairs/seed-11/stderr.log": {
+   "bytes": 435,
+   "sha256": "d865b97022aeac86ba807cede2178be93f02329eeda4b759c6a9f081a7ca9c49"
+  },
+  "control/pairs/seed-11/stdout.log": {
+   "bytes": 224,
+   "sha256": "724c8424d52bd1904503ce1b87bbfdf745160ab45d6982f4cdfded8c3291264f"
+  },
+  "control/pairs/seed-12/pin-record.json": {
+   "bytes": 38239,
+   "sha256": "bd87a1debdc92c99417330a4d006d3a9de7cb4e91b9263577125639a2d5b0b7c"
+  },
+  "control/pairs/seed-12/pin-record.json.port-pins.json": {
+   "bytes": 528,
+   "sha256": "1c5e8776efa9b3da6f7a363355de0d26236e65c6ae3da659bd43787800dec6a5"
+  },
+  "control/pairs/seed-12/stderr.log": {
+   "bytes": 435,
+   "sha256": "d865b97022aeac86ba807cede2178be93f02329eeda4b759c6a9f081a7ca9c49"
+  },
+  "control/pairs/seed-12/stdout.log": {
+   "bytes": 224,
+   "sha256": "f9105b096023e1c22ba24d5ce375d8d731f0d380e7f97b3d769f2447e191f0ec"
+  },
+  "control/recovery-index-values.json": {
+   "bytes": 1088,
+   "sha256": "16c75a4c87b8271bf5863174c71df1805fdb275fe667f0b952e570701dcac952"
+  },
+  "control/terminal.json": {
+   "bytes": 6364,
+   "sha256": "af0abad743e347195a382a58bba26d149a2f0cb1460756ee6ab6cf38fed3aa76"
+  }
+ },
+ "producer_records": [
+  "4ce884fba00b6d51e162435d4cfa79d1de70e0a6ccca9760f34e0721192fbaaa",
+  "6fc8bb5fa4fa2888dba0f0f868c98a8f54b0386435e5e9c1b2256b292cf038dc",
+  "bd87a1debdc92c99417330a4d006d3a9de7cb4e91b9263577125639a2d5b0b7c"
+ ],
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "qualification_claims": [],
+ "schema": "m7-navigation-v4-controller-record-1",
+ "stage": "S0d",
+ "stage_root": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d"
+}

@@ -1,0 +1,30 @@
+{
+ "before_after_inventory_sha256": "4bb839c55dd8978378f8232c6855e8350d3d2dcf0abef6ede5ae7d7a20bce485",
+ "pairs": [
+  {
+   "directory": "runs/S0d/seed-10",
+   "report_sha256": "3b5f14f26bd8bedf9754bf74aa37b15fb4106932532713cd2db412f506204086",
+   "training_seed": 10
+  },
+  {
+   "directory": "runs/S0d/seed-11",
+   "report_sha256": "27cd10fa4bda58ce328871bd01ca440468281c296b60606747694cc94b1d1313",
+   "training_seed": 11
+  },
+  {
+   "directory": "runs/S0d/seed-12",
+   "report_sha256": "186e3b6af878f4511f74d78d17d73630d8a421f113d729ae3fc5e7afbec0f09c",
+   "training_seed": 12
+  }
+ ],
+ "producer_root": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d",
+ "training_source_commit": "02e861f8be9877dd183a659ed1b70d66a9141052",
+ "training_supervisor": {
+  "path": "runs/S0d/control/outer-supervisor/supervisor.json",
+  "sha256": "fe2ae7cd6fb5605475e8fda5e5c455216385b0b1d346b173a50f8361457b29f0"
+ },
+ "training_terminal": {
+  "path": "runs/S0d/control/terminal.json",
+  "sha256": "af0abad743e347195a382a58bba26d149a2f0cb1460756ee6ab6cf38fed3aa76"
+ }
+}

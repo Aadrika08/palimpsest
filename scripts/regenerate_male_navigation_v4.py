@@ -305,27 +305,157 @@ def fill_document(raw, item, values):
     return text.encode()
 
 
-def fill_values(name, item, doc, original, chain):
-    """Values for every declared field still at its placeholder whose stage is in the chain.
+CASCADE_CLASSES = ('doc-path', 'doc-sha256', 'port-sha256')
 
-    Read only from pin records: a sha256 is the named output's recorded sha256, a run id is the
-    single run directory recorded under a case, and count fields are derived by the same
-    sub-schemas that check them. Anything else is refused, never guessed."""
+
+def doc_path_value(pins_dir, document):
+    """A v4 copy's path as recorded in other copies: repo-relative like the originals (absolute outside the repo)."""
+    path = (Path(pins_dir)/document).resolve()
+    try: return path.relative_to(ROOT.resolve()).as_posix()
+    except ValueError: return str(path)
+
+
+def _output_json(record, fill, where):
+    """A JSON value from recorded outputs: each file re-hashed against its record; identical across ``same_in``."""
+    values = []
+    for rel in [fill['output_json'], *fill.get('same_in', [])]:
+        if rel not in record['outputs']: raise Refusal(f'{where}: the record has no output {rel}')
+        raw = read_bounded(Path(record['output_root'])/rel)
+        if sha256_bytes(raw) != record['outputs'][rel]['sha256']: raise Refusal(f'{where}: {rel} differs from its pin record')
+        values.append(pointer_get(json.loads(raw), fill['pointer']))
+    if any(value != values[0] for value in values): raise Refusal(f'{where}: {fill["pointer"]} differs across {fill["output_json"]} and {fill.get("same_in")}')
+    return values[0]
+
+
+def _port_file(field, worktree, where):
+    """A port-byte cascade: the declared value, which must equal ``port_file`` at the recorded port commit
+    of the tree the field names (``port_tree`` in ports.json), read as a git object.
+
+    Independent of the stage worktree being run: S0f runs T-f, whose v1 collector is unported, while
+    contact-v2 pins the T-e port bytes (``worktree`` is accepted for the call sites and not used)."""
+    tree = load_ports()['trees'].get(field.get('port_tree'), {})
+    commit = tree.get('port_commit')
+    if not commit: raise Refusal(f'{where}: unknown port tree {field.get("port_tree")!r}')
+    done = subprocess.run(['git', 'cat-file', 'blob', f'{commit}:{field["port_file"]}'], cwd=ROOT, capture_output=True, timeout=30,
+                          env={k: v for k, v in os.environ.items() if not k.startswith('GIT_')})
+    if done.returncode != 0 or sha256_bytes(done.stdout) != field['cascade_value']:
+        raise Refusal(f'{where}: {field["port_file"]} at {field["port_tree"]} port commit {commit} is not the declared port bytes')
+    return field['cascade_value']
+
+
+def _git_bytes(*args):
+    done = subprocess.run(['git', *args], cwd=ROOT, capture_output=True, timeout=60,
+                          env={k: v for k, v in os.environ.items() if not k.startswith('GIT_')})
+    if done.returncode != 0: raise Refusal(f'git {" ".join(args)} failed: {done.stderr.decode(errors="replace")[:200]}')
+    return done.stdout
+
+
+def git_python_inventory(commit):
+    """Every tracked .py under src/ and scripts/ at ``commit`` -> sha256, from git objects.
+
+    The same map the T-f port's ``historical_identity`` hashes on a clean worktree at that commit."""
+    names = [n for n in _git_bytes('ls-tree', '-r', '--name-only', commit, '--', 'src', 'scripts').decode().splitlines()
+             if n.endswith('.py')]
+    if len(names) > 1024: raise Refusal('Historical source inventory cap exceeded')
+    return {name: sha256_bytes(_git_bytes('cat-file', 'blob', f'{commit}:{name}')) for name in names}
+
+
+def inventory_digest(sources):
+    """The data-v2 ``canonical_map_sha256`` serialization (sorted-key compact JSON, no newline)."""
+    return sha256_bytes(json.dumps(sources, sort_keys=True, separators=(',', ':'), allow_nan=False).encode())
+
+
+def _port_commit(tree, where):
+    commit = load_ports()['trees'].get(tree, {}).get('port_commit')
+    if not commit: raise Refusal(f'{where}: unknown port tree {tree!r}')
+    return commit
+
+
+def _chainless(field, original, where, historical_worktree=None):
+    """Values that do not come from a stage record: port identities and the historical worktree; None otherwise."""
+    kind, fill = field['class'], field.get('fill', {})
+    if kind == 'commit' and 'port_commit_of' in fill:
+        return _port_commit(fill['port_commit_of'], where)
+    if kind == 'port-inventory':
+        sources = git_python_inventory(_port_commit(fill['port_tree'], where))
+        return {'count': len(sources), 'canonical_map_sha256': inventory_digest(sources)}[fill['part']]
+    if kind == 'port-source-map':
+        sources = git_python_inventory(_port_commit(fill['port_tree'], where))
+        keys = list(pointer_get(original, field['pointer']))
+        if any(k not in sources for k in keys): raise Refusal(f'{where}: a pinned source is absent at {fill["port_tree"]}')
+        return {k: sources[k] for k in keys}
+    if kind == 'worktree-path' and fill.get('historical_worktree'):
+        if historical_worktree is None: raise Refusal(f'{where} needs --historical-worktree')
+        value = str(Path(historical_worktree).resolve())
+        if _git(value, 'rev-parse', 'HEAD').stdout.strip() != field['commit']:
+            raise Refusal(f'{where}: {value} is not a worktree at {field["commit"]}')
+        return value
+    return None
+
+
+CHAINLESS = ('port-inventory', 'port-source-map')
+
+
+def _is_chainless(field):
+    return field['class'] in CASCADE_CLASSES + CHAINLESS or 'port_commit_of' in field.get('fill', {}) or \
+        field.get('fill', {}).get('historical_worktree') is True
+
+
+def _recorded_path(record, fill, where):
+    if fill.get('worktree'): return record['worktree']
+    rel = fill['path_of']
+    if rel not in record['outputs'] and not any(k.startswith(rel + '/') for k in record['outputs']):
+        raise Refusal(f'{where}: the record has no output {rel}')
+    path = Path(record['output_root'])/rel
+    return path.relative_to(record['worktree']).as_posix() if fill.get('relative_to') == 'worktree' else str(path)
+
+
+def fill_values(name, item, doc, original, chain, *, pins_dir=None, worktree=None, doc_sha=None, historical_worktree=None):
+    """Values for every declared field still at its placeholder.
+
+    Read only from pin records, the files they bind and validated v4 copies. A sha256 is a named
+    output's recorded sha256 (or a controller-declared value); a path is a recorded output's path
+    or the producing worktree; a run id is the single run directory recorded under a case; a commit
+    is the producing commit; a source-map or path-keys value is read from a recorded output JSON
+    that is re-hashed and identical across seeds; counts are derived by the sub-schemas that check
+    them; doc-path/doc-sha256 name a validated copy; port-sha256 is a port byte pin checked against
+    the port tree. Anything else is refused, never guessed."""
     values = {}
     for field in item['fields']:
         pointer, kind = field['pointer'], field['class']
         if pointer_get(doc, pointer) != field['placeholder']: continue
-        where = f'{name}{pointer}'
+        where, fill = f'{name}{pointer}', field.get('fill', {})
         if kind in ('count-map', 'count-list', 'window-list'):
             if kind == 'count-map': value = expected_count_map(field.get('schema'), original, chain, where)
             elif field.get('schema') == 'recovery-ticks-v4': value = _recovery_ticks(chain, where)
             elif field.get('schema') == 'recovery-windows-v4': value = [windows_for(n) for n in _recovery_ticks(chain, where)]
             else: raise Refusal(f'{where} has class {kind} with unknown schema {field.get("schema")}')
+        elif kind == 'doc-path':
+            value = doc_path_value(pins_dir, field['document'])
+        elif kind == 'doc-sha256':
+            if doc_sha is None: raise Refusal(f'{where} needs the validated copy {field["document"]}')
+            value = doc_sha(field['document'])
+        elif kind == 'port-sha256':
+            value = _port_file(field, worktree, where)
+        elif _is_chainless(field):
+            value = _chainless(field, original, where, historical_worktree)
+            if value is None: raise Refusal(f'{where} ({kind}) names no fill source')
         else:
-            outputs, fill = _outputs(chain, field['stage'], where)['outputs'], field.get('fill', {})
-            if kind == 'sha256' and 'output' in fill:
+            record = _outputs(chain, field['stage'], where)
+            outputs = record['outputs']
+            if kind in ('sha256', 'bytes') and 'output' in fill:
                 if fill['output'] not in outputs: raise Refusal(f'{where}: {field["stage"]} recorded no {fill["output"]}')
-                value = outputs[fill['output']]['sha256']
+                value = outputs[fill['output']]['sha256' if kind == 'sha256' else 'bytes']
+            elif kind == 'sha256' and 'declared_value' in fill:
+                declared = record.get('declared_values', [])
+                if len(declared) <= fill['declared_value']: raise Refusal(f'{where}: {field["stage"]} declared no value')
+                value = declared[fill['declared_value']]
+            elif kind == 'path' and (fill.get('worktree') or 'path_of' in fill):
+                value = _recorded_path(record, fill, where)
+            elif kind == 'commit' and fill.get('producing_commit'):
+                value = record['producing_commit']
+            elif kind in ('source-map', 'path-keys') and 'output_json' in fill:
+                value = _output_json(record, fill, where)
             elif kind == 'run-id' and 'run_dir_of' in fill:
                 runs = {Path(rel).parts[1] for rel in outputs if Path(rel).parts[0] == fill['run_dir_of'] and len(Path(rel).parts) > 3
                         and Path(rel).parts[2] in ('recording', 'snapshots')}
@@ -337,7 +467,17 @@ def fill_values(name, item, doc, original, chain):
     return values
 
 
-def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha256, stages):
+def referenced_copy_sha(pins_dir, declarations, worktree, name):
+    """sha256 of a v4 copy another copy cascades to; the copy must already be placeholder-free."""
+    item = declarations['documents'][name]
+    original = read_bounded(Path(worktree)/item['original_path'])
+    if sha256_bytes(original) != item['original_sha256']: raise Refusal(f'Original {item["original_path"]} differs in {worktree}')
+    raw = read_bounded(Path(pins_dir)/name)
+    check_pin_document(original, raw, item, consumer=True)
+    return sha256_bytes(raw)
+
+
+def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha256, stages, historical_worktree=None):
     """--fill-document: fill a v4 copy consumed by ``stage`` in place, from the previous pin records only.
 
     Every field whose stage is in the chain must end filled and traced (check_document_values);
@@ -352,15 +492,18 @@ def fill_copy(name, stage, worktree, previous_paths, *, pins_dir, protocol_sha25
     target = Path(pins_dir)/name
     raw = read_bounded(target)
     original = json.loads(original_raw)
-    values = fill_values(name, item, check_pin_document(original_raw, raw, item, consumer=False), original, chain)
+    declarations = load_declarations(pins_dir, protocol_sha256)
+    doc_sha = lambda other: referenced_copy_sha(pins_dir, declarations, worktree, other)
+    values = fill_values(name, item, check_pin_document(original_raw, raw, item, consumer=False), original, chain,
+                         pins_dir=pins_dir, worktree=worktree, doc_sha=doc_sha, historical_worktree=historical_worktree)
     if not values: raise Refusal(f'{name} holds no placeholder that this chain can fill')
     filled = fill_document(raw, item, values)
     doc = check_pin_document(original_raw, filled, item, consumer=False)
-    due = {f['pointer'] for f in item['fields'] if f['stage'] in chain}
+    due = {f['pointer'] for f in item['fields'] if f['stage'] in chain or _is_chainless(f)}
     left = [p for p in _pending(doc) if any(p == d or p.startswith(d + '/') for d in due)]
     if left: raise Refusal(f'{name} still holds placeholders this chain should fill: {left}')
     check_document_values(name, doc, original, {**item, 'fields': [f for f in item['fields'] if f['pointer'] in values]},
-                          chain, lambda other: sha256_bytes(read_bounded(Path(pins_dir)/other)), pins_dir)
+                          chain, doc_sha, pins_dir, worktree=worktree)
     temporary = target.with_name(target.name + '.filling')
     with temporary.open('xb') as stream:
         stream.write(filled); stream.flush(); os.fsync(stream.fileno())
@@ -377,15 +520,19 @@ def _outputs(chain, stage, where):
     return chain[stage]
 
 
-def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir):
-    """Every filled value must trace to the pin-record chain (or to a validated v4 copy)."""
+def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir, *, worktree=None):
+    """Every filled value must trace to the pin-record chain (or to a validated v4 copy or port bytes)."""
     for field in item['fields']:
         where, value, kind = f'{name}{field["pointer"]}', pointer_get(doc, field['pointer']), field['class']
         if kind in ('doc-sha256', 'doc-path'):
             target = Path(pins_dir)/field['document']
             if (kind == 'doc-sha256' and value != doc_sha(field['document'])) or \
-                    (kind == 'doc-path' and (not isinstance(value, str) or Path(value).resolve() != target.resolve())):
+                    (kind == 'doc-path' and (not isinstance(value, str) or (value != doc_path_value(pins_dir, field['document'])
+                                                                           and Path(value).resolve() != target.resolve()))):
                 raise Refusal(f'{where} does not name the validated v4 copy {field["document"]}')
+            continue
+        if kind == 'port-sha256':
+            if value != _port_file(field, worktree, where): raise Refusal(f'{where} is not the {field["port_tree"]} port bytes')
             continue
         if kind in ('count-map', 'count-list', 'window-list'):
             check_count_field(where, kind, field.get('schema'), doc, original, value, chain)
@@ -393,6 +540,10 @@ def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir):
         if kind == 'worktree-path':
             if not isinstance(value, str) or _git(value, 'rev-parse', 'HEAD').stdout.strip() != field['commit']:
                 raise Refusal(f'{where} is not a worktree at {field["commit"]}')
+            continue
+        if kind in CHAINLESS or (kind == 'commit' and 'port_commit_of' in field.get('fill', {})):
+            if value != _chainless(field, original, where):
+                raise Refusal(f'{where} differs from the {field["fill"].get("port_tree", field["fill"].get("port_commit_of"))} port identity')
             continue
         record = _outputs(chain, field['stage'], where)
         outputs = record['outputs']
@@ -414,6 +565,13 @@ def check_document_values(name, doc, original, item, chain, doc_sha, pins_dir):
             if not isinstance(value, dict) or list(value.values()) != list(pointer_get(original, field['pointer']).values()) \
                     or not all(Path(k).is_absolute() and under(k, record['worktree']) for k in value):
                 raise Refusal(f'{where} must keep pinned hashes and name paths in the {field["stage"]} worktree')
+            if 'output_json' in field.get('fill', {}) and value != _output_json(record, field['fill'], where):
+                raise Refusal(f'{where} differs from the recorded {field["fill"]["output_json"]}')
+        elif kind == 'commit':
+            if value != record['producing_commit']: raise Refusal(f'{where} is not the {field["stage"]} producing commit')
+        elif kind == 'source-map':
+            if 'output_json' not in field.get('fill', {}) or value != _output_json(record, field['fill'], where):
+                raise Refusal(f'{where} differs from the recorded {field.get("fill", {}).get("output_json")}')
         else:
             raise Refusal(f'{where} has unknown class {kind}')
 
@@ -536,7 +694,7 @@ def load_pin_documents(spec, pins_dir, declarations, worktree, chain):
     for name in spec['documents']:
         entry = load(name)
         check_document_values(name, entry['value'], entry['original'], entry['item'], chain,
-                              lambda other: load(other)['sha256'], pins_dir)
+                              lambda other: load(other)['sha256'], pins_dir, worktree=worktree)
     return {name: {k: cache[name][k] for k in ('path', 'sha256')} for name in spec['documents']}
 
 
@@ -1096,7 +1254,7 @@ def main(argv=None, *, stages=None, pins_dir=None, root=None, protocol_sha256=No
             if any('port_tree' in s for s in stages.values()):
                 stages = port_stages(stages, load_ports(protocol_sha256=protocol_sha256) if ports is None else ports)
             filled = fill_copy(args.fill_document, args.stage, args.worktree, args.previous_pins or [], pins_dir=pins_dir,
-                               protocol_sha256=protocol_sha256, stages=stages)
+                               protocol_sha256=protocol_sha256, stages=stages, historical_worktree=args.historical_worktree)
         except (Refusal, OSError, ValueError, KeyError) as error:
             _emit({'mode': 'fill', 'status': 'refused', 'stage': args.stage,
                    'reason': str(error) if isinstance(error, Refusal) else f'{type(error).__name__}: {error}'})

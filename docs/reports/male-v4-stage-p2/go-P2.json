@@ -1,0 +1,23 @@
+{
+ "decision": "GO",
+ "lane": "navigation",
+ "stage": "P2",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "manifest_sha256": "a23400b0e2ee66e91d3b04fd5c49105286204aaffab646b75b81399667b8e1a3",
+ "port_pins_sha256": "278219f4b364ae53d4942c2020cf69dd100cad376c5a320b0e4a1c88633dbb69",
+ "declared_fields_sha256": "8877390c230e6371d6130abf3f4ff874639c00a9fa8d872c322251375d7ce208",
+ "t_f_head": "88c1a0f6f53274fe663f4cdad3be5ae2743af558",
+ "current_tree_head": "aac9b31276e40ce18271bc997aad65344559991f",
+ "entries": [
+  "S0z-controller",
+  "S0z-audit",
+  "S1-data-child",
+  "S1-data-child-closure",
+  "S1",
+  "S2"
+ ],
+ "cpu_quota_k": 1,
+ "scientific_attempt": false,
+ "granted_by": "Utkarsh Maurya (owner), interactive session",
+ "granted_at": "2026-11-19"
+}

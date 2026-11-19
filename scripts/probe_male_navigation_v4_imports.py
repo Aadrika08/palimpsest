@@ -68,10 +68,31 @@ ENTRYPOINTS = {
     'S0e-A-worker': {'module': 'audit_male_navigation_v4_s0e_raw', 'commit': None, 'thread_env': {}},
     'S0e-I': {'module': 'run_male_navigation_v4_s0e', 'commit': None, 'thread_env': {}},
     'controls': {'module': 'male_navigation_v4_controls', 'commit': None, 'thread_env': {}},
+    # Stage P2 (re-run): entries added after P passed. The S1 data child runs under `python -I` with only the
+    # T-f port on sys.path and imports prepare_male_navigation_v2 by name at run time, so its own file is
+    # probed in CUR (stdlib + function-level NumPy) and its real closure is the T-f port entry below.
+    'S0z-controller': {'module': 'run_male_navigation_v4_s0z', 'commit': None, 'thread_env': {}},
+    'S0z-audit': {'module': 'audit_male_navigation_v4_s0z', 'commit': None, 'thread_env': {}},
+    'S1-data-child': {'module': 'derive_male_navigation_v4_s1_data', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
+    'S1-data-child-closure': {'module': 'prepare_male_navigation_v2', 'commit': None, 'port_tree': 'T-f',
+                              'thread_env': {'OMP_NUM_THREADS': '1'}},
     # Planned v4 entry points live on the v4 branch; absent files are refused.
     'S1': {'module': 'train_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
     'S2': {'module': 'evaluate_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
+    # Stage P3 (Amendment 2): the v4 Engine binding and the S2 owner worker. The binding lives in src/ (the
+    # child puts scripts and src on sys.path); the worker is a mode of the evaluator module, import-only here.
+    'S2-binding': {'module': 'palimpsest.male_navigation_research_v4', 'commit': None,
+                   'file': 'src/palimpsest/male_navigation_research_v4.py', 'thread_env': {'OMP_NUM_THREADS': '1'}},
+    'S2-owner-worker': {'module': 'evaluate_male_navigation_v4', 'commit': None, 'thread_env': {'OMP_NUM_THREADS': '1'}},
 }
+
+# Entries first probed by stage P2 (P covered the other keys); S1 and S2 are re-probed in P2 as well.
+P2_ENTRIES = ('S0z-controller', 'S0z-audit', 'S1-data-child', 'S1-data-child-closure')
+P2_REPROBE = ('S1', 'S2')
+# Entries first probed by stage P3 (Amendment 2, gating before S2); S2 is re-probed in P3 as well. There is no
+# separate index builder: the binding reads the S1 evidence directly against hard-coded shas (A2's second option).
+P3_ENTRIES = ('S2-binding', 'S2-owner-worker')
+P3_REPROBE = ('S2',)
 
 # Worktree subtrees an import may read: source, plans/manifests (pin documents) and the
 # pinned upstream cell. Everything else under the worktree (runs/, data/assets, ...) is data.
@@ -333,7 +354,7 @@ def probe_stage(python, stage, worktree, *, forbid=(), egl=False, timeout=DEFAUL
         extra_env = {PORT_LOCATOR_ENV: str(port_pins)}
     elif commit is not None and git_head(worktree) != commit:
         return {**base, 'status': 'refused', 'reasons': [f'{stage} worktree is not at {commit}']}
-    if not (worktree/'scripts'/(entry['module'] + '.py')).is_file():
+    if not (worktree/entry.get('file', f'scripts/{entry["module"]}.py')).is_file():
         return {**base, 'status': 'refused', 'reasons': [f'{stage} entry point {entry["module"]} is not present']}
     result = probe_entry(python, worktree, entry['module'], thread_env=entry['thread_env'], forbid=forbid,
                          egl=egl, timeout=timeout, **({'extra_env': extra_env} if extra_env else {}))

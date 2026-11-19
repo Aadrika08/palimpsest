@@ -29,3 +29,15 @@ under the base protocol. Puck v4 Amendment 1 (proposed) permits exactly one more
 | Puck v4 **Amendment 1** (one-content non-scene allowlist; exactly one more S1 attempt; attempt-2 refusal ends puck v4) | `8d8529712614292ba470ce88f60aaad7d061a1732851627f3be0e1e8c0d1b20f` | **Approved** |
 | MaleCNS v4 **Amendment 1 erratum 1** (window derivation H3; v4-copy redirects and two ported files H1) | `cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477` | **Acknowledged** |
 | **GO puck S1 attempt 2** + D8 audit (stages `S1-attempt-2`, `S1-attempt-2-audit`; worst case 660 + 120 CPU-s), conditional on frozen-window checks | `8d852971…b20f` | **Granted** |
+
+## 18 November 2026
+
+| Decision | Applies to | Owner answer |
+| --- | --- | --- |
+| Reading of protocol sentence "S1 does not start before S0z review passes and derived arrays are published": "derived arrays" = the pinned schedule derivation and rosters (no array bundle; v3's trainer derived arrays in-process, hash-gated, and so does v4's S1) | MaleCNS v4 protocol `cd4eb130…` | **Accepted** (no amendment) |
+| GO MaleCNS v4 stage S0z (pin + independent compact audit; `scientific_attempt: true`) | S0z manifest | **Granted** |
+| Acknowledge MaleCNS v4 stage **P2** (smaller import re-probe of the 6 new/changed entries: S0z controller, S0z audit, S1 data child + its T-f closure, S1, S2; P2 failure treated as P failure) and **GO P2** (worst case 125 CPU-s) | P2 manifest | **Acknowledged and granted** (19 Nov 2026) |
+
+| Decision | Applies to | Owner answer |
+| --- | --- | --- |
+| **A2** — MaleCNS v4 Amendment 2: `NavigationBindingV4`, five-line `engine.py` allow-list hunk, S2 owner worker/index publisher, tests, stage P3 gate. Source scope only; no run authorised. | `docs/plans/m7-navigation-v4-amendment-2.json` sha256 `c4cd3a506b0b468b0d6d4d359dff7ecbd3b3bf0c25c6fe9360207282249f8d6f`; base protocol `cd4eb130…` unchanged | **Approved** (19 Nov 2026) |

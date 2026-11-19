@@ -487,7 +487,8 @@ def test_driver_merges_the_three_seed_records_and_traces_every_s0d_recovery_inde
     doc = json.loads((PINS/'male-recovery-research-development-v1.json').read_text())
     doc.update({k: values[k] for k in ('producer_root', 'training_terminal', 'training_supervisor', 'before_after_inventory_sha256')})
     for pair, value in zip(doc['pairs'], values['pairs']): pair.update(directory=value['directory'], report_sha256=value['report_sha256'])
-    item = declared('male-recovery-research-development-v1.json', 'S0d', skip=('path-keys',))
+    # path-keys, source-map and commit are read from seed protocol.json / the producing commit (ports tests cover them).
+    item = declared('male-recovery-research-development-v1.json', 'S0d', skip=('path-keys', 'source-map', 'commit'))
     assert len(item['fields']) == 12
     driver.check_document_values('index', doc, doc, item, chain, None, PINS)    # every S0d path and sha traces
     for pointer, value in (('/training_terminal/sha256', 'f'*64), ('/pairs/1/directory', '/elsewhere/seed-11'),
@@ -761,6 +762,7 @@ def test_s0e_index_publishes_and_the_driver_traces_every_data_v2_s0e_field(tmp_p
     for name, item in {**index['immutable_inputs'], 'published_collection_index': ctl.binding(control/'collection-index.json')}.items():
         doc['immutable_inputs'][name] = item
     item = declared('m7-navigation-data-v2-protocol.json', 'S0e')
+    item = {**item, 'fields': [f for f in item['fields'] if f['pointer'].startswith('/immutable_inputs/')]}  # counts/commit: ports tests
     assert len(item['fields']) == 24
     driver.check_document_values('data-v2', doc, doc, item, chain, None, PINS)
     changed = copy.deepcopy(doc); changed['immutable_inputs']['exec_drain']['bytes'] += 1
@@ -818,3 +820,130 @@ def test_stage_p_declares_every_controller_entry_point_and_the_probe_resolves_th
     for stage in CONTROLLER_ENTRIES:
         result = probe.probe_stage(sys.executable, stage, ROOT)
         assert result['status'] == 'passed', (stage, result.get('reasons'))
+
+
+# =================================================================== S1 data child (v3's data path on the T-f reader)
+
+S1_WORKER = ROOT/'scripts/derive_male_navigation_v4_s1_data.py'
+
+
+@pytest.fixture(scope='module')
+def port_tf(tmp_path_factory):
+    """Read-only extract of the T-f port branch as a clean tree."""
+    root = tmp_path_factory.mktemp('t-f')/'worktree'; root.mkdir()
+    archive = subprocess.run(['git', 'archive', port_rev('T-f'), 'src', 'scripts'], cwd=ROOT,
+                             capture_output=True, check=True).stdout
+    with tarfile.open(fileobj=io.BytesIO(archive)) as tar: tar.extractall(root, filter='data')
+    git(root, 'init', '-q'); git(root, 'add', '-A'); git(root, 'commit', '-qm', 'T-f port extract')
+    return root
+
+
+def reader_identity(root):
+    """T-f's reader_identity: sha256 of every tracked .py under src/ and scripts/ (the adapter included)."""
+    names = sorted(p.relative_to(root).as_posix() for base in ('src', 'scripts') for p in (root/base).rglob('*.py'))
+    return {n: sha((root/n).read_bytes()) for n in names}
+
+
+def run_s1_worker(tmp_path, tree, value, **config):  # config overrides body keys
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    raw = tmp_path/'data-manifest.json'; raw.write_bytes(json.dumps(value, sort_keys=True).encode())
+    body = {'port_root': str(tree), 'data_root': str(tmp_path/'s0f'), 'output': str(tmp_path/'arrays.npz'), 'seconds': 120,
+            'manifest': {'path': str(raw), 'sha256': sha(raw.read_bytes())}, **config}
+    documents = {n: {'path': str(PINS/n), 'sha256': sha((PINS/n).read_bytes())} for n in PORTS['trees']['T-f']['documents']}
+    locator = write(tmp_path/'locator.json', {'schema': PORTS['locator']['schema'], 'documents': documents})['path']
+    env = {**ctl.child_env(), ctl.driver.PORT_LOCATOR_ENV: locator}
+    done = subprocess.run([sys.executable, '-I', '-B', str(S1_WORKER), json.dumps(body)], env=env, cwd=tree, capture_output=True,
+                          text=True, timeout=180)
+    lines = [line for line in done.stdout.splitlines() if line.startswith('{')]
+    return done.returncode, json.loads(lines[-1]) if lines else {'reason': 'NO RESULT: ' + done.stderr[-900:], 'status': 'crashed'}
+
+
+def test_s1_data_child_refuses_tampered_reader_code_before_reading_anything(tmp_path, port_tf):
+    tampered = tmp_path/'tampered'
+    __import__('shutil').copytree(port_tf, tampered)
+    target = tampered/'src/palimpsest/male_model.py'
+    target.write_bytes(target.read_bytes() + b'\n# drift\n')
+    manifest = {'current_reader_sources': reader_identity(port_tf), 'adapter_sha256': 'a'*64, 'feature_protocol_sha256': 'b'*64}
+    code, result = run_s1_worker(tmp_path/'w', tampered, manifest)
+    assert code == 1 and result['status'] == 'refused' and 'current_reader_sources' in result['reason'], result
+    assert not (tmp_path/'w/arrays.npz').exists()
+
+
+def test_s1_data_child_checks_identity_then_adapter_then_the_feature_protocol_in_that_order(tmp_path, port_tf):
+    identity = reader_identity(port_tf)
+    code, result = run_s1_worker(tmp_path/'a', port_tf, {'current_reader_sources': identity, 'adapter_sha256': 'a'*64,
+                                                         'feature_protocol_sha256': 'b'*64})
+    assert code == 1 and 'adapter_sha256' in result['reason'], result          # code identity passed; the adapter gate is next
+    adapter = identity['scripts/prepare_male_navigation_v2.py']
+    code, result = run_s1_worker(tmp_path/'b', port_tf, {'current_reader_sources': identity, 'adapter_sha256': adapter,
+                                                         'feature_protocol_sha256': 'b'*64})
+    assert code == 1 and 'Feature protocol' in result['reason'], result
+
+
+def test_s1_data_child_refuses_a_manifest_that_differs_from_the_pinned_bytes(tmp_path, port_tf):
+    code, result = run_s1_worker(tmp_path, port_tf, {'x': 1}, **{'manifest': {'path': str(tmp_path/'data-manifest.json'), 'sha256': '0'*64}})
+    assert code == 1 and 'S0z pin' in result['reason'], result
+
+
+def test_s1_hooks_derive_data_binds_heads_locator_and_the_child_result(tmp_path):
+    import train_male_navigation_v4 as s1
+    from unittest import mock
+    repos = {}
+    for name in ('t-f', 't-h'):
+        repo = tmp_path/name; repo.mkdir(); git(repo, 'init', '-q'); (repo/'x').write_text(name)
+        git(repo, 'add', '-A'); git(repo, 'commit', '-qm', name)
+        repos[name] = (repo, git(repo, 'rev-parse', 'HEAD'))
+    locator = write(tmp_path/'locator.json', {'v': 1})
+    record = {'data_manifest': {'path': str(tmp_path/'m.json'), 'sha256': '1'*64, 'bytes': 1},
+              'reader': {'t_f': {'path': str(repos['t-f'][0]), 'head': repos['t-f'][1]},
+                         't_h': {'path': str(repos['t-h'][0]), 'head': repos['t-h'][1]},
+                         'locator': {'path': locator['path'], 'sha256': locator['sha256'], 'bytes': Path(locator['path']).stat().st_size},
+                         'data_root': str(tmp_path/'s0f')}}
+    out = tmp_path/'out'; out.mkdir()
+    real = subprocess.run
+    seen = []
+
+    def worker(payload, returncode=0):
+        def fake(cmd, *args, **kwargs):
+            if cmd[0] == 'git': return real(cmd, *args, **kwargs)
+            seen.append((cmd, kwargs['env']))
+            return types.SimpleNamespace(returncode=returncode, stderr='', stdout=json.dumps(payload) + '\n')
+        return fake
+    ok = {'status': 'derived', 'sources': 26, 'forbidden_modules': [], 'output_sha256': '0'*64}
+    hooks = s1.Hooks()
+    with mock.patch.object(s1.subprocess, 'run', worker(ok)):
+        assert hooks.derive_data(record, {}, out) == out/'transient-arrays.npz'
+    cmd, env = seen[0]
+    assert cmd[:3] == [sys.executable, '-I', '-B'] and cmd[3].endswith('derive_male_navigation_v4_s1_data.py')
+    assert env['PALIMPSEST_M7_V4_PINS'] == locator['path'] and env['CUDA_VISIBLE_DEVICES'] == ''
+    assert json.loads(cmd[4])['port_root'] == str(repos['t-f'][0])
+    for bad, code, message in (({**ok, 'forbidden_modules': ['torch']}, 0, 'forbidden'), ({**ok, 'sources': 25}, 0, 'forbidden'),
+                               ({'status': 'refused', 'reason': 'Byte drift: x'}, 1, 'Byte drift')):
+        with mock.patch.object(s1.subprocess, 'run', worker(bad, code)), pytest.raises(s1.Refusal, match=message):
+            hooks.derive_data(record, {}, out)
+    wrong = copy.deepcopy(record); wrong['reader']['t_f']['head'] = '0'*40
+    with mock.patch.object(s1.subprocess, 'run', worker(ok)), pytest.raises(s1.Refusal, match='port head'):
+        hooks.derive_data(wrong, {}, out)
+    changed = copy.deepcopy(record); changed['reader']['locator']['sha256'] = '0'*64
+    with mock.patch.object(s1.subprocess, 'run', worker(ok)), pytest.raises(s1.Refusal, match='differ'):
+        hooks.derive_data(changed, {}, out)
+
+
+def test_s1_hooks_refuse_a_dirty_or_untracked_reader_worktree_before_the_child_starts(tmp_path):
+    import train_male_navigation_v4 as s1
+    from unittest import mock
+    record = {'data_manifest': {'path': str(tmp_path/'m.json'), 'sha256': '1'*64, 'bytes': 1}, 'reader': {}}
+    for name in ('t-f', 't-h'):
+        repo = tmp_path/name; (repo/'src').mkdir(parents=True); (repo/'src/a.py').write_text('a=1\n'); git(repo, 'init', '-q')
+        git(repo, 'add', '-A'); git(repo, 'commit', '-qm', name)
+        record['reader'][name.replace('-', '_')] = {'path': str(repo), 'head': git(repo, 'rev-parse', 'HEAD')}
+    locator = write(tmp_path/'locator.json', {'v': 1})
+    record['reader'].update(locator={'path': locator['path'], 'sha256': locator['sha256'], 'bytes': Path(locator['path']).stat().st_size}, data_root='/x')
+    started = []
+    with mock.patch.object(s1.subprocess, 'run', wraps=subprocess.run) as run:
+        for edit in (lambda r: (r/'src/a.py').write_text('a=2\n'), lambda r: (r/'src/new.py').write_text('x=1\n')):
+            edit(tmp_path/'t-h')
+            with pytest.raises(s1.Refusal, match='modified or untracked'):
+                s1.Hooks().derive_data(record, {}, tmp_path)
+            git(tmp_path/'t-h', 'checkout', '-q', '--', 'src'); (tmp_path/'t-h/src/new.py').unlink(missing_ok=True)
+        assert not any(call.args[0][1:3] == ['-I', '-B'] for call in run.call_args_list)   # the child never started

@@ -468,3 +468,129 @@ lengths, each ported function returns the same result as the original. The cost 
 unchanged, because no hunk changes cost. The port branches were rebuilt; the new commits
 are recorded in `docs/plans/m7-navigation-v4-pins/ports.json`. `amendment_1_pending` stays
 inactive.
+
+## Amendment 2: S2 episode runner and v4 Engine binding (draft, 19 November 2026; awaiting owner decision A2)
+
+Append-only. Earlier text, owner records, Amendment 1 and erratum 1 are unchanged. The
+exact record is `amendment_2` in the separate pinned file
+`docs/plans/m7-navigation-v4-amendment-2.json`; the base protocol JSON stays
+byte-identical (`cd4eb130…`). Background: `docs/reports/male-v4-s2/NOTES.md`.
+
+**Why.** S0a through S1 are complete, with six terminal checkpoints published. S2 cannot
+run, for two reasons:
+
+- **Exact-type admission.** `Engine.open` (`src/palimpsest/engine.py`, about lines 438-454)
+  admits a `research_binding` only if its type is exactly `Binding`, `RecoveryBinding`,
+  `RecoveryHeldoutBinding` or the navigation `Binding`. A subclass or new class is refused.
+- **v2 hard-wiring.** `NavigationBinding` hard-codes the v2 index, v2 protocol SHA and v2
+  row counts. This protocol says S2 must not route through the v2 index.
+
+`engine.py` and the binding module are not in `implementation_files`. This amendment adds
+them, and adds no new scientific choice.
+
+**New and changed source** (`amendment_2.implementation_files_added`):
+
+- `src/palimpsest/male_navigation_research_v4.py`: `NavigationBindingV4`.
+  - **Index.** A v4 index of the six terminal checkpoints (seeds 10/11/12 × old-corpus /
+    augmented), each with the sha256 of its S1 `report.json`, `publication.json` and
+    `seed-N-arm.pt`, plus the v4 protocol SHA, the S0z corpus-pin SHA, and train rows taken
+    from the manifest (2,117 old / 7,197 augmented).
+  - **Admission.** Before any checkpoint loads it re-verifies the S1 publication
+    (`success_admitted`, no failure file, checkpoints unchanged).
+  - **Loading.** It loads exactly the S1 five-key checkpoint (`format`, `protocol_sha256`,
+    `graph_sha256`, `ordered_ids_sha256`, `state_dict`) and refuses anything else.
+  - **Surface.** The same `resolve`, `load_policy` and `provenance` contract as v2's
+    `Binding`, for CPU, `reproduction` and `checker` only. It refuses v2/v3 indexes,
+    tampered checkpoints and any wrong seed or arm.
+- `src/palimpsest/engine.py`: one allow-list line, nothing else.
+
+  ```python
+  # after the NavigationBinding branch, inside the same `if not admitted:` chain
+  if not admitted:
+      from .male_navigation_research_v4 import Binding as NavigationBindingV4
+      admitted = type(research_binding) is NavigationBindingV4
+      if admitted and (restore_snapshot is not None or replace_controller or memory_u is not None):
+          raise ValueError('Navigation research permits only fresh roots')
+  ```
+
+  Hunk invariants (checked by a diff-restricted review, as for the ports):
+  - the check stays `type(...) is`, never `isinstance`;
+  - the four existing types remain admitted unchanged;
+  - subclasses and unknown types remain refused, with the same `ValueError`;
+  - `controller in MALE_CONTROLLERS`, `memory_case is None` and the resolve/provenance
+    call are untouched;
+  - fresh roots only: `restore_snapshot`, `replace_controller` and `memory_u` stay refused;
+  - the import is lazy, so no other stage's import path changes.
+
+  The core change is one line. The fresh-roots guard is repeated for the new type and is
+  part of the same hunk.
+- `scripts/evaluate_male_navigation_v4.py`: the native owner worker, a port of v2's owner
+  worker with v4 constants only:
+  - **Case table.** Scenes 3160–3163 × seeds 10/11/12 × old/augmented (24 owners), using
+    `NavigationBindingV4`.
+  - **Owner process.** Fresh spawned one-thread CPU owner (`OMP_NUM_THREADS=1`,
+    `MUJOCO_GL=egl`, `CUDA_VISIBLE_DEVICES=''`), and `Engine.open(...,
+    controller='male-original', device='cpu', scenario='reproduction', texture='checker',
+    max_bytes=144 MiB, research_binding=...)`.
+  - **Contact checks.** Compiled-ownership and probe checks before the first action.
+  - **Episode.** No teacher access, exactly one policy prediction per interval, 600
+    intervals at most, outcome read from the natural boundary only.
+  - **Route.** Held-out is unreachable from this worker: it accepts no held-out ID, and
+    S3 uses a separate manifest and GO.
+- The v4 S2 index builder/publisher (builds the six-checkpoint index from the S1 evidence;
+  publishes the S2 result with a source-pin recheck last), and tests.
+
+**Tests added before the S2 freeze** (`amendment_2.tests_before_execution_freeze_additions`):
+
+- Engine allow-list regression: all four existing types are still admitted, a subclass of
+  any admitted type and an unknown type are still refused, the fresh-roots guard still
+  fires for both navigation types, and the v2 evaluator's tests pass unchanged.
+- `NavigationBindingV4` refuses v2 and v3 indexes, tampered checkpoint, report or
+  publication bytes, a wrong seed or arm, a non-five-key checkpoint, a missing
+  `success_admitted`, and non-CPU/non-reproduction/non-checker arguments.
+- Owner worker: a fixture-only port-equivalence check against v2's worker, with v4
+  constants as the only difference; the held-out route is unreachable.
+- Stage P3 covers the new binding module, owner worker, evaluator and index builder (gating item before S2).
+
+**S2 stage definition.** Unchanged: 24 owners, 180 s per owner, 1,800 s runner deadline
+inside a 4,430 s `RuntimeMaxSec` + 5 s stop (4,435 s worst CPU), 144 MiB recording and
+160 MiB recording + snapshot per owner, 4 GiB stage, `max_runs 24`, `max_snapshots 1`.
+A kill or timeout is an operational failure, never a non-goal. The cost table is verified
+unchanged: the S2 row stays 4,435 CPU-s, the worst-case total stays 23,108, and no new
+unit is added. Charged so far: navigation lane 808.743 of 14,400, so the held-out ceiling
+stays **5,643.168 CPU-s of measured charge through S2**.
+
+**Review and approval (A2).** `engine.py` is **shared source that every stage imports**.
+The change needs independent review and your explicit approval before any S2 GO.
+`NavigationBindingV4`'s admission of the S1 publication is a second new trust boundary
+and gets the same review.
+
+**Decision A2** (recommended: **approve**). Approve the one-line `engine.py` allow-list
+entry and `NavigationBindingV4`, with the invariants above, under independent review.
+**Alternative:** decline, in which case S2 cannot run and v4 is blocked at S2.
+
+Thresholds, the matched clock, scene IDs, the lane cap and v3 are unchanged.
+
+### Amendment 2, revision 2 (independent review: APPROVE WITH CHANGES)
+
+- **Two shas.** S2 and S3 GOs name both the base sha (`cd4eb130…`) and the
+  amendment-2 file sha. S1 checks and the checkpoint `protocol_sha256` (digest of S1's
+  `run_protocol`, which embeds `cd4eb130…`) keep the base sha. New S2 files add an
+  amendment-sha check.
+- **Binding.** The v4 `Binding` hard-codes the index path and sha (or the S1 output
+  directory plus the report and publication shas) and takes only `(training_seed, arm)`,
+  so no argument can redirect it. The pinned evidence is published before the binding
+  commit, or read directly against the hard-coded shas. It verifies the `publication.json`
+  receipt including `protocol_sha256 == cd4eb130…`, as `success_admitted` does, and each
+  checkpoint's `protocol_sha256`, `graph_sha256` and `ordered_ids_sha256`. It also checks
+  the python/numpy/torch runtime identity as v2 does.
+- **Identity.** Engine receives the `male_policy.validate_identity` payload (controller,
+  variant, profile and the eleven identity hashes), built from S1 evidence. It is not v2's
+  admitted payload. The checkpoint then loads through `_load_checked_policy`. The exact
+  `topology_sha256` and `feature_protocol_sha256` derivation is an open binding-review item.
+- **Owner worker.** No retry or replacement of an owner. It imports the evaluator's own
+  `reduce` and `check_protocol` and defines no thresholds.
+- **Tests.** The allow-list regression also covers the existing `NavigationBinding`
+  guard, and the binding tests prove it cannot be redirected.
+- **A2 scope.** Approval covers only the source scope and the amendment-2 file sha. It
+  is not a stage GO: S2 needs its own owner record.

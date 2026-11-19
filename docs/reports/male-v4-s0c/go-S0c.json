@@ -1,0 +1,25 @@
+{
+ "decision": "GO",
+ "lane": "navigation",
+ "stage": "S0c",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "plan_sha256": "41d53b28af3f13513aa0ee92f1b4da4c55aabc84a31c1389048fef2e5bc4a853",
+ "previous_pin_record": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0b/pin-record.json",
+ "previous_pin_record_sha256": "b3511f1a3bf625dd4cec20733317b5288bb965cde6873fbb1023a768e02809cb",
+ "chain_pin_record_sha256": {
+  "S0a": "d8e511b8d8095c8d781a0ecfb2b031571c4f6fd72d0367b88520643d0f653901",
+  "S0b": "b3511f1a3bf625dd4cec20733317b5288bb965cde6873fbb1023a768e02809cb"
+ },
+ "pin_document_sha256": {
+  "m7-recovery-learning-protocol.json": "9c0ae9efb2c70908b755daeba4157d32b5daf792807fcaf18ed05f54d23a77df"
+ },
+ "manifest_sha256": "928bdbbd3fad198ffea0270074089c110cd2fa334ab4609ccd3f513253d45121",
+ "worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-c",
+ "worktree_head": "c06b4976f30b86455dc9ea3406bad6fab42371e1",
+ "port_tree": "T-c",
+ "current_tree_head": "49ecace7c7a4bc8e3425ee443e851c3ddf5dcb3c",
+ "cpu_quota_k": 1,
+ "scientific_attempt": true,
+ "granted_by": "Utkarsh Maurya (owner), interactive session",
+ "granted_at": "2026-11-09"
+}

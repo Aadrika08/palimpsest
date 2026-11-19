@@ -1,0 +1,176 @@
+{
+ "case_rows": {
+  "learner-3100-seed-10": 600,
+  "learner-3100-seed-11": 485,
+  "learner-3100-seed-12": 496,
+  "learner-3101-seed-10": 600,
+  "learner-3101-seed-11": 196,
+  "learner-3101-seed-12": 600,
+  "learner-3102-seed-10": 600,
+  "learner-3102-seed-11": 243,
+  "learner-3102-seed-12": 198,
+  "learner-3103-seed-10": 600,
+  "learner-3103-seed-11": 276,
+  "learner-3103-seed-12": 186
+ },
+ "checks": [
+  {
+   "detail": {
+    "accepted_collection": true,
+    "collection_enclosing": true,
+    "collection_terminal": true,
+    "collector_supervisor": true,
+    "exec_drain": true,
+    "launcher_supervisor": true
+   },
+   "name": "inputs",
+   "ok": true
+  },
+  {
+   "detail": "report status, pins, assets and learner identities",
+   "name": "report",
+   "ok": true
+  },
+  {
+   "detail": "twelve owners in scene x learner order",
+   "name": "owners",
+   "ok": true
+  },
+  {
+   "detail": "rows 5080 vs numeric_ticks 5080; out of bounds {}",
+   "name": "rows",
+   "ok": true
+  },
+  {
+   "detail": "12 initial snapshots",
+   "name": "snapshots",
+   "ok": true
+  },
+  {
+   "detail": "260 producer-indexed files; mismatched []",
+   "name": "artifacts",
+   "ok": true
+  },
+  {
+   "detail": "terminal/enclosing/supervisor statuses, cleanups, inventories, controls and report binding",
+   "name": "enclosure",
+   "ok": true
+  },
+  {
+   "detail": "exec drain receipt",
+   "name": "drain",
+   "ok": true
+  },
+  {
+   "detail": {
+    "forbidden_modules": [],
+    "local_modules_outside_port": [],
+    "reader_origin": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e/scripts/collect_male_navigation_v2.py"
+   },
+   "name": "reader_isolation",
+   "ok": true
+  },
+  {
+   "detail": "all owners",
+   "name": "shared_validators",
+   "ok": true
+  },
+  {
+   "detail": "all owners",
+   "name": "contact_incidence",
+   "ok": true
+  },
+  {
+   "detail": "all owners",
+   "name": "finite_arrays",
+   "ok": true
+  },
+  {
+   "detail": "all owners",
+   "name": "tick_counts",
+   "ok": true
+  }
+ ],
+ "events": {
+  "learner-3100-seed-10": 1226,
+  "learner-3100-seed-11": 993,
+  "learner-3100-seed-12": 1015,
+  "learner-3101-seed-10": 1226,
+  "learner-3101-seed-11": 406,
+  "learner-3101-seed-12": 1226,
+  "learner-3102-seed-10": 1226,
+  "learner-3102-seed-11": 501,
+  "learner-3102-seed-12": 410,
+  "learner-3103-seed-10": 1226,
+  "learner-3103-seed-11": 568,
+  "learner-3103-seed-12": 385
+ },
+ "failures": [],
+ "inputs": {
+  "accepted_collection": {
+   "bytes": 130385,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/collection/report.json",
+   "sha256": "7c117e572088fb6415ebfa56b0dc44b2ad41aafe398fca601aca98116fc9ddde"
+  },
+  "collection_enclosing": {
+   "bytes": 2324,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/enclosing.json",
+   "sha256": "1780067f90773f66d1be0e5021dd03680a95e6adbb32fee6c8aeb38ff8482e69"
+  },
+  "collection_terminal": {
+   "bytes": 2207,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/terminal.json",
+   "sha256": "7773bfb8756b3ce54ae7d0fc5acf40e6bcf738a2fc5bef72878402d7ba3495a3"
+  },
+  "collector_supervisor": {
+   "bytes": 1518,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-launch/supervisor.json",
+   "sha256": "f83d09571032df04c592fe8df5fdaf3627dc913e478350b487c05ea63d40c926"
+  },
+  "exec_drain": {
+   "bytes": 1346,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/exec-drain.json",
+   "sha256": "a99a33cd4fbbfd9bae3265973eb7d100f96cf6882b279b82b9baf3a2922ad3f2"
+  },
+  "launcher_supervisor": {
+   "bytes": 649,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-supervisor/supervisor.json",
+   "sha256": "4b909b6826869ee14a9fc9b852095bfddcf4de9a9bdec4843982d0225c3979ad"
+  }
+ },
+ "kind": "m7-navigation-v4-root-raw-audit-1",
+ "native_or_model_import": false,
+ "not_covered": [],
+ "outcomes": {
+  "learner-3100-seed-10": "time_limit",
+  "learner-3100-seed-11": "goal",
+  "learner-3100-seed-12": "stalled",
+  "learner-3101-seed-10": "time_limit",
+  "learner-3101-seed-11": "stalled",
+  "learner-3101-seed-12": "time_limit",
+  "learner-3102-seed-10": "time_limit",
+  "learner-3102-seed-11": "stalled",
+  "learner-3102-seed-12": "stalled",
+  "learner-3103-seed-10": "time_limit",
+  "learner-3103-seed-11": "stalled",
+  "learner-3103-seed-12": "stalled"
+ },
+ "output_ledger": {
+  "bytes": 1136892030,
+  "files": 263
+ },
+ "pair_instances_by_type": {
+  "non_wheel_floor": 2,
+  "robot_obstacle": 8479,
+  "robot_wall": 0,
+  "wheel_floor_support": 291257,
+  "world_only": 3352800
+ },
+ "port_head": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+ "port_worktree": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "scope": "v2 root raw-audit scope: shared source/label/initial/contact validators plus independent raw contact incidence, finite arrays, row/event/hash counts and cleanup; no inference or physics recomputation; no useful-navigation qualification",
+ "seconds": 28.95187146801618,
+ "stage": "S0e-A",
+ "status": "passed"
+}

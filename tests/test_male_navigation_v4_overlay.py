@@ -310,7 +310,8 @@ def test_real_v4_pin_copies_differ_only_in_declared_fields():
     decl = real_declarations()
     assert decl['protocol_sha256'] == PROTOCOL_SHA
     assert set(decl['documents']) == {'m7-recovery-learning-protocol.json', 'm7-navigation-contact-v2-protocol.json',
-                                      'm7-navigation-data-v2-protocol.json', 'male-recovery-research-development-v1.json'}
+                                      'm7-navigation-data-v2-protocol.json', 'male-recovery-research-development-v1.json',
+                                      'm7-navigation-study-protocol.json'}   # study plan activated before S0e
     for name, item in decl['documents'].items():
         original = (ROOT/item['original_path']).read_bytes()
         assert sha(original) == item['original_sha256'], name
@@ -318,12 +319,18 @@ def test_real_v4_pin_copies_differ_only_in_declared_fields():
         declared = {f['pointer'] for f in item['fields']}
         diff = driver.field_diff(json.loads(original), json.loads(copy_bytes))
         assert all(any(p == d or p.startswith(d + '/') for d in declared) for p in diff), name   # nothing undeclared
-        assert all(any(p == d or p.startswith(d + '/') for p in diff) for d in declared), name   # every field regenerated
+        doc = json.loads(copy_bytes)
+        for field in item['fields']:   # a field differs from the original unless it is filled with an equal value
+            d = field['pointer']
+            assert any(p == d or p.startswith(d + '/') for p in diff) or \
+                driver.pointer_get(doc, d) == driver.pointer_get(json.loads(original), d), (name, d)
         driver.check_pin_document(original, copy_bytes, item, consumer=False)
 
 
-# Copies filled from published pin records before their first consumer (S0c: S0a + S0b records).
-FILLED_COPIES = {'m7-recovery-learning-protocol.json'}
+# Copies filled from published pin records before their first consumer (S0c: S0a + S0b records; S0e: S0c + S0d).
+FILLED_COPIES = {'m7-recovery-learning-protocol.json', 'male-recovery-research-development-v1.json',
+                 'm7-navigation-study-protocol.json', 'm7-navigation-contact-v2-protocol.json',
+                 'm7-navigation-data-v2-protocol.json'}   # S0f: S0a-S0e records and the T-h port
 
 
 def test_real_v4_pin_copies_hold_explicit_stage_placeholders_until_filled_and_unfilled_ones_are_refused():
@@ -585,6 +592,204 @@ def test_s0a_manifest_launch_matches_the_saved_plan_the_driver_rules_and_the_pro
     for path in (receipt, go_record, output, record):
         assert not driver.under(path, plan['worktree']) and not driver.under(path, flag('--assets', producer_args))
     assert 'scientific_attempt": true' in text and 'ends v4' in text.lower()
+
+
+def test_s0f_manifest_binds_t_f_and_t_h_the_plan_the_filled_copies_the_s0e_record_and_the_lane_budget():
+    import re
+    import run_research_stage as launcher
+    folder = ROOT/'docs/reports/male-v4-s0f'
+    text = (folder/'MANIFEST.md').read_text()
+    cur = '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/'
+    raw, derived = (folder/'plan-only.prepared-in-agent-worktree.json').read_bytes(), (folder/'plan-only.json').read_bytes()
+    agent = re.search(rb'(/[^"]+?/)docs/plans/', raw).group(1)
+    assert raw.replace(agent, cur.encode()) == derived and sha(raw) in text and sha(derived) in text
+    plan = json.loads(derived)
+    ports = driver.load_ports()
+    spec = driver.port_stages(driver.STAGES, ports)['S0f']
+    assert (plan['status'], plan['stage'], plan['protocol_sha256']) == ('admissible', 'S0f', PROTOCOL_SHA)
+    assert plan['producing_commit'] == spec['commit'] == ports['trees']['T-f']['port_commit'] == plan['port_check']['head']
+    assert plan['historical_port_check']['head'] == ports['trees']['T-h']['port_commit'] == spec['historical_commit']
+    pins = ROOT/'docs/plans/m7-navigation-v4-pins'
+    assert set(plan['documents']) == set(spec['documents'])
+    for name, entry in plan['documents'].items():
+        raw_copy = (pins/name).read_bytes()
+        assert entry['sha256'] == sha(raw_copy) and entry['sha256'] in text and b'PENDING' not in raw_copy
+        assert plan['locator']['value']['documents'][name] == entry and entry['path'] == cur + 'docs/plans/m7-navigation-v4-pins/' + name
+    declared = sha((pins/'declared-fields.json').read_bytes())
+    assert f'"declared_fields_sha256": "{declared}"' in text
+    s0e_record = (ROOT/'docs/reports/male-v4-s0e/control/collector-pin-record.json').read_bytes()
+    assert plan['previous_record_sha256'] == [sha(s0e_record)] and sha(s0e_record) in text
+    for name in ('controller-record.json', 'collection-index.json'):
+        assert sha((ROOT/'docs/reports/male-v4-s0e/control'/name).read_bytes()) in text
+    block = re.search(r'<!-- s0f-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    unit, command = argv[:argv.index('--')], argv[argv.index('--') + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    rows = {r['stage']: r for r in json.loads((ROOT/driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']}
+    k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+    assert (flag('--lane', unit), flag('--stage', unit)) == ('navigation', 'S0f')
+    assert (k, kill, worst) == (rows['S0f']['cpu_quota_k'], rows['S0f']['runtime_max_sec_kill_target'], rows['S0f']['worst_case_cpu']) == (1, 263, 268)
+    assert worst >= k * (kill + launcher.STOP_TIMEOUT)
+    inner = command.index('--')
+    driver_args, producer_args = command[:inner], command[inner + 1:]
+    assert driver_args[2] == cur + 'scripts/regenerate_male_navigation_v4.py' and '--plan-only' not in driver_args
+    assert flag('--stage', driver_args) == 'S0f' and flag('--worktree', driver_args) == plan['worktree']
+    assert flag('--historical-worktree', driver_args) == '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-h'
+    assert flag('--previous-pins', driver_args) == json.loads(s0e_record)['output_root'].rsplit('/', 1)[0] + '/control/collector-pin-record.json'
+    assert producer_args == plan['would_run'][2:]
+    output, record = Path(flag('--output', producer_args)), Path(flag('--pin-record-out', driver_args))
+    runs = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs')
+    assert output.parent == record.parent and runs not in output.parents                 # T-f refuses outputs under male-v4-runs
+    assert flag('--go', driver_args) == flag('--go-record', unit)
+    ledger = [json.loads(line) for line in (ROOT/'docs/reports/male-v4-s0e/research-ledger-snapshot.jsonl').read_text().splitlines() if line.strip()]
+    charged = sum(v for key, v in launcher.charges(ledger).items() if key[0] == 'navigation')
+    ahead = sum(rows[s]['worst_case_cpu'] for s in ('S0f', 'S0z', 'S1', 'S2'))
+    assert round(charged, 3) == 567.975 and ahead == 7173 and charged + ahead <= launcher.LANE_CAPS['navigation']
+    expected = charged - 1.832 + sum(rows[s]['expected'] for s in ('S0f', 'S0z', 'S1', 'S2'))
+    assert round(charged - 1.832, 3) == 566.143 and round(expected) == 2196 and expected <= 5643.168
+    assert rows['S0z']['worst_case_cpu'] == 305
+    for phrase in ('scientific_attempt": true', 'current_tree_head', 'historical_worktree_head', 'must **exist and be empty**',
+                   'writer.lock', 'Throttling risk', 'not applicable', 'Post-run gate', 'male_matched_budget_v4.derive',
+                   '600, 485, 496, 600, 196, 600, 600, 243, 198, 600, 276, 186', '[277,182,315,245,199,265,243,257]',
+                   'ends v4', 'GO binding', '[S0a, S0b, S0c, S0d, S0e, S0f]', 'm7-navigation-v4-corpus-pin-1', 'source_pins',
+                   '7,740.975', '**2,196**', 'driver.port_stages(driver.STAGES, driver.load_ports())',
+                   '**7,739.143 ≤ 14,398.168**', 'mkdir -p /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-data/S0f',
+                   'round-trip', 'New data production', 'Byte drift ends v4', 'measured charge'):
+        assert phrase in text, phrase
+
+
+def test_s0e_manifest_binds_four_units_to_their_plans_the_filled_copies_the_s0d_records_and_the_lane_budget():
+    import re
+    import run_research_stage as launcher
+    import run_male_navigation_v4_s0e as s0e
+    folder = ROOT/'docs/reports/male-v4-s0e'
+    text = (folder/'MANIFEST.md').read_text()
+    cur = '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/'
+    plans = {}
+    for name in ('driver-plan', 'launch-plan', 'drain-plan', 'audit-plan', 'index-plan'):
+        raw, derived = (folder/f'{name}.prepared-in-agent-worktree.json').read_bytes(), (folder/f'{name}.json').read_bytes()
+        agent = re.search(rb'(/[^"]+?/)(?:docs/plans|scripts)/', raw).group(1)
+        assert raw.replace(agent, cur.encode()) == derived and sha(derived) in text, name
+        plans[name] = json.loads(derived)
+    ports = driver.load_ports()
+    spec = driver.port_stages(driver.STAGES, ports)['S0e']
+    plan = plans['driver-plan']
+    assert (plan['status'], plan['stage'], plan['protocol_sha256']) == ('admissible', 'S0e', PROTOCOL_SHA)
+    assert plan['producing_commit'] == spec['commit'] == ports['trees']['T-e']['port_commit'] == plan['port_check']['head']
+    pins = ROOT/'docs/plans/m7-navigation-v4-pins'
+    for name, entry in plan['documents'].items():                                   # the committed filled copies
+        assert entry['sha256'] == sha((pins/name).read_bytes()) and entry['sha256'] in text and b'PENDING' not in (pins/name).read_bytes()
+        assert plan['locator']['value']['documents'][name] == entry and entry['path'] == cur + 'docs/plans/m7-navigation-v4-pins/' + name
+    assert set(plan['documents']) == set(spec['documents'])
+    for value in plan['previous_record_sha256']: assert value in text
+    launch = plans['launch-plan']
+    assert launch['collector_command'][launch['collector_command'].index('--') + 1:] == plan['would_run'][2:]
+    rows = {r['stage']: r for r in json.loads((ROOT/driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']}
+    flag = lambda name, words: words[words.index(name) + 1]
+    commands = {}
+    for stage, marker, command_name in (('S0e', 's0e', 'launch'), ('S0e-D', 's0e-d', 'drain'), ('S0e-A', 's0e-a', 'audit'),
+                                        ('S0e-I', 's0e-i', 'index')):
+        block = re.search(rf'<!-- {marker}-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+        argv = block.replace('\\\n', ' ').split()
+        unit, command = argv[:argv.index('--')], argv[argv.index('--') + 1:]
+        k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+        row = rows[stage]
+        assert (flag('--lane', unit), flag('--stage', unit)) == ('navigation', stage)
+        assert (k, kill, worst) == (row['cpu_quota_k'], row['runtime_max_sec_kill_target'], row['worst_case_cpu'])
+        assert worst >= k * (kill + launcher.STOP_TIMEOUT) and (k, kill) == (1, s0e.UNITS[stage]['runtime_max_sec'])
+        assert command[2] == cur + 'scripts/run_male_navigation_v4_s0e.py' and command[3] == command_name
+        assert flag('--go', command) == flag('--go-record', unit) and Path(flag('--go-record', unit)).name == f'go-{stage}.json'
+        planned = plans[f'{command_name}-plan']
+        assert planned['stage'] == stage and planned['mode'] == 'plan-only'
+        given = command[4:command.index('--go')] + command[command.index('--go') + 2:]
+        assert given == planned['unit_command'][planned['unit_command'].index('--') + 5:planned['unit_command'].index('--go')]
+        commands[stage] = (unit, command)
+    launch_cmd = commands['S0e'][1]
+    seeds = launch_cmd[launch_cmd.index('--previous-pins') + 1:launch_cmd.index('--previous-pins') + 4]
+    assert [Path(p).parts[-2] for p in seeds] == ['seed-10', 'seed-11', 'seed-12']
+    assert flag('--receipt-dir', commands['S0e-D'][1]) == flag('--receipt-dir', commands['S0e'][0])   # D drains the S0e unit
+    assert rows['S0e']['runtime_max_sec_kill_target'] == 2240 <= json.loads((ROOT/driver.PROTOCOL_PATH).read_text())[
+        'amendment_1']['lane_budget']['s0e_kill_target_cap_seconds'] == 2285
+    ledger = [json.loads(line) for line in (ROOT/'docs/reports/male-v4-s0d/research-ledger-snapshot.jsonl').read_text().splitlines() if line.strip()]
+    charged = sum(launcher.charges(ledger)[key] for key in launcher.charges(ledger) if key[0] == 'navigation')
+    ahead = sum(rows[s]['worst_case_cpu'] for s in ('S0e', 'S0e-D', 'S0e-A', 'S0e-I', 'S0f', 'S0z', 'S1', 'S2'))
+    assert round(charged, 3) == 330.857 and ahead == 9643 and charged + ahead <= launcher.LANE_CAPS['navigation']
+    for phrase in ('scientific_attempt": true', 'current_tree_head', 'must **not exist**', 'writer.lock', 'Throttling risk',
+                   'mesa 1:26.2.5-1', 'not_covered: []', 'exec_exitcode', 'collection-index.json', '1..600', 'ends v4',
+                   '9,973.857', 'GO binding', '[S0a, S0b, S0c, S0d, S0e]', '4d95f77', 'S0f dry-load',
+                   'binding deadline is the 180 s per-owner cap', '**329.025**', '**2,555**', 'source_pins'):
+        assert phrase in text, phrase
+    # Historical binding: the declarations as of S0e (the data-v2 fields were activated later, before S0f).
+    assert '"declared_fields_sha256": "96d5b6634c1e4dd47bfe5bce148024bf2601319ba4c4f99a83acca0290a9d722"' in text
+    assert round(charged - 1.832, 3) == 329.025                                   # measured v4 charge excl. the v3 prior
+    expected = (charged - 1.832 + sum(rows[s]['expected'] for s in ('S0e', 'S0e-D', 'S0e-A', 'S0e-I', 'S0f', 'S0z', 'S1', 'S2')))
+    assert round(expected) == 2555 and expected <= 5643.168
+
+
+def test_s0d_manifest_binds_the_controller_and_seed_plans_the_chain_the_live_locator_and_nested_deadlines():
+    import re
+    import run_research_stage as launcher
+    import run_male_navigation_v4_s0d as controller
+    folder = ROOT/'docs/reports/male-v4-s0d'
+    text = (folder/'MANIFEST.md').read_text()
+    cur = '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/'
+    plans = {}
+    for name in ('controller-plan', 'driver-plan-seed-10', 'driver-plan-seed-11', 'driver-plan-seed-12'):
+        raw, derived = (folder/f'{name}.prepared-in-agent-worktree.json').read_bytes(), (folder/f'{name}.json').read_bytes()
+        agent = re.search(rb'(/[^"]+?/)(?:docs/plans|scripts)/', raw).group(1)
+        assert raw.replace(agent, cur.encode()) == derived and sha(derived) in text, name
+        plans[name] = json.loads(derived)
+    record = {s: (ROOT/f'docs/reports/male-v4-{s.lower()}/pin-record.json').read_bytes() for s in ('S0a', 'S0b', 'S0c')}
+    for raw in record.values(): assert sha(raw) in text
+    s0c = json.loads(record['S0c'])
+    data_manifest = s0c['outputs']['data-manifest.json']['sha256']
+    ports = driver.load_ports()
+    spec = driver.port_stages(driver.STAGES, ports)['S0d']
+    copy_sha = sha((ROOT/'docs/plans/m7-navigation-v4-pins/m7-recovery-learning-protocol.json').read_bytes())
+    seeds = []
+    for seed in (10, 11, 12):
+        plan = plans[f'driver-plan-seed-{seed}']
+        assert (plan['status'], plan['stage'], plan['protocol_sha256']) == ('admissible', 'S0d', PROTOCOL_SHA)
+        assert plan['producing_commit'] == spec['commit'] == ports['trees']['T-d']['port_commit'] == plan['port_check']['head']
+        assert plan['previous_record_sha256'] == sha(record['S0c'])
+        locator = plan['locator']['value']
+        assert locator['data_manifest']['sha256'] == data_manifest and data_manifest in text and 'PENDING' not in json.dumps(locator)
+        assert locator['documents']['m7-recovery-learning-protocol.json']['sha256'] == copy_sha
+        assert plan['arguments']['--training-seed'] == {'value': str(seed)}
+        seeds.append(plan['would_run'][2:])
+    control = plans['controller-plan']
+    assert control['mode'] == 'plan-only' and control['stage'] == 'S0d' and control['limits'] == controller.LIMITS
+    assert [p['training_seed'] for p in control['pairs']] == [10, 11, 12]
+    for pair, producer_args in zip(control['pairs'], seeds):
+        command = pair['command']
+        assert command[2] == cur + 'scripts/regenerate_male_navigation_v4.py'
+        assert command[command.index('--') + 1:] == producer_args                    # controller runs the planned seed argv
+    block = re.search(r'<!-- s0d-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    cut = argv.index('--')
+    unit, command = argv[:cut], argv[cut + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    row = next(r for r in json.loads((ROOT/driver.PROTOCOL_PATH).read_text())['amendment_1']['lane_budget']['stage_costs_seconds']
+               if r['stage'] == 'S0d')
+    k, kill, worst = int(flag('--cpu-quota-k', unit)), int(flag('--runtime-max-sec', unit)), int(flag('--worst-case-cpu', unit))
+    assert (flag('--lane', unit), flag('--stage', unit)) == ('navigation', 'S0d')
+    assert (k, kill, worst) == (row['cpu_quota_k'], row['runtime_max_sec_kill_target'], row['worst_case_cpu']) == (1, 2160, 2165)
+    assert worst >= k * (kill + launcher.STOP_TIMEOUT)
+    limits = controller.LIMITS                                                       # deadlines nest inside RuntimeMaxSec
+    assert 3 * limits['pair_supervised_seconds'] <= limits['stage_internal_seconds'] < limits['stage_supervised_seconds'] == kill
+    assert limits['pair_internal_seconds'] < limits['pair_supervised_seconds']
+    assert command[2] == cur + 'scripts/run_male_navigation_v4_s0d.py'
+    go = command[command.index('--go'):command.index('--go') + 2]
+    assert go[1] == flag('--go-record', unit)
+    planned = control['unit_command'][control['unit_command'].index('--') + 1:]
+    planned = planned[:planned.index('--go')] + planned[planned.index('--go') + 2:]
+    launched = command[:command.index('--go')] + command[command.index('--go') + 2:]
+    assert launched[3:] == planned[3:] and launched[2] == planned[2]                  # same controller arguments as planned
+    assert flag('--stage-root', command) == '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d'
+    for phrase in ('scientific_attempt": true', '"cpu_quota_k": 1', 'chain_pin_record_sha256', 'previous_pin_record_sha256',
+                   'never evaluated or cited', 'must **not exist**', 'writer.lock', 'Throttling risk', 'not applicable',
+                   'GO binding', '[S0a, S0b, S0c, S0d]', 'elapsed_seconds ≤ 2160', 'recovery-index-values.json', 'ends v4'):
+        assert phrase in text, phrase
 
 
 def test_s0c_manifest_launch_matches_the_plan_the_records_the_filled_copy_and_the_protocol_budget():

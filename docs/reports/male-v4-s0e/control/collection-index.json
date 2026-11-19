@@ -1,0 +1,154 @@
+{
+ "audits": {
+  "root_raw": {
+   "not_covered": [],
+   "seconds": 28.95187146801618,
+   "sha256": "58d7696197ee0aaaa131fa4b0154c2b3f731bcba280c2c13ac473ae5e33608a4",
+   "status": "passed"
+  }
+ },
+ "coverage": {
+  "cases": [
+   {
+    "case": "learner-3100-seed-10",
+    "events": 1226,
+    "intervals": 600,
+    "outcome": "time_limit"
+   },
+   {
+    "case": "learner-3100-seed-11",
+    "events": 993,
+    "intervals": 485,
+    "outcome": "goal"
+   },
+   {
+    "case": "learner-3100-seed-12",
+    "events": 1015,
+    "intervals": 496,
+    "outcome": "stalled"
+   },
+   {
+    "case": "learner-3101-seed-10",
+    "events": 1226,
+    "intervals": 600,
+    "outcome": "time_limit"
+   },
+   {
+    "case": "learner-3101-seed-11",
+    "events": 406,
+    "intervals": 196,
+    "outcome": "stalled"
+   },
+   {
+    "case": "learner-3101-seed-12",
+    "events": 1226,
+    "intervals": 600,
+    "outcome": "time_limit"
+   },
+   {
+    "case": "learner-3102-seed-10",
+    "events": 1226,
+    "intervals": 600,
+    "outcome": "time_limit"
+   },
+   {
+    "case": "learner-3102-seed-11",
+    "events": 501,
+    "intervals": 243,
+    "outcome": "stalled"
+   },
+   {
+    "case": "learner-3102-seed-12",
+    "events": 410,
+    "intervals": 198,
+    "outcome": "stalled"
+   },
+   {
+    "case": "learner-3103-seed-10",
+    "events": 1226,
+    "intervals": 600,
+    "outcome": "time_limit"
+   },
+   {
+    "case": "learner-3103-seed-11",
+    "events": 568,
+    "intervals": 276,
+    "outcome": "stalled"
+   },
+   {
+    "case": "learner-3103-seed-12",
+    "events": 385,
+    "intervals": 186,
+    "outcome": "stalled"
+   }
+  ],
+  "output_bytes": 1136892030,
+  "output_files": 263,
+  "owners_completed": 12,
+  "pair_instances_by_type": {
+   "non_wheel_floor": 2,
+   "robot_obstacle": 8479,
+   "robot_wall": 0,
+   "wheel_floor_support": 291257,
+   "world_only": 3352800
+  },
+  "rows": 5080
+ },
+ "disposition": {
+  "collector_supervisor_seconds": 248.20998610497918,
+  "conflicting_owned_identities": [],
+  "enclosing_wall_seconds": 252.26833966199774,
+  "exec_exitcode": 0,
+  "forced_signals": [],
+  "inventories_and_controls_unchanged": true,
+  "launcher_supervisor_seconds": 250.19982326601166,
+  "normal_through_return_limit_seconds": 2210,
+  "sample_errors": [],
+  "survivors": [],
+  "union_sampled_identities": 16,
+  "unit_returncode": 0
+ },
+ "immutable_inputs": {
+  "accepted_collection": {
+   "bytes": 130385,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/collection/report.json",
+   "sha256": "7c117e572088fb6415ebfa56b0dc44b2ad41aafe398fca601aca98116fc9ddde"
+  },
+  "collection_enclosing": {
+   "bytes": 2324,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/enclosing.json",
+   "sha256": "1780067f90773f66d1be0e5021dd03680a95e6adbb32fee6c8aeb38ff8482e69"
+  },
+  "collection_terminal": {
+   "bytes": 2207,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/terminal.json",
+   "sha256": "7773bfb8756b3ce54ae7d0fc5acf40e6bcf738a2fc5bef72878402d7ba3495a3"
+  },
+  "collector_supervisor": {
+   "bytes": 1518,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-launch/supervisor.json",
+   "sha256": "f83d09571032df04c592fe8df5fdaf3627dc913e478350b487c05ea63d40c926"
+  },
+  "exec_drain": {
+   "bytes": 1346,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/exec-drain.json",
+   "sha256": "a99a33cd4fbbfd9bae3265973eb7d100f96cf6882b279b82b9baf3a2922ad3f2"
+  },
+  "launcher_supervisor": {
+   "bytes": 649,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/outer-supervisor/supervisor.json",
+   "sha256": "4b909b6826869ee14a9fc9b852095bfddcf4de9a9bdec4843982d0225c3979ad"
+  },
+  "root_raw_audit": {
+   "bytes": 5306,
+   "path": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/root-raw-audit.json",
+   "sha256": "58d7696197ee0aaaa131fa4b0154c2b3f731bcba280c2c13ac473ae5e33608a4"
+  }
+ },
+ "kind": "m7-navigation-v4-collection-index-1",
+ "producer_commit": "703acc503c43b13d9f2d5f8ddc05b29f72fc0247",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "qualification_claims": [],
+ "stage": "S0e-I",
+ "status": "completed-collection"
+}

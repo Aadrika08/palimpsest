@@ -767,25 +767,23 @@ def test_real_port_stages_pin_port_bytes_and_the_s0e_collector_cascade():
         'scripts/prepare_male_recovery_data.py': sha(blob(port_rev('T-d'), 'scripts/prepare_male_recovery_data.py'))}
     assert driver.STAGES['S0f']['port_source_guards'] == {
         'scripts/collect_male_navigation_v2.py': sha(blob(port_rev('T-f'), 'scripts/collect_male_navigation_v2.py'))}
-    pending = DECLARED['amendment_1_pending']
-    assert pending['status'].startswith('inactive')
-    field = next(f for f in pending['pending_fields'][driver.CONTACT_V2] if f['pointer'] == '/prior_version/collector_sha256')
-    assert field['cascade_value'] == collector and field['placeholder'] == 'PENDING-S0e'
+    # Activated before S0e (amendment_1_pending.activated): a port-byte cascade checked against the T-e file.
+    field = next(f for f in DECLARED['documents'][driver.CONTACT_V2]['fields'] if f['pointer'] == '/prior_version/collector_sha256')
+    assert field['cascade_value'] == collector and field['placeholder'] == 'PENDING-S0e' and field['class'] == 'port-sha256'
+    assert driver.CONTACT_V2 in DECLARED['amendment_1_pending']['activated']
 
 
-def test_study_plan_copy_differs_only_in_pending_fields_and_holds_placeholders():
-    item = DECLARED['amendment_1_pending']['pending_documents'][driver.STUDY_PLAN]
+def test_study_plan_copy_differs_only_in_its_declared_fields_and_is_filled_with_the_cascades():
+    item = DECLARED['documents'][driver.STUDY_PLAN]          # activated before S0e
     original = (ROOT/item['original_path']).read_bytes()
     assert sha(original) == item['original_sha256'] == 'a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f'
     copy_bytes = (ROOT/'docs/plans/m7-navigation-v4-pins'/driver.STUDY_PLAN).read_bytes()
     assert driver.field_diff(json.loads(original), json.loads(copy_bytes)) == {f['pointer'] for f in item['fields']}
     doc = json.loads(copy_bytes)
     for field in item['fields']:
-        assert driver.pointer_get(doc, field['pointer']) == field['placeholder'] == 'PENDING-' + field['stage']
-    with pytest.raises(driver.Refusal, match='PENDING'):
-        driver.check_pin_document(original, copy_bytes, item, consumer=True)
-    # Inactive: the copy is not an active pin document, so no stage can consume it yet.
-    assert driver.STUDY_PLAN not in DECLARED['documents']
+        assert field['placeholder'] == 'PENDING-' + field['stage'] and driver.pointer_get(doc, field['pointer']) != field['placeholder']
+    driver.check_pin_document(original, copy_bytes, item, consumer=True)
+    assert driver.STUDY_PLAN not in DECLARED['amendment_1_pending']['pending_documents']
     assert field_of(item, '/current_reusable_source_sha256/src~1palimpsest~1male_recovery_research.py')['cascade_value'] == \
         sha(blob(port_rev('T-e'), 'src/palimpsest/male_recovery_research.py'))
     assert field_of(item, '/current_reusable_source_sha256/scripts~1prepare_male_recovery_data.py')['cascade_value'] == \
@@ -904,8 +902,10 @@ import probe_male_navigation_v4_imports as probe  # noqa: E402
 def test_probe_declares_port_entry_points_and_refuses_wrong_head_without_child(tmp_path, monkeypatch):
     table = probe.ENTRYPOINTS
     assert {k: v['port_tree'] for k, v in table.items() if v.get('port_tree')} == {
-        'S0c-port': 'T-c', 'S0d-port': 'T-d', 'S0e-port': 'T-e', 'S0f-port': 'T-f', 'S0f-historical-port': 'T-h'}
+        'S0c-port': 'T-c', 'S0d-port': 'T-d', 'S0e-port': 'T-e', 'S0f-port': 'T-f', 'S0f-historical-port': 'T-h',
+        'S1-data-child-closure': 'T-f'}   # P2: the S1 data child's T-f closure
     assert all(table[k]['module'] == table[k[:-5]]['module'] for k in table if k.endswith('-port'))
+    assert table['S1-data-child-closure']['module'] == table['S0f-port']['module']
     assert probe.port_commit('T-e') == SPEC['trees']['T-e']['port_commit']
     calls = []
     monkeypatch.setattr(probe, 'probe_entry', lambda *a, **k: calls.append((a, k)) or {'status': 'passed'})
@@ -1310,3 +1310,289 @@ def test_fill_cli_fills_a_placeholder_copy_in_place_from_previous_records_only(t
     assert (pins/LEARNING).read_bytes() == (PINS/LEARNING).read_bytes()
     assert driver.main(argv, pins_dir=pins) == 3 and 'no placeholder' in json.loads(capsys.readouterr().out)['reason']
     assert driver.main([*argv[:2], '--stage', 'S0b', *argv[4:]], pins_dir=pins) == 3   # S0b does not consume this copy
+
+
+# =================================================================== S0e: index, study-plan and contact-v2 copies filled from S0c/S0d
+
+INDEX, CONTACT, STUDY = driver.RECOVERY_INDEX, driver.CONTACT_V2, driver.STUDY_PLAN
+CASCADES = ('doc-path', 'doc-sha256', 'port-sha256')
+S0D_EVIDENCE = ROOT/'docs/reports/male-v4-s0d'
+S0D_ROOT = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d/runs/S0d')
+S0D_RECORDS = [S0D_ROOT/f'control/pairs/seed-{s}/pin-record.json' for s in (10, 11, 12)]
+TE_TREE = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-e')
+TD_TREE = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-d')
+
+
+def item_of(name): return DECLARED['documents'][name]
+
+
+def placeholders(name):
+    item = item_of(name)
+    doc = json.loads((ROOT/item['original_path']).read_text())
+    for f in item['fields']: driver.pointer_set(doc, f['pointer'], f['placeholder'])
+    return doc
+
+
+def test_s0e_documents_are_active_and_every_field_has_a_fill_source_or_cascade():
+    assert {INDEX, CONTACT, STUDY} <= set(DECLARED['documents']) and STUDY not in PENDING['pending_documents']
+    assert INDEX not in PENDING['pending_fields'] and CONTACT not in PENDING['pending_fields']
+    for name in (INDEX, CONTACT, STUDY):
+        for f in item_of(name)['fields']:
+            assert f['class'] in CASCADES or f.get('fill') or (name, f['pointer']) in {
+                (CONTACT, p) for p in ('/fixed_source_models/index_path', '/fixed_source_models/index_sha256')}, (name, f['pointer'])
+            if f['class'] in ('doc-path', 'doc-sha256'): assert f['document'] in DECLARED['documents']
+            if f['class'] == 'port-sha256':
+                assert f['port_tree'] == 'T-e' and f['cascade_value'] == sha(blob(port_rev('T-e'), f['port_file']))
+    assert {f['pointer']: f['class'] for f in item_of(INDEX)['fields']}['/training_source_code'] == 'source-map'
+    assert driver.doc_path_value(PINS, STUDY) == 'docs/plans/m7-navigation-v4-pins/' + STUDY   # repo-relative, like the originals
+
+
+def synthetic_s0d(tmp_path, *, differ=False):
+    """A merged S0d chain entry over real-format seed files, plus an S0c entry."""
+    root, tree = tmp_path/'tree/runs/S0d', tmp_path/'tree'
+    outputs = {}
+    for s in (10, 11, 12):
+        seed = json.loads((S0D_EVIDENCE/f'seed-{s}/protocol.json').read_text())
+        seed['model_inputs'] = {str(tree/Path(k).relative_to(TD_TREE)): v for k, v in seed['model_inputs'].items()}
+        if differ and s == 12: seed['source_code']['trainer']['uv.lock'] = '0'*64
+        for rel, value in ((f'seed-{s}/protocol.json', seed), (f'seed-{s}/report.json', {'seed': s})):
+            path = root/rel; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(json.dumps(value))
+            outputs[rel] = {'sha256': sha(path.read_bytes()), 'bytes': path.stat().st_size}
+    for rel in ('control/terminal.json', 'control/outer-supervisor/supervisor.json'):
+        path = root/rel; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(rel)
+        outputs[rel] = {'sha256': sha(path.read_bytes()), 'bytes': path.stat().st_size}
+    s0c = tmp_path/'S0c/data'; s0c.mkdir(parents=True); (s0c/'data-manifest.json').write_text('{}')
+    return {'S0c': {'producing_commit': 'c', 'worktree': '/w', 'output_root': str(s0c),
+                    'outputs': {'data-manifest.json': {'sha256': sha(b'{}'), 'bytes': 2}}},
+            'S0d': {'producing_commit': 'd'*40, 'worktree': str(tree), 'output_root': str(root), 'outputs': outputs,
+                    'declared_values': ['a'*64]}}
+
+
+def test_fill_derives_every_recovery_index_field_from_the_s0c_and_merged_s0d_chain(tmp_path):
+    chain = synthetic_s0d(tmp_path)
+    doc, original = placeholders(INDEX), json.loads((ROOT/item_of(INDEX)['original_path']).read_text())
+    values = driver.fill_values(INDEX, item_of(INDEX), doc, original, chain, pins_dir=PINS)
+    seed10 = json.loads((S0D_EVIDENCE/'seed-10/protocol.json').read_text())
+    assert values['/training_source_code'] == seed10['source_code']
+    assert list(values['/model_inputs'].values()) == list(seed10['model_inputs'].values())
+    assert all(Path(k).is_relative_to(tmp_path/'tree') for k in values['/model_inputs'])
+    assert values['/training_source_commit'] == 'd'*40 and values['/before_after_inventory_sha256'] == 'a'*64
+    assert values['/producer_root'] == str(tmp_path/'tree') and values['/pairs/1/directory'] == 'runs/S0d/seed-11'
+    assert values['/training_terminal/path'] == 'runs/S0d/control/terminal.json'
+    assert values['/data_manifest/path'] == str(tmp_path/'S0c/data/data-manifest.json')
+    for pointer, value in values.items(): driver.pointer_set(doc, pointer, value)
+    driver.check_document_values(INDEX, doc, original, item_of(INDEX), chain, lambda other: None, PINS)
+    tampered = copy.deepcopy(doc); tampered['training_source_code']['trainer']['uv.lock'] = '1'*64
+    with pytest.raises(driver.Refusal):
+        driver.check_document_values(INDEX, tampered, original, item_of(INDEX), chain, lambda other: None, PINS)
+
+
+def test_fill_refuses_seed_protocols_that_differ_or_files_that_differ_from_their_record(tmp_path):
+    original = json.loads((ROOT/item_of(INDEX)['original_path']).read_text())
+    with pytest.raises(driver.Refusal, match='differs across'):
+        driver.fill_values(INDEX, item_of(INDEX), placeholders(INDEX), original, synthetic_s0d(tmp_path/'a', differ=True), pins_dir=PINS)
+    chain = synthetic_s0d(tmp_path/'b')
+    (Path(chain['S0d']['output_root'])/'seed-11/protocol.json').write_text('{}')
+    with pytest.raises(driver.Refusal, match='differs from its pin record'):
+        driver.fill_values(INDEX, item_of(INDEX), placeholders(INDEX), original, chain, pins_dir=PINS)
+
+
+def test_cascades_refuse_a_referenced_copy_that_still_holds_placeholders_or_port_bytes_that_differ(tmp_path):
+    pins = tmp_path/'pins'; pins.mkdir()
+    (pins/'declared-fields.json').write_bytes((PINS/'declared-fields.json').read_bytes())
+    (pins/INDEX).write_text(json.dumps(placeholders(INDEX), indent=2) + '\n')
+    tree = tmp_path/'tree'
+    for name in (INDEX, CONTACT, STUDY, driver.RECOVERY_LEARNING):
+        target = tree/item_of(name)['original_path']; target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((ROOT/item_of(name)['original_path']).read_bytes())
+    with pytest.raises(driver.Refusal, match='PENDING'):
+        driver.referenced_copy_sha(pins, DECLARED, tree, INDEX)
+    port = next(f for f in item_of(STUDY)['fields'] if f['class'] == 'port-sha256')
+    (tree/port['port_file']).parent.mkdir(parents=True, exist_ok=True); (tree/port['port_file']).write_text('not the port')
+    # Port-byte pins are checked against the tree the field names (T-e), not the stage worktree given.
+    values = driver.fill_values(STUDY, item_of(STUDY), placeholders(STUDY), {}, {}, pins_dir=PINS, worktree=tree,
+                                doc_sha=lambda other: 'x'*64)
+    assert values[port['pointer']] == port['cascade_value'] == sha(blob(port_rev('T-e'), port['port_file']))
+    for changed, match in (({**port, 'cascade_value': '0'*64}, 'not the declared port bytes'), ({**port, 'port_tree': 'T-x'}, 'T-x')):
+        with pytest.raises(driver.Refusal, match=match):
+            driver.fill_values(STUDY, {**item_of(STUDY), 'fields': [changed]}, placeholders(STUDY), {}, {}, pins_dir=PINS, worktree=tree)
+
+
+def test_contact_collector_port_pin_is_accepted_with_a_t_f_worktree_whose_v1_collector_is_unported(tmp_path):
+    """S0f passes T-f (unported collect_male_navigation.py d0decc66) while contact-v2 pins the T-e port bytes."""
+    field = next(f for f in item_of(CONTACT)['fields'] if f['pointer'] == '/prior_version/collector_sha256')
+    tree = tmp_path/'t-f'; (tree/'scripts').mkdir(parents=True)
+    unported = blob(port_rev('T-f'), 'scripts/collect_male_navigation.py')
+    (tree/'scripts/collect_male_navigation.py').write_bytes(unported)
+    assert sha(unported) != field['cascade_value']                                   # the bytes differ by design
+    contact = json.loads((PINS/CONTACT).read_bytes())
+    original = json.loads((ROOT/item_of(CONTACT)['original_path']).read_text())
+    driver.check_document_values(CONTACT, contact, original, {**item_of(CONTACT), 'fields': [field]}, {}, lambda other: None, PINS,
+                                 worktree=tree)
+    forged = copy.deepcopy(contact); forged['prior_version']['collector_sha256'] = sha(unported)
+    with pytest.raises(driver.Refusal):
+        driver.check_document_values(CONTACT, forged, original, {**item_of(CONTACT), 'fields': [field]}, {}, lambda other: None,
+                                     PINS, worktree=tree)
+
+
+TF_TREE = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-f')
+
+
+@pytest.mark.skipif(not all(p.exists() for p in S0D_RECORDS) or not TF_TREE.exists(), reason='S0d evidence host only')
+def test_s0f_dry_loads_the_contact_v2_copy_against_the_real_t_f_worktree_on_the_evidence_host():
+    stages = driver.port_stages(driver.STAGES, driver.load_ports())
+    chain = driver.previous_chain([json.loads(p.read_bytes()) for p in S0D_RECORDS], 'S0e', stages,
+                                  protocol_sha256=driver.PROTOCOL_SHA256)
+    declarations = driver.load_declarations(PINS, driver.PROTOCOL_SHA256)
+    assert CONTACT in stages['S0f']['documents']
+    documents = driver.load_pin_documents({'documents': [CONTACT]}, PINS, declarations, TF_TREE, chain)
+    assert documents[CONTACT]['sha256'] == sha((PINS/CONTACT).read_bytes())
+
+
+def test_tracked_s0e_copies_hold_the_published_s0c_s0d_values_and_cascades():
+    values = json.loads((S0D_EVIDENCE/'control-recovery-index-values.json').read_text())
+    seed10 = json.loads((S0D_EVIDENCE/'seed-10/protocol.json').read_text())
+    index = json.loads((PINS/INDEX).read_bytes())
+    for key in ('producer_root', 'training_source_commit', 'training_terminal', 'training_supervisor', 'before_after_inventory_sha256'):
+        assert index[key] == values[key], key
+    assert [{k: p[k] for k in ('directory', 'report_sha256', 'training_seed')} for p in index['pairs']] == values['pairs']
+    assert index['training_source_code'] == seed10['source_code'] and index['model_inputs'] == seed10['model_inputs']
+    s0c = json.loads((ROOT/'docs/reports/male-v4-s0c/pin-record.json').read_text())
+    assert index['data_manifest'] == {'path': str(Path(s0c['output_root'])/'data-manifest.json'),
+                                      'sha256': s0c['outputs']['data-manifest.json']['sha256']}
+    contact, study = json.loads((PINS/CONTACT).read_bytes()), json.loads((PINS/STUDY).read_bytes())
+    assert contact['fixed_source_models']['index_sha256'] == sha((PINS/INDEX).read_bytes())
+    assert contact['fixed_source_models']['index_path'] == 'docs/plans/m7-navigation-v4-pins/' + INDEX
+    assert contact['fixed_source_models']['producer_root'] == values['producer_root']
+    assert contact['fixed_source_models']['pair_report_sha256'] == {str(p['training_seed']): p['report_sha256'] for p in values['pairs']}
+    assert contact['data']['old_manifest_sha256'] == s0c['outputs']['data-manifest.json']['sha256']
+    assert contact['prior_version']['protocol_sha256'] == sha((PINS/STUDY).read_bytes())
+    assert contact['prior_version']['collector_sha256'] == sha(blob(port_rev('T-e'), 'scripts/collect_male_navigation.py'))
+    current = study['current_reusable_source_sha256']
+    assert current['data/manifests/male-recovery-research-development-v1.json'] == sha((PINS/INDEX).read_bytes())
+    assert current['docs/plans/m7-recovery-learning-protocol.json'] == sha((PINS/driver.RECOVERY_LEARNING).read_bytes())
+    assert current['src/palimpsest/male_recovery_research.py'] == sha(blob(port_rev('T-e'), 'src/palimpsest/male_recovery_research.py'))
+    for name in (INDEX, CONTACT, STUDY):
+        original = (ROOT/item_of(name)['original_path']).read_bytes()
+        driver.check_pin_document(original, (PINS/name).read_bytes(), item_of(name), consumer=True)   # no PENDING left
+
+
+@pytest.mark.skipif(not all(p.exists() for p in S0D_RECORDS) or not TE_TREE.exists(), reason='S0d evidence host only')
+def test_tracked_s0e_copies_trace_to_the_live_merged_s0d_chain_on_the_evidence_host():
+    stages = driver.port_stages(driver.STAGES, driver.load_ports())
+    chain = driver.previous_chain([json.loads(p.read_bytes()) for p in S0D_RECORDS], 'S0e', stages,
+                                  protocol_sha256=driver.PROTOCOL_SHA256)
+    declarations = driver.load_declarations(PINS, driver.PROTOCOL_SHA256)
+    spec = stages['S0e']
+    documents = driver.load_pin_documents(spec, PINS, declarations, TE_TREE, chain)   # every S0e copy validated and traced
+    assert set(documents) == {CONTACT, INDEX, driver.RECOVERY_LEARNING, STUDY}
+
+
+# =================================================================== S0f: data-v2 copy filled from S0a-S0e and the T-h port
+
+DATA = driver.DATA_V2
+S0E_EVIDENCE = ROOT/'docs/reports/male-v4-s0e'
+S0E_RECORD = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e/control/collector-pin-record.json')
+TH_TREE = Path('/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-trees/port-t-h')
+S0E_ADVICE = [600, 485, 496, 600, 196, 600, 600, 243, 198, 600, 276, 186]
+
+
+def test_data_v2_fields_are_all_active_with_fill_sources_and_the_historical_root_is_the_t_h_port():
+    assert DATA not in PENDING['pending_fields'] and PENDING['activated'][DATA]
+    for f in item_of(DATA)['fields']:
+        assert f['class'] in CASCADES or f['class'] == 'count-map' or f.get('fill'), f['pointer']
+    root = next(f for f in item_of(DATA)['fields'] if f['pointer'] == '/source_binding/old_historical_reader/root')
+    assert root['class'] == 'worktree-path' and root['commit'] == SPEC['trees']['T-h']['port_commit']
+
+
+def test_port_python_inventory_reproduces_the_original_217cbee_pin_and_follows_the_t_h_port():
+    original = json.loads((ROOT/item_of(DATA)['original_path']).read_text())['source_binding']['old_historical_reader']
+    base = driver.git_python_inventory('217cbee8399dcb25045a079af012beecbbdae29e')
+    assert len(base) == original['all_tracked_project_python_inventory']['count'] == 70
+    assert driver.inventory_digest(base) == original['all_tracked_project_python_inventory']['canonical_map_sha256']
+    port = driver.git_python_inventory(SPEC['trees']['T-h']['port_commit'])
+    assert set(port) == set(base) and {k for k in port if port[k] != base[k]} == {'scripts/prepare_male_recovery_data.py'}
+    assert port['scripts/prepare_male_recovery_data.py'] == driver.PORT_READER_SHA
+    assert {k: port[k] for k in original['code']} == original['code']                 # the six code pins are untouched
+
+
+def test_tracked_data_v2_copy_holds_the_published_s0a_s0e_values_and_the_t_h_identity():
+    data = json.loads((PINS/DATA).read_bytes())
+    original = (ROOT/item_of(DATA)['original_path']).read_bytes()
+    driver.check_pin_document(original, (PINS/DATA).read_bytes(), item_of(DATA), consumer=True)   # no PENDING left
+    index = json.loads((S0E_EVIDENCE/'control/collection-index.json').read_text())
+    for name, binding in index['immutable_inputs'].items():
+        assert data['immutable_inputs'][name] == binding, name
+    published = S0E_EVIDENCE/'control/collection-index.json'
+    assert data['immutable_inputs']['published_collection_index']['sha256'] == sha(published.read_bytes())
+    s0c = json.loads((ROOT/'docs/reports/male-v4-s0c/pin-record.json').read_text())
+    assert data['immutable_inputs']['old_manifest'] == {'path': str(Path(s0c['output_root'])/'data-manifest.json'),
+                                                        'sha256': s0c['outputs']['data-manifest.json']['sha256'],
+                                                        'bytes': s0c['outputs']['data-manifest.json']['bytes']}
+    assert data['parent_study'] | {} and data['parent_study']['sha256'] == sha((PINS/CONTACT).read_bytes())
+    assert data['parent_study']['path'] == 'docs/plans/m7-navigation-v4-pins/' + CONTACT
+    h = data['source_binding']['old_historical_reader']
+    port = driver.git_python_inventory(SPEC['trees']['T-h']['port_commit'])
+    assert h['head'] == SPEC['trees']['T-h']['port_commit'] and h['root'] == str(TH_TREE)
+    assert h['all_tracked_project_python_inventory']['count'] == len(port) == 70
+    assert h['all_tracked_project_python_inventory']['canonical_map_sha256'] == driver.inventory_digest(port)
+    assert h['adapter_sha256'] == driver.PORT_READER_SHA
+    assert data['source_binding']['navigation_producer_commit'] == SPEC['trees']['T-e']['port_commit']
+    counts = data['counts']
+    assert counts['per_source']['advice'] == S0E_ADVICE and counts['new_advice_train_rows'] == sum(S0E_ADVICE) == 5080
+    assert counts['old_train_rows'] == 2117 and counts['recorded_dev_rows'] == 1228 and counts['held_out_rows'] == 0
+    assert counts['augmented_train_rows'] == 7197 and counts['combined_unique_sources'] == 26
+
+
+H = '/source_binding/old_historical_reader'
+
+
+def data_field(pointer): return next(f for f in item_of(DATA)['fields'] if f['pointer'] == pointer)
+
+
+@pytest.mark.parametrize('pointer, mutate', [
+    (f'{H}/all_tracked_project_python_inventory/count', lambda v: v + 1),
+    (f'{H}/all_tracked_project_python_inventory/canonical_map_sha256', lambda v: '0'*64),
+    (f'{H}/code', lambda v: {**v, 'src/palimpsest/records.py': '0'*64}),
+    (f'{H}/code', lambda v: {k: x for k, x in v.items() if k != 'src/palimpsest/records.py'}),
+    (f'{H}/head', lambda v: SPEC['trees']['T-h']['base']),
+])
+def test_s0f_port_identity_fields_refuse_a_wrong_count_map_source_map_or_head(pointer, mutate):
+    data = json.loads((PINS/DATA).read_bytes())
+    original = json.loads((ROOT/item_of(DATA)['original_path']).read_text())
+    item = {**item_of(DATA), 'fields': [data_field(pointer)]}
+    driver.check_document_values(DATA, data, original, item, {}, lambda other: None, PINS)      # the filled value passes
+    changed = copy.deepcopy(data); driver.pointer_set(changed, pointer, mutate(driver.pointer_get(data, pointer)))
+    with pytest.raises(driver.Refusal):
+        driver.check_document_values(DATA, changed, original, item, {}, lambda other: None, PINS)
+
+
+def test_s0f_historical_root_needs_the_worktree_argument_and_refuses_a_worktree_at_another_commit(tmp_path):
+    field = data_field(f'{H}/root')
+    original = json.loads((ROOT/item_of(DATA)['original_path']).read_text())
+    doc = {**json.loads((PINS/DATA).read_bytes())}
+    driver.pointer_set(doc, field['pointer'], field['placeholder'])
+    with pytest.raises(driver.Refusal, match='historical-worktree'):
+        driver.fill_values(DATA, {**item_of(DATA), 'fields': [field]}, doc, original, {}, pins_dir=PINS)
+    other = tmp_path/'other'; other.mkdir(); git(other, 'init', '-q'); (other/'x').write_text('x')
+    git(other, 'add', '-A'); git(other, 'commit', '-qm', 'not T-h')
+    with pytest.raises(driver.Refusal, match='is not a worktree at'):
+        driver.fill_values(DATA, {**item_of(DATA), 'fields': [field]}, doc, original, {}, pins_dir=PINS, historical_worktree=other)
+    driver.pointer_set(doc, field['pointer'], str(other))
+    with pytest.raises(driver.Refusal, match='is not a worktree at'):
+        driver.check_document_values(DATA, doc, original, {**item_of(DATA), 'fields': [field]}, {}, lambda other: None, PINS)
+
+
+@pytest.mark.skipif(not S0E_RECORD.exists() or not TH_TREE.exists(), reason='S0e evidence host only')
+def test_tracked_data_v2_copy_traces_to_the_live_s0e_chain_and_the_real_t_f_t_h_worktrees_on_the_evidence_host():
+    stages = driver.port_stages(driver.STAGES, driver.load_ports())
+    chain = driver.previous_chain([json.loads(S0E_RECORD.read_bytes())], 'S0f', stages, protocol_sha256=driver.PROTOCOL_SHA256)
+    declarations = driver.load_declarations(PINS, driver.PROTOCOL_SHA256)
+    tf = TF_TREE
+    documents = driver.load_pin_documents(stages['S0f'], PINS, declarations, tf, chain)   # data-v2, learning, contact-v2
+    assert set(documents) == {DATA, driver.RECOVERY_LEARNING, CONTACT}
+    # The historical identity the T-f port computes on the real T-h worktree equals the filled pins.
+    h = json.loads((PINS/DATA).read_bytes())['source_binding']['old_historical_reader']
+    worktree = {rel: sha((TH_TREE/rel).read_bytes()) for rel in driver.git_python_inventory(h['head'])}
+    assert worktree == driver.git_python_inventory(h['head']) and driver.inventory_digest(worktree) == \
+        h['all_tracked_project_python_inventory']['canonical_map_sha256']

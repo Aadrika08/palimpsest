@@ -1,0 +1,85 @@
+{
+ "declared_values": [],
+ "documents": {
+  "control/after.json": {
+   "bytes": 188917,
+   "sha256": "f78120883d1427ecea80e4c503cb8a8e6bc7ad88d33c73b03a83bee0265ea7a8"
+  },
+  "control/before.json": {
+   "bytes": 188917,
+   "sha256": "f78120883d1427ecea80e4c503cb8a8e6bc7ad88d33c73b03a83bee0265ea7a8"
+  },
+  "control/collection-index.json": {
+   "bytes": 4378,
+   "sha256": "3d0ea26c9b4a9293f39d7b54e1e90c52f55bfb07eefec36ea1c8fd7d7ff90972"
+  },
+  "control/collector-pin-record.json": {
+   "bytes": 131321,
+   "sha256": "2eb64603ba837ac495a75081e11add57fddbdf0b55a70d70b59f107840e84af0"
+  },
+  "control/collector-pin-record.json.port-pins.json": {
+   "bytes": 1142,
+   "sha256": "7ea15522a04a717aaad8dc65a226596dfd9cc54ce88cb2d830cd957cfb67d83c"
+  },
+  "control/enclosing.json": {
+   "bytes": 2324,
+   "sha256": "1780067f90773f66d1be0e5021dd03680a95e6adbb32fee6c8aeb38ff8482e69"
+  },
+  "control/exec-drain.json": {
+   "bytes": 1346,
+   "sha256": "a99a33cd4fbbfd9bae3265973eb7d100f96cf6882b279b82b9baf3a2922ad3f2"
+  },
+  "control/invocation.json": {
+   "bytes": 2617,
+   "sha256": "9deeaf788fc021a5310535077079924e5c2423a817a176c14fb63cb649d6d934"
+  },
+  "control/outer-after.json": {
+   "bytes": 188917,
+   "sha256": "f78120883d1427ecea80e4c503cb8a8e6bc7ad88d33c73b03a83bee0265ea7a8"
+  },
+  "control/outer-before.json": {
+   "bytes": 188917,
+   "sha256": "f78120883d1427ecea80e4c503cb8a8e6bc7ad88d33c73b03a83bee0265ea7a8"
+  },
+  "control/outer-launch/stderr.log": {
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "control/outer-launch/stdout.log": {
+   "bytes": 289,
+   "sha256": "e9a0ecfb9a29ed0d06685743432d8d7c04a0dd4251ee7a58d93a0ce582f17cad"
+  },
+  "control/outer-launch/supervisor.json": {
+   "bytes": 1518,
+   "sha256": "f83d09571032df04c592fe8df5fdaf3627dc913e478350b487c05ea63d40c926"
+  },
+  "control/outer-supervisor/stderr.log": {
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "control/outer-supervisor/stdout.log": {
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "control/outer-supervisor/supervisor.json": {
+   "bytes": 649,
+   "sha256": "4b909b6826869ee14a9fc9b852095bfddcf4de9a9bdec4843982d0225c3979ad"
+  },
+  "control/root-raw-audit.json": {
+   "bytes": 5306,
+   "sha256": "58d7696197ee0aaaa131fa4b0154c2b3f731bcba280c2c13ac473ae5e33608a4"
+  },
+  "control/terminal.json": {
+   "bytes": 2207,
+   "sha256": "7773bfb8756b3ce54ae7d0fc5acf40e6bcf738a2fc5bef72878402d7ba3495a3"
+  }
+ },
+ "producer_records": [
+  "2eb64603ba837ac495a75081e11add57fddbdf0b55a70d70b59f107840e84af0"
+ ],
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "qualification_claims": [],
+ "schema": "m7-navigation-v4-controller-record-1",
+ "stage": "S0e",
+ "stage_root": "/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-runs/S0e"
+}

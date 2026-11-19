@@ -10,6 +10,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 from types import SimpleNamespace
 import unittest
@@ -71,6 +72,11 @@ class EnduranceProcessTests(unittest.TestCase):
 
     def test_permission_race_accepts_only_same_identity_now_zombie(self):
         with self.deny_fds(self.zombie):
+            self.assert_zombie(self.reader.process(self.child.pid))
+
+    def test_permission_race_settles_when_exit_completes_shortly_after(self):
+        timer = threading.Timer(.15, self.child.stdin.close)
+        with self.deny_fds(timer.start):
             self.assert_zombie(self.reader.process(self.child.pid))
 
     def test_inaccessible_live_process_still_raises_with_identity_context(self):

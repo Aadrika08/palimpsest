@@ -1,0 +1,569 @@
+{
+ "data_manifest_sha256": "052a8dbd7428ffa064a74dfd71792ca6c0f2ae54ea9564ce68eb0a94d5220c72",
+ "files": [
+  {
+   "path": "protocol.json",
+   "sha256": "64b707d60c4e6c254713158b1f100dca65eff814485111ad467ee5c2077b864b",
+   "size_bytes": 70782
+  },
+  {
+   "path": "original-graph.json",
+   "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+   "size_bytes": 32864
+  },
+  {
+   "path": "original.pt",
+   "sha256": "3952ce6caf977ee9b145a6755dd017228fc0b4f4e3d5cd855e0d5544a77178ee",
+   "size_bytes": 303341
+  },
+  {
+   "path": "degree_rewired-graph.json",
+   "sha256": "4e9600823d24b54775ed27f1218806abce53c8dd75964dbcf8796d472ab41605",
+   "size_bytes": 32864
+  },
+  {
+   "path": "degree_rewired.pt",
+   "sha256": "46a5a5498907c7b620a77ee917dd3efb1582b358280b9d6f88bcc96a5a246d14",
+   "size_bytes": 303341
+  }
+ ],
+ "held_out_status": "locked_unopened",
+ "held_out_used_for_selection": false,
+ "models": {
+  "degree_rewired": {
+   "checkpoint": {
+    "path": "degree_rewired.pt",
+    "sha256": "46a5a5498907c7b620a77ee917dd3efb1582b358280b9d6f88bcc96a5a246d14",
+    "size_bytes": 303341
+   },
+   "graph_file": "degree_rewired-graph.json",
+   "history": [
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04721896328541666,
+      "ticks": 1228,
+      "velocity_mae": 0.26638520773536606,
+      "wrapped_heading_mae_radians": 0.22583209080105884
+     },
+     "epoch": 1,
+     "train_loss": 0.02885178828160606,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04621226668163697,
+      "ticks": 1228,
+      "velocity_mae": 0.22065281382601112,
+      "wrapped_heading_mae_radians": 0.2326093409271116
+     },
+     "epoch": 2,
+     "train_loss": 0.027214364040894615,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04563473133485558,
+      "ticks": 1228,
+      "velocity_mae": 0.2050431425097711,
+      "wrapped_heading_mae_radians": 0.23107651507039023
+     },
+     "epoch": 3,
+     "train_loss": 0.02689161074572596,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.044995184393193124,
+      "ticks": 1228,
+      "velocity_mae": 0.17755395931219045,
+      "wrapped_heading_mae_radians": 0.22328172531889004
+     },
+     "epoch": 4,
+     "train_loss": 0.026863725147666266,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04434571784074609,
+      "ticks": 1228,
+      "velocity_mae": 0.1610102684567728,
+      "wrapped_heading_mae_radians": 0.21690072983212114
+     },
+     "epoch": 5,
+     "train_loss": 0.026823017357315834,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.043734137296482484,
+      "ticks": 1228,
+      "velocity_mae": 0.14471619583496442,
+      "wrapped_heading_mae_radians": 0.20726416442021484
+     },
+     "epoch": 6,
+     "train_loss": 0.02657278450131135,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04343584131340251,
+      "ticks": 1228,
+      "velocity_mae": 0.1362950234925708,
+      "wrapped_heading_mae_radians": 0.20042763689247714
+     },
+     "epoch": 7,
+     "train_loss": 0.02621199595348194,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04327939125536319,
+      "ticks": 1228,
+      "velocity_mae": 0.1154518069195825,
+      "wrapped_heading_mae_radians": 0.18543146904982652
+     },
+     "epoch": 8,
+     "train_loss": 0.0258153658122683,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04285056056630728,
+      "ticks": 1228,
+      "velocity_mae": 0.07824995851672045,
+      "wrapped_heading_mae_radians": 0.177625342038633
+     },
+     "epoch": 9,
+     "train_loss": 0.02542208307578871,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.0426781239406682,
+      "ticks": 1228,
+      "velocity_mae": 0.08310103780477754,
+      "wrapped_heading_mae_radians": 0.17649967455781437
+     },
+     "epoch": 10,
+     "train_loss": 0.024936597655277854,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.042403494496298925,
+      "ticks": 1228,
+      "velocity_mae": 0.0735831766932329,
+      "wrapped_heading_mae_radians": 0.1748205222104485
+     },
+     "epoch": 11,
+     "train_loss": 0.024677945073055218,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04209241785521616,
+      "ticks": 1228,
+      "velocity_mae": 0.09023247644644995,
+      "wrapped_heading_mae_radians": 0.17406697127761786
+     },
+     "epoch": 12,
+     "train_loss": 0.02442013690873706,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04153374344692945,
+      "ticks": 1228,
+      "velocity_mae": 0.0877824235428428,
+      "wrapped_heading_mae_radians": 0.1720112224431035
+     },
+     "epoch": 13,
+     "train_loss": 0.024230804007516246,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04077922390221773,
+      "ticks": 1228,
+      "velocity_mae": 0.07289229644043826,
+      "wrapped_heading_mae_radians": 0.1645475393070169
+     },
+     "epoch": 14,
+     "train_loss": 0.023912672972307487,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.0402740249076573,
+      "ticks": 1228,
+      "velocity_mae": 0.1357220343347481,
+      "wrapped_heading_mae_radians": 0.1619364721912903
+     },
+     "epoch": 15,
+     "train_loss": 0.023234621682818004,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04139275217871712,
+      "ticks": 1228,
+      "velocity_mae": 0.06557661154176979,
+      "wrapped_heading_mae_radians": 0.19619275207239953
+     },
+     "epoch": 16,
+     "train_loss": 0.022879339793294907,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.037849110408598126,
+      "ticks": 1228,
+      "velocity_mae": 0.10361610561706344,
+      "wrapped_heading_mae_radians": 0.1590489257818713
+     },
+     "epoch": 17,
+     "train_loss": 0.02289744279662787,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.03625734781403495,
+      "ticks": 1228,
+      "velocity_mae": 0.13793576496625956,
+      "wrapped_heading_mae_radians": 0.16141467463795448
+     },
+     "epoch": 18,
+     "train_loss": 0.021233935076277043,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.03492877013520231,
+      "ticks": 1228,
+      "velocity_mae": 0.17395255212286784,
+      "wrapped_heading_mae_radians": 0.1741957988784154
+     },
+     "epoch": 19,
+     "train_loss": 0.01975141439620312,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.030216107296633023,
+      "ticks": 1228,
+      "velocity_mae": 0.13258203592284884,
+      "wrapped_heading_mae_radians": 0.13779227258425195
+     },
+     "epoch": 20,
+     "train_loss": 0.01816047618960118,
+     "train_ticks": 2117
+    }
+   ],
+   "selected_epoch": 20,
+   "status": "completed",
+   "trainable_names": [
+    "encoder.0.weight",
+    "encoder.0.bias",
+    "cell.alpha_logits",
+    "cell.bias",
+    "cell.readout_head.0.weight",
+    "cell.readout_head.0.bias",
+    "cell.readout_head.2.weight",
+    "cell.readout_head.2.bias",
+    "cell.readout_head.4.weight",
+    "cell.readout_head.4.bias"
+   ],
+   "trainable_parameters": 61872
+  },
+  "original": {
+   "checkpoint": {
+    "path": "original.pt",
+    "sha256": "3952ce6caf977ee9b145a6755dd017228fc0b4f4e3d5cd855e0d5544a77178ee",
+    "size_bytes": 303341
+   },
+   "graph_file": "original-graph.json",
+   "history": [
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.046646862396976456,
+      "ticks": 1228,
+      "velocity_mae": 0.2528536999264447,
+      "wrapped_heading_mae_radians": 0.21278724705357505
+     },
+     "epoch": 1,
+     "train_loss": 0.02929722837642729,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04610029598303649,
+      "ticks": 1228,
+      "velocity_mae": 0.22388969570495407,
+      "wrapped_heading_mae_radians": 0.2238819399175116
+     },
+     "epoch": 2,
+     "train_loss": 0.02758790077496431,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04575925725679056,
+      "ticks": 1228,
+      "velocity_mae": 0.19822142955146319,
+      "wrapped_heading_mae_radians": 0.238778175282556
+     },
+     "epoch": 3,
+     "train_loss": 0.02722078737753092,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.045693901321981166,
+      "ticks": 1228,
+      "velocity_mae": 0.23504372450738464,
+      "wrapped_heading_mae_radians": 0.20971383173807437
+     },
+     "epoch": 4,
+     "train_loss": 0.02664720536291909,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.044535800911704566,
+      "ticks": 1228,
+      "velocity_mae": 0.1727236431662345,
+      "wrapped_heading_mae_radians": 0.22314220210628324
+     },
+     "epoch": 5,
+     "train_loss": 0.026978918936774027,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.0437688066196364,
+      "ticks": 1228,
+      "velocity_mae": 0.1506289948469653,
+      "wrapped_heading_mae_radians": 0.21211980928815538
+     },
+     "epoch": 6,
+     "train_loss": 0.02628047628452263,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.042827068521650295,
+      "ticks": 1228,
+      "velocity_mae": 0.11849625481456422,
+      "wrapped_heading_mae_radians": 0.1793125374819052
+     },
+     "epoch": 7,
+     "train_loss": 0.02600189416995294,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04328570226116367,
+      "ticks": 1228,
+      "velocity_mae": 0.1603709575795972,
+      "wrapped_heading_mae_radians": 0.19713150867615928
+     },
+     "epoch": 8,
+     "train_loss": 0.02517248816123029,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.042180851101875305,
+      "ticks": 1228,
+      "velocity_mae": 0.10877615800703776,
+      "wrapped_heading_mae_radians": 0.1862776357110238
+     },
+     "epoch": 9,
+     "train_loss": 0.024522805416645956,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.041534887414413475,
+      "ticks": 1228,
+      "velocity_mae": 0.05028036935709975,
+      "wrapped_heading_mae_radians": 0.17162178732236355
+     },
+     "epoch": 10,
+     "train_loss": 0.0238579693102983,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.04134933060757112,
+      "ticks": 1228,
+      "velocity_mae": 0.06460807834075406,
+      "wrapped_heading_mae_radians": 0.17962726123072814
+     },
+     "epoch": 11,
+     "train_loss": 0.02320822435670942,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.0411775535646013,
+      "ticks": 1228,
+      "velocity_mae": 0.08181651290930832,
+      "wrapped_heading_mae_radians": 0.1973435206502579
+     },
+     "epoch": 12,
+     "train_loss": 0.0221636341211646,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.038779258728027344,
+      "ticks": 1228,
+      "velocity_mae": 0.042953768799669965,
+      "wrapped_heading_mae_radians": 0.17793207161783783
+     },
+     "epoch": 13,
+     "train_loss": 0.021526347382991,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.03805288992797901,
+      "ticks": 1228,
+      "velocity_mae": 0.06418619384983075,
+      "wrapped_heading_mae_radians": 0.2521128410819299
+     },
+     "epoch": 14,
+     "train_loss": 0.020787204049587477,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.033089845984300495,
+      "ticks": 1228,
+      "velocity_mae": 0.03402618131924918,
+      "wrapped_heading_mae_radians": 0.2176319010774165
+     },
+     "epoch": 15,
+     "train_loss": 0.01826627487048373,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.02962370051817319,
+      "ticks": 1228,
+      "velocity_mae": 0.040360304256992156,
+      "wrapped_heading_mae_radians": 0.14042418251111374
+     },
+     "epoch": 16,
+     "train_loss": 0.01663637052857206,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.035917703923845135,
+      "ticks": 1228,
+      "velocity_mae": 0.03523715748072447,
+      "wrapped_heading_mae_radians": 0.2982704861738783
+     },
+     "epoch": 17,
+     "train_loss": 0.016127310499696727,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.03968302488132874,
+      "ticks": 1228,
+      "velocity_mae": 0.16059173279554137,
+      "wrapped_heading_mae_radians": 0.31519191835912896
+     },
+     "epoch": 18,
+     "train_loss": 0.014716467628740284,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.09378327412306292,
+      "ticks": 1228,
+      "velocity_mae": 0.05395339657507036,
+      "wrapped_heading_mae_radians": 0.5705455799832795
+     },
+     "epoch": 19,
+     "train_loss": 0.013646597464128548,
+     "train_ticks": 2117
+    },
+    {
+     "dev": {
+      "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+      "loss": 0.10836737355405422,
+      "ticks": 1228,
+      "velocity_mae": 0.051904419394580084,
+      "wrapped_heading_mae_radians": 0.6187495707688968
+     },
+     "epoch": 20,
+     "train_loss": 0.015045332230089067,
+     "train_ticks": 2117
+    }
+   ],
+   "selected_epoch": 16,
+   "status": "completed",
+   "trainable_names": [
+    "encoder.0.weight",
+    "encoder.0.bias",
+    "cell.alpha_logits",
+    "cell.bias",
+    "cell.readout_head.0.weight",
+    "cell.readout_head.0.bias",
+    "cell.readout_head.2.weight",
+    "cell.readout_head.2.bias",
+    "cell.readout_head.4.weight",
+    "cell.readout_head.4.bias"
+   ],
+   "trainable_parameters": 61872
+  }
+ },
+ "protocol_sha256": "64b707d60c4e6c254713158b1f100dca65eff814485111ad467ee5c2077b864b",
+ "qualification_claims": [],
+ "status": "completed-research-training",
+ "training_attempted": true,
+ "training_completed": true
+}
