@@ -18,16 +18,17 @@ all in `CUR`:
 
 | Key | Module | Notes |
 | --- | --- | --- |
-| `S2-binding` | `palimpsest.male_navigation_research_v4` (`src/palimpsest/male_navigation_research_v4.py`) | `NavigationBindingV4`; lazy male_policy/male_model imports, no Torch at import |
+| `S2-binding` | `palimpsest.male_navigation_research_v4` (`src/palimpsest/male_navigation_research_v4.py`) | class `Binding` (alias `NavigationBindingV4` in `engine.py`); module-level `from . import artifacts, male_model, male_policy`, Torch only inside functions |
 | `S2-owner-worker` | `evaluate_male_navigation_v4` | the S2 owner worker is a mode of the evaluator module; import-only here |
 | `S2` (re-probe) | `evaluate_male_navigation_v4` | the single EGL-context carrier, as in P and P2 |
 
-All other entries are covered by P and P2 evidence. `S1` is unchanged since P2 (pre-launch check 3).
+All other entries are covered by P and P2 evidence. S1 has since run (173.589 CPU-s charged); its two source files are unchanged since P2 (pre-launch check 2).
 
 ## Budget
 
-P measured about 4.1 CPU-s per entry including one EGL context (about 3.2 CPU-s). Three entries are expected
-near 12 CPU-s and well under 60 s wall against `RuntimeMaxSec` 120 and `TimeoutStopSec` 5 at k = 1, giving the
+P2 charged 29.918 CPU-s for six entries (about 5 each, including one EGL context of about 3.2). The S2 entries pull in
+Engine, replay, snapshots, Torch, MuJoCo and matplotlib, so three entries are expected at about 15 to 20 CPU-s and under
+90 s wall (3 x the 30 s per-entry timeout) against `RuntimeMaxSec` 120 and `TimeoutStopSec` 5 at k = 1, giving the
 **125 CPU-s worst case** (the amendment's P row). Navigation lane charged before P3: 808.743 CPU-s of 14,400.
 S3's held-out threshold needs spend through S2 of at most 5,643.168 CPU-s: 808.743 + 125 (P3 worst case) + 4,435
 (S2 worst case) = 5,368.743, under it.
@@ -75,6 +76,7 @@ opened by an import (the audit hook sees Python-level `open` calls only).
     "manifest_sha256": "<sha256 of this file>",
     "port_pins_sha256": "278219f4b364ae53d4942c2020cf69dd100cad376c5a320b0e4a1c88633dbb69",
     "current_tree_head": "<CUR HEAD at launch>",
+    "a2_erratum_ack": "<id of the decisions-2026-11-08.md row acknowledging the A2 wording erratum>",
     "entries": ["S2-binding", "S2-owner-worker", "S2"],
     "cpu_quota_k": 1, "scientific_attempt": false,
     "granted_by": "<owner>", "granted_at": "<date>"}
@@ -196,7 +198,8 @@ opened by an import (the audit hook sees Python-level `open` calls only).
 
 ## Pre-launch checks (by hand; `load_go` checks only lane, stage and non-empty fields)
 
-1. Protocol, Amendment 2 file, this manifest and the locator (step 3) hash to the GO values; `CUR` HEAD equals
+1. Protocol, Amendment 2 file, this manifest and the locator (step 3) hash to the GO values; the erratum
+   acknowledgement row named by `a2_erratum_ack` exists in `decisions-2026-11-08.md` (`load_go` does not enforce it); `CUR` HEAD equals
    `current_tree_head`; `git status --porcelain` in `CUR` is empty.
 2. `git diff <P2-time CUR head>..HEAD -- scripts/train_male_navigation_v4.py scripts/derive_male_navigation_v4_s1_data.py`
    is empty or reviewed (S1 is not re-probed here).
@@ -205,12 +208,14 @@ opened by an import (the audit hook sees Python-level `open` calls only).
 
 ## Post-run gate
 
-- **Unit:** receipt `complete`, `drained`, returncode 0, no survivors; ledger `charged` P3 row; wall under 60 s.
+- **Unit:** receipt `complete`, `drained`, returncode 0, no survivors; ledger `charged` P3 row; wall under 90 s.
 - **Report (`receipt/stdout.log`, a single JSON):** `status: passed`, exactly 3 probes, each `passed`, with no
   unresolved import, no blocked open, `forbidden` none and CUDA uninitialized.
-- **Entry facts:** the binding's closure imports nothing outside `CUR` and the interpreter prefixes; exactly one
-  non-null `runtime.egl`, from `S2`; Torch not imported by the binding at import time.
-- **Cost:** charged CPU recorded against the ~12 CPU-s estimate.
+- **Entry facts (read by hand from the report):** the `modules` paths of each entry lie under `CUR` or the
+  interpreter prefixes; exactly one non-null `runtime.egl`, from `S2`; CUDA not initialized. The probe imports
+  function-level targets during its scan, so Torch presence in the report does not show import-time behaviour;
+  by source review the binding's own module-level code does not import Torch.
+- **Cost:** charged CPU recorded against the 15 to 20 CPU-s estimate.
 
 ## On failure
 
@@ -226,7 +231,7 @@ mismatches between the approved A2 text and the implementation. The A2 file sha 
    built: the binding reads S1 `report.json` and `publication.json` directly against hard-coded shas (A2's
    second option). P3 therefore covers three entries, not four.
 2. "checkpoint `graph_sha256` and `ordered_ids_sha256` equal the S1 report values": the S1 report has neither
-   field. They are re-derived from the pinned graph and enforced by `_load_checked_policy` (NOTES.md).
+   field. They are re-derived from the pinned graph and enforced by `_load_checked_policy` (`docs/reports/male-v4-s2/NOTES.md`).
 3. "success_admitted true" names the `success_admitted()` predicate, not a report field.
 4. "reduce and check_protocol imported" is satisfied by same-module definitions.
 5. Review change applied in code (`e72ca7f`): S2's `--s1-output` must be the binding's hard-coded S1 tree, and
