@@ -432,3 +432,29 @@ def test_p3_entries_cover_the_binding_and_the_owner_worker_and_are_not_run(tmp_p
     assert calls[0][2] == 'palimpsest.male_navigation_research_v4'
     child = probe.ENTRYPOINTS['S2-binding']
     assert (ROOT / child['file']).is_file()                                                                 # the real file exists
+
+
+def test_stage_p3_manifest_probes_the_amendment_2_entries_under_a_fresh_p3_unit():
+    text = (ROOT/'docs/reports/male-v4-stage-p3/MANIFEST.md').read_text()
+    block = re.search(r'<!-- stage-p3-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = block.replace('\\\n', ' ').split()
+    unit, command = argv[:argv.index('--')], argv[argv.index('--') + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    assert (flag('--lane', unit), flag('--stage', unit), flag('--runtime-max-sec', unit), flag('--worst-case-cpu', unit),
+            flag('--cpu-quota-k', unit)) == ('navigation', 'P3', '120', '125', '1')
+    stages = [command[i + 1].partition('=') for i, w in enumerate(command) if w == '--stage']
+    assert [s for s, _, _ in stages] == ['S2-binding', 'S2-owner-worker', 'S2']
+    assert set(s for s, _, _ in stages) == set(probe.P3_ENTRIES) | set(probe.P3_REPROBE)
+    cur = '/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite'
+    assert all(w == cur for _, _, w in stages)
+    assert '--egl' in command and flag('--egl-stage', command) == 'S2'
+    forbid = [command[i + 1] for i, w in enumerate(command) if w == '--forbid']
+    e = '/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence'
+    p2 = re.search(r'<!-- stage-p2-command -->\n```sh\n(.*?)\n```', (ROOT/'docs/reports/male-v4-stage-p2/MANIFEST.md').read_text(), re.S).group(1).replace('\\\n', ' ').split()
+    assert {p2[i + 1] for i, w in enumerate(p2) if w == '--forbid'} <= set(forbid)          # P2's list is kept, never shrunk
+    assert f'{e}/male-v4-data' in forbid and f'{e}/male-v4-stage-p2' in forbid
+    for path in (flag('--receipt-dir', unit), flag('--go-record', unit), flag('--port-pins', command)):
+        assert Path(path).parent == Path(f'{e}/male-v4-stage-p3') or Path(path).parent.parent == Path(f'{e}/male-v4-stage-p3')
+        assert not any(Path(path) == Path(r) or Path(r) in Path(path).parents for r in forbid), path
+    assert '278219f4b364ae53d4942c2020cf69dd100cad376c5a320b0e4a1c88633dbb69' in text
+    assert 'c4cd3a506b0b468b0d6d4d359dff7ecbd3b3bf0c25c6fe9360207282249f8d6f' in text and 'scientific_attempt": false' in text
