@@ -1,0 +1,158 @@
+{
+  "schema": "m7-navigation-v4-amendment-2-1",
+  "amends": {
+    "protocol": "docs/plans/m7-navigation-v4-regenerated-matched-budget-protocol.json",
+    "base_protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477"
+  },
+  "note": "Held in a separate pinned file so the base protocol bytes (cd4eb130…) that S0a–S1 evidence and S1 admission bind stay immutable.",
+  "amendment_2": {
+    "id": "M7-NAV-V4-REGEN-MATCHED-BUDGET-1/amendment-2",
+    "date": "2026-11-19",
+    "status": "draft; requires independent review and explicit owner approval A2; append-only",
+    "trigger": "S0a-S1 complete; S2 blocked: Engine admits research bindings by exact type (src/palimpsest/engine.py ~438-454) and NavigationBinding hard-codes the v2 index/protocol/row counts; protocol says S2 must not route through the v2 index; engine.py and a v4 binding module were not in implementation_files. See docs/reports/male-v4-s2/NOTES.md.",
+    "implementation_files_added": {
+      "planned_create": [
+        "src/palimpsest/male_navigation_research_v4.py (NavigationBindingV4)",
+        "scripts/evaluate_male_navigation_v4.py native owner worker (port of v2 owner worker with v4 constants)",
+        "v4 S2 index builder/publisher (six-checkpoint index from S1 evidence; S2 result publication with source-pin recheck last)",
+        "tests for the binding, the allow-list regression, the owner worker and the index builder"
+      ],
+      "planned_modify": [
+        "src/palimpsest/engine.py: ONE allow-list hunk (shared source)"
+      ],
+      "planned_preserve": [
+        "scripts/evaluate_male_navigation_v2.py and its tests",
+        "src/palimpsest/male_navigation_research.py (v2 binding)",
+        "all v2/v3 documents and evidence"
+      ]
+    },
+    "navigation_binding_v4": {
+      "module": "src/palimpsest/male_navigation_research_v4.py",
+      "class": "Binding (exported; referred to as NavigationBindingV4)",
+      "index_content": "six terminal checkpoints (seeds 10,11,12 x arms old-corpus, augmented): sha256 of S1 report.json, publication.json and each seed-N-arm.pt; v4 protocol sha256; S0z corpus-pin sha256; train_rows from the manifest (2117 old / 7197 augmented); PAIR_SEEDS (10,11,12)",
+      "admission": "re-verifies the S1 publication exactly as train_male_navigation_v4.success_admitted does: report plus matching publication.json receipt including protocol_sha256 == base sha (cd4eb130...), status completed-navigation-v4-training, success_admitted true, no failure file, every checkpoint unchanged; and, per checkpoint: payload sha256 equals the pinned value, and the checkpoint's protocol_sha256 equals the digest of S1's run_protocol, its graph_sha256 and ordered_ids_sha256 equal the S1 report values. All before any checkpoint loads.",
+      "checkpoint_format": "exactly the S1 five-key format: format, protocol_sha256, graph_sha256, ordered_ids_sha256, state_dict; anything else refused",
+      "surface": "resolve / load_policy / provenance contract identical to v2 Binding; CPU, reproduction, checker only",
+      "refuses": [
+        "v2 or v3 index",
+        "tampered checkpoint/report/publication",
+        "wrong seed or arm",
+        "non-five-key checkpoint",
+        "missing success_admitted",
+        "non-CPU / non-reproduction / non-checker arguments"
+      ],
+      "arguments": "Binding takes ONLY (training_seed, arm). No manifest path, manifest sha, index path or output-directory argument exists (blocks attacker redirect).",
+      "hard_coded_constants": "the v4 index path+sha256, or equivalently the S1 output directory plus the S1 report.json and publication.json sha256 values (report 6ca8af5f..., publication fb6f1f38...); PAIR_SEEDS; base protocol sha; amendment sha is checked by the S2 files, not trusted from arguments",
+      "publication_order": "Either the index is published and its sha committed into the binding module before the binding commit, or the binding reads S1 report.json and publication.json directly and compares them to the hard-coded shas. The binding commit never precedes the evidence it pins.",
+      "runtime_identity": "python, numpy and torch_distribution must equal the pinned runtime, and torch build and uninitialized CUDA are checked before policy construction, as v2 does (male_navigation_research.py resolve/load_policy, about lines 255-285).",
+      "identity_payload": "Engine passes the dict that male_policy.validate_identity accepts: exactly {controller 'male-original', variant 'original', profile male_policy.PROFILE} plus the eleven IDENTITY_HASHES (model_manifest_sha256, training_report_sha256, protocol_sha256, checkpoint_sha256, graph_sha256, topology_sha256, ordered_ids_sha256, feature_protocol_sha256, cell_source_sha256, source_graph_sha256, graph_manifest_sha256). The v4 binding builds it from S1 evidence: model_manifest_sha256 = the v4 index sha (or report sha if no index file); training_report_sha256 = S1 report sha; protocol_sha256, graph_sha256, ordered_ids_sha256 = the checkpoint's verified values; checkpoint_sha256 = payload sha; topology_sha256, feature_protocol_sha256, cell/source-graph/graph-manifest shas = the same graph/male_model/asset-derived values v2 provenance carries. It is NOT v2's _admit payload.",
+      "policy_load": "After identity is validated, the 5-key checkpoint is loaded through male_policy._load_checked_policy(graph, payload, provenance, cell_path, device='cpu', seed), whose provenance must hold protocol_sha256, graph_sha256 and ordered_ids_sha256 equal to the checkpoint's; no new tensor-admission code.",
+      "open_review_item": "Exact derivation of topology_sha256 and feature_protocol_sha256 for a v4 checkpoint must be fixed in the binding review against male_model.digest and the S1 report fields; if S1 evidence lacks a field, the binding derives it from the pinned graph and refuses otherwise."
+    },
+    "engine_allow_list_hunk": {
+      "file": "src/palimpsest/engine.py",
+      "site": "Engine.open research_binding admission chain, after the NavigationBinding branch (about lines 438-454)",
+      "hunk": [
+        "if not admitted:",
+        "    from .male_navigation_research_v4 import Binding as NavigationBindingV4",
+        "    admitted = type(research_binding) is NavigationBindingV4",
+        "    if admitted and (restore_snapshot is not None or replace_controller or memory_u is not None):",
+        "        raise ValueError('Navigation research permits only fresh roots')"
+      ],
+      "note": "One new allow-list entry; the fresh-roots guard is repeated for the new type as part of the same hunk.",
+      "invariants": [
+        "exact-type check (type(...) is), never isinstance",
+        "the four existing types (Binding, RecoveryBinding, RecoveryHeldoutBinding, NavigationBinding) remain admitted unchanged",
+        "subclasses and unknown types remain refused with the same ValueError('unsupported trusted research binding')",
+        "controller in MALE_CONTROLLERS and memory_case is None checks untouched",
+        "resolve/load_policy/provenance call contract untouched",
+        "fresh roots only: restore_snapshot, replace_controller, memory_u refused",
+        "lazy import; no other stage's import path changes",
+        "no other engine behaviour changes; diff-restricted review requires the diff to equal exactly this hunk"
+      ]
+    },
+    "owner_worker": {
+      "script": "scripts/evaluate_male_navigation_v4.py",
+      "port_of": "scripts/evaluate_male_navigation_v2.py owner worker (verify + worker)",
+      "changes_only": [
+        "NavigationBindingV4 instead of v2 Binding",
+        "scene IDs 3160-3163",
+        "case table seed x arm x scene (24 owners)",
+        "v4 pins and protocol sha"
+      ],
+      "owner_process": "fresh spawned one-thread CPU process: PYTHONPATH=src, MUJOCO_GL=egl, OMP_NUM_THREADS=1, CUDA_VISIBLE_DEVICES=''; Torch intra/inter-op threads 1; MuJoCo 3.3.6 with get_mjcb_control() None; Engine.open(controller='male-original', device='cpu', scenario='reproduction', texture='checker', max_bytes 144 MiB, research_binding, expected_policy_identity)",
+      "fresh_boundary_and_contacts": "tick 0, no teacher, zero velocity/control/time, unmasked eyes, max_steps 600, n_obstacles 20, end_on_collision false; compiled-ownership vs ContactProbe comparison before first action; probe installed after scientific-initial checks",
+      "episode": "no teacher access; exactly one policy prediction per interval; at most 600 intervals; outcome read from the natural boundary only",
+      "held_out": "unreachable: no held-out ID accepted; S3 needs a separate manifest and explicit GO",
+      "no_retry_or_replacement": "No retry or replacement of any owner; the first owner failure is retained and later owners are not_started.",
+      "shared_gates": "The worker imports the evaluator's own reduce and check_protocol from scripts/evaluate_male_navigation_v4.py; it defines no separate thresholds, scene lists or case tables."
+    },
+    "tests_before_execution_freeze_additions": [
+      "Engine allow-list regression: all four existing types still admitted; a subclass of any admitted type and an unknown type still refused; the EXISTING NavigationBinding fresh-roots guard still fires and the new guard fires identically; v2 evaluator tests unchanged and passing.",
+      "Diff-restricted review: engine.py diff equals exactly the declared hunk.",
+      "NavigationBindingV4 refuses v2/v3 indexes, tampered checkpoint/report/publication bytes, wrong seed or arm, non-five-key checkpoints, missing success_admitted and non-CPU/reproduction/checker arguments.",
+      "Owner worker equivalence against v2's worker on fixtures with v4 constants as the only difference; held-out route unreachable.",
+      "Stage P3 covers the new binding module, owner worker, evaluator and index builder (gating item before S2).",
+      "Binding constants: constructor takes only (training_seed, arm); a test proves no path/sha argument can redirect it, that the binding refuses an index or report whose sha differs from the hard-coded value, and that a publication.json receipt with a protocol_sha256 other than cd4eb130... is refused.",
+      "Owner worker imports the evaluator's reduce and check_protocol; no duplicate thresholds exist (source scan).",
+      "S2 files check both the base sha and the amendment-2 file sha."
+    ],
+    "s2_stage_definition": {
+      "changed": false,
+      "owners": 24,
+      "per_owner_seconds": 180,
+      "runner_deadline_seconds": 1800,
+      "per_owner_recording_bytes": 150994944,
+      "per_owner_recording_plus_snapshot_bytes": 167772160,
+      "stage_bytes": 4294967296,
+      "max_runs": 24,
+      "max_snapshots": 1,
+      "kill_target_seconds": 4430,
+      "timeout_stop_seconds": 5,
+      "wall_clock_kill": "operational failure, never a non-goal"
+    },
+    "cost_table_check": {
+      "s2_worst_case_cpu": 4435,
+      "worst_case_total": 23108,
+      "worst_case_through_S2": 14353,
+      "new_units_added": 0,
+      "verified_unchanged": true,
+      "navigation_lane_charged_before_s2": 808.743,
+      "held_out_admission_ceiling_cpu_seconds": 5643.168
+    },
+    "approval": "engine.py is shared source imported by every stage; the change and NavigationBindingV4's admission of the S1 publication are new trust boundaries needing independent review and explicit owner approval before any S2 GO. Approval of A2 is not an S2 GO.",
+    "decision_A2": {
+      "question": "Approve the one-line engine.py allow-list entry and NavigationBindingV4 with the stated invariants, under independent review?",
+      "recommended_default": "approve",
+      "scope": "Approval covers only the source scope and the amendment-2 file sha. It is NOT a stage GO; S2 needs its own owner record naming both shas.",
+      "alternative": "decline; S2 cannot run and v4 is blocked at S2"
+    },
+    "unchanged": [
+      "thresholds",
+      "matched clock",
+      "scene IDs",
+      "lane cap",
+      "v3",
+      "owner records",
+      "Amendment 1 and erratum 1"
+    ],
+    "revision": 2,
+    "protocol_binding": {
+      "base_protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+      "amendment_2_file": "docs/plans/m7-navigation-v4-amendment-2.json (its sha256 is the amendment sha)",
+      "go_rule": "S2 and S3 owner GOs name BOTH the base sha (cd4eb130...) and the amendment-2 file sha.",
+      "s1_unchanged": "S1 admission, the S1 receipt and the checkpoint protocol_sha256 (digest of S1's run_protocol dict, which embeds cd4eb130...) keep the base sha; none is re-derived from the amendment.",
+      "new_s2_files": "every new S2 file adds an amendment-sha check in addition to the base-sha check."
+    },
+    "stage_p3": {
+      "gating": true,
+      "covers": [
+        "src/palimpsest/male_navigation_research_v4.py",
+        "the owner worker (scripts/evaluate_male_navigation_v4.py)",
+        "the evaluator",
+        "the v4 S2 index builder"
+      ],
+      "rule": "Stage P3 import-closure probe must pass on all four before any S2 manifest is reviewed; replaces the earlier 'Stage P covers' wording."
+    }
+  }
+}
