@@ -831,7 +831,7 @@ S1_WORKER = ROOT/'scripts/derive_male_navigation_v4_s1_data.py'
 def port_tf(tmp_path_factory):
     """Read-only extract of the T-f port branch as a clean tree."""
     root = tmp_path_factory.mktemp('t-f')/'worktree'; root.mkdir()
-    archive = subprocess.run(['git', 'archive', PORTS['trees']['T-f']['branch'], 'src', 'scripts'], cwd=ROOT,
+    archive = subprocess.run(['git', 'archive', port_rev('T-f'), 'src', 'scripts'], cwd=ROOT,
                              capture_output=True, check=True).stdout
     with tarfile.open(fileobj=io.BytesIO(archive)) as tar: tar.extractall(root, filter='data')
     git(root, 'init', '-q'); git(root, 'add', '-A'); git(root, 'commit', '-qm', 'T-f port extract')
