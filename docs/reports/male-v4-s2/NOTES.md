@@ -81,3 +81,39 @@ are new trust boundaries, each needing independent review before an owner GO: th
 allow-list entry and `NavigationBindingV4`'s admission of the S1 publication. The v4 Stage P probe
 covers `evaluate_male_navigation_v4.py` but not the new binding module, so P coverage of the binding
 is a precondition for S2.
+
+## Amendment 2 implementation notes (branch `impl/male-v4-a2`; no stage run)
+
+**Resolved open item (identity payload and derivations).** `male_policy.validate_identity` accepts exactly
+`{controller: 'male-original', variant: 'original', profile: male_policy.PROFILE, <the 11 IDENTITY_HASHES>}`,
+all lowercase 64-hex. `NavigationBindingV4` builds it from evidence S1 already published, with no new
+derivation of anything S1 did not write:
+
+| field | source |
+|---|---|
+| `checkpoint_sha256` | hard-coded per `(seed, arm)`; equals `checkpoints.sha256` (a test compares all six) |
+| `protocol_sha256` | digest of S1's `run_protocol` (= `report.run_protocol_sha256`, sha of `protocol.json` `3769df74...`), the lineage each checkpoint carries; the base sha `cd4eb130...` is checked separately against the receipt and report |
+| `model_manifest_sha256`, `training_report_sha256` | S1 `report.json` sha `6ca8af5f...` (there is no separate model index file; the report is both) |
+| `graph_sha256` | `male_model.digest(graph)` of the pinned reduced graph (what S1 wrote into every checkpoint) |
+| `ordered_ids_sha256`, `topology_sha256`, `source_graph_sha256`, `graph_manifest_sha256` | fields of the loaded pinned graph (`source-graph.json`, input shas pinned from S1's `protocol.json` `model_inputs`) |
+| `feature_protocol_sha256` | `male_model.digest(male_model.FEATURE_PROTOCOL)` |
+| `cell_source_sha256` | `male_model.CELL_SHA256` (the pinned upstream cell) |
+
+The S1 report does not list `graph_sha256` or `ordered_ids_sha256`; both are re-derived from the pinned graph and
+then enforced by `male_policy._load_checked_policy`, which requires the five-key checkpoint
+(`format, protocol_sha256, graph_sha256, ordered_ids_sha256, state_dict`) and lineage equal to the provenance.
+Checkpoint internals are only readable after `torch.load(weights_only=True)`, so `resolve` verifies payload sha256 and
+archive safety (`_check_archive`) and `load_policy` enforces the five keys and lineage; nothing is unpickled before the
+sha matches.
+
+**No separate index builder.** A2 allows either a published index or a binding that reads S1 `report.json` and
+`publication.json` directly against hard-coded shas; the second is implemented (constants: report `6ca8af5f...`,
+publication `fb6f1f38...`, six checkpoint shas, S1 output root). `Binding(training_seed, arm)` takes nothing else.
+Stage P3 therefore probes the binding module and the evaluator (also entry `S2-owner-worker`): `P3_ENTRIES` in the
+probe. P3 has not been run.
+
+**Owner worker** (`scripts/evaluate_male_navigation_v4.py`): port of v2's worker and `verify` with the A2 changes only.
+The S2 GO must name the base sha and `amendment_2_sha256` (`c4cd3a50...`); the file sha is also pinned in every
+owner's source pins. `native_owner` stays refused when called directly; owners run only through `run_development`
+(GO, S1 admission, `inside_research_stage`). Output, S1 output, assets and corpus pin are absolute paths; the output
+must not overlap S1 evidence, assets or the tree. Report publication rechecks source pins last.

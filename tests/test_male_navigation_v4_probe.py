@@ -317,7 +317,7 @@ def test_stage_p_manifest_covers_every_entry_point_once_under_a_charged_navigati
     command = argv[argv.index('--') + 1:]
     assert command[0] == '/home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python' and flag('--python', command) == command[0]
     stages = [command[i + 1].partition('=') for i, w in enumerate(command) if w == '--stage']
-    p_keys = sorted(set(probe.ENTRYPOINTS) - set(probe.P2_ENTRIES))      # stage P predates the P2 entries
+    p_keys = sorted(set(probe.ENTRYPOINTS) - set(probe.P2_ENTRIES) - set(probe.P3_ENTRIES))   # stage P predates the P2/P3 entries
     assert sorted(s for s, _, _ in stages) == p_keys and len(stages) == len(p_keys) == 21
     assert '--egl' in command and Path(flag('--port-pins', command)).is_absolute()
     roots = {w for _, _, w in stages}
@@ -413,3 +413,22 @@ def test_stage_p2_manifest_probes_exactly_the_new_and_changed_entries_under_a_fr
     for phrase in ('scientific_attempt": false', 'Decision: split', 'declared_fields_sha256', 'current_tree_head', 'Post-run gate',
                    'On failure', 'mesa 1:26.2.5-1', '85.274', 'only the T-f port on `sys.path`', '88c1a0f6f53274fe663f4cdad3be5ae2743af558'):
         assert phrase in text, phrase
+
+
+def test_p3_entries_cover_the_binding_and_the_owner_worker_and_are_not_run(tmp_path, monkeypatch):
+    table = probe.ENTRYPOINTS
+    assert probe.P3_ENTRIES == ('S2-binding', 'S2-owner-worker') and probe.P3_REPROBE == ('S2',)
+    assert table['S2-binding']['module'] == 'palimpsest.male_navigation_research_v4'
+    assert table['S2-owner-worker']['module'] == table['S2']['module'] == 'evaluate_male_navigation_v4'
+    assert all(table[k]['commit'] is None and 'port_tree' not in table[k] for k in probe.P3_ENTRIES)
+    assert not set(probe.P3_ENTRIES) & set(probe.P2_ENTRIES)
+    calls = []
+    monkeypatch.setattr(probe, 'probe_entry', lambda *a, **k: calls.append(a) or {'status': 'passed'})
+    root = tmp_path / 'wt'; root.mkdir()
+    assert probe.probe_stage(sys.executable, 'S2-binding', root)['status'] == 'refused' and calls == []     # file absent
+    (root / 'src/palimpsest').mkdir(parents=True)
+    (root / 'src/palimpsest/male_navigation_research_v4.py').write_text('')
+    assert probe.probe_stage(sys.executable, 'S2-binding', root)['status'] == 'passed'
+    assert calls[0][2] == 'palimpsest.male_navigation_research_v4'
+    child = probe.ENTRYPOINTS['S2-binding']
+    assert (ROOT / child['file']).is_file()                                                                 # the real file exists

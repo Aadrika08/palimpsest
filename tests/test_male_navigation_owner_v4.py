@@ -163,3 +163,14 @@ class Parent(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class Imports(unittest.TestCase):
+    def test_binding_and_evaluator_import_without_torch_mujoco_or_numpy(self):
+        import subprocess
+        import sys
+        code = ("import sys; sys.path[:0]=[%r, %r]\n"
+                "import palimpsest.male_navigation_research_v4, evaluate_male_navigation_v4\n"
+                "print([m for m in ('torch', 'mujoco', 'numpy') if m in sys.modules])") % (str(ROOT / 'src'), str(ROOT / 'scripts'))
+        out = subprocess.run([sys.executable, '-I', '-c', code], capture_output=True, text=True, check=True, cwd=ROOT)
+        self.assertEqual(out.stdout.strip(), '[]')
