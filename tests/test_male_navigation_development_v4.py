@@ -346,13 +346,21 @@ class Cli(Temp):
         output = self.root / 'eval'
         go = self.write('go.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S2',
                                     'protocol_sha256': trainer.PROTOCOL_SHA256, 's1_report_sha256': s1_sha,
+                                    'amendment_2_sha256': evaluator.AMENDMENT_SHA256,
                                     'granted_by': 'owner', 'granted_at': '2026-11-09'})
+        no_amendment = self.write('no-amendment.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S2',
+                                  'protocol_sha256': trainer.PROTOCOL_SHA256, 's1_report_sha256': s1_sha,
+                                  'granted_by': 'owner', 'granted_at': '2026-11-09'})
         wrong = self.write('wrong.json', {'decision': 'GO', 'lane': 'navigation', 'stage': 'S3',
                                           'protocol_sha256': trainer.PROTOCOL_SHA256, 's1_report_sha256': s1_sha,
+                                          'amendment_2_sha256': evaluator.AMENDMENT_SHA256,
                                           'granted_by': 'owner', 'granted_at': '2026-11-09'})
+        extra = ['--assets', str(self.root / 'assets'), '--corpus-pin', str(self.root / 'pin.json')]
         for argv, message in ((['--go', str(go)], '--s1-output'),
-                              (['--go', str(wrong), '--s1-output', str(s1), '--output', str(output)], 'stage S2'),
-                              (['--go', str(go), '--s1-output', str(s1), '--output', str(output)],
+                              (['--go', str(wrong), '--s1-output', str(s1), '--output', str(output), *extra], 'stage S2'),
+                              (['--go', str(no_amendment), '--s1-output', str(s1), '--output', str(output), *extra],
+                               'amendment 2'),
+                              (['--go', str(go), '--s1-output', str(s1), '--output', str(output), *extra],
                                'run_research_stage'),
                               (['--plan-only', '--go', str(go)], 'exclusive')):
             code, value = self.invoke(argv)
@@ -360,7 +368,7 @@ class Cli(Temp):
                 self.assertEqual((code, value['status']), (2, 'refused'))
                 self.assertIn(message, value['reason'])
                 self.assertFalse(output.exists())
-        with self.assertRaisesRegex(evaluator.Refusal, 'Engine'):
+        with self.assertRaisesRegex(evaluator.Refusal, 'run_development'):
             evaluator.native_owner(evaluator.CASES[0])
         (s1 / 'publication.json').unlink()
         with self.assertRaisesRegex(evaluator.Refusal, 'terminal S1'):
