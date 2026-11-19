@@ -35,6 +35,7 @@ jobs:
           rm -rf /var/cache/pacman/pkg/*
           rm -rf /var/lib/pacman/sync/* /usr/share/man /usr/share/doc /usr/share/info /usr/share/gtk-doc
           find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en*' -exec rm -rf {} +
+          df -h / /tmp
       - uses: actions/checkout@v7
         with:
           submodules: true
