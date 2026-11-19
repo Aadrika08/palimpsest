@@ -100,6 +100,11 @@ jobs:
         env:
           PALIMPSEST_TMPFS_BASETEMP: /tmp/palimpsest-pytest
         run: |
+          # The preflight steps leave their pytest base temps behind; the full suite's storage-floor
+          # fixtures need that space back. Only this job's disposable preflight output is removed.
+          du -sh /home/fixture/.cache/palimpsest-pytest runs/hosted-preflight runs/pytest-* 2>/dev/null || true
+          rm -rf /home/fixture/.cache/palimpsest-pytest runs/hosted-preflight runs/pytest-*
+          df -h . /tmp
           runuser -u fixture -- prlimit --nofile=65536: -- scripts/run_tests.sh
   frontend:
     runs-on: ubuntu-latest
