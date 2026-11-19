@@ -85,13 +85,20 @@ def process(pid):
         except PermissionError as error:
             # Exit can race resource inspection. Only an observed same-identity
             # zombie excuses denied access; an inaccessible live process does not.
-            try:
-                current = identity()
-            except PermissionError:
-                error.add_note('Process identity recheck was also inaccessible')
-                raise error
-            if current['state'] == 'Z' and all(current[key] == row[key] for key in ('start_ticks', 'group')):
-                return current
+            # A task in do_exit can read R with /proc/<pid>/fd denied for a few milliseconds before it
+            # becomes a zombie or disappears: settle for a bounded window, then treat it as live.
+            deadline = time.monotonic() + 1.0
+            while True:
+                try:
+                    current = identity()
+                except PermissionError:
+                    error.add_note('Process identity recheck was also inaccessible')
+                    raise error
+                if current['state'] == 'Z' and all(current[key] == row[key] for key in ('start_ticks', 'group')):
+                    return current
+                if time.monotonic() >= deadline:
+                    break
+                time.sleep(0.02)
             error.add_note(f'Process identity recheck: {current}')
             raise
     except (FileNotFoundError, ProcessLookupError):
