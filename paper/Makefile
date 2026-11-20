@@ -11,7 +11,7 @@ all: paper
 evidence:
 	$(PYTHON) scripts/build_evidence.py
 
-paper: authority-evidence audit-affordability
+paper: authority-evidence audit-affordability male-v4-development
 	mkdir -p $(BUILD)
 	$(PDFLATEX) -interaction=nonstopmode -halt-on-error -output-directory=$(BUILD) main.tex
 	cp references.bib $(BUILD)/references.bib
@@ -23,6 +23,7 @@ paper: authority-evidence audit-affordability
 verify: paper
 	$(PYTHON) -B scripts/build_authority_evidence.py $(AUTHORITY_ARGS) --check
 	$(PYTHON) -B scripts/build_audit_affordability.py --check
+	$(PYTHON) -B scripts/build_male_v4_development.py --check
 	$(PYTHON) scripts/verify_paper.py --write
 
 figures: authority-evidence
@@ -51,3 +52,9 @@ authority-evidence-check:
 # RQ5 affordability table from retained change-audit pilot accounting.
 audit-affordability:
 	$(PYTHON) -B scripts/build_audit_affordability.py
+
+.PHONY: male-v4-development
+
+# MaleCNS v4 development-gate numbers from the retained S2 report.
+male-v4-development:
+	$(PYTHON) -B scripts/build_male_v4_development.py
