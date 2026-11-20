@@ -27,7 +27,7 @@ native goal; the old-corpus arm is reported, not gated. Passing admits S3 (held-
 augmented seed), which needs its own manifest, review and GO and spend through S2 of at most 5,643.168 CPU-s.
 Not passing is reported as the actual result: S3 is then not run, and no qualification claim is made.
 
-## Inputs (all pinned; nothing else is read)
+## Inputs (all pinned by sha256)
 
 | Input | Pin |
 | --- | --- |
@@ -36,7 +36,13 @@ Not passing is reported as the actual result: S3 is then not run, and no qualifi
 | S1 checkpoints | six files, shas in `docs/reports/male-v4-s1/checkpoints.sha256`, read from the S1 output tree below |
 | Corpus pin (S0z) | `male-v4-data/S0z/corpus-pin.json`, sha256 `f6115c1e03d5aec37ac2463cc833bbd8fbea06403a8ae1c98e6a3f049b6b29b7` |
 | Runtime assets | `/home/utkarsh/Work/shraddha/palimpsest/data/assets/flynn`, verified before and after by `verify_assets` |
+| S1 protocol | S1 `protocol.json`, sha256 `3769df74...` (hard-coded in the binding) |
+| Data manifest | the S0f data manifest named by the corpus pin (sha256 `4a1be092...`), checked equal to the one S1 trained on |
+| Plan inputs | `data/manifests/malecns-reduced-neighborhood-v1.json`, the cell source, `source-graph.json` under the assets (shas pinned in the binding), the v2 study plan and the pinned upstream generator sources |
 | Source | exact producer root = `CUR` HEAD; per-owner source pins incl. the amendment sha; rechecked last before publication |
+
+The environment is cleared (`env -i`) to the one the P3 EGL probe and the S0 stages ran under; the unit's inherited
+user-manager environment (DISPLAY, WAYLAND_DISPLAY, CUDA_PATH and others) would otherwise reach the first v4 render.
 
 ## Roots
 
@@ -45,7 +51,7 @@ Not passing is reported as the actual result: S3 is then not run, and no qualifi
 | `CUR` | `/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite` |
 | `E` | `/home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence` |
 | S1 output | `E/male-v4-data/S1/train` (read-only; the binding refuses any other tree) |
-| `E4` | `E/male-v4-s2` (GO record, launcher receipt; holds nothing else before launch) |
+| `E4` | `E/male-v4-s2` (GO record, launcher receipt; created by the operator with the GO record; holds nothing else before launch) |
 | output | `E4/eval` (fresh; must not exist; outside S1 output, assets and `CUR`) |
 | ledger | `/home/utkarsh/.local/state/palimpsest/research-ledger.jsonl` |
 
@@ -65,8 +71,9 @@ Not passing is reported as the actual result: S3 is then not run, and no qualifi
 
 1. **Pin.** Record `CUR` HEAD, this file's sha256 and the S1 report sha in the GO. `CUR` must be clean.
 2. **Ledger.** No `navigation/S2` row exists.
-3. **GO record** at `E4/go-S2.json` (fields checked by `check_go`: decision, lane, stage, base protocol sha, amendment 2
-   sha, S1 report sha, granted by and at; the rest is for the audit trail):
+3. **Create `E4`** (`mkdir`; the evaluator needs the output parent to exist) and write the **GO record** at `E4/go-S2.json` (fields checked by `check_go`: decision, lane, stage, base protocol sha, amendment 2
+   sha, S1 report sha, granted by and at; the rest is for the audit trail; every `<placeholder>` must be replaced:
+   neither `load_go` nor `check_go` rejects a literal placeholder):
 
    ```json
    {"decision": "GO", "lane": "navigation", "stage": "S2",
@@ -91,7 +98,7 @@ Not passing is reported as the actual result: S3 is then not run, and no qualifi
   --go-record /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s2/go-S2.json \
   --receipt-dir /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s2/receipt \
   -- \
-  /usr/bin/env CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 MUJOCO_GL=egl \
+  /usr/bin/env -i PATH=/usr/bin:/bin HOME=/home/utkarsh LANG=C.UTF-8 PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 MUJOCO_GL=egl \
   PYTHONPATH=/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/src:/home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts \
   /home/utkarsh/Work/shraddha/palimpsest/.venv/bin/python -B /home/utkarsh/Work/shraddha/palimpsest/.worktrees/authority-paper-rewrite/scripts/evaluate_male_navigation_v4.py \
   --go /home/utkarsh/Work/shraddha/palimpsest-authored-test-evidence/male-v4-s2/go-S2.json \
@@ -118,21 +125,36 @@ Not passing is reported as the actual result: S3 is then not run, and no qualifi
 - **Unit:** receipt `complete`, `drained`, returncode 0, no survivors; ledger `charged` S2 row; charged CPU recorded
   against the 4,435 reservation and the 837.785 spent so far.
 - **Report (`eval/report.json`, published last with a source-pin recheck):** `route: development`, `status:
-  completed` and no `failure.json`; 24 owners all `completed-recording`; `finalization_errors` empty; `assets_after`,
-  `identities_after` and `final_source_pins` equal the before values; `teacher_queries` 0 for every owner; 24 `.snp`
-  files.
+  completed` and no `failure.json`; 24 owners all `completed-recording`; `finalization_errors` empty (the in-process
+  equality of assets, candidate identities and source pins before and after passed); `final_source_pins` equals
+  `source_pins`; `teacher_queries` 0 for every owner; 24 `.snp` files.
 - **Result:** report the per-seed, per-arm count of 4 for the augmented seeds and the old-corpus arm. The `admission`
   field says whether S3 may be prepared. An independent compact AI audit of the report (as for S0z) precedes any
   claim; it is AI review, not human acceptance.
 
 ## On failure
 
-An owner timeout, kill or non-normal disposition stops the stage (`failed-infrastructure`, `failure.json`) and is
-charged; nothing is replaced or retried. A completed run that does not meet 3 of 4 on every augmented seed is the
-real result: it is reported as such and S3 is not run. Evidence is retained either way.
+Three distinct outcomes, all charged, nothing replaced or retried, evidence retained:
+
+- **Owner failure** (timeout, kill, non-normal disposition): `report.json` is published with status
+  `operational-failure`, the failing row `operational-failure`, later rows `not_started` and admission
+  `not-admitted-operational-failure`; exit code 1. Its `held_out_status: locked-permanently` is a label of the
+  protocol's operational-failure rule, **not a scientific verdict**: per Amendment 2 a wall-clock kill is an
+  operational failure, never a non-goal.
+- **Parent exception** (finalization error, late deadline, budget error): `failure.json`, status `failed-infrastructure`.
+- **Completed run, gate not met:** the real result. If every owner finished and some augmented seed is below 3 of 4,
+  it is reported as such and S3 is not run. If all 24 owners complete but `reduce` itself refuses (`not-admitted`,
+  no per-seed counts), the attempt is spent with no per-seed result; the report says so.
 
 ## Dry validation performed (not stage S2)
 
 The evaluator's and binding's tests (46 passed) and the P3 import probe (passed, 29.042 CPU-s) were run. **No S1
 checkpoint has been loaded and no Engine owner has run**; the real Engine and checkpoint path is first exercised by
-S2 itself, which is the main residual risk beyond the 1,800 s deadline noted above.
+S2 itself. A synthetic checkpoint in the trainer's exact format (same size as every S1 file) passed the real loader in
+review, but only the real S1 bytes confirm it.
+
+Residual launch risks not ruled out statically: (a) the first real read of an S1 checkpoint (a failure there occurs in
+the parent before any owner and still costs the attempt); (b) the first real EGL render and Engine path with a v4
+binding; (c) the deadline margin: v2's 24 owners took 861 s (about 36 s each), so a full 600-tick v4 run is estimated at
+about 1,150 s against the 1,800 s deadline, plausible but only 1.5 to 2 times; (d) the 4 MiB spare in the 4 GiB aggregate
+storage margin, identical to v2 and unmeasured for v4; (e) any refusal inside `reduce` after a fully completed run.
