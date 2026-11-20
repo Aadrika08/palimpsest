@@ -398,7 +398,8 @@ def test_s2_manifest_command_binds_the_launcher_unit_and_the_evaluator_flags():
     assert int(flag('--worst-case-cpu', unit)) == int(flag('--cpu-quota-k', unit)) * (int(flag('--runtime-max-sec', unit)) + 5)
     assert flag('--go', command) == flag('--go-record', unit)
     assert flag('--s1-output', command) == str(research.S1_OUTPUT) and '--held-out' not in command
-    assert flag('--repo', command) == str(evaluator.ROOT)
+    script = next(w for w in command if w.endswith('evaluate_male_navigation_v4.py'))
+    assert flag('--repo', command) == str(P(script).parents[1])          # the manifest's own producer root, not this checkout
     out, recv = P(flag('--output', command)), P(flag('--receipt-dir', unit))
     assert out.parent == recv.parent and out != recv and not out.is_relative_to(research.S1_OUTPUT)
     env = dict(w.partition('=')[::2] for w in command[1:command.index(next(w for w in command if w.endswith('python')))] if '=' in w)
