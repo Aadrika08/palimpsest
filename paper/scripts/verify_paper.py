@@ -147,11 +147,12 @@ def main(argv: list[str] | None = None) -> int:
     evidence = paper / "evidence" / "authority-replay-v1"
     sources = [evidence / "summary.json", evidence / "campaign-manifest.json",
                paper / "studies" / "authority_replay_v1" / "protocol.json",
-               paper / "evidence" / "change-audit-runtime-pilot-v1" / "source3c17cfd" / "pilot-process-accounting.json"]
+               paper / "evidence" / "change-audit-runtime-pilot-v1" / "source3c17cfd" / "pilot-process-accounting.json",
+               paper / "evidence" / "male-v4-s2" / "report.json"]
     generated = [paper / "generated" / name for name in (
         "authority-claims.tex", "fault-matrix.tex", "replay-table.tex",
         "overhead-table.tex", "operation-table.tex", "overhead-plot.tex", "snapshot-ablation.tex",
-        "audit-affordability.tex")]
+        "audit-affordability.tex", "male-v4-development.tex")]
     validation = subprocess.run([
         sys.executable, "-B", str(paper / "scripts" / "build_authority_evidence.py"),
         "--summary", str(sources[0]), "--manifest", str(sources[1]),
@@ -167,6 +168,12 @@ def main(argv: list[str] | None = None) -> int:
     if affordability.returncode:
         print(affordability.stderr or affordability.stdout, file=sys.stderr)
         return 1
+    male = subprocess.run([
+        sys.executable, "-B", str(paper / "scripts" / "build_male_v4_development.py"), "--check",
+    ], capture_output=True, text=True)
+    if male.returncode:
+        print(male.stderr or male.stdout, file=sys.stderr)
+        return 1
     build_inputs = [
         paper / "main.tex",
         paper / "references.bib",
@@ -177,6 +184,7 @@ def main(argv: list[str] | None = None) -> int:
         paper / "scripts" / "audit_authority_state.py",
         paper / "scripts" / "verify_paper.py",
         paper / "scripts" / "build_audit_affordability.py",
+        paper / "scripts" / "build_male_v4_development.py",
         repo / "pyproject.toml",
         repo / "uv.lock",
         repo / "src" / "palimpsest" / "snapshots.py",

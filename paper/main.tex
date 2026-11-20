@@ -17,6 +17,7 @@ pdfauthor={Anonymous Authors},pdfsubject={Experimental authority and reproducibi
 \setlength{\parindent}{0pt}
 \input{generated/authority-claims.tex}
 \input{generated/audit-affordability.tex}
+\input{generated/male-v4-development.tex}
 \newcommand{\studyinput}[1]{\input{generated/#1.tex}}
 \title{Who Changed the World?\\Authority-Aware Replay for Interactive Embodied-AI Experiments}
 \author{Anonymous Authors}
@@ -656,6 +657,19 @@ memory comparison covered 44 of 48 development cells, with all 120 applicable
 correction pairs tied, and a navigation
 development gate failed. Held-out evaluation was not run for either study; an
 earlier recovery-navigation held-out stage did not qualify.
+A regenerated, matched-budget navigation study (v4) ran its development
+evaluation once, on four fixed scenes with three training seeds and the gate
+fixed in advance at \MaleVfourThreshold{} of 4 scenes per augmented seed. The
+augmented arm reached the goal in \MaleVfourAugGoals{} of its 12 owner episodes
+(per seed: \MaleVfourAugBySeed{}), stalling in \MaleVfourAugStalled{} and timing out in
+\MaleVfourAugTimeLimit{}, with a median final distance of \MaleVfourAugMedianDistance{}\,m; the
+reported-only old-corpus arm reached it in \MaleVfourOldGoals{} of 12
+(per seed: \MaleVfourOldBySeed{}; median \MaleVfourOldMedianDistance{}\,m). The gate was not met, held-out
+evaluation was not run, and we make no capability claim. An independent audit of
+the recorded actions found the augmented checkpoints emitting a nearly constant
+action, which suggests collapsed policies, but no diagnostic stage was run, so
+the cause is unestablished. A regenerated puck study completed only its
+scene-identifier admission stage; its later stages were not built.
 
 \textbf{Retention and availability.}
 Protected rechecks can detect specified identity/content changes, not every
