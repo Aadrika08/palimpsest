@@ -385,5 +385,28 @@ class Cli(Temp):
             evaluator.admit_candidates(s1)
 
 
+def test_s2_manifest_command_binds_the_launcher_unit_and_the_evaluator_flags():
+    import re, shlex
+    from pathlib import Path as P
+    text = (P(__file__).resolve().parents[1] / 'docs/reports/male-v4-s2/MANIFEST.md').read_text()
+    block = re.search(r'<!-- s2-command -->\n```sh\n(.*?)\n```', text, re.S).group(1)
+    argv = shlex.split(block.replace('\\\n', ' '))
+    unit, command = argv[:argv.index('--')], argv[argv.index('--') + 1:]
+    flag = lambda name, words: words[words.index(name) + 1]
+    assert (flag('--lane', unit), flag('--stage', unit), flag('--runtime-max-sec', unit), flag('--worst-case-cpu', unit),
+            flag('--cpu-quota-k', unit)) == ('navigation', 'S2', '4430', '4435', '1')
+    assert int(flag('--worst-case-cpu', unit)) == int(flag('--cpu-quota-k', unit)) * (int(flag('--runtime-max-sec', unit)) + 5)
+    assert flag('--go', command) == flag('--go-record', unit)
+    assert flag('--s1-output', command) == str(research.S1_OUTPUT) and '--held-out' not in command
+    assert flag('--repo', command) == str(evaluator.ROOT)
+    out, recv = P(flag('--output', command)), P(flag('--receipt-dir', unit))
+    assert out.parent == recv.parent and out != recv and not out.is_relative_to(research.S1_OUTPUT)
+    env = dict(w.partition('=')[::2] for w in command[1:command.index(next(w for w in command if w.endswith('python')))] if '=' in w)
+    assert env['CUDA_VISIBLE_DEVICES'] == '' and env['OMP_NUM_THREADS'] == '1'
+    for phrase in ('6ca8af5f9969fd1227d6e9494e9efc334e425c03145998da7a3de3a9d06c3cd2', evaluator.AMENDMENT_SHA256,
+                   'scientific_attempt": true', 'held_out_authorised": false', 'Post-run gate', 'On failure'):
+        assert phrase in text, phrase
+
+
 if __name__ == '__main__':
     unittest.main()
