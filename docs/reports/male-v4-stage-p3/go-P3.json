@@ -1,0 +1,10 @@
+{"decision": "GO", "lane": "navigation", "stage": "P3",
+ "protocol_sha256": "cd4eb1307f4be6f2d924142eb4202e001918c81660145db26764a410b9dcd477",
+ "amendment_2_sha256": "c4cd3a506b0b468b0d6d4d359dff7ecbd3b3bf0c25c6fe9360207282249f8d6f",
+ "manifest_sha256": "03ea5d2c57b3b4fdd3e8b8725aac76c6d2c49f2d83b8d6a03ed2e77b91800be5",
+ "port_pins_sha256": "278219f4b364ae53d4942c2020cf69dd100cad376c5a320b0e4a1c88633dbb69",
+ "current_tree_head": "408b2c81b355c80389660c355db3ad8c5b235a2e",
+ "a2_erratum_ack": "decisions-2026-11-08.md 20 November 2026: a2-erratum-1",
+ "entries": ["S2-binding", "S2-owner-worker", "S2"],
+ "cpu_quota_k": 1, "scientific_attempt": false,
+ "granted_by": "Utkarsh (owner), via explicit GO answer in session", "granted_at": "2026-11-20"}

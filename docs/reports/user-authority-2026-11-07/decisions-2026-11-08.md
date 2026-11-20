@@ -41,3 +41,11 @@ under the base protocol. Puck v4 Amendment 1 (proposed) permits exactly one more
 | Decision | Applies to | Owner answer |
 | --- | --- | --- |
 | **A2** — MaleCNS v4 Amendment 2: `NavigationBindingV4`, five-line `engine.py` allow-list hunk, S2 owner worker/index publisher, tests, stage P3 gate. Source scope only; no run authorised. | `docs/plans/m7-navigation-v4-amendment-2.json` sha256 `c4cd3a506b0b468b0d6d4d359dff7ecbd3b3bf0c25c6fe9360207282249f8d6f`; base protocol `cd4eb130…` unchanged | **Approved** (19 Nov 2026) |
+
+## 20 November 2026
+
+| Decision | Applies to | Owner answer |
+| --- | --- | --- |
+| **A2 erratum 1** — wording mismatches 1 to 5 of `docs/reports/male-v4-stage-p3/MANIFEST.md` (no index builder: the binding reads S1 directly, A2's second option; `graph_sha256` and `ordered_ids_sha256` are re-derived, not S1 report fields; `success_admitted` is a predicate; `reduce`/`check_protocol` are same-module; `--s1-output` bound to the hard-coded S1 tree). A2 file unchanged; P3 covers 3 entries, not 4. Row id: `a2-erratum-1` | A2 sha `c4cd3a50…8d6f`; base protocol `cd4eb130…` | **Acknowledged** (20 Nov 2026) |
+| **GO MaleCNS v4 stage P3** (navigation lane, import probe of `S2-binding`, `S2-owner-worker`, `S2`; worst case 125 CPU-s; one attempt; `scientific_attempt: false`) | `docs/reports/male-v4-stage-p3/MANIFEST.md` | **Granted** (20 Nov 2026) |
+| **GO MaleCNS v4 stage S2** (development evaluation; worst case 4,435 CPU-s; one attempt; `scientific_attempt: true`; held-out not authorised) | `docs/reports/male-v4-s2/MANIFEST.md` sha256 `833109d0…2263` at tree head `bf979b0` | **Granted** (20 Nov 2026); ran once, development gate not met (augmented 0/4 on every seed), see `docs/reports/male-v4-s2/RESULT.md` |
