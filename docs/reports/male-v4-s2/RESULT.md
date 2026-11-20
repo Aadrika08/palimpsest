@@ -41,6 +41,22 @@ It shows that the six S1 checkpoints, trained with the matched budget of the v4 
 fixed development scenes, do not meet the gate; the augmented policies mostly stalled far from the goal. It does not
 establish why (no diagnostic stage was authorised), does not say anything about held-out scenes (never read), and
 does not license a different training or evaluation budget: any follow-up (another training design, a diagnostic) is a
-new protocol decision for the owner, with new stage names and budget accounting. Remaining navigation budget is
-12,749 CPU-s, but the protocol's one-attempt-per-stage rule and "no relaxing the 3/4 and 6/8 thresholds" stay.
-An independent compact AI audit of this report (not human acceptance) is recorded separately.
+new protocol decision for the owner, with new stage names and budget accounting. The navigation lane has 13,149 CPU-s of its
+14,400 cap unspent, but the protocol's one-attempt-per-stage rule and "no relaxing the 3/4 and 6/8 thresholds" stay.
+
+## Independent AI audit (not human acceptance)
+
+A fresh reviewer agent re-derived the result read-only from the recorded files: SHA256SUMS, the GO fields, the receipt and
+ledger charge (413.050 CPU-s; lane total 1,250.835) and every count above reproduce, and all 24 per-owner `result.json`
+files agree with `report.json`. The six checkpoint shas in the report equal the files and the binding's constants, and each
+worker builds the binding for its own `(seed, arm)`; the per-owner results record no checkpoint hash of their own, so that
+link rests on the code path plus the report-level identities. `goal_reached` comes from the engine's natural-goal boundary,
+not from a threshold. Raw payload and policy-input hashes are all distinct and the old-corpus arm on the same initials
+behaves normally, so the harness is not the cause.
+
+**Observation to read the failure with:** from the recorded per-tick actions, the augmented checkpoints emit an almost
+constant action independent of the observation (seed 10 about forward 0.49, turn near 0; seed 11 about 0.54, -0.27; seed 12
+about 0.53, -0.20; standard deviation over ticks at most 0.02 for seeds 11 and 12, and small for seed 10), so each drives a
+fixed arc and stalls early in 9 of 12 owners. The old-corpus arm shows ordinary action variance. This points to collapsed or
+saturated augmented policies (a training or checkpoint question), not a navigation failure that varies by scene. Nothing
+authorised so far establishes the cause, and this document does not claim one.
