@@ -20,6 +20,7 @@ jobs:
         --security-opt systempaths=unconfined
         --ulimit nofile=65536:65536
         --tmpfs /tmp:rw,exec,nosuid,nodev,size=4g --shm-size=2g
+        -v /usr/share/dotnet:/host-free/dotnet -v /usr/local/lib/android:/host-free/android -v /opt/ghc:/host-free/ghc
     defaults:
       run:
         shell: bash
@@ -27,6 +28,13 @@ jobs:
       UV_PYTHON_INSTALL_DIR: /home/utkarsh/.local/share/uv/python
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
+      - name: Reclaim runner disk used by unrelated preinstalled toolchains
+        run: |
+          # The fixture storage floors need free space the hosted image leaves too thin. These host
+          # toolchains (mounted above) are not used by this job.
+          df -h /__w
+          rm -rf /host-free/dotnet/* /host-free/android/* /host-free/ghc/*
+          df -h /__w
       - name: Install namespace, compiler and EGL dependencies
         run: |
           pacman -Syu --noconfirm --needed git gcc bubblewrap libglvnd mesa curl tar gzip xz python
