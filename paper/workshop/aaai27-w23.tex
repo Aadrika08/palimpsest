@@ -1,0 +1,270 @@
+\documentclass[letterpaper]{article}
+\usepackage[submission]{aaai2027}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\frenchspacing
+\usepackage{booktabs}
+\usepackage{array,tabularx,xcolor,tikz,amsmath}
+\usetikzlibrary{arrows.meta,positioning,fit,plotmarks}
+\definecolor{palblue}{HTML}{245A7A}
+\definecolor{palgreen}{HTML}{2D7B64}
+\definecolor{palgold}{HTML}{B27A20}
+\definecolor{palred}{HTML}{9E3D38}
+\pdfinfo{/TemplateVersion (2027.1)}
+\setlength{\parindent}{0pt}
+\input{generated/authority-claims.tex}
+\input{generated/audit-affordability.tex}
+\input{generated/male-v4-development.tex}
+\newcommand{\studyinput}[1]{\input{generated/#1.tex}}
+\title{Who Changed the World? Authority-Aware Replay for Interactive Embodied-AI Experiments, with a Costed Improvement Audit}
+\author{Anonymous Submission}
+\affiliations{}
+\begin{document}
+\maketitle
+\begin{abstract}
+AI-driven experiments on interactive simulators need evidence of which interventions
+became authoritative, which state was restored, and which computation replay executed.
+We implement a semantic contract joining applied-command receipts, controller-visible
+observations, continuation state, replay reports and publication status, and evaluate it
+on one host with CPU execution: \FaultDeclaredUnits{} controlled challenges, ten continuation pairs, five replay
+trajectories and ten paired recording-cost sets. Complete continuation agreed on
+\ContinuationPassed{}/\ContinuationDeclared{} pairs and declared replay on
+\ReplayPassed{}/\ReplayDeclared{} trajectories, while pose-only restoration changed the
+first action on all three ablation seeds. Median recording overhead versus a null writer was
+\SynchronousOverheadMedian{}\% (synchronous), \BackgroundOverheadMedian{}\% (background) and
+\StorageOverheadMedian{}\% with storage accounting (worst pair \StorageOverheadMaximum{}\%).
+We machine-check in Lean~4 finite-candidate fixed-horizon and anytime bounds for auditing a
+controller change and price them at measured cost: the one-hour audit allocation affords
+\AuditLaneScenarios{} scenarios, a vacuous radius. We also report, as a negative result, that a
+matched-budget navigation development gate failed (\MaleVfourAugGoals{} of \MaleVfourEpisodes{} augmented episodes reached the goal),
+so no capability claim is made. One declared clean-checkout unit remains incomplete.
+\end{abstract}
+
+\section{Introduction}
+An experimenter adds an obstacle while a recurrent controller navigates a simulated world. The
+browser can preview the change while the server accepts it for application at a later control
+boundary, and a saved trajectory later plays without error. Was the intervention applied before
+a given action, and did replay reproduce its computation? Request acceptance and visual similarity
+cannot answer either question. This hypothetical error motivates controlled injections, not a
+measured account of user behavior.
+
+Existing systems already separate important parts of the problem: robomimic provides observation
+visualization, simulator-state playback and open-loop action playback, and ManiSkill distinguishes action
+replay from state-based playback \citep{robomimicplayback,maniskillreplay}; MuJoCo documents the state
+needed for continuation \citep{mujococomputation}. We wrap a pinned MuJoCo/FLYNN path
+\citep{wang2026flynn} to connect these boundaries: an intervention record identifies application, a
+snapshot binds continuation state, a replay report names the executed computation and comparison, and
+publication status determines which records a reader may admit. Contributions: (1) a semantic contract with
+explicit failure boundaries; (2) an implementation (boundary receipts, observation projection, complete
+snapshots, independent branch owners, staged publication); (3) a predeclared evaluation of conformance,
+ablation, paired agreement and cost; (4) a machine-checked finite-candidate improvement audit with an exact-rational
+bridge and its measured cost (RQ5), plus an honest account of capability studies that did not qualify.
+
+\section{Semantic Contract}
+Write the continuation state as $z_t=(x_t,h_t,w_t,r_t,q_t)$: physics $x_t$, recurrent controller $h_t$,
+wrapper $w_t$, random generator $r_t$, pending commands $q_t$. At a boundary the owner processes eligible
+commands, $\bar z_t=C(z_t)$, projects the permitted input $o_t=P(\bar z_t)$ and computes
+$(a_t,h_{t+1},r'_t)=\pi(o_t,\bar h_t,\bar r_t)$, $z_{t+1}=F(\bar z_t,a_t,h_{t+1},r'_t)$.
+Commitment precedes policy execution; a browser display has no authority to substitute for $C$ or $P$.
+Acceptance acknowledges queue admission, an applied receipt names its actual control tick and revision,
+and rejection and failure are distinct outcomes. Delay is permitted, duplicate application is not.
+Equal $qpos$/$qvel$ need not imply equal continuation (hidden state, counters, RNG or pending commands can
+differ), and branch independence requires that mutating a child leave parent and siblings unchanged.
+Replay has two orthogonal dimensions: what executes (playback, action replay, policy replay) and what is compared.
+
+\textbf{I1: application has an authority boundary.} One owner mutates live state; each application has one
+receipt and control tick; expected revisions are checked and duplicates cannot apply twice.
+\textbf{I2: continuation binds transition-relevant state and identity.} Restore requires compatible schema,
+source/asset identity, and physics, controller, wrapper, random and pending state; incompatible components are
+refused before mutating the destination. Equal initial pose is insufficient.
+\textbf{I3: evidence names its computation and publication status.} Every replay declares its mode, whether
+inference executed, comparison fields and tolerances, and agreement or first divergence; readers distinguish a
+validated published prefix from terminal completion. This is a bounded integration contract, not a compositional
+theorem. Faults covered: admission/application timing, stale or duplicate commands, incomplete state,
+source/asset drift, shared branches, publication interruption and resource failure; the host OS and experiment
+code are trusted.
+
+\section{Implementation}
+Commands enter a bounded queue; the owner revalidates previewed geometry at application, mutates the world,
+refreshes the observation, increments the revision and emits the receipt, so a stale preview cannot authorize
+mutation against a new revision. Observations are projected from the authoritative world and kept separate from
+world truth and display metadata, locating whether disagreement begins in observation, controller or dynamics.
+Snapshots combine physics and mutable world state with controller hidden state, wrapper counters, RNG state, recorder
+position and pending commands, bound by source and asset fingerprints (a different checkpoint can load while changing
+the transition function). Each branch restores into a separate owner and run. Executable replay checks compatibility,
+creates a new destination, restores state and advances the declared computation; action replay bypasses inference and
+policy replay executes it, and reports retain mode, execution, agreement and first divergent field and tick.
+The recorder writes typed chunks and ordered events under bounded policies with no-overwrite publication, so an
+interruption leaves a validated prefix and an ignored unpublished tail without a terminal-success claim.
+
+\begin{figure*}[t]
+\centering\resizebox{0.8\textwidth}{!}{\input{figures/authority-sequence.tex}}
+\caption{Application of a queued intervention. The change stays unapplied while execution continues; at illustrative tick $t+2$ mutation and observation refresh precede the receipt (revision $v_a$) and the next policy/physics transition. A receipt identifies an application boundary, not a causal effect.}
+\label{fig:authority}
+\end{figure*}
+\begin{figure}[t]
+\centering\footnotesize\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}\input{figures/replay-matrix.tex}
+\caption{Replay modes differ in computation as well as validation: a physical match under recorded actions leaves policy recomputation untested.}
+\label{fig:matrix}
+\end{figure}
+
+\section{Evaluation}
+The protocol was committed and frozen, not independently preregistered. Seed 0 appeared in disclosed development
+checks and fixed seeds are engineering repetitions, not held-out evaluation. Scope is one host (Linux x86-64,
+Ryzen 7 7735HS), pinned CPU FLYNN/MuJoCo, same version and architecture. The protocol declares \StudyDeclaredUnits{} descriptors; all
+\StudyDeclaredUnits{} are accounted for, \StudyCompletedUnits{} completed, and one clean-checkout unit was not
+admitted under its aggregate output reservation and is retained as incomplete. A first campaign completed 69/\StudyDeclaredUnits{}; a
+missing benchmark reset (initially misclassified as a resource failure) led to a disclosed amendment, with both
+attempts hash-retained. Float32 arrays use absolute and relative tolerance $10^{-6}$ and must be finite; identities
+match exactly.
+
+\textbf{RQ1: conformance and ablations.} The \FaultDeclaredUnits{} units cover delayed, stale and duplicate requests, replay mislabeling,
+incomplete snapshots, source/asset substitution, custody and benign churn, interrupted publication, shared-owner
+branches, and quota, queue and writer failures. Result counters: \FaultCompletedUnits{}/\FaultDeclaredUnits{}
+completed units, \FaultBaselineKnownClaims{} claims with known truth and \FaultBaselineUnknownClaims{} unknown,
+\FaultBaselineFalseAccepts{} measured false acceptances under weak predicates, \FaultSystemSilentAccepts{} silent
+system acceptances and \FaultBenignFalseRejects{} benign false rejections. Unknown truth is not a measured false claim,
+and an unrelated crash is not semantic success.
+
+\begin{table*}[t]
+\centering\small
+\caption{Controlled conformance and ablations. R: CPU FLYNN; F: interface fixture; F+: fixture with subprocess
+interruption. I/D/L count interface detections, diagnostic comparisons (S1/B2) and study label guards (R1/R2).
+C3 alone measures benign false rejection. Diagnostic divergence is not automatic runtime refusal.}
+\label{tab:fault}\studyinput{fault-matrix}
+\end{table*}
+
+\textbf{RQ2: continuation and replay.} Ten seeds run an eight-tick prefix and a 100-tick source/restored comparison:
+agreement \ContinuationPassed{}/\ContinuationDeclared{}. Five source trajectories each run branch, playback, action
+replay and policy replay conditions: \ReplayPassed{}/\ReplayDeclared{}. Pose-only restoration, which jointly omits
+continuation state, changed the first action on all three seeds (this does not identify any single omitted component).
+For seed 0 a retained join links the goal-edit receipt (tick 0, revision 1), a tick-8 snapshot holding that receipt and
+a digest of 30 events, a separate branch matching 92 ticks, and action and policy replay reports on the same source with
+policy execution false and true.
+
+\begin{table}[t]
+\centering\small
+\caption{Continuation and replay under the frozen policy. Counts are pairs or trajectories, never ticks.}
+\label{tab:replay}\resizebox{\columnwidth}{!}{\studyinput{replay-table}}
+\end{table}
+
+\begin{table}[t]
+\centering\small
+\caption{S1 first continuation action after the eight-tick prefix; absolute errors recomputed from retained arrays.}
+\label{tab:snapshot-ablation}\resizebox{\columnwidth}{!}{\studyinput{snapshot-ablation}}
+\end{table}
+
+\textbf{RQ3: cost.} Ten seeds run four conditions in fresh processes (null, synchronous, background, background plus
+storage accounting), 20 warm-up and 200 measured ticks, with condition order rotated by seed. Matched sets:
+\OverheadMatchedSeeds{}/\OverheadDeclaredSeeds{}. Median overheads versus null are \SynchronousOverheadMedian{}\%,
+\BackgroundOverheadMedian{}\% and \StorageOverheadMedian{}\%; null and storage-accounted wall times per tick are
+\NullWallMedianMs{} and \StorageWallMedianMs{} ms. Storage-accounted paired overhead reached \StorageOverheadMaximum{}\%
+(IQR \StorageOverheadIQR{} points), with producer backpressure up to \StorageBackpressureMaximumSeconds{} s in a
+200-tick window, so bounded retention exposes stalls as well as a median. Only native MuJoCo \texttt{timer.duration} is
+normalized for cost-state matching; replay validation is unchanged. Operation costs (capture, save, read, restore, playback, action and policy replay on the five retained source runs) are in Table~\ref{tab:operation}; they measure different work and carry no threshold.
+
+\begin{table*}[t]
+\centering\small
+\caption{Matched execution cost. All four conditions for a seed enter or leave the timing summary together; open and close costs are separate from tick time. IQR (pp) is the interquartile range in percentage points.}
+\label{tab:overhead}\resizebox{\textwidth}{!}{\studyinput{overhead-table}}
+\end{table*}
+\begin{figure}[t]
+\centering\resizebox{\columnwidth}{!}{\studyinput{overhead-plot}}
+\caption{Paired execution costs by seed and condition; samples are paired by seed, not independent ticks.}
+\label{fig:overhead}
+\end{figure}
+
+\begin{table}[t]
+\centering\small
+\caption{Operation costs on retained RQ2 source runs; each measures different work.}
+\label{tab:operation}\resizebox{\columnwidth}{!}{\studyinput{operation-table}}
+\end{table}
+
+\textbf{RQ4: fresh checkout.} The declared clean-checkout unit is \OfflineStatus{}: admission needed its full 10~GiB
+maximum, which exceeded the remaining cap, so it was not launched. A separately labeled follow-up stopped on a missing
+locked wheel; a later one, after preparing the permitted dependency cache, passed offline install, UI build, API smoke
+and a 55-second CPU full-FLYNN branch/replay check (158 CPU-seconds). This does not change the frozen unit's incomplete
+status, and second-machine reproduction remains open.
+
+\section{RQ5: Can a Verified Improvement Audit Be Afforded?}
+Replay shows what a changed controller computed, not whether it helps. Each observation is one scenario; for $K$
+predeclared candidates the contrast is candidate minus baseline loss in $[-1,1]$. A standalone package of nine Lean~4.31
+modules pinned to one mathlib revision \citep{demoura2021lean4,mathlib2020} proves two one-sided bounds under explicit
+fresh-sampling premises (adapted, independent-of-past, centred increments). At a fixed horizon $n$, some candidate's mean
+contrast falls below its expectation by more than $\sqrt{2\log(K/\alpha)/n}$ with probability at most $\alpha$
+\citep{hoeffding1963probability}; for a fixed scale $\lambda$, a Ville-type argument
+\citep{ville1939etude,howard2021timeuniform} gives the same guarantee at every prefix with radius
+$\log(K/\alpha)/(\lambda n)+\lambda/2$, whose floor does not vanish. Exact rational Taylor sums certify an upper bound on
+$\log(K/\alpha)$ so a checker can decide the anytime gate in rational arithmetic. All 17 axiom reports list only Lean's
+three standard axioms (no \texttt{sorry}); the Ville helper is adapted with attribution from an Apache-2.0 upstream proof
+and we claim no new probability theorem. The proofs do not verify the parser, the sampler or that a simulator satisfies the
+premises.
+
+A four-seed engineering pilot (16 conditions, 1,024 recorded ticks, no retries) measured cost only: no condition recorded
+an input-contact tick in 64 ticks, so no loss was defined and nothing is certified. Its supervised tree used \AuditPilotCpu{}
+CPU-seconds (\AuditPerScenarioCpu{} per four-condition scenario). With $K=3$ and $\alpha=0.05$ the remaining one-hour
+allocation affords \AuditLaneScenarios{} scenarios at radius \AuditLaneRadius{}, vacuous for contrasts in $[-1,1]$; the
+whole remaining 24 CPU-hour allocation would afford \AuditTotalScenarios{} scenarios and radius \AuditTotalRadius{}. The
+extrapolation assumes the pilot's design including supervisor CPU (\AuditSupervisorShare{}\%) and is neither an upper nor a
+lower bound; radii and counts round up.
+
+\section{Related Work}
+robomimic and ManiSkill already establish that state and action replay differ \citep{robomimicplayback,maniskillreplay,
+mandlekar2022robomimic,tao2025maniskill3}; we claim no priority for that taxonomy, and compare named predicates and
+narrow ablations, not these systems. rosbag2, CARLA and Gazebo record at middleware or simulation-state layers
+\citep{rosbag2,carlarecorder,gazebologging}; MuJoCo documents integration-state restoration and same-version limits
+\citep{mujococomputation}; rr replays user-space processes \citep{ocallahan2017rr}; ReproZip packages environments
+\citep{chirigati2013reprozip}. Each addresses a different boundary from declaring what an application applied, restored
+and recomputed. Anytime-valid inference \citep{ville1939etude,howard2021timeuniform} underlies the anytime bound; our
+contribution there is a machine-checked finite-candidate specialization and a measured cost, not new theory.
+
+\section{Negative Results and Limitations}
+Claims should match their evidence boundary: admission, application, state agreement, executed computation and
+publication are separate facts, tested here through conformance, ablation, agreement and cost, not proved.
+
+\textbf{Capability studies did not qualify.} Predeclared capability studies on the same substrate are unresolved: a
+stale-information memory comparison covered 44 of 48 development cells with all 120 applicable correction pairs tied, and
+held-out evaluation was not run for it; an earlier recovery-navigation held-out stage did not qualify. A regenerated
+matched-budget navigation study (v4) ran its development evaluation once on four fixed scenes and three training seeds,
+with the gate fixed in advance at \MaleVfourThreshold{} of \MaleVfourScenes{} scenes per augmented seed. The augmented arm reached the goal
+in \MaleVfourAugGoals{} of \MaleVfourEpisodes{} owner episodes (per seed \MaleVfourAugBySeed{}), stalling in \MaleVfourAugStalled{} and timing
+out in \MaleVfourAugTimeLimit{} (median final distance \MaleVfourAugMedianDistance{}\,m); the reported-only old-corpus arm
+reached it in \MaleVfourOldGoals{} of \MaleVfourEpisodes{} (\MaleVfourOldBySeed{}). The gate was not met, held-out evaluation was not run, and
+we make no capability claim. Retained training logs are consistent with underfitting: matched-budget augmented training
+loss was roughly 11--12 times the old-corpus loss on all three seeds, and recorded actions were nearly constant. This
+comparison is descriptive: training loss is not directly comparable across the two corpora (7,197 vs 2,117 rows), and no
+ablation was run, so the cause is not established. A regenerated puck study completed only scene-identifier admission (a first attempt was refused; a second, run under an owner-approved amended protocol, was admitted).
+
+\textbf{Coverage and independence.} One host, one controller and fixed engineering seeds limit coverage; faults do not
+exhaust combined faults or estimate field prevalence; no human interpretation or competing-system performance is measured.
+Agreement is scoped to CPU, same-version, same-architecture execution; GPU continuation, cross-version portability, parallel
+branching and hostile hosts are outside scope. The RQ5 proofs are conditional on fresh-sampling premises that no hash or
+replay can establish, and within the audit lane no improvement claim is affordable. Staged publication does not establish
+power-loss recovery. Independent-machine reproduction and a public archive with reviewed redistribution terms remain open.
+
+\section{Conclusion}
+The contract makes application, continuation, computation and publication claims separately inspectable. Pose-only
+restoration diverged immediately while complete continuation agreed in the tested pairs, background recording had a lower
+paired median than synchronous writing, and storage-accounted retention exposed long stalls. A machine-checked audit makes
+the missing claim precise: certifying improvement needs hundreds to thousands of independent scenarios depending on the target radius, beyond the one-hour lane.
+
+\bibliography{references}
+
+\appendix
+\section{Appendix: Audit Requirements}
+\begin{table}[h]
+\centering\small
+\caption{Independent scenarios required by the fixed-horizon bound ($K=3$, $\alpha=0.05$) at the pilot's cost per scenario.}
+\begin{tabular}{rrr}
+\toprule
+Radius & Scenarios & CPU-hours \\
+\midrule
+\AuditRequiredRows
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document}

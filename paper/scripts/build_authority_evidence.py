@@ -453,7 +453,7 @@ def generate_outputs(result, hashes, trace_root=None):
                                          (r'$+$ sync', r'$\times$ background', r'$\circ$ storage')):
             coords = ' '.join(f'({seed},{y(value):.6f})' for seed,condition,value in points if condition == c)
             plot.append(rf'\draw[{color}] plot[only marks,mark={mark}] coordinates {{{coords}}};')
-            plot.append(rf'\node[{color},anchor=west] at (0,{4.1+CONDITIONS.index(c)*0.25:.2f}) {{{label}}};')
+            plot.append(rf'\node[{color},anchor=west] at (5.5,{3.0+CONDITIONS.index(c)*0.3:.2f}) {{{label}}};')
         plot.append(r'\end{tikzpicture}')
         outputs['overhead-plot.tex'] = '\n'.join(plot)+'\n'
     else:
