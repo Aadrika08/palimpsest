@@ -18,4 +18,8 @@ Generated macros cover results. These prose-only constants trace to retained evi
 | Loss ~11-12x (11.4, 12.2, 11.2), 7,197 vs 2,117 rows | `docs/reports/male-v4-s2/UNDERFIT-NOTE.md` (S1 report sha `6ca8af5f...`); descriptive, not a controlled test |
 | 12 episodes, 4 scenes | now macros `\MaleVfourEpisodes`, `\MaleVfourScenes` |
 
+| 1,214.4 CPU-s pilot tree vs 1,222.455 aggregate | `docs/reports/change-audit-runtime-pilot-v1-2026-11-05.md:24,26`: parent CLI tree 1214.384515; aggregate charged (incl. audit) 1222.455497 |
+| No retries in the pilot | same report, line 3 ("no retries or replacement roots") |
+| Puck attempt 2 ran under Amendment 1 | `puck-v4-s1-attempt-2/README.md:3` (approved by owner 2026-11-09); attempt 1 protocol allowed no retry |
+
 Not re-derived from raw data: the 8/100/20/200-tick protocol constants and the puck statement beyond the progress notes.
