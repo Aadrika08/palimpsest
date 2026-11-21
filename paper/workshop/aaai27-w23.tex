@@ -40,7 +40,7 @@ first action on all three ablation seeds. Median recording overhead versus a nul
 We machine-check in Lean~4 finite-candidate fixed-horizon and anytime bounds for auditing a
 controller change and price them at measured cost: the one-hour audit allocation affords
 \AuditLaneScenarios{} scenarios, a vacuous radius. We also report, as a negative result, that a
-matched-budget navigation development gate failed (\MaleVfourAugGoals{} of 12 augmented episodes reached the goal),
+matched-budget navigation development gate failed (\MaleVfourAugGoals{} of \MaleVfourEpisodes{} augmented episodes reached the goal),
 so no capability claim is made. One declared clean-checkout unit remains incomplete.
 \end{abstract}
 
@@ -230,10 +230,10 @@ publication are separate facts, tested here through conformance, ablation, agree
 stale-information memory comparison covered 44 of 48 development cells with all 120 applicable correction pairs tied, and
 held-out evaluation was not run for it; an earlier recovery-navigation held-out stage did not qualify. A regenerated
 matched-budget navigation study (v4) ran its development evaluation once on four fixed scenes and three training seeds,
-with the gate fixed in advance at \MaleVfourThreshold{} of 4 scenes per augmented seed. The augmented arm reached the goal
-in \MaleVfourAugGoals{} of 12 owner episodes (per seed \MaleVfourAugBySeed{}), stalling in \MaleVfourAugStalled{} and timing
+with the gate fixed in advance at \MaleVfourThreshold{} of \MaleVfourScenes{} scenes per augmented seed. The augmented arm reached the goal
+in \MaleVfourAugGoals{} of \MaleVfourEpisodes{} owner episodes (per seed \MaleVfourAugBySeed{}), stalling in \MaleVfourAugStalled{} and timing
 out in \MaleVfourAugTimeLimit{} (median final distance \MaleVfourAugMedianDistance{}\,m); the reported-only old-corpus arm
-reached it in \MaleVfourOldGoals{} of 12 (\MaleVfourOldBySeed{}). The gate was not met, held-out evaluation was not run, and
+reached it in \MaleVfourOldGoals{} of \MaleVfourEpisodes{} (\MaleVfourOldBySeed{}). The gate was not met, held-out evaluation was not run, and
 we make no capability claim. Retained training logs are consistent with underfitting: matched-budget augmented training
 loss was roughly 11--12 times the old-corpus loss on all three seeds, and recorded actions were nearly constant. This
 comparison is descriptive: training loss is not directly comparable across the two corpora (7,197 vs 2,117 rows), and no
