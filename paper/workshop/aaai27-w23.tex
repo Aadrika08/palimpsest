@@ -141,9 +141,9 @@ C3 alone measures benign false rejection. Diagnostic divergence is not automatic
 
 \textbf{RQ2: continuation and replay.} Ten seeds run an eight-tick prefix and a 100-tick source/restored comparison:
 agreement \ContinuationPassed{}/\ContinuationDeclared{}. Five source trajectories each run branch, playback, action
-replay and policy replay conditions: \ReplayPassed{}/\ReplayDeclared{}. Pose-only restoration, which jointly omits
-continuation state, changed the first action on all three seeds; this is a measurement of a known restore pitfall
-\citep{mujococomputation,zhou2026simuguard} and does not identify any single omitted component.
+replay and policy replay conditions: \ReplayPassed{}/\ReplayDeclared{}. Pose-only restoration, which rewinds physics but leaves controller, RNG and
+application state at their post-step values, changed the first action on all three seeds; this is a measurement of a known restore pitfall
+\citep{mujococomputation,zhou2026simuguard} and does not identify which of the unrestored components matters.
 For seed 0 a retained join links the goal-edit receipt (tick 0, revision 1), a tick-8 snapshot holding that receipt and
 a digest of 30 events, a separate branch matching 92 ticks, and action and policy replay reports on the same source with
 policy execution false and true.
@@ -202,7 +202,7 @@ contrast falls below its expectation by more than $\sqrt{2\log(K/\alpha)/n}$ wit
 \citep{ville1939etude,howard2021timeuniform} gives the same guarantee at every prefix with radius
 $\log(K/\alpha)/(\lambda n)+\lambda/2$, whose floor does not vanish. Exact rational Taylor sums certify an upper bound on
 $\log(K/\alpha)$ so a checker can decide the anytime gate in rational arithmetic. All 17 axiom reports list only Lean's
-three standard axioms (no \texttt{sorry}); the Ville helper is adapted with attribution from an Apache-2.0 upstream proof
+three standard axioms (no \texttt{sorry}); the Ville helper is adapted with attribution from an Apache-2.0 upstream proof \citep{aapbrepo}
 and we claim no new probability theorem. The proofs do not verify the parser, the sampler or that a simulator satisfies the
 premises.
 
@@ -222,10 +222,10 @@ narrow ablations, not these systems. rosbag2, CARLA and Gazebo record at middlew
 \citep{mujococomputation}; rr replays user-space processes \citep{ocallahan2017rr}; ReproZip packages environments
 \citep{chirigati2013reprozip}. Each addresses a different boundary from declaring what an application applied, restored
 and recomputed. Concurrent snapshot, provenance and replay work records world state, hash-chained updates and bit-for-bit replay
-\citep{li2026tws,zhou2026simuguard}; we found none that also binds controller hidden state, RNG and pending commands to
-an applied-command receipt, but our search reached only part of the literature and we claim no priority. Anytime-valid inference
-\citep{ville1939etude,howard2021timeuniform} underlies the anytime bound, and Lean-checked anytime-valid bounds, including
-for auditing post-training changes to a robot model, appeared in 2026
+\citep{li2026tws,zhou2026simuguard}; in the abstracts and pages we read we found none that also binds controller hidden state, RNG and pending commands to
+an applied-command receipt, but this was an AI-assisted screen that reached only part of the literature, and we claim no priority. Anytime-valid inference
+\citep{ville1939etude,howard2021timeuniform} underlies the anytime bound, and Lean 4 work on anytime-valid bounds, including a Lean-checked bound for auditing
+post-training changes to a robot model, appeared in 2026
 \citep{gupta2026pacbayes,sneiderman2026monitor,sneiderman2026simulated,sneiderman2026fixedn,yang2026formalavs,mittal2026sealed,lmlexploreville}.
 Our contribution there is a finite-candidate specialization to controller-change audits with an exact-rational bridge and
 a measured one-hour cost, not the anytime-valid bound itself.
