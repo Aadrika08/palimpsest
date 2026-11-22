@@ -62,7 +62,8 @@ publication status determines which records a reader may admit. Contributions: (
 explicit failure boundaries; (2) an implementation (boundary receipts, observation projection, complete
 snapshots, independent branch owners, staged publication); (3) a predeclared evaluation of conformance,
 ablation, paired agreement and cost; (4) a machine-checked finite-candidate improvement audit with an exact-rational
-bridge and its measured cost (RQ5), plus an honest account of capability studies that did not qualify.
+bridge and its measured cost (RQ5), plus an honest account of capability studies that did not qualify. Each component has
+precedent (Related Work); the claim is their joint contract and the measured evidence, not any single mechanism.
 
 \section{Semantic Contract}
 Write the continuation state as $z_t=(x_t,h_t,w_t,r_t,q_t)$: physics $x_t$, recurrent controller $h_t$,
@@ -141,7 +142,8 @@ C3 alone measures benign false rejection. Diagnostic divergence is not automatic
 \textbf{RQ2: continuation and replay.} Ten seeds run an eight-tick prefix and a 100-tick source/restored comparison:
 agreement \ContinuationPassed{}/\ContinuationDeclared{}. Five source trajectories each run branch, playback, action
 replay and policy replay conditions: \ReplayPassed{}/\ReplayDeclared{}. Pose-only restoration, which jointly omits
-continuation state, changed the first action on all three seeds (this does not identify any single omitted component).
+continuation state, changed the first action on all three seeds; this is a measurement of a known restore pitfall
+\citep{mujococomputation,zhou2026simuguard} and does not identify any single omitted component.
 For seed 0 a retained join links the goal-edit receipt (tick 0, revision 1), a tick-8 snapshot holding that receipt and
 a digest of 30 events, a separate branch matching 92 ticks, and action and policy replay reports on the same source with
 policy execution false and true.
@@ -219,8 +221,14 @@ narrow ablations, not these systems. rosbag2, CARLA and Gazebo record at middlew
 \citep{rosbag2,carlarecorder,gazebologging}; MuJoCo documents integration-state restoration and same-version limits
 \citep{mujococomputation}; rr replays user-space processes \citep{ocallahan2017rr}; ReproZip packages environments
 \citep{chirigati2013reprozip}. Each addresses a different boundary from declaring what an application applied, restored
-and recomputed. Anytime-valid inference \citep{ville1939etude,howard2021timeuniform} underlies the anytime bound; our
-contribution there is a machine-checked finite-candidate specialization and a measured cost, not new theory.
+and recomputed. Concurrent snapshot, provenance and replay work records world state, hash-chained updates and bit-for-bit replay
+\citep{li2026tws,zhou2026simuguard}; we found none that also binds controller hidden state, RNG and pending commands to
+an applied-command receipt, but our search reached only part of the literature and we claim no priority. Anytime-valid inference
+\citep{ville1939etude,howard2021timeuniform} underlies the anytime bound, and Lean-checked anytime-valid bounds, including
+for auditing post-training changes to a robot model, appeared in 2026
+\citep{gupta2026pacbayes,sneiderman2026monitor,sneiderman2026simulated,sneiderman2026fixedn,yang2026formalavs,mittal2026sealed,lmlexploreville}.
+Our contribution there is a finite-candidate specialization to controller-change audits with an exact-rational bridge and
+a measured one-hour cost, not the anytime-valid bound itself.
 
 \section{Negative Results and Limitations}
 Claims should match their evidence boundary: admission, application, state agreement, executed computation and
