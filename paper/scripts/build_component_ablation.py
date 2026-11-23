@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import hashlib
 from pathlib import Path
 
 PAPER = Path(__file__).resolve().parents[1]
@@ -36,6 +37,11 @@ def compute() -> dict:
     identity = json.loads((EVIDENCE / 'identity.json').read_text())
     if identity['protocol_sha256'] != identity['go']['protocol_sha256'] or identity['go']['go'] is not True:
         raise ValueError('run identity does not carry the owner GO for its protocol')
+    if hashlib.sha256(PROTOCOL.read_bytes()).hexdigest() != identity['protocol_sha256']:
+        raise ValueError('protocol.json differs from the protocol the run executed')
+    if any(r['restore_refused'] or r['ticks'] != protocol['horizon_ticks'] or not isinstance(r['first_action_changed'], bool)
+           for r in rows):
+        raise ValueError('a row was refused, short or has no boolean first-action verdict')
     arm = {(r['seed'], r['arm']): r for r in rows}
     analyses = []
     for seed in seeds:
@@ -44,38 +50,49 @@ def compute() -> dict:
             raise ValueError(f'seed {seed}: recomputed analysis disagrees with the retained analysis')
         analyses.append(derived)
     count = lambda key, comp, want=True: sum(a[key][comp] is want for a in analyses)
-    clean = lambda name: sum(arm[(s, name)]['scientific_first_divergence'] is None for s in seeds)
+    # 'clean' means every recorded tick field agreed, including the revision counter.
+    clean = lambda name: sum(arm[(s, name)]['scientific_first_divergence'] is None
+                             and arm[(s, name)]['application_first_divergence'] is None for s in seeds)
+    revision_only = lambda name: sum(arm[(s, name)]['scientific_first_divergence'] is None
+                                     and (arm[(s, name)]['application_first_divergence'] or {}).get('field') == 'revision'
+                                     for s in seeds)
+    # Text claim 'the first action changed only when hidden state was stale', checked over every arm.
+    for r in rows:
+        if r['arm'] != 'full' and r['first_action_changed'] != ('controller_hidden' not in r['from_source']):
+            raise ValueError(f"{r['unit_id']}: first-action change does not track stale hidden state")
     tick = lambda name: [arm[(s, name)]['first_action_divergence_tick'] for s in seeds]
     for name in ('loo:observation', 'loo:physics', 'loo:controller_retina'):
         if None in tick(name):
             raise ValueError(f'{name}: action never diverged on some seed; macros assume it did')
     others = [c for c in runner.COMPONENTS if c not in ('controller_hidden', 'rng')]
     prechecks = [json.loads((EVIDENCE / f'seed-{s}/precheck.json').read_text()) for s in seeds]
+    if any(p['differs']['rng'] for p in prechecks):
+        raise ValueError('rng was exercised on some seed; the text says no step consumed RNG state')
     cpu = json.loads((EVIDENCE / 'cpu.json').read_text())
     return {
-        'seeds': len(seeds), 'arms': protocol['arms_per_seed'], 'rows': len(rows), 'horizon': protocol['horizon_ticks'],
+        'seeds': len(seeds), 'arms': protocol['arms_per_seed'], 'horizon': protocol['horizon_ticks'],
         'valid': sum(a['h1_full_agrees'] for a in analyses),
-        'pose_changed': sum(a['h2_pose_only_changes_first_action'] is True for a in analyses),
         'hidden_necessary': count('necessary_first_action', 'controller_hidden'),
         'hidden_repairs': count('repairs_first_action', 'controller_hidden'),
         'other_first_action': sum(a['necessary_first_action'][c] is True for a in analyses for c in others),
-        'inputs_clean': clean('add:controller_inputs'),
+        'other_first_action_arms': len(others) * len(seeds),
+        'inputs_revision_only': revision_only('add:controller_inputs'),
         'observation_tick': _ticks(tick('loo:observation')),
         'physics_tick': _ticks(tick('loo:physics')),
         'retina_tick': _ticks(tick('loo:controller_retina')),
-        'wrapper_clean': clean('loo:environment'), 'application_clean': clean('loo:application'),
-        'rng_exercised': sum(p['differs']['rng'] for p in prechecks),
+        'wrapper_clean': clean('loo:environment'), 'application_revision_only': revision_only('loo:application'),
         'cpu': round(cpu['total_cpu_seconds_including_parent']),
     }
 
 
 def render(v: dict) -> str:
-    names = {'seeds': 'CompSeeds', 'arms': 'CompArms', 'rows': 'CompRows', 'horizon': 'CompHorizon',
-             'valid': 'CompValidSeeds', 'pose_changed': 'CompPoseChanged', 'hidden_necessary': 'CompHiddenNecessary',
+    names = {'seeds': 'CompSeeds', 'arms': 'CompArms', 'horizon': 'CompHorizon',
+             'valid': 'CompValidSeeds', 'hidden_necessary': 'CompHiddenNecessary',
              'hidden_repairs': 'CompHiddenRepairs', 'other_first_action': 'CompOtherFirstAction',
-             'inputs_clean': 'CompInputsClean', 'observation_tick': 'CompObservationTick',
+             'other_first_action_arms': 'CompOtherFirstActionArms',
+             'inputs_revision_only': 'CompInputsRevisionOnly', 'observation_tick': 'CompObservationTick',
              'physics_tick': 'CompPhysicsTick', 'retina_tick': 'CompRetinaTick', 'wrapper_clean': 'CompWrapperClean',
-             'application_clean': 'CompApplicationClean', 'rng_exercised': 'CompRngExercised', 'cpu': 'CompCPU'}
+             'application_revision_only': 'CompApplicationRevisionOnly', 'cpu': 'CompCPU'}
     lines = ['% Generated by scripts/build_component_ablation.py from paper/evidence/authority-component-v1; do not edit.']
     for key, name in names.items():
         value = f'{v[key]:,}' if key == 'cpu' else v[key]

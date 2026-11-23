@@ -33,3 +33,5 @@ Not re-derived from raw data: the 8/100/20/200-tick protocol constants and the p
 | "contrary to our preregistered expectation that no single component would" | `protocol.json` `prediction_from_code`, committed before the run |
 | "Hybrids pass per-component validation but need not be reachable states" | `protocol.json` `hybrid_coherence`; AI review 2 in `paper/studies/authority_component_v1/REVIEWS.md` |
 | "through stale recurrent controller state" (abstract, conclusion) | same evidence: leave-one-out hidden changes tick-0 action 6/6, add hidden alone repairs 6/6, no other component changes tick-0 action |
+| "first action changed only when recurrent controller state was stale" | generator asserts, over all 90 non-reference rows, first-action change iff hidden came from the donor |
+| wrapper unchanged / application only revision | generator `clean()` requires both scientific and revision agreement; `revision_only()` requires non-revision agreement and a revision-first divergence (AI review 3 caught the earlier overclaim) |

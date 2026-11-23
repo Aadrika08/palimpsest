@@ -9,9 +9,11 @@
 
 Outcome (descriptive, n=6, FLYNN sparse-navigation on CPU): stale recurrent controller hidden state alone changed the
 first restored action (6/6) and restoring it alone repaired it (6/6), contradicting the pre-registered expectation
-that no single component would. Stale observation, physics and retina state first changed the action at restored
-ticks 1, 2 and 5-10; stale wrapper fields and application state changed nothing recorded in 64 ticks; no step
-consumed RNG state. Restoring physics plus observation, hidden and retina removed all divergence (6/6).
+that no single component would. Stale observation, physics and retina state first moved the action beyond the 1e-6
+tolerance at restored ticks 1, 2 and 5-10. Over 64 ticks (comparing qpos, qvel, ctrl, hidden, action, retinas and
+revision; reward and termination not compared), stale wrapper fields changed nothing and stale application state
+changed only the revision counter (one ahead); no step consumed RNG state. Restoring physics plus observation, hidden
+and retina removed every divergence except that revision counter (6/6).
 
 Question: the parent study's S1 unit showed that restoring physics alone changes the first FLYNN action, but not
 which unrestored component causes it. This study restores 16 hybrid snapshots per seed (full, pose-only, seven
