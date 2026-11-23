@@ -19,6 +19,7 @@
 \input{generated/authority-claims.tex}
 \input{generated/audit-affordability.tex}
 \input{generated/male-v4-development.tex}
+\input{generated/component-ablation.tex}
 \newcommand{\studyinput}[1]{\input{generated/#1.tex}}
 \title{Who Changed the World? Authority-Aware Replay for Interactive Embodied-AI Experiments, with a Costed Improvement Audit}
 \author{Anonymous Submission}
@@ -34,7 +35,8 @@ on one host with CPU execution: \FaultDeclaredUnits{} controlled challenges, ten
 trajectories and ten paired recording-cost sets. Complete continuation agreed on
 \ContinuationPassed{}/\ContinuationDeclared{} pairs and declared replay on
 \ReplayPassed{}/\ReplayDeclared{} trajectories, while pose-only restoration changed the
-first action on all three ablation seeds. Median recording overhead versus a null writer was
+first action on all three ablation seeds; a preregistered hybrid-restore ablation (\CompSeeds{} seeds, one controller)
+attributes that change to stale recurrent controller state. Median recording overhead versus a null writer was
 \SynchronousOverheadMedian{}\% (synchronous), \BackgroundOverheadMedian{}\% (background) and
 \StorageOverheadMedian{}\% with storage accounting (worst pair \StorageOverheadMaximum{}\%).
 We machine-check in Lean~4 finite-candidate fixed-horizon and anytime bounds for auditing a
@@ -143,8 +145,20 @@ C3 alone measures benign false rejection. Diagnostic divergence is not automatic
 agreement \ContinuationPassed{}/\ContinuationDeclared{}. Five source trajectories each run branch, playback, action
 replay and policy replay conditions: \ReplayPassed{}/\ReplayDeclared{}. Pose-only restoration, which rewinds the full MuJoCo integration state $x$ but leaves the recurrent controller $h$, wrapper $w$ (environment fields and engine counters),
 RNG $r$ and the cached observation at their post-step values (the command queue $q$ is empty at that boundary), changed the first action on all three seeds.
-Restore completeness is a documented concern for physics state \citep{mujococomputation}; this measurement does not identify
-which of the unrestored components matters.
+Restore completeness is a documented concern for physics state \citep{mujococomputation}. A preregistered follow-up
+(one attempt, \CompCPU{} CPU-s) restored \CompArms{} hybrid snapshots per seed on \CompSeeds{} development seeds through
+the production restore path, taking each component from the snapshot or from the post-step state, and compared
+\CompHorizon{} ticks. The all-snapshot hybrid agreed on \CompValidSeeds{}/\CompSeeds{} seeds. The first action changed only
+when recurrent controller state was stale (\CompHiddenNecessary{}/\CompSeeds{}; other exercised components \CompOtherFirstAction{}/\CompOtherFirstActionArms{} arms),
+and restoring it alone on top of physics repaired the first action (\CompHiddenRepairs{}/\CompSeeds{}), contrary to our
+preregistered expectation that no single component would. Stale observation, physics and retina state first moved the
+action beyond the comparison tolerance ($10^{-6}$ absolute and relative) at restored ticks \CompObservationTick{}, \CompPhysicsTick{} and
+\CompRetinaTick{}. Over \CompHorizon{} ticks, comparing positions, velocities, controls, hidden and retina state, action and
+the revision counter (not reward or termination), stale wrapper fields changed nothing (\CompWrapperClean{}/\CompSeeds{}) and
+stale application state changed only the revision counter (\CompApplicationRevisionOnly{}/\CompSeeds{}); the step between snapshot and post-step state consumed no RNG
+state, so RNG restoration was not exercised. Restoring physics, observation, hidden and retina state removed every
+divergence except that counter (\CompInputsRevisionOnly{}/\CompSeeds{}). Hybrids pass per-component
+validation but need not be states the live engine could reach; the result is specific to this controller and task.
 For seed 0 a retained join links the goal-edit receipt (tick 0, revision 1), a tick-8 snapshot holding that receipt and
 a digest of 30 events, a separate branch matching 92 ticks, and action and policy replay reports on the same source with
 policy execution false and true.
@@ -258,7 +272,7 @@ power-loss recovery. Independent-machine reproduction and a public archive with 
 
 \section{Conclusion}
 The contract makes application, continuation, computation and publication claims separately inspectable. Pose-only
-restoration diverged immediately while complete continuation agreed in the tested pairs, background recording had a lower
+restoration diverged immediately, through stale recurrent controller state in the tested controller and task, while complete continuation agreed in the tested pairs, background recording had a lower
 paired median than synchronous writing, and storage-accounted retention exposed long stalls. A machine-checked audit makes
 the missing claim precise: certifying improvement needs hundreds to thousands of independent scenarios depending on the target radius, beyond the one-hour lane.
 
