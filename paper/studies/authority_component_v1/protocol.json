@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "study_id": "authority_component_v1",
+  "status": "draft: scope approved by owner 2026-11-23 (\"doit\", final lane); the add:controller_inputs arm was added after AI review and needs owner OK; run GO not given",
+  "question": "When a FLYNN continuation is restored with physics at the snapshot boundary but other snapshot components left at their post-step values, which components change the first restored action?",
+  "parent_finding": "authority_replay_v1 fault S1 (seeds 0-2): pose/integration-only restore on the live engine changed the first action; complete restore agreed. That unit does not identify which unrestored component matters.",
+  "parent_study_frozen": "paper/studies/authority_replay_v1 is imported read-only and never edited.",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "seed_status": "development only; authority_replay_v1 declares no held-out seeds and these seeds were already used by its continuation unit",
+  "controller": "flynn",
+  "device": "cpu",
+  "scenario": "sparse-navigation",
+  "prefix_ticks": 8,
+  "horizon_ticks": 8,
+  "capture": {
+    "source": "capture at the paused boundary after prefix_ticks live steps",
+    "donor": "capture at the paused boundary after one further live step from that source boundary (the post-step values S1 leaves in place)",
+    "expected": "the live engine's tick states for horizon_ticks steps from the source boundary (the donor capture happens between expected ticks 1 and 2 and mutates no scientific state)"
+  },
+  "components": {
+    "physics": [
+      "native_data",
+      "native_sha256",
+      "integration"
+    ],
+    "environment": [
+      "environment"
+    ],
+    "observation": [
+      "observation"
+    ],
+    "controller_hidden": [
+      "policy.hidden",
+      "policy.failure_diagnostics"
+    ],
+    "controller_retina": [
+      "policy.left",
+      "policy.right"
+    ],
+    "rng": [
+      "rng"
+    ],
+    "application": [
+      "application"
+    ]
+  },
+  "invariant_keys": [
+    "schema_version",
+    "identity",
+    "integration_enum",
+    "teacher"
+  ],
+  "invariant_rule": "source and donor must agree on invariant_keys (teacher is None for flynn); otherwise the seed is a failed unit",
+  "arms": {
+    "full": "every component from source (reference arm; exercised is null)",
+    "pose_only": "physics from source, every other component from donor",
+    "leave_one_out": "every component from source except one, taken from donor (7 arms)",
+    "add_one_in": "pose_only plus one non-physics component from source (6 arms)",
+    "add:controller_inputs": "pose_only plus observation, controller_hidden and controller_retina from source (1 arm; added after AI review because the tick-0 action reads only these three)"
+  },
+  "arms_per_seed": 16,
+  "restore_path": "each arm restores its hybrid snapshot into a freshly opened engine with Engine.restore_branch (production validation path), then steps horizon_ticks",
+  "tick_state": "authority_replay_v1.fault_matrix._tick_state (qpos, qvel, control, hidden, action, revision, retinas)",
+  "comparison": "authority_replay_v1.fault_matrix.first_divergence (exact discrete, atol=rtol=1e-6 float) against expected",
+  "metrics": {
+    "primary": "first_action_divergence_tick: first restored tick (0..horizon_ticks-1) whose action fails the comparison, null if none; first_action_changed means tick 0",
+    "secondary": [
+      "scientific_first_divergence over horizon_ticks (field and tick; revision excluded)",
+      "application_first_divergence (revision only)",
+      "restore_refused with the error text",
+      "per-tick total_tick and phase; a tick that does not advance ends the arm as runtime_failure"
+    ]
+  },
+  "exercised_rule": "Per seed and component, record whether source and donor digests differ. An arm is exercised iff any of its tested components (loo:c and add:c -> {c}; add:controller_inputs -> those three; pose_only -> all non-physics) differs. A not_exercised arm is reported but never read as 'component does not matter'. All 16 arms are attempted on every started seed; failed, timed-out and not-started seeds are padded with placeholder rows so rows.jsonl always holds 96 rows.",
+  "harness_checks": {
+    "H1": "full arm completes with no scientific and no application divergence over horizon_ticks. Any H1 failure makes every attribution for that seed invalid; reported as a harness failure.",
+    "H2": "pose_only changes the tick-0 action on seeds 0, 1, 2. This is a consistency check with the parent S1 finding, not an independent validation: it is expected whenever donor observation or controller state differ, and the parent used live mj_setState, not restore_branch."
+  },
+  "analysis": {
+    "necessary_first_action": "component c: leave_one_out[c] changes the tick-0 action, given H1",
+    "necessary_horizon": "component c: leave_one_out[c] has any scientific divergence within horizon_ticks, given H1",
+    "repairs_first_action": "arm add:x repairs pose_only if its tick-0 action is unchanged while pose_only's changed, given H1",
+    "reporting": "per-component counts over valid seeds (n<=6); descriptive only, no significance test, no extrapolation beyond FLYNN sparse-navigation on CPU",
+    "interactions": "no arms beyond these 16 are added after seeing results"
+  },
+  "resources": {
+    "lane": "final",
+    "lane_cap_cpu_seconds": 7200,
+    "lane_used_before_cpu_seconds": 158.4,
+    "study_ceiling_cpu_seconds": 4500,
+    "estimate_cpu_seconds": 3200,
+    "estimate_basis": "parent S1 took 39.7 s wall for two engine opens plus 10 steps; this study opens 17 engines per seed. Torch uses 2 threads, so CPU can exceed wall. Unmeasured until the smoke run.",
+    "seed_timeout_seconds": 900,
+    "sequential": true,
+    "cpu_only": true,
+    "paid_compute": false,
+    "cpu_accounting": "seed CPU from RUSAGE_CHILDREN per seed child (stop rule); cpu.json also records RUSAGE_SELF+CHILDREN including the parent's runtime copy and identity hashing, which is the figure charged to the lane"
+  },
+  "stop_rules": [
+    "Before each seed, stop if used CPU-s plus the largest per-seed CPU-s seen so far (or 900 for the first seed) exceeds study_ceiling_cpu_seconds.",
+    "Stop new seeds after any seed timeout.",
+    "Retain completed, failed, refused and timed-out rows; never delete, replace, retry or rerun a seed.",
+    "No automatic retries. No held-out reads."
+  ],
+  "outputs": "runs/paper-authority-component-v1/<exclusive empty root>: rows.jsonl (96 rows), identity.json, cpu.json, seed-<n>.stderr, seed-<n>/{rows.jsonl, precheck.json, expected.npz, arm-NN.npz, analysis.json, child.json}",
+  "authority": {
+    "scope_approval": "owner, 2026-11-23, message \"doit\" in reply to the proposal 'approve ablation scope, final lane'",
+    "required_before_run": [
+      "authored tests pass",
+      "independent AI review recorded as AI review",
+      "owner OK for the add:controller_inputs arm",
+      "owner OK, then one opt-in smoke run on non-study seed 1000 (horizon 2, prefix 2) with CPU and peak RSS recorded",
+      "explicit owner run GO committed as go.json naming this protocol's sha256 (campaign_identity requires a clean checkout)"
+    ],
+    "run_go": null
+  },
+  "prediction_from_code": "Recorded before any run, from engine.py advance(): the tick-0 action is policy.act on the cached observation with the current hidden and retina state, computed before env.step. So leave_one_out arms for physics, environment, rng and application cannot change the tick-0 action; any effect of theirs can appear only at later ticks or in non-action fields. No single add_one_in arm is expected to repair pose_only if two or more of observation, hidden and retina differ between source and donor; add:controller_inputs is expected to repair the tick-0 action. A result contradicting this is reported as such, not reinterpreted."
+}
