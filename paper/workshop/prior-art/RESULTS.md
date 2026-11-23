@@ -73,3 +73,9 @@ Lean-checked anytime-valid results exist, some for robot post-training audits, a
 5. Describe C8 as measuring a known restore pitfall.
 6. A human second screen and the sources neither AI could reach (Scholar, ACM, IEEE, DBLP, GitHub code search, Zulip)
    remain open; this run does not discharge the protocol's two-screener independence requirement beyond two AIs.
+
+## Addendum 2026-11-23 (after independent AI review of PR #197)
+
+- Cited after GitHub/arXiv verification: formal-martingales, atlas-lean PR #1250 (merged 2026-11-12), mathlib4 PR #45429 (open), RoboVerse (arXiv 2504.18904). The Ville helper upstream (`noumenal-ai/anytime-anywhere-pac-bayes`, `Ville.lean`) is authored by Dhruv Gupta and is the companion code of Gupta & Mittal 2026; the bib entry now says so.
+- Not cited: Isaac Sim Episode Recorder, Isaac Lab-Arena, RoboSandbox, Ortega et al. 2605.29973. Each was reported by one screener at snippet level only and was not re-verified; under the stricter-reading rule they remain counted as prior art for C1/C4 in Section 7, and the draft's C1/C4 wording already disclaims priority.
+- SimuGuard is no longer cited for the restore pitfall: its abstract does not mention restore or warm start (abstract-level only, never re-verified).
