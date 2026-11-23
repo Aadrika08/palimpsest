@@ -149,14 +149,14 @@ Restore completeness is a documented concern for physics state \citep{mujococomp
 (one attempt, \CompCPU{} CPU-s) restored \CompArms{} hybrid snapshots per seed on \CompSeeds{} development seeds through
 the production restore path, taking each component from the snapshot or from the post-step state, and compared
 \CompHorizon{} ticks. The all-snapshot hybrid agreed on \CompValidSeeds{}/\CompSeeds{} seeds. The first action changed only
-when recurrent controller state was stale (\CompHiddenNecessary{}/\CompSeeds{}; other components \CompOtherFirstAction{}/\CompOtherFirstActionArms{} arms),
+when recurrent controller state was stale (\CompHiddenNecessary{}/\CompSeeds{}; other exercised components \CompOtherFirstAction{}/\CompOtherFirstActionArms{} arms),
 and restoring it alone on top of physics repaired the first action (\CompHiddenRepairs{}/\CompSeeds{}), contrary to our
 preregistered expectation that no single component would. Stale observation, physics and retina state first moved the
-action beyond the $10^{-6}$ comparison tolerance at restored ticks \CompObservationTick{}, \CompPhysicsTick{} and
+action beyond the comparison tolerance ($10^{-6}$ absolute and relative) at restored ticks \CompObservationTick{}, \CompPhysicsTick{} and
 \CompRetinaTick{}. Over \CompHorizon{} ticks, comparing positions, velocities, controls, hidden and retina state, action and
 the revision counter (not reward or termination), stale wrapper fields changed nothing (\CompWrapperClean{}/\CompSeeds{}) and
-stale application state changed only the revision counter (\CompApplicationRevisionOnly{}/\CompSeeds{}); no step consumed RNG
-state, so its restoration was not exercised. Restoring physics, observation, hidden and retina state removed every
+stale application state changed only the revision counter (\CompApplicationRevisionOnly{}/\CompSeeds{}); the step between snapshot and post-step state consumed no RNG
+state, so RNG restoration was not exercised. Restoring physics, observation, hidden and retina state removed every
 divergence except that counter (\CompInputsRevisionOnly{}/\CompSeeds{}). Hybrids pass per-component
 validation but need not be states the live engine could reach; the result is specific to this controller and task.
 For seed 0 a retained join links the goal-edit receipt (tick 0, revision 1), a tick-8 snapshot holding that receipt and

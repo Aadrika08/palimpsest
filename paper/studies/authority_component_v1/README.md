@@ -12,7 +12,7 @@ first restored action (6/6) and restoring it alone repaired it (6/6), contradict
 that no single component would. Stale observation, physics and retina state first moved the action beyond the 1e-6
 tolerance at restored ticks 1, 2 and 5-10. Over 64 ticks (comparing qpos, qvel, ctrl, hidden, action, retinas and
 revision; reward and termination not compared), stale wrapper fields changed nothing and stale application state
-changed only the revision counter (one ahead); no step consumed RNG state. Restoring physics plus observation, hidden
+changed only the revision counter; the step between snapshot and post-step state consumed no RNG state. Restoring physics plus observation, hidden
 and retina removed every divergence except that revision counter (6/6).
 
 Question: the parent study's S1 unit showed that restoring physics alone changes the first FLYNN action, but not

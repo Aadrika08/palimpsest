@@ -67,7 +67,7 @@ def compute() -> dict:
     others = [c for c in runner.COMPONENTS if c not in ('controller_hidden', 'rng')]
     prechecks = [json.loads((EVIDENCE / f'seed-{s}/precheck.json').read_text()) for s in seeds]
     if any(p['differs']['rng'] for p in prechecks):
-        raise ValueError('rng was exercised on some seed; the text says no step consumed RNG state')
+        raise ValueError('rng differs between source and donor on some seed; the text says the snapshot-to-post-step step consumed no RNG state')
     cpu = json.loads((EVIDENCE / 'cpu.json').read_text())
     return {
         'seeds': len(seeds), 'arms': protocol['arms_per_seed'], 'horizon': protocol['horizon_ticks'],
