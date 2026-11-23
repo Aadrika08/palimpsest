@@ -1,0 +1,31 @@
+{
+ "h1_full_agrees": true,
+ "h2_pose_only_changes_first_action": true,
+ "necessary_first_action": {
+  "application": false,
+  "controller_hidden": true,
+  "controller_retina": false,
+  "environment": false,
+  "observation": false,
+  "physics": false,
+  "rng": "not_exercised"
+ },
+ "necessary_horizon": {
+  "application": false,
+  "controller_hidden": true,
+  "controller_retina": true,
+  "environment": false,
+  "observation": true,
+  "physics": true,
+  "rng": "not_exercised"
+ },
+ "repairs_first_action": {
+  "application": false,
+  "controller_hidden": true,
+  "controller_inputs": true,
+  "controller_retina": false,
+  "environment": false,
+  "observation": false,
+  "rng": "not_exercised"
+ }
+}

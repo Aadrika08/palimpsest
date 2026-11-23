@@ -23,3 +23,13 @@ Generated macros cover results. These prose-only constants trace to retained evi
 | Puck attempt 2 ran under Amendment 1 | `puck-v4-s1-attempt-2/README.md:3` (approved by owner 2026-11-09); attempt 1 protocol allowed no retry |
 
 Not re-derived from raw data: the 8/100/20/200-tick protocol constants and the puck statement beyond the progress notes.
+
+## Component-wise restore ablation (added 2026-11-23)
+
+| Claim in prose | Source |
+| --- | --- |
+| Component ablation numbers (\Comp* macros: arms, seeds, ticks, counts, CPU-s) | `paper/generated/component-ablation.tex`, built by `paper/scripts/build_component_ablation.py` from `paper/evidence/authority-component-v1/` (re-derives each seed's analysis and refuses on disagreement) |
+| "one attempt", "preregistered", owner GO | `paper/studies/authority_component_v1/protocol.json` (sha256 b6e6e956...), `go.json`; run commit tag `authority-component-v1-run` (afb50cc) |
+| "contrary to our preregistered expectation that no single component would" | `protocol.json` `prediction_from_code`, committed before the run |
+| "Hybrids pass per-component validation but need not be reachable states" | `protocol.json` `hybrid_coherence`; AI review 2 in `paper/studies/authority_component_v1/REVIEWS.md` |
+| "through stale recurrent controller state" (abstract, conclusion) | same evidence: leave-one-out hidden changes tick-0 action 6/6, add hidden alone repairs 6/6, no other component changes tick-0 action |

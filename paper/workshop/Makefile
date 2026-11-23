@@ -1,6 +1,7 @@
 # AAAI-27 W23 build. Needs aaai2027.{sty,bst} from https://aaai.org/authorkit27/ (not committed).
 .PHONY: pdf
 pdf:
+	cd .. && python3 -B scripts/build_component_ablation.py --check
 	mkdir -p build
 	TEXINPUTS=..:: BIBINPUTS=.:: pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build aaai27-w23.tex
 	cd build && BIBINPUTS=..:: BSTINPUTS=..:: bibtex aaai27-w23
@@ -10,7 +11,7 @@ pdf:
 # Anonymized source bundle for upload: only files the draft loads, full-line TeX comments stripped
 # (they carry repo paths, project name and commit hashes), project/commit macros dropped, then a leak check.
 # Output: build/anon-src.zip
-GEN = authority-claims audit-affordability male-v4-development fault-matrix replay-table snapshot-ablation overhead-table overhead-plot operation-table
+GEN = authority-claims audit-affordability male-v4-development component-ablation fault-matrix replay-table snapshot-ablation overhead-table overhead-plot operation-table
 FIG = authority-sequence replay-matrix
 .PHONY: anon
 anon:
