@@ -227,11 +227,15 @@ def main():
     parser.add_argument('--seed-child', type=int)
     parser.add_argument('--repo', type=Path)
     parser.add_argument('--assets', type=Path)
+    parser.add_argument('--horizon', type=int, help='seed-child only: smoke override; the study uses the protocol value')
+    parser.add_argument('--prefix', type=int, help='seed-child only: smoke override; the study uses the protocol value')
     args = parser.parse_args()
     protocol = json.loads(PROTOCOL.read_text())
     if args.seed_child is not None:
-        run_seed(args.seed_child, args.output, args.repo, args.assets, protocol['horizon_ticks'], protocol['prefix_ticks'])
+        run_seed(args.seed_child, args.output, args.repo, args.assets,
+                 args.horizon or protocol['horizon_ticks'], args.prefix or protocol['prefix_ticks'])
         return 0
+    require(args.horizon is None and args.prefix is None, '--horizon/--prefix are smoke-only seed-child overrides')
     from paper.studies.authority_replay_v1 import fault_matrix
     protocol_sha = sha256_file(PROTOCOL)
     go = _go(protocol_sha)
