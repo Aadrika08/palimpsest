@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "study_id": "authority_component_v1",
-  "status": "draft: scope approved by owner 2026-11-23 (\"doit\", final lane); add:controller_inputs arm, smoke run and 64-tick horizon approved by owner 2026-11-23; run GO not given",
+  "status": "frozen for GO review: scope, final lane, 16th arm, smoke run and 64-tick horizon approved by owner 2026-11-23; smoke passed; run GO not given",
   "question": "When a FLYNN continuation is restored with physics at the snapshot boundary but other snapshot components left at their post-step values, which components change the first restored action?",
   "parent_finding": "authority_replay_v1 fault S1 (seeds 0-2): pose/integration-only restore on the live engine changed the first action; complete restore agreed. That unit does not identify which unrestored component matters.",
   "parent_study_frozen": "paper/studies/authority_replay_v1 is imported read-only and never edited.",
@@ -93,15 +93,16 @@
   "resources": {
     "lane": "final",
     "lane_cap_cpu_seconds": 7200,
-    "lane_used_before_cpu_seconds": 158.4,
+    "lane_used_before_cpu_seconds": 599.47,
     "study_ceiling_cpu_seconds": 4500,
-    "estimate_cpu_seconds": 3200,
-    "estimate_basis": "parent S1 took 39.7 s wall for two engine opens plus 10 steps; this study opens 17 engines per seed and steps 17 x 64 ticks. Torch uses 2 threads, so CPU can exceed wall. The owner-approved smoke run (seed 1000, horizon 2) measures open and restore cost before GO.",
-    "seed_timeout_seconds": 900,
+    "estimate_cpu_seconds": 3900,
+    "estimate_basis": "smoke (seed 1000, horizon 2): about 25 s wall per arm, dominated by engine open; 439 child CPU-s for one seed. Per-tick cost was not isolated; assuming up to 0.2 s per tick, a 64-tick seed is about 17 x 25 + 1088 x 0.2 = 650 CPU-s, 6 seeds about 3,900. seed_timeout raised to 1,800 s after the smoke so a slower seed is not cut off; worst case (ceiling plus one overshooting seed) is 6,300 CPU-s, inside the 6,600 left in the final lane.",
+    "seed_timeout_seconds": 1800,
     "sequential": true,
     "cpu_only": true,
     "paid_compute": false,
-    "cpu_accounting": "seed CPU from RUSAGE_CHILDREN per seed child (stop rule); cpu.json also records RUSAGE_SELF+CHILDREN including the parent's runtime copy and identity hashing, which is the figure charged to the lane"
+    "cpu_accounting": "seed CPU from RUSAGE_CHILDREN per seed child (stop rule); cpu.json also records RUSAGE_SELF+CHILDREN including the parent's runtime copy and identity hashing, which is the figure charged to the lane",
+    "lane_used_basis": "158.40 before this study + 441.07 CPU-s for the owner-approved smoke run (user 399.27 + system 41.80, whole pytest process, 2026-11-23)"
   },
   "stop_rules": [
     "Before each seed, stop if used CPU-s plus the largest per-seed CPU-s seen so far (or 900 for the first seed) exceeds study_ceiling_cpu_seconds.",
@@ -148,7 +149,7 @@
     "seed": 1000,
     "horizon_ticks": 2,
     "prefix_ticks": 2,
-    "status": "approved by owner 2026-11-23; charged to the final lane; output retained",
+    "status": "ran 2026-11-23 at commit 618b001: passed. 16/16 arms completed, none refused, H1 held, pose_only changed the tick-0 action, rng not exercised (source and donor equal). 441.07 CPU-s, 7 min 14 s wall, peak RSS 2.64 GB. Output retained under palimpsest-authored-test-evidence/source-vertical-component-v1-smoke-20261123200431. Seed 1000 is not a study seed; its per-arm outcomes are a harness check, not a result.",
     "path": "tests/test_runner.py::test_real_flynn_smoke_on_non_study_seed with PALIMPSEST_COMPONENT_SMOKE=1 (runs the real seed child through the CLI)",
     "rule": "smoke overrides (--horizon/--prefix) are refused on study seeds and recorded in precheck.json and every row"
   }
