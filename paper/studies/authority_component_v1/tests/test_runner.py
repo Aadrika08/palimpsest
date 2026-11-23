@@ -335,3 +335,30 @@ def test_real_flynn_smoke_on_non_study_seed(tmp_path):
     result = {r['arm']: r for r in runner.read_rows(tmp_path / 'seed/rows.jsonl')}
     assert len(result) == 16 and all(r['status'] == 'completed' for r in result.values())
     assert not result['full']['restore_refused'] and result['full']['scientific_first_divergence'] is None
+
+
+def test_component_split_covers_every_snapshot_key():
+    from palimpsest.snapshots import SNAPSHOT_KEYS
+    covered = set(runner.PHYSICS_KEYS) | {'environment', 'observation', 'policy', 'rng', 'application'} | set(runner.INVARIANT)
+    assert covered == SNAPSHOT_KEYS
+    assert {k for parts in runner.POLICY_PARTS.values() for k in parts} == {'hidden', 'failure_diagnostics', 'left', 'right'}
+
+
+def test_collect_seed_survives_a_truncated_child_rows_file(tmp_path):
+    seed_dir = tmp_path / 'seed-4'
+    seed_dir.mkdir()
+    (seed_dir / 'rows.jsonl').write_text('{"unit_id": "seed-4/full", "arm": "fu')
+    rows = runner.collect_seed(4, seed_dir, 'completed', None)
+    assert len(rows) == 16 and {r['status'] for r in rows} == {'failed'} and 'unreadable' in rows[0]['reason']
+    assert (seed_dir / 'rows.jsonl').read_text().startswith('{"unit_id"')  # raw file retained
+
+
+def test_smoke_overrides_are_refused_on_study_seeds_and_recorded(tmp_path, monkeypatch, fake):
+    monkeypatch.setattr(sys, 'argv', ['runner.py', '--output', str(tmp_path / 'x'), '--seed-child', '0', '--horizon', '2'])
+    with pytest.raises(ValueError, match='refused on study seeds'):
+        runner.main()
+    monkeypatch.setattr(sys, 'argv', ['runner.py', '--output', str(tmp_path / 'y'), '--seed-child', '1000', '--horizon', '2', '--prefix', '1'])
+    assert runner.main() == 0
+    precheck = json.loads((tmp_path / 'y/precheck.json').read_text())
+    assert (precheck['horizon_ticks'], precheck['prefix_ticks']) == (2, 1)
+    assert {r['horizon_ticks'] for r in runner.read_rows(tmp_path / 'y/rows.jsonl')} == {2}

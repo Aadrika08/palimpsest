@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "study_id": "authority_component_v1",
-  "status": "draft: scope approved by owner 2026-11-23 (\"doit\", final lane); the add:controller_inputs arm was added after AI review and needs owner OK; run GO not given",
+  "status": "draft: scope approved by owner 2026-11-23 (\"doit\", final lane); add:controller_inputs arm, smoke run and 64-tick horizon approved by owner 2026-11-23; run GO not given",
   "question": "When a FLYNN continuation is restored with physics at the snapshot boundary but other snapshot components left at their post-step values, which components change the first restored action?",
   "parent_finding": "authority_replay_v1 fault S1 (seeds 0-2): pose/integration-only restore on the live engine changed the first action; complete restore agreed. That unit does not identify which unrestored component matters.",
   "parent_study_frozen": "paper/studies/authority_replay_v1 is imported read-only and never edited.",
@@ -18,7 +18,7 @@
   "device": "cpu",
   "scenario": "sparse-navigation",
   "prefix_ticks": 8,
-  "horizon_ticks": 8,
+  "horizon_ticks": 64,
   "capture": {
     "source": "capture at the paused boundary after prefix_ticks live steps",
     "donor": "capture at the paused boundary after one further live step from that source boundary (the post-step values S1 leaves in place)",
@@ -63,7 +63,7 @@
     "pose_only": "physics from source, every other component from donor",
     "leave_one_out": "every component from source except one, taken from donor (7 arms)",
     "add_one_in": "pose_only plus one non-physics component from source (6 arms)",
-    "add:controller_inputs": "pose_only plus observation, controller_hidden and controller_retina from source (1 arm; added after AI review because the tick-0 action reads only these three)"
+    "add:controller_inputs": "pose_only plus observation, controller_hidden and controller_retina from source (1 arm; proposed after AI review because the tick-0 action reads only these three; approved by owner 2026-11-23)"
   },
   "arms_per_seed": 16,
   "restore_path": "each arm restores its hybrid snapshot into a freshly opened engine with Engine.restore_branch (production validation path), then steps horizon_ticks",
@@ -96,7 +96,7 @@
     "lane_used_before_cpu_seconds": 158.4,
     "study_ceiling_cpu_seconds": 4500,
     "estimate_cpu_seconds": 3200,
-    "estimate_basis": "parent S1 took 39.7 s wall for two engine opens plus 10 steps; this study opens 17 engines per seed. Torch uses 2 threads, so CPU can exceed wall. Unmeasured until the smoke run.",
+    "estimate_basis": "parent S1 took 39.7 s wall for two engine opens plus 10 steps; this study opens 17 engines per seed and steps 17 x 64 ticks. Torch uses 2 threads, so CPU can exceed wall. The owner-approved smoke run (seed 1000, horizon 2) measures open and restore cost before GO.",
     "seed_timeout_seconds": 900,
     "sequential": true,
     "cpu_only": true,
@@ -111,15 +111,45 @@
   ],
   "outputs": "runs/paper-authority-component-v1/<exclusive empty root>: rows.jsonl (96 rows), identity.json, cpu.json, seed-<n>.stderr, seed-<n>/{rows.jsonl, precheck.json, expected.npz, arm-NN.npz, analysis.json, child.json}",
   "authority": {
-    "scope_approval": "owner, 2026-11-23, message \"doit\" in reply to the proposal 'approve ablation scope, final lane'",
+    "scope_approval": "see owner_decisions",
     "required_before_run": [
       "authored tests pass",
-      "independent AI review recorded as AI review",
-      "owner OK for the add:controller_inputs arm",
-      "owner OK, then one opt-in smoke run on non-study seed 1000 (horizon 2, prefix 2) with CPU and peak RSS recorded",
+      "independent AI reviews recorded as AI review (REVIEWS.md)",
+      "smoke run on seed 1000 passes, CPU and peak RSS recorded",
       "explicit owner run GO committed as go.json naming this protocol's sha256 (campaign_identity requires a clean checkout)"
     ],
-    "run_go": null
+    "run_go": null,
+    "owner_decisions": [
+      {
+        "date": "2026-11-23",
+        "words": "doit",
+        "meaning": "approve ablation scope, final lane"
+      },
+      {
+        "date": "2026-11-23",
+        "words": "Approve 16th arm (Recommended)",
+        "meaning": "add:controller_inputs arm"
+      },
+      {
+        "date": "2026-11-23",
+        "words": "OK smoke run (Recommended)",
+        "meaning": "one smoke run on seed 1000, horizon 2, final lane, output kept"
+      },
+      {
+        "date": "2026-11-23",
+        "words": "64 ticks (Recommended)",
+        "meaning": "horizon_ticks = 64"
+      }
+    ]
   },
-  "prediction_from_code": "Recorded before any run, from engine.py advance() for flynn sparse-navigation: the tick-0 action is policy.act on the cached observation (cameras via effective_cameras, which also applies the application's eyes flags; collision/wind sensors) with the current hidden and retina state, computed before env.step; no sparse-navigation branch refreshes the observation first. So leave_one_out arms for physics, environment and rng cannot change the tick-0 action, and application can only through eyes, which a step does not change. Their effects can appear only at later ticks or in non-action fields. No single add_one_in arm is expected to repair pose_only if two or more of observation, hidden and retina differ between source and donor; add:controller_inputs is expected to repair the tick-0 action. The tick-0 part is therefore largely determined by code structure; the informative parts are which of observation, hidden and retina matter alone, and horizon divergence. A result contradicting this is reported as such, not reinterpreted."
+  "prediction_from_code": "Recorded before any run, from engine.py advance() for flynn sparse-navigation: the tick-0 action is policy.act on the cached observation (cameras via effective_cameras, which also applies the application's eyes flags; collision/wind sensors) with the current hidden and retina state, computed before env.step; no sparse-navigation branch refreshes the observation first. So leave_one_out arms for physics, environment and rng cannot change the tick-0 action, and application can only through eyes, which a step does not change. Their effects can appear only at later ticks or in non-action fields. No single add_one_in arm is expected to repair pose_only if two or more of observation, hidden and retina differ between source and donor; add:controller_inputs is expected to repair the tick-0 action. The tick-0 part is therefore largely determined by code structure; the informative parts are which of observation, hidden and retina matter alone, and horizon divergence. A result contradicting this is reported as such, not reinterpreted.",
+  "hybrid_coherence": "Hybrids are validated per component only: restore checks physics as one unit and the application against the destination, but nothing compares application total_tick/episode_step with environment _t or physics time. restore_refused=false therefore means the production restore accepted the hybrid, not that the hybrid is a state the live engine could reach. Arms taking donor application start one tick later; with prefix 8 + horizon 64 + 1 far below the 600-tick episode and the 50-tick stall limit, no arm is expected to terminate.",
+  "smoke": {
+    "seed": 1000,
+    "horizon_ticks": 2,
+    "prefix_ticks": 2,
+    "status": "approved by owner 2026-11-23; charged to the final lane; output retained",
+    "path": "tests/test_runner.py::test_real_flynn_smoke_on_non_study_seed with PALIMPSEST_COMPONENT_SMOKE=1 (runs the real seed child through the CLI)",
+    "rule": "smoke overrides (--horizon/--prefix) are refused on study seeds and recorded in precheck.json and every row"
+  }
 }

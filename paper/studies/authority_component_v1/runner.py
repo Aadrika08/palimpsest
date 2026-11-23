@@ -96,7 +96,7 @@ def classify(row_by_arm):
     valid = (full['status'] == 'completed' and not full['restore_refused']
              and full['scientific_first_divergence'] is None and full['application_first_divergence'] is None)
     pose_changed = valid and pose['status'] == 'completed' and pose['first_action_changed'] is True
-    result = {'h1_full_agrees': valid, 'h2_pose_only_changes_first_action': pose['first_action_changed'],
+    result = {'h1_full_agrees': valid, 'h2_pose_only_changes_first_action': _verdict(pose, 'first_action_changed'),
               'necessary_first_action': {}, 'necessary_horizon': {}, 'repairs_first_action': {}}
     for c in COMPONENTS:
         loo = row_by_arm[f'loo:{c}']
@@ -134,9 +134,10 @@ def _step(engine, rows, ticks):
 
 
 def placeholder(seed, name, from_source, status, reason):
-    return {'unit_id': f'seed-{seed}/{name}', 'seed': seed, 'arm': name, 'from_source': sorted(from_source),
-            'status': status, 'reason': reason, 'exercised': None, 'restore_refused': False, 'refusal': None,
-            'ticks': 0, 'first_action_changed': None, 'first_action_divergence_tick': None,
+    tested = dict((n, x) for n, _, x in arms())[name]
+    return {'unit_id': f'seed-{seed}/{name}', 'seed': seed, 'arm': name, 'run_id': None, 'from_source': sorted(from_source),
+            'tested': sorted(tested), 'status': status, 'reason': reason, 'exercised': None, 'restore_refused': False,
+            'refusal': None, 'ticks': 0, 'tick_phases': [], 'wall_seconds': None, 'first_action_changed': None, 'first_action_divergence_tick': None,
             'scientific_first_divergence': None, 'application_first_divergence': None}
 
 
@@ -166,12 +167,12 @@ def run_seed(seed, output, repo, assets, horizon, prefix):
     precheck = {'source': src_d, 'donor': don_d, 'differs': {c: src_d[c] != don_d[c] for c in COMPONENTS},
                 'pending_commands': {'source': len(source['application']['pending_commands']),
                                      'donor': len(donor['application']['pending_commands'])},
-                'source_ticks': source_ticks, 'runs': runs}
+                'source_ticks': source_ticks, 'runs': runs, 'horizon_ticks': horizon, 'prefix_ticks': prefix}
     (output / 'precheck.json').write_text(json.dumps(precheck, indent=1, sort_keys=True))
     for index, (name, from_source, tested) in enumerate(arms()):
         runs[name] = uuid.uuid4().hex
         (output / 'precheck.json').write_text(json.dumps(precheck, indent=1, sort_keys=True))
-        actual, ticks, refused, failure = [], [], None, None
+        actual, ticks, refused, failure, started = [], [], None, None, time.monotonic()
         try:
             engine = _open(repo, assets, output / runs[name], seed)
             try:
@@ -195,7 +196,8 @@ def run_seed(seed, output, repo, assets, horizon, prefix):
             'from_source': sorted(from_source), 'tested': sorted(tested),
             'status': 'completed' if complete else 'runtime_failure', 'reason': failure,
             'exercised': exercised(src_d, don_d, tested), 'restore_refused': refused is not None, 'refusal': refused,
-            'ticks': len(actual), 'tick_phases': ticks, 'first_action_changed': None if not actual else tick == 0,
+            'ticks': len(actual), 'tick_phases': ticks, 'wall_seconds': time.monotonic() - started,
+            'horizon_ticks': horizon, 'first_action_changed': None if not actual else tick == 0,
             'first_action_divergence_tick': tick,
             'scientific_first_divergence': sci, 'application_first_divergence': app})
     rows = read_rows(output / 'rows.jsonl')
@@ -215,7 +217,12 @@ def _go(protocol_sha):
 
 def collect_seed(seed, seed_dir, status, reason):
     """Child rows, padded with placeholders so every seed contributes exactly len(arms()) rows."""
-    rows = read_rows(seed_dir / 'rows.jsonl') if (seed_dir / 'rows.jsonl').is_file() else []
+    names = {n for n, _, _ in arms()}
+    try:
+        rows = read_rows(seed_dir / 'rows.jsonl') if (seed_dir / 'rows.jsonl').is_file() else []
+    except ValueError:  # a child killed mid-append; the raw file stays on disk for inspection
+        rows, status, reason = [], 'failed', f'unreadable child rows; {reason}'
+    rows = [r for r in rows if r.get('arm') in names and r.get('seed') == seed]
     done = {r['arm'] for r in rows}
     rows += [placeholder(seed, name, src, status, reason) for name, src, _ in arms() if name not in done]
     return rows
@@ -232,8 +239,11 @@ def main():
     args = parser.parse_args()
     protocol = json.loads(PROTOCOL.read_text())
     if args.seed_child is not None:
+        smoke = args.horizon is not None or args.prefix is not None
+        require(not (smoke and args.seed_child in protocol['seeds']), 'smoke overrides are refused on study seeds')
         run_seed(args.seed_child, args.output, args.repo, args.assets,
-                 args.horizon or protocol['horizon_ticks'], args.prefix or protocol['prefix_ticks'])
+                 protocol['horizon_ticks'] if args.horizon is None else args.horizon,
+                 protocol['prefix_ticks'] if args.prefix is None else args.prefix)
         return 0
     require(args.horizon is None and args.prefix is None, '--horizon/--prefix are smoke-only seed-child overrides')
     from paper.studies.authority_replay_v1 import fault_matrix
@@ -268,12 +278,12 @@ def main():
         command = [sys.executable, '-B', __file__, '--output', str(seed_dir), '--seed-child', str(seed),
                    '--repo', str(repo), '--assets', str(assets)]
         try:
-            done = subprocess.run(command, capture_output=True, text=True, timeout=res['seed_timeout_seconds'])
+            done = subprocess.run(command, capture_output=True, text=True, errors='replace', timeout=res['seed_timeout_seconds'])
             (args.output / f'seed-{seed}.stderr').write_text(done.stderr)
             if done.returncode != 0:
                 status, reason = 'failed', f'child exit {done.returncode}'
         except subprocess.TimeoutExpired as error:
-            (args.output / f'seed-{seed}.stderr').write_text(error.stderr.decode() if isinstance(error.stderr, bytes) else str(error.stderr or ''))
+            (args.output / f'seed-{seed}.stderr').write_text(error.stderr.decode(errors='replace') if isinstance(error.stderr, bytes) else str(error.stderr or ''))
             status, reason, stopped = 'timeout', 'seed timeout', 'previous seed timed out'
         after = resource.getrusage(resource.RUSAGE_CHILDREN)
         cpu = (after.ru_utime - before.ru_utime) + (after.ru_stime - before.ru_stime)
@@ -281,6 +291,9 @@ def main():
         log.append({'seed': seed, 'status': status, 'reason': reason, 'cpu_seconds': cpu, 'wall_seconds': time.monotonic() - start})
         for row in collect_seed(seed, seed_dir, status, reason):
             append_row(args.output / 'rows.jsonl', row)
+        if campaign_identity(REPO, PROTOCOL, fault_matrix.ASSETS) != identity:
+            stopped = 'identity drift'
+            log[-1]['identity_drift_after'] = True
         account()
     # ponytail: no automatic retry by design (protocol stop rules); failed seeds stay as retained rows.
     drift = campaign_identity(REPO, PROTOCOL, fault_matrix.ASSETS) != identity
