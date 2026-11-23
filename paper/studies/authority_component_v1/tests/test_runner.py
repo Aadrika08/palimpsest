@@ -267,16 +267,71 @@ def test_protocol_budget_and_any_committed_go_is_well_formed():
         runner._go(runner.sha256_file(runner.PROTOCOL))
 
 
+def test_main_end_to_end_with_fake_children(tmp_path, monkeypatch):
+    """GO gate -> identity -> runtime copy -> seed children -> padding -> cpu.json, with every failure path."""
+    import subprocess
+    calls = []
+    monkeypatch.setattr(runner, '_go', lambda sha: {'go': True, 'protocol_sha256': sha})
+    monkeypatch.setattr(runner, 'campaign_identity', lambda *a: {'commit': 'c'})
+    monkeypatch.setattr(fault_matrix, '_copy_runtime', lambda out: (out / 'repo', out / 'assets'))
+    starts = iter([True, True, True, False, False, False])
+    monkeypatch.setattr(runner, 'should_start', lambda used, worst, res: next(starts))
+
+    def fake_run(command, **kw):
+        seed, out = int(command[command.index('--seed-child') + 1]), Path(command[command.index('--output') + 1])
+        calls.append(seed)
+        assert kw['timeout'] == PROTOCOL['resources']['seed_timeout_seconds']
+        out.mkdir()
+        keep = {0: 16, 1: 5, 2: 2}[seed]
+        for name, src, _ in runner.arms()[:keep]:
+            runner.append_row(out / 'rows.jsonl', runner.placeholder(seed, name, src, 'completed', None))
+        if seed == 2:
+            raise subprocess.TimeoutExpired(command, kw['timeout'], stderr=b'slow')
+        return subprocess.CompletedProcess(command, 0 if seed == 0 else 1, stdout='', stderr='e')
+
+    monkeypatch.setattr(runner.subprocess, 'run', fake_run)
+    monkeypatch.setattr(sys, 'argv', ['runner.py', '--output', str(tmp_path / 'out')])
+    assert runner.main() == 1
+    out = tmp_path / 'out'
+    rows = runner.read_rows(out / 'rows.jsonl')
+    assert calls == [0, 1, 2] and len(rows) == 96 == 6 * PROTOCOL['arms_per_seed']
+    status = lambda seed: [r['status'] for r in rows if r['seed'] == seed]
+    assert status(0) == ['completed'] * 16
+    assert status(1).count('completed') == 5 and status(1).count('failed') == 11
+    assert status(2).count('timeout') == 14 and status(4) == ['not_started'] * 16
+    cpu = json.loads((out / 'cpu.json').read_text())
+    assert [s['status'] for s in cpu['seeds']] == ['completed', 'failed', 'timeout', 'not_started', 'not_started', 'not_started']
+    assert cpu['seeds'][3]['reason'] == 'previous seed timed out' and 'total_cpu_seconds_including_parent' in cpu
+    assert (out / 'seed-2.stderr').read_text() == 'slow'
+    assert json.loads((out / 'identity.json').read_text())['protocol_sha256'] == runner.sha256_file(runner.PROTOCOL)
+
+
+def test_main_refuses_before_touching_output_without_go(tmp_path, monkeypatch):
+    monkeypatch.setattr(runner, '__file__', str(tmp_path / 'runner.py'))
+    monkeypatch.setattr(sys, 'argv', ['runner.py', '--output', str(tmp_path / 'out')])
+    with pytest.raises(ValueError, match='go.json missing'):
+        runner.main()
+    assert not (tmp_path / 'out').exists()
+
+
 @pytest.mark.skipif(os.environ.get('PALIMPSEST_COMPONENT_SMOKE') != '1', reason='real FLYNN smoke is opt in (needs owner OK)')
 def test_real_flynn_smoke_on_non_study_seed(tmp_path):
+    """Runs the real seed child through the CLI entry point on non-study seed 1000 with a short horizon."""
     import resource
+    import subprocess
     seed = 1000  # never a study seed
     assert seed not in PROTOCOL['seeds']
     base = tmp_path / 'base'
     base.mkdir()
     repo, assets = fault_matrix._copy_runtime(base)
-    result = {r['arm']: r for r in runner.run_seed(seed, tmp_path / 'seed', repo, assets, horizon=2, prefix=2)}
-    usage = resource.getrusage(resource.RUSAGE_SELF)
-    print(json.dumps({'cpu_seconds': usage.ru_utime + usage.ru_stime, 'peak_rss_kib': usage.ru_maxrss}))
+    done = subprocess.run([sys.executable, '-B', str(Path(runner.__file__)), '--output', str(tmp_path / 'seed'),
+                           '--seed-child', str(seed), '--repo', str(repo), '--assets', str(assets),
+                           '--horizon', '2', '--prefix', '2'], capture_output=True, text=True, timeout=900)
+    usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+    (tmp_path / 'smoke.json').write_text(json.dumps({'returncode': done.returncode, 'stderr_tail': done.stderr[-4000:],
+        'child_cpu_seconds': usage.ru_utime + usage.ru_stime, 'child_peak_rss_kib': usage.ru_maxrss}, indent=1))
+    print((tmp_path / 'smoke.json').read_text())
+    assert done.returncode == 0, done.stderr[-4000:]
+    result = {r['arm']: r for r in runner.read_rows(tmp_path / 'seed/rows.jsonl')}
     assert len(result) == 16 and all(r['status'] == 'completed' for r in result.values())
     assert not result['full']['restore_refused'] and result['full']['scientific_first_divergence'] is None
